@@ -506,6 +506,7 @@
     <div id="resultado">
       <div class="score-num" id="scoreNum">0/12</div>
       <p id="scoreMsg" style="font-weight:600;"></p>
+      <div id="temasReforzar"></div>
       <button class="btn" id="btnReiniciar">🔄 Reiniciar simulacro</button>
     </div>
 
@@ -562,18 +563,18 @@
   });
 
   const preguntas = [
-    { nivel:'b', ctx:'', q:'Según el artículo 113 de la Constitución Política, ¿cuáles son las Ramas del Poder Público?', ops:['Legislativa, Ejecutiva y Electoral','Legislativa, Ejecutiva y Judicial','Ejecutiva, Judicial y Ministerio Público','Legislativa, Judicial y de Control'], correcta:1, fb:'Las tres ramas son Legislativa, Ejecutiva y Judicial. Además existen órganos autónomos e independientes.' },
-    { nivel:'b', ctx:'', q:'¿Qué entidad lidera la formulación de las políticas de empleo público en Colombia?', ops:['La Contraloría General de la República','La Procuraduría General de la Nación','El Departamento Administrativo de la Función Pública (DAFP)','El Consejo Nacional Electoral'], correcta:2, fb:'El DAFP formula las políticas de empleo público. (Distinto de la CNSC, que administra la carrera y los concursos.)' },
-    { nivel:'b', ctx:'', q:'De acuerdo con el artículo 123 de la Constitución, ¿quiénes son servidores públicos?', ops:['Los miembros de corporaciones públicas, los empleados y trabajadores del Estado y de sus entidades descentralizadas','Únicamente los empleados de libre nombramiento y remoción','Solamente los contratistas por prestación de servicios','Solo quienes son elegidos por voto popular'], correcta:0, fb:'Art. 123 CP. Los contratistas por prestación de servicios NO son servidores públicos.' },
-    { nivel:'b', ctx:'', q:'¿Cuál de las siguientes opciones corresponde a los principios de la función administrativa (art. 209 CP)?', ops:['Rentabilidad, competitividad y libre mercado','Jerarquía, obediencia y reserva','Autonomía, descentralización y desconcentración','Igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad'], correcta:3, fb:'Art. 209 CP. Descentralización y desconcentración son formas de organización, no los principios del 209.' },
-    { nivel:'i', ctx:'En una Empresa Industrial y Comercial del Estado, una persona fue vinculada mediante contrato de trabajo para labores de mantenimiento.', q:'¿Qué tipo de servidor es?', ops:['Empleado público de libre nombramiento','Trabajador oficial','Contratista de prestación de servicios','Miembro de corporación pública'], correcta:1, fb:'El vínculo es un contrato de trabajo, propio de los trabajadores oficiales (común en obras públicas y EICE).' },
-    { nivel:'i', ctx:'', q:'El Ministerio Público, encargado de la guarda de los derechos y el control disciplinario, está integrado principalmente por:', ops:['La Fiscalía General y los jueces','La Registraduría y el Consejo Nacional Electoral','La Contraloría y la Auditoría General','La Procuraduría General, la Defensoría del Pueblo y las personerías'], correcta:3, fb:'El Ministerio Público lo ejercen la Procuraduría, la Defensoría del Pueblo y las personerías. La Contraloría ejerce el control fiscal (aparte).' },
-    { nivel:'i', ctx:'', q:'La organización electoral en Colombia está conformada por:', ops:['La Procuraduría y la Contraloría','El Congreso y el Consejo de Estado','El Consejo Nacional Electoral y la Registraduría Nacional del Estado Civil','La CNSC y el DAFP'], correcta:2, fb:'La organización electoral la conforman el CNE y la Registraduría Nacional del Estado Civil (art. 120 CP).' },
-    { nivel:'i', ctx:'Un jefe quiere vincular a un conocido en un empleo de carrera administrativa, sin concurso, "porque confía en él".', q:'¿Qué es lo correcto conforme a la función pública?', ops:['Nombrarlo, pues el jefe tiene autonomía absoluta','Proveer el empleo de carrera mediante concurso de méritos administrado por la CNSC','Nombrarlo en provisionalidad de manera indefinida','Convertir el cargo a libre nombramiento para evitar el concurso'], correcta:1, fb:'Los empleos de carrera se proveen por mérito mediante concurso (Ley 909/2004); la CNSC administra el proceso.' },
-    { nivel:'i', ctx:'', q:'¿Qué regula principalmente la Ley 909 de 2004?', ops:['El presupuesto general de la Nación','El régimen tributario nacional','La contratación estatal','El empleo público, la carrera administrativa y la gerencia pública'], correcta:3, fb:'La Ley 909 de 2004 regula el empleo público, la carrera administrativa y la gerencia pública.' },
-    { nivel:'a', ctx:'Una entidad publica en su página web los resultados de un concurso, notifica a todos los aspirantes en igualdad de condiciones y resuelve las reclamaciones dentro de los plazos establecidos.', q:'¿Qué principios de la función administrativa se evidencian principalmente?', ops:['Rentabilidad y competitividad','Jerarquía y reserva','Publicidad, igualdad y celeridad','Autonomía y descentralización'], correcta:2, fb:'Publicar (publicidad), tratar a todos igual (igualdad) y resolver a tiempo (celeridad). Art. 209 CP.' },
-    { nivel:'a', ctx:'', q:'¿Cuál es una clasificación correcta de los niveles jerárquicos de los empleos públicos?', ops:['Directivo, Asesor, Profesional, Técnico y Asistencial','Alto, Medio y Bajo','Operativo, Táctico y Estratégico','Primario, Secundario y Terciario'], correcta:0, fb:'Los niveles jerárquicos son Directivo, Asesor, Profesional, Técnico y Asistencial (Decreto 1083 de 2015).' },
-    { nivel:'a', ctx:'Un aspirante afirma que la CNSC pertenece a la Rama Ejecutiva "porque administra el empleo público y eso es ejecutar".', q:'¿Es correcta esa afirmación?', ops:['Sí, porque toda función administrativa corresponde a la Rama Ejecutiva','No, la CNSC es un órgano autónomo e independiente; no pertenece a ninguna de las tres ramas','Sí, porque depende directamente del Presidente de la República','No, porque la CNSC hace parte de la Rama Judicial'], correcta:1, fb:'La CNSC es un órgano autónomo e independiente (art. 130 CP). No pertenece a ninguna de las tres ramas.' }
+    { nivel:'b', tema:'Estructura del Estado', ctx:'', q:'Según el artículo 113 de la Constitución Política, ¿cuáles son las Ramas del Poder Público?', ops:['Legislativa, Ejecutiva y Electoral','Legislativa, Ejecutiva y Judicial','Ejecutiva, Judicial y Ministerio Público','Legislativa, Judicial y de Control'], correcta:1, expl:['Lo electoral es una organización autónoma, no una rama.','✔ Las tres ramas son Legislativa, Ejecutiva y Judicial.','El Ministerio Público es órgano de control, no una rama.','El control es función de órganos autónomos, no una rama.'] },
+    { nivel:'b', tema:'Función Pública (DAFP/CNSC)', ctx:'', q:'¿Qué entidad lidera la formulación de las políticas de empleo público en Colombia?', ops:['La Contraloría General de la República','La Procuraduría General de la Nación','El Departamento Administrativo de la Función Pública (DAFP)','El Consejo Nacional Electoral'], correcta:2, expl:['La Contraloría ejerce control fiscal, no políticas de empleo.','La Procuraduría ejerce control disciplinario, no políticas de empleo.','✔ El DAFP formula las políticas de empleo público (la CNSC administra carrera y concursos).','El CNE pertenece a la organización electoral.'] },
+    { nivel:'b', tema:'Servidor Público', ctx:'', q:'De acuerdo con el artículo 123 de la Constitución, ¿quiénes son servidores públicos?', ops:['Los miembros de corporaciones públicas, los empleados y trabajadores del Estado y de sus entidades descentralizadas','Únicamente los empleados de libre nombramiento y remoción','Solamente los contratistas por prestación de servicios','Solo quienes son elegidos por voto popular'], correcta:0, expl:['✔ Es la definición del art. 123 CP.','Es muy restrictivo: deja por fuera a empleados de carrera, trabajadores y elegidos.','El contratista NO es servidor público; tiene vínculo civil.','Deja por fuera a empleados y trabajadores del Estado.'] },
+    { nivel:'b', tema:'Principios de la función administrativa (art. 209)', ctx:'', q:'¿Cuál de las siguientes opciones corresponde a los principios de la función administrativa (art. 209 CP)?', ops:['Rentabilidad, competitividad y libre mercado','Jerarquía, obediencia y reserva','Autonomía, descentralización y desconcentración','Igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad'], correcta:3, expl:['Son conceptos de mercado, no principios del art. 209.','No son los principios del 209.','Son formas de organización administrativa, no los principios del 209.','✔ Son los 7 principios del art. 209 CP.'] },
+    { nivel:'i', tema:'Servidor Público (empleado vs. trabajador oficial)', ctx:'En una Empresa Industrial y Comercial del Estado, una persona fue vinculada mediante contrato de trabajo para labores de mantenimiento.', q:'¿Qué tipo de servidor es?', ops:['Empleado público de libre nombramiento','Trabajador oficial','Contratista de prestación de servicios','Miembro de corporación pública'], correcta:1, expl:['El empleado público tiene vínculo legal y reglamentario, no contrato de trabajo.','✔ Vínculo por contrato de trabajo = trabajador oficial (típico en EICE y obras públicas).','El contratista presta servicios por contrato civil; aquí hay contrato de trabajo.','Los miembros de corporaciones llegan por elección popular.'] },
+    { nivel:'i', tema:'Estructura del Estado (órganos de control)', ctx:'', q:'El Ministerio Público, encargado de la guarda de los derechos y el control disciplinario, está integrado principalmente por:', ops:['La Fiscalía General y los jueces','La Registraduría y el Consejo Nacional Electoral','La Contraloría y la Auditoría General','La Procuraduría General, la Defensoría del Pueblo y las personerías'], correcta:3, expl:['La Fiscalía y los jueces hacen parte de la Rama Judicial.','Esos integran la organización electoral.','La Contraloría ejerce control fiscal, no el Ministerio Público.','✔ El Ministerio Público lo ejercen la Procuraduría, la Defensoría y las personerías.'] },
+    { nivel:'i', tema:'Estructura del Estado (organización electoral)', ctx:'', q:'La organización electoral en Colombia está conformada por:', ops:['La Procuraduría y la Contraloría','El Congreso y el Consejo de Estado','El Consejo Nacional Electoral y la Registraduría Nacional del Estado Civil','La CNSC y el DAFP'], correcta:2, expl:['Son órganos de control, no organización electoral.','Pertenecen a las ramas Legislativa y Judicial.','✔ La organización electoral la conforman el CNE y la Registraduría (art. 120 CP).','Son entidades del empleo público, no organización electoral.'] },
+    { nivel:'i', tema:'Función Pública (carrera y mérito)', ctx:'Un jefe quiere vincular a un conocido en un empleo de carrera administrativa, sin concurso, "porque confía en él".', q:'¿Qué es lo correcto conforme a la función pública?', ops:['Nombrarlo, pues el jefe tiene autonomía absoluta','Proveer el empleo de carrera mediante concurso de méritos administrado por la CNSC','Nombrarlo en provisionalidad de manera indefinida','Convertir el cargo a libre nombramiento para evitar el concurso'], correcta:1, expl:['No existe autonomía para saltarse el mérito en empleos de carrera.','✔ Los empleos de carrera se proveen por concurso de méritos (Ley 909/2004).','La provisionalidad es excepcional y temporal, no una vía para evitar el concurso.','Cambiar la naturaleza del cargo para evadir el concurso es irregular.'] },
+    { nivel:'i', tema:'Función Pública (Ley 909 de 2004)', ctx:'', q:'¿Qué regula principalmente la Ley 909 de 2004?', ops:['El presupuesto general de la Nación','El régimen tributario nacional','La contratación estatal','El empleo público, la carrera administrativa y la gerencia pública'], correcta:3, expl:['El presupuesto se rige por otras normas (Estatuto Orgánico de Presupuesto).','Los tributos se rigen por el Estatuto Tributario.','La contratación se rige por la Ley 80 de 1993 y normas afines.','✔ La Ley 909 de 2004 regula el empleo público, la carrera y la gerencia pública.'] },
+    { nivel:'a', tema:'Principios de la función administrativa (art. 209)', ctx:'Una entidad publica en su página web los resultados de un concurso, notifica a todos los aspirantes en igualdad de condiciones y resuelve las reclamaciones dentro de los plazos establecidos.', q:'¿Qué principios de la función administrativa se evidencian principalmente?', ops:['Rentabilidad y competitividad','Jerarquía y reserva','Publicidad, igualdad y celeridad','Autonomía y descentralización'], correcta:2, expl:['No son principios del art. 209.','La reserva es lo contrario a la publicidad mostrada en el caso.','✔ Publicar = publicidad; tratar a todos igual = igualdad; resolver a tiempo = celeridad.','Son formas de organización, no los principios aplicados aquí.'] },
+    { nivel:'a', tema:'Niveles jerárquicos del empleo', ctx:'', q:'¿Cuál es una clasificación correcta de los niveles jerárquicos de los empleos públicos?', ops:['Directivo, Asesor, Profesional, Técnico y Asistencial','Alto, Medio y Bajo','Operativo, Táctico y Estratégico','Primario, Secundario y Terciario'], correcta:0, expl:['✔ Son los niveles jerárquicos (Decreto 1083 de 2015).','No es la clasificación normativa de empleos públicos.','Corresponde a niveles de gestión empresarial, no a la norma de empleos.','Es una clasificación económica, no de empleos públicos.'] },
+    { nivel:'a', tema:'Estructura del Estado (CNSC autónoma)', ctx:'Un aspirante afirma que la CNSC pertenece a la Rama Ejecutiva "porque administra el empleo público y eso es ejecutar".', q:'¿Es correcta esa afirmación?', ops:['Sí, porque toda función administrativa corresponde a la Rama Ejecutiva','No, la CNSC es un órgano autónomo e independiente; no pertenece a ninguna de las tres ramas','Sí, porque depende directamente del Presidente de la República','No, porque la CNSC hace parte de la Rama Judicial'], correcta:1, expl:['No toda función administrativa es de la Ejecutiva; hay órganos autónomos.','✔ La CNSC es un órgano autónomo e independiente (art. 130 CP).','La CNSC no depende del Presidente; es autónoma.','La CNSC no pertenece a la Rama Judicial.'] }
   ];
 
   const quizDiv = document.getElementById('quiz');
@@ -614,23 +615,46 @@
           if (k === p.correcta) o.classList.add('correcta');
         });
         const fb = document.getElementById('fb-' + qi);
-        if (oi === p.correcta) { fb.className = 'feedback ok show'; fb.innerHTML = '✅ <strong>¡Correcto!</strong> ' + p.fb; }
-        else { this.classList.add('incorrecta'); fb.className = 'feedback no show'; fb.innerHTML = '❌ <strong>Incorrecto.</strong> ' + p.fb; }
+        const letraCorrecta = String.fromCharCode(65 + p.correcta);
+        if (oi === p.correcta) {
+          fb.className = 'feedback ok show';
+          fb.innerHTML = '✅ <strong>¡Correcto!</strong> ' + p.expl[p.correcta];
+        } else {
+          this.classList.add('incorrecta');
+          fb.className = 'feedback no show';
+          fb.innerHTML = '❌ <strong>Incorrecto.</strong> Tu opción: ' + p.expl[oi] +
+            '<br><br>✅ <strong>La respuesta correcta es ' + letraCorrecta + ':</strong> ' + p.expl[p.correcta];
+        }
       });
     });
   }
 
   document.getElementById('btnCalcular').addEventListener('click', () => {
     let correctas = 0;
-    preguntas.forEach((p, i) => { if (respondidas[i] === p.correcta) correctas++; });
+    const temasFallados = [];
+    preguntas.forEach((p, i) => {
+      if (respondidas[i] === p.correcta) { correctas++; }
+      else { if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema); }
+    });
     const res = document.getElementById('resultado');
     document.getElementById('scoreNum').textContent = correctas + '/12';
     let msg;
     const pct = correctas / 12;
     if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas la estructura del Estado. Listo para el Día 3.';
-    else if (pct >= 0.58) msg = '👍 Buen trabajo. Repasa las comparaciones y los principios antes de avanzar.';
-    else msg = '📚 Vuelve al desarrollo temático y repite el simulacro. ¡Tú puedes!';
+    else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados antes de avanzar.';
+    else msg = '📚 Vas por buen camino. Repasa los temas marcados y repite el simulacro. ¡Tú puedes!';
     document.getElementById('scoreMsg').textContent = msg;
+
+    const cont = document.getElementById('temasReforzar');
+    if (temasFallados.length === 0) {
+      cont.innerHTML = '<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. Tienes el Día 2 dominado.</p></div>';
+    } else {
+      let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+      cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+        '<div class="box-title">📌 Temas que debes reforzar</div>' +
+        '<p>Fallaste preguntas de estos temas. Vuelve a la sección <strong>Desarrollo</strong> y repásalos antes de continuar:</p>' +
+        '<ul class="lista" style="margin-bottom:0;">' + items + '</ul></div>';
+    }
     res.classList.add('show');
     res.scrollIntoView({ behavior: 'smooth' });
   });
