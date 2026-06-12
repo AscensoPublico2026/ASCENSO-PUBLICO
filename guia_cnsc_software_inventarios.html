@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNSC · INDERVALLE · Software de Inventarios y Sistemas de Información — Función Esencial 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2a4a;--blue:#1e4d8c;--blue-mid:#2c6ab0;--blue-lt:#4a90d9;
+  --gold:#c8a84b;--gold-lt:#e8c97a;--cream:#f8f5ef;--white:#ffffff;
+  --g100:#f2f2f5;--g200:#e4e4ea;--g400:#9494a8;--g600:#5a5a72;--g800:#2e2e3e;
+  --red:#c0392b;--red-lt:#fdf0ee;--green:#1a6640;--green-lt:#edf7f1;
+  --amber:#b8600a;--amber-lt:#fef5e7;--teal:#0d6e6e;--teal-lt:#e6f4f4;
+  --sh-sm:0 2px 8px rgba(26,42,74,.08);--sh-md:0 6px 24px rgba(26,42,74,.13);--sh-lg:0 16px 48px rgba(26,42,74,.18);
+  --r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:28px;
+  --fd:'Playfair Display',Georgia,serif;--fb:'Source Sans 3',Arial,sans-serif;--fs:'Source Serif 4',Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--cream);color:var(--g800);line-height:1.7;font-size:16px}
+
+/* HEADER */
+.site-header{background:linear-gradient(135deg,#0f1d35 0%,var(--blue) 55%,#1a5d9c 100%);color:var(--white);position:relative;overflow:hidden}
+.site-header::before{content:'';position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(200,168,75,.07);pointer-events:none}
+.header-band{background:var(--gold);text-align:center;padding:6px 20px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--navy)}
+.header-inner{max-width:1160px;margin:0 auto;padding:44px 32px 42px;position:relative;z-index:1}
+.hbadge{background:rgba(200,168,75,.18);border:1.5px solid var(--gold);color:var(--gold-lt);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;display:inline-block;margin-bottom:18px}
+.header-title{font-family:var(--fd);font-size:clamp(24px,4vw,44px);font-weight:700;line-height:1.18;color:var(--white);margin-bottom:10px}
+.header-title em{font-style:italic;color:var(--gold-lt)}
+.header-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.72);max-width:680px;line-height:1.6;margin-bottom:28px}
+.htags{display:flex;flex-wrap:wrap;gap:8px}
+.htag{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px}
+
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:2px solid var(--gold);box-shadow:var(--sh-md)}
+.snav-inner{max-width:1160px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none}
+.snav-inner::-webkit-scrollbar{display:none}
+.nav-link{display:inline-block;padding:13px 15px;font-size:12.5px;font-weight:600;color:var(--g600);text-decoration:none;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+.nav-link:hover{color:var(--blue);border-bottom-color:var(--blue-lt)}
+
+/* MAIN */
+.main{max-width:1160px;margin:0 auto;padding:48px 32px}
+.section-block{margin-bottom:64px}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-label::before{content:'';display:inline-block;width:28px;height:2px;background:var(--gold);border-radius:2px}
+.section-title{font-family:var(--fd);font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:16px}
+.section-intro{font-size:16.5px;color:var(--g600);line-height:1.76;max-width:840px;margin-bottom:32px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--g200),transparent);margin:52px 0}
+
+/* CALLOUT */
+.callout-navy{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:var(--r-lg);padding:34px 38px;color:var(--white);margin-bottom:32px;position:relative;overflow:hidden}
+.callout-navy::after{content:'§';position:absolute;right:28px;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:110px;font-weight:900;color:rgba(255,255,255,.04);pointer-events:none;user-select:none}
+.callout-navy h3{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--gold-lt);margin-bottom:12px}
+.callout-navy p{font-size:15.5px;color:rgba(255,255,255,.82);line-height:1.72;max-width:780px}
+.callout-navy ul{padding-left:20px;margin-top:8px}
+.callout-navy ul li{font-size:15px;color:rgba(255,255,255,.78);line-height:1.65;margin-bottom:6px}
+
+/* CONCEPT CARDS */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:28px 0}
+.concept-card{background:var(--white);border-radius:var(--r-md);box-shadow:var(--sh-sm);border:1px solid var(--g200);padding:26px 22px;position:relative;overflow:hidden;transition:transform .22s,box-shadow .22s}
+.concept-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.concept-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+.concept-card.blue::before{background:linear-gradient(180deg,var(--blue),var(--blue-lt))}
+.concept-card.gold::before{background:linear-gradient(180deg,var(--gold),var(--gold-lt))}
+.concept-card.green::before{background:linear-gradient(180deg,var(--green),#27ae60)}
+.concept-card.red::before{background:linear-gradient(180deg,var(--red),#e74c3c)}
+.concept-card.teal::before{background:linear-gradient(180deg,var(--teal),#14a0a0)}
+.concept-icon{font-size:28px;margin-bottom:10px;line-height:1}
+.concept-title{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.concept-card p{font-size:14.5px;color:var(--g600);line-height:1.65}
+.concept-card strong{color:var(--navy)}
+
+/* NORMA PILL */
+.npill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:var(--navy);color:var(--gold);padding:2px 8px;border-radius:3px;margin:4px 2px 0 0}
+
+/* TABLA NORMATIVA */
+.table-wrap{overflow-x:auto;border-radius:var(--r-md);box-shadow:var(--sh-sm);margin:24px 0}
+.norm-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white)}
+.norm-table thead tr{background:var(--navy);color:var(--white)}
+.norm-table thead th{padding:13px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.norm-table tbody tr{border-bottom:1px solid var(--g200);transition:background .15s}
+.norm-table tbody tr:hover{background:var(--g100)}
+.norm-table tbody td{padding:12px 16px;color:var(--g800);vertical-align:top;line-height:1.6}
+.norm-table .td-key{font-weight:700;color:var(--blue)}
+
+/* FLUJO MAPA */
+.flujo-section{background:var(--white);border-radius:var(--r-lg);box-shadow:var(--sh-md);padding:32px;margin:28px 0;overflow:hidden}
+.flujo-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.flujo-sub{font-size:14px;color:var(--g600);margin-bottom:28px}
+.flujo-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-bottom:20px}
+.flujo-row::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:3px;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold),var(--teal),var(--blue-mid));border-radius:3px;z-index:0}
+.flujo-col{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+.flujo-icon-wrap{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;box-shadow:var(--sh-sm);background:var(--white);border:3px solid var(--g200)}
+.flujo-icon-wrap.fc1{border-color:var(--green);background:var(--green-lt)}
+.flujo-icon-wrap.fc2{border-color:var(--blue);background:#e8f4fd}
+.flujo-icon-wrap.fc3{border-color:var(--gold);background:var(--amber-lt)}
+.flujo-icon-wrap.fc4{border-color:var(--teal);background:var(--teal-lt)}
+.flujo-icon-wrap.fc5{border-color:var(--blue-mid);background:#eef4fc}
+.flujo-step-num{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--g400);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase}
+.flujo-step-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.3}
+.flujo-step-desc{font-size:11.5px;color:var(--g600);line-height:1.55}
+.flujo-detail-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px}
+.flujo-detail-card{background:var(--g100);border-radius:var(--r-sm);padding:12px 10px;font-size:12px;color:var(--g600);line-height:1.55;border:1px solid var(--g200)}
+.flujo-detail-card strong{display:block;font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px;letter-spacing:.3px;text-transform:uppercase}
+.flujo-detail-card .df-pill{display:inline-block;font-size:10px;font-weight:700;background:var(--navy);color:var(--gold);padding:2px 7px;border-radius:3px;margin-bottom:5px}
+
+/* PERFILES TABLA */
+.perfiles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px 0}
+.perfil-card{background:var(--white);border-radius:var(--r-md);box-shadow:var(--sh-sm);border:1px solid var(--g200);padding:20px 18px}
+.perfil-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.perfil-badge.admin{background:var(--red-lt);color:var(--red);border:1px solid var(--red)}
+.perfil-badge.cont{background:#e8f4fd;color:var(--blue);border:1px solid var(--blue-lt)}
+.perfil-badge.tec{background:var(--green-lt);color:var(--green);border:1px solid var(--green)}
+.perfil-badge.cons{background:var(--g100);color:var(--g600);border:1px solid var(--g200)}
+.perfil-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.perfil-list{list-style:none;padding:0}
+.perfil-list li{font-size:13px;color:var(--g600);line-height:1.6;padding:3px 0 3px 16px;position:relative;border-bottom:1px solid var(--g100)}
+.perfil-list li:last-child{border-bottom:none}
+.perfil-list li::before{content:'▸';position:absolute;left:0;color:var(--blue-lt);font-size:10px;top:6px}
+.perfil-list li.no{color:var(--red);opacity:.75}
+.perfil-list li.no::before{color:var(--red)}
+
+/* BLOQUES ESPECIALES */
+.alerta-cnsc{background:var(--red-lt);border:1.5px solid #e74c3c;border-left:5px solid var(--red);border-radius:var(--r-md);padding:22px 26px;margin:28px 0}
+.alerta-label{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:9px}
+.alerta-cnsc h4{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--red);margin-bottom:8px}
+.alerta-cnsc p,.alerta-cnsc ul{font-size:14.5px;color:#7b1a1a;line-height:1.7}
+.alerta-cnsc ul{padding-left:18px;margin-top:6px}
+.alerta-cnsc ul li{margin-bottom:5px}
+
+.regla-oro{background:linear-gradient(135deg,#fffbf0,#fff8e1);border:2px solid var(--gold);border-radius:var(--r-lg);padding:28px 32px;margin:28px 0;position:relative;overflow:hidden}
+.regla-oro::before{content:'★';position:absolute;right:20px;top:14px;font-size:48px;color:rgba(200,168,75,.14);pointer-events:none;user-select:none}
+.regla-label{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:9px}
+.regla-oro h4{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--amber);margin-bottom:10px}
+.regla-pasos{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+.regla-paso{flex:1;min-width:150px;background:var(--white);border:1.5px solid var(--gold);border-radius:var(--r-sm);padding:14px 15px;text-align:center}
+.regla-paso-num{font-family:var(--fd);font-size:28px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:5px}
+.regla-paso-title{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.regla-paso-text{font-size:13px;color:var(--g600);line-height:1.5}
+
+.tips-mem{background:var(--green-lt);border:1.5px solid #27ae60;border-left:5px solid var(--green);border-radius:var(--r-md);padding:22px 26px;margin:28px 0}
+.tips-label{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:9px}
+.tips-mem h4{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--green);margin-bottom:8px}
+.tips-mem ul{padding-left:18px}
+.tips-mem ul li{font-size:14.5px;color:#164d2e;line-height:1.65;margin-bottom:6px}
+.tips-mem strong{color:var(--green)}
+
+/* QUIZ */
+.quiz-scoreboard{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:var(--r-lg);padding:22px 30px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:32px;box-shadow:var(--sh-md)}
+.sb-info h3{font-family:var(--fd);font-size:18px;font-weight:700;color:var(--white);margin-bottom:3px}
+.sb-info p{font-size:12px;color:rgba(255,255,255,.6)}
+.sb-stats{display:flex;align-items:center;gap:18px}
+.sb-bubble{text-align:center}
+.sb-num{font-family:var(--fd);font-size:32px;font-weight:900;color:var(--gold);line-height:1;display:block}
+.sb-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.sb-sep{width:1px;height:36px;background:rgba(255,255,255,.2)}
+.sb-prog{height:5px;background:rgba(255,255,255,.15);border-radius:100px;overflow:hidden;margin-top:8px;width:180px}
+.sb-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:100px;transition:width .5s ease;width:0%}
+
+.quiz-card{background:var(--white);border-radius:var(--r-lg);box-shadow:var(--sh-md);margin-bottom:32px;overflow:hidden;border:1px solid var(--g200)}
+.qcard-hdr{background:linear-gradient(90deg,var(--navy),var(--blue-mid));padding:13px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.qnum{font-family:var(--fd);font-size:20px;font-weight:900;color:var(--gold);line-height:1;flex-shrink:0}
+.qcomp{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);flex:1}
+.qscenario{padding:18px 24px 14px;background:var(--g100);border-bottom:1px solid var(--g200)}
+.qscen-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.qscenario p{font-family:var(--fs);font-size:14.5px;color:var(--g800);line-height:1.72}
+.qquestion{padding:14px 24px;font-size:15px;font-weight:600;color:var(--navy);line-height:1.55;border-bottom:1px solid var(--g200)}
+.qopts{padding:14px 20px;display:flex;flex-direction:column;gap:9px}
+.quiz-opt{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;border:1.5px solid var(--g200);border-radius:var(--r-md);cursor:pointer;transition:border-color .18s,background .18s,transform .12s;background:var(--white);text-align:left;width:100%;font-family:inherit}
+.quiz-opt:hover:not(:disabled){border-color:var(--blue-lt);background:#f0f6ff;transform:translateX(2px)}
+.quiz-opt:disabled{cursor:default}
+.quiz-opt.correct{border-color:var(--green);background:var(--green-lt)}
+.quiz-opt.incorrect{border-color:var(--red);background:var(--red-lt)}
+.quiz-opt.neutral{border-color:var(--g200);background:var(--g100);opacity:.65}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:var(--g200);color:var(--navy);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .18s,color .18s}
+.quiz-opt.correct .opt-letter{background:var(--green);color:var(--white)}
+.quiz-opt.incorrect .opt-letter{background:var(--red);color:var(--white)}
+.opt-text{font-size:14px;color:var(--g800);line-height:1.62;flex:1}
+.opt-icon{font-size:15px;flex-shrink:0;opacity:0;transition:opacity .2s}
+.quiz-opt.correct .opt-icon,.quiz-opt.incorrect .opt-icon{opacity:1}
+.quiz-feedback{display:none;padding:0 20px 20px;flex-direction:column;gap:9px}
+.quiz-card.answered .quiz-feedback{display:flex}
+.fb-header{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);padding-top:12px;padding-bottom:4px;border-top:1px solid var(--g200)}
+.fb-item{border-radius:var(--r-sm);padding:11px 15px;font-size:13px;line-height:1.65}
+.fb-item.fc{background:var(--green-lt);border-left:4px solid var(--green);color:#164d2e}
+.fb-item.fi{background:var(--red-lt);border-left:4px solid var(--red);color:#7b1a1a}
+.fb-norm{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:var(--navy);color:var(--gold);padding:2px 7px;border-radius:3px;margin-bottom:5px}
+.fb-item strong{display:block;margin-bottom:3px;font-size:11px;letter-spacing:.3px;text-transform:uppercase}
+
+.result-box{display:none;background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:var(--r-xl);padding:48px 40px;text-align:center;margin-top:40px;box-shadow:var(--sh-lg)}
+.result-box.visible{display:block}
+.res-title{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--gold-lt);margin-bottom:6px}
+.res-big{font-family:var(--fd);font-size:72px;font-weight:900;color:var(--gold);line-height:1;margin:14px 0}
+.res-msg{font-size:16px;color:rgba(255,255,255,.75);max-width:520px;margin:0 auto 24px;line-height:1.65}
+.res-reset{background:var(--gold);color:var(--navy);font-family:var(--fb);font-size:14px;font-weight:700;border:none;border-radius:100px;padding:13px 32px;cursor:pointer;transition:background .2s,transform .15s}
+.res-reset:hover{background:var(--gold-lt);transform:translateY(-2px)}
+
+.site-footer{background:var(--navy);color:rgba(255,255,255,.45);text-align:center;padding:26px 20px;font-size:12.5px;line-height:1.7;margin-top:70px}
+.site-footer strong{color:var(--gold)}
+@media(max-width:768px){
+  .main{padding:24px 16px}
+  .header-inner{padding:32px 20px 28px}
+  .flujo-row{grid-template-columns:1fr 1fr;gap:16px}
+  .flujo-row::before{display:none}
+  .flujo-detail-grid{grid-template-columns:1fr 1fr}
+  .sb-stats{gap:12px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-band">Ministerio de Tecnologías de la Información y las Comunicaciones · Contaduría General de la Nación · CNSC · INDERVALLE · OPEC 243477</div>
+  <div class="header-inner">
+    <div class="hbadge">Función Esencial 12 · Técnico Operativo 314-03</div>
+    <h1 class="header-title">Software de Inventarios y<br><em>Sistemas de Información en el Almacén Público</em></h1>
+    <p class="header-sub">Integridad de datos, perfiles de usuario, trazabilidad de transacciones e interfaz con la contabilidad pública. Marco normativo: Decreto 1008/2018 · Ley 1581/2012 · Resolución CGN 357/2008 · Decreto 815/2018.</p>
+    <div class="htags">
+      <span class="htag">Función Esencial 12</span>
+      <span class="htag">Decreto 1008/2018 · GovDigital</span>
+      <span class="htag">Ley 1581/2012 · Datos</span>
+      <span class="htag">Res. 357/2008 CGN</span>
+      <span class="htag">Pistas de Auditoría</span>
+      <span class="htag">Perfiles de Usuario</span>
+      <span class="htag">Trazabilidad SIIF</span>
+    </div>
+  </div>
+</header>
+
+<nav class="sticky-nav">
+  <div class="snav-inner">
+    <a class="nav-link" href="#funcion12">§1 Función 12</a>
+    <a class="nav-link" href="#ecosistema">§2 Ecosistema Digital</a>
+    <a class="nav-link" href="#perfiles">§3 Perfiles de Usuario</a>
+    <a class="nav-link" href="#flujo">§4 Flujo de Datos</a>
+    <a class="nav-link" href="#normativa">§5 Marco Normativo</a>
+    <a class="nav-link" href="#regla">§6 Regla de Oro</a>
+    <a class="nav-link" href="#alertas">§7 Alertas CNSC</a>
+    <a class="nav-link" href="#simulacro">§8 Simulacro</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- §1 FUNCIÓN ESENCIAL 12 -->
+<section class="section-block" id="funcion12">
+  <div class="section-label">Sección 1 — Anclaje Normativo del Cargo</div>
+  <h2 class="section-title">La Función Esencial N.° 12: Dimensión Legal del Registro Informático</h2>
+  <p class="section-intro">El Manual de Funciones de INDERVALLE establece taxativamente en la Función Esencial N.° 12 del cargo Técnico Operativo (Código 314, Grado 03): <strong>"Registrar y/o consultar la información requerida por el proceso en los sistemas de información implementados por la institución."</strong> Esta función no es una actividad administrativa secundaria: es la interfaz entre el mundo físico del almacén y el ecosistema digital e institucional de INDERVALLE.</p>
+
+  <div class="callout-navy">
+    <h3>¿Por qué la Función Esencial 12 tiene mayor impacto legal que parece?</h3>
+    <p>Cada vez que el Técnico Operativo registra un ingreso, egreso, traslado o ajuste en el software de inventarios de INDERVALLE, está ejecutando un acto jurídico que: (1) genera una pista de auditoría vinculada a sus credenciales personales e intransferibles, (2) modifica el saldo del inventario activo de la entidad con efectos contables inmediatos, (3) produce evidencia admisible en procesos disciplinarios, fiscales y penales, y (4) está protegido por los principios de integridad y no repudiación de la Resolución 357/2008 de la CGN. Un registro informático sin soporte físico previo es un acto irregular equiparable a una falsedad en documento público.</p>
+    <ul>
+      <li><strong>No repudiación:</strong> el técnico no puede alegar que no ejecutó un registro que el sistema registra bajo sus credenciales (Res. 357/2008 CGN, Art. 6).</li>
+      <li><strong>Integridad:</strong> los datos registrados no pueden ser modificados retroactivamente sin el proceso formal de ajuste con acto administrativo (Decreto 1008/2018).</li>
+      <li><strong>Confidencialidad:</strong> las credenciales de acceso son personales e intransferibles; compartirlas viola la Ley 1581/2012 y la política de seguridad de la entidad.</li>
+      <li><strong>Disponibilidad:</strong> el técnico tiene la obligación de registrar los datos de forma oportuna y completa para que estén disponibles para los entes de control en cualquier momento.</li>
+    </ul>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card blue">
+      <div class="concept-icon">🔍</div>
+      <div class="concept-title">Pista de Auditoría (Log del Sistema)</div>
+      <p>El software de inventarios registra automáticamente <strong>quién</strong> hizo el registro (usuario logueado), <strong>qué</strong> registró (transacción exacta), <strong>cuándo</strong> (fecha y hora del servidor) y <strong>desde dónde</strong> (terminal o IP). Este log es inmutable para el técnico: solo el Administrador del Sistema puede acceder a él y no puede ser borrado por el usuario regular. Ante una auditoría de la Contraloría, el log es la primera fuente de verificación de la actuación del técnico.</p>
+      <span class="npill">Res. 357/2008 CGN Art. 6</span>
+      <span class="npill">Decreto 1008/2018</span>
+    </div>
+    <div class="concept-card gold">
+      <div class="concept-icon">🔐</div>
+      <div class="concept-title">Credenciales Intransferibles</div>
+      <p>El usuario y contraseña asignados al técnico son su <strong>firma digital de facto</strong> en el sistema de inventarios. La Ley 1581/2012 y la Política de Gobierno Digital (Decreto 1008/2018) establecen que cada servidor público es el único responsable de los actos realizados bajo sus credenciales. Compartir usuario y clave "por urgencia" o "por confianza" no exime al titular de la responsabilidad legal de todos los actos registrados bajo ese usuario, incluidos los que él no ejecutó directamente.</p>
+      <span class="npill">Ley 1581/2012</span>
+      <span class="npill">Decreto 1008/2018 Art. 8</span>
+    </div>
+    <div class="concept-card green">
+      <div class="concept-icon">⚡</div>
+      <div class="concept-title">Impacto Contable Inmediato</div>
+      <p>En los sistemas integrados de gestión (como SEVEN o SAP usados en entidades públicas del Valle del Cauca), el registro de un ingreso en el módulo de almacén <strong>genera automáticamente el asiento contable</strong> en el módulo de contabilidad de la entidad. Esto significa que un registro erróneo o sin soporte del técnico distorsiona de inmediato el balance patrimonial de INDERVALLE, con consecuencias en los estados financieros que reporta la entidad a la CGN y que audita la Contraloría Departamental.</p>
+      <span class="npill">Res. 533/2015 CGN</span>
+      <span class="npill">Marco NICSP-CGN</span>
+    </div>
+    <div class="concept-card red">
+      <div class="concept-icon">⚠️</div>
+      <div class="concept-title">Registro sin Soporte Físico</div>
+      <p>Registrar un movimiento en el software sin que exista el documento soporte físico (acta de recepción, orden de despacho, acta de baja) invierte el orden del proceso: primero debe existir el hecho físico verificado y el soporte documental firmado, y <strong>luego</strong> el registro informático que refleja ese hecho. El registro previo al soporte puede configurar la creación de activos ficticios o la sustracción de inventario sin rastro documental físico, lo cual puede derivar en responsabilidad fiscal bajo la Ley 610/2000.</p>
+      <span class="npill">Ley 610/2000</span>
+      <span class="npill">Circular 001/2004 CGN-CGR</span>
+    </div>
+    <div class="concept-card teal">
+      <div class="concept-icon">🔄</div>
+      <div class="concept-title">Ajustes y Reversiones</div>
+      <p>Todo ajuste, reversa o corrección de un registro ya cerrado en el sistema requiere: (a) soporte documental que justifique la corrección (memorando de error, nota de ajuste), (b) autorización del Contador o del nivel competente mediante acto administrativo, y (c) registro en el sistema a través del módulo de ajustes habilitado para ello. El técnico no puede corregir registros cerrados usando su perfil ordinario: esa acción requiere un perfil de administrador que él no tiene ni debe tener.</p>
+      <span class="npill">Res. 357/2008 CGN</span>
+      <span class="npill">Decreto 815/2018</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §2 ECOSISTEMA DIGITAL -->
+<section class="section-block" id="ecosistema">
+  <div class="section-label">Sección 2 — Marco Teórico Completo</div>
+  <h2 class="section-title">El Ecosistema Digital del Almacén: Componentes e Interdependencias</h2>
+  <p class="section-intro">El software de inventarios de INDERVALLE no es una herramienta aislada: es un módulo integrado en el sistema de información de la entidad que se comunica con los módulos de contabilidad, presupuesto y gestión contractual. Comprender esta arquitectura es indispensable para que el técnico entienda el impacto real de cada acción que realiza en el sistema.</p>
+
+  <div class="table-wrap">
+    <table class="norm-table">
+      <thead>
+        <tr>
+          <th>Componente del Sistema</th>
+          <th>Quién lo Administra</th>
+          <th>Función del Técnico de Almacén</th>
+          <th>Restricción del Técnico</th>
+          <th>Norma que lo Regula</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key">Módulo de Almacén e Inventarios</td>
+          <td>Área de TI (configuración) + Técnico Operativo (operación)</td>
+          <td>Registrar y consultar movimientos: entradas, salidas, traslados, consultas de saldo</td>
+          <td>No puede modificar parámetros del módulo, crear cuentas de usuario ni alterar el catálogo UNSPSC base sin autorización de TI</td>
+          <td><span class="npill">Función Esencial 12</span><span class="npill">Decreto 1008/2018</span></td>
+        </tr>
+        <tr>
+          <td class="td-key">Módulo de Contabilidad Pública</td>
+          <td>Contador Público + Área Financiera</td>
+          <td>Ninguna acción directa; sus registros en almacén generan asientos automáticos</td>
+          <td>No puede acceder al módulo contable, crear ni modificar asientos, ni ajustar cuentas de inventario directamente</td>
+          <td><span class="npill">Res. 533/2015 CGN</span><span class="npill">Marco NICSP</span></td>
+        </tr>
+        <tr>
+          <td class="td-key">Módulo de Presupuesto y Compromisos (SIIF)</td>
+          <td>Área Financiera + Ordenador del Gasto</td>
+          <td>Consultar el estado de la disponibilidad presupuestal como soporte de una recepción (no modificar)</td>
+          <td>No puede crear ni liberar compromisos presupuestales; no puede aprobar ni anular CDPs</td>
+          <td><span class="npill">SIIF Nación</span><span class="npill">Decreto 1068/2015</span></td>
+        </tr>
+        <tr>
+          <td class="td-key">Sistema de Gestión Documental (ORFEO/SIGEP)</td>
+          <td>Área de Archivo + Secretaría General</td>
+          <td>Generar o consultar el número de radicado de los documentos soporte de los movimientos del almacén</td>
+          <td>No puede eliminar ni modificar documentos radicados, ni alterar los metadatos de los documentos ya ingresados</td>
+          <td><span class="npill">Ley 594/2000</span><span class="npill">Acuerdo AGN 042/2002</span></td>
+        </tr>
+        <tr>
+          <td class="td-key">Panel de Administración de Usuarios (TI)</td>
+          <td>Área de TI exclusivamente</td>
+          <td>Ninguna; solo puede solicitar cambio de contraseña propia por canal formal</td>
+          <td>No puede crear, modificar ni eliminar perfiles de usuario; no puede asignar accesos a terceros</td>
+          <td><span class="npill">Decreto 1008/2018 Art. 8</span><span class="npill">Ley 1581/2012</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alerta-cnsc">
+    <div class="alerta-label">⚠ Alerta CNSC</div>
+    <h4>La trampa del "sistema caído a fin de mes": registrar después del cierre</h4>
+    <p>Un distractor de alta complejidad presenta la siguiente situación: el sistema de inventarios se cae a las 5:00 p.m. del último día del mes fiscal y el técnico tiene 15 movimientos de despacho pendientes de registrar. El supervisor le pide que registre todos los movimientos al día siguiente, con fecha del día anterior, para que queden en el mes que corresponde. Esta opción parece razonable operativamente pero viola la Resolución 357/2008 de la CGN, que establece que los registros informáticos no pueden ser backdated (antedatados). La conducta correcta es registrar los movimientos con la fecha real de registro, adjuntar una nota explicativa sobre el cierre del sistema, y reportar al jefe la situación para que el Contador haga el ajuste de período correspondiente con el acto administrativo pertinente.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §3 PERFILES DE USUARIO -->
+<section class="section-block" id="perfiles">
+  <div class="section-label">Sección 3 — Seguridad de la Información</div>
+  <h2 class="section-title">Perfiles de Usuario en el Software de Inventarios: Jerarquía de Accesos</h2>
+  <p class="section-intro">El Decreto 1008/2018 (Política de Gobierno Digital) exige que las entidades del Estado implementen controles de acceso basados en roles (Role-Based Access Control — RBAC). En el software de inventarios de INDERVALLE esto se traduce en perfiles diferenciados para cada tipo de usuario, con accesos habilitados estrictamente para las funciones que cada servidor debe ejecutar según su cargo.</p>
+
+  <div class="perfiles-grid">
+    <div class="perfil-card">
+      <span class="perfil-badge admin">Administrador TI</span>
+      <div class="perfil-title">Área de Sistemas / TI</div>
+      <ul class="perfil-list">
+        <li>Crear y eliminar cuentas de usuario</li>
+        <li>Asignar y revocar perfiles de acceso</li>
+        <li>Configurar parámetros del sistema</li>
+        <li>Acceder a los logs de auditoría</li>
+        <li>Realizar copias de seguridad (backup)</li>
+        <li class="no">NO registra transacciones de inventario</li>
+        <li class="no">NO modifica asientos contables</li>
+      </ul>
+    </div>
+    <div class="perfil-card">
+      <span class="perfil-badge cont">Contador Público</span>
+      <div class="perfil-title">Área Financiera y Contable</div>
+      <ul class="perfil-list">
+        <li>Aprobar y anular asientos contables</li>
+        <li>Configurar cuentas del Plan de Cuentas</li>
+        <li>Realizar ajustes contables con acto administrativo</li>
+        <li>Generar informes de estados financieros</li>
+        <li>Validar la interfaz almacén-contabilidad</li>
+        <li class="no">NO crea entradas o salidas en almacén</li>
+        <li class="no">NO registra movimientos físicos de bienes</li>
+      </ul>
+    </div>
+    <div class="perfil-card">
+      <span class="perfil-badge tec">Técnico Operativo</span>
+      <div class="perfil-title">Almacén Central INDERVALLE</div>
+      <ul class="perfil-list">
+        <li>Registrar entradas de bienes con soporte</li>
+        <li>Registrar salidas de bienes con soporte</li>
+        <li>Registrar traslados entre dependencias</li>
+        <li>Consultar saldos y movimientos propios</li>
+        <li>Consultar el catálogo de bienes</li>
+        <li class="no">NO modifica parámetros del sistema</li>
+        <li class="no">NO accede a módulos contables</li>
+        <li class="no">NO crea perfiles de usuario</li>
+        <li class="no">NO realiza ajustes sin autorización</li>
+      </ul>
+    </div>
+    <div class="perfil-card">
+      <span class="perfil-badge cons">Consultor / Solo Lectura</span>
+      <div class="perfil-title">Entes de Control / Supervisores</div>
+      <ul class="perfil-list">
+        <li>Consultar saldos de inventario</li>
+        <li>Generar reportes de movimientos</li>
+        <li>Verificar el catálogo de bienes</li>
+        <li>Revisar histórico de transacciones</li>
+        <li class="no">NO puede registrar ningún movimiento</li>
+        <li class="no">NO puede modificar ningún dato</li>
+        <li class="no">NO puede exportar datos fuera del sistema</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tips-mem">
+    <div class="tips-label">💡 Tips de Memorización</div>
+    <h4>El principio del mínimo privilegio aplicado al almacén</h4>
+    <ul>
+      <li><strong>Principio de mínimo privilegio:</strong> cada usuario solo tiene los permisos estrictamente necesarios para ejecutar sus funciones. Un técnico con acceso al módulo contable podría crear asientos sin soporte; un técnico sin restricción en ajustes podría modificar registros históricos. Los perfiles limitados son una protección para el técnico, no una restricción arbitraria.</li>
+      <li><strong>Frase ancla:</strong> <em>"Lo que el sistema no me permite hacer, es porque no me corresponde hacerlo."</em> Si el técnico necesita realizar una operación que su perfil no permite, eso es la señal de que debe escalar la solicitud al nivel competente (Contador o TI), no buscar la forma de saltarse el control.</li>
+      <li><strong>El perfil como protección:</strong> si el sistema no le permite al técnico modificar registros cerrados, eso lo protege de ser imputado por alteraciones que haya podido hacer. Un técnico que accede a funciones fuera de su perfil (por cualquier medio) pierde esa protección institucional.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §4 FLUJO DE DATOS -->
+<section class="section-block" id="flujo">
+  <div class="section-label">Sección 4 — Entregable Práctico</div>
+  <h2 class="section-title">Mapa de Flujo de Información: Del Bien Físico al Asiento Contable</h2>
+  <p class="section-intro">Este diagrama traza la ruta completa de un dato desde que el bien ingresa físicamente al almacén de INDERVALLE hasta que se refleja en la contabilidad general de la entidad. Cada etapa tiene una acción física, un documento soporte, datos específicos que el técnico digita y una interfaz con el área contable.</p>
+
+  <div class="flujo-section">
+    <div class="flujo-title">Caso: Ingreso de 50 Balones de Fútbol al Almacén de INDERVALLE</div>
+    <div class="flujo-sub">Proveedor adjudicado · Orden de compra N.° OC-2024-089 · Valor $4.500.000</div>
+
+    <div class="flujo-row">
+      <div class="flujo-col">
+        <div class="flujo-icon-wrap fc1">📦</div>
+        <div class="flujo-step-num">Paso 1</div>
+        <div class="flujo-step-title">Recepción Física</div>
+        <div class="flujo-step-desc">El proveedor entrega los 50 balones. El técnico verifica cantidad, especificaciones y estado.</div>
+      </div>
+      <div class="flujo-col">
+        <div class="flujo-icon-wrap fc2">📝</div>
+        <div class="flujo-step-num">Paso 2</div>
+        <div class="flujo-step-title">Documento Soporte</div>
+        <div class="flujo-step-desc">Se elabora y firma el Acta de Recepción Conforme con el supervisor de contrato.</div>
+      </div>
+      <div class="flujo-col">
+        <div class="flujo-icon-wrap fc3">💻</div>
+        <div class="flujo-step-num">Paso 3</div>
+        <div class="flujo-step-title">Digitación en Sistema</div>
+        <div class="flujo-step-desc">El técnico registra el comprobante de entrada en el software con todos los datos del bien.</div>
+      </div>
+      <div class="flujo-col">
+        <div class="flujo-icon-wrap fc4">🔗</div>
+        <div class="flujo-step-num">Paso 4</div>
+        <div class="flujo-step-title">Interfaz Contable</div>
+        <div class="flujo-step-desc">El sistema genera automáticamente el asiento de inventario en el módulo contable de INDERVALLE.</div>
+      </div>
+      <div class="flujo-col">
+        <div class="flujo-icon-wrap fc5">📊</div>
+        <div class="flujo-step-num">Paso 5</div>
+        <div class="flujo-step-title">Estados Financieros</div>
+        <div class="flujo-step-desc">El asiento actualiza el saldo del Grupo 16 (Inventarios) en el balance de INDERVALLE.</div>
+      </div>
+    </div>
+
+    <div class="flujo-detail-grid">
+      <div class="flujo-detail-card">
+        <span class="df-pill">Acción Física</span>
+        <strong>Verificación real</strong>
+        Conteo de 50 balones unidad por unidad. Verificación de talla, marca y especificación del pliego. Inspección visual de estado del empaque. Confirmación que coincide con la remisión del proveedor.
+      </div>
+      <div class="flujo-detail-card">
+        <span class="df-pill">Documento Soporte</span>
+        <strong>Acta de Recepción Conforme</strong>
+        Firmada por: Técnico Operativo + Supervisor de Contrato. Contiene: fecha, N.° OC, descripción del bien, cantidad recibida, valor unitario y valor total, observaciones. Radicada en sistema documental.
+      </div>
+      <div class="flujo-detail-card">
+        <span class="df-pill">Datos que Digita el Técnico</span>
+        <strong>Comprobante de Entrada</strong>
+        Código UNSPSC (49191705), nombre del bien, cantidad (50 unid.), valor unitario ($90.000), fecha de entrada, N.° de acta de recepción, N.° de orden de compra, nombre del proveedor, N.° de factura comercial.
+      </div>
+      <div class="flujo-detail-card">
+        <span class="df-pill">Interfaz Automática</span>
+        <strong>Asiento contable automático</strong>
+        Débito: Cuenta 1635 (Inventarios de materiales) por $4.500.000. Crédito: Cuenta 2408 (Cuentas por pagar a proveedores) por $4.500.000. Generado automáticamente por el sistema; el técnico no lo digita directamente.
+      </div>
+      <div class="flujo-detail-card">
+        <span class="df-pill">Efecto en Balance</span>
+        <strong>Grupo 16 CGN actualizado</strong>
+        El inventario activo de INDERVALLE aumenta en $4.500.000. El Kardex del bien refleja el nuevo saldo: 50 unidades a $90.000 c/u (Promedio Ponderado). El balance patrimonial de la entidad queda actualizado automáticamente.
+      </div>
+    </div>
+  </div>
+
+  <div class="alerta-cnsc" style="margin-top:20px;">
+    <div class="alerta-label">⚠ Alerta CNSC</div>
+    <h4>Error crítico: Registrar el ingreso ANTES de que el soporte esté firmado</h4>
+    <p>El orden del proceso es inviolable: <strong>primero el hecho físico → después el documento firmado → finalmente el registro informático</strong>. Un distractor frecuente presenta a un proveedor que llega sin la remisión impresa pero el técnico lo conoce y sabe que los bienes son correctos, entonces registra el ingreso en el sistema para "no retrasar la operación" y queda pendiente la firma del acta. Esta actuación viola la Circular Conjunta 001/2004 CGN-CGR: el registro informático es el reflejo documental de un hecho ya verificado y soportado, no una anticipación del soporte que llegará después. Si el soporte nunca llega o tiene inconsistencias, el registro ya ejecutado generó un activo sin respaldo, lo que puede configurar responsabilidad fiscal.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §5 MARCO NORMATIVO -->
+<section class="section-block" id="normativa">
+  <div class="section-label">Sección 5 — Fuentes Normativas</div>
+  <h2 class="section-title">Marco Normativo del Sistema de Información del Almacén</h2>
+
+  <div class="table-wrap">
+    <table class="norm-table">
+      <thead>
+        <tr>
+          <th>Norma</th>
+          <th>Expedida por</th>
+          <th>Contenido Clave para el Técnico Operativo</th>
+          <th>Consecuencia del Incumplimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-key"><span class="npill">Decreto 1008/2018</span></td>
+          <td>MinTIC</td>
+          <td>Política de Gobierno Digital. Establece los principios de seguridad de la información en entidades del Estado: confidencialidad, integridad, disponibilidad y no repudiación de los datos digitales. Las credenciales de acceso son personales e intransferibles. Los sistemas deben implementar control de acceso basado en roles (RBAC) para garantizar que cada servidor acceda únicamente a las funciones de su cargo.</td>
+          <td>Falta disciplinaria gravísima por violación de la política de seguridad de la información. Responsabilidad civil y penal si la violación genera acceso no autorizado a datos o registros fraudulentos.</td>
+        </tr>
+        <tr>
+          <td class="td-key"><span class="npill">Ley 1581/2012</span></td>
+          <td>Congreso de la República</td>
+          <td>Protección de Datos Personales. Los registros del sistema de inventarios contienen datos de personas naturales (proveedores, funcionarios que firman actas). El técnico tiene la obligación de garantizar la reserva y la integridad de esos datos. Compartir sus credenciales permite a un tercero acceder a esa información sin autorización, lo cual viola el habeas data de las personas involucradas en los registros.</td>
+          <td>Sanción por la Superintendencia de Industria y Comercio (SIC). Responsabilidad disciplinaria del servidor que facilitó el acceso no autorizado a datos personales de terceros.</td>
+        </tr>
+        <tr>
+          <td class="td-key"><span class="npill">Res. 357/2008 CGN</span></td>
+          <td>Contaduría General de la Nación</td>
+          <td>Régimen de Control Interno Contable. Establece que los registros informáticos de inventario deben ser consistentes (reflejar fielmente los hechos), íntegros (no alterados retroactivamente), trazables (con pista de auditoría completa) y no repudiables (vinculados al servidor que los ejecutó). Los ajustes a registros cerrados requieren acto administrativo formal. Los datos informáticos tienen valor probatorio en procesos fiscales.</td>
+          <td>Hallazgo de auditoría de la Contraloría. Responsabilidad fiscal del servidor si los registros inconsistentes ocultan un detrimento patrimonial. Invalidez de los estados financieros si hay alteraciones sistemáticas.</td>
+        </tr>
+        <tr>
+          <td class="td-key"><span class="npill">Decreto 815/2018</span></td>
+          <td>DAFP</td>
+          <td>Competencias comportamentales del nivel técnico. En el contexto de sistemas de información: la Confiabilidad Técnica exige registrar con exactitud y verificar los datos antes de ingresarlos; la Disciplina exige respetar los límites del perfil de acceso asignado; la Responsabilidad exige reportar por escrito cualquier error, inconsistencia o falla del sistema al jefe inmediato, sin intentar resolverlo unilateralmente por medios fuera del perfil.</td>
+          <td>Falta disciplinaria por incumplimiento de las competencias comportamentales del cargo. Evaluación de desempeño desfavorable. Proceso disciplinario si la conducta genera perjuicio a la entidad.</td>
+        </tr>
+        <tr>
+          <td class="td-key"><span class="npill">Circular 001/2004 CGN-CGR</span></td>
+          <td>CGN + CGR</td>
+          <td>Protección y control de bienes del Estado. En su dimensión informática: todo movimiento de bienes en el sistema debe estar respaldado por un soporte documental físico firmado y radicado. El sistema informático es el espejo digital del archivo físico del almacén. Si hay inconsistencia entre el registro digital y el documento físico, prevalece la investigación sobre el servidor responsable del registro.</td>
+          <td>Hallazgo de Control Interno o de la Contraloría. Responsabilidad fiscal si la inconsistencia refleja un detrimento patrimonial. Proceso disciplinario por omisión de la función de custodia y registro.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §6 REGLA DE ORO -->
+<section class="section-block" id="regla">
+  <div class="section-label">Sección 6 — Principio Rector</div>
+  <h2 class="section-title">Regla de Oro del Técnico Operativo en Sistemas de Información</h2>
+
+  <div class="regla-oro">
+    <div class="regla-label">★ Regla de Oro</div>
+    <h4>Registrar lo verificado · Reportar lo inconsistente · Jamás actuar fuera del perfil</h4>
+    <p style="font-size:15px;color:#5a3008;line-height:1.7;margin-bottom:18px;">
+      El Técnico Operativo de INDERVALLE tiene en el sistema de inventarios exactamente tres acciones válidas: <em>registrar</em> hechos ya verificados con soporte físico firmado, <em>consultar</em> información dentro de los parámetros del módulo de almacén, y <em>reportar</em> por escrito cualquier error, falla o inconsistencia que detecte. Cualquier acción que requiera un perfil diferente al suyo (ajustar cuentas, crear usuarios, modificar parámetros, reversar transacciones sin acto administrativo) no es de su competencia y debe ser escalada al nivel correspondiente con comunicación escrita.
+    </p>
+    <div class="regla-pasos">
+      <div class="regla-paso">
+        <div class="regla-paso-num">1</div>
+        <div class="regla-paso-title">Registrar lo verificado</div>
+        <div class="regla-paso-text">Solo después de la verificación física y con el soporte documental firmado en mano. El dato digital es el reflejo de un hecho ya ocurrido, nunca una anticipación.</div>
+      </div>
+      <div class="regla-paso">
+        <div class="regla-paso-num">2</div>
+        <div class="regla-paso-title">Reportar lo inconsistente</div>
+        <div class="regla-paso-text">Cualquier error de digitación, falla del sistema, inconsistencia entre el físico y el digital se reporta por escrito al jefe inmediato. El técnico no lo "resuelve" solo.</div>
+      </div>
+      <div class="regla-paso">
+        <div class="regla-paso-num">3</div>
+        <div class="regla-paso-title">Jamás actuar fuera del perfil</div>
+        <div class="regla-paso-text">Si la operación requerida no está disponible en su perfil, es porque no es de su competencia. Escalar, no eludir el control. Sus credenciales son su firma digital y su responsabilidad.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §7 ALERTAS CNSC -->
+<section class="section-block" id="alertas">
+  <div class="section-label">Sección 7 — Psicometría Avanzada</div>
+  <h2 class="section-title">Anatomía de los Distractores CNSC en Sistemas de Información</h2>
+  <p class="section-intro">Los distractores en ítems de sistemas de información son especialmente sofisticados porque mezclan urgencia operativa real con violaciones normativas sutiles. La clave para distinguirlos es identificar si la opción le da al técnico una competencia que su perfil no tiene o si le propone una solución informal que viola la integridad del sistema.</p>
+
+  <div class="alerta-cnsc">
+    <div class="alerta-label">⚠ Alerta CNSC · Tipo 1</div>
+    <h4>Distractor de Extralimitación TI/Contable</h4>
+    <p>Este distractor presenta al técnico tomando acciones fuera de su perfil de usuario, que corresponden al Administrador del Sistema (TI) o al Contador:</p>
+    <ul>
+      <li><strong>Acceder al módulo de ajustes contables:</strong> "Ingresa al módulo de contabilidad y reversa el asiento automático generado por el registro erróneo, corrigiendo directamente el saldo del Grupo 16 para que coincida con el inventario físico real."</li>
+      <li><strong>Crear perfiles de usuario:</strong> "Crea una cuenta de usuario temporal para el funcionario de la Subgerencia que necesita consultar el inventario urgentemente, asignándole perfil de solo lectura por un día."</li>
+      <li><strong>Modificar parámetros del sistema:</strong> "Accede a la configuración del módulo de inventarios y actualiza el código UNSPSC del bien directamente en la tabla maestra del sistema para corregir el error de codificación."</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>Señal de alerta:</strong> Si la opción describe al técnico haciendo algo en el sistema que requeriría haber iniciado sesión con credenciales diferentes a las suyas ordinarias, es este distractor.</p>
+  </div>
+
+  <div class="alerta-cnsc" style="margin-top:20px;">
+    <div class="alerta-label">⚠ Alerta CNSC · Tipo 2</div>
+    <h4>Distractor de Informalidad / Vía de Hecho Informática</h4>
+    <p>Este distractor presenta al técnico resolviendo problemas del sistema de forma informal, cómoda o urgente pero violando normas de seguridad o integridad:</p>
+    <ul>
+      <li><strong>Usar sesión de otro usuario:</strong> "Usa la sesión que el compañero dejó abierta al ir a almorzar para registrar los 3 egresos urgentes que hay pendientes, porque el compañero tiene perfil habilitado para ese módulo y el técnico no tiene tiempo de esperar."</li>
+      <li><strong>Excel paralelo:</strong> "Lleva un inventario paralelo en Excel personal con los datos reales, porque el sistema oficial tiene fallas frecuentes y necesita tener un respaldo confiable de los saldos reales del almacén."</li>
+      <li><strong>Reversa verbal:</strong> "Reversa el egreso de los 30 balones en el sistema basándose en la instrucción verbal del jefe, sin esperar el acto administrativo escrito, para que el inventario cuadre antes del cierre del mes."</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>Señal de alerta:</strong> Si la opción propone una solución que evita el proceso formal "por urgencia" o "por confianza" pero deja al técnico operando fuera de sus credenciales o sin soporte documental previo, es este distractor.</p>
+  </div>
+
+  <div class="tips-mem" style="margin-top:20px;">
+    <div class="tips-label">💡 Tips de Memorización</div>
+    <h4>El Test de los Tres Candados</h4>
+    <ul>
+      <li><strong>Candado 1 — ¿Está en mi perfil?:</strong> Si la acción no está habilitada en el perfil de Técnico Operativo del módulo de almacén → Extralimitación. No importa qué tan urgente sea.</li>
+      <li><strong>Candado 2 — ¿Existe el soporte físico firmado?:</strong> Si no hay acta, acto administrativo o documento físico previo → No registrar. El sistema no crea realidades; las refleja.</li>
+      <li><strong>Candado 3 — ¿Son mis propias credenciales?:</strong> Si la acción requiere usar las credenciales de otro o dejar las propias sin supervisión → Informalidad. Un registro bajo credenciales ajenas es responsabilidad del titular de esas credenciales.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- §8 SIMULACRO -->
+<section class="section-block" id="simulacro">
+  <div class="section-label">Sección 8 — Evaluación Interactiva</div>
+  <h2 class="section-title">Simulacro MBE · 17 Ítems de Juicio Situacional — Sistemas de Información INDERVALLE</h2>
+  <p class="section-intro">Metodología de Juicio Situacional y Modelo Basado en Evidencias (MBE). Escenarios del almacén de INDERVALLE. Tres opciones con longitud, nivel de detalle y estructura gramatical equivalentes. La respuesta óptima rota entre A, B y C. Haga clic para ver la retroalimentación normativa inmediata.</p>
+
+  <div class="quiz-scoreboard">
+    <div class="sb-info">
+      <h3>Tablero · Sistemas de Información</h3>
+      <p>Función Esencial 12 · Decreto 1008/2018 · Res. 357/2008 CGN</p>
+      <div class="sb-prog"><div class="sb-prog-fill" id="sbFill"></div></div>
+    </div>
+    <div class="sb-stats">
+      <div class="sb-bubble"><span class="sb-num" id="sbC">0</span><span class="sb-label">Correctas</span></div>
+      <div class="sb-sep"></div>
+      <div class="sb-bubble"><span class="sb-num" id="sbT">0</span><span class="sb-label">Respondidas</span></div>
+      <div class="sb-sep"></div>
+      <div class="sb-bubble"><span class="sb-num" id="sbP">0%</span><span class="sb-label">Eficacia</span></div>
+    </div>
+  </div>
+
+  <div id="quizContainer"></div>
+
+  <div class="result-box" id="resultBox">
+    <div class="res-title">Diagnóstico · Sistemas de Información INDERVALLE</div>
+    <div class="res-big" id="resBig">0/17</div>
+    <div class="res-msg" id="resMsg"></div>
+    <button class="res-reset" onclick="resetQuiz()">↺ Reiniciar Simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    <strong>CNSC · INDERVALLE · OPEC 243477</strong> · Técnico Operativo 314-03 · Función Esencial N.° 12<br>
+    Decreto 1008/2018 · Ley 1581/2012 · Resolución CGN 357/2008 · Circular 001/2004 CGN-CGR · Decreto 815/2018<br>
+    Material de preparación académica. No constituye acto administrativo oficial de la CNSC.
+  </p>
+</footer>
+
+<script>
+const Q = [
+{
+  num:1, comp:"Credenciales · Préstamo de Usuario · Decreto 1008/2018",
+  sc:"El técnico de almacén de INDERVALLE está registrando los comprobantes de entrada del día cuando el funcionario de tesorería le solicita que le preste su usuario y contraseña del sistema por 10 minutos para consultar el saldo de un bien, dado que el área de TI aún no ha creado su perfil de solo lectura.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la solicitud de préstamo de sus credenciales?",
+  opts:[
+    {l:"A", t:"Niega el préstamo de credenciales, explica que sus credenciales son intransferibles y que usarlas genera pistas de auditoría vinculadas a su nombre personal, orienta al funcionario a solicitar formalmente su perfil al área de TI, y ofrece hacer él mismo la consulta del saldo en su presencia."},
+    {l:"B", t:"Presta sus credenciales por 10 minutos controlando que el funcionario solo consulte sin modificar nada, supervisa visualmente cada pantalla durante toda la sesión, y registra en su bitácora personal que el préstamo fue temporal con propósito de consulta y con su supervisión directa."},
+    {l:"C", t:"Accede al perfil de administrador de TI para crear directamente el perfil de solo lectura del funcionario de tesorería, le asigna acceso temporal de un día al módulo de almacén, resuelve el problema de raíz y reporta la creación del perfil al área de TI para que lo formalicen en el sistema."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Decreto 1008/2018 Art. 8 · Ley 1581/2012 · Decreto 815/2018",
+       tx:"Correcta. El Decreto 1008/2018 establece que las credenciales son personales e intransferibles. Todo acto ejecutado bajo las credenciales del técnico queda en el log del sistema como acto del técnico, independientemente de quién operó físicamente el teclado. Ofrecer hacer la consulta en su presencia satisface la necesidad del usuario sin comprometer la integridad del sistema ni la responsabilidad personal del técnico."},
+    B:{t:"i", n:"Decreto 1008/2018 · Ley 1581/2012 · No Repudiación",
+       tx:"Incorrecta. Supervisar visualmente no elimina la responsabilidad legal del técnico sobre los actos ejecutados bajo sus credenciales. El sistema registra que el técnico hizo la consulta (o cualquier otra acción que el funcionario pudiera ejecutar), y el técnico no puede repudiar ese registro. Si el funcionario accede a datos sensibles o ejecuta accidentalmente alguna acción, el técnico responde por ello como si lo hubiera hecho él mismo."},
+    C:{t:"i", n:"Decreto 1008/2018 · Perfil de Administrador · Extralimitación",
+       tx:"Incorrecta. El técnico operativo no tiene ni debe tener acceso al panel de administración de usuarios de TI. Crear perfiles de usuario es función exclusiva del área de TI. Si el técnico accede al panel de administración por cualquier medio, está operando fuera de su perfil de usuario autorizado, lo cual genera un log de acceso no autorizado que puede configurar una violación a la política de seguridad de la información."}
+  }
+},
+{
+  num:2, comp:"Registro sin Soporte · Integridad · Circular 001/2004 CGN-CGR",
+  sc:"A las 4:50 p.m. llega al almacén de INDERVALLE el proveedor de uniformes sin el acta de recepción impresa porque la impresora de su oficina no funciona. Los uniformes están correctos. Le dice al técnico que el acta llegará mañana por correo. El supervisor de contrato no está presente.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la llegada de bienes sin soporte documental impreso?",
+  opts:[
+    {l:"A", t:"Registra el ingreso de los uniformes en el sistema con todos los datos del bien, usando como soporte la orden de compra que sí tiene disponible en el archivo, y le indica al proveedor que el acta de recepción debe ser firmada por el supervisor al día siguiente para completar el expediente."},
+    {l:"B", t:"Recibe los uniformes físicamente en el área de cuarentena del almacén sin registrar el ingreso en el sistema, notifica por escrito al supervisor de contrato que los bienes llegaron pero el acta no está firmada, y espera la firma del acta y el soporte completo antes de registrar el comprobante de entrada."},
+    {l:"C", t:"Rechaza la entrega de los uniformes de forma terminante porque sin el acta impresa firmada no puede recibir ningún bien, le indica al proveedor que regrese mañana con todos los documentos en orden, y notifica al área de contratos que la entrega fue rechazada por incumplimiento documental."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Circular 001/2004 CGN-CGR · Función Esencial 12 · Res. 357/2008 CGN",
+       tx:"Correcta. El técnico puede recibir físicamente los bienes en el área de cuarentena (para que no queden expuestos) sin registrar el ingreso en el sistema, dado que el registro requiere el soporte firmado previo. La notificación escrita al supervisor activa el proceso correcto y genera trazabilidad del momento de llegada. La Circular 001/2004 exige que el registro informático tenga soporte físico previo."},
+    A:{t:"i", n:"Circular 001/2004 CGN-CGR · Registro sin Soporte · Res. 357/2008 CGN",
+       tx:"Incorrecta. Registrar el ingreso usando la orden de compra como soporte cuando el documento que respalda el hecho de la recepción (el acta firmada por el supervisor) aún no existe invierte el orden del proceso. Si al día siguiente el supervisor detecta que los uniformes no cumplen las especificaciones y no firma el acta, el técnico ya registró en el sistema una entrada que no tiene soporte válido, generando un activo sin respaldo."},
+    C:{t:"i", n:"Ley 80/1993 · Gestión de Bienes Públicos · Orientación al Usuario",
+       tx:"Incorrecta. Rechazar la entrega física de los bienes cuando la única falla es la ausencia del acta impresa (no de la verificación o de la conformidad de los bienes) es desproporcionado y puede perjudicar a la institución. El acta puede firmarse y el ingreso puede registrarse una vez que el supervisor esté presente y los bienes hayan sido verificados. La solución de cuarentena es más apropiada que el rechazo total."}
+  }
+},
+{
+  num:3, comp:"Error de Digitación · Registro Cerrado · Res. 357/2008 CGN",
+  sc:"El técnico de INDERVALLE detecta que en el comprobante de entrada del mes anterior registró 40 balones de básquet cuando en realidad ingresaron 50. El mes ya está cerrado en el sistema y el registro no puede ser editado con su perfil de usuario habitual.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante un error de digitación en un registro cerrado?",
+  opts:[
+    {l:"A", t:"Elabora un informe de error de digitación al jefe inmediato con descripción del dato incorrecto, el dato correcto, el número del comprobante y la fecha, solicita que el Contador autorice el ajuste formal con el acto administrativo correspondiente, y conserva el soporte físico que certifica la cantidad real."},
+    {l:"B", t:"Accede al módulo de administración del sistema usando las credenciales del técnico de TI que tiene guardadas de una capacitación anterior, modifica el registro histórico directamente en la base de datos para corregir la cantidad a 50, y registra en su bitácora que realizó la corrección de forma proactiva."},
+    {l:"C", t:"Registra un segundo comprobante de entrada por las 10 unidades faltantes sin soporte físico adicional, indica en las observaciones que es una 'corrección del comprobante anterior', actualiza el Kardex manualmente con el total de 50 unidades, y lo notifica verbalmente al Contador en la siguiente reunión."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Res. 357/2008 CGN · Función Esencial 12 · Decreto 815/2018 Responsabilidad",
+       tx:"Correcta. La Resolución 357/2008 de la CGN establece que los ajustes a registros informáticos cerrados requieren autorización formal del nivel competente (Contador) con acto administrativo. El técnico hace lo que le corresponde: documenta el error con precisión, lo escala al nivel competente y conserva el soporte físico que certifica la realidad. La responsabilidad de ejecutar el ajuste en el sistema corresponde al Contador."},
+    B:{t:"i", n:"Decreto 1008/2018 · Seguridad de la Información · Acceso No Autorizado",
+       tx:"Incorrecta. Acceder al módulo de administración usando credenciales de otro usuario es una violación grave a la política de seguridad de la información del Decreto 1008/2018, independientemente de la justificación. El log del sistema registrará el acceso con las credenciales del técnico de TI, lo que puede comprometer gravemente a ese servidor. Además, modificar directamente la base de datos sin acto administrativo viola la Resolución 357/2008."},
+    C:{t:"i", n:"Circular 001/2004 CGN-CGR · Res. 357/2008 CGN · Registro sin Soporte",
+       tx:"Incorrecta. Registrar un segundo comprobante de entrada sin soporte físico adicional es crear un movimiento de inventario falso: no hubo un segundo ingreso de 10 balones, solo un error de digitación en el registro del primer ingreso. Esta actuación distorsiona el historial de movimientos del bien y puede generar inconsistencias en el historial de compras ante una auditoría de la Contraloría."}
+  }
+},
+{
+  num:4, comp:"Sistema Caído · Despacho sin Registro · Función Esencial 12",
+  sc:"El sistema de inventarios de INDERVALLE cae a las 3:00 p.m. durante el cierre de mes. El coordinador de ligas deportivas necesita urgentemente 20 balones de voleibol para un evento esta tarde. El supervisor de almacén le dice al técnico que despache los balones y los registre mañana cuando el sistema vuelva.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante el despacho urgente con el sistema caído?",
+  opts:[
+    {l:"A", t:"Despacha los 20 balones a mano con un acta de entrega manual firmada por el solicitante y el técnico, registra el movimiento pendiente en el sistema en cuanto este vuelva a funcionar con la fecha real del registro, y adjunta nota explicativa sobre el fallo del sistema como soporte de la diferencia de fechas."},
+    {l:"B", t:"Niega el despacho hasta que el sistema vuelva a funcionar porque sin el registro informático previo no puede ejecutarse ningún movimiento físico de bienes del almacén, le explica al coordinador que los procedimientos institucionales no admiten excepciones por urgencia operativa."},
+    {l:"C", t:"Despacha los balones sin ningún documento de respaldo porque el evento no puede esperar y sería irresponsable detener la misión del instituto, confía en que el coordinador reportará la salida de los balones a su jefe y que el registro se hará retroactivamente cuando el sistema vuelva."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Circular 001/2004 CGN-CGR · Res. 357/2008 CGN · Decreto 815/2018 Orientación a Resultados",
+       tx:"Correcta. Cuando el sistema está caído, el proceso no se detiene: se documenta manualmente con el acta de entrega física, y el registro informático se realiza cuando el sistema vuelva con la fecha real de registro y la nota explicativa. La Resolución 357/2008 no prohíbe el registro posterior al hecho: prohíbe el backdating (alterar la fecha para hacerlo parecer simultáneo). Esta opción preserva la trazabilidad física y digital del movimiento."},
+    B:{t:"i", n:"Decreto 815/2018 · Orientación a Resultados · Flexibilidad dentro del Proceso",
+       tx:"Incorrecta. El sistema informático es una herramienta, no el proceso mismo. La imposibilidad técnica de registrar en el momento no implica que el movimiento físico deba detenerse: existe el mecanismo del acta manual para exactamente estas situaciones. Negar el despacho por falla del sistema cuando existe un mecanismo alternativo es rigidez procedimental que afecta el objeto misional de INDERVALLE y contradice la Orientación a Resultados del Decreto 815/2018."},
+    C:{t:"i", n:"Circular 001/2004 CGN-CGR · Informalidad Operativa · Responsabilidad Fiscal",
+       tx:"Incorrecta. Despachar bienes sin ningún soporte documental, ni físico ni digital, viola la Circular 001/2004 que exige registro previo o simultáneo de los movimientos de bienes. Si los balones se pierden, dañan o no son devueltos, no existe ningún documento que acredite a quién le fueron entregados, cuándo ni bajo qué condiciones, y el técnico custodio asume la responsabilidad patrimonial por los bienes faltantes."}
+  }
+},
+{
+  num:5, comp:"Reversa de Transacción · Acto Administrativo · Res. 357/2008 CGN",
+  sc:"El jefe del almacén de INDERVALLE llama por teléfono al técnico y le indica verbalmente que revarse en el sistema la salida de 30 petos que se registró esta mañana, porque el área de deportes cambió de parecer y no los necesitará hasta la próxima semana.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la instrucción verbal de reversar una transacción?",
+  opts:[
+    {l:"A", t:"Reversa la transacción en el sistema de inmediato porque el jefe tiene la autoridad jerárquica para dar instrucciones operativas verbales sobre el almacén, registra en las observaciones del sistema 'reversa por instrucción verbal del jefe' y llama al área de deportes para confirmar que los petos están disponibles de nuevo."},
+    {l:"B", t:"Informa al jefe que la reversa de una transacción registrada requiere el documento soporte por escrito que justifique la corrección conforme a la Res. 357/2008 CGN, solicita que formalice la instrucción por escrito antes de ejecutar la reversa en el sistema, y suspende el proceso hasta recibir ese soporte."},
+    {l:"C", t:"Accede al módulo de auditoría del sistema y elimina directamente el registro de salida de los 30 petos de la base de datos histórica, dado que la transacción fue de esta mañana y su eliminación es técnicamente simple antes del cierre del día y evita la necesidad del trámite de reversa formal."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Res. 357/2008 CGN · Decreto 815/2018 Disciplina · Función Esencial 12",
+       tx:"Correcta. La Resolución 357/2008 de la CGN establece que los ajustes a registros informáticos requieren soporte documental formal. Una instrucción verbal del jefe no es un acto administrativo: no genera la trazabilidad requerida para justificar la modificación del registro en el sistema. El técnico aplica correctamente la Disciplina del Decreto 815/2018: cumple instrucciones del superior dentro del marco normativo, no ciegamente."},
+    A:{t:"i", n:"Res. 357/2008 CGN · No Repudiación · Instrucción Verbal",
+       tx:"Incorrecta. Las instrucciones verbales de un jefe no tienen valor como acto administrativo para modificar registros informáticos del inventario. La nota 'reversa por instrucción verbal' en el sistema no es soporte válido: si hay un hallazgo de auditoría posterior, el técnico no puede demostrar con documentos la legitimidad de la modificación. La Resolución 357/2008 exige soporte documental escrito para cualquier ajuste a registros ya ejecutados."},
+    C:{t:"i", n:"Decreto 1008/2018 · Res. 357/2008 CGN · Alteración de Registros Históricos",
+       tx:"Incorrecta. El módulo de auditoría del sistema no es accesible para el técnico operativo: es territorio exclusivo del Administrador TI. Acceder a él y eliminar registros históricos de la base de datos es una violación gravísima a la política de seguridad de la información del Decreto 1008/2018 y al principio de no repudiación de la Resolución 357/2008. Eliminar un registro no es lo mismo que reversarlo: eliminar destruye la pista de auditoría del movimiento."}
+  }
+},
+{
+  num:6, comp:"Sesión Ajena · Urgencia · Decreto 1008/2018",
+  sc:"El compañero técnico de INDERVALLE fue a almorzar dejando su sesión activa en la computadora. El supervisor le pide al técnico que use esa sesión para registrar urgentemente 3 egresos de implementos para un evento que comienza en una hora, porque el propio técnico no tiene ese módulo habilitado en su perfil.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la presión de usar la sesión activa de su compañero?",
+  opts:[
+    {l:"A", t:"Registra los 3 egresos usando la sesión del compañero porque la urgencia del evento es real, considera que es una ayuda al equipo y que su compañero probablemente estaría de acuerdo, y le deja una nota en el escritorio explicándole las 3 transacciones que realizó bajo sus credenciales."},
+    {l:"B", t:"Se niega a usar la sesión del compañero, informa al supervisor que registrar bajo credenciales ajenas vincula al titular de esas credenciales con transacciones que no ejecutó, propone contactar al compañero para que autorice o regrese, y solicita autorización de TI para que habilite el módulo requerido."},
+    {l:"C", t:"Cierra la sesión del compañero para proteger sus datos, inicia sesión con sus propias credenciales, y solicita al área de TI que le habilite el módulo de egresos de forma urgente, argumentando que la falta de acceso está afectando la operación misional del instituto en tiempo real."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Decreto 1008/2018 · Ley 1581/2012 · No Repudiación · Decreto 815/2018",
+       tx:"Correcta. Usar la sesión de otro servidor sin su autorización vincula al titular de las credenciales con transacciones que no ejecutó, lo cual puede generar responsabilidad disciplinaria para el compañero ausente. El Decreto 1008/2018 y la Ley 1581/2012 establecen que las credenciales son personales e intransferibles. El técnico protege al compañero y a sí mismo al negarse, y propone la solución correcta (contactar al compañero o habilitar el acceso por TI)."},
+    A:{t:"i", n:"Decreto 1008/2018 · Ley 1581/2012 · Uso de Credenciales Ajenas",
+       tx:"Incorrecta. La nota en el escritorio no exonera al titular de las credenciales de la responsabilidad por las transacciones registradas bajo su usuario. El compañero no autorizó el uso de sus credenciales y el log del sistema registrará las 3 transacciones como hechas por él. Si alguna de esas transacciones presenta irregularidades, el compañero será el primer imputado. La urgencia operativa no justifica comprometer la responsabilidad legal de otro servidor."},
+    C:{t:"i", n:"Decreto 1008/2018 · Seguridad de la Información · Protección de Sesión Ajena",
+       tx:"Incorrecta. Cerrar la sesión del compañero tiene un aspecto positivo (proteger sus credenciales), pero solicitar a TI habilitación urgente de un módulo para resolver un problema operativo inmediato no es el proceso correcto: las habilitaciones de perfil tienen un proceso formal de solicitud y aprobación que no puede ejecutarse en minutos. La propuesta correcta es contactar al compañero para que regrese o autorice el registro, no crear un nuevo proceso de TI de emergencia."}
+  }
+},
+{
+  num:7, comp:"Excel Paralelo · Integridad de Datos · Función Esencial 12",
+  sc:"El técnico de INDERVALLE lleva meses notando que el software de inventarios tiene fallas frecuentes que le hacen perder registros. Por esta razón, lleva un Excel personal en su computador con los saldos reales del almacén, que considera más confiable que el sistema oficial para el día a día.",
+  q:"¿Por qué el Excel paralelo personal viola la normativa institucional de gestión de información?",
+  opts:[
+    {l:"A", t:"Viola el Decreto 1008/2018 porque los datos del inventario oficial solo pueden existir en los sistemas de información certificados de la entidad; un archivo personal sin controles de versión, sin pista de auditoría y sin respaldo institucional no tiene valor probatorio oficial ni garantías de integridad."},
+    {l:"B", t:"No viola ninguna norma porque el Excel es solo una herramienta de apoyo personal del técnico y no reemplaza el sistema oficial; siempre que el sistema oficial tenga los datos correctos al final del día, el Excel personal es simplemente una memoria de trabajo válida y aceptable en el contexto operativo."},
+    {l:"C", t:"Solo viola la normativa si el técnico comparte el Excel con terceros externos a INDERVALLE; si lo usa exclusivamente de forma personal y local sin compartirlo, el archivo no representa ningún riesgo para la integridad de los datos oficiales del sistema de inventarios de la entidad."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Decreto 1008/2018 · Ley 1581/2012 · Res. 357/2008 CGN",
+       tx:"Correcta. El Decreto 1008/2018 exige que los datos institucionales existan en los sistemas de información certificados de la entidad. Un Excel personal no tiene: pista de auditoría (no sabe quién lo modificó ni cuándo), control de versiones, respaldo institucional, ni valor probatorio ante entes de control. Si el técnico toma decisiones basándose en el Excel y no en el sistema oficial, opera sobre datos no oficiales, con riesgo de divergencia entre la realidad física y los registros institucionales."},
+    B:{t:"i", n:"Decreto 1008/2018 · Integridad de Datos Institucionales",
+       tx:"Incorrecta. Un archivo personal sin controles de auditoría que contiene datos del inventario público de INDERVALLE representa un riesgo de seguridad de la información independientemente de si el sistema oficial está actualizado al final del día. La información en el Excel puede ser consultada, modificada o sustraída sin dejar rastro, lo cual viola el principio de integridad y disponibilidad controlada de los datos del Decreto 1008/2018."},
+    C:{t:"i", n:"Ley 1581/2012 · Decreto 1008/2018 · Datos Institucionales",
+       tx:"Incorrecta. Los datos del inventario de INDERVALLE son datos institucionales públicos que no deben existir en archivos personales locales independientemente de si se comparten o no. El riesgo no es solo la divulgación a terceros: es también la pérdida del archivo (robo del computador, fallo del disco), la modificación sin trazabilidad y la eventual divergencia entre los datos del Excel y los del sistema oficial que generaría confusión ante una auditoría."}
+  }
+},
+{
+  num:8, comp:"Falla del Sistema · Reporte Técnico · Decreto 815/2018",
+  sc:"El técnico de INDERVALLE detecta que el sistema de inventarios está generando errores al calcular el Promedio Ponderado de los balones de fútbol: el sistema muestra un valor unitario incorrecto en las últimas 3 salidas registradas. El técnico sospecha que es un error del software.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la detección de un error de cálculo del sistema?",
+  opts:[
+    {l:"A", t:"Elabora el reporte técnico de la falla al jefe inmediato y al área de TI con descripción del error, las transacciones afectadas y la fecha de detección; suspende temporalmente el registro de nuevas salidas de ese bien hasta que TI confirme si el error afecta otros registros, y conserva los soportes físicos de las salidas ya ejecutadas."},
+    {l:"B", t:"Accede a la configuración del módulo de inventarios y ajusta manualmente la fórmula de cálculo del Promedio Ponderado para los balones de fútbol, corrigiendo el parámetro que considera incorrecto, y notifica al área de TI que realizó la corrección para que la validen en la próxima actualización del sistema."},
+    {l:"C", t:"Corrige los valores incorrectos directamente en los registros de las 3 salidas afectadas usando el campo de observaciones para escribir el valor correcto según su cálculo manual, garantizando que el Kardex tenga los datos exactos antes del cierre del sistema y notifica verbalmente al Contador la situación."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Decreto 815/2018 Confiabilidad Técnica · Función Esencial 12 · Decreto 1008/2018",
+       tx:"Correcta. El técnico detecta y reporta la falla con precisión (competencia de Confiabilidad Técnica del Decreto 815/2018). Suspender temporalmente los registros del bien afectado evita que el error se propague a más transacciones. Reportar a TI activa el mecanismo correcto para la corrección de la falla. Esta actuación protege al técnico: demuestra que detectó el error, lo reportó y tomó medidas preventivas, no que lo ignoró o lo agravó."},
+    B:{t:"i", n:"Decreto 1008/2018 · Parámetros del Sistema · Extralimitación de TI",
+       tx:"Incorrecta. Acceder a la configuración del módulo de inventarios y ajustar parámetros de cálculo es una función exclusiva del Administrador TI o del proveedor del software. El técnico no tiene ese permiso en su perfil y no tiene la formación técnica para modificar fórmulas del sistema sin generar consecuencias no anticipadas en otros módulos. Esta actuación puede convertir un error menor en una falla sistémica mayor."},
+    C:{t:"i", n:"Res. 357/2008 CGN · Integridad de Registros · Alteración Retroactiva",
+       tx:"Incorrecta. Escribir el 'valor correcto' en el campo de observaciones no es una corrección oficial del registro: el sistema sigue usando el valor calculado para sus interfaces con el módulo contable. Además, modificar el contenido de registros cerrados por el campo de observaciones es una alteración retroactiva que no genera el asiento contable de ajuste correspondiente, lo que crea inconsistencia entre el módulo de almacén y el módulo contable."}
+  }
+},
+{
+  num:9, comp:"Acceso No Autorizado · Consulta Urgente · Ley 1581/2012",
+  sc:"El subgerente administrativo de INDERVALLE solicita al técnico acceso urgente al sistema de inventarios desde su computador personal para hacer una consulta de saldo antes de una reunión con la Contraloría. El técnico necesitaría dar su usuario y clave por teléfono para habilitarlo.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la solicitud de acceso remoto del subgerente?",
+  opts:[
+    {l:"A", t:"Dicta su usuario y clave por teléfono al subgerente porque tiene la autoridad institucional más alta de las dos personas en la llamada, confía en que no modificará nada, y considera que facilitar el acceso a un superior en una emergencia de control fiscal es parte de su obligación de servicio."},
+    {l:"B", t:"Explica que sus credenciales son intransferibles, propone hacer él mismo la consulta en ese momento y enviar el reporte de saldos por correo institucional al subgerente en los próximos minutos, o gestionar con TI la habilitación de acceso remoto con las credenciales propias del subgerente."},
+    {l:"C", t:"Crea un usuario temporal de cortesía para el subgerente usando las opciones de administración que encuentra en su panel de usuario, le asigna perfil de solo lectura por 2 horas, le envía las credenciales temporales por WhatsApp y resuelve el problema de forma ágil sin comprometer su propia contraseña."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Decreto 1008/2018 Art. 8 · Ley 1581/2012 · Confiabilidad Técnica",
+       tx:"Correcta. Las credenciales del técnico son intransferibles independientemente de la jerarquía de quien las solicita. La alternativa de hacer la consulta y enviar el reporte por correo institucional satisface la necesidad de información del subgerente sin comprometer las credenciales del técnico. Gestionar con TI la habilitación del acceso del subgerente con sus propias credenciales es la solución estructural correcta."},
+    A:{t:"i", n:"Decreto 1008/2018 · Ley 1581/2012 · Jerarquía No Exime Norma",
+       tx:"Incorrecta. La autoridad jerárquica del subgerente no lo habilita para solicitar las credenciales de un subordinado. El Decreto 1008/2018 y la Ley 1581/2012 no hacen excepciones por jerarquía: las credenciales son intransferibles para todos los servidores. Si el subgerente usa las credenciales del técnico y consulta o modifica algo en el sistema, el log registra esa acción como del técnico, quien responderá por ella independientemente de quien la ejecutó."},
+    C:{t:"i", n:"Decreto 1008/2018 · Panel de Administración · Extralimitación",
+       tx:"Incorrecta. El técnico operativo no tiene acceso al panel de creación de usuarios y si lo tuviera sería una falla de seguridad del sistema. Crear usuarios es función exclusiva del área de TI. Enviar credenciales por WhatsApp viola los principios de seguridad de la información del Decreto 1008/2018: los canales de mensajería instantánea no son canales seguros para transmitir credenciales de sistemas institucionales."}
+  }
+},
+{
+  num:10, comp:"Backdating · Antedatación · Res. 357/2008 CGN",
+  sc:"Al primer día hábil del mes, el técnico de INDERVALLE descubre que 8 movimientos del último día hábil del mes anterior quedaron sin registrar en el sistema porque tuvo que atender una emergencia en el almacén. El jefe le pide que los registre con fecha del día anterior para que queden en el período correcto.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la instrucción de registrar con fecha retroactiva?",
+  opts:[
+    {l:"A", t:"Registra los 8 movimientos en el sistema con la fecha del día anterior como indica el jefe, dado que pertenecen a ese período y cuadrar los períodos contables es una necesidad legítima, y adjunta en cada registro una nota con la fecha real del registro para que quede constancia del desfase de fechas."},
+    {l:"B", t:"Registra los 8 movimientos con la fecha real del día actual, adjunta en cada registro una nota explicativa indicando que el movimiento físico ocurrió el día anterior y la razón de la diferencia, y reporta al jefe por escrito la situación para que el Contador realice el ajuste de período contable que corresponda."},
+    {l:"C", t:"Reporta al jefe que es técnicamente imposible registrar con fecha retroactiva porque el sistema bloquea automáticamente los períodos cerrados, y le solicita que el área de TI habilite el período anterior para que los registros puedan ingresarse con la fecha correcta que corresponde a los movimientos físicos."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Res. 357/2008 CGN · Decreto 1008/2018 · Registro con Fecha Real",
+       tx:"Correcta. La Resolución 357/2008 de la CGN establece que los registros informáticos no deben ser backdated (antedatados): la fecha del registro debe ser la fecha real de digitación, no la fecha deseada del movimiento. La nota explicativa genera la trazabilidad necesaria para que el Contador realice el ajuste de período con el acto administrativo correspondiente. El técnico registra hechos reales en el momento real."},
+    A:{t:"i", n:"Res. 357/2008 CGN · Antedatación · Alteración de Registros",
+       tx:"Incorrecta. Registrar con fecha retroactiva aunque se añada una nota es antedatar un registro informático, lo cual viola la Resolución 357/2008 de la CGN. La nota de 'fecha real' no subsana el problema: el sistema registrará que el movimiento ocurrió en el período anterior, distorsionando el historial cronológico real del inventario. El ajuste de período es un proceso contable formal que debe ejecutar el Contador, no el técnico con un cambio de fecha."},
+    C:{t:"i", n:"Decreto 1008/2018 · Período Contable Cerrado · Competencias de TI",
+       tx:"Incorrecta. Si el sistema no permite registrar con fecha retroactiva es precisamente por la protección de integridad que establece la Resolución 357/2008. Solicitar a TI que habilite un período cerrado para que el técnico pueda ingresar datos con fecha pasada es solicitar que se deshabilite un control de seguridad del sistema. Esa habilitación requeriría un acto administrativo del Contador justificando la necesidad, no una solicitud verbal del técnico."}
+  }
+},
+{
+  num:11, comp:"Trazabilidad · Log de Auditoría · Consulta de Ente de Control",
+  sc:"La Contraloría Departamental del Valle solicita al almacén de INDERVALLE el reporte de todas las transacciones de egreso de cronómetros de los últimos 2 años, con la identificación del usuario que ejecutó cada registro. El técnico sabe que en ese período hubo compañeros que usaron su sesión 'por urgencia'.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la solicitud de la Contraloría sobre transacciones registradas bajo sus credenciales?",
+  opts:[
+    {l:"A", t:"Genera el reporte del sistema y lo entrega a la Contraloría sin mencionar los casos en que su sesión fue usada por compañeros, dado que las transacciones están correctas y el dato técnico de quién las hizo es un asunto interno que no debe ser informado espontáneamente a los entes de control."},
+    {l:"B", t:"Genera el reporte del sistema, elabora un informe complementario al jefe inmediato detallando los casos que recuerda en que su sesión fue usada por otros, y le informa a la Contraloría que hay transacciones en el reporte que pueden no haber sido ejecutadas directamente por él, con soporte escrito de esa situación."},
+    {l:"C", t:"Solicita al área de TI que modifique retroactivamente el log del sistema para que las transacciones ejecutadas por sus compañeros aparezcan bajo las credenciales correctas de cada uno, con el propósito de que el reporte entregado a la Contraloría refleje la realidad de quién ejecutó cada movimiento."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Ley 610/2000 · Decreto 1008/2018 · Transparencia ante Entes de Control",
+       tx:"Correcta. El técnico tiene la obligación de colaborar con la Contraloría con información completa y veraz. Si sabe que hay transacciones en el log que fueron ejecutadas bajo sus credenciales por otras personas, informarlo proactivamente lo protege a él (no será imputado por actos que no cometió), protege la investigación (la Contraloría sabrá que el log no es totalmente confiable en esas fechas) y demuestra su compromiso con la transparencia."},
+    A:{t:"i", n:"Ley 610/2000 · Transparencia · Responsabilidad del Custodio de Credenciales",
+       tx:"Incorrecta. Omitir información relevante a la Contraloría sobre las condiciones en que se ejecutaron las transacciones registradas bajo sus credenciales puede ser interpretado como obstaculización del control fiscal. Además, si la Contraloría determina irregularidades en esas transacciones, el técnico será el primer imputado porque el log lo señala como responsable. Informar proactivamente es la única forma de protegerse."},
+    C:{t:"i", n:"Decreto 1008/2018 · Res. 357/2008 CGN · Alteración de Logs de Auditoría",
+       tx:"Incorrecta. Solicitar la modificación retroactiva del log de auditoría del sistema es la infracción más grave posible en materia de sistemas de información pública: los logs son registros de evidencia inmutables por diseño. Modificarlos constituye alteración de evidencia en el contexto de una investigación de la Contraloría, lo que puede configurar un tipo penal adicional a los que ya podrían existir. El log debe entregarse como está, con la explicación complementaria del técnico."}
+  }
+},
+{
+  num:12, comp:"Catálogo de Bienes · Código UNSPSC · Modificación de Parámetros",
+  sc:"El técnico de INDERVALLE detecta que en el catálogo de bienes del sistema, las mallas de voleibol tienen asignado el código UNSPSC 49181600 pero el catálogo vigente 2023 de Colombia Compra Eficiente indica que el código correcto para ese bien es 49171612.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante el error de codificación en el catálogo del sistema?",
+  opts:[
+    {l:"A", t:"Accede a la tabla maestra del catálogo en el sistema y actualiza directamente el código UNSPSC de las mallas de voleibol al valor correcto 49171612, dado que es un error evidente de codificación que como responsable del almacén tiene el deber de mantener el catálogo actualizado y correcto."},
+    {l:"B", t:"Elabora el informe de inconsistencia al jefe inmediato con el código actual en el sistema, el código correcto según el catálogo oficial de Colombia Compra Eficiente vigente y las referencias documentales que lo soportan, y solicita que TI y el profesional competente actualicen formalmente el catálogo del sistema."},
+    {l:"C", t:"Registra todas las futuras transacciones de mallas de voleibol usando manualmente el código correcto en el campo de observaciones del comprobante, sin modificar el catálogo del sistema, para que los registros nuevos usen el código actualizado aunque el catálogo oficial del sistema siga incorrecto."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Colombia Compra Eficiente · Decreto 1008/2018 · Función Esencial 12 Confiabilidad Técnica",
+       tx:"Correcta. La detección y reporte del error con soporte documental (catálogo oficial de Colombia Compra Eficiente) es la actuación óptima de Confiabilidad Técnica del Decreto 815/2018. La modificación del catálogo base del sistema no es competencia del técnico operativo: es función del área de TI con autorización del profesional competente. El informe genera la trazabilidad del hallazgo y activa el proceso correcto de actualización."},
+    A:{t:"i", n:"Decreto 1008/2018 · Catálogo Maestro · Extralimitación TI",
+       tx:"Incorrecta. La tabla maestra del catálogo de bienes del sistema no es accesible al técnico operativo: es un parámetro del sistema administrado por TI. Si el técnico accede a ella y la modifica, está operando fuera de su perfil de usuario autorizado. Aunque la corrección sea técnicamente correcta, el acceso no autorizado a los parámetros del sistema genera un log de seguridad que puede ser investigado."},
+    C:{t:"i", n:"Función Esencial 12 · Integridad de Datos · Inconsistencia del Catálogo",
+       tx:"Incorrecta. Usar el campo de observaciones para escribir el código correcto no actualiza el catálogo del sistema: las interfaces automáticas con el módulo contable y el SECOP seguirán usando el código incorrecto del catálogo. Esta solución crea una inconsistencia entre los datos del catálogo oficial y los registros manuales del técnico, lo cual es más difícil de auditar que el error original del catálogo."}
+  }
+},
+{
+  num:13, comp:"Función Esencial 12 · Registro Oportuno · Disciplina",
+  sc:"El técnico de INDERVALLE tiene 15 comprobantes de salida acumulados sin registrar del día anterior porque estuvo atendiendo la recepción de un pedido grande durante toda la tarde. El sistema está funcionando correctamente a primera hora del día siguiente.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante los registros pendientes del día anterior?",
+  opts:[
+    {l:"A", t:"Registra los 15 comprobantes con la fecha real del día actual de registro, adjunta en cada uno una nota indicando que el movimiento físico ocurrió el día anterior con la descripción de la razón del retraso, e informa al jefe inmediato por escrito la situación para que el Contador evalúe si requiere ajuste de período."},
+    {l:"B", t:"Registra los 15 comprobantes con la fecha de ayer porque corresponden a movimientos de ese día y el sistema no tiene ningún control que impida ingresar esa fecha, dado que es más correcto desde el punto de vista contable que los registros queden en el período en que los bienes salieron físicamente."},
+    {l:"C", t:"Espera al cierre del mes para registrar los 15 comprobantes atrasados de forma consolidada en un único registro resumen, dado que su volumen es pequeño respecto al total de movimientos del mes y no afectará significativamente el saldo del Kardex ni los estados financieros de la entidad."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Res. 357/2008 CGN · Decreto 815/2018 Responsabilidad · Función Esencial 12",
+       tx:"Correcta. La Resolución 357/2008 exige que la fecha del registro sea la fecha real de digitación. Registrar con fecha real e incluir la nota explicativa del retraso genera trazabilidad completa: la pista de auditoría refleja cuándo ocurrió el hecho físico y cuándo se registró, con la justificación. El reporte al jefe activa el proceso de ajuste de período si el Contador lo considera necesario."},
+    B:{t:"i", n:"Res. 357/2008 CGN · Backdating · Integridad Temporal del Registro",
+       tx:"Incorrecta. Que el sistema técnicamente permita ingresar una fecha pasada no significa que sea correcto hacerlo. La Resolución 357/2008 prohíbe el backdating porque altera la cronología real del registro informático. Argumentar que es 'más correcto contablemente' es una decisión que no le corresponde al técnico: esa evaluación la hace el Contador con el fundamento normativo correspondiente."},
+    C:{t:"i", n:"Función Esencial 12 · Oportunidad del Registro · Circular 001/2004",
+       tx:"Incorrecta. Esperar al cierre del mes para registrar 15 movimientos de forma consolidada viola el principio de oportunidad del registro establecido en la Circular 001/2004 y en la Función Esencial 12. Un registro resumen consolidado no tiene la misma trazabilidad que 15 registros individuales con los datos de cada movimiento: elimina la posibilidad de verificar cada transacción de forma individual ante una auditoría."}
+  }
+},
+{
+  num:14, comp:"Informe de Sistema · Consulta Autorizada · Protección de Datos",
+  sc:"Un periodista deportivo contacta al técnico del almacén de INDERVALLE solicitándole el reporte de inventario de medallas preparadas para los Juegos Departamentales, argumentando que es información pública de interés general que debe estar disponible bajo la Ley de Transparencia.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo ante la solicitud de información del periodista?",
+  opts:[
+    {l:"A", text:"Genera el reporte del sistema y se lo envía por correo electrónico al periodista porque es información pública de la entidad sin clasificación de reserva, considera que la transparencia institucional es un deber del servidor público y que negar esa información afectaría la imagen de INDERVALLE."},
+    {l:"B", t:"Informa al periodista que las solicitudes de información pública de INDERVALLE deben tramitarse ante la Oficina de Comunicaciones o mediante el sistema de acceso a la información pública (PQRS institucional), que él no tiene la competencia para entregar reportes del sistema a solicitudes externas."},
+    {l:"C", t:"Accede al módulo de administración para crear un perfil de consulta temporal para el periodista, le envía las credenciales para que genere su propio reporte directamente del sistema, garantizando que el acceso sea de solo lectura y que el periodista obtenga la información oficial sin intermediarios."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Ley 1712/2014 Transparencia · Decreto 1008/2018 · Decreto 815/2018 Compromiso con la Organización",
+       tx:"Correcta. Las solicitudes de información pública tienen un canal institucional formal (PQRS, Oficina de Comunicaciones) que garantiza que la entidad evalúe qué información es pública y qué puede tener reserva. El técnico no tiene la competencia para determinar unilateralmente qué información del sistema puede entregarse a externos. Orientar al periodista al canal correcto es la actuación de Orientación al Usuario del Decreto 815/2018."},
+    A:{t:"i", n:"Ley 1581/2012 · Decreto 1008/2018 · Entrega de Datos sin Proceso Formal",
+       tx:"Incorrecta. El hecho de que la información no tenga clasificación de reserva no autoriza al técnico a entregarla directamente por correo electrónico a externos. Los reportes del sistema de inventarios pueden contener datos de proveedores y funcionarios protegidos por la Ley 1581/2012. La entrega formal de información a externos requiere el proceso institucional de respuesta a solicitudes de acceso a la información."},
+    C:{t:"i", n:"Decreto 1008/2018 · Perfil de Usuario · Extralimitación",
+       tx:"Incorrecta. El técnico no tiene la competencia para crear perfiles de usuario ni para habilitar accesos al sistema a personas externas a la entidad. Un periodista externo con acceso al sistema de inventarios de INDERVALLE representa un riesgo de seguridad de la información que el Decreto 1008/2018 busca exactamente prevenir. El acceso al sistema institucional se concede únicamente a servidores autorizados por TI."}
+  }
+},
+{
+  num:15, comp:"Integrado · Sistemas + Comportamental · Caso Complejo",
+  sc:"El técnico de INDERVALLE detecta un martes en la tarde que el sistema registra 8 implementos de atletismo más en el inventario que los que hay físicamente. El jefe le pide por WhatsApp que ajuste el sistema para que cuadre con el físico 'antes de la auditoría del jueves'. El técnico no tiene habilitado el módulo de ajustes.",
+  q:"¿Cuál es la actuación óptima del Técnico Operativo ante este requerimiento de ajuste urgente sin módulo habilitado?",
+  opts:[
+    {l:"A", t:"Elabora el informe de diferencia de inventario dirigido al jefe y a Control Interno con descripción de los 8 implementos, la fecha de detección, el saldo en sistema y el saldo físico; informa que el ajuste requiere autorización formal del Contador, y solicita que TI habilite el módulo de ajustes con el acto administrativo correspondiente."},
+    {l:"B", t:"Accede al sistema con las credenciales del Contador que tiene memorizadas de una asignación anterior, realiza el ajuste de los 8 implementos en el módulo habilitado para ese perfil, y notifica al Contador y al jefe que el sistema ya está cuadrado con el físico para la auditoría del jueves."},
+    {l:"C", t:"Lleva al almacén físicamente 8 implementos similares de la bodega de suministros generales para completar el inventario físico real con el saldo del sistema, evitando el ajuste informático y garantizando que el conteo físico y el sistema estén sincronizados para la auditoría del jueves."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Res. 357/2008 CGN · Circular 001/2004 CGN-CGR · Decreto 815/2018 · Ley 610/2000",
+       tx:"Correcta. Esta opción integra las competencias comportamentales y normativas del técnico: documenta el hallazgo (Responsabilidad), reporta al nivel competente (Disciplina), señala la ruta correcta del ajuste formal (Confiabilidad Técnica) y no actúa fuera de su perfil (respeto al control de acceso). El informe a Control Interno es especialmente importante: la auditoría del jueves debe conocer la diferencia, no encontrar un inventario artificialmente cuadrado."},
+    B:{t:"i", n:"Decreto 1008/2018 · Res. 357/2008 CGN · Uso de Credenciales Ajenas · Alteración antes de Auditoría",
+       tx:"Incorrecta. Esta opción concentra las dos peores infracciones posibles: usar credenciales ajenas (del Contador) y realizar un ajuste sin soporte documental previo justamente antes de una auditoría. El ajuste realizado sin acto administrativo formal y sin informar a la Contraloría sobre la diferencia original puede configurar obstaculización del control fiscal. El log del sistema registrará el acceso con las credenciales del Contador, comprometiendo gravemente a ese funcionario."},
+    C:{t:"i", n:"Circular 001/2004 CGN-CGR · Ley 610/2000 · Manipulación del Inventario Físico",
+       tx:"Incorrecta. Mover bienes de otra bodega para completar artificialmente el inventario físico y hacerlo coincidir con el sistema es una manipulación del inventario que engaña a la Contraloría durante la auditoría. Esos 8 implementos de la bodega de suministros no son los bienes faltantes: son bienes de otra dependencia que ahora también tendrán un faltante. Esta actuación puede configurar una falta disciplinaria gravísima y eventualmente responsabilidad fiscal."}
+  }
+},
+{
+  num:16, comp:"Contraseña Comprometida · Seguridad · Decreto 1008/2018",
+  sc:"El técnico de INDERVALLE sospecha que su contraseña del sistema puede haber sido comprometida porque detectó que ayer por la tarde el sistema registra actividad bajo sus credenciales mientras él estaba en una diligencia externa y su computador debería haber estado bloqueado.",
+  q:"¿Cuál es la actuación correcta del Técnico Operativo al detectar una posible vulneración de sus credenciales?",
+  opts:[
+    {l:"A", t:"Cambia su contraseña de inmediato usando la opción de cambio disponible en su perfil de usuario, reporta el incidente al área de TI con descripción detallada de las circunstancias y el horario de la actividad sospechosa, y solicita que TI revise el log del sistema para identificar qué transacciones se ejecutaron bajo sus credenciales en ese período."},
+    {l:"B", t:"Espera unos días para ver si la actividad sospechosa se repite antes de reportarla a TI, dado que puede ser un error del registro de horarios del sistema o que simplemente olvidó cerrar su sesión, y no quiere generar una alarma innecesaria que afecte el clima laboral del equipo del almacén."},
+    {l:"C", t:"Accede al log de auditoría del sistema usando su perfil de usuario para identificar qué transacciones se realizaron bajo sus credenciales durante el período sospechoso, elabora su propio informe de incidente con los datos encontrados, y lo reporta directamente a la Contraloría para protegerse de responsabilidades."}
+  ],
+  correct:"A",
+  fb:{
+    A:{t:"c", n:"Decreto 1008/2018 · Política de Seguridad de la Información · Decreto 815/2018 Responsabilidad",
+       tx:"Correcta. El técnico toma las dos acciones inmediatas correctas: cambia la contraseña (impide que quien la comprometió siga accediendo) y reporta el incidente a TI con los datos precisos. El reporte a TI activa la revisión del log (que el técnico no puede hacer directamente) y el protocolo de gestión de incidentes de seguridad del Decreto 1008/2018. Esta actuación demuestra Responsabilidad del Decreto 815/2018."},
+    B:{t:"i", n:"Decreto 1008/2018 · Respuesta a Incidentes de Seguridad · Pasividad",
+       tx:"Incorrecta. Esperar para confirmar una posible vulneración de credenciales viola el principio de respuesta oportuna a incidentes de seguridad del Decreto 1008/2018. Cada hora de espera es potencialmente una hora en que el acceso no autorizado continúa bajo las credenciales del técnico, generando transacciones o consultas de datos que son responsabilidad del técnico. La duda razonable es suficiente para activar el cambio de contraseña y el reporte."},
+    C:{t:"i", n:"Decreto 1008/2018 · Log de Auditoría · Competencias de TI y Contraloría",
+       tx:"Incorrecta. El técnico operativo no tiene acceso al log de auditoría: ese es un módulo exclusivo de TI precisamente para garantizar que los logs no sean alterados por los usuarios a quienes registran. Reportar directamente a la Contraloría saltando a TI y al jefe inmediato rompe el conducto regular. El reporte a la Contraloría corresponde al nivel directivo de la entidad después de que TI haya evaluado el incidente."}
+  }
+},
+{
+  num:17, comp:"Integrado · Función 12 + Competencias · Ética Informática",
+  sc:"El técnico de INDERVALLE, al revisar el log de sus propias transacciones del último mes, nota que hay 5 comprobantes de salida de balones de básquet que él no recuerda haber ejecutado. Los montos y destinatarios parecen correctos y los soportes físicos existen. No hubo préstamo de credenciales conocido.",
+  q:"¿Cuál es la actuación del Técnico Operativo ante transacciones bajo sus credenciales que no recuerda haber ejecutado?",
+  opts:[
+    {l:"A", t:"Asume que simplemente no recuerda haberlas hecho porque el período fue de alta carga operativa, verifica que los soportes físicos coincidan con los registros digitales, confirma que los datos del registro son correctos, y no genera ningún reporte adicional porque no detecta ninguna irregularidad en el contenido de las transacciones."},
+    {l:"B", t:"Elabora el reporte de incidente de seguridad al área de TI y al jefe inmediato describiendo las 5 transacciones no reconocidas con sus números de comprobante, fechas y montos; solicita que TI verifique si hubo acceso desde IPs inusuales o fuera de horario, y cambia su contraseña de inmediato como medida preventiva."},
+    {l:"C", t:"Reversa las 5 transacciones en el sistema porque si no las ejecutó él entonces son ilegítimas, y dado que los balones posiblemente no salieron del almacén, regenera el inventario original con los balones devueltos al stock, notificando verbalmente al Contador que realizó el ajuste por transacciones no autorizadas."}
+  ],
+  correct:"B",
+  fb:{
+    B:{t:"c", n:"Decreto 1008/2018 · Res. 357/2008 CGN · Decreto 815/2018 Responsabilidad y Confiabilidad Técnica",
+       tx:"Correcta. Que los soportes físicos existan no elimina el riesgo: alguien pudo haber usado las credenciales del técnico para ejecutar transacciones que coinciden con soportes reales. El reporte a TI con los datos precisos permite la investigación técnica (acceso por IP, horario del servidor) que confirmará si hubo acceso no autorizado. El cambio de contraseña es inmediato y preventivo. Esta opción protege al técnico y activa los mecanismos de seguridad institucionales."},
+    A:{t:"i", n:"Decreto 1008/2018 · Seguridad de la Información · Omisión de Reporte",
+       tx:"Incorrecta. Normalizar transacciones no reconocidas porque los datos parecen correctos puede ser exactamente la estrategia de un acceso fraudulento que opera con soportes reales para evitar la detección. La no actuación ante transacciones no reconocidas deja al técnico expuesto a cualquier irregularidad que pueda detectarse en esas 5 transacciones en el futuro, sin poder demostrar que no fue él quien las ejecutó."},
+    C:{t:"i", n:"Res. 357/2008 CGN · Reversa sin Acto Administrativo · Informalidad",
+       tx:"Incorrecta. Reversar transacciones de forma unilateral sin acto administrativo formal y sin verificar primero si los balones efectivamente no salieron del almacén puede crear una inconsistencia mayor que la original. Si los balones sí salieron (la salida fue legítima pero ejecutada por alguien que accedió al sistema), la reversa genera un sobrante de inventario que no existe físicamente, lo cual es una irregularidad adicional que debe explicar ante la Contraloría."}
+  }
+}
+];
+
+let correct = 0, answered = 0;
+const TOTAL = Q.length;
+
+function renderQuiz() {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  Q.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'qc' + idx;
+    card.innerHTML = `
+      <div class="qcard-hdr">
+        <span class="qnum">${String(q.num).padStart(2,'0')}</span>
+        <span class="qcomp">${q.comp}</span>
+      </div>
+      <div class="qscenario">
+        <div class="qscen-lbl">▸ Escenario — INDERVALLE</div>
+        <p>${q.sc}</p>
+      </div>
+      <div class="qquestion">${q.q}</div>
+      <div class="qopts" id="opts${idx}">
+        ${q.opts.map(o => `
+          <button class="quiz-opt" onclick="handleAnswer(${idx},'${o.l}')" data-letter="${o.l}">
+            <span class="opt-letter">${o.l}</span>
+            <span class="opt-text">${o.t || o.text}</span>
+            <span class="opt-icon" id="ic${idx}${o.l}"></span>
+          </button>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="fb${idx}">
+        <div class="fb-header">▸ Retroalimentación Normativa · Función Esencial 12 · Decreto 1008/2018 · Res. 357/2008 CGN</div>
+        ${q.opts.map(o => {
+          const f = q.fb[o.l];
+          return `<div class="fb-item ${f.t === 'c' ? 'fc' : 'fi'}">
+            <span class="fb-norm">${f.n}</span>
+            <strong>Opción ${o.l} — ${f.t === 'c' ? '✓ Respuesta Óptima' : '✗ Incorrecta'}</strong>
+            ${f.tx}</div>`;
+        }).join('')}
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+function handleAnswer(idx, letter) {
+  const q = Q[idx];
+  const card = document.getElementById('qc' + idx);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  answered++;
+  const ok = (letter === q.correct);
+  if (ok) correct++;
+  document.querySelectorAll('#opts' + idx + ' .quiz-opt').forEach(btn => {
+    btn.disabled = true;
+    const bl = btn.getAttribute('data-letter');
+    const icon = btn.querySelector('.opt-icon');
+    if (bl === q.correct) { btn.classList.add('correct'); icon.textContent = '✓'; }
+    else if (bl === letter && !ok) { btn.classList.add('incorrect'); icon.textContent = '✗'; }
+    else btn.classList.add('neutral');
+  });
+  updateBoard();
+  setTimeout(() => {
+    const fb = document.getElementById('fb' + idx);
+    if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 200);
+  if (answered === TOTAL) setTimeout(showResult, 900);
+}
+
+function updateBoard() {
+  document.getElementById('sbC').textContent = correct;
+  document.getElementById('sbT').textContent = answered;
+  const pct = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('sbP').textContent = pct + '%';
+  document.getElementById('sbFill').style.width = Math.round((answered / TOTAL) * 100) + '%';
+}
+
+function showResult() {
+  const box = document.getElementById('resultBox');
+  box.classList.add('visible');
+  document.getElementById('resBig').textContent = correct + '/' + TOTAL;
+  const pct = Math.round((correct / TOTAL) * 100);
+  let msg = '';
+  if (pct >= 90) msg = 'Desempeño Sobresaliente. Domina con precisión el régimen de sistemas de información en el sector público colombiano y las competencias de la Función Esencial 12. Su capacidad para distinguir los límites del perfil técnico frente al Administrador TI y al Contador lo diferencia como candidato de alto rendimiento.';
+  else if (pct >= 75) msg = 'Desempeño Satisfactorio. Ha asimilado los principios del Decreto 1008/2018 y la Resolución 357/2008 CGN. Refuerce los casos de credenciales y ajustes de registros cerrados antes del proceso CNSC.';
+  else if (pct >= 60) msg = 'Desempeño en Desarrollo. Regrese al Marco Teórico de Pistas de Auditoría y Perfiles de Usuario. Estudie especialmente la no repudiación de la Resolución 357/2008 y el principio de mínimo privilegio del Decreto 1008/2018.';
+  else msg = 'Desempeño Insuficiente. El régimen de sistemas de información pública requiere estudio sistemático. Comience con la Función Esencial 12, luego el Decreto 1008/2018 y finalmente la Resolución 357/2008 CGN antes de repetir el simulacro.';
+  document.getElementById('resMsg').textContent = msg;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  correct = 0; answered = 0;
+  document.getElementById('resultBox').classList.remove('visible');
+  updateBoard();
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => { renderQuiz(); updateBoard(); });
+</script>
+</body>
+</html>
