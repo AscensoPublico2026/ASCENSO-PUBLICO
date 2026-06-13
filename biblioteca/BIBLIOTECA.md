@@ -5,7 +5,7 @@
 
 > Registro maestro de guías del curso de preparación CNSC. Fuente de verdad de la biblioteca: cada guía definitiva se registra aquí con su código, día, categoría, estado y temas. Reemplaza al archivo BIBLIOTECA.xlsx.
 
-**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 16 ✅
+**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 17 ✅
 
 > 🧱 **Cómo está organizada:** la fuente de verdad es `biblioteca.json`. Este índice (`BIBLIOTECA.md`) se genera con `generar_indice.py`. Para añadir o publicar una guía, edita el JSON y regenera el índice.
 
@@ -30,7 +30,7 @@
 | ✅ | 8 | [`ASI-ESP-02`](../guias/ASI-ESP-02-alcance-cargo-asistencial.html) | Alcance del Cargo Asistencial | Por Nivel | Asistencial |
 | ✅ | 8 | [`PRO-ESP-02`](../guias/PRO-ESP-02-alcance-cargo-profesional.html) | Alcance del Cargo Profesional | Por Nivel | Profesional |
 | ✅ | 8 | [`TEC-ESP-02`](../guias/TEC-ESP-02-alcance-cargo-tecnico.html) | Alcance del Cargo Técnico | Por Nivel | Técnico |
-| ⬜ | — | `BON-01` | Estrategia CNSC (Bonus) | Bonus | — |
+| ✅ | — | [`BON-01`](../guias/BON-01-estrategia-cnsc.html) | Estrategia CNSC (Bonus) | Bonus | — |
 | ⬜ | 21 | `SIM-001` | Simulacro Integral Final | Simulacro Final | — |
 
 **Leyenda:** ✅ Publicada · ⬜ Pendiente · 🔁 Bajo demanda (se crea con la compra)
@@ -233,8 +233,8 @@ Temas:
 
 ### Bonus
 
-#### ⬜ BON-01 · Estrategia CNSC (Bonus)
-**Día:** — · **Estado:** Pendiente · **Reutilizable:** sí · **Aplica a:** Todos los niveles
+#### ✅ BON-01 · Estrategia CNSC (Bonus)
+**Día:** — · **Estado:** Publicada · **Reutilizable:** sí · **Archivo:** [`guias/BON-01-estrategia-cnsc.html`](../guias/BON-01-estrategia-cnsc.html) · **Aplica a:** Todos los niveles
 
 Temas:
 - Cómo piensa la CNSC al construir las pruebas
@@ -254,6 +254,8 @@ Temas:
 - Número de preguntas según el nivel evaluado por la CNSC
 - Formato de juicio situacional + conocimientos
 - Repetible las veces que el aspirante quiera
+
+> ℹ️ El simulacro final es personalizado para cada cliente: se construye con base en todas las guías de su plan de estudio y se enfoca en la OPEC (empleo) a la que aspira.
 
 ## ⚖️ Marco de competencias comportamentales (referencia)
 
