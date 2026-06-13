@@ -282,44 +282,48 @@ Cada uno: término + definición de 1 línea
 
 ### Sección 11 — 🎓 Simulacro (15–20 min)
 
-**Propósito:** Evaluar el dominio del día con 12 preguntas tipo CNSC reales.
+**Propósito:** Evaluar el dominio del día con 12 preguntas de **juicio situacional**, tal como las pruebas reales de competencias de la CNSC.
+
+**Regla de oro:** son **casos**, no preguntas de memoria. Cada pregunta plantea una situación del día a día del servidor y pide la **actuación más apropiada**. NUNCA "¿qué dice la ley X?".
 
 **Estructura:**
 - **12 preguntas** total
 - Distribución: **4 básicas + 5 intermedias + 3 avanzadas**
-- **4 opciones (A, B, C, D)** — formato CNSC real
+- **4 opciones (A, B, C, D)** — cursos de acción plausibles; solo uno correcto
+- **`ctx` presente en TODAS** (el caso/contexto)
+- Enunciado tipo "¿qué es lo más apropiado que debe hacer?" / "la actuación correcta es"
 - **Cada pregunta tiene `tema`** (para "Temas a reforzar")
-- **Cada opción tiene su `expl`** (retroalimentación específica)
-- Respuestas correctas distribuidas **sin patrón** (ej. B,C,A,D,B,D,C,B,D,C,A,B)
+- **Cada opción tiene su `expl`** (retroalimentación específica; aquí SÍ se cita la norma para reforzar)
+- Respuestas correctas distribuidas **sin patrón** (ej. B,C,A,D,C,A,D,B,A,C,D,B)
 
 **Ejemplo de un item del array `preguntas`:**
 ```js
 {
   nivel: 'i',
-  tema: 'Servidor Público (empleado vs. trabajador oficial)',
-  ctx: 'En una Empresa Industrial y Comercial del Estado, una persona fue vinculada mediante contrato de trabajo para labores de mantenimiento.',
-  q: '¿Qué tipo de servidor es?',
+  tema: 'Conflicto de intereses',
+  ctx: 'Trabajas en el área de contratación. Llega para evaluación una propuesta presentada por la empresa de tu hermano.',
+  q: 'Lo más apropiado que debes hacer es:',
   ops: [
-    'Empleado público de libre nombramiento',
-    'Trabajador oficial',
-    'Contratista de prestación de servicios',
-    'Miembro de corporación pública'
+    'Evaluarla con objetividad, pues confías en tu imparcialidad',
+    'Rechazar la propuesta de inmediato para evitar comentarios',
+    'Manifestar el impedimento por conflicto de intereses y apartarte de esa evaluación',
+    'Pedirle a un compañero que la firme, pero evaluarla tú igualmente'
   ],
-  correcta: 1,
+  correcta: 2,
   expl: [
-    'El empleado público tiene vínculo legal y reglamentario, no contrato de trabajo.',
-    '✔ Vínculo por contrato de trabajo en EICE = trabajador oficial.',
-    'El contratista presta servicios por contrato civil; aquí hay contrato de trabajo.',
-    'Los miembros de corporaciones llegan por elección popular.'
+    'Aunque confíes en tu objetividad, el parentesco configura un conflicto de intereses que debes declarar.',
+    'No te corresponde rechazar la propuesta; eso afectaría al proponente. Lo correcto es apartarte tú.',
+    '✔ Ante un conflicto de intereses, el servidor debe declararse impedido y no participar en la decisión.',
+    'Evaluar tú aunque otro firme mantiene el conflicto y agrava la irregularidad.'
   ]
 }
 ```
 
 **Reglas:**
-- Mezclar preguntas con `ctx` (contexto/caso) y sin `ctx`
-- Usar verbos CNSC: "corresponde a", "es", "señala", "identifica", "según el artículo X"
-- Distractores plausibles, no absurdos
-- La explicación de la opción correcta empieza con `✔`
+- **Todas** las preguntas llevan `ctx` (un caso realista con nombres/situaciones concretas).
+- Enunciados con verbos de acción: "lo más apropiado es", "¿cómo debes proceder?", "la actuación correcta es".
+- Distractores = acciones plausibles (no absurdas): omitir, callar, aceptar la dádiva, favorecer, etc.
+- La explicación de la opción correcta empieza con `✔` y puede citar el artículo/ley para reforzar el aprendizaje.
 
 ---
 
@@ -451,6 +455,7 @@ grep -c "correcta:" {archivo}.html              # 12
 - **Conceptos sin norma/artículo** ("es importante" sin sustento)
 - **Casos abstractos sin nombres reales** (siempre poner Indervalle, DIAN, etc.)
 - **Distractores absurdos en el simulacro** (deben ser plausibles)
+- **Simulacro con preguntas de memoria de la norma** ("¿qué dice la ley X?") — debe ser **juicio situacional**: un caso + "¿qué es lo más apropiado?"
 - **Misma `tema` en múltiples preguntas** sin variar (limitan los temas a reforzar)
 
 ### ❌ De forma

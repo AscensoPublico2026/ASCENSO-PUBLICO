@@ -2,7 +2,7 @@
 
 > **Documento maestro de respaldo.** Permite retomar el proyecto desde cero si todo lo demás se pierde.
 >
-> **Última actualización:** 12 de junio de 2026
+> **Última actualización:** 13 de junio de 2026
 > **Mantenedor:** César Deávila
 > **Repositorio:** [CesarDeavila1126/ASCENSO-PUBLICO](https://github.com/CesarDeavila1126/ASCENSO-PUBLICO)
 
@@ -178,16 +178,22 @@ Cuando un concepto tiene sub-componentes evaluables (ej. las 3 ramas, los 4 grup
    └── Sub-bloque 3 (igual estructura)
 ```
 
-### 6.5 Simulacro — formato CNSC real
+### 6.5 Simulacro — formato CNSC real (juicio situacional)
+
+Las pruebas de competencias de la CNSC son de **juicio situacional**: plantean un caso real del día a día del servidor y piden decidir la actuación más apropiada. **No** preguntan la norma de memoria.
 
 | Parámetro | Valor | Notas |
 |---|---|---|
-| Tipo | Selección múltiple única respuesta | Formato oficial CNSC |
-| Opciones | 4 (A, B, C, D) | **Confirmado tras investigación**, anula la versión inicial de 3 opciones del estándar v1.1 |
+| Tipo | **Juicio situacional** | Caso/contexto + "¿qué es lo más apropiado que debe hacer?" |
+| Qué evalúa | Aplicar el criterio a la situación | NO memoria de leyes/artículos |
+| Opciones | 4 (A, B, C, D) | Cursos de acción plausibles; solo uno correcto |
 | Cantidad | 12 preguntas | 4 básicas + 5 intermedias + 3 avanzadas |
-| Distribución de respuestas | Sin patrón visible | Ej. B,C,A,D,B,D,C,B,D,C,A,B |
-| Retroalimentación inmediata | Sí, por cada opción | Por qué la suya está mal + por qué la correcta es correcta |
+| Contexto (`ctx`) | Presente en todas | Cada pregunta es un caso |
+| Distribución de respuestas | Sin patrón visible | Ej. B,C,A,D,C,A,D,B,A,C,D,B |
+| Retroalimentación inmediata | Sí, por cada opción | Explica por qué cada acción es correcta/incorrecta; **aquí sí cita la norma** para reforzar |
 | Resultado final | Puntaje + Lista de **temas a reforzar** | Según preguntas falladas |
+
+> **Regla clave:** el enunciado y las opciones son situacionales (qué harías); la **retroalimentación** sí puede citar artículo/ley para que el estudiante aprenda el porqué.
 
 ### 6.6 Botón "Avanzar" al final de cada sección
 
@@ -251,48 +257,23 @@ Cada una de las 11 secciones termina con una barra dorada:
 | `PRONT GENERADOR DE PLANES 1.1.docx` | Prompt del generador de planes |
 | `BIBLIOTECA.xlsx` | Excel maestro con 3 hojas (códigos por categoría) |
 
-### Plantilla maestra y guías nuevas (rama `feat/guia-gen-01`, [PR #1](https://github.com/CesarDeavila1126/ASCENSO-PUBLICO/pull/1))
-| Archivo | Descripción | Estado |
-|---|---|---|
-| `INTRO-00-presentacion-curso.html` | Plantilla maestra congelada (logo + diseño) | ✅ Lista |
-| `GEN-01-estado-funcion-publica.html` | Día 2 — Estado y Función Pública (versión robusta) | ✅ Lista (base) |
-| `brand/logo-ascenso-publico.svg` | Logo principal (guías) | ✅ |
-| `brand/logo-ascenso-publico-navy.svg` | Logo para fondos claros | ✅ |
-| `brand/logo-ascenso-publico-tiktok.svg` | Logo para redes/TikTok | ✅ |
-| `brand/favicon.svg` | Favicon | ✅ |
+### Guías definitivas — carpeta `guias/`
+Todas las guías HTML vigentes viven en `guias/`. Son autocontenidas y referencian el favicon como `../brand/favicon.svg`.
 
-### GEN-01 con profundización "Tres Ramas" (rama `feat/gen-01-profundizacion`, [PR #2](https://github.com/CesarDeavila1126/ASCENSO-PUBLICO/pull/2))
-| Archivo | Descripción |
-|---|---|
-| `GEN-01-estado-funcion-publica.html` | Versión final aprobada con sub-bloques desplegables, mini-preguntas tipo CNSC, +20% profundidad |
+| Archivo | Día | Descripción | Estado |
+|---|---|---|---|
+| `guias/INTRO-00-presentacion-curso.html` | 1 | Presentación del curso + CNSC (plantilla maestra congelada: logo + diseño) | ✅ |
+| `guias/GEN-01-estado-funcion-publica.html` | 2 | Estado y Función Pública (sub-bloques 3 ramas + órganos autónomos + mini-preguntas) | ✅ |
+| `guias/GEN-02-relacion-estado-ciudadano.html` | 3 | Relación Estado-Ciudadano (petición, PQRSD, acciones constitucionales, habeas data) | ✅ |
+| `guias/GEN-03-marco-institucional.html` | 4 | Marco Institucional (Constitución y empleo, integridad, ética, MIPG, transparencia) — simulacro situacional | ✅ |
 
-> ✅ **Versión vigente de GEN-01.** Incluye sub-bloques de las 3 ramas, los 4 grupos de órganos autónomos y mini-preguntas en los 3 tipos de servidor público.
+> ✅ **La Biblioteca General está completa** (INTRO-00 + GEN-01/02/03). `GEN-01` es la **base de referencia** para crear nuevas guías por la vía rápida.
 
-### GEN-02 (rama `feat/gen-02-relacion-ciudadano`, [PR #3](https://github.com/CesarDeavila1126/ASCENSO-PUBLICO/pull/3))
-| Archivo | Descripción | Estado |
-|---|---|---|
-| `GEN-02-relacion-estado-ciudadano.html` | Día 3 — Derecho de petición, PQRSD, acciones constitucionales, habeas data | ✅ Aprobada |
+### Marca — carpeta `brand/`
+Logos oficiales (SVG + PNG en varios tamaños) y `README.md` de uso. Variantes: `logo-gold`, `logo-navy`, `logo-mark` (+transparente), `favicon`.
 
-### Guías heredadas (anteriores al estándar nuevo)
-17 archivos `.html` con la nomenclatura antigua. **No siguen** la plantilla maestra ni la paleta congelada. Quedan como referencia/contenido a migrar:
-
-- `guia-constitucion-cnsc.html`
-- `guia-funcion-publica-cnsc.html`
-- `guia-atencion-ciudadano-pqrsd-cnsc.html`
-- `guia-gestion-documental-cnsc.html`
-- `guia-gtc185-competencias-cnsc.html`
-- `guia_indervalle_cnsc_opec243477.html`
-- `guia_almacen_indervalle_modulo2.html`
-- `guia_recepcion_bienes_modulo3.html`
-- `guia_codificacion_unspsc_modulo4.html`
-- `guia_kardex_valoracion_modulo5.html`
-- `guia_inventario_fisico_conciliacion_kardex_indervalle.html`
-- `guia_cnsc_software_inventarios.html`
-- `guia_supervision_contratos_apoyo_tecnico_indervalle.html`
-- `guia_gestion_documental_modulo7.html`
-- `guia_cnsc_decreto815_semana1.html`
-- `guia_decreto815_OR_AC_modulo_avanzado.html`
-- `guia_decreto815_comportamental_modulo6.html`
+### Guías heredadas — RETIRADAS
+Las 17 guías HTML antiguas (nomenclatura `guia_*` / `guia-*`, anteriores al estándar) **fueron eliminadas del repositorio** en la reorganización, por no seguir la plantilla maestra ni la paleta congelada. Su historial queda preservado en los PRs anteriores por si se necesitara recuperar contenido.
 
 ---
 
@@ -300,7 +281,7 @@ Cada una de las 11 secciones termina con una barra dorada:
 
 1. **Logo oficial:** V2 (flecha con impulso). No volver a explorar opciones.
 2. **Paleta:** Crema 60 + Azul institucional 30 + Dorado 10. Solo los 4 semánticos adicionales.
-3. **Simulacro CNSC:** 12 preguntas, 4 opciones (A–D), retroalimentación por opción + temas a reforzar.
+3. **Simulacro CNSC:** **juicio situacional** — 12 preguntas (caso + "¿qué es lo más apropiado?"), 4 opciones (A–D), retroalimentación por opción + temas a reforzar. No se pregunta la norma de memoria.
 4. **Tiempo por guía:** 75–110 min.
 5. **Estructura del Día 1:** INTRO-00 + INTRO-01 (esta última bajo demanda al comprar).
 6. **Numeración GEN:** GEN-01 = Día 2, GEN-02 = Día 3, GEN-03 = Día 4 (corrida tras absorber Introducción CNSC en INTRO-00).
@@ -313,7 +294,7 @@ Cada una de las 11 secciones termina con una barra dorada:
 ## 10. Pendientes (en orden de prioridad)
 
 ### Fase 1 — Completar el motor de contenido
-- [ ] **GEN-03** · Marco Institucional (Día 4) — Próxima en cola
+- [x] **GEN-03** · Marco Institucional (Día 4) — ✅ Biblioteca General COMPLETA
 - [ ] **Generador de Guías** (prompt) — desbloquea creación masiva de guías funcionales
 
 ### Fase 2 — Biblioteca por Nivel
@@ -349,10 +330,8 @@ cd ASCENSO-PUBLICO
 ```
 
 ### Paso 2 — Identificar las ramas de trabajo
-- `main` — base original (guías heredadas, sin plantilla nueva)
-- `feat/guia-gen-01` — plantilla maestra + INTRO-00 + GEN-01 base + `/brand/`
-- `feat/gen-01-profundizacion` — **GEN-01 final aprobada** (con sub-bloques)
-- `feat/gen-02-relacion-ciudadano` — **GEN-02 final aprobada**
+- `main` — repositorio definitivo y reorganizado (guías en `guias/`, marca en `brand/`, documentación maestra).
+- Ramas históricas de cada guía (`feat/guia-gen-01`, `feat/gen-01-profundizacion`, `feat/gen-02-relacion-ciudadano`, `feat/gen-03-marco-institucional-final`) — quedan como historial; lo vigente ya está consolidado en `main`.
 
 ### Paso 3 — Leer estos 4 documentos en orden
 1. `ESTADO-PROYECTO.md` (este archivo) — visión completa
@@ -361,12 +340,12 @@ cd ASCENSO-PUBLICO
 4. `.kiro/steering/proyecto-ascenso-publico.md` — reglas para el agente AI
 
 ### Paso 4 — Si necesitas reconstruir una guía desde cero
-- Toma `INTRO-00-presentacion-curso.html` o `GEN-01-estado-funcion-publica.html` (PR #2) como base.
+- Toma `guias/INTRO-00-presentacion-curso.html` o `guias/GEN-01-estado-funcion-publica.html` como base.
 - Sigue `PLANTILLA-GUIA.md`.
 - Respeta las decisiones congeladas (§9 de este documento).
 
 ### Paso 5 — Si necesitas continuar el desarrollo
-- Empezar por la próxima guía de `§10 — Pendientes` (hoy: GEN-03).
+- Empezar por la próxima guía de `§10 — Pendientes` (hoy: Biblioteca por Nivel, Día 5+).
 - Iniciar nueva sesión de Kiro con este documento como referencia.
 - El steering en `.kiro/steering/` se carga automáticamente.
 

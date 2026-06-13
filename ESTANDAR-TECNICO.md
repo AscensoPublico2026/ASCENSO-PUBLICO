@@ -18,13 +18,15 @@ Todas las guías arrancan con la misma cabecera:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{CODIGO} · {Nombre de la guía} — Ascenso Público</title>
-<link rel="icon" type="image/svg+xml" href="brand/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
   /* ... CSS de §2 ... */
 </style>
 </head>
 ```
+
+> **Ruta del favicon:** las guías viven en `guias/`, por eso el favicon se referencia como `../brand/favicon.svg` (sube un nivel a la carpeta `brand/`). El logo del header va **inline** como SVG, así que no depende de rutas externas.
 
 **Tipografías oficiales:**
 - `'Plus Jakarta Sans'` (sans-serif) — texto general
@@ -635,7 +637,7 @@ renderFlash();
   <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
 
   <div class="card card-lead quiz-intro">
-    <p><strong>Formato CNSC real:</strong> selección múltiple única respuesta — 1 enunciado/contexto + 4 opciones (A, B, C, D), solo una correcta.</p>
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> real y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones de acción (A, B, C, D); solo una es la correcta. No se pregunta la norma de memoria.</p>
     <div class="dific-tags">
       <span class="tag b">4 básicas</span>
       <span class="tag i">5 intermedias</span>
@@ -745,20 +747,22 @@ renderFlash();
 
 ### JS — array `preguntas` (esquema de cada item)
 
+> **Formato de juicio situacional (tipo CNSC).** El enunciado y las opciones plantean un **caso** y posibles **cursos de acción**; la respuesta correcta es la actuación más apropiada. La explicación por opción (`expl`) sí cita la norma para reforzar. Por eso `ctx` está **presente en todas** las preguntas.
+
 ```js
 const preguntas = [
   {
     nivel: 'b',                     // 'b' básica · 'i' intermedia · 'a' avanzada
-    tema: 'Estructura del Estado',  // Aparece en "Temas a reforzar"
-    ctx:  '',                       // Contexto opcional antes del enunciado
-    q:    '¿Pregunta?',
-    ops:  ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
+    tema: 'Conflicto de intereses', // Aparece en "Temas a reforzar"
+    ctx:  'Trabajas en contratación y llega para evaluación la propuesta de la empresa de tu hermano.', // El CASO (siempre presente)
+    q:    '¿Cuál es la actuación más apropiada?',
+    ops:  ['Acción A', 'Acción B', 'Acción C', 'Acción D'],
     correcta: 1,                    // índice 0-3
-    expl: [                         // explicación POR opción
-      'Por qué A es incorrecta',
-      '✔ Por qué B es correcta',
-      'Por qué C es incorrecta',
-      'Por qué D es incorrecta'
+    expl: [                         // explicación POR opción (puede citar la norma)
+      'Por qué la acción A no es la correcta',
+      '✔ Por qué la acción B es la correcta',
+      'Por qué la acción C no es la correcta',
+      'Por qué la acción D no es la correcta'
     ]
   },
   // ... 12 en total: 4 básicas + 5 intermedias + 3 avanzadas
