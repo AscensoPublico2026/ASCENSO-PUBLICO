@@ -6,7 +6,7 @@ inclusion: always
 
 > Este archivo se carga automáticamente en cada sesión de Kiro para este repositorio.
 > Mantiene el contexto del proyecto y las decisiones ya congeladas.
-> **Documentos completos de referencia:** `ESTADO-PROYECTO.md`, `ESTANDAR-TECNICO.md`, `PLANTILLA-GUIA.md` (todos en la raíz).
+> **Documentos completos de referencia:** `PROYECTO-MAESTRO.md` (norte + handoff), `ESTANDAR-TECNICO.md`, `PLANTILLA-GUIA.md`, y los prompts en `prompts/` (todos en la raíz del repo).
 
 ---
 
@@ -175,10 +175,10 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 
 Al inicio de cualquier sesión sobre este repo:
 
-1. **Leer estos 4 documentos** en este orden:
+1. **Leer estos documentos** en este orden:
    - `.kiro/steering/proyecto-ascenso-publico.md` (este archivo, automático)
-   - `ESTADO-PROYECTO.md` (visión completa)
-   - `PLANTILLA-GUIA.md` (cómo crear guías)
+   - `PROYECTO-MAESTRO.md` (norte + handoff: idea completa, estado y paso siguiente)
+   - `PLANTILLA-GUIA.md` (cómo crear guías) y `prompts/generador-guias.md`
    - `ESTANDAR-TECNICO.md` (código real)
 
 2. **Verificar el estado real del repo:**
@@ -187,7 +187,7 @@ Al inicio de cualquier sesión sobre este repo:
    - Ver últimos commits: `git log --oneline -10`
 
 3. **Confirmar el estado entendido al usuario** antes de hacer cambios:
-   - "Aquí estamos: GEN-01 y GEN-02 aprobadas, próxima es GEN-03..."
+   - "Aquí estamos: Biblioteca General completa (INTRO-00 + GEN-01/02/03), próxima es la Biblioteca por Nivel (Día 5+)..."
 
 4. **Solo después** proponer próximos pasos.
 
