@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASI-COM-02 · Día 6 · Atención y Colaboración en el Servicio Público — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+    --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+    --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+    --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+    --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+    --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+    --texto:#2A3441; --texto-suave:#5B6675;
+    --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--crema); color:var(--texto); line-height:1.7; -webkit-font-smoothing:antialiased; }
+
+  #readbar { position:fixed; top:0; left:0; height:4px; width:0%; background:linear-gradient(90deg,var(--oro),var(--oro-claro)); z-index:999; transition:width .1s linear; }
+
+  header { background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%); color:var(--blanco); padding:42px 20px 34px; text-align:center; position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%); }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:5px; background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%); }
+  .doc-ref { position:absolute; top:16px; right:18px; z-index:3; font-size:.68rem; font-weight:700; letter-spacing:.16em; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.22); padding:4px 11px; border-radius:7px; text-transform:uppercase; }
+  .brand { display:inline-flex; align-items:center; gap:13px; position:relative; z-index:2; }
+  .brand-logo { width:50px; height:50px; border-radius:13px; background:linear-gradient(135deg,var(--oro-claro),var(--oro)); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(232,163,61,.4); flex-shrink:0; }
+  .brand-name { font-size:1.6rem; font-weight:800; letter-spacing:.01em; line-height:1; }
+  .brand-slogan { font-size:.82rem; font-weight:400; color:rgba(255,255,255,.78); margin-top:4px; }
+  .kicker { display:inline-flex; align-items:center; gap:11px; margin:24px 0 12px; position:relative; z-index:2; color:var(--oro-claro); font-weight:700; font-size:.78rem; letter-spacing:.2em; text-transform:uppercase; }
+  .kicker::before,.kicker::after { content:''; width:26px; height:2px; border-radius:2px; background:linear-gradient(90deg,transparent,var(--oro),transparent); }
+  header h1 { font-family:'Source Serif 4',serif; font-size:clamp(1.7rem,4.5vw,2.6rem); font-weight:700; line-height:1.16; max-width:740px; margin:0 auto; position:relative; z-index:2; }
+  .header-meta { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:22px; position:relative; z-index:2; }
+  .header-meta span { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.14); padding:7px 15px; border-radius:9px; font-size:.8rem; font-weight:500; }
+
+  nav { position:sticky; top:0; z-index:50; background:var(--azul); display:flex; gap:5px; padding:11px 12px; overflow-x:auto; scrollbar-width:thin; box-shadow:0 4px 18px rgba(10,42,94,.22); }
+  nav::-webkit-scrollbar { height:5px; }
+  nav::-webkit-scrollbar-thumb { background:var(--oro); border-radius:10px; }
+  nav button { background:rgba(255,255,255,.07); color:rgba(255,255,255,.78); border:none; padding:9px 16px; border-radius:9px; cursor:pointer; font-family:inherit; font-size:.84rem; font-weight:600; white-space:nowrap; transition:all .2s; flex-shrink:0; }
+  nav button:hover { background:rgba(255,255,255,.16); color:#fff; }
+  nav button.active { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); box-shadow:0 4px 12px rgba(232,163,61,.4); }
+
+  main { max-width:880px; margin:0 auto; padding:36px 18px 80px; }
+  .section { display:none; animation:fade .4s ease; }
+  .section.visible { display:block; }
+  @keyframes fade { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:none;} }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--ambar); font-weight:700; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:12px; }
+  .eyebrow::before { content:''; width:26px; height:3px; background:linear-gradient(90deg,var(--oro),var(--oro-claro)); border-radius:3px; }
+  h2.sec-title { font-family:'Source Serif 4',serif; font-size:clamp(1.55rem,3.6vw,2.1rem); color:var(--azul); line-height:1.2; margin-bottom:20px; }
+  h3 { font-size:1.2rem; color:var(--azul); margin:28px 0 11px; font-weight:700; display:flex; align-items:center; gap:9px; }
+  h3 .h3-chip { width:30px; height:30px; border-radius:9px; flex-shrink:0; background:var(--azul-suave); color:var(--azul-claro); display:inline-flex; align-items:center; justify-content:center; font-size:.9rem; font-weight:800; }
+  h4 { color: var(--azul); font-size: 1rem; margin: 16px 0 8px; font-weight: 700; }
+  p { margin-bottom:14px; color:var(--texto); }
+  strong { color:var(--azul); font-weight:700; }
+
+  .card { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:var(--radio); padding:26px; margin-bottom:20px; box-shadow:var(--sombra); }
+  .card-lead { border:none; border-left:6px solid var(--oro); background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 75%); }
+
+  /* Concepto en 4 capas — estilo cálido alineado con el resto de la guía */
+  .concepto { background: linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+  .concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom: 2px dashed var(--oro-borde); }
+  .concepto-head .ch-icon { font-size:1.4rem; }
+  .concepto-body { padding: 6px 14px 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .capa { padding: 13px 15px; border-radius: 12px; display:flex; gap:11px; align-items:flex-start; background: var(--blanco); border: 1px solid var(--gris-borde); transition: transform .15s; }
+  .capa:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+  .capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+  .capa-icon.def { background: var(--azul-suave); }
+  .capa-icon.apl { background: var(--verde-suave); }
+  .capa-icon.eje { background: var(--oro-suave); }
+  .capa-icon.cnsc { background: var(--rojo-suave); }
+  .capa-content { flex:1; }
+  .capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+  .capa.cap-def .label { color: var(--azul); }
+  .capa.cap-apl .label { color: var(--verde); }
+  .capa.cap-eje .label { color: var(--ambar); }
+  .capa.cap-cnsc .label { color: var(--rojo); }
+  .capa-content p { margin-bottom:0; font-size:.9rem; line-height: 1.55; }
+
+  /* Sub-bloques: profundizacion por sub-componente (las 3 ramas, los 4 organos autonomos, etc.) */
+  .sub-grupo { margin: 14px 0 22px; }
+  .sub-grupo-intro { font-size:.86rem; color: var(--texto-suave); margin: 8px 4px 12px; font-style: italic; }
+  .subbloque { background: var(--blanco); border:1px solid var(--gris-borde); border-left: 5px solid var(--azul-claro); border-radius:14px; margin: 12px 0; overflow:hidden; box-shadow: var(--sombra); transition: transform .15s; }
+  .subbloque:hover { transform: translateY(-2px); }
+  .subbloque.legi { border-left-color: #6E5BD0; }
+  .subbloque.ejec { border-left-color: var(--oro); }
+  .subbloque.judi { border-left-color: var(--verde); }
+  .subbloque.ctrl { border-left-color: var(--rojo); }
+  .subbloque.elec { border-left-color: #1A8AA8; }
+  .subbloque.banca { border-left-color: var(--ambar); }
+  .subbloque.otros { border-left-color: var(--azul-claro); }
+  .sub-head { background: linear-gradient(100deg, var(--azul-suave), var(--blanco) 75%); padding: 14px 18px; display:flex; align-items:center; gap:12px; border-bottom: 1px solid var(--azul-borde); flex-wrap: wrap; }
+  .sub-head .sub-icon { font-size: 1.55rem; line-height:1; }
+  .sub-head .sub-title { font-weight: 800; color: var(--azul); font-size: 1.06rem; flex: 1; min-width: 160px; }
+  .sub-head .sub-art { font-size: .7rem; font-weight: 700; color: var(--azul-claro); background: #fff; border: 1px solid var(--azul-borde); padding: 4px 10px; border-radius: 7px; letter-spacing: .04em; white-space: nowrap; }
+  .sub-body { padding: 16px 18px 18px; }
+  .sub-row { margin-bottom: 14px; }
+  .sub-row:last-child { margin-bottom: 0; }
+  .sub-label { font-weight: 800; color: var(--azul); margin-bottom: 7px; font-size: .9rem; display:flex; align-items:center; gap:7px; }
+  .sub-row p, .sub-row ul { font-size: .9rem; line-height: 1.6; }
+  .sub-row ul { list-style: none; padding-left: 0; }
+  .sub-row ul li { position: relative; padding-left: 22px; margin-bottom: 6px; }
+  .sub-row ul li::before { content: '▸'; position: absolute; left: 6px; color: var(--oro); font-weight: 800; }
+  .sub-row ul.dot li::before { content: '•'; left: 8px; color: var(--oro); font-size: 1.1rem; top: -2px; }
+  table.mini-tabla { width: 100%; border-collapse: collapse; margin: 6px 0; border: 1px solid var(--gris-borde); border-radius: 8px; overflow: hidden; font-size: .85rem; }
+  table.mini-tabla th { background: var(--azul-suave); color: var(--azul); padding: 8px 11px; text-align: left; font-size: .78rem; }
+  table.mini-tabla td { padding: 7px 11px; border-bottom: 1px solid var(--gris-borde); font-size: .84rem; }
+  table.mini-tabla tr:last-child td { border-bottom: none; }
+
+  .sub-trampa { background: var(--ambar-suave); border: 1px solid var(--ambar-borde); border-radius: 10px; padding: 11px 15px; margin-top: 10px; font-size: .88rem; }
+  .sub-trampa .st-tag { font-weight: 800; color: var(--ambar); text-transform: uppercase; letter-spacing: .07em; font-size: .72rem; display:flex; align-items:center; gap:6px; margin-bottom: 5px; }
+
+  .sub-mq { background: linear-gradient(180deg, var(--rojo-suave), #fff 100%); border: 1px solid var(--rojo-borde); border-radius: 10px; padding: 13px 16px; margin-top: 12px; }
+  .sub-mq .mq-tag { display: inline-flex; align-items: center; gap: 6px; font-size: .7rem; font-weight: 800; color: var(--rojo); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 7px; }
+  .sub-mq .mq-q { font-weight: 600; font-size: .92rem; margin-bottom: 4px; color: var(--texto); }
+  .sub-mq .mq-opts { list-style: none; margin: 8px 0 4px; padding: 0; font-size: .87rem; }
+  .sub-mq .mq-opts li { padding: 5px 0 5px 30px; position: relative; line-height: 1.45; }
+  .sub-mq .mq-opts li::before { content: attr(data-l); position:absolute; left: 0; top: 4px; width: 22px; height: 22px; background:#fff; color: var(--texto-suave); border-radius: 50%; font-weight: 800; font-size: .72rem; display: flex; align-items:center; justify-content:center; border: 1.5px solid var(--gris-borde); }
+  .sub-mq details { margin-top: 6px; }
+  .sub-mq details[open] .mq-opts li.ok::before { content: '✓'; background: var(--verde); color: #fff; border-color: var(--verde); }
+  .sub-mq details[open] .mq-opts li.ok { color: var(--verde); font-weight: 700; background: var(--verde-suave); border-radius:6px; padding-left: 30px; padding-right: 8px; }
+  .sub-mq summary { cursor: pointer; font-weight: 700; color: var(--azul); font-size: .82rem; padding: 6px 10px; background: #fff; border-radius: 7px; border: 1px solid var(--rojo-borde); display: inline-flex; align-items: center; gap: 6px; user-select: none; }
+  .sub-mq summary:hover { background: var(--rojo-suave); }
+  .sub-mq summary::-webkit-details-marker { display: none; }
+  .sub-mq summary::before { content: '▶'; font-size: .65rem; transition: transform .2s; }
+  .sub-mq details[open] summary::before { transform: rotate(90deg); }
+  .sub-mq .mq-explica { margin-top: 10px; padding: 10px 12px; background: #fff; border-left: 3px solid var(--verde); border-radius: 6px; font-size: .85rem; color: var(--texto); }
+  .sub-mq .mq-explica strong { color: var(--verde); }
+
+  ul.lista { list-style:none; margin:6px 0 16px; }
+  ul.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+  ul.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+  ol.lista-num { margin:6px 0 16px; list-style:none; counter-reset:paso; }
+  ol.lista-num li { position:relative; padding-left:38px; margin-bottom:12px; counter-increment:paso; }
+  ol.lista-num li::before { content:counter(paso); position:absolute; left:0; top:0; width:26px; height:26px; background:var(--azul); color:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; }
+
+  .box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+  .box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+  .box p:last-child { margin-bottom:0; }
+  .box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+  .box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+  .box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+  .box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+  .box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+
+  .tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+  table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+  th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+  td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:#FAF8F2; }
+
+  .caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+  .caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+  .caso-body { padding:18px 20px; }
+  .caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+  .caso-body .label:first-child { margin-top:0; }
+  .resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+
+  .trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+  .trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+  .trampa-detail { padding:16px 18px; background:var(--blanco); }
+  .trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+  .trampa-detail .t-row:last-child { margin-bottom:0; }
+  .trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+  .trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+  .trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+
+  /* Flashcards */
+  .flash-intro { text-align:center; margin-bottom: 20px; color: var(--texto-suave); }
+  .flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom: 12px; }
+  .flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+  .flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+  .flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+  .flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+  .flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+  .flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+  .flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+  .flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+  .flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+  .flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap: wrap; }
+  .flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+  .flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+  .flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+
+  /* Glosario */
+  .glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+  .glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+  .glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+  .glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+
+  /* Simulacro */
+  .quiz-intro { text-align:center; margin-bottom:18px; }
+  .quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+  .quiz-formato strong { color:var(--azul); }
+  .dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+  .tag.b { background:var(--verde-suave); color:var(--verde); }
+  .tag.i { background:var(--azul-suave); color:var(--azul); }
+  .tag.a { background:var(--rojo-suave); color:var(--rojo); }
+
+  .pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+  .pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+  .nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+  .nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+  .nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+  .nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+  .q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+  .q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+  .opciones { display:flex; flex-direction:column; gap:9px; }
+  .opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+  .opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+  .opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+  .opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+  .opcion.correcta .letra { background:var(--verde); color:#fff; }
+  .opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+  .opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+  .opcion.bloqueada { pointer-events:none; }
+  .feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+  .feedback.show { display:block; }
+  .feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+  .feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+
+  #resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+  #resultado.show { display:block; }
+  .score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+  .btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+  .btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+  .btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+
+  .resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+  .resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+  .resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+  .resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+
+  .cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+  .cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+  .cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+  .cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+
+  footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+  footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+  footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+  footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+
+  .nav-footer { display:flex; justify-content:space-between; gap:12px; margin-top:30px; }
+  .nav-footer button { flex:1; background:var(--blanco); border:1.5px solid var(--gris-borde); color:var(--azul); padding:14px; border-radius:12px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.88rem; transition:all .2s; }
+  .nav-footer button:hover:not(:disabled) { border-color:var(--oro); background:var(--oro-suave); }
+  .nav-footer button:disabled { opacity:.4; cursor:not-allowed; }
+
+  /* Boton Avanzar al final de cada seccion */
+  .advance-bar { display:flex; justify-content:flex-end; align-items:center; gap:14px; margin-top: 36px; padding-top: 22px; border-top: 2px dashed var(--oro-borde); flex-wrap: wrap; }
+  .advance-hint { color: var(--texto-suave); font-size: .82rem; font-weight: 500; }
+  .advance-btn { background: linear-gradient(135deg, var(--oro), var(--oro-claro)); color: var(--azul); border: none; padding: 14px 26px; border-radius: 12px; font-family: inherit; font-weight: 800; font-size: .92rem; cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(232,163,61,.35); }
+  .advance-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(232,163,61,.45); }
+  .advance-btn.final { background: linear-gradient(135deg, var(--verde), #16a064); color: #fff; }
+  .advance-btn.final:hover { box-shadow: 0 8px 22px rgba(26,122,74,.45); }
+
+  @media (max-width:560px) { .card{padding:21px 17px;} header{padding:34px 16px 30px;} .capa{padding:11px 16px;} }
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">ASI-COM-02</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div style="text-align:left;">
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 6 · Nivel Asistencial</div>
+  <h1>Atención y Colaboración en el Servicio Público</h1>
+  <div class="header-meta">
+    <span>📅 Día 6 de 21</span>
+    <span>⏱️ 75–90 min</span>
+    <span>🧠 Repaso interactivo</span>
+    <span>📝 Simulacro · 12 preguntas</span>
+  </div>
+</header>
+
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos CNSC</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">📝 Simulacro</button>
+</nav>
+
+<main>
+
+
+
+        <!-- 0. OBJETIVO -->
+  <section class="section visible" data-sec="0">
+    <div class="eyebrow">Objetivo de la guía</div>
+    <h2 class="sec-title">¿Qué dominarás en el Día 6?</h2>
+    <div class="card card-lead">
+      <p style="margin-bottom:0;">Hoy aprenderás <strong>cómo se relaciona</strong> un buen servidor asistencial: con los <strong>ciudadanos</strong> a los que sirve y con sus <strong>compañeros</strong> de trabajo. Verás las competencias comunes de <strong>orientación al usuario, trabajo en equipo, relaciones interpersonales y colaboración</strong>, y cómo la CNSC las evalúa con casos. La clave sigue siendo la misma: no memorizar, sino saber <em>qué harías</em>.</p>
+    </div>
+    <h3><span class="h3-chip">★</span> Al terminar serás capaz de:</h3>
+    <ul class="lista">
+      <li>Atender al ciudadano con <strong>orientación al servicio</strong>, calidez y claridad.</li>
+      <li>Trabajar en <strong>equipo</strong> aportando y respetando a los demás.</li>
+      <li>Mantener <strong>relaciones interpersonales</strong> respetuosas, incluso ante conflictos.</li>
+      <li>Demostrar <strong>colaboración</strong> con tu área sin extralimitarte.</li>
+      <li>Manejar con cuidado la <strong>información</strong> que recibes en la atención.</li>
+    </ul>
+    <div class="box info">
+      <div class="box-title">📌 Conecta con el Día 5</div>
+      <p>Ayer viste cómo trabajas <strong>tú</strong> (resultados, aprendizaje, compromiso, adaptación). Hoy sumas cómo te <strong>relacionas con otros</strong>: el ciudadano y el equipo. Juntas, son las competencias comunes que más caen en el nivel asistencial.</p>
+    </div>
+    <div class="box gold">
+      <div class="box-title">⏱️ Cómo aprovechar tus 75–90 min</div>
+      <p>Lee el Desarrollo (cada competencia en 4 capas), practica los Casos de atención y trabajo en equipo, haz el Repaso y cierra con el Simulacro situacional.</p>
+    </div>
+  </section>
+
+  <!-- 1. IMPORTANCIA -->
+  <section class="section" data-sec="1">
+    <div class="eyebrow">Importancia del tema</div>
+    <h2 class="sec-title">¿Por qué la atención y el equipo son clave?</h2>
+    <p>El nivel asistencial es, muchas veces, <strong>la cara de la entidad</strong>: recibe al ciudadano, atiende la ventanilla, apoya al equipo. Por eso la CNSC evalúa con fuerza la <strong>orientación al usuario</strong> y el <strong>trabajo en equipo</strong>: son el día a día del cargo.</p>
+    <p>Estas competencias se preguntan con <strong>casos de relación</strong>: "un ciudadano molesto…", "un compañero te pide…", "recibes información de un usuario…". La respuesta correcta casi siempre combina <strong>respeto + servicio + cuidado de la información</strong>, sin caer en el maltrato, el desinterés ni la extralimitación.</p>
+    <p>Dominar esto te da puntos seguros, porque son situaciones muy reconocibles. La trampa está en las opciones que parecen "firmes" pero son <strong>groseras</strong>, o las que parecen "serviciales" pero <strong>incumplen un procedimiento</strong> o <strong>exceden tu rol</strong>.</p>
+    <div class="box info">
+      <div class="box-title">📊 Dato clave</div>
+      <p>Orientación al usuario y trabajo en equipo son <strong>competencias comunes</strong> (Decreto 815/2018): aplican a todos los niveles. En el asistencial pesan especialmente por la naturaleza de apoyo y atención del cargo.</p>
+    </div>
+  </section>
+
+  <!-- 2. DESARROLLO -->
+  <section class="section" data-sec="2">
+    <div class="eyebrow">Desarrollo temático</div>
+    <h2 class="sec-title">Cómo se relaciona un buen servidor asistencial</h2>
+    <div class="box info">
+      <div class="box-title">📐 Cómo está construido este Desarrollo</div>
+      <p>Cada competencia en <strong>4 capas</strong>: 🟦 <strong>Definición</strong> · 🟩 <strong>Aplicación</strong> · 🟨 <strong>Ejemplo real</strong> · 🟥 <strong>Cómo lo evalúa la CNSC</strong>. Al final, las <strong>conductas observables</strong> que distinguen una buena de una mala actuación.</p>
+    </div>
+
+    <h3><span class="h3-chip">1</span> Orientación al usuario y al ciudadano</h3>
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🤝</span><span>Orientación al usuario y al ciudadano</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Es <strong>dirigir las acciones a satisfacer las necesidades del ciudadano y de los usuarios internos</strong>, brindando un servicio de calidad. El ciudadano es la razón de ser del servicio público.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Atender con amabilidad, escuchar, dar información clara y oportuna, y orientar al ciudadano hacia la solución, aunque la respuesta no dependa de ti. Trato digno e igual para todos.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un ciudadano no sabe qué documento necesita. En vez de despacharlo con un "no es aquí", le explicas con calma, le indicas a dónde dirigirse y le confirmas que entendió.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos de atención (a veces con un ciudadano molesto). <strong>Trampa:</strong> la opción "firme" pero grosera, o la que se desentiende ("no es mi área") sin orientar. Lo correcto: mantener la calma, escuchar y orientar.</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">2</span> Trabajo en equipo</h3>
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">👥</span><span>Trabajo en equipo</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Es <strong>trabajar con otros de forma coordinada</strong> para lograr objetivos comunes, aportando lo propio y respetando el rol de cada quien.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Compartir información útil, cumplir tu parte a tiempo, apoyar cuando el equipo lo necesita y resolver las diferencias de forma constructiva, sin competir ni sabotear.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>En un pico de radicación, organizas con tus compañeros quién hace qué para que el área cumpla, y avisas de un dato que les sirve a todos.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos de coordinación o desacuerdo. <strong>Trampa:</strong> la opción individualista ("yo hago lo mío y ya") o la que impone sin escuchar. Lo correcto: aportar, coordinar y dialogar.</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">3</span> Relaciones interpersonales y comunicación respetuosa</h3>
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">💬</span><span>Relaciones interpersonales</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Es <strong>establecer y mantener relaciones cordiales y respetuosas</strong> con compañeros, jefes y ciudadanos, comunicándose con claridad y sin agresividad.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Saludar, escuchar, usar un tono respetuoso, expresar desacuerdos sin ofender y mantener la calma ante situaciones tensas. El respeto no se pierde aunque el otro lo pierda.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un compañero te responde de mala forma frente a otros. En vez de contestar igual, mantienes el respeto y, si es necesario, hablas con él en privado o lo manejas con tu jefe.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos de conflicto o trato. <strong>Trampa:</strong> "responder en el mismo tono" o "ponerlo en su lugar". Lo correcto: mantener el respeto y manejar el conflicto por la vía adecuada.</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">4</span> Colaboración</h3>
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🙌</span><span>Colaboración</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Es <strong>cooperar con los demás y con el área</strong> para alcanzar metas comunes, ofreciendo apoyo dentro de las propias funciones.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Ayudar a un compañero que lo necesita, compartir la carga en momentos críticos y aportar al objetivo del área, sin descuidar tus tareas ni hacer el trabajo que no te corresponde.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un compañero nuevo no sabe usar el sistema de radicación. Le explicas lo básico y le indicas dónde encontrar la guía, sin hacerle todo el trabajo.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos de apoyo entre compañeros. <strong>Trampa:</strong> "no es mi función" (desinterés) o "le hago todo el trabajo" (que puede tapar un problema o excederte). Lo correcto: apoyar dentro de tu rol.</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">5</span> Manejo básico de la información en la atención</h3>
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🗂️</span><span>Manejo de la información en la atención</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Es <strong>recibir, registrar y custodiar con cuidado</strong> la información de los ciudadanos, protegiendo sus datos personales y usándolos solo para lo que corresponde.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No divulgar datos de los usuarios, no dejar documentos a la vista, registrar correctamente y entregar la información solo a quien tiene derecho a recibirla.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un tercero te pide datos de un trámite que no es suyo "porque es familiar". Lo correcto es no entregar información personal sin la autorización debida.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos de datos personales. <strong>Trampa:</strong> "entregar por ayudar" o "comentar el caso". Lo correcto: proteger la información (conecta con habeas data, Día 3).</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">6</span> ¿Cómo me relaciono? — conductas observables</h3>
+    <p>Esto es lo que <strong>suma</strong> y lo que <strong>resta</strong> en cada competencia de relación.</p>
+
+    <div class="sub-grupo">
+      <p class="sub-grupo-intro">🔍 <strong>Las competencias de relación en conductas</strong> — qué demuestra, qué viola y una mini-pregunta tipo CNSC.</p>
+
+      <div class="subbloque legi">
+        <div class="sub-head"><span class="sub-icon">🤝</span><span class="sub-title">Orientación al usuario</span></div>
+        <div class="sub-body">
+          <div class="sub-row"><div class="sub-label">✅ La demuestra</div><p>Escucha, da información clara, orienta con calma aunque la solución no dependa de él.</p></div>
+          <div class="sub-row"><div class="sub-label">❌ La viola</div><p>Despacha al ciudadano, responde con grosería o se desentiende ("no es mi área").</p></div>
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Mini-pregunta CNSC</div>
+            <p class="mq-q">Un ciudadano llega alterado porque lo mandaron de una oficina a otra. ¿Qué es lo más apropiado?</p>
+            <details><summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Responderle firme para que entienda que no es contigo.</li>
+                <li data-l="B" class="ok">Mantener la calma, escucharlo y orientarlo con claridad hacia la solución.</li>
+                <li data-l="C">Decirle que no es tu área y seguir con lo tuyo.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> Orientación al usuario es atender con calma y orientar, no despachar ni responder con dureza.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="subbloque ejec">
+        <div class="sub-head"><span class="sub-icon">👥</span><span class="sub-title">Trabajo en equipo</span></div>
+        <div class="sub-body">
+          <div class="sub-row"><div class="sub-label">✅ La demuestra</div><p>Comparte información útil, cumple su parte, apoya y coordina con los demás.</p></div>
+          <div class="sub-row"><div class="sub-label">❌ La viola</div><p>Trabaja aislado, retiene información o impone su criterio sin escuchar.</p></div>
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Mini-pregunta CNSC</div>
+            <p class="mq-q">Tienes un dato que le serviría a todo el equipo para evitar errores. ¿Qué haces?</p>
+            <details><summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A" class="ok">Compartirlo con el equipo para que todos lo aprovechen.</li>
+                <li data-l="B">Guardarlo para destacar tú solo.</li>
+                <li data-l="C">Usarlo solo en tus tareas y no decir nada.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: A.</strong> El trabajo en equipo implica compartir lo que beneficia el objetivo común.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="subbloque judi">
+        <div class="sub-head"><span class="sub-icon">💬</span><span class="sub-title">Relaciones interpersonales</span></div>
+        <div class="sub-body">
+          <div class="sub-row"><div class="sub-label">✅ La demuestra</div><p>Trato respetuoso y cordial; maneja los desacuerdos sin ofender y por la vía adecuada.</p></div>
+          <div class="sub-row"><div class="sub-label">❌ La viola</div><p>Responde con agresividad, descalifica o expone los conflictos frente a terceros.</p></div>
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Mini-pregunta CNSC</div>
+            <p class="mq-q">Un compañero te responde mal frente a un ciudadano. ¿Qué haces?</p>
+            <details><summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Responderle en el mismo tono para que aprenda.</li>
+                <li data-l="B">Discutir con él ahí mismo delante del ciudadano.</li>
+                <li data-l="C" class="ok">Mantener el respeto en el momento y hablarlo después en privado o con el jefe.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: C.</strong> Las relaciones interpersonales se cuidan manteniendo el respeto y manejando el conflicto por la vía adecuada.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="subbloque ctrl">
+        <div class="sub-head"><span class="sub-icon">🙌</span><span class="sub-title">Colaboración</span></div>
+        <div class="sub-body">
+          <div class="sub-row"><div class="sub-label">✅ La demuestra</div><p>Apoya a compañeros y al área dentro de su rol, en momentos críticos.</p></div>
+          <div class="sub-row"><div class="sub-label">❌ La viola</div><p>Se desentiende ("no es mi función") o hace el trabajo completo de otro tapando un problema.</p></div>
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Mini-pregunta CNSC</div>
+            <p class="mq-q">Un compañero nuevo no sabe usar el sistema. ¿Qué es lo más apropiado?</p>
+            <details><summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Hacerle tú todas sus tareas para que no se atrase.</li>
+                <li data-l="B" class="ok">Explicarle lo básico e indicarle dónde está la guía, dentro de tus posibilidades.</li>
+                <li data-l="C">Decirle que aprenda solo, que no es tu función.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> Colaborar es apoyar dentro de tu rol, sin desentenderte ni asumir el trabajo completo del otro.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. COMPARACIONES -->
+  <section class="section" data-sec="3">
+    <div class="eyebrow">Comparaciones clave</div>
+    <h2 class="sec-title">Diferencias que deciden la respuesta</h2>
+    <p>Distinciones que la CNSC convierte en distractores en los casos de atención y equipo.</p>
+
+    <h3><span class="h3-chip">A</span> Atender vs. Despachar</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Despachar (incorrecto)</th><th>Atender / orientar (correcto)</th></tr></thead>
+        <tbody>
+          <tr><td>Actitud</td><td>"No es aquí", corta rápido</td><td>Escucha y orienta con calma</td></tr>
+          <tr><td>Ante un ciudadano molesto</td><td>Responde en el mismo tono</td><td>Mantiene la calma y resuelve</td></tr>
+          <tr><td>Si no le compete</td><td>Lo deja sin salida</td><td>Lo dirige a dónde sí pueden ayudarlo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">B</span> Colaborar vs. Hacer el trabajo del otro</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Colaborar (correcto)</th><th>Asumir todo (incorrecto)</th></tr></thead>
+        <tbody>
+          <tr><td>Alcance</td><td>Apoya dentro de su rol</td><td>Hace las funciones completas del otro</td></tr>
+          <tr><td>Efecto</td><td>Suma al equipo</td><td>Puede tapar un problema o descuidar lo propio</td></tr>
+          <tr><td>Aprendizaje del otro</td><td>Lo orienta para que aprenda</td><td>Lo deja dependiente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">C</span> Firmeza respetuosa vs. Grosería</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Firmeza respetuosa (correcto)</th><th>Grosería (trampa)</th></tr></thead>
+        <tbody>
+          <tr><td>Tono</td><td>Calmado y claro</td><td>Agresivo o cortante</td></tr>
+          <tr><td>Límites</td><td>Explica la norma con respeto</td><td>"Pone en su lugar" al otro</td></tr>
+          <tr><td>Conflicto</td><td>Lo maneja en privado / con el jefe</td><td>Lo expone frente a terceros</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box warn">
+      <div class="box-title">⚠️ Trampa frecuente en atención</div>
+      <p>La opción "firme pero grosera" suele sonar como la "respuesta de carácter", pero es <strong>incorrecta</strong>. La CNSC premia el <strong>respeto y la orientación</strong>, no el maltrato, aunque el ciudadano o el compañero esté alterado.</p>
+    </div>
+  </section>
+
+  <!-- 4. CASOS -->
+  <section class="section" data-sec="4">
+    <div class="eyebrow">Casos aplicados CNSC</div>
+    <h2 class="sec-title">Practica con casos situacionales</h2>
+    <p>Imagina qué harías tú y luego revisa el análisis. Así se ven las preguntas reales de atención y equipo.</p>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 1 — Ciudadano molesto</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Un ciudadano llega alterado porque ha esperado mucho y, además, le falta un documento. Te levanta la voz.
+        <span class="label">Análisis</span>
+        Orientación al usuario y relaciones interpersonales: <strong>mantener la calma, escuchar, explicar con respeto</strong> qué necesita y cómo continuar. Responder en el mismo tono empeora todo.
+        <div class="resp-correcta"><strong>Actuación correcta:</strong> Escuchas con calma, validas su molestia, le explicas con claridad el documento que falta y cómo seguir.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 2 — Trabajo en equipo</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        El área tiene un pico de trabajo y los tiempos están justos. Tienes información que ayudaría a tus compañeros a no repetir errores.
+        <span class="label">Análisis</span>
+        Trabajo en equipo: <strong>compartir la información y coordinar</strong> para que todos cumplan, en vez de guardarla para destacar tú solo.
+        <div class="resp-correcta"><strong>Actuación correcta:</strong> Compartes el dato con el equipo y proponen organizarse para cumplir a tiempo.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 3 — Protección de datos</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Una persona te pide información del trámite de otro ciudadano, diciendo que es su familiar y que "solo quiere ayudar".
+        <span class="label">Análisis</span>
+        Manejo de la información: los <strong>datos personales se protegen</strong>. No se entregan a terceros sin autorización, por más bienintencionado que parezca.
+        <div class="resp-correcta"><strong>Actuación correcta:</strong> Explicas con amabilidad que no puedes entregar información personal de otra persona sin la autorización debida.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 4 — Conflicto con un compañero</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Un compañero te responde de mala forma frente a un ciudadano y a otros compañeros.
+        <span class="label">Análisis</span>
+        Relaciones interpersonales: <strong>mantener el respeto en el momento</strong> y resolver el desacuerdo después, en privado o con el jefe. Discutir ahí afecta el servicio y el ambiente.
+        <div class="resp-correcta"><strong>Actuación correcta:</strong> Mantienes la compostura frente al ciudadano y luego hablas el tema en privado o lo manejas con tu jefe.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 5 — Colaborar sin extralimitarse</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Un compañero nuevo te pide que le "resuelvas" un trámite que implica tomar una decisión que le corresponde al profesional del área.
+        <span class="label">Análisis</span>
+        Colaboración con límite: <strong>ayudar en lo que está en tu rol</strong> (orientarlo, mostrarle el procedimiento), pero no tomar una decisión que no compete al nivel asistencial.
+        <div class="resp-correcta"><strong>Actuación correcta:</strong> Le explicas el procedimiento y lo orientas, pero la decisión la canalizan al funcionario competente.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ERRORES -->
+  <section class="section" data-sec="5">
+    <div class="eyebrow">Errores frecuentes</div>
+    <h2 class="sec-title">Lo que NO debes hacer (ni marcar)</h2>
+    <div class="box danger"><div class="box-title">❌ Error 1 — Responder en el mismo tono al ciudadano molesto</div><p>Aunque el ciudadano falte al respeto, tú debes <strong>mantener la calma</strong>. La grosería siempre es la opción incorrecta.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 2 — Desentenderse con "no es mi área"</div><p>Aunque no sea tu competencia, debes <strong>orientar</strong> hacia dónde sí pueden ayudarlo.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 3 — Entregar datos personales a terceros</div><p>Proteger la información es obligatorio. No la entregues sin autorización, ni por "ayudar".</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 4 — Discutir un conflicto frente al ciudadano</div><p>Los desacuerdos con compañeros se manejan en privado o con el jefe, no en público.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 5 — Trabajar aislado y retener información</div><p>El trabajo en equipo exige compartir lo que beneficia el objetivo común.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 6 — "Ayudar" haciendo el trabajo completo de otro</div><p>Colaborar es apoyar dentro de tu rol, no asumir funciones que no te corresponden.</p></div>
+  </section>
+
+  <!-- 6. TIPS -->
+  <section class="section" data-sec="6">
+    <div class="eyebrow">Tips Ascenso Público</div>
+    <h2 class="sec-title">Recomendaciones para aprobar</h2>
+    <div class="box ok"><div class="box-title">💡 Tip 1 — Calma + respeto siempre ganan</div><p>Ante un ciudadano o compañero alterado, la respuesta correcta mantiene la calma y el respeto.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 2 — Orientar aunque no te competa</div><p>"No es mi área, pero lo dirijo a…" suele ser mejor que "no es aquí".</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 3 — Datos personales: proteger por defecto</div><p>Ante la duda de entregar información de un usuario, la respuesta segura es protegerla.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 4 — Conflictos: en privado y por la vía adecuada</div><p>Nunca frente al ciudadano; mejor en privado o con el jefe.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 5 — Comparte lo que ayuda al equipo</div><p>Si tienes un dato que evita errores, compartirlo demuestra trabajo en equipo.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 6 — Colabora con límite</div><p>Apoya dentro de tu rol; no asumas decisiones o funciones de otro nivel.</p></div>
+  </section>
+
+  <!-- 7. TRAMPAS -->
+  <section class="section" data-sec="7">
+    <div class="eyebrow">Preguntas trampa</div>
+    <h2 class="sec-title">Aprende a detectar distractores</h2>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 1: "Le respondo firme al ciudadano grosero para que respete."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> suena a "hacerse respetar".</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> responder con dureza viola la orientación al usuario y el respeto.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> mantener la calma, escuchar y orientar.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 2: "Le doy la información del trámite a su familiar para ayudar."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> suena servicial.</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> entregar datos personales a terceros sin autorización vulnera la protección de la información.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> no entregar información personal sin la autorización debida.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 3: "No es mi área, así que le digo que no puedo ayudarlo y sigo."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> "respeto las competencias".</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> desentenderse sin orientar viola la orientación al usuario.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> orientarlo hacia dónde sí pueden ayudarlo.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 4: "Le hago todo el trabajo al compañero nuevo para que no se atrase."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> suena solidario.</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> asumir el trabajo completo de otro lo deja dependiente y puede descuidar lo tuyo.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> orientarlo y mostrarle el procedimiento para que aprenda.</div>
+      </div>
+    </div>
+  </section>
+
+<!-- 8. REPASO INTERACTIVO (FLASHCARDS) -->
+  <section class="section" data-sec="8">
+    <div class="eyebrow">Repaso interactivo</div>
+    <h2 class="sec-title">Fija conceptos antes del simulacro</h2>
+    <p class="flash-intro">Haz clic en la tarjeta para ver la respuesta. Pasa por las 10 antes de hacer el simulacro: te ayudará a fijar los conceptos clave del Día 6.</p>
+    <div style="text-align:center;">
+      <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+    </div>
+
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <div class="label">Pregunta</div>
+          <div class="pregunta-flash" id="flashFront">¿Cuáles son las tres Ramas del Poder Público en Colombia?</div>
+          <div class="hint">👆 Clic para ver la respuesta</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="label">Respuesta</div>
+          <div class="respuesta-flash" id="flashBack">Legislativa, Ejecutiva y Judicial (art. 113 CP). Además existen órganos autónomos e independientes que no pertenecen a ninguna rama.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button id="flashPrev">← Anterior</button>
+      <button class="primary" id="flashFlip">🔄 Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </section>
+
+        <!-- 9. RESUMEN + GLOSARIO -->
+  <section class="section" data-sec="9">
+    <div class="eyebrow">Resumen ejecutivo</div>
+    <h2 class="sec-title">Repaso rápido del Día 6</h2>
+    <div class="resumen-grid">
+      <div class="resumen-item"><h4>🤝 Orientación al usuario</h4><p>Atender con calma, escuchar y orientar; trato digno e igual para todos.</p></div>
+      <div class="resumen-item"><h4>👥 Trabajo en equipo</h4><p>Compartir, coordinar y apoyar para el objetivo común.</p></div>
+      <div class="resumen-item"><h4>💬 Relaciones interpersonales</h4><p>Respeto y comunicación cordial; conflictos en privado y por la vía adecuada.</p></div>
+      <div class="resumen-item"><h4>🙌 Colaboración</h4><p>Apoyar dentro del rol, sin desentenderse ni asumir el trabajo de otro.</p></div>
+      <div class="resumen-item"><h4>🗂️ Manejo de información</h4><p>Proteger los datos personales; no entregarlos a terceros sin autorización.</p></div>
+      <div class="resumen-item"><h4>⚠️ La trampa</h4><p>"Firme pero grosero" es incorrecto. La CNSC premia el respeto y la orientación.</p></div>
+    </div>
+
+    <h3 style="margin-top:30px;"><span class="h3-chip">📖</span> Glosario rápido</h3>
+    <dl class="glosario">
+      <div class="glo-item"><dt>Orientación al usuario</dt><dd>Dirigir las acciones a satisfacer las necesidades del ciudadano con un servicio de calidad.</dd></div>
+      <div class="glo-item"><dt>Trabajo en equipo</dt><dd>Trabajar coordinadamente con otros para lograr objetivos comunes.</dd></div>
+      <div class="glo-item"><dt>Relaciones interpersonales</dt><dd>Mantener vínculos cordiales y respetuosos con compañeros, jefes y ciudadanos.</dd></div>
+      <div class="glo-item"><dt>Colaboración</dt><dd>Cooperar con los demás y con el área, dentro de las propias funciones.</dd></div>
+      <div class="glo-item"><dt>Trato digno</dt><dd>Atender a todas las personas con respeto e igualdad, sin discriminación.</dd></div>
+      <div class="glo-item"><dt>Protección de datos</dt><dd>Cuidar la información personal de los usuarios y usarla solo para lo que corresponde.</dd></div>
+    </dl>
+
+    <div class="box gold">
+      <div class="box-title">⚡ Frase para recordar</div>
+      <p>"Atiende con calma, comparte con el equipo, cuida los datos y resuelve los conflictos por la vía adecuada: esa suele ser la respuesta correcta."</p>
+    </div>
+  </section>
+
+<!-- 10. SIMULACRO -->
+  <section class="section" data-sec="10">
+    <div class="eyebrow">Simulacro diario</div>
+    <h2 class="sec-title">Pon a prueba tu Día 6</h2>
+    <div class="quiz-intro">
+      <p>12 preguntas de <strong>juicio situacional</strong>, igual que en la prueba real de la CNSC: cada una plantea un caso de tu día a día como servidor y te pide decidir la actuación más apropiada. Recibirás retroalimentación inmediata por cada opción y, al final, un reporte con los temas que debes reforzar.</p>
+    </div>
+    <div class="quiz-formato">
+      <strong>📋 Formato CNSC — Juicio situacional, única respuesta.</strong> Cada pregunta presenta un (1) <strong>contexto o caso</strong> y un enunciado del tipo "¿qué es lo más apropiado que debe hacer?", con <strong>cuatro (4) opciones de acción (A, B, C, D)</strong>, todas plausibles. Solo una (1) refleja la actuación correcta.
+      <div class="dific-tags">
+        <span class="tag b">4 Básicas</span>
+        <span class="tag i">5 Intermedias</span>
+        <span class="tag a">3 Avanzadas</span>
+      </div>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div style="text-align:center;">
+      <button class="btn gold" id="btnCalcular">Ver mi resultado</button>
+    </div>
+
+    <div id="resultado">
+      <div class="score-num" id="scoreNum">0/12</div>
+      <p id="scoreMsg" style="font-weight:600;"></p>
+      <div id="temasReforzar"></div>
+      <button class="btn" id="btnReiniciar">🔄 Reiniciar simulacro</button>
+    </div>
+
+    <div class="cierre" style="margin-top:34px;">
+      <h3>🎓 ¡Completaste el Día 6!</h3>
+      <p>Ya sabes cómo relacionarte con el ciudadano y con tu equipo: orientación al usuario, trabajo en equipo, relaciones respetuosas, colaboración y cuidado de la información. Mañana sigues con <strong>ASI-ESP-01 · Competencias del Nivel Asistencial</strong> (las competencias específicas de tu nivel).</p>
+      <p style="margin-bottom:0; font-weight:700; color:#fff;">Tu ruta personalizada hacia el empleo público avanza. 🚀</p>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">ASI-COM-02 · Día 6 · Atención y Colaboración en el Servicio Público · Biblioteca por Nivel (Asistencial) · Estándar AP-QA-001<br>© Ascenso Público. Material de preparación para concursos de mérito CNSC.</div>
+</footer>
+
+
+
+<script>
+  /* ===== NAVEGACIÓN ===== */
+  const navBtns = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('.section');
+  let current = 0;
+  const total = sections.length;
+
+  function showSection(i) {
+    current = i;
+    sections.forEach(s => s.classList.remove('visible'));
+    navBtns.forEach(b => b.classList.remove('active'));
+    sections[i].classList.add('visible');
+    navBtns[i].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateFooterBtns();
+  }
+  navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+  function updateFooterBtns() { /* legacy nav buttons removed; advance-btn handles flow */ }
+
+  /* ===== BOTÓN AVANZAR AL FINAL DE CADA SECCIÓN ===== */
+  const titulosCortos = [
+    'Importancia',     // de Objetivo → Importancia
+    'Desarrollo',      // de Importancia → Desarrollo
+    'Comparaciones',
+    'Casos CNSC',
+    'Errores',
+    'Tips',
+    'Trampas',
+    'Repaso',
+    'Resumen',
+    'Simulacro',
+    null               // última sección
+  ];
+  sections.forEach((sec, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'advance-bar';
+    if (i < sections.length - 1) {
+      bar.innerHTML = `
+        <span class="advance-hint">¿Listo para continuar?</span>
+        <button class="advance-btn" data-target="${i + 1}">Avanzar a ${titulosCortos[i]} →</button>`;
+    } else {
+      bar.innerHTML = `
+        <span class="advance-hint">🎓 Has completado todo el contenido</span>
+        <button class="advance-btn final" data-target="finalizar">✅ Finalizar Día 6</button>`;
+    }
+    sec.appendChild(bar);
+  });
+  document.querySelectorAll('.advance-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.target;
+      if (t === 'finalizar') {
+        alert('🎓 ¡Felicitaciones! Completaste el Día 6: Atención y Colaboración en el Servicio Público.\n\nMañana sigues con ASI-ESP-01 · Competencias del Nivel Asistencial.\n\nTu ruta personalizada hacia el empleo público continúa. 🚀');
+      } else {
+        showSection(parseInt(t));
+      }
+    });
+  });
+
+  /* ===== BARRA DE LECTURA ===== */
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('readbar').style.width = scrolled + '%';
+  });
+
+  /* ===== FLASHCARDS ===== */
+  const flashcards = [
+    { f:'¿Qué es la orientación al usuario y al ciudadano?', b:'Dirigir las acciones a satisfacer las necesidades del ciudadano con un servicio de calidad: escuchar, dar información clara y orientar, con trato digno e igual para todos.' },
+    { f:'Un ciudadano te reclama alterado. ¿Qué es lo correcto?', b:'Mantener la calma, escucharlo y orientarlo con respeto. Nunca responder en el mismo tono ni despacharlo.' },
+    { f:'¿Qué es el trabajo en equipo?', b:'Trabajar coordinadamente con otros para objetivos comunes: compartir información, cumplir tu parte y apoyar.' },
+    { f:'¿Qué son las relaciones interpersonales en el trabajo?', b:'Mantener trato cordial y respetuoso; expresar desacuerdos sin ofender y manejar los conflictos en privado o con el jefe.' },
+    { f:'Un compañero te responde mal frente a un ciudadano. ¿Qué haces?', b:'Mantener el respeto en el momento y hablarlo después en privado o con el jefe. No discutir frente al ciudadano.' },
+    { f:'¿Qué es colaborar con límite?', b:'Apoyar a compañeros y al área dentro de tu rol, sin desentenderte ("no es mi función") ni asumir el trabajo completo de otro.' },
+    { f:'Un tercero pide datos del trámite de otra persona. ¿Qué haces?', b:'No entregar información personal sin la autorización debida, aunque diga que es familiar o que solo quiere ayudar.' },
+    { f:'El asunto no es de tu área. ¿Te desentiendes?', b:'No. Orienta igual al ciudadano hacia la dependencia donde sí pueden ayudarlo.' },
+    { f:'Tienes un dato que evita errores a todo el equipo. ¿Qué haces?', b:'Compartirlo con el equipo (y proponerlo al jefe si aplica). Retener información va contra el trabajo en equipo.' },
+    { f:'¿Por qué "firme pero grosero" es la respuesta incorrecta?', b:'Porque viola la orientación al usuario y el respeto. La CNSC premia mantener la calma y orientar, no el maltrato.' }
+  ];
+
+  let flashIndex = 0;
+  const flashEl = document.getElementById('flashcard');
+  const flashFront = document.getElementById('flashFront');
+  const flashBack = document.getElementById('flashBack');
+  const flashCounter = document.getElementById('flashCounter');
+
+  function renderFlash() {
+    flashEl.classList.remove('flipped');
+    flashFront.textContent = flashcards[flashIndex].f;
+    flashBack.textContent = flashcards[flashIndex].b;
+    flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+  }
+  flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+  document.getElementById('flashFlip').addEventListener('click', (e) => { e.stopPropagation(); flashEl.classList.toggle('flipped'); });
+  document.getElementById('flashPrev').addEventListener('click', () => { flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length; renderFlash(); });
+  document.getElementById('flashNext').addEventListener('click', () => { flashIndex = (flashIndex + 1) % flashcards.length; renderFlash(); });
+  renderFlash();
+
+  /* ===== SIMULACRO ===== */
+  const preguntas = [
+    { nivel:'b', tema:'Orientación al usuario', ctx:'Un ciudadano se acerca confundido y no sabe a qué oficina dirigirse.', q:'¿Qué refleja la orientación al usuario?', ops:['Decirle que pregunte en información y seguir con lo tuyo','Escucharlo, identificar qué necesita y orientarlo con claridad hacia dónde dirigirse','Atenderlo solo si su asunto es de tu área','Pedirle que lea la cartelera'], correcta:1, expl:['Despacharlo sin orientar no es orientación al usuario.','✔ Escuchar, identificar la necesidad y orientar es la conducta correcta.','El servicio no se condiciona a que el asunto sea de tu área.','Remitirlo a la cartelera es desentenderse.'] },
+    { nivel:'b', tema:'Trabajo en equipo', ctx:'Tu equipo está saturado y tú ya terminaste tus tareas del momento.', q:'¿Qué demuestra trabajo en equipo?', ops:['Esperar a que te asignen algo','Tomar un descanso porque ya cumpliste','Ofrecer apoyo en lo que esté dentro de tus funciones','Hacer tareas de otra dependencia sin avisar'], correcta:2, expl:['Esperar pasivamente no aporta al objetivo común.','Cumplir lo tuyo no impide apoyar al equipo cuando puedes.','✔ Ofrecer apoyo dentro de tus funciones es trabajo en equipo.','Asumir tareas de otra dependencia sin avisar puede generar problemas.'] },
+    { nivel:'b', tema:'Relaciones interpersonales', ctx:'No estás de acuerdo con la forma en que un compañero hizo una tarea.', q:'¿Cuál es la forma más apropiada de expresarlo?', ops:['Criticarlo frente a los demás','Ignorarlo y rehacerlo a tu manera','Comentarlo con otros compañeros','Decírselo de forma respetuosa y directa, en privado'], correcta:3, expl:['Criticar en público daña la relación y el ambiente.','Rehacerlo sin hablarlo no resuelve la diferencia.','Comentarlo con terceros es chisme, no comunicación.','✔ Hablarlo directo y en privado, con respeto, es lo correcto.'] },
+    { nivel:'b', tema:'Manejo de la información', ctx:'Alguien te pide por teléfono datos del trámite de otra persona.', q:'¿Qué es lo correcto?', ops:['No entregar datos personales sin verificar la autorización','Darlos si dice que es familiar','Darlos si es algo sencillo','Darlos para agilizar el trámite'], correcta:0, expl:['✔ Los datos personales se protegen; no se entregan sin autorización.','El parentesco alegado no autoriza la entrega.','La sencillez del dato no cambia que es información personal.','Agilizar no justifica vulnerar la protección de datos.'] },
+    { nivel:'i', tema:'Orientación al usuario', ctx:'Un ciudadano alza la voz y te reclama por una demora que no dependió de ti, con otros usuarios observando.', q:'¿Cuál es la mejor actuación?', ops:['Responderle firme para que baje el tono','Pedirle que se retire si sigue así','Mantener la calma, escucharlo y explicarle con respeto cómo continuar','Llamar de una vez a seguridad'], correcta:2, expl:['Responder con dureza escala el conflicto y viola el respeto.','Pedirle que se retire no resuelve su necesidad.','✔ Calma, escucha y orientación respetuosa es lo correcto.','Seguridad es un último recurso, no la primera reacción ante un reclamo.'] },
+    { nivel:'i', tema:'Colaboración (con límite)', ctx:'Un compañero nuevo te pide que le hagas un trámite que implica una decisión que le corresponde al profesional del área.', q:'¿Qué es lo más apropiado?', ops:['Hacérselo completo para que no se atrase','Decirle que no es tu problema','Tomar tú la decisión para ayudar rápido','Orientarlo en el procedimiento y canalizar la decisión al funcionario competente'], correcta:3, expl:['Asumir su trabajo completo lo deja dependiente y puede excederte.','Desentenderse va contra la colaboración.','Tomar una decisión que no te compete es extralimitarte.','✔ Orientar y canalizar la decisión a quien tiene la competencia es lo correcto.'] },
+    { nivel:'i', tema:'Relaciones interpersonales', ctx:'Un compañero te responde de mala forma frente a un ciudadano.', q:'¿Cuál es la mejor actuación?', ops:['Responderle igual para que no se pase','Mantener la compostura en el momento y hablarlo después en privado o con el jefe','Discutirlo ahí mismo para aclarar','Quejarte con los demás compañeros'], correcta:1, expl:['Responder igual rompe el respeto y afecta el servicio.','✔ Mantener la compostura y resolver el conflicto por la vía adecuada es lo correcto.','Discutir frente al ciudadano empeora la situación.','Quejarse con terceros no resuelve y genera mal ambiente.'] },
+    { nivel:'i', tema:'Trabajo en equipo', ctx:'Descubres una forma de evitar un error común en el registro que afecta a todo el equipo.', q:'¿Qué haces?', ops:['Compartirlo con el equipo y, si aplica, proponerlo al jefe','Usarlo solo tú para destacar','No decir nada para no complicar','Esperar a que alguien más lo descubra'], correcta:0, expl:['✔ Compartir lo que beneficia el objetivo común es trabajo en equipo.','Guardarlo para destacar va contra el equipo.','Callarlo perjudica al equipo y al servicio.','Esperar pasivamente mantiene el error.'] },
+    { nivel:'i', tema:'Orientación al usuario', ctx:'Un ciudadano necesita algo que no corresponde a tu dependencia.', q:'¿Qué es lo más apropiado?', ops:['Decirle "aquí no es" y seguir con lo tuyo','Atenderlo igual y hacer tú el trámite de la otra área','Pedirle que averigüe por su cuenta','Indicarle con claridad a qué dependencia dirigirse y, si puedes, cómo llegar'], correcta:3, expl:['Despacharlo sin orientar es desentenderse.','Hacer el trámite de otra área te extralimita.','Dejarlo sin guía no es buen servicio.','✔ Orientarlo hacia la dependencia correcta es la actuación adecuada.'] },
+    { nivel:'a', tema:'Manejo de la información', ctx:'Un conocido te pide "por debajo" que le adelantes información reservada de un proceso para tener ventaja.', q:'¿Cuál es la actuación correcta?', ops:['Dársela, total es un conocido','Negarte: la información reservada no se entrega y darle ventaja sería indebido','Dársela si promete no contar','Dársela de forma parcial'], correcta:1, expl:['La cercanía no autoriza entregar información reservada.','✔ Negarse protege la información y la igualdad; darle ventaja sería una falta.','Una promesa no legaliza la entrega indebida.','Entregar "una parte" sigue siendo indebido.'] },
+    { nivel:'a', tema:'Atención y procedimiento', ctx:'Un ciudadano insiste en que le recibas su documento aunque le falta un requisito obligatorio, y se molesta.', q:'¿Qué es lo más apropiado?', ops:['Recibirlo igual para evitar el conflicto','Negarte sin darle explicación','Explicarle con respeto por qué falta el requisito y cómo completarlo, sin saltarte el procedimiento','Decirle que vuelva cuando esté de mejor ánimo'], correcta:2, expl:['Saltarte el requisito incumple el procedimiento.','Negarte sin explicar es mal servicio.','✔ Explicar con respeto y orientar cómo completarlo, sin saltarte la norma, es lo correcto.','Condicionar la atención a su ánimo no es adecuado.'] },
+    { nivel:'a', tema:'Trabajo en equipo y resultados', ctx:'En un cierre, un compañero no alcanza y te pide ayuda; tú también tienes pendientes con plazo.', q:'¿Cuál es la mejor actuación?', ops:['Coordinar prioridades (con el jefe si hace falta) y apoyar en lo que puedas sin abandonar lo tuyo','Dejar tus tareas y hacer las de él','Negarte porque tienes lo tuyo','Ayudarle en secreto sin avisar y atrasar tus entregas'], correcta:0, expl:['✔ Coordinar prioridades y apoyar sin descuidar lo propio equilibra equipo y resultados.','Abandonar lo tuyo afecta tus propios compromisos.','Negarte sin más va contra la colaboración.','Ayudar en secreto y atrasarte genera otro problema.'] }
+  ];
+
+  const quizDiv = document.getElementById('quiz');
+  let respondidas = {};
+
+  function renderQuiz() {
+    respondidas = {};
+    quizDiv.innerHTML = '';
+    const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+    preguntas.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'pregunta';
+      let opsHtml = '';
+      p.ops.forEach((op, j) => {
+        const letra = String.fromCharCode(65 + j);
+        opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}"><span class="letra">${letra}</span><span>${op}</span></div>`;
+      });
+      const ctxHtml = p.ctx ? `<div class="q-contexto">${p.ctx}</div>` : '';
+      card.innerHTML = `
+        <div class="q-num">Pregunta ${idx+1} <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span></div>
+        ${ctxHtml}
+        <div class="q-texto">${p.q}</div>
+        <div class="opciones">${opsHtml}</div>
+        <div class="feedback" id="fb-${idx}"></div>`;
+      quizDiv.appendChild(card);
+    });
+
+    document.querySelectorAll('.opcion').forEach(op => {
+      op.addEventListener('click', function() {
+        const qi = +this.dataset.q;
+        const oi = +this.dataset.op;
+        if (respondidas[qi] !== undefined) return;
+        respondidas[qi] = oi;
+        const p = preguntas[qi];
+        const cont = this.parentElement;
+        cont.querySelectorAll('.opcion').forEach((o, k) => {
+          o.classList.add('bloqueada');
+          if (k === p.correcta) o.classList.add('correcta');
+        });
+        const fb = document.getElementById('fb-' + qi);
+        const letraCorrecta = String.fromCharCode(65 + p.correcta);
+        if (oi === p.correcta) {
+          fb.className = 'feedback ok show';
+          fb.innerHTML = '✅ <strong>¡Correcto!</strong> ' + p.expl[p.correcta];
+        } else {
+          this.classList.add('incorrecta');
+          fb.className = 'feedback no show';
+          fb.innerHTML = '❌ <strong>Incorrecto.</strong> Tu opción: ' + p.expl[oi] +
+            '<br><br>✅ <strong>La respuesta correcta es ' + letraCorrecta + ':</strong> ' + p.expl[p.correcta];
+        }
+      });
+    });
+  }
+
+  document.getElementById('btnCalcular').addEventListener('click', () => {
+    let correctas = 0;
+    const temasFallados = [];
+    preguntas.forEach((p, i) => {
+      if (respondidas[i] === p.correcta) { correctas++; }
+      else { if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema); }
+    });
+    const res = document.getElementById('resultado');
+    document.getElementById('scoreNum').textContent = correctas + '/12';
+    let msg;
+    const pct = correctas / 12;
+    if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas la atención y la colaboración. Listo para el Día 7.';
+    else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados antes de avanzar.';
+    else msg = '📚 Vas por buen camino. Repasa los temas marcados y repite el simulacro. ¡Tú puedes!';
+    document.getElementById('scoreMsg').textContent = msg;
+
+    const cont = document.getElementById('temasReforzar');
+    if (temasFallados.length === 0) {
+      cont.innerHTML = '<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. Tienes el Día 6 dominado.</p></div>';
+    } else {
+      let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+      cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+        '<div class="box-title">📌 Temas que debes reforzar</div>' +
+        '<p>Fallaste preguntas de estos temas. Vuelve a la sección <strong>Desarrollo</strong> y repásalos antes de continuar:</p>' +
+        '<ul class="lista" style="margin-bottom:0;">' + items + '</ul></div>';
+    }
+    res.classList.add('show');
+    res.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnReiniciar').addEventListener('click', () => {
+    renderQuiz();
+    document.getElementById('resultado').classList.remove('show');
+    window.scrollTo({ top: document.querySelector('[data-sec="10"]').offsetTop, behavior:'smooth' });
+  });
+
+  renderQuiz();
+  updateFooterBtns();
+</script>
+</body>
+</html>
