@@ -5,7 +5,7 @@
 
 > Registro maestro de guías del curso de preparación CNSC. Fuente de verdad de la biblioteca: cada guía definitiva se registra aquí con su código, día, categoría, estado y temas. Reemplaza al archivo BIBLIOTECA.xlsx.
 
-**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 8 ✅
+**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 9 ✅
 
 > 🧱 **Cómo está organizada:** la fuente de verdad es `biblioteca.json`. Este índice (`BIBLIOTECA.md`) se genera con `generar_indice.py`. Para añadir o publicar una guía, edita el JSON y regenera el índice.
 
@@ -20,7 +20,7 @@
 | ✅ | 4 | [`GEN-03`](../guias/GEN-03-marco-institucional.html) | Marco Institucional | General | — |
 | ✅ | 5 | [`ASI-COM-01`](../guias/ASI-COM-01-cumplimiento-desarrollo-laboral.html) | Cumplimiento y Desarrollo Laboral (Nivel Asistencial) | Por Nivel | Asistencial |
 | ⬜ | 5 | `PRO-COM-01` | Gestión Profesional y Cumplimiento Institucional (Nivel Profesional) | Por Nivel | Profesional |
-| ⬜ | 5 | `TEC-COM-01` | Desempeño Individual y Cumplimiento Institucional (Nivel Técnico) | Por Nivel | Técnico |
+| ✅ | 5 | [`TEC-COM-01`](../guias/TEC-COM-01-desempeno-cumplimiento.html) | Desempeño Individual y Cumplimiento Institucional (Nivel Técnico) | Por Nivel | Técnico |
 | ✅ | 6 | [`ASI-COM-02`](../guias/ASI-COM-02-atencion-colaboracion.html) | Atención y Colaboración en el Servicio Público (Nivel Asistencial) | Por Nivel | Asistencial |
 | ⬜ | 6 | `PRO-COM-02` | Servicio al Ciudadano y Articulación Institucional (Nivel Profesional) | Por Nivel | Profesional |
 | ⬜ | 6 | `TEC-COM-02` | Relación con Usuarios y Trabajo Colaborativo (Nivel Técnico) | Por Nivel | Técnico |
@@ -145,8 +145,8 @@ Temas:
 
 #### 🪜 Nivel Técnico
 
-#### ⬜ TEC-COM-01 · Desempeño Individual y Cumplimiento Institucional (Nivel Técnico)
-**Día:** 5 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ TEC-COM-01 · Desempeño Individual y Cumplimiento Institucional (Nivel Técnico)
+**Día:** 5 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/TEC-COM-01-desempeno-cumplimiento.html`](../guias/TEC-COM-01-desempeno-cumplimiento.html)
 
 Temas:
 - Competencias comunes (Dec. 815/2018): ¿cómo trabajo yo?
