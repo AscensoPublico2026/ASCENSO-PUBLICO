@@ -5,7 +5,7 @@
 
 > Registro maestro de guías del curso de preparación CNSC. Fuente de verdad de la biblioteca: cada guía definitiva se registra aquí con su código, día, categoría, estado y temas. Reemplaza al archivo BIBLIOTECA.xlsx.
 
-**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 5 ✅
+**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 8 ✅
 
 > 🧱 **Cómo está organizada:** la fuente de verdad es `biblioteca.json`. Este índice (`BIBLIOTECA.md`) se genera con `generar_indice.py`. Para añadir o publicar una guía, edita el JSON y regenera el índice.
 
@@ -21,13 +21,13 @@
 | ✅ | 5 | [`ASI-COM-01`](../guias/ASI-COM-01-cumplimiento-desarrollo-laboral.html) | Cumplimiento y Desarrollo Laboral (Nivel Asistencial) | Por Nivel | Asistencial |
 | ⬜ | 5 | `PRO-COM-01` | Gestión Profesional y Cumplimiento Institucional (Nivel Profesional) | Por Nivel | Profesional |
 | ⬜ | 5 | `TEC-COM-01` | Desempeño Individual y Cumplimiento Institucional (Nivel Técnico) | Por Nivel | Técnico |
-| ⬜ | 6 | `ASI-COM-02` | Atención y Colaboración en el Servicio Público (Nivel Asistencial) | Por Nivel | Asistencial |
+| ✅ | 6 | [`ASI-COM-02`](../guias/ASI-COM-02-atencion-colaboracion.html) | Atención y Colaboración en el Servicio Público (Nivel Asistencial) | Por Nivel | Asistencial |
 | ⬜ | 6 | `PRO-COM-02` | Servicio al Ciudadano y Articulación Institucional (Nivel Profesional) | Por Nivel | Profesional |
 | ⬜ | 6 | `TEC-COM-02` | Relación con Usuarios y Trabajo Colaborativo (Nivel Técnico) | Por Nivel | Técnico |
-| ⬜ | 7 | `ASI-ESP-01` | Competencias del Nivel Asistencial | Por Nivel | Asistencial |
+| ✅ | 7 | [`ASI-ESP-01`](../guias/ASI-ESP-01-competencias-nivel-asistencial.html) | Competencias del Nivel Asistencial | Por Nivel | Asistencial |
 | ⬜ | 7 | `PRO-ESP-01` | Competencias del Nivel Profesional | Por Nivel | Profesional |
 | ⬜ | 7 | `TEC-ESP-01` | Competencias del Nivel Técnico | Por Nivel | Técnico |
-| ⬜ | 8 | `ASI-ESP-02` | Alcance del Cargo Asistencial | Por Nivel | Asistencial |
+| ✅ | 8 | [`ASI-ESP-02`](../guias/ASI-ESP-02-alcance-cargo-asistencial.html) | Alcance del Cargo Asistencial | Por Nivel | Asistencial |
 | ⬜ | 8 | `PRO-ESP-02` | Alcance del Cargo Profesional | Por Nivel | Profesional |
 | ⬜ | 8 | `TEC-ESP-02` | Alcance del Cargo Técnico | Por Nivel | Técnico |
 | ⬜ | — | `BON-01` | Estrategia CNSC (Bonus) | Bonus | — |
@@ -112,8 +112,8 @@ Temas:
 - Adaptación al cambio en el entorno público
 - Casos situacionales y simulacro
 
-#### ⬜ ASI-COM-02 · Atención y Colaboración en el Servicio Público (Nivel Asistencial)
-**Día:** 6 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ ASI-COM-02 · Atención y Colaboración en el Servicio Público (Nivel Asistencial)
+**Día:** 6 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/ASI-COM-02-atencion-colaboracion.html`](../guias/ASI-COM-02-atencion-colaboracion.html)
 
 Temas:
 - Orientación al usuario y al ciudadano (¿cómo me relaciono?)
@@ -122,8 +122,8 @@ Temas:
 - Manejo básico de la información en la atención
 - Casos situacionales y simulacro
 
-#### ⬜ ASI-ESP-01 · Competencias del Nivel Asistencial
-**Día:** 7 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ ASI-ESP-01 · Competencias del Nivel Asistencial
+**Día:** 7 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/ASI-ESP-01-competencias-nivel-asistencial.html`](../guias/ASI-ESP-01-competencias-nivel-asistencial.html)
 
 Temas:
 - Manejo de la información: protección y uso adecuado de datos
@@ -132,8 +132,8 @@ Temas:
 - Colaboración como competencia específica del nivel
 - Casos CNSC, distractores frecuentes y tips
 
-#### ⬜ ASI-ESP-02 · Alcance del Cargo Asistencial
-**Día:** 8 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ ASI-ESP-02 · Alcance del Cargo Asistencial
+**Día:** 8 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/ASI-ESP-02-alcance-cargo-asistencial.html`](../guias/ASI-ESP-02-alcance-cargo-asistencial.html)
 
 Temas:
 - Rol del nivel asistencial (Decreto 1083/2015)
