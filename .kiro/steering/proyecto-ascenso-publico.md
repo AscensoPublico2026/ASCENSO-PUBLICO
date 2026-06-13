@@ -74,11 +74,13 @@ Cada concepto importante se presenta en este orden:
 ### Patrón "concepto madre + sub-bloques"
 Para conceptos con 3+ sub-componentes evaluables (ramas del poder, órganos autónomos, PQRSD, acciones constitucionales): usar `<details class="sb sb-{color}">` con summary, body, trampa CNSC y mini-pregunta tipo CNSC desplegable.
 
-### Simulacro — formato CNSC real
-- **12 preguntas** total.
-- Distribución: **4 básicas + 5 intermedias + 3 avanzadas**.
+### Simulacro — formato CNSC real (JUICIO SITUACIONAL)
+- **Tipo: juicio situacional.** Cada pregunta plantea un **caso/contexto** real del día a día del servidor y un enunciado tipo *"¿qué es lo más apropiado que debe hacer?"*. **NO se pregunta la norma de memoria** (nada de "¿qué dice la ley X?"); se evalúa **aplicar el criterio** a la situación, tal como en la prueba real de competencias de la CNSC.
+- Las 4 opciones son **cursos de acción plausibles**; solo uno refleja la actuación correcta.
+- **12 preguntas** total. Distribución: **4 básicas + 5 intermedias + 3 avanzadas**.
 - **4 opciones (A, B, C, D)** — formato real CNSC. **NUNCA usar 3 opciones.**
-- **Retroalimentación por opción**: cada `expl[i]` explica por qué esa opción es correcta o incorrecta.
+- **Todas las preguntas llevan `ctx`** (el caso situacional).
+- **Retroalimentación por opción** (`expl[i]`): explica por qué cada acción es correcta o incorrecta; **aquí sí se cita la norma** (artículo/ley) para reforzar el aprendizaje.
 - **Cada pregunta tiene `tema`** para alimentar la lista de "Temas a reforzar" al final.
 - **Respuestas correctas distribuidas sin patrón visible.**
 
@@ -95,12 +97,14 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 | 1 | INTRO-01 | Bienvenida personalizada (creada **bajo demanda** al comprar) |
 | 2 | GEN-01 | Biblioteca General — Estado y Función Pública ✅ |
 | 3 | GEN-02 | Biblioteca General — Relación Estado-Ciudadano ✅ |
-| 4 | GEN-03 | Biblioteca General — Marco Institucional (próxima) |
+| 4 | GEN-03 | Biblioteca General — Marco Institucional ✅ |
 | 5–8 | varía | Biblioteca por Nivel (Asistencial / Técnico / Profesional) |
 | 9–20 | varía | Biblioteca Funcional (según funciones del cargo) |
 | 21 | SIM-001 | Simulacro Integral Final |
 
 **Atención al numerar GEN:** GEN-01 = Día 2 (no Día 1). La introducción CNSC quedó **absorbida** dentro de INTRO-00.
+
+> **Ubicación de las guías:** todas las guías HTML definitivas viven en la carpeta **`guias/`**. Referencian el favicon como `../brand/favicon.svg`. Las guías heredadas antiguas fueron retiradas del repo (su historial queda en los PRs).
 
 ### 4 bibliotecas
 - **A) General** — fija para todos los clientes (3 GEN + INTRO-00)
@@ -118,7 +122,7 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 - Si falta información para una guía nueva, **preguntar** los 8 datos requeridos (ver §1 de `PLANTILLA-GUIA.md`). No inventar.
 
 ### Al crear/modificar guías
-- Tomar `GEN-01-estado-funcion-publica.html` (rama `feat/gen-01-profundizacion`, PR #2) como **base de referencia**: es la versión más completa y aprobada.
+- Tomar `guias/GEN-01-estado-funcion-publica.html` como **base de referencia**: es la versión más completa y aprobada. (La vía rápida: copiarla, reemplazar metadata + contenido por sección + arrays JS; ver `PLANTILLA-GUIA.md` §4 Opción A.)
 - Si una guía nueva supera ~80 KB, **crear el archivo vacío y agregar contenido por bloques** (`fs_write` inicial + `fs_append` sucesivos). Más confiable que un único `fs_write` gigante.
 - Para ediciones puntuales en archivos existentes, usar **`str_replace`** (más estable que reescribir todo).
 - **Validar después de cada cambio mayor:** etiquetas balanceadas, conteo de elementos, abrir mentalmente el flujo del usuario.
@@ -127,7 +131,7 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 1. Logo V2.
 2. Paleta 60-30-10 (azul + dorado + crema).
 3. Tipografías Source Serif 4 + Plus Jakarta Sans.
-4. Simulacro 12 preguntas / 4 opciones / retroalimentación por opción / temas a reforzar.
+4. Simulacro **de juicio situacional**: 12 preguntas / 4 opciones / retroalimentación por opción / temas a reforzar. (Casos, no memoria de la norma.)
 5. 11 secciones obligatorias.
 6. Patrón 4 capas + sub-bloques.
 7. Botón "Avanzar" al final de cada sección.
@@ -152,6 +156,7 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 ## 6. Anti-patrones a evitar
 
 ❌ Usar 3 opciones en el simulacro (es 4).
+❌ Simulacro con preguntas de memoria de la norma ("¿qué dice la ley X?") — debe ser **juicio situacional** (un caso + "¿qué es lo más apropiado?").
 ❌ Capas de 1 línea (sensación "perdí mi dinero").
 ❌ Capas de 7+ párrafos (fatiga lectora).
 ❌ Cambiar la paleta `:root`.
@@ -186,16 +191,19 @@ Al inicio de cualquier sesión sobre este repo:
 
 ---
 
-## 8. Pendientes actuales (al 12 de junio de 2026)
+## 8. Pendientes actuales (al 13 de junio de 2026)
+
+### Estado de la Biblioteca General — ✅ COMPLETA
+INTRO-00 + GEN-01 + GEN-02 + GEN-03 listas (Días 1–4). El módulo general está terminado.
 
 ### Próximo paso inmediato
-- 🔜 **GEN-03 · Marco Institucional (Día 4)** — última guía de la Biblioteca General.
+- 🔜 **Biblioteca por Nivel (Día 5+)** — empezar por el nivel que se necesite (Asistencial / Técnico / Profesional).
 
 ### En cola (orden de prioridad)
-1. Generador de Guías (prompt) — desbloquea creación masiva.
-2. 4 guías Nivel Técnico (TEC-COM-01/02, TEC-ESP-01/02).
-3. 4 guías Nivel Asistencial (ASI-COM-01/02, ASI-ESP-01/02).
-4. 4 guías Nivel Profesional (PRO-COM-01/02, PRO-ESP-01/02).
+1. 4 guías Nivel Técnico (TEC-COM-01/02, TEC-ESP-01/02).
+2. 4 guías Nivel Asistencial (ASI-COM-01/02, ASI-ESP-01/02).
+3. 4 guías Nivel Profesional (PRO-COM-01/02, PRO-ESP-01/02).
+4. Generador de Guías (prompt) — desbloquea creación masiva de guías funcionales.
 5. SIM-001 — Simulacro Integral Final.
 6. Plataforma web (landing, registro, panel estudiante, panel admin).
 

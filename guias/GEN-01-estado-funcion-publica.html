@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEN-01 · Día 2 · Estado y Función Pública — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+    --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+    --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+    --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+    --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+    --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+    --texto:#2A3441; --texto-suave:#5B6675;
+    --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--crema); color:var(--texto); line-height:1.7; -webkit-font-smoothing:antialiased; }
+
+  #readbar { position:fixed; top:0; left:0; height:4px; width:0%; background:linear-gradient(90deg,var(--oro),var(--oro-claro)); z-index:999; transition:width .1s linear; }
+
+  header { background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%); color:var(--blanco); padding:42px 20px 34px; text-align:center; position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%); }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:5px; background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%); }
+  .doc-ref { position:absolute; top:16px; right:18px; z-index:3; font-size:.68rem; font-weight:700; letter-spacing:.16em; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.22); padding:4px 11px; border-radius:7px; text-transform:uppercase; }
+  .brand { display:inline-flex; align-items:center; gap:13px; position:relative; z-index:2; }
+  .brand-logo { width:50px; height:50px; border-radius:13px; background:linear-gradient(135deg,var(--oro-claro),var(--oro)); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(232,163,61,.4); flex-shrink:0; }
+  .brand-name { font-size:1.6rem; font-weight:800; letter-spacing:.01em; line-height:1; }
+  .brand-slogan { font-size:.82rem; font-weight:400; color:rgba(255,255,255,.78); margin-top:4px; }
+  .kicker { display:inline-flex; align-items:center; gap:11px; margin:24px 0 12px; position:relative; z-index:2; color:var(--oro-claro); font-weight:700; font-size:.78rem; letter-spacing:.2em; text-transform:uppercase; }
+  .kicker::before,.kicker::after { content:''; width:26px; height:2px; border-radius:2px; background:linear-gradient(90deg,transparent,var(--oro),transparent); }
+  header h1 { font-family:'Source Serif 4',serif; font-size:clamp(1.7rem,4.5vw,2.6rem); font-weight:700; line-height:1.16; max-width:740px; margin:0 auto; position:relative; z-index:2; }
+  .header-meta { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:22px; position:relative; z-index:2; }
+  .header-meta span { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.14); padding:7px 15px; border-radius:9px; font-size:.8rem; font-weight:500; }
+
+  nav { position:sticky; top:0; z-index:50; background:var(--azul); display:flex; gap:5px; padding:11px 12px; overflow-x:auto; scrollbar-width:thin; box-shadow:0 4px 18px rgba(10,42,94,.22); }
+  nav::-webkit-scrollbar { height:5px; }
+  nav::-webkit-scrollbar-thumb { background:var(--oro); border-radius:10px; }
+  nav button { background:rgba(255,255,255,.07); color:rgba(255,255,255,.78); border:none; padding:9px 16px; border-radius:9px; cursor:pointer; font-family:inherit; font-size:.84rem; font-weight:600; white-space:nowrap; transition:all .2s; flex-shrink:0; }
+  nav button:hover { background:rgba(255,255,255,.16); color:#fff; }
+  nav button.active { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); box-shadow:0 4px 12px rgba(232,163,61,.4); }
+
+  main { max-width:880px; margin:0 auto; padding:36px 18px 80px; }
+  .section { display:none; animation:fade .4s ease; }
+  .section.visible { display:block; }
+  @keyframes fade { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:none;} }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--ambar); font-weight:700; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:12px; }
+  .eyebrow::before { content:''; width:26px; height:3px; background:linear-gradient(90deg,var(--oro),var(--oro-claro)); border-radius:3px; }
+  h2.sec-title { font-family:'Source Serif 4',serif; font-size:clamp(1.55rem,3.6vw,2.1rem); color:var(--azul); line-height:1.2; margin-bottom:20px; }
+  h3 { font-size:1.2rem; color:var(--azul); margin:28px 0 11px; font-weight:700; display:flex; align-items:center; gap:9px; }
+  h3 .h3-chip { width:30px; height:30px; border-radius:9px; flex-shrink:0; background:var(--azul-suave); color:var(--azul-claro); display:inline-flex; align-items:center; justify-content:center; font-size:.9rem; font-weight:800; }
+  h4 { color: var(--azul); font-size: 1rem; margin: 16px 0 8px; font-weight: 700; }
+  p { margin-bottom:14px; color:var(--texto); }
+  strong { color:var(--azul); font-weight:700; }
+
+  .card { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:var(--radio); padding:26px; margin-bottom:20px; box-shadow:var(--sombra); }
+  .card-lead { border:none; border-left:6px solid var(--oro); background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 75%); }
+
+  /* Concepto en 4 capas — estilo cálido alineado con el resto de la guía */
+  .concepto { background: linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+  .concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom: 2px dashed var(--oro-borde); }
+  .concepto-head .ch-icon { font-size:1.4rem; }
+  .concepto-body { padding: 6px 14px 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .capa { padding: 13px 15px; border-radius: 12px; display:flex; gap:11px; align-items:flex-start; background: var(--blanco); border: 1px solid var(--gris-borde); transition: transform .15s; }
+  .capa:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+  .capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+  .capa-icon.def { background: var(--azul-suave); }
+  .capa-icon.apl { background: var(--verde-suave); }
+  .capa-icon.eje { background: var(--oro-suave); }
+  .capa-icon.cnsc { background: var(--rojo-suave); }
+  .capa-content { flex:1; }
+  .capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+  .capa.cap-def .label { color: var(--azul); }
+  .capa.cap-apl .label { color: var(--verde); }
+  .capa.cap-eje .label { color: var(--ambar); }
+  .capa.cap-cnsc .label { color: var(--rojo); }
+  .capa-content p { margin-bottom:0; font-size:.9rem; line-height: 1.55; }
+
+  /* Sub-bloques: profundizacion por sub-componente (las 3 ramas, los 4 organos autonomos, etc.) */
+  .sub-grupo { margin: 14px 0 22px; }
+  .sub-grupo-intro { font-size:.86rem; color: var(--texto-suave); margin: 8px 4px 12px; font-style: italic; }
+  .subbloque { background: var(--blanco); border:1px solid var(--gris-borde); border-left: 5px solid var(--azul-claro); border-radius:14px; margin: 12px 0; overflow:hidden; box-shadow: var(--sombra); transition: transform .15s; }
+  .subbloque:hover { transform: translateY(-2px); }
+  .subbloque.legi { border-left-color: #6E5BD0; }
+  .subbloque.ejec { border-left-color: var(--oro); }
+  .subbloque.judi { border-left-color: var(--verde); }
+  .subbloque.ctrl { border-left-color: var(--rojo); }
+  .subbloque.elec { border-left-color: #1A8AA8; }
+  .subbloque.banca { border-left-color: var(--ambar); }
+  .subbloque.otros { border-left-color: var(--azul-claro); }
+  .sub-head { background: linear-gradient(100deg, var(--azul-suave), var(--blanco) 75%); padding: 14px 18px; display:flex; align-items:center; gap:12px; border-bottom: 1px solid var(--azul-borde); flex-wrap: wrap; }
+  .sub-head .sub-icon { font-size: 1.55rem; line-height:1; }
+  .sub-head .sub-title { font-weight: 800; color: var(--azul); font-size: 1.06rem; flex: 1; min-width: 160px; }
+  .sub-head .sub-art { font-size: .7rem; font-weight: 700; color: var(--azul-claro); background: #fff; border: 1px solid var(--azul-borde); padding: 4px 10px; border-radius: 7px; letter-spacing: .04em; white-space: nowrap; }
+  .sub-body { padding: 16px 18px 18px; }
+  .sub-row { margin-bottom: 14px; }
+  .sub-row:last-child { margin-bottom: 0; }
+  .sub-label { font-weight: 800; color: var(--azul); margin-bottom: 7px; font-size: .9rem; display:flex; align-items:center; gap:7px; }
+  .sub-row p, .sub-row ul { font-size: .9rem; line-height: 1.6; }
+  .sub-row ul { list-style: none; padding-left: 0; }
+  .sub-row ul li { position: relative; padding-left: 22px; margin-bottom: 6px; }
+  .sub-row ul li::before { content: '▸'; position: absolute; left: 6px; color: var(--oro); font-weight: 800; }
+  .sub-row ul.dot li::before { content: '•'; left: 8px; color: var(--oro); font-size: 1.1rem; top: -2px; }
+  table.mini-tabla { width: 100%; border-collapse: collapse; margin: 6px 0; border: 1px solid var(--gris-borde); border-radius: 8px; overflow: hidden; font-size: .85rem; }
+  table.mini-tabla th { background: var(--azul-suave); color: var(--azul); padding: 8px 11px; text-align: left; font-size: .78rem; }
+  table.mini-tabla td { padding: 7px 11px; border-bottom: 1px solid var(--gris-borde); font-size: .84rem; }
+  table.mini-tabla tr:last-child td { border-bottom: none; }
+
+  .sub-trampa { background: var(--ambar-suave); border: 1px solid var(--ambar-borde); border-radius: 10px; padding: 11px 15px; margin-top: 10px; font-size: .88rem; }
+  .sub-trampa .st-tag { font-weight: 800; color: var(--ambar); text-transform: uppercase; letter-spacing: .07em; font-size: .72rem; display:flex; align-items:center; gap:6px; margin-bottom: 5px; }
+
+  .sub-mq { background: linear-gradient(180deg, var(--rojo-suave), #fff 100%); border: 1px solid var(--rojo-borde); border-radius: 10px; padding: 13px 16px; margin-top: 12px; }
+  .sub-mq .mq-tag { display: inline-flex; align-items: center; gap: 6px; font-size: .7rem; font-weight: 800; color: var(--rojo); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 7px; }
+  .sub-mq .mq-q { font-weight: 600; font-size: .92rem; margin-bottom: 4px; color: var(--texto); }
+  .sub-mq .mq-opts { list-style: none; margin: 8px 0 4px; padding: 0; font-size: .87rem; }
+  .sub-mq .mq-opts li { padding: 5px 0 5px 30px; position: relative; line-height: 1.45; }
+  .sub-mq .mq-opts li::before { content: attr(data-l); position:absolute; left: 0; top: 4px; width: 22px; height: 22px; background:#fff; color: var(--texto-suave); border-radius: 50%; font-weight: 800; font-size: .72rem; display: flex; align-items:center; justify-content:center; border: 1.5px solid var(--gris-borde); }
+  .sub-mq details { margin-top: 6px; }
+  .sub-mq details[open] .mq-opts li.ok::before { content: '✓'; background: var(--verde); color: #fff; border-color: var(--verde); }
+  .sub-mq details[open] .mq-opts li.ok { color: var(--verde); font-weight: 700; background: var(--verde-suave); border-radius:6px; padding-left: 30px; padding-right: 8px; }
+  .sub-mq summary { cursor: pointer; font-weight: 700; color: var(--azul); font-size: .82rem; padding: 6px 10px; background: #fff; border-radius: 7px; border: 1px solid var(--rojo-borde); display: inline-flex; align-items: center; gap: 6px; user-select: none; }
+  .sub-mq summary:hover { background: var(--rojo-suave); }
+  .sub-mq summary::-webkit-details-marker { display: none; }
+  .sub-mq summary::before { content: '▶'; font-size: .65rem; transition: transform .2s; }
+  .sub-mq details[open] summary::before { transform: rotate(90deg); }
+  .sub-mq .mq-explica { margin-top: 10px; padding: 10px 12px; background: #fff; border-left: 3px solid var(--verde); border-radius: 6px; font-size: .85rem; color: var(--texto); }
+  .sub-mq .mq-explica strong { color: var(--verde); }
+
+  ul.lista { list-style:none; margin:6px 0 16px; }
+  ul.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+  ul.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+  ol.lista-num { margin:6px 0 16px; list-style:none; counter-reset:paso; }
+  ol.lista-num li { position:relative; padding-left:38px; margin-bottom:12px; counter-increment:paso; }
+  ol.lista-num li::before { content:counter(paso); position:absolute; left:0; top:0; width:26px; height:26px; background:var(--azul); color:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; }
+
+  .box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+  .box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+  .box p:last-child { margin-bottom:0; }
+  .box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+  .box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+  .box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+  .box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+  .box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+
+  .tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+  table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+  th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+  td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:#FAF8F2; }
+
+  .caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+  .caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+  .caso-body { padding:18px 20px; }
+  .caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+  .caso-body .label:first-child { margin-top:0; }
+  .resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+
+  .trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+  .trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+  .trampa-detail { padding:16px 18px; background:var(--blanco); }
+  .trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+  .trampa-detail .t-row:last-child { margin-bottom:0; }
+  .trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+  .trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+  .trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+
+  /* Flashcards */
+  .flash-intro { text-align:center; margin-bottom: 20px; color: var(--texto-suave); }
+  .flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom: 12px; }
+  .flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+  .flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+  .flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+  .flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+  .flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+  .flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+  .flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+  .flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+  .flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+  .flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap: wrap; }
+  .flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+  .flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+  .flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+
+  /* Glosario */
+  .glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+  .glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+  .glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+  .glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+
+  /* Simulacro */
+  .quiz-intro { text-align:center; margin-bottom:18px; }
+  .quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+  .quiz-formato strong { color:var(--azul); }
+  .dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+  .tag.b { background:var(--verde-suave); color:var(--verde); }
+  .tag.i { background:var(--azul-suave); color:var(--azul); }
+  .tag.a { background:var(--rojo-suave); color:var(--rojo); }
+
+  .pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+  .pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+  .nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+  .nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+  .nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+  .nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+  .q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+  .q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+  .opciones { display:flex; flex-direction:column; gap:9px; }
+  .opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+  .opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+  .opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+  .opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+  .opcion.correcta .letra { background:var(--verde); color:#fff; }
+  .opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+  .opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+  .opcion.bloqueada { pointer-events:none; }
+  .feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+  .feedback.show { display:block; }
+  .feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+  .feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+
+  #resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+  #resultado.show { display:block; }
+  .score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+  .btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+  .btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+  .btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+
+  .resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+  .resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+  .resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+  .resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+
+  .cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+  .cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+  .cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+  .cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+
+  footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+  footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+  footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+  footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+
+  .nav-footer { display:flex; justify-content:space-between; gap:12px; margin-top:30px; }
+  .nav-footer button { flex:1; background:var(--blanco); border:1.5px solid var(--gris-borde); color:var(--azul); padding:14px; border-radius:12px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.88rem; transition:all .2s; }
+  .nav-footer button:hover:not(:disabled) { border-color:var(--oro); background:var(--oro-suave); }
+  .nav-footer button:disabled { opacity:.4; cursor:not-allowed; }
+
+  /* Boton Avanzar al final de cada seccion */
+  .advance-bar { display:flex; justify-content:flex-end; align-items:center; gap:14px; margin-top: 36px; padding-top: 22px; border-top: 2px dashed var(--oro-borde); flex-wrap: wrap; }
+  .advance-hint { color: var(--texto-suave); font-size: .82rem; font-weight: 500; }
+  .advance-btn { background: linear-gradient(135deg, var(--oro), var(--oro-claro)); color: var(--azul); border: none; padding: 14px 26px; border-radius: 12px; font-family: inherit; font-weight: 800; font-size: .92rem; cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(232,163,61,.35); }
+  .advance-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(232,163,61,.45); }
+  .advance-btn.final { background: linear-gradient(135deg, var(--verde), #16a064); color: #fff; }
+  .advance-btn.final:hover { box-shadow: 0 8px 22px rgba(26,122,74,.45); }
+
+  @media (max-width:560px) { .card{padding:21px 17px;} header{padding:34px 16px 30px;} .capa{padding:11px 16px;} }
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">GEN-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div style="text-align:left;">
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 2 · Biblioteca General</div>
+  <h1>Estado y Función Pública</h1>
+  <div class="header-meta">
+    <span>📅 Día 2 de 21</span>
+    <span>⏱️ 90–110 min</span>
+    <span>🧠 Repaso interactivo</span>
+    <span>📝 Simulacro · 12 preguntas</span>
+  </div>
+</header>
+
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos CNSC</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">📝 Simulacro</button>
+</nav>
+
+<main>
+
+
+
+  <!-- 0. OBJETIVO -->
+  <section class="section visible" data-sec="0">
+    <div class="eyebrow">Objetivo de la guía</div>
+    <h2 class="sec-title">¿Qué dominarás en el Día 2?</h2>
+    <div class="card card-lead">
+      <p style="margin-bottom:0;">Hoy entenderás <strong>cómo está organizado el Estado colombiano</strong> y cuál es el papel del servidor público dentro de él. Comprenderás qué es la función pública, quién es servidor público, los principios que guían toda actuación administrativa y los niveles jerárquicos del empleo. Es la base conceptual que la CNSC evalúa una y otra vez.</p>
+    </div>
+    <h3><span class="h3-chip">★</span> Al terminar serás capaz de:</h3>
+    <ul class="lista">
+      <li>Identificar la estructura del Estado: las 3 ramas y los órganos autónomos.</li>
+      <li>Explicar qué es la función pública y quién la regula.</li>
+      <li>Reconocer quién es servidor público y diferenciar sus clases.</li>
+      <li>Aplicar los principios de la función administrativa (art. 209 CP) a casos concretos.</li>
+      <li>Ubicar tu propio cargo en los niveles jerárquicos del empleo público.</li>
+    </ul>
+    <div class="box info">
+      <div class="box-title">📌 Conecta con el Día 1</div>
+      <p>Ya sabes <strong>cómo evalúa</strong> la CNSC. Hoy sumas el <strong>qué</strong>: el conocimiento base sobre el Estado que aparece en casi todas las pruebas.</p>
+    </div>
+    <div class="box gold">
+      <div class="box-title">⏱️ Cómo aprovechar tus 90–110 min</div>
+      <p>Esta guía está diseñada por capas: lee el Desarrollo (cada concepto en 4 capas), revisa Comparaciones, practica los Casos, haz el Repaso interactivo (flashcards) y termina con el Simulacro. Estudia sin afán: el objetivo es comprender, no correr.</p>
+    </div>
+  </section>
+
+  <!-- 1. IMPORTANCIA -->
+  <section class="section" data-sec="1">
+    <div class="eyebrow">Importancia del tema</div>
+    <h2 class="sec-title">¿Por qué este tema es transversal?</h2>
+    <p>Entender la estructura del Estado y la función pública <strong>no es solo un tema más del temario</strong>: es el lenguaje común de todo el empleo público. Cuando un caso te habla de "una entidad", "un servidor", "una dependencia" o "un principio", debes saber exactamente a qué se refiere para no caer en distractores. Si no manejas estos conceptos, las preguntas posteriores (servicio al ciudadano, alcance del cargo, competencias) se vuelven mucho más difíciles porque te falta la base.</p>
+    <p>La mayoría de los aspirantes pierden puntos en preguntas que <strong>parecen fáciles</strong>, pero que confunden por falta de claridad conceptual: confundir <strong>órganos de control con la Rama Ejecutiva</strong>, llamar "servidor público" al contratista, o no lograr identificar cuál principio del art. 209 se aplica a un caso. Hoy esos errores se acaban.</p>
+    <p>Además, la función pública no es solo teoría: es el <strong>marco que define tu día a día</strong> como aspirante y futuro servidor. Saber si tu cargo es de carrera, de libre nombramiento o de provisionalidad cambia tus derechos, tus deberes y la forma en que asciendes. Por eso este Día 2 vale doble: estudias para la prueba <em>y</em> entiendes mejor el sistema al que vas a entrar.</p>
+    <div class="box ok">
+      <div class="box-title">✅ Lo que ganas hoy</div>
+      <p>Podrás <strong>ubicar cualquier entidad</strong> dentro del Estado, identificar tu rol como servidor y reconocer cuándo una actuación respeta (o viola) los principios administrativos. Eso te da puntos en preguntas funcionales <strong>y</strong> comportamentales.</p>
+    </div>
+    <div class="box warn">
+      <div class="box-title">⚠️ Datos que la CNSC adora preguntar</div>
+      <p>La diferencia entre <strong>empleado público y trabajador oficial</strong>; cuáles son los <strong>órganos autónomos</strong> (que NO son de las 3 ramas); el rol de la <strong>CNSC vs. el DAFP</strong>; la <strong>aplicación de los principios del art. 209</strong> en situaciones reales; y los <strong>niveles jerárquicos</strong> del empleo. Hoy verás cada uno con ejemplos concretos.</p>
+    </div>
+  </section>
+
+
+
+  <!-- 2. DESARROLLO -->
+  <section class="section" data-sec="2">
+    <div class="eyebrow">Desarrollo temático</div>
+    <h2 class="sec-title">El Estado colombiano y la función pública</h2>
+    <div class="box info">
+      <div class="box-title">📐 Cómo está construido este Desarrollo</div>
+      <p>Cada concepto clave se presenta en <strong>4 capas</strong>: 🟦 <strong>Definición</strong> (qué es) · 🟩 <strong>Aplicación</strong> (cómo funciona) · 🟨 <strong>Ejemplo real</strong> (en una entidad) · 🟥 <strong>CNSC</strong> (cómo lo evalúan). Así pasas de saber a aplicar.</p>
+    </div>
+
+    <h3><span class="h3-chip">1</span> Estructura del Estado (art. 113 CP)</h3>
+    <p>El poder público en Colombia se organiza en <strong>tres ramas</strong>, pero además existen <strong>órganos autónomos e independientes</strong> que cumplen funciones especializadas y NO pertenecen a ninguna rama.</p>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🏛️</span><span>Las Tres Ramas del Poder Público</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El art. 113 de la Constitución divide el poder público en tres ramas: <strong>Legislativa</strong> (hace las leyes y controla políticamente al Gobierno), <strong>Ejecutiva</strong> (gobierna, administra y ejecuta las leyes) y <strong>Judicial</strong> (administra justicia). Cada una es independiente, pero deben colaborar armónicamente para el cumplimiento de los fines del Estado.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>La Rama Ejecutiva opera en el orden nacional (Presidente, ministerios, departamentos administrativos) y territorial (gobernadores, alcaldes, secretarías). La Legislativa la ejerce el Congreso. La Judicial la integran las altas cortes (Constitucional, Suprema, Consejo de Estado), tribunales y juzgados. Saber esto te ayuda a ubicar cualquier entidad sin equivocarte.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si trabajas en una <strong>alcaldía o gobernación</strong>, eres parte de la Rama <strong>Ejecutiva</strong> en su orden territorial. Si lo haces en un <strong>juzgado o tribunal</strong>, en la <strong>Judicial</strong>. Si en el <strong>Congreso</strong> o en una asamblea/concejo, en la <strong>Legislativa</strong> (incluyendo cuerpos colegiados territoriales).</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Te entrega el nombre de una entidad o un caso y te pide identificar a qué rama pertenece. <strong>Trampa típica:</strong> incluir como ramas al "Ministerio Público", "el Electoral" o "el Control" — NO son ramas, sino órganos autónomos. Si ves una opción que mezcla ramas con autónomos, descártala.</p></div></div>
+      </div>
+    </div>
+
+    <div class="sub-grupo">
+      <p class="sub-grupo-intro">🔍 <strong>Profundización por rama</strong> — qué la conforma, qué hace, cómo opera en lo nacional y territorial, su trampa típica y una pregunta tipo CNSC. Estúdialas una por una.</p>
+
+      <!-- RAMA LEGISLATIVA -->
+      <div class="subbloque legi">
+        <div class="sub-head">
+          <span class="sub-icon">📜</span>
+          <span class="sub-title">Rama Legislativa</span>
+          <span class="sub-art">Art. 114 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quién la conforma</div>
+            <p>El <strong>Congreso de la República</strong>, que es <strong>bicameral</strong>:</p>
+            <ul>
+              <li><strong>Senado de la República</strong> — 108 senadores: 100 por circunscripción nacional + 2 indígenas + curules especiales (acuerdo de paz). Período de 4 años.</li>
+              <li><strong>Cámara de Representantes</strong> — 188 representantes elegidos por circunscripción <em>territorial</em> (departamental) y especiales (afro, indígena, internacional, paz).</li>
+            </ul>
+            <p style="margin-top:10px;">En el <strong>orden territorial</strong>, la función legislativa la ejercen cuerpos colegiados:</p>
+            <ul>
+              <li><strong>Asambleas Departamentales</strong> → expiden <strong>ordenanzas</strong></li>
+              <li><strong>Concejos Municipales / Distritales</strong> → expiden <strong>acuerdos</strong></li>
+              <li><strong>Juntas Administradoras Locales (JAL)</strong> → en comunas y corregimientos</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🎯 Qué hace exactamente</div>
+            <ul class="dot">
+              <li><strong>Hace las leyes</strong> (las expide, modifica, interpreta y deroga).</li>
+              <li><strong>Ejerce control político</strong> al Gobierno: citaciones a ministros, mociones de censura.</li>
+              <li><strong>Reforma la Constitución</strong> mediante acto legislativo.</li>
+              <li><strong>Elige altos funcionarios</strong>: Procurador, Contralor, Defensor del Pueblo, magistrados de la Corte Constitucional (en parte), Vicepresidente en caso de falta absoluta.</li>
+              <li><strong>Aprueba</strong> el Plan Nacional de Desarrollo y el Presupuesto General de la Nación.</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🌐 Nacional vs. territorial</div>
+            <table class="mini-tabla">
+              <thead><tr><th>Nivel</th><th>Órgano</th><th>Norma que produce</th></tr></thead>
+              <tbody>
+                <tr><td>Nacional</td><td>Congreso (Senado + Cámara)</td><td><strong>Ley</strong></td></tr>
+                <tr><td>Departamental</td><td>Asamblea Departamental</td><td><strong>Ordenanza</strong></td></tr>
+                <tr><td>Municipal / distrital</td><td>Concejo</td><td><strong>Acuerdo</strong></td></tr>
+                <tr><td>Local</td><td>JAL</td><td>Resolución</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>Confundir <strong>aprobar/expedir la ley</strong> (función legislativa → Congreso) con <strong>sancionar y promulgar la ley</strong> (función ejecutiva → Presidente). La ley nace en el Congreso, pero entra en vigencia con la firma del Presidente. Si una opción dice "el Congreso sanciona la ley", está mal.</p>
+          </div>
+
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+            <p class="mq-q">Un Concejo Municipal expide un acuerdo sobre el uso del suelo en su jurisdicción. Esta función corresponde a:</p>
+            <details>
+              <summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Rama Ejecutiva en orden territorial.</li>
+                <li data-l="B" class="ok">Rama Legislativa en orden territorial.</li>
+                <li data-l="C">Función administrativa exclusiva del alcalde.</li>
+                <li data-l="D">Órgano autónomo del nivel municipal.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> El Concejo Municipal es el órgano que ejerce la función legislativa en el ámbito municipal: produce normas (acuerdos) que regulan el municipio. La A confunde porque el alcalde sí es ejecutiva, pero quien expide el acuerdo es el Concejo. Los concejos NO son órganos autónomos.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- RAMA EJECUTIVA -->
+      <div class="subbloque ejec">
+        <div class="sub-head">
+          <span class="sub-icon">🏛️</span>
+          <span class="sub-title">Rama Ejecutiva</span>
+          <span class="sub-art">Art. 115 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quién la conforma</div>
+            <p><strong>Nivel nacional (sector central):</strong></p>
+            <ul>
+              <li><strong>Presidente de la República</strong> — Jefe de Estado, Jefe de Gobierno y Suprema Autoridad Administrativa.</li>
+              <li><strong>Vicepresidente</strong> y <strong>Ministros</strong> del despacho.</li>
+              <li><strong>Departamentos administrativos</strong> — DAPRE, DNP, DAFP, DANE, Prosperidad Social.</li>
+              <li><strong>Superintendencias</strong> — Salud, Industria y Comercio, Sociedades, Financiera.</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Nivel nacional (sector descentralizado):</strong></p>
+            <ul>
+              <li><strong>Establecimientos públicos</strong> — ICBF, SENA, ICETEX.</li>
+              <li><strong>Empresas Industriales y Comerciales del Estado (EICE)</strong> — Ecopetrol, INVÍAS.</li>
+              <li><strong>Sociedades de economía mixta</strong> — donde el Estado tiene participación.</li>
+              <li><strong>Unidades administrativas especiales</strong> — DIAN, UGPP, UNGRD.</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Nivel territorial:</strong></p>
+            <ul>
+              <li><strong>Gobernadores</strong> y secretarías departamentales.</li>
+              <li><strong>Alcaldes</strong> (municipios y distritos) y secretarías municipales.</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🎯 Qué hace exactamente</div>
+            <ul class="dot">
+              <li><strong>Gobierna</strong>: define políticas públicas y planes de desarrollo.</li>
+              <li><strong>Administra</strong>: gestiona la función pública, los recursos y los servicios.</li>
+              <li><strong>Ejecuta las leyes</strong> mediante decretos reglamentarios.</li>
+              <li><strong>Sanciona y promulga</strong> las leyes aprobadas por el Congreso.</li>
+              <li><strong>Mantiene el orden público</strong> y dirige las relaciones internacionales.</li>
+              <li><strong>Nombra y remueve</strong> a sus colaboradores libremente designados.</li>
+            </ul>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>Es la rama más extensa, así que la CNSC mete distractores con entidades que <em>parecen</em> ejecutivas pero NO lo son: <strong>Banco de la República</strong> (autónomo), <strong>Contraloría</strong> (autónoma de control), <strong>CNSC</strong> (autónoma), <strong>Registraduría</strong> (autónoma electoral). Otra trampa: confundir <strong>departamento administrativo</strong> (DAFP, DNP — sí son ejecutiva) con <strong>órgano autónomo</strong>.</p>
+          </div>
+
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+            <p class="mq-q">El SENA, dada su naturaleza jurídica, corresponde a:</p>
+            <details>
+              <summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Un órgano autónomo e independiente.</li>
+                <li data-l="B" class="ok">Un establecimiento público adscrito a la Rama Ejecutiva (Ministerio del Trabajo).</li>
+                <li data-l="C">Una empresa industrial y comercial del Estado.</li>
+                <li data-l="D">Un organismo de control fiscal.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> El SENA es un establecimiento público del orden nacional, adscrito al Ministerio del Trabajo. Pertenece al sector descentralizado de la Rama Ejecutiva. La C es trampa: las EICE (Ecopetrol, INVÍAS) hacen actividades industriales/comerciales con ánimo de lucro; el SENA presta un servicio público de formación.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- RAMA JUDICIAL -->
+      <div class="subbloque judi">
+        <div class="sub-head">
+          <span class="sub-icon">⚖️</span>
+          <span class="sub-title">Rama Judicial</span>
+          <span class="sub-art">Art. 116 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quién la conforma</div>
+            <p><strong>Altas Cortes:</strong></p>
+            <ul>
+              <li><strong>Corte Constitucional</strong> — guarda y interpreta la Constitución; revisa tutelas y leyes.</li>
+              <li><strong>Corte Suprema de Justicia</strong> — máximo tribunal de la jurisdicción <em>ordinaria</em> (penal, civil, laboral, familia).</li>
+              <li><strong>Consejo de Estado</strong> — máximo tribunal de la jurisdicción <em>contencioso administrativa</em>; juzga al Estado.</li>
+              <li><strong>Consejo Superior de la Judicatura</strong> — administra la rama judicial (carrera, presupuesto, gobierno judicial).</li>
+              <li><strong>Comisión Nacional de Disciplina Judicial</strong> — Acto Legislativo 02/2015; juzga conducta de jueces y abogados.</li>
+              <li><strong>Jurisdicción Especial para la Paz (JEP)</strong> — justicia transicional del Acuerdo Final.</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Otros órganos:</strong></p>
+            <ul>
+              <li><strong>Tribunales Superiores</strong> y <strong>Tribunales Administrativos</strong>.</li>
+              <li><strong>Juzgados</strong> del circuito y municipales.</li>
+              <li><strong>Fiscalía General de la Nación</strong> — investiga y acusa (parte funcional de la Rama Judicial, art. 116).</li>
+              <li><strong>Jurisdicciones especiales</strong>: indígena (art. 246) y de paz (art. 247).</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🎯 Qué hace exactamente</div>
+            <ul class="dot">
+              <li><strong>Administra justicia</strong>: resuelve conflictos aplicando la ley.</li>
+              <li><strong>Controla la constitucionalidad</strong> de las leyes (Corte Constitucional).</li>
+              <li><strong>Investiga y acusa</strong> delitos (Fiscalía).</li>
+              <li><strong>Juzga al Estado</strong> y sus actos administrativos (Consejo de Estado y Tribunales Administrativos).</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🧭 Las cuatro jurisdicciones</div>
+            <table class="mini-tabla">
+              <thead><tr><th>Jurisdicción</th><th>Quién la encabeza</th><th>Qué juzga</th></tr></thead>
+              <tbody>
+                <tr><td>Constitucional</td><td>Corte Constitucional</td><td>Constitucionalidad de leyes y tutelas</td></tr>
+                <tr><td>Ordinaria</td><td>Corte Suprema de Justicia</td><td>Penal, civil, laboral, familia</td></tr>
+                <tr><td>Contencioso administrativa</td><td>Consejo de Estado</td><td>Conflictos con el Estado y sus actos</td></tr>
+                <tr><td>Disciplinaria</td><td>Comisión Nacional de Disciplina Judicial</td><td>Conducta de jueces y abogados</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>Confundir <strong>Corte Suprema</strong> (ordinaria — entre particulares) con <strong>Consejo de Estado</strong> (contencioso administrativa — frente al Estado). Si el caso menciona <em>"demanda contra una entidad pública"</em>, va al Consejo de Estado o tribunales administrativos, NUNCA a la Corte Suprema. Otra: meter al <strong>Consejo Superior de la Judicatura</strong> como si juzgara casos — su función principal es administrar la rama, no resolver pleitos.</p>
+          </div>
+
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+            <p class="mq-q">Una servidora pública demanda a la administración municipal porque considera ilegal un acto que la afecta. La controversia se resuelve, en última instancia, en:</p>
+            <details>
+              <summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">La Corte Suprema de Justicia, sala laboral.</li>
+                <li data-l="B">La Corte Constitucional.</li>
+                <li data-l="C" class="ok">La jurisdicción contencioso administrativa (Tribunales Administrativos y Consejo de Estado).</li>
+                <li data-l="D">El Consejo Superior de la Judicatura.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: C.</strong> Los conflictos contra actos administrativos del Estado se resuelven en la jurisdicción contencioso administrativa, encabezada por el Consejo de Estado. La A es trampa: la Corte Suprema solo conoce asuntos laborales <em>entre particulares</em>, no contra entidades públicas. La D administra la rama, no juzga.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">⚖️</span><span>Los Órganos Autónomos e Independientes</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Son entidades del Estado con funciones especializadas y autonomía constitucional, que <strong>NO pertenecen a las tres ramas</strong>. Existen porque sus funciones requieren neutralidad: vigilar al propio Estado, organizar las elecciones, manejar la moneda o seleccionar por mérito. Art. 113 inciso 2 CP.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Se agrupan en cuatro categorías: <strong>(1) Órganos de control</strong> — Procuraduría, Contraloría, Defensoría del Pueblo y personerías; <strong>(2) Organización electoral</strong> — Consejo Nacional Electoral y Registraduría; <strong>(3) Banca central</strong> — Banco de la República; <strong>(4) Otros constitucionales</strong> — CNSC, universidades estatales y la Corporación Autónoma Regional, entre otros.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>La <strong>Contraloría</strong> investiga el manejo de recursos públicos sin depender del Presidente: por eso puede auditar al propio Gobierno. La <strong>CNSC</strong> administra los concursos de mérito sin que ningún ministerio le indique a quién favorecer. Esa autonomía es lo que garantiza la imparcialidad.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>La pregunta más frecuente: <strong>"¿La CNSC pertenece a la Rama Ejecutiva?"</strong> — la respuesta es <strong>NO</strong>: es órgano autónomo (art. 130 CP). Lo mismo con Contraloría, Procuraduría, Banco de la República y Registraduría. Si una opción los ubica dentro de una rama, es distractor seguro.</p></div></div>
+      </div>
+    </div>
+
+    <div class="sub-grupo">
+      <p class="sub-grupo-intro">🔍 <strong>Profundización por grupo</strong> — los autónomos NO son una rama, pero la CNSC pregunta sus diferencias internas. Los 4 grupos, uno por uno.</p>
+
+      <!-- ÓRGANOS DE CONTROL -->
+      <div class="subbloque ctrl">
+        <div class="sub-head">
+          <span class="sub-icon">🛡️</span>
+          <span class="sub-title">1. Órganos de Control</span>
+          <span class="sub-art">Arts. 117–118, 267–284 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quiénes son</div>
+            <p><strong>Ministerio Público</strong> (control disciplinario y de derechos):</p>
+            <ul>
+              <li><strong>Procuraduría General de la Nación</strong> — vigila la conducta de los servidores, investiga disciplinariamente, defiende el interés público.</li>
+              <li><strong>Defensoría del Pueblo</strong> — protege y promueve los derechos humanos.</li>
+              <li><strong>Personerías municipales y distritales</strong> — Ministerio Público en lo local.</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Control fiscal</strong> (recursos públicos):</p>
+            <ul>
+              <li><strong>Contraloría General de la República</strong> — vigila la gestión fiscal del Estado.</li>
+              <li><strong>Contralorías territoriales</strong> — departamentales, distritales y municipales.</li>
+            </ul>
+          </div>
+
+          <div class="sub-row">
+            <div class="sub-label">🎯 Qué hace cada uno</div>
+            <table class="mini-tabla">
+              <thead><tr><th>Órgano</th><th>Tipo de control</th><th>Sanción que impone</th></tr></thead>
+              <tbody>
+                <tr><td>Procuraduría</td><td>Disciplinario</td><td>Destitución, suspensión, multa, inhabilidad</td></tr>
+                <tr><td>Contraloría</td><td>Fiscal</td><td>Responsabilidad fiscal (paga el daño al erario)</td></tr>
+                <tr><td>Defensoría</td><td>Protección de DDHH</td><td>NO sanciona — promueve y reclama</td></tr>
+                <tr><td>Personería</td><td>Disciplinario y DDHH (local)</td><td>Acompaña al ciudadano y al servidor</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>Confundir <strong>Procuraduría (disciplinaria)</strong> con <strong>Contraloría (fiscal)</strong>. Si el caso habla de <em>"presunto desfalco"</em> o <em>"manejo indebido de recursos"</em> → Contraloría. Si habla de <em>"falta del servidor"</em> o <em>"conducta indebida"</em> → Procuraduría. Y la <strong>Defensoría NO sanciona</strong>: promueve y protege, pero no impone destituciones ni multas.</p>
+          </div>
+
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+            <p class="mq-q">Un funcionario es señalado de haber autorizado pagos sin soporte por valor de $400 millones. ¿Qué órgano abre la investigación que puede obligarlo a resarcir el daño al patrimonio público?</p>
+            <details>
+              <summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Procuraduría General de la Nación.</li>
+                <li data-l="B" class="ok">Contraloría General de la República.</li>
+                <li data-l="C">Defensoría del Pueblo.</li>
+                <li data-l="D">Personería Municipal.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> El daño al patrimonio público se persigue por la <em>responsabilidad fiscal</em>, competencia de la Contraloría. La Procuraduría podría abrir paralelamente proceso disciplinario por la falta, pero quien obliga a "pagar el daño" es la Contraloría. Importante: pueden actuar al tiempo (son procesos independientes).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORGANIZACIÓN ELECTORAL -->
+      <div class="subbloque elec">
+        <div class="sub-head">
+          <span class="sub-icon">🗳️</span>
+          <span class="sub-title">2. Organización Electoral</span>
+          <span class="sub-art">Arts. 120, 264–266 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quiénes son y qué hace cada uno</div>
+            <table class="mini-tabla">
+              <thead><tr><th>Órgano</th><th>Función principal</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Consejo Nacional Electoral (CNE)</strong></td><td>Regula, vigila y controla la actividad electoral, los partidos políticos y la financiación de campañas.</td></tr>
+                <tr><td><strong>Registraduría Nacional del Estado Civil</strong></td><td>Organiza las elecciones (logística, jurados, escrutinios) y lleva el registro civil + identificación (cédula).</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>El <strong>CNE NO organiza</strong> las elecciones — eso lo hace la <strong>Registraduría</strong>. El CNE las <em>vigila y regula</em>. Otra confusión: la Registraduría también administra el registro civil (nacimientos, matrimonios, defunciones) y la identificación (cédula, tarjeta de identidad), funciones distintas a la electoral.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANCA CENTRAL -->
+      <div class="subbloque banca">
+        <div class="sub-head">
+          <span class="sub-icon">💵</span>
+          <span class="sub-title">3. Banca Central</span>
+          <span class="sub-art">Arts. 371–373 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quién es</div>
+            <p><strong>Banco de la República</strong> — banco central de Colombia. Tiene <strong>autonomía técnica, administrativa y patrimonial</strong>. NO depende del Gobierno.</p>
+          </div>
+          <div class="sub-row">
+            <div class="sub-label">🎯 Qué hace</div>
+            <ul class="dot">
+              <li>Emite la moneda legal (única autorizada).</li>
+              <li>Regula la moneda, los cambios internacionales y el crédito.</li>
+              <li><strong>Mantiene el poder adquisitivo de la moneda</strong> (controlar la inflación).</li>
+              <li>Es prestamista de última instancia y banquero del Gobierno.</li>
+            </ul>
+          </div>
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>El Banco <strong>NO es del Ministerio de Hacienda</strong>. Su Junta Directiva tiene 7 miembros y es <em>presidida</em> por el Ministro de Hacienda (único nexo formal con el Gobierno), pero la institución conserva su autonomía. Decir que "depende del Ejecutivo" es falso.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTROS AUTÓNOMOS -->
+      <div class="subbloque otros">
+        <div class="sub-head">
+          <span class="sub-icon">🎓</span>
+          <span class="sub-title">4. Otros Órganos Constitucionalmente Autónomos</span>
+          <span class="sub-art">Arts. 69, 130, 150 CP</span>
+        </div>
+        <div class="sub-body">
+          <div class="sub-row">
+            <div class="sub-label">👥 Quiénes son</div>
+            <ul>
+              <li><strong>CNSC — Comisión Nacional del Servicio Civil</strong> (art. 130 CP) — administra la carrera administrativa y los concursos públicos de mérito. <em>Es la entidad que organiza tu propio concurso.</em></li>
+              <li><strong>Universidades Estatales</strong> (art. 69 CP) — autonomía universitaria: se autodirigen académica, administrativa y financieramente.</li>
+              <li><strong>Corporaciones Autónomas Regionales (CAR)</strong> — gestión ambiental en su jurisdicción.</li>
+              <li><strong>Entes universitarios autónomos</strong> y otros creados por la Constitución o la ley.</li>
+            </ul>
+          </div>
+
+          <div class="sub-trampa">
+            <div class="st-tag">⚠️ Trampa CNSC frecuente</div>
+            <p>La <strong>CNSC NO es del Gobierno ni del DAFP</strong>. Es órgano autónomo del orden nacional (art. 130). Esta es <em>la</em> pregunta que más cae sobre este tema. Otra: confundir CNSC con DAFP — el DAFP <em>formula políticas</em> de empleo público y SÍ es Rama Ejecutiva (departamento administrativo); la CNSC <em>administra los concursos</em> y es autónoma.</p>
+          </div>
+
+          <div class="sub-mq">
+            <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+            <p class="mq-q">La Comisión Nacional del Servicio Civil tiene como naturaleza:</p>
+            <details>
+              <summary>Ver opciones y respuesta</summary>
+              <ul class="mq-opts">
+                <li data-l="A">Departamento administrativo de la Rama Ejecutiva.</li>
+                <li data-l="B" class="ok">Órgano autónomo e independiente del orden nacional.</li>
+                <li data-l="C">Establecimiento público adscrito al DAFP.</li>
+                <li data-l="D">Unidad administrativa especial sin personería jurídica.</li>
+              </ul>
+              <div class="mq-explica"><strong>✓ Correcta: B.</strong> El art. 130 de la Constitución crea la CNSC como órgano autónomo e independiente para administrar la carrera y los concursos. NO es del Gobierno (descarta A y C). La D es absurda: la CNSC sí tiene personería jurídica.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3><span class="h3-chip">2</span> La Función Pública</h3>
+    <p>La <strong>función pública</strong> es el conjunto de reglas que rigen el empleo en el Estado: cómo se ingresa, cómo se asciende, cómo se evalúa y cómo se retira. Su objetivo es que el Estado funcione con personas idóneas, seleccionadas por <strong>mérito</strong>.</p>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">📋</span><span>Función Pública y sus reguladores</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La función pública es el <strong>régimen jurídico del empleo en el Estado</strong>: define cómo se ingresa, cómo se asciende, cómo se evalúa y cómo se retira. Su norma central es la <strong>Ley 909 de 2004</strong>, que regula el empleo público, la carrera administrativa y la gerencia pública. Su finalidad es asegurar que los cargos los ocupen los más idóneos, no los más recomendados.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Dos entidades clave operan el sistema: el <strong>DAFP</strong> (Departamento Administrativo de la Función Pública) <strong>formula las políticas</strong> de empleo y los lineamientos técnicos. La <strong>CNSC</strong> <strong>administra la carrera y los concursos</strong> de mérito. Son distintas, con roles complementarios. Confundirlas es el error más frecuente.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Cuando una alcaldía necesita proveer un cargo, el <strong>DAFP</strong> le dice cómo debe ser el manual de funciones tipo y los lineamientos del empleo. Después, la <strong>CNSC</strong> convoca el concurso, recibe las inscripciones en SIMO, aplica la prueba escrita y publica la lista de elegibles. Cada una en su rol.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Pregunta frecuente: <strong>"¿Qué entidad lidera las políticas de empleo público?"</strong> → DAFP. <strong>Trampa:</strong> incluir como opción a la Procuraduría o Contraloría (esas <em>controlan</em>, no <em>formulan</em> políticas). Otra: pretender que el DAFP "hace concursos". No: los concursos los administra la CNSC.</p></div></div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">3</span> El Servidor Público (art. 123 CP)</h3>
+    <p>Son servidores públicos <strong>los miembros de las corporaciones públicas, los empleados y trabajadores del Estado</strong> y de sus entidades descentralizadas. Existen tres clases con vínculos distintos.</p>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">👤</span><span>Empleado Público</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Servidor con vínculo <strong>legal y reglamentario</strong>. No firma un contrato laboral: ingresa por <strong>acto administrativo de nombramiento</strong> y luego <strong>toma posesión</strong> del cargo. Sus funciones, salario y deberes están fijados por norma, no por negociación entre las partes.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Es la figura más común en la administración pública nacional y territorial: alcaldías, gobernaciones, ministerios y la mayoría de entidades descentralizadas. Sus reclamaciones laborales se tramitan por la <strong>vía administrativa</strong> y, en última instancia, ante la jurisdicción <strong>contencioso administrativa</strong>.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>El <strong>profesional universitario</strong> de una alcaldía o el <strong>técnico operativo</strong> de un ministerio: ambos llegan al cargo cuando reciben el acto de nombramiento, se posesionan y firman un acta. Desde ese momento son empleados públicos con todos los derechos y deberes del cargo.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Cuando el caso menciona "<strong>acto de nombramiento</strong>", "<strong>posesión</strong>" o un cargo de carrera, está describiendo a un empleado público. Si la opción dice "contrato de trabajo" para describir a este servidor, está mal: ese vínculo es del trabajador oficial.</p></div></div>
+      </div>
+      <div style="padding: 0 14px 14px;">
+        <div class="sub-mq">
+          <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+          <p class="mq-q">Una persona es designada como Profesional Universitario en una Secretaría Distrital y firma el acta de posesión. Desde ese momento, su vínculo con el Estado es:</p>
+          <details>
+            <summary>Ver opciones y respuesta</summary>
+            <ul class="mq-opts">
+              <li data-l="A">Contractual de prestación de servicios.</li>
+              <li data-l="B">Contractual laboral, regulado por el Código Sustantivo del Trabajo.</li>
+              <li data-l="C" class="ok">Legal y reglamentario, propio del empleado público.</li>
+              <li data-l="D">Estatutario sin derechos pensionales.</li>
+            </ul>
+            <div class="mq-explica"><strong>✓ Correcta: C.</strong> El acto de nombramiento + posesión configura el vínculo legal y reglamentario, propio del empleado público. La A confunde con el contratista; la B con el trabajador oficial; la D es falsa (todo empleado público tiene derechos pensionales).</div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🛠️</span><span>Trabajador Oficial</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Servidor público con vínculo <strong>contractual</strong>: ingresa por <strong>contrato de trabajo</strong>, no por nombramiento. Esto significa que sus condiciones laborales (salario, jornada, prestaciones) <strong>se pactan</strong> y pueden ser objeto de negociación colectiva, a diferencia del empleado público.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Su régimen es laboral, regulado principalmente por el <strong>Decreto 2127 de 1945</strong> y el Código Sustantivo del Trabajo en lo aplicable. Reclama por la <strong>vía laboral ordinaria</strong>, no por la contencioso administrativa. Es típico en <strong>obras públicas</strong> y en <strong>Empresas Industriales y Comerciales del Estado (EICE)</strong>.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un <strong>obrero de mantenimiento</strong> contratado en una EICE como Ecopetrol o el INVÍAS, o un <strong>trabajador de construcción</strong> vinculado por una secretaría de obras municipales. Firmaron contrato de trabajo, no acto de nombramiento.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Cuando un caso combina "<strong>contrato de trabajo</strong>" + "<strong>EICE</strong>" o "<strong>obra pública</strong>", la respuesta es trabajador oficial. <strong>Trampa frecuente:</strong> incluir como opción "empleado público de libre nombramiento" — vínculo distinto, descártalo de inmediato.</p></div></div>
+      </div>
+      <div style="padding: 0 14px 14px;">
+        <div class="sub-mq">
+          <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+          <p class="mq-q">Pedro fue vinculado mediante contrato de trabajo a una Empresa Industrial y Comercial del Estado para labores de mantenimiento de plantas. Si tiene una controversia laboral, la jurisdicción competente es:</p>
+          <details>
+            <summary>Ver opciones y respuesta</summary>
+            <ul class="mq-opts">
+              <li data-l="A">Contencioso administrativa, porque trabaja para una entidad pública.</li>
+              <li data-l="B" class="ok">Ordinaria laboral, porque su vínculo es contractual de trabajo.</li>
+              <li data-l="C">Constitucional, mediante acción de tutela exclusivamente.</li>
+              <li data-l="D">Disciplinaria ante la Procuraduría.</li>
+            </ul>
+            <div class="mq-explica"><strong>✓ Correcta: B.</strong> Aunque trabaja para una entidad pública, el vínculo es laboral (contrato de trabajo), por lo que sus controversias se resuelven en la jurisdicción ordinaria laboral. La A es la trampa típica: NO toda controversia con el Estado va a la contencioso administrativa.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">🚫</span><span>El Contratista NO es Servidor Público</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>contratista por prestación de servicios</strong> tiene un vínculo de naturaleza <strong>civil/contractual</strong> con la entidad, regido por la <strong>Ley 80 de 1993</strong> y la Ley 1150 de 2007. NO es servidor público porque no hay subordinación laboral, sino la ejecución de un objeto contractual definido.</p></div></div>
+        <div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No recibe salario sino <strong>honorarios</strong>; no tiene prestaciones sociales propias del empleado; no accede a la carrera administrativa. Su contrato es <strong>temporal</strong> y termina al cumplirse el objeto o el plazo. Si es indefinido y existe subordinación, podría haber un contrato realidad: ahí sí cambian las reglas.</p></div></div>
+        <div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un <strong>consultor</strong> que firma un contrato por 6 meses para entregar un estudio técnico, o un <strong>profesional</strong> contratado para apoyar un proyecto puntual. Aunque trabajen físicamente en una entidad pública y reciban orientación, siguen siendo contratistas, no servidores.</p></div></div>
+        <div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p><strong>Distractor frecuente:</strong> "Solo los contratistas son servidores públicos" o "El contratista hace parte de la planta de personal" → ambos son <strong>FALSOS siempre</strong>. Si ves esa opción, descártala sin pensarlo. La pista clave: si el caso menciona "contrato de prestación de servicios", NO es servidor.</p></div></div>
+      </div>
+      <div style="padding: 0 14px 14px;">
+        <div class="sub-mq">
+          <div class="mq-tag">🎯 Pregunta tipo CNSC</div>
+          <p class="mq-q">Juliana firmó un contrato de prestación de servicios profesionales por 4 meses para apoyar un proyecto de un Ministerio. ¿Cuál afirmación es correcta sobre su situación?</p>
+          <details>
+            <summary>Ver opciones y respuesta</summary>
+            <ul class="mq-opts">
+              <li data-l="A">Es servidora pública porque trabaja en una entidad estatal.</li>
+              <li data-l="B">Hace parte de la planta de personal del Ministerio.</li>
+              <li data-l="C" class="ok">No es servidora pública; su vínculo es contractual y se rige por la Ley 80 de 1993.</li>
+              <li data-l="D">Tiene derecho a estabilidad laboral reforzada como cualquier empleado público.</li>
+            </ul>
+            <div class="mq-explica"><strong>✓ Correcta: C.</strong> El contratista por prestación de servicios NO es servidor público: su vínculo es civil/contractual, sin subordinación laboral. Las opciones A, B y D parten de premisas falsas (asocian "trabajar en lo público" con "ser servidor público", que son cosas distintas). Atención: si en el caso aparecen subordinación + horario + permanencia, podría reclamar contrato realidad — pero esa es otra figura.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <h3><span class="h3-chip">4</span> Principios de la función administrativa (art. 209 CP)</h3>
+    <p>Toda actuación administrativa debe regirse por <strong>siete principios</strong>. Memoriza el concepto, no la lista vacía: la CNSC evalúa por <strong>aplicación</strong>.</p>
+
+    <div class="concepto">
+      <div class="concepto-head"><span class="ch-icon">⚖️</span><span>Los 7 principios — uno por uno</span></div>
+      <div class="concepto-body">
+        <div class="capa cap-def"><div class="capa-icon def">⚖️</div><div class="capa-content"><span class="label">Igualdad</span><p>Tratar a todos sin discriminación. <em>Aplicación:</em> todos los aspirantes tienen los mismos plazos y reglas.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">💎</div><div class="capa-content"><span class="label">Moralidad</span><p>Actuar con rectitud y ética. <em>Aplicación:</em> rechazar regalos a cambio de favorecer a alguien.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">🎯</div><div class="capa-content"><span class="label">Eficacia</span><p>Lograr el objetivo. <em>Aplicación:</em> resolver la PQRSD efectivamente, no solo radicarla.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">💰</div><div class="capa-content"><span class="label">Economía</span><p>Usar bien los recursos. <em>Aplicación:</em> no duplicar trámites; aprovechar lo que ya existe.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">⚡</div><div class="capa-content"><span class="label">Celeridad</span><p>Resolver con rapidez dentro de los plazos. <em>Aplicación:</em> contestar el derecho de petición a tiempo.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">🤝</div><div class="capa-content"><span class="label">Imparcialidad</span><p>Decidir sin favoritismos. <em>Aplicación:</em> calificar las hojas de vida con los mismos criterios.</p></div></div>
+        <div class="capa cap-def"><div class="capa-icon def">📢</div><div class="capa-content"><span class="label">Publicidad</span><p>Dar a conocer las actuaciones. <em>Aplicación:</em> publicar listas de elegibles y notificar decisiones.</p></div></div>
+      </div>
+    </div>
+    <div class="box info">
+      <div class="box-title">🧠 Truco para recordarlos</div>
+      <p>"<strong>I-M-E-E-C-I-P</strong>": Igualdad, Moralidad, Eficacia, Economía, Celeridad, Imparcialidad, Publicidad. La CNSC suele incluir falsos amigos como "rentabilidad", "jerarquía", "reserva" o "descentralización" — esos NO son del 209.</p>
+    </div>
+
+    <h3><span class="h3-chip">5</span> Niveles jerárquicos del empleo público</h3>
+    <p>Los empleos públicos se clasifican según su naturaleza y responsabilidad. La norma base es el <strong>Decreto 1083 de 2015</strong> (Decreto Único Reglamentario del sector Función Pública).</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Nivel</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Directivo</strong></td><td>Dirige y orienta la entidad o dependencia</td><td>Director general, secretario de despacho</td></tr>
+          <tr><td><strong>Asesor</strong></td><td>Aconseja a la alta dirección</td><td>Asesor jurídico, asesor de planeación</td></tr>
+          <tr><td><strong>Profesional</strong></td><td>Aplica conocimientos especializados (titulación profesional)</td><td>Profesional universitario, profesional especializado</td></tr>
+          <tr><td><strong>Técnico</strong></td><td>Ejecuta tareas con cierto grado de complejidad técnica</td><td>Técnico operativo, técnico administrativo</td></tr>
+          <tr><td><strong>Asistencial</strong></td><td>Apoyo administrativo y operativo</td><td>Auxiliar administrativo, secretario ejecutivo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box gold">
+      <div class="box-title">🎯 Dato práctico</div>
+      <p>Identifica <strong>tu propio nivel</strong> mirando tu OPEC y manual de funciones. Eso te ayuda en preguntas comportamentales del concurso (por ejemplo, "¿qué se espera de un funcionario del nivel asistencial frente a un ciudadano?").</p>
+    </div>
+  </section>
+
+
+
+  <!-- 3. COMPARACIONES -->
+  <section class="section" data-sec="3">
+    <div class="eyebrow">Comparaciones clave</div>
+    <h2 class="sec-title">Diferencias que generan errores</h2>
+    <p>Cuatro cuadros comparativos que la CNSC convierte en preguntas. Estúdialos como si fueran obligatorios.</p>
+
+    <h3><span class="h3-chip">A</span> Empleado público vs. Trabajador oficial</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Empleado público</th><th>Trabajador oficial</th></tr></thead>
+        <tbody>
+          <tr><td>Tipo de vínculo</td><td>Legal y reglamentario</td><td>Contrato de trabajo</td></tr>
+          <tr><td>Cómo ingresa</td><td>Acto de nombramiento + posesión</td><td>Contratación laboral</td></tr>
+          <tr><td>Régimen aplicable</td><td>Administrativo (CCA / Ley 909)</td><td>Laboral (Código Sustantivo del Trabajo)</td></tr>
+          <tr><td>Vía de reclamación</td><td>Administrativa / contenciosa</td><td>Laboral ordinaria</td></tr>
+          <tr><td>Dónde es típico</td><td>Entidades del nivel central, alcaldías, ministerios</td><td>EICE y obras públicas</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">B</span> Las tres ramas vs. Órganos autónomos</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Ramas del poder</th><th>Órganos autónomos</th></tr></thead>
+        <tbody>
+          <tr><td>Cuáles son</td><td>Legislativa, Ejecutiva, Judicial</td><td>Control, electoral, Banco Rep., CNSC, etc.</td></tr>
+          <tr><td>Función</td><td>Funciones clásicas del Estado</td><td>Funciones especializadas con autonomía</td></tr>
+          <tr><td>Norma base</td><td>Art. 113 inciso 1 CP</td><td>Art. 113 inciso 2 y normas específicas</td></tr>
+          <tr><td>Trampa típica</td><td>Decir que el Ministerio Público es una rama</td><td>Decir que la CNSC es de la Rama Ejecutiva</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">C</span> DAFP vs. CNSC</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>DAFP</th><th>CNSC</th></tr></thead>
+        <tbody>
+          <tr><td>Qué hace</td><td>Formula políticas de empleo público</td><td>Administra carrera y concursos</td></tr>
+          <tr><td>Naturaleza</td><td>Departamento administrativo (Rama Ejecutiva)</td><td>Órgano autónomo e independiente</td></tr>
+          <tr><td>Norma central</td><td>Decreto 1083 de 2015</td><td>Ley 909 de 2004 + Acuerdos CNSC</td></tr>
+          <tr><td>Ejemplo</td><td>Define el manual de funciones tipo</td><td>Aplica la prueba escrita del concurso</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">D</span> Ministerio Público vs. Control Fiscal</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Criterio</th><th>Ministerio Público</th><th>Control Fiscal</th></tr></thead>
+        <tbody>
+          <tr><td>Qué controla</td><td>Conducta disciplinaria + DDHH</td><td>Manejo de recursos públicos</td></tr>
+          <tr><td>Quién lo ejerce</td><td>Procuraduría, Defensoría, personerías</td><td>Contraloría General y territoriales</td></tr>
+          <tr><td>Tipo de órgano</td><td>Autónomo de control</td><td>Autónomo de control</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. CASOS -->
+  <section class="section" data-sec="4">
+    <div class="eyebrow">Casos aplicados CNSC</div>
+    <h2 class="sec-title">Practica con casos reales</h2>
+    <p>Lee cada caso, intenta resolverlo aplicando el método de 4 pasos del Día 1 y luego revisa el análisis.</p>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 1 — ¿A qué rama pertenece?</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Un aspirante debe ubicar a la <strong>Contraloría General de la República</strong> dentro del Estado y duda si pertenece a la Rama Ejecutiva, ya que "controla a los gobiernos".
+        <span class="label">Análisis</span>
+        La Contraloría es un <strong>órgano de control fiscal</strong> con autonomía constitucional (arts. 117 y 267 CP). NO pertenece a ninguna de las tres ramas. La trampa está en asociar "controlar" con "ejecutar".
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Es un órgano autónomo de control fiscal, no parte de la Rama Ejecutiva.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 2 — Tipo de servidor</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        María fue nombrada como profesional universitaria en una secretaría municipal y tomó posesión del cargo. Pedro fue vinculado por contrato de trabajo para mantenimiento en una empresa industrial del Estado. Juan firmó un contrato de prestación de servicios por 4 meses en un ministerio.
+        <span class="label">Análisis</span>
+        María: vínculo legal y reglamentario → <strong>empleada pública</strong>. Pedro: contrato de trabajo en EICE → <strong>trabajador oficial</strong>. Juan: contrato de prestación → <strong>NO es servidor público</strong>; es contratista.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> María = empleada pública; Pedro = trabajador oficial; Juan = contratista (no servidor público).</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 3 — Principios en acción</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Una entidad publica los resultados del concurso en su web, notifica a todos los aspirantes en igualdad de condiciones y resuelve las reclamaciones dentro de los plazos.
+        <span class="label">Análisis</span>
+        Publicar resultados = <strong>publicidad</strong>; tratar a todos igual = <strong>igualdad</strong>; resolver dentro del plazo = <strong>celeridad</strong>. Los tres son del art. 209 CP.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Se aplican publicidad, igualdad y celeridad.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 4 — Identificar nivel jerárquico</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        Un OPEC describe un cargo cuyas funciones son: "ejecutar tareas con un grado moderado de complejidad técnica, apoyar al profesional encargado y manejar bases de datos del inventario".
+        <span class="label">Análisis</span>
+        "Ejecutar tareas técnicas" + "apoyar al profesional" + manejo operativo = <strong>nivel técnico</strong>. No es asistencial (es más que apoyo administrativo) ni profesional (no requiere conocimientos profesionales especializados).
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Nivel técnico (Decreto 1083 de 2015).</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 5 — DAFP o CNSC</div>
+      <div class="caso-body">
+        <span class="label">Situación</span>
+        El alcalde solicita "lineamientos sobre cómo elaborar el manual específico de funciones" para una nueva dependencia.
+        <span class="label">Análisis</span>
+        Las <strong>políticas y lineamientos</strong> del empleo público los emite el <strong>DAFP</strong>. La CNSC interviene cuando hay que <strong>proveer</strong> esos cargos por concurso, no en el diseño de los manuales.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> DAFP. La CNSC actúa después, en la provisión por mérito.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ERRORES -->
+  <section class="section" data-sec="5">
+    <div class="eyebrow">Errores frecuentes</div>
+    <h2 class="sec-title">Lo que NO debes confundir</h2>
+    <div class="box danger"><div class="box-title">❌ Error 1 — Creer que todo órgano del Estado es de la Rama Ejecutiva</div><p>Control, electoral, Banco de la República y CNSC son <strong>autónomos</strong>. Ninguno es de la Ejecutiva.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 2 — Llamar "servidor público" al contratista</div><p>El contratista por prestación de servicios <strong>NO</strong> es servidor público. Su vínculo es civil, no laboral ni reglamentario.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 3 — Confundir DAFP con CNSC</div><p>DAFP = políticas; CNSC = concursos y carrera. Si la pregunta habla de "lineamientos" o "políticas" del empleo, es DAFP.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 4 — Mezclar empleado público y trabajador oficial</div><p>El <strong>vínculo</strong> es la clave: nombramiento + posesión = empleado público; contrato de trabajo = trabajador oficial.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 5 — Memorizar el art. 209 sin entender</div><p>La CNSC no te pide la lista; te pide aplicar el principio. Asocia cada uno con un comportamiento.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 6 — Confundir niveles del empleo</div><p>"Asistencial" no es lo mismo que "técnico". Lee bien las funciones del cargo en la pregunta.</p></div>
+  </section>
+
+  <!-- 6. TIPS -->
+  <section class="section" data-sec="6">
+    <div class="eyebrow">Tips Ascenso Público</div>
+    <h2 class="sec-title">Recomendaciones para aprobar</h2>
+    <div class="box ok"><div class="box-title">💡 Tip 1 — Usa el truco "I-M-E-E-C-I-P"</div><p>Recuerda los 7 principios del art. 209 con esa sigla. Y asocia cada uno a una acción real.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 2 — Pregúntate "¿qué vínculo tiene?"</div><p>Es la pregunta clave para diferenciar empleado público, trabajador oficial y contratista.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 3 — Memoriza los autónomos estrella</div><p>Control (Procuraduría, Contraloría, Defensoría), electoral (CNE, Registraduría), Banco de la República y CNSC. Si aparece uno, NO es de las tres ramas.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 4 — Asocia ley con tema</div><p>Ley 909/2004 = empleo público y carrera; Decreto 1083/2015 = niveles y empleos.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 5 — Ubica tu cargo</div><p>Repasa tu OPEC y manual de funciones. Identifica tu nivel y entidad: te ayuda a aterrizar la teoría.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 6 — Lee dos veces el caso</div><p>En las preguntas con contexto, marca mentalmente: tipo de entidad, tipo de vínculo y principio en juego. Eso filtra distractores rápido.</p></div>
+  </section>
+
+  <!-- 7. TRAMPAS -->
+  <section class="section" data-sec="7">
+    <div class="eyebrow">Preguntas trampa</div>
+    <h2 class="sec-title">Aprende a detectar distractores</h2>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 1: "La CNSC pertenece a la Rama Ejecutiva porque administra el empleo público."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> "administrar" suena a "ejecutar".</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> la CNSC es un <strong>órgano autónomo e independiente</strong> (art. 130 CP); no pertenece a ninguna rama.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> es autónoma, NO de la Ejecutiva.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 2: "El contratista de prestación de servicios es un servidor público más."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> trabaja para una entidad pública.</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> su vínculo es un contrato civil/de prestación, no laboral ni reglamentario.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> el contratista NO es servidor público.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 3: "Eficiencia y eficacia son lo mismo, da igual cuál marcar."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> suenan similares.</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> el art. 209 nombra <strong>eficacia</strong> (lograr el objetivo) y <strong>economía</strong> (usar bien los recursos), no "eficiencia" como tal.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> los principios del 209 son: igualdad, moralidad, eficacia, economía, celeridad, imparcialidad, publicidad.</div>
+      </div>
+    </div>
+
+    <div class="trampa">
+      <div class="trampa-q">🎭 Trampa 4: "Como el DAFP también se ocupa del empleo público, hace concursos como la CNSC."</div>
+      <div class="trampa-detail">
+        <div class="t-row parece"><strong>Parece correcta porque:</strong> ambos están relacionados con el empleo público.</div>
+        <div class="t-row malo"><strong>Por qué es incorrecta:</strong> DAFP formula políticas y lineamientos. <strong>NO administra concursos</strong>.</div>
+        <div class="t-row bueno"><strong>Correcto:</strong> los concursos los administra la CNSC.</div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 8. REPASO INTERACTIVO (FLASHCARDS) -->
+  <section class="section" data-sec="8">
+    <div class="eyebrow">Repaso interactivo</div>
+    <h2 class="sec-title">Fija conceptos antes del simulacro</h2>
+    <p class="flash-intro">Haz clic en la tarjeta para ver la respuesta. Pasa por las 10 antes de hacer el simulacro: te ayudará a fijar los conceptos clave del Día 2.</p>
+    <div style="text-align:center;">
+      <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+    </div>
+
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <div class="label">Pregunta</div>
+          <div class="pregunta-flash" id="flashFront">¿Cuáles son las tres Ramas del Poder Público en Colombia?</div>
+          <div class="hint">👆 Clic para ver la respuesta</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="label">Respuesta</div>
+          <div class="respuesta-flash" id="flashBack">Legislativa, Ejecutiva y Judicial (art. 113 CP). Además existen órganos autónomos e independientes que no pertenecen a ninguna rama.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button id="flashPrev">← Anterior</button>
+      <button class="primary" id="flashFlip">🔄 Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </section>
+
+  <!-- 9. RESUMEN + GLOSARIO -->
+  <section class="section" data-sec="9">
+    <div class="eyebrow">Resumen ejecutivo</div>
+    <h2 class="sec-title">Repaso rápido del Día 2</h2>
+    <div class="resumen-grid">
+      <div class="resumen-item"><h4>🏛️ Estructura del Estado</h4><p>3 ramas (Legislativa, Ejecutiva, Judicial) + órganos autónomos (control, electoral, Banco Rep., CNSC).</p></div>
+      <div class="resumen-item"><h4>📋 Función pública</h4><p>Reglas del empleo estatal. Ley 909/2004. DAFP hace políticas; CNSC administra concursos.</p></div>
+      <div class="resumen-item"><h4>👤 Servidor público</h4><p>Empleados públicos, trabajadores oficiales y miembros de corporaciones. El contratista no lo es.</p></div>
+      <div class="resumen-item"><h4>⚖️ Principios (art. 209)</h4><p>I-M-E-E-C-I-P: Igualdad, Moralidad, Eficacia, Economía, Celeridad, Imparcialidad, Publicidad.</p></div>
+      <div class="resumen-item"><h4>🪜 Niveles del empleo</h4><p>Directivo, Asesor, Profesional, Técnico y Asistencial (Decreto 1083/2015).</p></div>
+      <div class="resumen-item"><h4>🎯 Recuerda</h4><p>La CNSC es autónoma; no es de la Rama Ejecutiva.</p></div>
+    </div>
+
+    <h3 style="margin-top:30px;"><span class="h3-chip">📖</span> Glosario rápido</h3>
+    <dl class="glosario">
+      <div class="glo-item"><dt>Carrera administrativa</dt><dd>Sistema de empleo basado en el ingreso y ascenso por mérito (Ley 909/2004).</dd></div>
+      <div class="glo-item"><dt>OPEC</dt><dd>Oferta Pública de Empleos de Carrera. Es el listado de cargos a proveer en una convocatoria.</dd></div>
+      <div class="glo-item"><dt>Manual de funciones</dt><dd>Documento que describe propósito, funciones, requisitos y competencias de cada empleo.</dd></div>
+      <div class="glo-item"><dt>Provisionalidad</dt><dd>Vinculación temporal de una persona en un empleo de carrera mientras se realiza el concurso.</dd></div>
+      <div class="glo-item"><dt>Lista de elegibles</dt><dd>Resultado del concurso de méritos: aspirantes en orden de puntaje.</dd></div>
+      <div class="glo-item"><dt>EICE</dt><dd>Empresa Industrial y Comercial del Estado. Allí es típico encontrar trabajadores oficiales.</dd></div>
+    </dl>
+
+    <div class="box gold">
+      <div class="box-title">⚡ Frase para recordar</div>
+      <p>"Si el caso habla de control, elecciones, Banco de la República o CNSC... NO es de las tres ramas: es autónomo."</p>
+    </div>
+  </section>
+
+  <!-- 10. SIMULACRO -->
+  <section class="section" data-sec="10">
+    <div class="eyebrow">Simulacro diario</div>
+    <h2 class="sec-title">Pon a prueba tu Día 2</h2>
+    <div class="quiz-intro">
+      <p>12 preguntas en el formato real de la CNSC. Recibirás retroalimentación inmediata por cada opción y, al final, un reporte con los temas que debes reforzar.</p>
+    </div>
+    <div class="quiz-formato">
+      <strong>📋 Formato CNSC — Selección múltiple con única respuesta.</strong> Cada pregunta se desarrolla en torno a un (1) enunciado o contexto y <strong>cuatro (4) opciones de respuesta (A, B, C, D)</strong>. Solo una (1) responde correctamente.
+      <div class="dific-tags">
+        <span class="tag b">4 Básicas</span>
+        <span class="tag i">5 Intermedias</span>
+        <span class="tag a">3 Avanzadas</span>
+      </div>
+    </div>
+
+    <div id="quiz"></div>
+
+    <div style="text-align:center;">
+      <button class="btn gold" id="btnCalcular">Ver mi resultado</button>
+    </div>
+
+    <div id="resultado">
+      <div class="score-num" id="scoreNum">0/12</div>
+      <p id="scoreMsg" style="font-weight:600;"></p>
+      <div id="temasReforzar"></div>
+      <button class="btn" id="btnReiniciar">🔄 Reiniciar simulacro</button>
+    </div>
+
+    <div class="cierre" style="margin-top:34px;">
+      <h3>🎓 ¡Completaste el Día 2!</h3>
+      <p>Ya dominas la estructura del Estado y la función pública. Mañana avanzamos con <strong>GEN-02: Relación Estado-Ciudadano</strong> (Derecho de Petición, servicio al ciudadano y transparencia).</p>
+      <p style="margin-bottom:0; font-weight:700; color:#fff;">Tu ruta personalizada hacia el empleo público avanza. 🚀</p>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">GEN-01 · Día 2 · Estado y Función Pública · Biblioteca General · Estándar AP-QA-001<br>© Ascenso Público. Material de preparación para concursos de mérito CNSC.</div>
+</footer>
+
+
+
+<script>
+  /* ===== NAVEGACIÓN ===== */
+  const navBtns = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('.section');
+  let current = 0;
+  const total = sections.length;
+
+  function showSection(i) {
+    current = i;
+    sections.forEach(s => s.classList.remove('visible'));
+    navBtns.forEach(b => b.classList.remove('active'));
+    sections[i].classList.add('visible');
+    navBtns[i].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateFooterBtns();
+  }
+  navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+  function updateFooterBtns() { /* legacy nav buttons removed; advance-btn handles flow */ }
+
+  /* ===== BOTÓN AVANZAR AL FINAL DE CADA SECCIÓN ===== */
+  const titulosCortos = [
+    'Importancia',     // de Objetivo → Importancia
+    'Desarrollo',      // de Importancia → Desarrollo
+    'Comparaciones',
+    'Casos CNSC',
+    'Errores',
+    'Tips',
+    'Trampas',
+    'Repaso',
+    'Resumen',
+    'Simulacro',
+    null               // última sección
+  ];
+  sections.forEach((sec, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'advance-bar';
+    if (i < sections.length - 1) {
+      bar.innerHTML = `
+        <span class="advance-hint">¿Listo para continuar?</span>
+        <button class="advance-btn" data-target="${i + 1}">Avanzar a ${titulosCortos[i]} →</button>`;
+    } else {
+      bar.innerHTML = `
+        <span class="advance-hint">🎓 Has completado todo el contenido</span>
+        <button class="advance-btn final" data-target="finalizar">✅ Finalizar Día 2</button>`;
+    }
+    sec.appendChild(bar);
+  });
+  document.querySelectorAll('.advance-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.target;
+      if (t === 'finalizar') {
+        alert('🎓 ¡Felicitaciones! Completaste el Día 2: Estado y Función Pública.\n\nMañana avanzas con GEN-02 · Relación Estado-Ciudadano.\n\nTu ruta personalizada hacia el empleo público continúa. 🚀');
+      } else {
+        showSection(parseInt(t));
+      }
+    });
+  });
+
+  /* ===== BARRA DE LECTURA ===== */
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('readbar').style.width = scrolled + '%';
+  });
+
+  /* ===== FLASHCARDS ===== */
+  const flashcards = [
+    { f:'¿Cuáles son las tres Ramas del Poder Público en Colombia?', b:'Legislativa, Ejecutiva y Judicial (art. 113 CP). Además existen órganos autónomos e independientes que no pertenecen a ninguna rama.' },
+    { f:'¿La CNSC pertenece a la Rama Ejecutiva?', b:'NO. Es un órgano autónomo e independiente (art. 130 CP). No pertenece a ninguna de las tres ramas.' },
+    { f:'¿Quién formula las políticas de empleo público y quién administra la carrera?', b:'El DAFP formula las políticas; la CNSC administra la carrera y los concursos. Son entidades distintas.' },
+    { f:'¿Qué regula la Ley 909 de 2004?', b:'El empleo público, la carrera administrativa y la gerencia pública.' },
+    { f:'¿Quiénes son servidores públicos según el art. 123 CP?', b:'Los miembros de corporaciones públicas, los empleados y trabajadores del Estado y de sus entidades descentralizadas. El contratista por prestación NO lo es.' },
+    { f:'Diferencia clave entre empleado público y trabajador oficial', b:'El empleado público tiene vínculo legal y reglamentario (nombramiento + posesión). El trabajador oficial tiene contrato de trabajo (típico en EICE y obras públicas).' },
+    { f:'Memoriza los 7 principios del art. 209 (truco I-M-E-E-C-I-P)', b:'Igualdad, Moralidad, Eficacia, Economía, Celeridad, Imparcialidad, Publicidad.' },
+    { f:'¿Cuáles son los 5 niveles jerárquicos del empleo público?', b:'Directivo, Asesor, Profesional, Técnico y Asistencial (Decreto 1083 de 2015).' },
+    { f:'¿Qué órganos integran el Ministerio Público?', b:'La Procuraduría General de la Nación, la Defensoría del Pueblo y las personerías municipales y distritales.' },
+    { f:'¿Qué entidades conforman la organización electoral en Colombia?', b:'El Consejo Nacional Electoral (CNE) y la Registraduría Nacional del Estado Civil (art. 120 CP).' }
+  ];
+
+  let flashIndex = 0;
+  const flashEl = document.getElementById('flashcard');
+  const flashFront = document.getElementById('flashFront');
+  const flashBack = document.getElementById('flashBack');
+  const flashCounter = document.getElementById('flashCounter');
+
+  function renderFlash() {
+    flashEl.classList.remove('flipped');
+    flashFront.textContent = flashcards[flashIndex].f;
+    flashBack.textContent = flashcards[flashIndex].b;
+    flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+  }
+  flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+  document.getElementById('flashFlip').addEventListener('click', (e) => { e.stopPropagation(); flashEl.classList.toggle('flipped'); });
+  document.getElementById('flashPrev').addEventListener('click', () => { flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length; renderFlash(); });
+  document.getElementById('flashNext').addEventListener('click', () => { flashIndex = (flashIndex + 1) % flashcards.length; renderFlash(); });
+  renderFlash();
+
+  /* ===== SIMULACRO ===== */
+  const preguntas = [
+    { nivel:'b', tema:'Estructura del Estado', ctx:'', q:'Según el artículo 113 de la Constitución Política, ¿cuáles son las Ramas del Poder Público?', ops:['Legislativa, Ejecutiva y Electoral','Legislativa, Ejecutiva y Judicial','Ejecutiva, Judicial y Ministerio Público','Legislativa, Judicial y de Control'], correcta:1, expl:['Lo electoral es una organización autónoma, no una rama.','✔ Las tres ramas son Legislativa, Ejecutiva y Judicial.','El Ministerio Público es órgano de control, no una rama.','El control es función de órganos autónomos, no una rama.'] },
+    { nivel:'b', tema:'Función Pública (DAFP/CNSC)', ctx:'', q:'¿Qué entidad lidera la formulación de las políticas de empleo público en Colombia?', ops:['La Contraloría General de la República','La Procuraduría General de la Nación','El Departamento Administrativo de la Función Pública (DAFP)','El Consejo Nacional Electoral'], correcta:2, expl:['La Contraloría ejerce control fiscal, no políticas de empleo.','La Procuraduría ejerce control disciplinario, no políticas de empleo.','✔ El DAFP formula las políticas de empleo público (la CNSC administra carrera y concursos).','El CNE pertenece a la organización electoral.'] },
+    { nivel:'b', tema:'Servidor Público', ctx:'', q:'De acuerdo con el artículo 123 de la Constitución, ¿quiénes son servidores públicos?', ops:['Los miembros de corporaciones públicas, los empleados y trabajadores del Estado y de sus entidades descentralizadas','Únicamente los empleados de libre nombramiento y remoción','Solamente los contratistas por prestación de servicios','Solo quienes son elegidos por voto popular'], correcta:0, expl:['✔ Es la definición del art. 123 CP.','Es muy restrictivo: deja por fuera a empleados de carrera, trabajadores y elegidos.','El contratista NO es servidor público; tiene vínculo civil.','Deja por fuera a empleados y trabajadores del Estado.'] },
+    { nivel:'b', tema:'Principios de la función administrativa (art. 209)', ctx:'', q:'¿Cuál de las siguientes opciones corresponde a los principios de la función administrativa (art. 209 CP)?', ops:['Rentabilidad, competitividad y libre mercado','Jerarquía, obediencia y reserva','Autonomía, descentralización y desconcentración','Igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad'], correcta:3, expl:['Son conceptos de mercado, no principios del art. 209.','No son los principios del 209.','Son formas de organización administrativa, no los principios del 209.','✔ Son los 7 principios del art. 209 CP.'] },
+    { nivel:'i', tema:'Servidor Público (empleado vs. trabajador oficial)', ctx:'En una Empresa Industrial y Comercial del Estado, una persona fue vinculada mediante contrato de trabajo para labores de mantenimiento.', q:'¿Qué tipo de servidor es?', ops:['Empleado público de libre nombramiento','Trabajador oficial','Contratista de prestación de servicios','Miembro de corporación pública'], correcta:1, expl:['El empleado público tiene vínculo legal y reglamentario, no contrato de trabajo.','✔ Vínculo por contrato de trabajo en EICE = trabajador oficial.','El contratista presta servicios por contrato civil; aquí hay contrato de trabajo.','Los miembros de corporaciones llegan por elección popular.'] },
+    { nivel:'i', tema:'Estructura del Estado (órganos de control)', ctx:'', q:'El Ministerio Público, encargado de la guarda de los derechos y el control disciplinario, está integrado principalmente por:', ops:['La Fiscalía General y los jueces','La Registraduría y el Consejo Nacional Electoral','La Contraloría y la Auditoría General','La Procuraduría General, la Defensoría del Pueblo y las personerías'], correcta:3, expl:['La Fiscalía y los jueces hacen parte de la Rama Judicial.','Esos integran la organización electoral.','La Contraloría ejerce control fiscal, no el Ministerio Público.','✔ El Ministerio Público lo ejercen la Procuraduría, la Defensoría y las personerías.'] },
+    { nivel:'i', tema:'Estructura del Estado (organización electoral)', ctx:'', q:'La organización electoral en Colombia está conformada por:', ops:['La Procuraduría y la Contraloría','El Congreso y el Consejo de Estado','El Consejo Nacional Electoral y la Registraduría Nacional del Estado Civil','La CNSC y el DAFP'], correcta:2, expl:['Son órganos de control, no organización electoral.','Pertenecen a las ramas Legislativa y Judicial.','✔ La organización electoral la conforman el CNE y la Registraduría (art. 120 CP).','Son entidades del empleo público, no organización electoral.'] },
+    { nivel:'i', tema:'Función Pública (carrera y mérito)', ctx:'Un jefe quiere vincular a un conocido en un empleo de carrera administrativa, sin concurso, "porque confía en él".', q:'¿Qué es lo correcto conforme a la función pública?', ops:['Nombrarlo, pues el jefe tiene autonomía absoluta','Proveer el empleo de carrera mediante concurso de méritos administrado por la CNSC','Nombrarlo en provisionalidad de manera indefinida','Convertir el cargo a libre nombramiento para evitar el concurso'], correcta:1, expl:['No existe autonomía para saltarse el mérito en empleos de carrera.','✔ Los empleos de carrera se proveen por concurso de méritos (Ley 909/2004).','La provisionalidad es excepcional y temporal, no una vía para evitar el concurso.','Cambiar la naturaleza del cargo para evadir el concurso es irregular.'] },
+    { nivel:'i', tema:'Función Pública (Ley 909 de 2004)', ctx:'', q:'¿Qué regula principalmente la Ley 909 de 2004?', ops:['El presupuesto general de la Nación','El régimen tributario nacional','La contratación estatal','El empleo público, la carrera administrativa y la gerencia pública'], correcta:3, expl:['El presupuesto se rige por otras normas (Estatuto Orgánico de Presupuesto).','Los tributos se rigen por el Estatuto Tributario.','La contratación se rige por la Ley 80 de 1993 y normas afines.','✔ La Ley 909 de 2004 regula el empleo público, la carrera y la gerencia pública.'] },
+    { nivel:'a', tema:'Principios de la función administrativa (art. 209)', ctx:'Una entidad publica en su página web los resultados de un concurso, notifica a todos los aspirantes en igualdad de condiciones y resuelve las reclamaciones dentro de los plazos establecidos.', q:'¿Qué principios de la función administrativa se evidencian principalmente?', ops:['Rentabilidad y competitividad','Jerarquía y reserva','Publicidad, igualdad y celeridad','Autonomía y descentralización'], correcta:2, expl:['No son principios del art. 209.','La reserva es lo contrario a la publicidad mostrada en el caso.','✔ Publicar = publicidad; tratar a todos igual = igualdad; resolver a tiempo = celeridad.','Son formas de organización, no los principios aplicados aquí.'] },
+    { nivel:'a', tema:'Niveles jerárquicos del empleo', ctx:'', q:'¿Cuál es una clasificación correcta de los niveles jerárquicos de los empleos públicos?', ops:['Directivo, Asesor, Profesional, Técnico y Asistencial','Alto, Medio y Bajo','Operativo, Táctico y Estratégico','Primario, Secundario y Terciario'], correcta:0, expl:['✔ Son los niveles jerárquicos (Decreto 1083 de 2015).','No es la clasificación normativa de empleos públicos.','Corresponde a niveles de gestión empresarial, no a la norma de empleos.','Es una clasificación económica, no de empleos públicos.'] },
+    { nivel:'a', tema:'Estructura del Estado (CNSC autónoma)', ctx:'Un aspirante afirma que la CNSC pertenece a la Rama Ejecutiva "porque administra el empleo público y eso es ejecutar".', q:'¿Es correcta esa afirmación?', ops:['Sí, porque toda función administrativa corresponde a la Rama Ejecutiva','No, la CNSC es un órgano autónomo e independiente; no pertenece a ninguna de las tres ramas','Sí, porque depende directamente del Presidente de la República','No, porque la CNSC hace parte de la Rama Judicial'], correcta:1, expl:['No toda función administrativa es de la Ejecutiva; hay órganos autónomos.','✔ La CNSC es un órgano autónomo e independiente (art. 130 CP).','La CNSC no depende del Presidente; es autónoma.','La CNSC no pertenece a la Rama Judicial.'] }
+  ];
+
+  const quizDiv = document.getElementById('quiz');
+  let respondidas = {};
+
+  function renderQuiz() {
+    respondidas = {};
+    quizDiv.innerHTML = '';
+    const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+    preguntas.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'pregunta';
+      let opsHtml = '';
+      p.ops.forEach((op, j) => {
+        const letra = String.fromCharCode(65 + j);
+        opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}"><span class="letra">${letra}</span><span>${op}</span></div>`;
+      });
+      const ctxHtml = p.ctx ? `<div class="q-contexto">${p.ctx}</div>` : '';
+      card.innerHTML = `
+        <div class="q-num">Pregunta ${idx+1} <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span></div>
+        ${ctxHtml}
+        <div class="q-texto">${p.q}</div>
+        <div class="opciones">${opsHtml}</div>
+        <div class="feedback" id="fb-${idx}"></div>`;
+      quizDiv.appendChild(card);
+    });
+
+    document.querySelectorAll('.opcion').forEach(op => {
+      op.addEventListener('click', function() {
+        const qi = +this.dataset.q;
+        const oi = +this.dataset.op;
+        if (respondidas[qi] !== undefined) return;
+        respondidas[qi] = oi;
+        const p = preguntas[qi];
+        const cont = this.parentElement;
+        cont.querySelectorAll('.opcion').forEach((o, k) => {
+          o.classList.add('bloqueada');
+          if (k === p.correcta) o.classList.add('correcta');
+        });
+        const fb = document.getElementById('fb-' + qi);
+        const letraCorrecta = String.fromCharCode(65 + p.correcta);
+        if (oi === p.correcta) {
+          fb.className = 'feedback ok show';
+          fb.innerHTML = '✅ <strong>¡Correcto!</strong> ' + p.expl[p.correcta];
+        } else {
+          this.classList.add('incorrecta');
+          fb.className = 'feedback no show';
+          fb.innerHTML = '❌ <strong>Incorrecto.</strong> Tu opción: ' + p.expl[oi] +
+            '<br><br>✅ <strong>La respuesta correcta es ' + letraCorrecta + ':</strong> ' + p.expl[p.correcta];
+        }
+      });
+    });
+  }
+
+  document.getElementById('btnCalcular').addEventListener('click', () => {
+    let correctas = 0;
+    const temasFallados = [];
+    preguntas.forEach((p, i) => {
+      if (respondidas[i] === p.correcta) { correctas++; }
+      else { if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema); }
+    });
+    const res = document.getElementById('resultado');
+    document.getElementById('scoreNum').textContent = correctas + '/12';
+    let msg;
+    const pct = correctas / 12;
+    if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas la estructura del Estado. Listo para el Día 3.';
+    else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados antes de avanzar.';
+    else msg = '📚 Vas por buen camino. Repasa los temas marcados y repite el simulacro. ¡Tú puedes!';
+    document.getElementById('scoreMsg').textContent = msg;
+
+    const cont = document.getElementById('temasReforzar');
+    if (temasFallados.length === 0) {
+      cont.innerHTML = '<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. Tienes el Día 2 dominado.</p></div>';
+    } else {
+      let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+      cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+        '<div class="box-title">📌 Temas que debes reforzar</div>' +
+        '<p>Fallaste preguntas de estos temas. Vuelve a la sección <strong>Desarrollo</strong> y repásalos antes de continuar:</p>' +
+        '<ul class="lista" style="margin-bottom:0;">' + items + '</ul></div>';
+    }
+    res.classList.add('show');
+    res.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnReiniciar').addEventListener('click', () => {
+    renderQuiz();
+    document.getElementById('resultado').classList.remove('show');
+    window.scrollTo({ top: document.querySelector('[data-sec="10"]').offsetTop, behavior:'smooth' });
+  });
+
+  renderQuiz();
+  updateFooterBtns();
+</script>
+</body>
+</html>
