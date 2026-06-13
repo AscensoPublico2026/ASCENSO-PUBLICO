@@ -11,28 +11,28 @@
 
 ```
 ASCENSO-PUBLICO/
-├── README.md                      ← este índice
-├── guias/                         ← GUÍAS HTML DEFINITIVAS (abren en el navegador)
+├── README.md                      ← este índice (puerta de entrada)
+├── PROYECTO-MAESTRO.md            ← 🧭 documento NORTE: idea completa + estado + handoff
+├── ESTANDAR-TECNICO.md            ← 🛠️ código CSS/HTML/JS de los componentes
+├── PLANTILLA-GUIA.md              ← ✅ checklist paso a paso para crear una guía
+├── prompts/                       ← 🤖 prompts reutilizables
+│   ├── generador-plan-estudio.md  · genera el plan de 21 días desde OPEC + manual
+│   └── generador-guias.md         · genera una guía HTML desde un tema (vivo)
+├── biblioteca/                    ← 📚 catálogo maestro de guías (reemplaza el Excel)
+│   ├── biblioteca.json            · fuente de verdad (códigos, estado, temas)
+│   ├── BIBLIOTECA.md              · índice legible (generado)
+│   ├── generar_indice.py          · regenera el índice desde el JSON
+│   └── README.md                  · cómo registrar una guía
+├── guias/                         ← 🎓 guías HTML definitivas (abren en el navegador)
 │   ├── INTRO-00-presentacion-curso.html      · Día 1 — Presentación del curso + CNSC
 │   ├── GEN-01-estado-funcion-publica.html    · Día 2 — Estado y Función Pública
 │   ├── GEN-02-relacion-estado-ciudadano.html · Día 3 — Relación Estado-Ciudadano
 │   └── GEN-03-marco-institucional.html       · Día 4 — Marco Institucional
-├── biblioteca/                    ← 📚 REGISTRO MAESTRO de guías (reemplaza el Excel)
-│   ├── biblioteca.json            · fuente de verdad (códigos, estado, temas)
-│   ├── BIBLIOTECA.md              · índice legible (generado)
-│   └── generar_indice.py          · regenera el índice desde el JSON
-├── brand/                         ← Logos oficiales (SVG + PNG) y guía de uso
-│
-├── ESTADO-PROYECTO.md             ← 📘 Documento maestro (visión, flujo, estado, decisiones)
-├── ESTANDAR-TECNICO.md            ← 🛠️ Código CSS/HTML/JS de los componentes
-├── PLANTILLA-GUIA.md              ← ✅ Checklist paso a paso para crear una guía nueva
-├── .kiro/steering/                ← Reglas para el agente AI (se cargan automáticamente)
-│
-├── BIBLIOTECA.xlsx                ← (histórico) Excel original — superseded por `biblioteca/`
-├── ESTÁNDAR DE CALIDAD OFICIAL.docx       ← Estándar AP-QA-001
-├── Fundacional de Ascenso Público V1..docx ← Documento fundacional
-└── PRONT GENERADOR DE PLANES 1.1.docx     ← Prompt del generador de planes
+├── brand/                         ← 🎨 logos oficiales (SVG + PNG) y guía de uso
+└── .kiro/steering/                ← ⚙️ reglas para el agente AI (se cargan solas)
 ```
+
+> 🧭 **¿Nuevo en el proyecto (o eres otra IA)?** Empieza por **[`PROYECTO-MAESTRO.md`](PROYECTO-MAESTRO.md)**: contiene la idea completa, el estado actual y el paso siguiente.
 
 ---
 
@@ -63,13 +63,14 @@ Cada guía es un **archivo HTML autocontenido**: ábrelo con doble clic en cualq
 - **Paleta 60-30-10:** crema `#FBF9F4` · azul `#0A2A5E` · dorado `#E8A33D`.
 - **Cada guía** tiene 11 secciones, 75–110 min de estudio, conceptos en 4 capas + sub-bloques, y un **simulacro de juicio situacional** (12 preguntas, 4 opciones, casos reales — no memoria de la norma).
 
-Detalles completos en `ESTADO-PROYECTO.md`, `ESTANDAR-TECNICO.md` y `PLANTILLA-GUIA.md`.
+Detalles completos en [`PROYECTO-MAESTRO.md`](PROYECTO-MAESTRO.md), `ESTANDAR-TECNICO.md` y `PLANTILLA-GUIA.md`.
 
 ---
 
 ## 🚀 Cómo continuar el proyecto
 
-1. Lee `ESTADO-PROYECTO.md` (visión y estado completo).
-2. Para crear una guía nueva, sigue `PLANTILLA-GUIA.md` (vía rápida: parte de `guias/GEN-01-...html`).
-3. Respeta las decisiones congeladas y la identidad de marca.
-4. Próximo paso sugerido: **Biblioteca por Nivel (Día 5+)**.
+1. Lee **[`PROYECTO-MAESTRO.md`](PROYECTO-MAESTRO.md)** (idea completa, estado y paso siguiente).
+2. Para crear una guía nueva, usa `prompts/generador-guias.md` + `PLANTILLA-GUIA.md` (vía rápida: parte de una guía publicada en `guias/`).
+3. Para generar el plan de 21 días de un aspirante, usa `prompts/generador-plan-estudio.md`.
+4. Respeta las decisiones congeladas y la identidad de marca.
+5. Próximo paso sugerido: **Biblioteca por Nivel (Día 5+)**.

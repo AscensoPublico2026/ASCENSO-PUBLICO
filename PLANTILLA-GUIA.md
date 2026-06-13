@@ -537,4 +537,4 @@ Convenciones para el repo:
 
 ---
 
-*Fin de la plantilla. Para detalles del código ver `ESTANDAR-TECNICO.md`. Para visión general ver `ESTADO-PROYECTO.md`.*
+*Fin de la plantilla. Para detalles del código ver `ESTANDAR-TECNICO.md`. Para la visión general y el estado del proyecto ver `PROYECTO-MAESTRO.md`. Para el prompt de generación ver `prompts/generador-guias.md`.*
