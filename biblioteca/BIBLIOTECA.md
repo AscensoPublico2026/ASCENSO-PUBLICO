@@ -5,7 +5,7 @@
 
 > Registro maestro de guías del curso de preparación CNSC. Fuente de verdad de la biblioteca: cada guía definitiva se registra aquí con su código, día, categoría, estado y temas. Reemplaza al archivo BIBLIOTECA.xlsx.
 
-**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 12 ✅
+**Versión:** 1.0 · **Actualizado:** 2026-06-13 · **Guías registradas:** 19 · **Publicadas:** 16 ✅
 
 > 🧱 **Cómo está organizada:** la fuente de verdad es `biblioteca.json`. Este índice (`BIBLIOTECA.md`) se genera con `generar_indice.py`. Para añadir o publicar una guía, edita el JSON y regenera el índice.
 
@@ -19,16 +19,16 @@
 | ✅ | 3 | [`GEN-02`](../guias/GEN-02-relacion-estado-ciudadano.html) | Relación Estado-Ciudadano | General | — |
 | ✅ | 4 | [`GEN-03`](../guias/GEN-03-marco-institucional.html) | Marco Institucional | General | — |
 | ✅ | 5 | [`ASI-COM-01`](../guias/ASI-COM-01-cumplimiento-desarrollo-laboral.html) | Cumplimiento y Desarrollo Laboral (Nivel Asistencial) | Por Nivel | Asistencial |
-| ⬜ | 5 | `PRO-COM-01` | Gestión Profesional y Cumplimiento Institucional (Nivel Profesional) | Por Nivel | Profesional |
+| ✅ | 5 | [`PRO-COM-01`](../guias/PRO-COM-01-gestion-cumplimiento.html) | Gestión Profesional y Cumplimiento Institucional (Nivel Profesional) | Por Nivel | Profesional |
 | ✅ | 5 | [`TEC-COM-01`](../guias/TEC-COM-01-desempeno-cumplimiento.html) | Desempeño Individual y Cumplimiento Institucional (Nivel Técnico) | Por Nivel | Técnico |
 | ✅ | 6 | [`ASI-COM-02`](../guias/ASI-COM-02-atencion-colaboracion.html) | Atención y Colaboración en el Servicio Público (Nivel Asistencial) | Por Nivel | Asistencial |
-| ⬜ | 6 | `PRO-COM-02` | Servicio al Ciudadano y Articulación Institucional (Nivel Profesional) | Por Nivel | Profesional |
+| ✅ | 6 | [`PRO-COM-02`](../guias/PRO-COM-02-servicio-articulacion.html) | Servicio al Ciudadano y Articulación Institucional (Nivel Profesional) | Por Nivel | Profesional |
 | ✅ | 6 | [`TEC-COM-02`](../guias/TEC-COM-02-usuarios-trabajo-colaborativo.html) | Relación con Usuarios y Trabajo Colaborativo (Nivel Técnico) | Por Nivel | Técnico |
 | ✅ | 7 | [`ASI-ESP-01`](../guias/ASI-ESP-01-competencias-nivel-asistencial.html) | Competencias del Nivel Asistencial | Por Nivel | Asistencial |
-| ⬜ | 7 | `PRO-ESP-01` | Competencias del Nivel Profesional | Por Nivel | Profesional |
+| ✅ | 7 | [`PRO-ESP-01`](../guias/PRO-ESP-01-competencias-nivel-profesional.html) | Competencias del Nivel Profesional | Por Nivel | Profesional |
 | ✅ | 7 | [`TEC-ESP-01`](../guias/TEC-ESP-01-competencias-nivel-tecnico.html) | Competencias del Nivel Técnico | Por Nivel | Técnico |
 | ✅ | 8 | [`ASI-ESP-02`](../guias/ASI-ESP-02-alcance-cargo-asistencial.html) | Alcance del Cargo Asistencial | Por Nivel | Asistencial |
-| ⬜ | 8 | `PRO-ESP-02` | Alcance del Cargo Profesional | Por Nivel | Profesional |
+| ✅ | 8 | [`PRO-ESP-02`](../guias/PRO-ESP-02-alcance-cargo-profesional.html) | Alcance del Cargo Profesional | Por Nivel | Profesional |
 | ✅ | 8 | [`TEC-ESP-02`](../guias/TEC-ESP-02-alcance-cargo-tecnico.html) | Alcance del Cargo Técnico | Por Nivel | Técnico |
 | ⬜ | — | `BON-01` | Estrategia CNSC (Bonus) | Bonus | — |
 | ⬜ | 21 | `SIM-001` | Simulacro Integral Final | Simulacro Final | — |
@@ -189,8 +189,8 @@ Temas:
 
 #### 🪜 Nivel Profesional
 
-#### ⬜ PRO-COM-01 · Gestión Profesional y Cumplimiento Institucional (Nivel Profesional)
-**Día:** 5 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ PRO-COM-01 · Gestión Profesional y Cumplimiento Institucional (Nivel Profesional)
+**Día:** 5 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/PRO-COM-01-gestion-cumplimiento.html`](../guias/PRO-COM-01-gestion-cumplimiento.html)
 
 Temas:
 - Competencias comunes (Dec. 815/2018): ¿cómo trabajo yo?
@@ -200,8 +200,8 @@ Temas:
 - Adaptación al cambio
 - Casos situacionales y simulacro
 
-#### ⬜ PRO-COM-02 · Servicio al Ciudadano y Articulación Institucional (Nivel Profesional)
-**Día:** 6 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ PRO-COM-02 · Servicio al Ciudadano y Articulación Institucional (Nivel Profesional)
+**Día:** 6 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/PRO-COM-02-servicio-articulacion.html`](../guias/PRO-COM-02-servicio-articulacion.html)
 
 Temas:
 - Orientación al usuario y al ciudadano
@@ -210,8 +210,8 @@ Temas:
 - Comunicación efectiva (oral y escrita)
 - Casos situacionales y simulacro
 
-#### ⬜ PRO-ESP-01 · Competencias del Nivel Profesional
-**Día:** 7 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ PRO-ESP-01 · Competencias del Nivel Profesional
+**Día:** 7 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/PRO-ESP-01-competencias-nivel-profesional.html`](../guias/PRO-ESP-01-competencias-nivel-profesional.html)
 
 Temas:
 - Aporte técnico-profesional: análisis y conceptos técnicos
@@ -220,8 +220,8 @@ Temas:
 - Relación con otras áreas
 - Cómo evalúa la CNSC estas competencias (casos y distractores)
 
-#### ⬜ PRO-ESP-02 · Alcance del Cargo Profesional
-**Día:** 8 · **Estado:** Pendiente · **Simulacro:** sí · **Reutilizable:** sí
+#### ✅ PRO-ESP-02 · Alcance del Cargo Profesional
+**Día:** 8 · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/PRO-ESP-02-alcance-cargo-profesional.html`](../guias/PRO-ESP-02-alcance-cargo-profesional.html)
 
 Temas:
 - Gestión de procedimientos: diseño, mejora y seguimiento de procesos
