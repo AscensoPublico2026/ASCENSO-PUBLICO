@@ -17,6 +17,10 @@ ASCENSO-PUBLICO/
 │   ├── GEN-01-estado-funcion-publica.html    · Día 2 — Estado y Función Pública
 │   ├── GEN-02-relacion-estado-ciudadano.html · Día 3 — Relación Estado-Ciudadano
 │   └── GEN-03-marco-institucional.html       · Día 4 — Marco Institucional
+├── biblioteca/                    ← 📚 REGISTRO MAESTRO de guías (reemplaza el Excel)
+│   ├── biblioteca.json            · fuente de verdad (códigos, estado, temas)
+│   ├── BIBLIOTECA.md              · índice legible (generado)
+│   └── generar_indice.py          · regenera el índice desde el JSON
 ├── brand/                         ← Logos oficiales (SVG + PNG) y guía de uso
 │
 ├── ESTADO-PROYECTO.md             ← 📘 Documento maestro (visión, flujo, estado, decisiones)
@@ -24,7 +28,7 @@ ASCENSO-PUBLICO/
 ├── PLANTILLA-GUIA.md              ← ✅ Checklist paso a paso para crear una guía nueva
 ├── .kiro/steering/                ← Reglas para el agente AI (se cargan automáticamente)
 │
-├── BIBLIOTECA.xlsx                ← Excel maestro de códigos de guías (por categoría)
+├── BIBLIOTECA.xlsx                ← (histórico) Excel original — superseded por `biblioteca/`
 ├── ESTÁNDAR DE CALIDAD OFICIAL.docx       ← Estándar AP-QA-001
 ├── Fundacional de Ascenso Público V1..docx ← Documento fundacional
 └── PRONT GENERADOR DE PLANES 1.1.docx     ← Prompt del generador de planes
@@ -48,6 +52,8 @@ Cada guía es un **archivo HTML autocontenido**: ábrelo con doble clic en cualq
 | 21 | SIM-001 | Simulacro Integral Final | Evaluación | ⬜ |
 
 > ✅ **La Biblioteca General (Días 1–4) está completa.**
+
+📚 **Catálogo completo de guías** (publicadas y pendientes, con sus temas): ver [`biblioteca/BIBLIOTECA.md`](biblioteca/BIBLIOTECA.md).
 
 ---
 

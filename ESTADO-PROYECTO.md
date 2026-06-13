@@ -255,7 +255,17 @@ Cada una de las 11 secciones termina con una barra dorada:
 | `Fundacional de Ascenso Público V1..docx` | Visión, flujo, filosofía |
 | `ESTÁNDAR DE CALIDAD OFICIAL.docx` | Estándar AP-QA-001 v1.1 |
 | `PRONT GENERADOR DE PLANES 1.1.docx` | Prompt del generador de planes |
-| `BIBLIOTECA.xlsx` | Excel maestro con 3 hojas (códigos por categoría) |
+| `BIBLIOTECA.xlsx` | (histórico) Excel original. **Superseded** por la carpeta `biblioteca/`. |
+
+### Biblioteca — carpeta `biblioteca/` (registro maestro, reemplaza el Excel)
+| Archivo | Qué es |
+|---|---|
+| `biblioteca/biblioteca.json` | 🧱 Fuente de verdad: todas las guías con código, día, categoría, nivel, estado y temas |
+| `biblioteca/BIBLIOTECA.md` | 📖 Índice legible (generado desde el JSON) |
+| `biblioteca/generar_indice.py` | 🔧 Regenera el índice desde el JSON |
+| `biblioteca/README.md` | Cómo registrar/publicar una guía nueva |
+
+> Al crear o publicar una guía: actualizar `biblioteca.json` (estado + archivo + temas) y ejecutar `python3 biblioteca/generar_indice.py`.
 
 ### Guías definitivas — carpeta `guias/`
 Todas las guías HTML vigentes viven en `guias/`. Son autocontenidas y referencian el favicon como `../brand/favicon.svg`.

@@ -108,9 +108,11 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 
 ### 4 bibliotecas
 - **A) General** — fija para todos los clientes (3 GEN + INTRO-00)
-- **B) Por Nivel** — depende del nivel jerárquico de la OPEC
-- **C) Funcional** — depende de funciones específicas; reutilizable vía `BIBLIOTECA.xlsx`
+- **B) Por Nivel** — depende del nivel jerárquico de la OPEC (competencias Dec. 815/2018)
+- **C) Funcional** — depende de funciones específicas; reutilizable
 - **D) Por Entidad** — creada bajo demanda y reutilizada (`ENT-001` Indervalle, etc.)
+
+> **Registro maestro de guías:** la carpeta **`biblioteca/`** reemplaza al antiguo `BIBLIOTECA.xlsx`. La fuente de verdad es `biblioteca/biblioteca.json`; el índice legible `biblioteca/BIBLIOTECA.md` se regenera con `python3 biblioteca/generar_indice.py`. **Al crear o publicar una guía, registrarla en el JSON (estado + archivo + temas) y regenerar el índice.**
 
 ---
 
