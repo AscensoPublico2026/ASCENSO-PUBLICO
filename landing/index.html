@@ -98,7 +98,7 @@
   a:focus-visible,.btn:focus-visible,summary:focus-visible,.nav-toggle:focus-visible,details:focus-visible{outline:3px solid var(--azul-claro);outline-offset:2px;border-radius:8px;}
 
   /* HERO */
-  .hero{position:relative;overflow:hidden;background:linear-gradient(155deg,#06203F 0%,var(--azul) 52%,var(--azul-medio) 100%);color:#fff;padding:76px 0 86px;}
+  .hero{position:relative;overflow:hidden;background:linear-gradient(155deg,rgba(6,32,63,.93),rgba(10,42,94,.85) 52%,rgba(26,74,138,.8)),url('../brand/fotos/hero.jpg') center/cover no-repeat;color:#fff;padding:76px 0 86px;}
   .hero::before{content:'';position:absolute;top:-120px;right:-100px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%);}
   .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro),var(--oro-claro) 50%,var(--oro));}
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
@@ -218,10 +218,11 @@
   .conv-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
   .conv{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;box-shadow:var(--sombra);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
   .conv:hover{transform:translateY(-4px);box-shadow:var(--sombra-lg);}
-  .conv-media{position:relative;height:118px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .conv-media img{width:100%;height:100%;object-fit:cover;}
-  .conv-media .ic-conv{width:54px;height:54px;color:#fff;opacity:.95;}
-  .conv-media .estado{position:absolute;top:12px;left:12px;}
+  .conv-media{position:relative;height:128px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .conv-media .ic-conv{width:54px;height:54px;color:#fff;opacity:.95;z-index:1;}
+  .conv-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;}
+  .conv-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,32,63,.5),rgba(6,32,63,0) 45%);z-index:3;pointer-events:none;}
+  .conv-media .estado{position:absolute;top:12px;left:12px;z-index:4;}
   .conv-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:9px;}
   .conv .estado{align-self:flex-start;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:5px 12px;border-radius:20px;}
   .estado.abiertas{background:var(--verde-suave);color:var(--verde);}
@@ -763,7 +764,7 @@
       etiqueta:'Inscripciones abiertas',
       vacantes:'1.665',
       fecha:'Inscripciones en curso · prueba escrita pendiente',
-      tema:'nacional'
+      tema:'nacional', imagen:'../brand/fotos/nacional.jpg'
     },
     {
       nombre:'Territorial 12',
@@ -772,7 +773,7 @@
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.573',
       fecha:'Inscripciones cerradas (12 jun 2026) · prueba pendiente',
-      tema:'territorial'
+      tema:'territorial', imagen:'../brand/fotos/territorial12.jpg'
     },
     {
       nombre:'Entidades del Orden Territorial y UApA',
@@ -781,7 +782,7 @@
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.453',
       fecha:'Proceso en ejecución · prueba pendiente',
-      tema:'territorial'
+      tema:'territorial', imagen:'../brand/fotos/territorial-uapa.jpg'
     },
     {
       nombre:'DIAN 2676',
@@ -790,7 +791,7 @@
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.990',
       fecha:'En verificación de requisitos (VRM) · prueba pendiente',
-      tema:'impuestos'
+      tema:'impuestos', imagen:'../brand/fotos/dian.png'
     },
     {
       nombre:'Procuraduría General de la Nación',
@@ -798,7 +799,7 @@
       estado:'proxima',
       etiqueta:'Inscripciones próximas',
       fecha:'Inscripciones: 7–18 sep 2026 (Res. 133 de 2026)',
-      tema:'justicia'
+      tema:'justicia', imagen:'../brand/fotos/procuraduria.jpg'
     },
     {
       nombre:'Empresas Sociales del Estado 2 (ESE 2)',
@@ -807,7 +808,7 @@
       etiqueta:'En planeación',
       vacantes:'~3.000',
       fecha:'En divulgación · prueba escrita lejana',
-      tema:'salud'
+      tema:'salud', imagen:'../brand/fotos/ese.jpg'
     }
   ];
   const grid = document.getElementById('convGrid');
@@ -824,9 +825,7 @@
   } else {
     grid.innerHTML = CONVOCATORIAS.map(c => {
       const t = TEMAS[c.tema] || TEMAS.nacional;
-      const media = c.imagen
-        ? `<img src="${c.imagen}" alt="${c.nombre}">`
-        : `<svg class="ic-conv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${t.svg}</svg>`;
+      const media = `${c.imagen ? `<img src="${c.imagen}" alt="${c.nombre}" loading="lazy" onerror="this.remove()">` : ''}<svg class="ic-conv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${t.svg}</svg>`;
       return `
       <div class="conv">
         <div class="conv-media" style="background:linear-gradient(135deg,${t.g1},${t.g2});">
