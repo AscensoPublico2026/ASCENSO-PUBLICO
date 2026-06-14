@@ -34,10 +34,11 @@ El proyecto se divide en **6 fases**. Cada fase agrupa paquetes de trabajo (entr
 - 1.2 Biblioteca por Nivel — Asistencial, Técnico y Profesional (12 guías, Días 5–8). ✅
 - 1.3 Bonus — BON-01 Estrategia CNSC. 🟦 *construido; PR pendiente de merge.*
 
-### Fase 2 · Diseño de lo personalizable  ⬜ (el foco de ahora)
-- 2.1 **Diseño de las guías funcionales** (Días 9–20): estructura, profundidad, peso, cómo se ven. *(no se crean aún; se especifica el molde).*
-- 2.2 **Diseño del simulacro integral final** (SIM-001): cómo se arma, nº de preguntas, mezcla, personalización por OPEC.
-- 2.3 Decisión sobre **guías adicionales** (¿se añaden nuevas? ¿cuáles?).
+### Fase 2 · Diseño de lo personalizable  ⏳ (se define con la PRIMERA COMPRA)
+> **Decisión (14 jun):** el molde de las guías funcionales y del simulacro final se diseñará **en tiempo real con el primer cliente** (OPEC real). Al verlo funcionando se fija el estándar para las próximas compras. Se evita diseñar en abstracto.
+- 2.1 **Diseño de las guías funcionales** — se define con la 1ª compra.
+- 2.2 **Diseño del simulacro integral final (SIM-001)** — se define con la 1ª compra.
+- 2.3 Decisión sobre **guías adicionales** — tras ver el caso real.
 
 ### Fase 3 · Producción a demanda (por cliente/OPEC)  ⬜
 - 3.1 Guías funcionales según funciones del cargo.
@@ -52,9 +53,9 @@ El proyecto se divide en **6 fases**. Cada fase agrupa paquetes de trabajo (entr
 - 4.4 Panel administrador (gestionar clientes, planes, publicación de guías).
 
 ### Fase 5 · Marketing y adquisición  ⬜
-- 5.1 **TikTok** (línea de contenido, calendario, primeros videos).
+- 5.1 **TikTok / redes** — gestionado por el fundador con apoyo de IA externa (Claude).
 - 5.2 Otros canales (a definir).
-- 5.3 Embudo: contenido → landing → compra.
+- 5.3 Embudo: contenido en redes → **landing** → captación/compra.
 
 ### Fase 6 · Automatización IA (visión futura)  ⬜
 - 6.1 Analizar OPEC + manual → generar plan → generar guías → publicar.
@@ -67,7 +68,7 @@ El proyecto se divide en **6 fases**. Cada fase agrupa paquetes de trabajo (entr
 |---|:--:|:--:|---|
 | 0 · Fundación | ✅ Completa | 100% | — |
 | 1 · Contenido reutilizable | 🟦 Casi | 95% | Mergear BON-01 |
-| 2 · Diseño de lo personalizable | ⬜ Por iniciar | 0% | Specs de guías funcionales y de SIM-001 |
+| 2 · Diseño de lo personalizable | ⏳ Diferida | — | Se define con la primera compra (caso real) |
 | 3 · Producción a demanda | ⬜ Por iniciar | 0% | Depende de Fase 2 y del primer cliente |
 | 4 · Plataforma | ⬜ Por iniciar | 0% | Landing → compra → panel estudiante |
 | 5 · Marketing | ⬜ Por iniciar | 0% | TikTok y embudo |
@@ -108,16 +109,17 @@ El proyecto se divide en **6 fases**. Cada fase agrupa paquetes de trabajo (entr
 
 ---
 
-## 6. Próximo paso recomendado
+## 6. Próximo paso recomendado (actualizado 14 jun)
 
-Con el contenido base casi cerrado, lo más rentable ahora es **definir los moldes de lo personalizable (Fase 2)** y, en paralelo, **abrir el frente de producto/marketing (landing + TikTok)**. Concretamente, en este orden:
+**Decisión del fundador:** la Fase 2 (diseño de guías funcionales y simulacro) se trabaja **con la primera compra**, sobre un caso real. El foco inmediato pasa a **producto y captación**.
 
+Orden de trabajo:
 1. **Mergear BON-01** (cierra la Fase 1).
-2. **Definir el diseño de las guías funcionales** (spec): es lo que más se va a repetir y conviene tener el molde antes de producir.
-3. **Definir el diseño del simulacro final** (spec).
-4. **Landing page** y **línea de TikTok** (se pueden trabajar en paralelo a lo anterior).
+2. **Landing page** ← prioridad inmediata (se construye con el asistente).
+3. **TikTok / redes** ← lo gestiona el fundador con apoyo de IA externa (Claude); el landing es el destino del embudo.
+4. **Fase 2 (funcionales + simulacro)** ← se diseña en tiempo real al llegar la primera compra.
 
-> Recomendación: no producir guías funcionales todavía; primero fijar el molde (2.1) para que toda la producción salga uniforme.
+> Razón: ya hay contenido de calidad para mostrar; lo que urge es **tener presencia y captar demanda** mientras se diseña lo personalizable con un caso real.
 
 ---
 
