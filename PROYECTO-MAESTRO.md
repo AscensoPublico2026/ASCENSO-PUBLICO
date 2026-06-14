@@ -122,6 +122,7 @@ ASCENSO-PUBLICO/
 ├── README.md                  · Índice/puerta de entrada del repo
 ├── PROYECTO-MAESTRO.md        · 🧭 ESTE documento (norte + handoff)
 ├── PLAN-PROYECTO.md           · 📊 Gestión: fases, cronograma, % de avance, hitos
+├── ARQUITECTURA-PLATAFORMA.md · 🏗️ Plano de la plataforma web (landing, portal, admin)
 ├── ESTANDAR-TECNICO.md        · 🛠️ Código (CSS/HTML/JS) de los componentes de las guías
 ├── PLANTILLA-GUIA.md          · ✅ Checklist paso a paso para crear una guía nueva
 ├── prompts/                   · 🤖 Prompts reutilizables
