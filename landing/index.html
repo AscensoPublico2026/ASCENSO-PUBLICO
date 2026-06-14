@@ -216,7 +216,13 @@
 
   /* CONVOCATORIAS */
   .conv-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
-  .conv{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:22px;box-shadow:var(--sombra);display:flex;flex-direction:column;gap:10px;}
+  .conv{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;box-shadow:var(--sombra);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
+  .conv:hover{transform:translateY(-4px);box-shadow:var(--sombra-lg);}
+  .conv-media{position:relative;height:118px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .conv-media img{width:100%;height:100%;object-fit:cover;}
+  .conv-media .ic-conv{width:54px;height:54px;color:#fff;opacity:.95;}
+  .conv-media .estado{position:absolute;top:12px;left:12px;}
+  .conv-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:9px;}
   .conv .estado{align-self:flex-start;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:5px 12px;border-radius:20px;}
   .estado.abiertas{background:var(--verde-suave);color:var(--verde);}
   .estado.cerradas{background:var(--azul-suave);color:var(--azul);}
@@ -742,8 +748,10 @@
      EDITA AQUÍ las convocatorias (a futuro se cargan desde el panel admin / base de datos).
      estado: 'abiertas' | 'cerradas' | 'proxima'
      Cuando tengas las reales de SIMO (https://simo.cnsc.gov.co), agrégalas con este formato:
-     { nombre:'Nombre de la convocatoria', entidad:'Entidad', estado:'abiertas', etiqueta:'Inscripciones abiertas', vacantes:'1.250', fecha:'Pruebas: por confirmar' },
-     (el campo "vacantes" es opcional)
+     { nombre:'...', entidad:'...', estado:'abiertas', etiqueta:'Inscripciones abiertas', vacantes:'1.250', fecha:'...', tema:'nacional' },
+     - "vacantes" es opcional.
+     - "tema" define el icono del banner: 'nacional' | 'territorial' | 'impuestos' | 'justicia' | 'salud'.
+     - "imagen" (opcional): si pones una URL/ruta de foto, se muestra en vez del icono. Ej: imagen:'../brand/fotos/dian-640.jpg'
   */
   const CONVOCATORIAS = [
     {
@@ -752,7 +760,8 @@
       estado:'abiertas',
       etiqueta:'Inscripciones abiertas',
       vacantes:'1.665',
-      fecha:'Inscripciones en curso · prueba escrita pendiente'
+      fecha:'Inscripciones en curso · prueba escrita pendiente',
+      tema:'nacional'
     },
     {
       nombre:'Territorial 12',
@@ -760,7 +769,8 @@
       estado:'proxima',
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.573',
-      fecha:'Inscripciones cerradas (12 jun 2026) · prueba pendiente'
+      fecha:'Inscripciones cerradas (12 jun 2026) · prueba pendiente',
+      tema:'territorial'
     },
     {
       nombre:'Entidades del Orden Territorial y UApA',
@@ -768,7 +778,8 @@
       estado:'proxima',
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.453',
-      fecha:'Proceso en ejecución · prueba pendiente'
+      fecha:'Proceso en ejecución · prueba pendiente',
+      tema:'territorial'
     },
     {
       nombre:'DIAN 2676',
@@ -776,14 +787,16 @@
       estado:'proxima',
       etiqueta:'Prueba escrita pendiente',
       vacantes:'1.990',
-      fecha:'En verificación de requisitos (VRM) · prueba pendiente'
+      fecha:'En verificación de requisitos (VRM) · prueba pendiente',
+      tema:'impuestos'
     },
     {
       nombre:'Procuraduría General de la Nación',
       entidad:'Procuraduría General de la Nación',
       estado:'proxima',
       etiqueta:'Inscripciones próximas',
-      fecha:'Inscripciones: 7–18 sep 2026 (Res. 133 de 2026)'
+      fecha:'Inscripciones: 7–18 sep 2026 (Res. 133 de 2026)',
+      tema:'justicia'
     },
     {
       nombre:'Empresas Sociales del Estado 2 (ESE 2)',
@@ -791,22 +804,42 @@
       estado:'proxima',
       etiqueta:'En planeación',
       vacantes:'~3.000',
-      fecha:'En divulgación · prueba escrita lejana'
+      fecha:'En divulgación · prueba escrita lejana',
+      tema:'salud'
     }
   ];
   const grid = document.getElementById('convGrid');
+  // Iconos vectoriales por tema (no usamos logos oficiales para no implicar afiliación).
+  const TEMAS = {
+    nacional:    { g1:'#0A2A5E', g2:'#1A4A8A', svg:'<path d="M3 21h18"/><path d="M6 21V9l6-4 6 4v12"/><path d="M10 21v-5h4v5"/><path d="M9 12h.01M15 12h.01"/>' },
+    territorial: { g1:'#1A4A8A', g2:'#2D6CC0', svg:'<path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/>' },
+    impuestos:   { g1:'#0A2A5E', g2:'#2D6CC0', svg:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>' },
+    justicia:    { g1:'#06203F', g2:'#1A4A8A', svg:'<path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/>' },
+    salud:       { g1:'#1A4A8A', g2:'#1A7A4A', svg:'<rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 8.5v7M8.5 12h7"/>' },
+  };
   if (CONVOCATORIAS.length === 0) {
     grid.innerHTML = '<div class="conv-empty">Pronto publicaremos las convocatorias activas. Escríbenos para avisarte cuando abra la tuya.</div>';
   } else {
-    grid.innerHTML = CONVOCATORIAS.map(c => `
+    grid.innerHTML = CONVOCATORIAS.map(c => {
+      const t = TEMAS[c.tema] || TEMAS.nacional;
+      const media = c.imagen
+        ? `<img src="${c.imagen}" alt="${c.nombre}">`
+        : `<svg class="ic-conv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${t.svg}</svg>`;
+      return `
       <div class="conv">
-        <span class="estado ${c.estado}">${c.etiqueta}</span>
-        <h3>${c.nombre}</h3>
-        <div class="ent">${c.entidad}</div>
-        ${c.vacantes ? `<div class="vac">🪑 ${c.vacantes} vacantes</div>` : ''}
-        <div class="fecha">${c.fecha}</div>
-        <a href="#precio" class="btn btn-azul" style="padding:11px 18px;font-size:.88rem;margin-top:6px;">Prepararme para esta</a>
-      </div>`).join('');
+        <div class="conv-media" style="background:linear-gradient(135deg,${t.g1},${t.g2});">
+          <span class="estado ${c.estado}">${c.etiqueta}</span>
+          ${media}
+        </div>
+        <div class="conv-body">
+          <h3>${c.nombre}</h3>
+          <div class="ent">${c.entidad}</div>
+          ${c.vacantes ? `<div class="vac">🪑 ${c.vacantes} vacantes</div>` : ''}
+          <div class="fecha">${c.fecha}</div>
+          <a href="#precio" class="btn btn-azul" style="padding:11px 18px;font-size:.88rem;margin-top:6px;">Prepararme para esta</a>
+        </div>
+      </div>`;
+    }).join('');
   }
 
   /* ===== ANIMACIÓN DE APARICIÓN AL HACER SCROLL ===== */
