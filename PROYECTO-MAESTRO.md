@@ -8,7 +8,7 @@
 >
 > **Regla:** este documento se mantiene vivo. Cada vez que se completa algo importante, se actualiza la sección **§9 Estado actual**.
 
-**Última actualización:** 13 de junio de 2026
+**Última actualización:** 14 de junio de 2026
 
 ---
 
@@ -121,6 +121,7 @@ Las pruebas reales de la CNSC son de **juicio situacional**. Por lo tanto, **tod
 ASCENSO-PUBLICO/
 ├── README.md                  · Índice/puerta de entrada del repo
 ├── PROYECTO-MAESTRO.md        · 🧭 ESTE documento (norte + handoff)
+├── PLAN-PROYECTO.md           · 📊 Gestión: fases, cronograma, % de avance, hitos
 ├── ESTANDAR-TECNICO.md        · 🛠️ Código (CSS/HTML/JS) de los componentes de las guías
 ├── PLANTILLA-GUIA.md          · ✅ Checklist paso a paso para crear una guía nueva
 ├── prompts/                   · 🤖 Prompts reutilizables
@@ -142,23 +143,30 @@ ASCENSO-PUBLICO/
 
 ## 9. Estado actual ⭐ (se actualiza siempre)
 
+> Para la **vista de gestión** (fases, cronograma, % de avance, hitos) ver **`PLAN-PROYECTO.md`**.
+
 ### ✅ Hecho
 - Identidad de marca y logo (V2) — congelados.
 - Plantilla maestra de guía (diseño + componentes) — congelada.
-- **Biblioteca General COMPLETA:** INTRO-00, GEN-01, GEN-02, GEN-03 (Días 1–4).
-- Simulacros en formato **juicio situacional** (GEN-03 ya lo usa; es el estándar para todas).
-- Repositorio reorganizado y limpio; biblioteca versionable (`biblioteca/`); documentación maestra y prompts.
+- **Biblioteca General COMPLETA:** INTRO-00, GEN-01/02/03 (Días 1–4).
+- **Biblioteca por Nivel COMPLETA:** Asistencial, Técnico y Profesional — 12 guías (Días 5–8).
+- Simulacros en **juicio situacional** con encuadre fiel a la CNSC (comportamental vs funcional) en las 12 guías por nivel.
+- **BON-01 — Estrategia CNSC** construido *(PR pendiente de merge)*.
+- Repositorio limpio; biblioteca versionable (`biblioteca/`); documentación maestra y de gestión.
 
 ### 🔜 Próximo paso inmediato
-- **Biblioteca por Nivel (Días 5–8).** Empezar por el nivel que se necesite (Asistencial / Técnico / Profesional), usando `prompts/generador-guias.md` y la vía rápida de `PLANTILLA-GUIA.md`.
+- **Fase 2 — Diseño de lo personalizable:** especificar el molde de las **guías funcionales** (Días 9–20) y del **simulacro final SIM-001**. En paralelo, abrir **landing page** y **línea de TikTok**.
 
 ### ⬜ Pendiente (orden sugerido)
-1. 12 guías por nivel (4 Asistencial + 4 Técnico + 4 Profesional) — temas ya definidos en `biblioteca/biblioteca.json`.
-2. BON-01 — Estrategia CNSC (bonus, todos los niveles).
-3. Generador de guías funcionales a escala (usar `prompts/generador-guias.md`).
-4. SIM-001 — Simulacro Integral Final (Día 21).
-5. Plataforma web (landing, registro/compra, panel del estudiante con barra de progreso, panel admin).
-6. (Visión futura) Automatización IA: analizar OPEC + manual → generar plan → generar guías → publicar.
+1. Mergear BON-01 (cierra el contenido reutilizable).
+2. Spec de diseño de **guías funcionales** + decisión de guías adicionales.
+3. Spec de diseño del **simulacro final** (SIM-001, personalizado por OPEC).
+4. **Landing page** y **TikTok** (en paralelo).
+5. Plataforma web (compra, panel del estudiante con barra de progreso, panel admin).
+6. Producción a demanda por cliente (funcionales + INTRO-01 + SIM-001).
+7. (Visión futura) Automatización IA: analizar OPEC + manual → generar plan → generar guías → publicar.
+
+> **Decisión registrada:** SIM-001 es **personalizado por cliente** (se arma con todas las guías de su plan y se enfoca en la OPEC).
 
 ---
 
