@@ -47,12 +47,17 @@ export default async function AdminHome() {
 
       <h2 style={{ fontSize: "1.1rem", marginBottom: 14 }}>Acciones rápidas</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
-        <Link href="/admin/cursos" style={{ ...stat, display: "block" }}>
+        <Link href="/admin/cursos" style={{ ...stat, display: "block", transition: "transform .15s" }}>
           <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>🎓</div>
           <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar cursos</div>
           <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Ver clientes, subir guías funcionales y habilitar acceso.</div>
+          {(cursosPrep ?? 0) > 0 && (
+            <div style={{ marginTop: 10, background: "#FDF4E3", color: "#B8600A", fontWeight: 700, fontSize: ".78rem", padding: "4px 10px", borderRadius: 8, display: "inline-block" }}>
+              ⚠️ {cursosPrep} curso{(cursosPrep ?? 0) > 1 ? "s" : ""} pendiente{(cursosPrep ?? 0) > 1 ? "s" : ""} de preparar
+            </div>
+          )}
         </Link>
-        <Link href="/admin/convocatorias" style={{ ...stat, display: "block" }}>
+        <Link href="/admin/convocatorias" style={{ ...stat, display: "block", transition: "transform .15s" }}>
           <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>📋</div>
           <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar convocatorias</div>
           <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Agregar, editar, activar/desactivar convocatorias.</div>

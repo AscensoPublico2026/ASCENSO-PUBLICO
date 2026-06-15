@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import LogoutButton from "./LogoutButton";
+import CambiarPassword from "./CambiarPassword";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,9 @@ export default async function PerfilPage() {
         </div>
         <LogoutButton />
       </div>
+
+      {/* Cambiar contraseña */}
+      <CambiarPassword />
 
       {/* Multi-curso: grid de tarjetas */}
       {!cursos || cursos.length === 0 ? (

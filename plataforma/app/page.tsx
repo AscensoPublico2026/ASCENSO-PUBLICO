@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import NavLanding from "./components/NavLanding";
 import NivelTabs from "./components/NivelTabs";
 import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
+import ContadorCupos from "./components/ContadorCupos";
 import "./landing.css";
 
 export const dynamic = "force-dynamic";
@@ -10,9 +11,11 @@ export const dynamic = "force-dynamic";
 const WHATSAPP = "573151972091";
 const WA_MSG = encodeURIComponent("Hola, quiero mi curso personalizado de Ascenso Público 🎯");
 const WA_URL = `https://wa.me/${WHATSAPP}?text=${WA_MSG}`;
+const CUPOS_LANZAMIENTO = 100; // Total de cupos del precio de lanzamiento
 
 export default async function LandingPage() {
   let convocatorias: any[] = [];
+  let cursosVendidos = 0;
   try {
     const supabase = createClient();
     const { data } = await supabase
@@ -21,6 +24,10 @@ export default async function LandingPage() {
       .eq("activa", true)
       .order("orden");
     convocatorias = data || [];
+
+    // Contar cupos vendidos (pagos aprobados)
+    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
+    cursosVendidos = count || 0;
   } catch {
     convocatorias = [];
   }
@@ -221,6 +228,7 @@ export default async function LandingPage() {
               <li>Acceso desde tu perfil durante la vigencia del curso</li>
             </ul>
             <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
+            <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
             <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
             <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? Escríbenos por WhatsApp y te asesoramos sin compromiso antes de pagar.</span></div>
           </div>
