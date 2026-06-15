@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
+import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
 
 const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
@@ -62,6 +63,16 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     .single();
 
   const cursoId = curso?.id ?? null;
+
+  // Auto-cargar guías (Intro + Generales + Nivel + Bonus) al crear el curso
+  if (cursoId && pre.nivel) {
+    try {
+      await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
+    } catch (err) {
+      console.error("[procesarReferencia] Error en auto-carga de guías:", err);
+      // No bloquea el flujo principal — las guías se pueden cargar manualmente después
+    }
+  }
 
   await supabase
     .from("pagos")
