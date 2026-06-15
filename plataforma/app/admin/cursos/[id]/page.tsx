@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, habilitarCurso, eliminarGuia } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -63,11 +63,24 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         <div style={{ ...box, background: "#FDF4E3", border: "1px solid #F0DCB0" }}>
           <p style={{ color: "#B8600A", fontWeight: 700, marginBottom: 10 }}>⚡ Curso en preparación</p>
           <p style={{ color: "var(--texto-suave)", fontSize: ".88rem", marginBottom: 14 }}>
-            Sube las guías funcionales y luego habilita el acceso:
+            Cuando termines de subir las guías funcionales, tienes dos opciones:
           </p>
-          <form action={habilitarCurso.bind(null, curso.id)}>
-            <button className="btn btn-oro" style={{ padding: "10px 20px" }}>✅ Habilitar acceso</button>
-          </form>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <form action={marcarCursoListo.bind(null, curso.id)}>
+              <button className="btn btn-oro" style={{ padding: "10px 18px", fontSize: ".88rem" }}>
+                ✅ Curso listo (se habilita a las 12h)
+              </button>
+            </form>
+            <form action={habilitarCursoAhora.bind(null, curso.id)}>
+              <button className="btn btn-azul" style={{ padding: "10px 18px", fontSize: ".88rem" }}>
+                ⚡ Habilitar ahora (acceso inmediato)
+              </button>
+            </form>
+          </div>
+          <p style={{ color: "var(--texto-suave)", fontSize: ".78rem", marginTop: 10 }}>
+            <strong>Curso listo:</strong> el cliente verá el curso cuando se cumplan las 12h desde su compra.<br/>
+            <strong>Habilitar ahora:</strong> el cliente ve el curso de inmediato (para amigos o casos especiales).
+          </p>
         </div>
       )}
 

@@ -92,8 +92,35 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
       )}
 
       {/* Biblioteca de guías */}
-      {curso.estado === "listo" && (
-        <div style={{ marginTop: 24 }}>
+      {curso.estado === "listo" && (() => {
+        // Verificar si el deadline ya pasó (si existe)
+        const deadlinePasado = !curso.preparacion_deadline || new Date(curso.preparacion_deadline).getTime() <= Date.now();
+
+        if (!deadlinePasado) {
+          // Curso listo pero aún no pasan las 12h — mostrar contador
+          return (
+            <div style={{
+              background: "var(--verde-suave)",
+              border: "1px solid #c3e6d3",
+              borderRadius: 14,
+              padding: "20px 24px",
+              marginTop: 20,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                <span style={{ fontSize: "1.2rem" }}>✅</span>
+                <span style={{ fontWeight: 800, color: "var(--verde)", fontSize: ".82rem", textTransform: "uppercase" }}>Tu curso está casi listo</span>
+              </div>
+              <p style={{ color: "var(--texto-suave)", margin: "0 0 14px" }}>
+                Tu ruta de estudio ya fue preparada. Estará disponible en:
+              </p>
+              <Contador deadline={curso.preparacion_deadline} />
+            </div>
+          );
+        }
+
+        // Deadline pasado → mostrar guías
+        return (
+          <div style={{ marginTop: 24 }}>
           {/* Progreso */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
             <h2 style={{ fontSize: "1.15rem", margin: 0 }}>Tu biblioteca</h2>
@@ -127,7 +154,8 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             </p>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* Vencimiento */}
       {curso.fecha_vencimiento && (
