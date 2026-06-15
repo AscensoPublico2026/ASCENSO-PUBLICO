@@ -30,11 +30,30 @@ export async function subirGuia(cursoId: string, formData: FormData) {
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
 
-// Marca el curso como "listo" (habilita el acceso del estudiante a sus guías).
-export async function habilitarCurso(cursoId: string) {
+/**
+ * "Curso listo" — Admin terminó de preparar el curso.
+ * El curso pasa a estado "listo" pero el cliente SOLO lo verá
+ * cuando se cumplan las 12h desde la compra (preparacion_deadline).
+ * Si ya pasaron las 12h, se ve inmediatamente.
+ */
+export async function marcarCursoListo(cursoId: string) {
   await requireAdmin();
   const supabase = createAdminClient();
-  await supabase.from("cursos").update({ estado: "listo", progreso_pct: 100 }).eq("id", cursoId);
+  await supabase.from("cursos").update({ estado: "listo" }).eq("id", cursoId);
+  revalidatePath(`/admin/cursos/${cursoId}`);
+}
+
+/**
+ * "Habilitar ahora" — Acceso inmediato (casos especiales, amigos, etc).
+ * Pone el curso en estado "listo" Y elimina el deadline (el cliente lo ve ya).
+ */
+export async function habilitarCursoAhora(cursoId: string) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+  await supabase.from("cursos").update({
+    estado: "listo",
+    preparacion_deadline: new Date().toISOString(), // deadline = ahora = ya pasó
+  }).eq("id", cursoId);
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
 
