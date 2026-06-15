@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
@@ -143,5 +143,18 @@ export default function LoginPage() {
         </>
       )}
     </main>
+  );
+}
+
+// Next.js 14 requiere Suspense para componentes que usan useSearchParams
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <main style={{ maxWidth: 420, margin: "0 auto", padding: "70px 22px", textAlign: "center" }}>
+        <p style={{ color: "var(--texto-suave)" }}>Cargando...</p>
+      </main>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
