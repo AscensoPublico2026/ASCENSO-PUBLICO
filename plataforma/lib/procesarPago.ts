@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
+import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
 
 const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
@@ -68,6 +69,14 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     .eq("referencia", referencia);
 
   await supabase.from("preregistros").update({ procesado: true }).eq("referencia", referencia);
+
+  // Correos (no bloquean el flujo si fallan)
+  try {
+    await correoConfirmacionCliente(pre.correo, pre.nombre);
+    await correoAvisoAdmin({ ...pre, referencia });
+  } catch {
+    /* ignore */
+  }
 
   return { userId, cursoId, email: pre.correo, yaProcesado: false };
 }
