@@ -1,10 +1,10 @@
 import { redirect, notFound } from "next/navigation";
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
-// Visor de guía embebida. La RLS limita guias_curso a las de cursos del propio
-// usuario; la URL firmada (temporal) se genera en el servidor con service role.
+// Visor de guía: muestra el HTML embebido a través de /api/guia/[id],
+// que lo sirve con el Content-Type correcto para que se renderice bien.
 export default async function GuiaPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -12,15 +12,10 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
 
   const { data: guia } = await supabase
     .from("guias_curso")
-    .select("id,titulo,archivo_path")
+    .select("titulo,archivo_path")
     .eq("id", params.id)
     .single();
-
-  if (!guia || !guia.archivo_path) notFound();
-
-  const admin = createAdminClient();
-  const { data: signed } = await admin.storage.from("guias").createSignedUrl(guia.archivo_path, 60 * 30);
-  if (!signed?.signedUrl) notFound();
+  if (!guia?.archivo_path) notFound();
 
   return (
     <main style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
@@ -28,7 +23,7 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
         <a href="/perfil" style={{ color: "var(--azul)", fontWeight: 700 }}>← Mi perfil</a>
         <strong style={{ color: "var(--azul)" }}>{guia.titulo}</strong>
       </div>
-      <iframe src={signed.signedUrl} style={{ flex: 1, width: "100%", border: "none" }} title={guia.titulo} />
+      <iframe src={`/api/guia/${params.id}`} style={{ flex: 1, width: "100%", border: "none" }} title={guia.titulo} />
     </main>
   );
 }

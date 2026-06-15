@@ -20,7 +20,7 @@ export async function subirGuia(cursoId: string, formData: FormData) {
     archivo_path = `${cursoId}/${Date.now()}-${archivo.name}`.replace(/\s+/g, "_");
     const bytes = Buffer.from(await archivo.arrayBuffer());
     const { error } = await supabase.storage.from("guias").upload(archivo_path, bytes, {
-      contentType: archivo.type || "text/html",
+      contentType: "text/html; charset=utf-8",
       upsert: true,
     });
     if (error) throw new Error("No se pudo subir la guía: " + error.message);
