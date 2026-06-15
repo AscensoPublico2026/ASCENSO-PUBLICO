@@ -21,6 +21,10 @@ export default async function PerfilPage() {
 
   const nombre = toTitleCase((user.user_metadata as any)?.nombre || user.email || "");
 
+  // Verificar si es admin para mostrar botón de panel
+  const { data: profile } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
+  const isAdmin = profile?.rol === "admin";
+
   return (
     <main style={{ maxWidth: 860, margin: "0 auto", padding: "40px 22px 80px" }}>
       {/* Header del perfil */}
@@ -29,7 +33,14 @@ export default async function PerfilPage() {
           <div style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>Bienvenido,</div>
           <h1 style={{ fontSize: "1.4rem", margin: 0 }}>{nombre}</h1>
         </div>
-        <LogoutButton />
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          {isAdmin && (
+            <a href="/admin" style={{ background: "linear-gradient(135deg, #E8A33D, #F6C56B)", color: "#0A2A5E", fontWeight: 800, fontSize: ".82rem", padding: "8px 14px", borderRadius: 10, textDecoration: "none" }}>
+              ⚙️ Panel admin
+            </a>
+          )}
+          <LogoutButton />
+        </div>
       </div>
 
       {/* Cambiar contraseña */}
