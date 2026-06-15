@@ -132,28 +132,39 @@ alter table public.guias_curso enable row level security;
 alter table public.pagos enable row level security;
 
 -- profiles
+drop policy if exists "perfil propio select" on public.profiles;
 create policy "perfil propio select" on public.profiles for select using (id = auth.uid() or public.is_admin());
+drop policy if exists "perfil propio update" on public.profiles;
 create policy "perfil propio update" on public.profiles for update using (id = auth.uid() or public.is_admin());
 
 -- convocatorias: lectura pública (landing); escritura solo admin
+drop policy if exists "convocatorias lectura" on public.convocatorias;
 create policy "convocatorias lectura" on public.convocatorias for select using (true);
+drop policy if exists "convocatorias admin" on public.convocatorias;
 create policy "convocatorias admin" on public.convocatorias for all using (public.is_admin()) with check (public.is_admin());
 
 -- preregistros: solo admin (se crean desde el servidor con service role, que omite RLS)
+drop policy if exists "preregistros admin" on public.preregistros;
 create policy "preregistros admin" on public.preregistros for all using (public.is_admin()) with check (public.is_admin());
 
 -- cursos
+drop policy if exists "cursos propios" on public.cursos;
 create policy "cursos propios" on public.cursos for select using (usuario_id = auth.uid() or public.is_admin());
+drop policy if exists "cursos admin" on public.cursos;
 create policy "cursos admin" on public.cursos for all using (public.is_admin()) with check (public.is_admin());
 
 -- guias_curso (el estudiante ve solo las de sus cursos)
+drop policy if exists "guias propias" on public.guias_curso;
 create policy "guias propias" on public.guias_curso for select using (
   public.is_admin() or exists(select 1 from public.cursos c where c.id = guias_curso.curso_id and c.usuario_id = auth.uid())
 );
+drop policy if exists "guias admin" on public.guias_curso;
 create policy "guias admin" on public.guias_curso for all using (public.is_admin()) with check (public.is_admin());
 
 -- pagos
+drop policy if exists "pagos propios" on public.pagos;
 create policy "pagos propios" on public.pagos for select using (usuario_id = auth.uid() or public.is_admin());
+drop policy if exists "pagos admin" on public.pagos;
 create policy "pagos admin" on public.pagos for all using (public.is_admin()) with check (public.is_admin());
 
 -- ============================================================
@@ -164,9 +175,11 @@ insert into storage.buckets (id, name, public) values ('guias','guias', false) o
 
 -- Acceso directo a Storage solo para admin. El estudiante NO accede directo:
 -- el servidor genera URLs firmadas temporales para mostrar las guías en un iframe.
+drop policy if exists "storage manuales admin" on storage.objects;
 create policy "storage manuales admin" on storage.objects
   for all using (bucket_id = 'manuales' and public.is_admin())
   with check (bucket_id = 'manuales' and public.is_admin());
+drop policy if exists "storage guias admin" on storage.objects;
 create policy "storage guias admin" on storage.objects
   for all using (bucket_id = 'guias' and public.is_admin())
   with check (bucket_id = 'guias' and public.is_admin());
