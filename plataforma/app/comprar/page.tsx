@@ -1,15 +1,21 @@
 import { crearCompra } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import ContadorCupos from "../components/ContadorCupos";
 
 export const dynamic = "force-dynamic";
 
+const CUPOS_LANZAMIENTO = 100;
+
 export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
   let convocatorias: { id: string; nombre: string }[] = [];
+  let cursosVendidos = 0;
   try {
     const supabase = createClient();
     const { data } = await supabase.from("convocatorias").select("id,nombre").eq("activa", true).order("orden");
     convocatorias = data || [];
+    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
+    cursosVendidos = count || 0;
   } catch {
     convocatorias = [];
   }
@@ -29,6 +35,8 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
         Completa tus datos y sube tu manual de funciones. Después realizas el pago seguro con Wompi.
       </p>
       <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Precio: $300.000 COP · pago único</p>
+
+      <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
 
       <form action={crearCompra}>
         {/* Nombres y Apellidos separados - OBLIGATORIOS */}
