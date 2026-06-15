@@ -14,11 +14,13 @@ export async function crearConvocatoria(formData: FormData) {
     etiqueta: String(formData.get("etiqueta") || "").trim() || null,
     vacantes: String(formData.get("vacantes") || "").trim() || null,
     fecha_prueba_aprox: String(formData.get("fecha_prueba_aprox") || "").trim() || null,
+    imagen_url: String(formData.get("imagen_url") || "").trim() || null,
     tema: String(formData.get("tema") || "nacional"),
     orden: Number(formData.get("orden") || 0) || 0,
     activa: true,
   });
   revalidatePath("/admin/convocatorias");
+  revalidatePath("/");
 }
 
 export async function toggleConvocatoria(id: string, activa: boolean) {
@@ -26,6 +28,7 @@ export async function toggleConvocatoria(id: string, activa: boolean) {
   const supabase = createAdminClient();
   await supabase.from("convocatorias").update({ activa: !activa }).eq("id", id);
   revalidatePath("/admin/convocatorias");
+  revalidatePath("/");
 }
 
 export async function eliminarConvocatoria(id: string) {
@@ -33,4 +36,5 @@ export async function eliminarConvocatoria(id: string) {
   const supabase = createAdminClient();
   await supabase.from("convocatorias").delete().eq("id", id);
   revalidatePath("/admin/convocatorias");
+  revalidatePath("/");
 }
