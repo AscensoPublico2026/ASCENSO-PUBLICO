@@ -8,6 +8,11 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // No interceptar rutas de API (se protegen internamente)
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
+
   // Solo proteger rutas que requieren sesión
   const protectedPaths = ["/perfil", "/guia", "/admin"];
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
