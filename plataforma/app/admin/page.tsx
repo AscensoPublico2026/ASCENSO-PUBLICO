@@ -1,32 +1,65 @@
 import Link from "next/link";
-import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
-  await requireAdmin();
   const supabase = createClient();
-  const { count: cursos } = await supabase.from("cursos").select("*", { count: "exact", head: true });
-  const { count: convs } = await supabase.from("convocatorias").select("*", { count: "exact", head: true });
 
-  const card: React.CSSProperties = { background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 16, padding: 26, boxShadow: "var(--sombra)", display: "block" };
+  const { count: totalCursos } = await supabase.from("cursos").select("*", { count: "exact", head: true });
+  const { count: cursosListo } = await supabase.from("cursos").select("*", { count: "exact", head: true }).eq("estado", "listo");
+  const { count: cursosPrep } = await supabase.from("cursos").select("*", { count: "exact", head: true }).eq("estado", "en_preparacion");
+  const { count: totalConvs } = await supabase.from("convocatorias").select("*", { count: "exact", head: true }).eq("activa", true);
+  const { count: totalPagos } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
+
+  const stat: React.CSSProperties = {
+    background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 16,
+    padding: "22px 20px", boxShadow: "0 4px 20px rgba(10,42,94,.06)",
+  };
 
   return (
-    <main style={{ maxWidth: 880, margin: "0 auto", padding: "48px 22px" }}>
-      <h1 style={{ fontSize: "1.9rem", marginBottom: 24 }}>Panel de administración</h1>
-      <div style={{ display: "grid", gap: 18, gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))" }}>
-        <Link href="/admin/cursos" style={card}>
-          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--azul)" }}>{cursos ?? 0}</div>
-          <div style={{ fontWeight: 700, marginTop: 6 }}>Cursos / Clientes →</div>
-          <div style={{ color: "var(--texto-suave)", fontSize: ".9rem" }}>Ver clientes, subir guías y habilitar acceso.</div>
+    <div style={{ padding: "40px 28px", maxWidth: 900 }}>
+      <h1 style={{ fontSize: "1.7rem", marginBottom: 8 }}>Dashboard</h1>
+      <p style={{ color: "var(--texto-suave)", marginBottom: 28 }}>Resumen general de Ascenso Público.</p>
+
+      {/* Métricas principales */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 32 }}>
+        <div style={stat}>
+          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--azul)" }}>{totalCursos ?? 0}</div>
+          <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Cursos totales</div>
+        </div>
+        <div style={stat}>
+          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--verde, #1A7A4A)" }}>{cursosListo ?? 0}</div>
+          <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Cursos listos</div>
+        </div>
+        <div style={stat}>
+          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "#B8600A" }}>{cursosPrep ?? 0}</div>
+          <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>En preparación</div>
+        </div>
+        <div style={stat}>
+          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--azul)" }}>{totalConvs ?? 0}</div>
+          <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Convocatorias activas</div>
+        </div>
+        <div style={stat}>
+          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--verde, #1A7A4A)" }}>{totalPagos ?? 0}</div>
+          <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Pagos aprobados</div>
+        </div>
+      </div>
+
+      {/* Accesos rápidos */}
+      <h2 style={{ fontSize: "1.1rem", marginBottom: 14 }}>Acciones rápidas</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+        <Link href="/admin/cursos" style={{ ...stat, display: "block", transition: "transform .15s" }}>
+          <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>🎓</div>
+          <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar cursos</div>
+          <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Ver clientes, subir guías funcionales y habilitar acceso.</div>
         </Link>
-        <Link href="/admin/convocatorias" style={card}>
-          <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--azul)" }}>{convs ?? 0}</div>
-          <div style={{ fontWeight: 700, marginTop: 6 }}>Convocatorias →</div>
-          <div style={{ color: "var(--texto-suave)", fontSize: ".9rem" }}>Agregar, editar y activar/desactivar.</div>
+        <Link href="/admin/convocatorias" style={{ ...stat, display: "block", transition: "transform .15s" }}>
+          <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>📋</div>
+          <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar convocatorias</div>
+          <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Agregar, editar, activar/desactivar convocatorias.</div>
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

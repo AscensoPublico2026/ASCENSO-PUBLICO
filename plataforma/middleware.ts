@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Rutas protegidas (requieren sesión)
-  const protectedPaths = ["/perfil", "/guia"];
+  const protectedPaths = ["/perfil", "/guia", "/admin"];
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
 
   if (!isProtected) {
@@ -52,5 +52,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/perfil/:path*", "/guia/:path*"],
+  matcher: ["/perfil/:path*", "/guia/:path*", "/admin/:path*"],
 };
