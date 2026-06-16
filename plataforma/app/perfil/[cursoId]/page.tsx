@@ -37,6 +37,19 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const guiasBonus = (guias || []).filter((g: any) => g.tipo === "bonus");
   const guiasSimulacro = (guias || []).filter((g: any) => g.tipo === "simulacro");
 
+  // Calcular progreso EN VIVO: % de guías (con archivo disponible) que ya fueron leídas.
+  // Solo cuentan las guías que tienen archivo (las funcionales/simulacro pendientes no penalizan).
+  const guiasDisponibles = (guias || []).filter((g: any) => g.archivo_path);
+  const guiasLeidas = guiasDisponibles.filter((g: any) => g.leida).length;
+  const progresoPct = guiasDisponibles.length > 0
+    ? Math.round((guiasLeidas / guiasDisponibles.length) * 100)
+    : 0;
+
+  // Sincronizar el campo del curso (para que aparezca igual en la lista de /perfil)
+  if (curso.estado === "listo" && progresoPct !== curso.progreso_pct) {
+    await supabase.from("cursos").update({ progreso_pct: progresoPct }).eq("id", curso.id);
+  }
+
   return (
     <main style={{ maxWidth: 800, margin: "0 auto", padding: "40px 22px 80px" }}>
       {/* Back link */}
@@ -126,9 +139,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             <h2 style={{ fontSize: "1.15rem", margin: 0 }}>Tu biblioteca</h2>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 120, height: 8, borderRadius: 4, background: "var(--gris-borde)", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${curso.progreso_pct || 0}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 4 }} />
+                <div style={{ height: "100%", width: `${progresoPct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 4 }} />
               </div>
-              <span style={{ fontSize: ".82rem", fontWeight: 700, color: "var(--azul)" }}>{curso.progreso_pct || 0}%</span>
+              <span style={{ fontSize: ".82rem", fontWeight: 700, color: "var(--azul)" }}>{progresoPct}%</span>
             </div>
           </div>
 
