@@ -146,6 +146,15 @@ Al comprar → IA lee el manual → genera el plan (con `generador-plan-estudio.
 - **CHATBOT** de dudas en el portal. Muy a futuro.
 - **Vercel Pro** ($20/mes) al vender formalmente. Correo profesional (`contacto@`) opcional.
 
+### 9.7 Pendientes de CONFIGURACIÓN (acción del usuario en paneles externos)
+- **Correos de Auth (Supabase) sin marca:** el correo de "recuperar contraseña" llega con marca/datos de **Supabase** (no de Ascenso Público) porque usa el SMTP y las plantillas por defecto de Supabase. **Fix (en el dashboard de Supabase):**
+  1. Auth → **SMTP Settings** → habilitar **Custom SMTP** con Resend: host `smtp.resend.com`, puerto 465 (o 587), usuario `resend`, contraseña = `RESEND_API_KEY`, **sender** `noreply@ascensopublico.com`, nombre "Ascenso Público".
+  2. Auth → **Email Templates** → personalizar "Reset Password" (y Confirm signup, Magic Link) con la marca y textos en español.
+  Así TODOS los correos de auth saldrán de Ascenso Público. (No requiere cambio de código.)
+- **`ADMIN_EMAIL` en Vercel** = `ascensopublico@gmail.com` + **redeploy** (el aviso de compra está saliendo a otro correo).
+- **Todas las cuentas bajo `ascensopublico@gmail.com`:** verificar/migrar la titularidad o notificaciones de GitHub, Vercel, Supabase, Resend, Cloudflare, registrador del dominio y Wompi a ese correo. (Acción del usuario en cada panel.)
+- **Orden del portal del estudiante:** confirmado **Plan → 🎁 Bonus → 📝 Simulacro Final** (los bonus van ANTES del simulacro; el simulacro cierra como gran final). Para enriquecer bonus: agregar más `BON-*` (se auto-cargan y se ordenan por `orden`).
+
 ## 10. Cómo quedó esta sesión
 - ✅ **BON-02 (Ofimática)** creada (basada en `referencias/ofimatica-banco-preguntas.md`) y auto-cargada como bonus.
 - ✅ **Asignación de guías por código** + **panel del curso reordenado** por el plan (Día 1/Entidad → generales/nivel → funcionales → simulacro) + seed de las 31 publicadas + `scripts/sync-biblioteca.sh`.
