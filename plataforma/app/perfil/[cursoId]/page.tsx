@@ -236,7 +236,13 @@ function SeccionGuias({ titulo, guias }: { titulo: string; guias: any[] }) {
                 </span>
               )}
             </div>
-            <span style={{ color: "var(--azul)", fontSize: ".85rem", fontWeight: 600 }}>→</span>
+            {g.leida ? (
+              <span style={{ color: "var(--verde)", fontSize: ".8rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 4 }}>
+                ✓ Leída
+              </span>
+            ) : (
+              <span style={{ color: "var(--azul)", fontSize: ".85rem", fontWeight: 600 }}>→</span>
+            )}
           </Link>
         ))}
       </div>
