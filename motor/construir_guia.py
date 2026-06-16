@@ -181,9 +181,70 @@ def build_main(d):
     return '\n'.join(s)
 
 
+def validar(d):
+    """Valida que el contenido esté completo y correcto. Devuelve (errores, avisos)."""
+    err, warn = [], []
+    req = ['codigo', 'archivo', 'titulo', 'dia', 'familia', 'categoria', 'header_sub',
+           'tiempo', 'proxima', 'objetivo', 'importancia', 'desarrollo', 'simulacro', 'flashcards']
+    for k in req:
+        if k not in d:
+            err.append('Falta el campo obligatorio: %s' % k)
+    # Desarrollo
+    de = d.get('desarrollo', {})
+    cps = de.get('conceptos', [])
+    if len(cps) < 5:
+        warn.append('Hay %d conceptos (recomendado 6-8, mínimo 5)' % len(cps))
+    for i, c in enumerate(cps, 1):
+        if not c.get('def') or not c.get('apl'):
+            err.append('Concepto %d sin def/apl' % i)
+        cp = c.get('checkpoint')
+        if cp and not any(o.get('ok') for o in cp.get('opciones', [])):
+            err.append('Checkpoint del concepto %d no tiene opción correcta' % i)
+    if not de.get('fuentes', {}).get('items'):
+        warn.append('Desarrollo sin enlaces a fuentes (.fuentes)')
+    # Conteos recomendados
+    for campo, ideal in [('casos', 5), ('errores', 6), ('tips', 6), ('trampas', 4), ('flashcards', 10), ('resumen', 6), ('glosario', 6)]:
+        n = len(d.get(campo, []))
+        if n != ideal:
+            warn.append('%s: hay %d (recomendado %d)' % (campo, n, ideal))
+    # Simulacro
+    sim = d.get('simulacro', [])
+    if len(sim) != 12:
+        err.append('El simulacro tiene %d preguntas (deben ser 12)' % len(sim))
+    nb = sum(1 for p in sim if p.get('nivel') == 'b')
+    ni = sum(1 for p in sim if p.get('nivel') == 'i')
+    na = sum(1 for p in sim if p.get('nivel') == 'a')
+    if (nb, ni, na) != (4, 5, 3):
+        err.append('Distribución del simulacro %d-%d-%d (debe ser 4-5-3)' % (nb, ni, na))
+    for i, p in enumerate(sim, 1):
+        if len(p.get('ops', [])) != 4:
+            err.append('Pregunta %d no tiene 4 opciones' % i)
+        if len(p.get('expl', [])) != 4:
+            err.append('Pregunta %d no tiene 4 explicaciones (una por opción)' % i)
+        if not isinstance(p.get('correcta'), int) or not (0 <= p.get('correcta', -1) <= 3):
+            err.append('Pregunta %d: "correcta" inválida (debe ser 0-3)' % i)
+        if not p.get('ctx'):
+            err.append('Pregunta %d sin contexto (ctx)' % i)
+    # Patrón obvio de respuestas (todas iguales)
+    corr = [p.get('correcta') for p in sim]
+    if len(set(corr)) == 1:
+        err.append('Todas las respuestas correctas son iguales (patrón obvio)')
+    return err, warn
+
+
 def construir(json_path):
     with open(json_path, encoding='utf-8') as fh:
         d = json.load(fh)
+
+    err, warn = validar(d)
+    for w in warn:
+        print('  ⚠️  %s' % w)
+    if err:
+        print('  ❌ ERRORES en %s:' % os.path.basename(json_path))
+        for e in err:
+            print('     - %s' % e)
+        raise SystemExit('Corrige los errores antes de generar la guía.')
+
     with open(os.path.join(BASE_DIR, 'base-guia.html'), encoding='utf-8') as fh:
         base = fh.read()
 
