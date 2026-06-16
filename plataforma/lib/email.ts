@@ -5,15 +5,22 @@ const FROM = "Ascenso Público <noreply@ascensopublico.com>";
 
 async function enviar(to: string | string[], subject: string, html: string) {
   const key = process.env.RESEND_API_KEY;
-  if (!key) return; // si no hay API key, no se envía (no rompe el flujo)
+  if (!key) {
+    console.error("[email] RESEND_API_KEY no configurada");
+    return;
+  }
   try {
-    await fetch(RESEND_URL, {
+    const res = await fetch(RESEND_URL, {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({ from: FROM, to, subject, html }),
     });
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`[email] Resend rechazó el envío (${res.status}):`, body);
+    }
   } catch (e) {
-    console.error("Error enviando correo:", e);
+    console.error("[email] Error enviando correo:", e);
   }
 }
 
