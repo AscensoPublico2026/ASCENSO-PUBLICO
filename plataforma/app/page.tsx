@@ -188,7 +188,7 @@ export default async function LandingPage() {
           <div className="founder">
             <div className="founder-photo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/fotos/fundador.jpg" alt="Fundador de Ascenso Público" loading="lazy" />
+              <img src="/fotos/fundador.jpg?v=2" alt="Fundador de Ascenso Público" loading="lazy" />
             </div>
             <div>
               <span className="eyebrow c">Quién está detrás</span>
