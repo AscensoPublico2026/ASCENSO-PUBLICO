@@ -108,6 +108,32 @@ export function guiasAsignables(): GuiaCatalogo[] {
     });
 }
 
+/** Guías funcionales publicadas (para el desplegable de funcionales). */
+export function guiasFuncionalesAsignables(): GuiaCatalogo[] {
+  return guiasPublicadasConArchivo()
+    .filter((g) => g.tipo === "funcional")
+    .sort((a, b) => a.codigo.localeCompare(b.codigo));
+}
+
+/** Simulacros publicados (para el desplegable de simulacro). */
+export function guiasSimulacroAsignables(): GuiaCatalogo[] {
+  return guiasPublicadasConArchivo()
+    .filter((g) => g.tipo === "simulacro")
+    .sort((a, b) => a.codigo.localeCompare(b.codigo));
+}
+
+/** Guías "Conoce tu Entidad" (biblioteca "Por Entidad", ej. ENT-IDV-01). */
+export function guiasEntidadAsignables(): GuiaCatalogo[] {
+  return guiasPublicadasConArchivo()
+    .filter((g) => g.biblioteca === "Por Entidad")
+    .sort((a, b) => a.codigo.localeCompare(b.codigo));
+}
+
+/** True si una ruta de Storage corresponde a una guía "Conoce tu Entidad" (ENT-...). */
+export function esRutaEntidad(archivoPath: string | null | undefined): boolean {
+  return !!archivoPath && /(^|\/)ENT-/.test(archivoPath);
+}
+
 /** Lista de nombres de archivo (basename) de todas las guías publicadas con archivo. */
 export function archivosSeed(): string[] {
   return guiasPublicadasConArchivo()

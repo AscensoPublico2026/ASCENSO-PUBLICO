@@ -4,7 +4,7 @@ import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca } from "./actions";
-import { guiasAsignables } from "@/lib/catalogoGuias";
+import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 
 export const dynamic = "force-dynamic";
 
@@ -30,12 +30,62 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
   const input: React.CSSProperties = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".88rem" };
   const box: React.CSSProperties = { background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 14, padding: 22, boxShadow: "0 4px 20px rgba(10,42,94,.06)", marginBottom: 20 };
 
-  const guiasAuto = (guias || []).filter((g: any) => ["general", "nivel", "bonus"].includes(g.tipo));
-  const guiasManuales = (guias || []).filter((g: any) => ["funcional", "simulacro"].includes(g.tipo));
+  const todas = (guias || []) as any[];
+  const rutasAsignadas = new Set(todas.map((g) => g.archivo_path).filter(Boolean));
 
-  // Guías de la biblioteca (funcional + simulacro) que AÚN no están asignadas a este curso.
-  const rutasAsignadas = new Set((guias || []).map((g: any) => g.archivo_path).filter(Boolean));
-  const disponiblesBiblioteca = guiasAsignables().filter((g) => !rutasAsignadas.has(g.archivoPath));
+  // Día 1: Introducción (INTRO-00) y Conoce tu Entidad
+  const intro = todas.find((g) => g.dia === 1 && g.tipo === "general") || todas.find((g) => /INTRO-00/.test(g.archivo_path || ""));
+  const entidadAsignadas = todas.filter((g) => esRutaEntidad(g.archivo_path));
+
+  // Generales y por nivel (auto), excluyendo la presentación del día 1
+  const guiasAuto = todas
+    .filter((g) => ["general", "nivel", "bonus"].includes(g.tipo) && g.id !== intro?.id && !esRutaEntidad(g.archivo_path))
+    .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+  const guiasFuncionales = todas.filter((g) => g.tipo === "funcional").sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+  const guiasSimulacro = todas.filter((g) => g.tipo === "simulacro");
+
+  // Disponibles en la biblioteca (no asignadas aún a este curso)
+  const dispEntidad = guiasEntidadAsignables().filter((g) => !rutasAsignadas.has(g.archivoPath));
+  const dispFuncionales = guiasFuncionalesAsignables().filter((g) => !rutasAsignadas.has(g.archivoPath));
+  const dispSimulacro = guiasSimulacroAsignables().filter((g) => !rutasAsignadas.has(g.archivoPath));
+
+  // Desplegable reutilizable para asignar una guía de la biblioteca por código.
+  const selector = (items: { codigo: string; titulo: string }[], placeholder: string) => (
+    <form action={asignarGuiaDesdeBiblioteca.bind(null, curso.id)} style={{ display: "grid", gap: 10, gridTemplateColumns: "1fr 90px 90px auto", alignItems: "end" }}>
+      <div>
+        <label style={{ fontSize: ".7rem", color: "var(--texto-suave)" }}>GUÍA (código — título)</label>
+        <select style={input} name="codigo" defaultValue="" required>
+          <option value="" disabled>{placeholder}</option>
+          {items.map((g) => (
+            <option key={g.codigo} value={g.codigo}>{g.codigo} — {g.titulo}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label style={{ fontSize: ".7rem", color: "var(--texto-suave)" }}>DÍA</label>
+        <input style={input} type="number" name="dia" placeholder="–" min={1} />
+      </div>
+      <div>
+        <label style={{ fontSize: ".7rem", color: "var(--texto-suave)" }}>ORDEN</label>
+        <input style={input} type="number" name="orden" placeholder="–" min={0} />
+      </div>
+      <button className="btn btn-azul" style={{ padding: "10px 14px" }}>Cargar</button>
+    </form>
+  );
+
+  const filaGuia = (g: any, conEliminar: boolean) => (
+    <div key={g.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "var(--crema)", borderRadius: 8 }}>
+      {g.dia != null && <span style={{ fontWeight: 800, color: "var(--azul)", fontSize: ".78rem", minWidth: 26 }}>D{g.dia}</span>}
+      <span style={{ flex: 1, fontSize: ".88rem" }}>{g.titulo}</span>
+      <span style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>{g.tipo}</span>
+      {conEliminar && (
+        <form action={eliminarGuia.bind(null, curso.id, g.id)}>
+          <button style={{ background: "none", border: "none", color: "#b00", cursor: "pointer", fontSize: ".78rem" }}>Eliminar</button>
+        </form>
+      )}
+    </div>
+  );
 
   return (
     <div style={{ padding: "40px 28px", maxWidth: 880 }}>
@@ -89,82 +139,91 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         </div>
       )}
 
-      {/* Guías auto-cargadas */}
+      {/* DÍA 1 — Introducción y tu entidad */}
       <div style={box}>
-        <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📚 Guías auto-cargadas ({guiasAuto.length})</h2>
-        {guiasAuto.length === 0 ? (
-          <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>No hay guías auto-cargadas.</p>
-        ) : (
-          <div style={{ display: "grid", gap: 6 }}>
-            {guiasAuto.map((g: any) => (
-              <div key={g.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "var(--crema)", borderRadius: 8 }}>
-                {g.dia != null && <span style={{ fontWeight: 800, color: "var(--azul)", fontSize: ".78rem" }}>D{g.dia}</span>}
-                <span style={{ flex: 1, fontSize: ".88rem" }}>{g.titulo}</span>
-                <span style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>{g.tipo}</span>
-              </div>
-            ))}
+        <h2 style={{ fontSize: "1rem", marginBottom: 12 }}>📅 Día 1 · Introducción y tu entidad</h2>
+        {intro ? filaGuia(intro, false) : (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>La presentación (INTRO-00) se auto-carga al confirmar la compra.</p>
+        )}
+
+        <h3 style={{ fontSize: ".9rem", margin: "18px 0 8px" }}>🏛️ Conoce tu Entidad</h3>
+        {entidadAsignadas.length > 0 && (
+          <div style={{ display: "grid", gap: 6, marginBottom: 12 }}>
+            {entidadAsignadas.map((g: any) => filaGuia(g, true))}
           </div>
+        )}
+        {dispEntidad.length > 0 ? (
+          <>
+            <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
+              Elige la guía de entidad que corresponde a la OPEC del cliente.
+            </p>
+            {selector(dispEntidad, "Selecciona la guía de entidad…")}
+          </>
+        ) : (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>
+            {entidadAsignadas.length > 0
+              ? "Ya está asignada la guía de entidad."
+              : "Aún no hay guías “Conoce tu Entidad” en la biblioteca. Créala (con su código ENT-…), súbela a la biblioteca y aquí podrás seleccionarla. Mientras tanto puedes usar la subida manual de abajo."}
+          </p>
         )}
       </div>
 
-      {/* Guías funcionales/simulacro */}
+      {/* Generales y por nivel (auto) */}
       <div style={box}>
-        <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📝 Guías funcionales y simulacro ({guiasManuales.length})</h2>
-        {guiasManuales.length > 0 && (
-          <div style={{ display: "grid", gap: 6, marginBottom: 16 }}>
-            {guiasManuales.map((g: any) => (
-              <div key={g.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", border: "1px solid var(--gris-borde)", borderRadius: 8 }}>
-                {g.dia != null && <span style={{ fontWeight: 800, color: "var(--azul)", fontSize: ".78rem" }}>D{g.dia}</span>}
-                <span style={{ flex: 1, fontSize: ".88rem" }}>{g.titulo}</span>
-                <form action={eliminarGuia.bind(null, curso.id, g.id)}>
-                  <button style={{ background: "none", border: "none", color: "#b00", cursor: "pointer", fontSize: ".78rem" }}>Eliminar</button>
-                </form>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <h3 style={{ fontSize: ".9rem", margin: "14px 0 10px" }}>➕ Asignar guía de la biblioteca</h3>
-        <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
-          Elige una guía ya creada (según el plan de estudio) y queda cargada al instante. No necesitas subir el HTML: ya vive en el sistema.
-        </p>
-        {disponiblesBiblioteca.length === 0 ? (
-          <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", padding: "8px 0" }}>
-            No quedan guías de la biblioteca por asignar (ya están todas las funcionales/simulacro disponibles).
-          </p>
+        <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📚 Generales y por nivel — auto-cargadas ({guiasAuto.length})</h2>
+        {guiasAuto.length === 0 ? (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>No hay guías auto-cargadas todavía.</p>
         ) : (
-          <form action={asignarGuiaDesdeBiblioteca.bind(null, curso.id)} style={{ display: "grid", gap: 10, gridTemplateColumns: "2fr 1fr 1fr", alignItems: "end" }}>
-            <div style={{ gridColumn: "1/-1" }}>
-              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>GUÍA (código — título)</label>
-              <select style={input} name="codigo" defaultValue="" required>
-                <option value="" disabled>Selecciona del plan de estudio…</option>
-                {disponiblesBiblioteca.map((g) => (
-                  <option key={g.codigo} value={g.codigo}>
-                    {g.codigo} — {g.titulo}{g.tipo === "simulacro" ? " (Simulacro)" : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>DÍA (opcional)</label>
-              <input style={input} type="number" name="dia" placeholder="ej. 9" min={1} />
-            </div>
-            <div>
-              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>ORDEN (opcional)</label>
-              <input style={input} type="number" name="orden" placeholder="ej. 9" min={0} />
-            </div>
-            <button className="btn btn-azul" style={{ padding: 12 }}>Asignar al curso</button>
-          </form>
+          <div style={{ display: "grid", gap: 6 }}>{guiasAuto.map((g: any) => filaGuia(g, false))}</div>
         )}
+      </div>
 
-        <h3 style={{ fontSize: ".9rem", margin: "22px 0 10px", paddingTop: 16, borderTop: "1px solid var(--gris-borde)" }}>⬆️ Subir guía personalizada (HTML)</h3>
+      {/* Funcionales */}
+      <div style={box}>
+        <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📝 Guías funcionales ({guiasFuncionales.length}/12)</h2>
+        {guiasFuncionales.length > 0 && (
+          <div style={{ display: "grid", gap: 6, marginBottom: 14 }}>{guiasFuncionales.map((g: any) => filaGuia(g, true))}</div>
+        )}
+        {dispFuncionales.length > 0 ? (
+          <>
+            <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
+              Selecciona del plan de estudio e indica el día/orden. Queda cargada al instante.
+            </p>
+            {selector(dispFuncionales, "Selecciona una guía funcional…")}
+          </>
+        ) : (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>Ya están asignadas todas las funcionales disponibles en la biblioteca.</p>
+        )}
+      </div>
+
+      {/* Simulacro */}
+      <div style={box}>
+        <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>🎯 Simulacro final ({guiasSimulacro.length})</h2>
+        {guiasSimulacro.length > 0 && (
+          <div style={{ display: "grid", gap: 6, marginBottom: 14 }}>{guiasSimulacro.map((g: any) => filaGuia(g, true))}</div>
+        )}
+        {dispSimulacro.length > 0 ? (
+          selector(dispSimulacro, "Selecciona el simulacro…")
+        ) : (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>
+            {guiasSimulacro.length > 0
+              ? "Simulacro ya asignado."
+              : "El simulacro final es único por OPEC. Cuando lo crees y lo subas a la biblioteca, aparecerá aquí para seleccionarlo."}
+          </p>
+        )}
+      </div>
+
+      {/* Subir guía personalizada (fallback) */}
+      <div style={box}>
+        <h2 style={{ fontSize: "1rem", marginBottom: 6 }}>⬆️ Subir guía personalizada (HTML)</h2>
         <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
-          Solo para guías que NO están en la biblioteca (ej. “Conoce tu Entidad”, personalizada por cliente).
+          Solo para guías que aún NO están en la biblioteca (ej. una “Conoce tu Entidad” nueva). Lo ideal es subirla a la biblioteca para reutilizarla; esto es el respaldo rápido.
         </p>
         <form action={subirGuia.bind(null, curso.id)} style={{ display: "grid", gap: 10, gridTemplateColumns: "1fr 1fr" }}>
           <input style={input} type="text" name="titulo" placeholder="Título *" required />
           <input style={input} type="number" name="dia" placeholder="Día (ej. 9)" />
           <select style={input} name="tipo" defaultValue="funcional">
+            <option value="general">General / Entidad</option>
             <option value="funcional">Funcional</option>
             <option value="simulacro">Simulacro</option>
           </select>
