@@ -62,6 +62,16 @@ inclusion: always
 10. 📝 Resumen + Glosario (6 + 6)
 11. 🎓 Simulacro (12 preguntas)
 
+### Desarrollo PROFUNDO tipo "mini-libro" — CONGELADO (estándar obligatorio)
+El **Desarrollo (Sección 3)** es la sección más importante y debe ser un **mini-libro de estudio profesional**, no un resumen de definiciones. Estándar obligatorio para toda guía funcional:
+- **7 a 9 temas** (`desarrollo.temas`), cada uno con varios bloques y explicaciones extensas y claras.
+- Debe incluir SIEMPRE: un bloque **`normativa`** (marco legal citado norma por norma con su contenido), al menos una **`tabla`**, y 1–2 cajas **`destacado`** (regla de oro en `oro`, alerta/trampa en `rojo`).
+- Todo **cálculo o fórmula** va en bloque **`calculo`** paso a paso (nunca comprimido).
+- Cierra con un tema de **rol del servidor + trampas CNSC**.
+- La guía resultante pesa ~95–110 KB. Referencias modelo: `motor/contenido/FUN-DOC-01.json` y `FUN-ALM-04.json`.
+- Bloques disponibles: `texto, definicion, idea, ejemplo, prueba, lista, tabla, acordeon, normativa, destacado, minicheck, calculo`.
+- Generalizar siempre: sin nombres de entidad, OPEC, código/grado de cargo; hablar de "el servidor público" y "la entidad".
+
 ### Las 4 capas por concepto (Desarrollo)
 Cada concepto importante se presenta en este orden:
 1. 🟦 **Definición** — qué es exactamente (con norma + artículo)
