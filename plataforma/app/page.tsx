@@ -4,6 +4,7 @@ import NavLanding from "./components/NavLanding";
 import NivelTabs from "./components/NivelTabs";
 import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
 import ContadorCupos from "./components/ContadorCupos";
+import ScrollReveal from "./components/ScrollReveal";
 import "./landing.css";
 
 export const dynamic = "force-dynamic";
@@ -35,6 +36,7 @@ export default async function LandingPage() {
   return (
     <>
       <NavLanding />
+      <ScrollReveal />
 
       {/* ===== HERO ===== */}
       <section className="hero">
