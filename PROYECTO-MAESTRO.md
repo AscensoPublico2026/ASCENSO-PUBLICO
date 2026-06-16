@@ -1,5 +1,7 @@
 # 🧭 PROYECTO MAESTRO — Ascenso Público
 
+> ⚠️ **DOCUMENTO HISTÓRICO / PARCIALMENTE DESACTUALIZADO.** El estado real (lo hecho, lo pendiente y el próximo paso) vive en **`CONTINUIDAD.md`** (fuente de verdad). Varias cosas que aquí figuran como "pendiente/por iniciar" (mergear BON-01, plataforma, panel del estudiante/admin, specs de guías funcionales y del simulacro) **YA están hechas**. Este archivo conserva valor para el *porqué* y la visión; para el *estado actual*, consulta `CONTINUIDAD.md`.
+
 > **Este es el documento NORTE del proyecto.** Contiene la idea de inicio a fin, las decisiones tomadas, el estado actual y el paso siguiente.
 >
 > **Dos usos:**
