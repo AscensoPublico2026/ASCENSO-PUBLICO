@@ -51,7 +51,10 @@ export default async function PerfilPage() {
         <EmptyState />
       ) : cursos.length === 1 ? (
         // Si tiene un solo curso, mostrar tarjeta expandida directamente
-        <CursoCard curso={cursos[0]} expanded />
+        <>
+          <CursoCard curso={cursos[0]} expanded />
+          <ComprarOtroCurso />
+        </>
       ) : (
         <>
           <h2 style={{ fontSize: "1.1rem", color: "var(--texto-suave)", marginBottom: 18 }}>
@@ -62,9 +65,37 @@ export default async function PerfilPage() {
               <CursoCard key={curso.id} curso={curso} />
             ))}
           </div>
+          <ComprarOtroCurso />
         </>
       )}
     </main>
+  );
+}
+
+function ComprarOtroCurso() {
+  return (
+    <div style={{
+      marginTop: 24,
+      border: "1.5px dashed var(--gris-borde)",
+      borderRadius: 16,
+      padding: "24px 28px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 16,
+      flexWrap: "wrap",
+      background: "#fff",
+    }}>
+      <div>
+        <h3 style={{ fontSize: "1rem", margin: "0 0 4px" }}>¿Aplicas a otra convocatoria?</h3>
+        <p style={{ color: "var(--texto-suave)", fontSize: ".88rem", margin: 0 }}>
+          Puedes preparar otro cargo con su propio plan personalizado.
+        </p>
+      </div>
+      <Link href="/comprar" className="btn btn-oro" style={{ padding: "11px 22px", whiteSpace: "nowrap" }}>
+        + Comprar otro curso
+      </Link>
+    </div>
   );
 }
 
