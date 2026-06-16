@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión Documental — Ley 594 de 2000 · Guía CNSC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amarillo: #F5C518;
+    --azul: #0A2A5E;
+    --rojo: #C8102E;
+    --cafe: #7B4F1E;
+    --verde: #1a6e3c;
+    --crema: #FDF8EE;
+    --gris: #F0EDE6;
+    --texto: #1a1a1a;
+    --card: #ffffff;
+    --sombra: 0 4px 24px rgba(10,42,94,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--azul);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, var(--amarillo) 33%, var(--azul) 33%, var(--azul) 66%, var(--rojo) 66%);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    color: var(--amarillo);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  header p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.95rem;
+    margin-top: 8px;
+    font-weight: 300;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--rojo);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  /* NAV TABS */
+  nav {
+    background: var(--azul);
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 16px 16px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  nav button:hover { background: rgba(255,255,255,0.15); color: white; }
+  nav button.active { background: var(--amarillo); color: var(--azul); }
+
+  /* MAIN */
+  main { max-width: 900px; margin: 0 auto; padding: 32px 16px 60px; }
+  .section { display: none; }
+  .section.visible { display: block; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--azul);
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* INTRO CARD */
+  .intro-box {
+    background: var(--azul);
+    color: white;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-box::after {
+    content: '📁';
+    position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    font-size: 4rem; opacity: 0.15;
+  }
+  .intro-box h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--amarillo); margin-bottom: 10px; }
+  .intro-box p { font-size: 0.95rem; line-height: 1.7; opacity: 0.9; }
+
+  /* CONCEPTO CLAVE BOX */
+  .concepto-box {
+    background: linear-gradient(135deg, #7B4F1E 0%, #0A2A5E 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .concepto-box::after {
+    content: '🧠';
+    position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    font-size: 4rem; opacity: 0.2;
+  }
+  .concepto-box h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--amarillo); margin-bottom: 12px; }
+  .concepto-box p { font-size: 0.9rem; line-height: 1.7; opacity: 0.92; }
+
+  /* SEPARADOR */
+  .ley-sep {
+    display: flex; align-items: center; gap: 12px; margin: 32px 0 20px;
+  }
+  .ley-sep-label {
+    background: var(--rojo); color: white; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px;
+    border-radius: 20px; white-space: nowrap;
+  }
+  .ley-sep-line { flex: 1; height: 2px; background: var(--gris); }
+
+  /* ARTICLE CARDS */
+  .articles-grid { display: grid; gap: 16px; }
+  .art-card {
+    background: var(--card); border-radius: 14px; box-shadow: var(--sombra);
+    overflow: hidden; border-left: 5px solid var(--azul);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .art-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(10,42,94,0.15); }
+  .art-card.rojo { border-left-color: var(--rojo); }
+  .art-card.amarillo { border-left-color: #D4A017; }
+  .art-card.verde { border-left-color: var(--verde); }
+  .art-card.cafe { border-left-color: var(--cafe); }
+
+  .art-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 20px 14px; cursor: pointer; user-select: none;
+  }
+  .art-num {
+    background: var(--azul); color: white; font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; min-width: 52px; height: 44px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; padding: 0 6px;
+  }
+  .art-card.rojo .art-num { background: var(--rojo); }
+  .art-card.amarillo .art-num { background: #8B6914; }
+  .art-card.verde .art-num { background: var(--verde); }
+  .art-card.cafe .art-num { background: var(--cafe); }
+  .art-title-wrap { flex: 1; }
+  .art-title { font-weight: 700; font-size: 1rem; color: var(--azul); }
+  .art-card.rojo .art-title { color: var(--rojo); }
+  .art-card.verde .art-title { color: var(--verde); }
+  .art-card.cafe .art-title { color: var(--cafe); }
+  .art-tag {
+    display: inline-block; background: var(--gris); color: #555; font-size: 0.72rem;
+    padding: 2px 8px; border-radius: 10px; margin-top: 4px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .art-toggle { font-size: 1.2rem; color: #aaa; transition: transform 0.2s; }
+  .art-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--gris); }
+  .art-body.open { display: block; }
+  .art-toggle.open { transform: rotate(180deg); }
+
+  .art-texto {
+    background: var(--gris); border-radius: 8px; padding: 14px 16px;
+    font-size: 0.88rem; color: #444; font-style: italic; line-height: 1.7; margin: 14px 0 12px;
+  }
+  .art-explicacion { font-size: 0.95rem; line-height: 1.75; color: #333; margin-bottom: 12px; }
+  .art-clave {
+    background: #EAF2FF; border-left: 3px solid var(--azul); padding: 10px 14px;
+    border-radius: 6px; font-size: 0.88rem; color: var(--azul); margin-bottom: 10px;
+  }
+  .art-clave strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .art-card.rojo .art-clave { background: #FFF0F0; border-left-color: var(--rojo); color: #8B0000; }
+  .art-card.verde .art-clave { background: #EAF7EF; border-left-color: var(--verde); color: #1a4d2c; }
+  .art-card.cafe .art-clave { background: #FDF5ED; border-left-color: var(--cafe); color: #4a2e10; }
+  .art-analogia {
+    background: #FFFBE6; border-left: 3px solid var(--amarillo); padding: 10px 14px;
+    border-radius: 6px; font-size: 0.88rem; color: #5a4200;
+  }
+  .art-analogia strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; color: #8B6914; }
+
+  /* CICLO VITAL VISUAL */
+  .ciclo-wrap {
+    display: flex; flex-direction: column; gap: 0; margin: 20px 0;
+  }
+  .ciclo-etapa {
+    display: flex; align-items: stretch; gap: 0; margin-bottom: 8px; border-radius: 14px; overflow: hidden; box-shadow: var(--sombra);
+  }
+  .ciclo-barra {
+    width: 8px; flex-shrink: 0;
+  }
+  .ciclo-etapa.g1 .ciclo-barra { background: var(--azul); }
+  .ciclo-etapa.g2 .ciclo-barra { background: var(--cafe); }
+  .ciclo-etapa.g3 .ciclo-barra { background: var(--verde); }
+  .ciclo-inner {
+    flex: 1; background: white; padding: 18px 20px; display: flex; align-items: flex-start; gap: 16px;
+  }
+  .ciclo-icon { font-size: 2.2rem; flex-shrink: 0; }
+  .ciclo-content { flex: 1; }
+  .ciclo-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;
+  }
+  .ciclo-etapa.g1 .ciclo-label { color: var(--azul); }
+  .ciclo-etapa.g2 .ciclo-label { color: var(--cafe); }
+  .ciclo-etapa.g3 .ciclo-label { color: var(--verde); }
+  .ciclo-nombre { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 6px; }
+  .ciclo-etapa.g1 .ciclo-nombre { color: var(--azul); }
+  .ciclo-etapa.g2 .ciclo-nombre { color: var(--cafe); }
+  .ciclo-etapa.g3 .ciclo-nombre { color: var(--verde); }
+  .ciclo-desc { font-size: 0.85rem; color: #555; line-height: 1.6; }
+  .ciclo-ejemplo {
+    display: inline-block; margin-top: 8px; font-size: 0.78rem; font-weight: 600;
+    background: var(--gris); padding: 3px 10px; border-radius: 20px; color: #444;
+  }
+  .ciclo-arrow {
+    text-align: center; font-size: 1.5rem; color: #bbb; margin: 2px 0 2px 28px;
+  }
+
+  /* DEFINICIONES GRID */
+  .defs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+  .def-card {
+    background: white; border-radius: 12px; padding: 16px 18px; box-shadow: var(--sombra); border-top: 4px solid var(--azul);
+  }
+  .def-card.r { border-top-color: var(--rojo); }
+  .def-card.a { border-top-color: #D4A017; }
+  .def-card.v { border-top-color: var(--verde); }
+  .def-card.c { border-top-color: var(--cafe); }
+  .def-icon { font-size: 1.6rem; margin-bottom: 8px; }
+  .def-term { font-weight: 700; font-size: 0.9rem; color: var(--azul); margin-bottom: 5px; }
+  .def-card.r .def-term { color: var(--rojo); }
+  .def-card.v .def-term { color: var(--verde); }
+  .def-card.c .def-term { color: var(--cafe); }
+  .def-desc { font-size: 0.8rem; color: #555; line-height: 1.55; }
+
+  /* PRINCIPIOS ARCHIVISTICOS */
+  .principios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+  .principio-card {
+    background: white; border-radius: 12px; padding: 14px 16px; box-shadow: var(--sombra);
+    border-top: 4px solid var(--azul); text-align: center;
+  }
+  .principio-card.r { border-top-color: var(--rojo); }
+  .principio-card.a { border-top-color: #D4A017; }
+  .principio-card.v { border-top-color: var(--verde); }
+  .principio-card.c { border-top-color: var(--cafe); }
+  .principio-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .principio-name { font-weight: 700; font-size: 0.88rem; color: var(--azul); margin-bottom: 4px; }
+  .principio-card.r .principio-name { color: var(--rojo); }
+  .principio-card.v .principio-name { color: var(--verde); }
+  .principio-card.c .principio-name { color: var(--cafe); }
+  .principio-desc { font-size: 0.76rem; color: #666; line-height: 1.5; }
+
+  /* MAPA MENTAL */
+  .mapa { margin-bottom: 32px; }
+  .mapa-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--azul); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .mapa-central {
+    background: var(--azul); color: white; text-align: center; padding: 18px 24px;
+    border-radius: 50px; font-weight: 700; font-size: 1rem; margin: 0 auto 20px;
+    max-width: 340px; box-shadow: var(--sombra);
+  }
+  .mapa-ramas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .rama {
+    background: white; border-radius: 12px; padding: 16px; box-shadow: var(--sombra);
+    border-top: 4px solid var(--azul); text-align: center;
+  }
+  .rama.r { border-top-color: var(--rojo); }
+  .rama.a { border-top-color: #D4A017; }
+  .rama.v { border-top-color: var(--verde); }
+  .rama.c { border-top-color: var(--cafe); }
+  .rama-icon { font-size: 1.8rem; margin-bottom: 8px; }
+  .rama-label { font-weight: 700; font-size: 0.85rem; color: var(--azul); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .rama.r .rama-label { color: var(--rojo); }
+  .rama.v .rama-label { color: var(--verde); }
+  .rama.c .rama-label { color: var(--cafe); }
+  .rama-items { font-size: 0.8rem; color: #555; line-height: 1.6; }
+
+  /* TABLA */
+  .tabla-wrap { overflow-x: auto; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { background: var(--azul); color: white; padding: 12px 14px; text-align: left; font-weight: 600; }
+  td { padding: 11px 14px; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5; }
+  tr:nth-child(even) td { background: var(--gris); }
+  td:first-child { font-weight: 700; color: var(--azul); white-space: nowrap; }
+
+  /* TRD VISUAL */
+  .trd-flow {
+    display: flex; flex-direction: column; gap: 12px; margin: 16px 0;
+  }
+  .trd-paso {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: white; border-radius: 12px; padding: 16px 18px; box-shadow: var(--sombra);
+  }
+  .trd-num {
+    background: var(--cafe); color: white; font-weight: 700; font-family: 'Playfair Display', serif;
+    width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1rem;
+  }
+  .trd-paso:nth-child(odd) .trd-num { background: var(--azul); }
+  .trd-content { flex: 1; }
+  .trd-title { font-weight: 700; color: var(--azul); font-size: 0.95rem; margin-bottom: 4px; }
+  .trd-paso:nth-child(even) .trd-title { color: var(--cafe); }
+  .trd-desc { font-size: 0.85rem; color: #555; line-height: 1.55; }
+
+  /* QUIZ */
+  .quiz-card { background: white; border-radius: 14px; box-shadow: var(--sombra); padding: 24px; margin-bottom: 20px; }
+  .quiz-q { font-weight: 700; font-size: 1rem; color: var(--azul); margin-bottom: 16px; line-height: 1.5; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--gris); border: 2px solid transparent; border-radius: 8px;
+    padding: 12px 16px; cursor: pointer; font-size: 0.92rem; transition: all 0.18s;
+    text-align: left; font-family: 'Source Sans 3', sans-serif;
+  }
+  .quiz-opt:hover { border-color: var(--azul); background: #EAF2FF; }
+  .quiz-opt.correct { background: #E6F7EC; border-color: #2E8B57; color: #1a5c35; }
+  .quiz-opt.wrong { background: #FFF0F0; border-color: var(--rojo); color: #8B0000; }
+  .quiz-feedback { margin-top: 14px; font-size: 0.9rem; line-height: 1.6; padding: 12px 14px; border-radius: 8px; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #E6F7EC; color: #1a5c35; }
+  .quiz-feedback.fail { background: #FFF0F0; color: #8B0000; }
+  .quiz-score {
+    background: var(--azul); color: white; text-align: center; padding: 20px;
+    border-radius: 14px; font-size: 1.1rem; font-weight: 700; display: none; margin-top: 10px;
+  }
+  .btn-quiz {
+    background: var(--azul); color: white; border: none; padding: 12px 28px;
+    border-radius: 8px; font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem;
+    font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s;
+  }
+  .btn-quiz:hover { background: #0d3a7a; }
+
+  /* TIPS */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .tip-card { background: white; border-radius: 14px; padding: 20px; box-shadow: var(--sombra); border-top: 4px solid var(--amarillo); }
+  .tip-icon { font-size: 2rem; margin-bottom: 10px; }
+  .tip-title { font-weight: 700; color: var(--azul); font-size: 0.95rem; margin-bottom: 6px; }
+  .tip-text { font-size: 0.87rem; color: #555; line-height: 1.65; }
+
+  @media (max-width: 600px) {
+    nav button { padding: 8px 10px; font-size: 0.8rem; }
+    .art-num { min-width: 44px; height: 38px; font-size: 0.85rem; }
+    .ciclo-etapa { flex-direction: row; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gestión Documental</h1>
+  <p>Ley 594 de 2000 — Ley General de Archivos</p>
+  <span class="badge">Guía CNSC — Tema 3</span>
+</header>
+
+<nav>
+  <button class="active" onclick="show('conceptos')">📖 Arts. 1–4<br><small>Conceptos</small></button>
+  <button onclick="show('ciclo')">🔄 Arts. 7–11<br><small>Ciclo Vital</small></button>
+  <button onclick="show('trd')">📋 Arts. 24–26<br><small>TRD</small></button>
+  <button onclick="show('mapas')">🧠 Mapas</button>
+  <button onclick="show('resumen')">📊 Resumen</button>
+  <button onclick="show('quiz')">✏️ Quiz</button>
+</nav>
+
+<main>
+
+<!-- ====== CONCEPTOS Y PRINCIPIOS ====== -->
+<div id="conceptos" class="section visible">
+  <h2 class="section-title">Objeto, Principios y Definiciones</h2>
+  <p class="section-subtitle">Artículos 1 al 4 — La base conceptual de toda la gestión documental pública en Colombia.</p>
+
+  <div class="intro-box">
+    <h2>¿Qué es la Ley 594 de 2000?</h2>
+    <p>La Ley 594 es la <strong>Ley General de Archivos</strong> de Colombia. Establece las reglas para que todas las entidades del Estado manejen correctamente sus documentos: cómo se crean, organizan, conservan y cuándo se pueden eliminar. Es el marco legal de toda gestión documental pública. El <strong>Archivo General de la Nación (AGN)</strong> es el ente rector que la administra.</p>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 1 — Objeto</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 1 -->
+  <div class="art-card verde">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 1</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Objeto de la Ley</div>
+        <span class="art-tag">Patrimonio documental · AGN</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«La presente ley establece las reglas y principios generales que regulan la función archivística del Estado. El Archivo General de la Nación es el establecimiento público encargado de formular, orientar y controlar la política archivística nacional.»</div>
+      <p class="art-explicacion">La ley tiene un doble propósito: regular la función archivística y crear una autoridad nacional que la lidere.</p>
+      <div class="art-clave"><strong>🔑 Puntos clave del objeto:</strong>
+        · Regula la <b>función archivística del Estado</b> en todos sus niveles (nacional, departamental, municipal)<br>
+        · El <b>AGN (Archivo General de la Nación)</b> es el rector de la política archivística<br>
+        · Aplica a todas las entidades públicas sin excepción<br>
+        · También aplica a entidades privadas que cumplen funciones públicas o custodian documentos de interés público
+      </div>
+      <div class="art-analogia"><strong>💡 Analogía:</strong> Si los documentos del Estado fueran dinero, la Ley 594 sería el Estatuto Orgánico del Sistema Financiero y el AGN sería la Superintendencia que vigila que nadie "dilapide" la memoria del país.</div>
+    </div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 2 — Definiciones clave</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 2 -->
+  <div class="art-card">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 2</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Definiciones Fundamentales</div>
+        <span class="art-tag">Archivo · Documento · Fondo · Serie</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Para los efectos de esta ley, se definen los siguientes conceptos: Archivo: conjunto de documentos sea cual fuere su fecha, forma y soporte material, acumulados en un proceso natural por una persona o entidad pública o privada en el transcurso de su gestión. Documento de archivo: registro de información producida o recibida por una entidad pública o privada en razón de sus actividades o funciones.»</div>
+      <p class="art-explicacion">Estas definiciones son la base de todo el examen. Debes saber diferenciar cada término con precisión:</p>
+
+      <div class="defs-grid">
+        <div class="def-card">
+          <div class="def-icon">🗂️</div>
+          <div class="def-term">Archivo</div>
+          <div class="def-desc">Conjunto de documentos acumulados <em>naturalmente</em> por una persona o entidad en el transcurso de su gestión, sin importar fecha, forma o soporte.</div>
+        </div>
+        <div class="def-card r">
+          <div class="def-icon">📄</div>
+          <div class="def-term">Documento de Archivo</div>
+          <div class="def-desc">Registro de información producida o recibida por una entidad <em>en razón de sus actividades o funciones</em>. Tiene valor como evidencia de una actuación.</div>
+        </div>
+        <div class="def-card v">
+          <div class="def-icon">🏛️</div>
+          <div class="def-term">Fondo Documental</div>
+          <div class="def-desc">Totalidad de la documentación producida y recibida por una entidad. Es el "universo" documental de una institución.</div>
+        </div>
+        <div class="def-card a">
+          <div class="def-icon">📂</div>
+          <div class="def-term">Serie Documental</div>
+          <div class="def-desc">Conjunto de documentos del mismo tipo o asunto, producidos con el mismo trámite. Ej: "contratos de arrendamiento", "resoluciones de personal".</div>
+        </div>
+        <div class="def-card c">
+          <div class="def-icon">📁</div>
+          <div class="def-term">Subserie</div>
+          <div class="def-desc">Subdivisión de la serie. Agrupa documentos del mismo tipo dentro de una serie más amplia. Ej: dentro de "contratos" → "contratos de prestación de servicios".</div>
+        </div>
+        <div class="def-card">
+          <div class="def-icon">📦</div>
+          <div class="def-term">Expediente</div>
+          <div class="def-desc">Conjunto de documentos relacionados con un mismo asunto o trámite específico. Ej: el expediente de una licitación, de un funcionario, de una tutela.</div>
+        </div>
+      </div>
+
+      <div class="art-analogia"><strong>💡 Clave para no confundirse:</strong> No todo papel es un "documento de archivo". Un post-it, un borrador sin firmar o una fotocopia de un periódico NO son documentos de archivo. Lo es el documento que nace o llega como resultado de la función institucional.</div>
+    </div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 3 — Principios archivísticos</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 3 -->
+  <div class="art-card rojo">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 3</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Principios Archivísticos</div>
+        <span class="art-tag">Procedencia · Orden original · Integridad</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«La función archivística del Estado se basa en los principios de procedencia y orden original. El principio de procedencia señala que los documentos producidos por una institución y sus dependencias no deben mezclarse con los de otras. El principio de orden original establece que debe respetarse la secuencia de los procesos que dieron lugar a su producción.»</div>
+      <p class="art-explicacion">Los dos principios más importantes y preguntados de la archivística son:</p>
+
+      <div class="principios-grid">
+        <div class="principio-card r">
+          <div class="principio-icon">🏛️</div>
+          <div class="principio-name">Procedencia</div>
+          <div class="principio-desc">Los documentos de una entidad no se mezclan con los de otra. Cada fondo documental debe mantenerse separado según su origen institucional.</div>
+        </div>
+        <div class="principio-card a">
+          <div class="principio-icon">🔢</div>
+          <div class="principio-name">Orden Original</div>
+          <div class="principio-desc">Debe respetarse el orden en que fueron producidos o recibidos los documentos. Reflejan la secuencia del trámite que les dio origen.</div>
+        </div>
+        <div class="principio-card v">
+          <div class="principio-icon">🔒</div>
+          <div class="principio-name">Integridad</div>
+          <div class="principio-desc">Los fondos documentales deben conservarse íntegros. No pueden fragmentarse, mutilarse ni dispersarse sin autorización del AGN.</div>
+        </div>
+        <div class="principio-card c">
+          <div class="principio-icon">⏳</div>
+          <div class="principio-name">Ciclo Vital</div>
+          <div class="principio-desc">Todo documento pasa por etapas: gestión, central e histórico. La TRD determina cuánto tiempo dura en cada etapa y qué pasa al final.</div>
+        </div>
+        <div class="principio-card">
+          <div class="principio-icon">🌐</div>
+          <div class="principio-name">Función Social</div>
+          <div class="principio-desc">Los archivos son patrimonio de la Nación. Sirven como fuente de información, memoria histórica y garantía de derechos ciudadanos.</div>
+        </div>
+        <div class="principio-card r">
+          <div class="principio-icon">📢</div>
+          <div class="principio-name">Acceso y Consulta</div>
+          <div class="principio-desc">Los ciudadanos tienen derecho a consultar los documentos públicos, salvo los que tengan reserva legal (secreto de Estado, datos personales).</div>
+        </div>
+      </div>
+
+      <div class="art-analogia"><strong>💡 Pregunta trampa frecuente:</strong> El principio de <b>procedencia</b> significa que no se mezclan archivos de distintas entidades. El de <b>orden original</b> significa que no se reorganiza el orden interno de un fondo según criterios ajenos al trámite. Son complementarios pero distintos.</div>
+    </div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 4 — Objetivos de la función archivística</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 4 -->
+  <div class="art-card amarillo">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 4</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Objetivos de la Función Archivística</div>
+        <span class="art-tag">Para qué sirven los archivos</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Son objetivos de la función archivística del Estado: salvaguardar los derechos e intereses del Estado y de los ciudadanos; garantizar la autenticidad e integridad de los documentos; facilitar la recuperación de la información; apoyar las funciones administrativas; contribuir a la transparencia y eficacia de la gestión pública; y preservar la memoria institucional e histórica de la Nación.»</div>
+      <p class="art-explicacion">Los archivos no son solo "bodegas de papeles". La ley les asigna funciones estratégicas para el Estado y los ciudadanos:</p>
+      <div class="art-clave"><strong>🔑 Objetivos de los archivos públicos:</strong>
+        · <b>Jurídico</b>: Probar derechos y garantizar el acceso a la justicia (contratos, resoluciones, actos administrativos)<br>
+        · <b>Administrativo</b>: Apoyar la gestión diaria de las entidades y la continuidad del Estado<br>
+        · <b>Histórico</b>: Preservar la memoria colectiva de la Nación<br>
+        · <b>Transparencia</b>: Permitir el control ciudadano sobre los actos del Estado<br>
+        · <b>Eficiencia</b>: Recuperar la información rápidamente para tomar mejores decisiones
+      </div>
+      <div class="art-analogia"><strong>💡 Dato para el examen:</strong> Los documentos de archivo son la principal <b>prueba de actuación del Estado</b>. Sin ellos, no hay forma de demostrar si un contrato fue cumplido, si un derecho fue reconocido o si un funcionario actuó legalmente.</div>
+    </div>
+  </div>
+
+</div><!-- /conceptos -->
+
+
+<!-- ====== CICLO VITAL ====== -->
+<div id="ciclo" class="section">
+  <h2 class="section-title">Ciclo Vital del Documento</h2>
+  <p class="section-subtitle">Artículos 7 al 11 — Las tres etapas que vive todo documento público: desde que nace hasta que se conserva o se elimina.</p>
+
+  <div class="concepto-box">
+    <h3>🔄 El concepto más práctico de toda la prueba</h3>
+    <p>El <strong>ciclo vital del documento</strong> es el concepto central de la gestión documental. Todo documento público "nace" cuando se produce o recibe, "vive" activamente mientras es útil para el trámite, "envejece" cuando ya no se usa tanto pero puede consultarse, y "muere" (se elimina) o "se vuelve patrimonio" (se conserva para siempre). La <strong>TRD</strong> es el instrumento que determina exactamente cuándo ocurre cada transición.</p>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Arts. 7–9 — Las tres etapas</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 7 — GESTIÓN -->
+  <div class="art-card">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 7</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Archivo de Gestión</div>
+        <span class="art-tag">Etapa 1 · Activo · Tu oficina</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«En los archivos de gestión reposa la documentación en trámite, en busca de solución a los asuntos iniciados, y sometida a continua utilización y consulta administrativa por las mismas oficinas productoras.»</div>
+      <p class="art-explicacion">El Archivo de Gestión es la <strong>primera etapa</strong> del ciclo vital. Aquí vive el documento mientras está activo, siendo usado en el trámite cotidiano:</p>
+      <div class="art-clave"><strong>🔑 Características del Archivo de Gestión:</strong>
+        · Está ubicado en la <b>oficina productora</b> (donde se originó el documento)<br>
+        · Los documentos están <b>en trámite</b> o se consultan frecuentemente<br>
+        · La responsabilidad es del <b>jefe de la dependencia</b> donde reposa<br>
+        · No tiene un tiempo fijo de permanencia: depende de lo que diga la <b>TRD</b> para esa serie documental<br>
+        · Ejemplo: el expediente de una solicitud de pensión en trámite; las actas de reuniones del año en curso
+      </div>
+      <div class="art-analogia"><strong>💡 Analogía:</strong> El Archivo de Gestión es como la mesa de trabajo de un profesional: tiene ahí los papeles que está usando todos los días. No los archiva en la bodega porque los necesita a la mano.</div>
+    </div>
+  </div>
+
+  <!-- ART 8 — CENTRAL -->
+  <div class="art-card cafe">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 8</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Archivo Central</div>
+        <span class="art-tag">Etapa 2 · Semiactivo · Bodega central</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«En el archivo central se agrupará la documentación transferida por los distintos archivos de gestión de la entidad respectiva, cuya consulta no es tan frecuente pero que sigue teniendo vigencia y debe conservarse. Puede ser consultada por las dependencias productoras.»</div>
+      <p class="art-explicacion">El Archivo Central es la <strong>segunda etapa</strong>. Los documentos ya no se usan diariamente, pero siguen siendo relevantes y pueden necesitarse:</p>
+      <div class="art-clave" style="background:#FDF5ED;border-left-color:var(--cafe);color:#4a2e10"><strong>🔑 Características del Archivo Central:</strong>
+        · Los documentos llegan por <b>transferencia primaria</b> desde el Archivo de Gestión<br>
+        · La consulta es <b>ocasional</b>, no cotidiana<br>
+        · Está en una dependencia centralizada de la entidad (no en cada oficina)<br>
+        · El tiempo de permanencia lo fija la <b>TRD</b><br>
+        · Ejemplo: contratos que terminaron hace 2 años; historias laborales de empleados que ya se retiraron; resoluciones de años anteriores
+      </div>
+      <div class="art-analogia"><strong>💡 Analogía:</strong> Es como el cuarto de archivo en casa: ya no están en tu escritorio los papeles viejos, pero los guardas en una carpeta organizada porque puedes necesitarlos algún día (garantías vencidas, declaraciones de renta anteriores).</div>
+    </div>
+  </div>
+
+  <!-- ART 9 — HISTÓRICO -->
+  <div class="art-card verde">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 9</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Archivo Histórico</div>
+        <span class="art-tag">Etapa 3 · Permanente · Patrimonio</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Es aquel al que se transfiere la documentación del archivo central o del archivo de gestión que por decisión del correspondiente comité de archivo, debe conservarse permanentemente, dado el valor que adquiere para la investigación, la ciencia y la cultura.»</div>
+      <p class="art-explicacion">El Archivo Histórico es la <strong>etapa final y permanente</strong>. Solo llegan aquí los documentos de valor excepcional:</p>
+      <div class="art-clave" style="background:#EAF7EF;border-left-color:var(--verde);color:#1a4d2c"><strong>🔑 Características del Archivo Histórico:</strong>
+        · Llegan por <b>transferencia secundaria</b> desde el Archivo Central<br>
+        · Conservación <b>permanente</b>: nunca se eliminan<br>
+        · Tienen valor para la <b>investigación, la ciencia, la cultura o la historia</b><br>
+        · El <b>Comité de Archivo</b> es quien decide qué documentos pasan aquí<br>
+        · Ejemplo: actas de fundación de una institución; documentos de la Independencia; registros civiles centenarios; fotografías históricas de una ciudad
+      </div>
+      <div class="art-analogia"><strong>💡 Regla de oro:</strong> Lo que llega al Archivo Histórico <b>NUNCA se elimina</b>. Es patrimonio documental de la Nación. Ningún funcionario tiene autoridad para destruirlo, ni siquiera por decisión directiva.</div>
+    </div>
+  </div>
+
+  <!-- VISUAL CICLO COMPLETO -->
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">El ciclo completo — Visual</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <div class="ciclo-wrap">
+    <div class="ciclo-etapa g1">
+      <div class="ciclo-barra"></div>
+      <div class="ciclo-inner">
+        <div class="ciclo-icon">📝</div>
+        <div class="ciclo-content">
+          <div class="ciclo-label">Etapa 1 — Activo</div>
+          <div class="ciclo-nombre">Archivo de Gestión</div>
+          <div class="ciclo-desc">El documento nace (se produce o recibe) y vive en la oficina que lo originó. Se consulta con frecuencia. Está en trámite o en uso activo. Permanece aquí el tiempo que indique la TRD.</div>
+          <span class="ciclo-ejemplo">📌 Ej: Expediente de tutela en curso · Actas de reuniones del año</span>
+        </div>
+      </div>
+    </div>
+    <div class="ciclo-arrow">⬇ Transferencia Primaria</div>
+    <div class="ciclo-etapa g2">
+      <div class="ciclo-barra"></div>
+      <div class="ciclo-inner">
+        <div class="ciclo-icon">🗄️</div>
+        <div class="ciclo-content">
+          <div class="ciclo-label">Etapa 2 — Semiactivo</div>
+          <div class="ciclo-nombre">Archivo Central</div>
+          <div class="ciclo-desc">El documento ya no se usa cotidianamente pero sigue teniendo vigencia. Sale de la oficina y va a la bodega centralizada de la entidad. Se puede consultar de manera ocasional.</div>
+          <span class="ciclo-ejemplo">📌 Ej: Contratos terminados · Historias laborales de exfuncionarios</span>
+        </div>
+      </div>
+    </div>
+    <div class="ciclo-arrow">⬇ Transferencia Secundaria (solo documentos con valor histórico)</div>
+    <div class="ciclo-etapa g3">
+      <div class="ciclo-barra"></div>
+      <div class="ciclo-inner">
+        <div class="ciclo-icon">🏛️</div>
+        <div class="ciclo-content">
+          <div class="ciclo-label">Etapa 3 — Permanente</div>
+          <div class="ciclo-nombre">Archivo Histórico</div>
+          <div class="ciclo-desc">El documento tiene valor permanente: científico, cultural, histórico o patrimonial. Se conserva para siempre. El Comité de Archivo decide qué llega aquí. Nunca se destruye.</div>
+          <span class="ciclo-ejemplo">📌 Ej: Actas de fundación · Documentos históricos · Registros patrimoniales</span>
+        </div>
+      </div>
+    </div>
+    <div class="ciclo-arrow" style="color:var(--rojo)">🗑️ Eliminación (solo para documentos sin valor histórico, con acta y autorización)</div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Arts. 10–11 — Gestión y obligaciones</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 10 -->
+  <div class="art-card rojo">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 10</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Responsabilidad de la Gestión Documental</div>
+        <span class="art-tag">Obligación de las entidades</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«La gestión de documentos dentro del concepto de archivo total comprende los procesos de la función archivística, es decir, desde la elaboración del documento hasta su eliminación o conservación permanente.»</div>
+      <p class="art-explicacion">El artículo 10 consagra el concepto de <strong>Archivo Total</strong>, que es fundamental en el examen:</p>
+      <div class="art-clave"><strong>🔑 ¿Qué es el Archivo Total?</strong>
+        Es la visión integral del ciclo de vida del documento. Implica que la gestión documental no empieza cuando el papel llega a la bodega, sino desde el momento en que se <b>produce o se recibe</b> el documento, y abarca todos los procesos hasta su disposición final (eliminación o conservación permanente). Ningún proceso queda por fuera.
+      </div>
+      <div class="art-analogia"><strong>💡 Los procesos del Archivo Total:</strong> Producción → Recepción → Distribución → Trámite → Organización → Consulta → Conservación → Disposición final.</div>
+    </div>
+  </div>
+
+  <!-- ART 11 -->
+  <div class="art-card amarillo">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 11</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Obligatoriedad de la Gestión Documental</div>
+        <span class="art-tag">Programa de Gestión Documental — PGD</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Las entidades del Estado estarán obligadas a elaborar programas de gestión de documentos, pudiendo contemplar el uso de nuevas tecnologías y soportes, en cuya aplicación deberán observarse los principios y procesos archivísticos.»</div>
+      <p class="art-explicacion">Ninguna entidad pública puede improvisar en gestión documental. La ley exige un instrumento formal: el <strong>Programa de Gestión Documental (PGD)</strong>.</p>
+      <div class="art-clave"><strong>🔑 ¿Qué es el PGD?</strong>
+        El <b>Programa de Gestión Documental (PGD)</b> es el instrumento archivístico que define la política de la entidad para manejar sus documentos: cómo se crean, organizan, custodian y disponen. Es obligatorio para todas las entidades del Estado. Incluye el uso de tecnologías digitales, siempre respetando los principios archivísticos.
+      </div>
+      <div class="art-analogia"><strong>💡 Instrumentos archivísticos clave:</strong> · <b>PGD</b> (Programa de Gestión Documental): política global · <b>TRD</b> (Tabla de Retención Documental): tiempos de retención por serie · <b>TVD</b> (Tabla de Valoración Documental): para fondos acumulados sin TRD · <b>PINAR</b> (Plan Institucional de Archivos): planeación estratégica archivística.</div>
+    </div>
+  </div>
+
+</div><!-- /ciclo -->
+
+
+<!-- ====== TRD ====== -->
+<div id="trd" class="section">
+  <h2 class="section-title">Tablas de Retención Documental (TRD)</h2>
+  <p class="section-subtitle">Artículos 24 al 26 — El instrumento que le dice a la entidad cuánto tiempo conservar cada documento y qué hacer con él al final.</p>
+
+  <div class="intro-box" style="background: linear-gradient(135deg, #7B4F1E 0%, #0A2A5E 100%);">
+    <h2>¿Qué es la TRD?</h2>
+    <p>La <strong>Tabla de Retención Documental (TRD)</strong> es el listado de las series y subseries documentales producidas por cada dependencia de la entidad, con los tiempos de permanencia en cada etapa del ciclo vital y la disposición final: si el documento se conserva, se digitaliza, se selecciona o se elimina. Es el instrumento más práctico de la gestión documental y uno de los más preguntados en el examen CNSC.</p>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 24 — Elaboración y aprobación de la TRD</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 24 -->
+  <div class="art-card cafe">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 24</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Elaboración y Aplicación de las TRD</div>
+        <span class="art-tag">¿Quién elabora? · ¿Quién aprueba?</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Las entidades del Estado elaborarán sus tablas de retención documental, las cuales serán aprobadas por el correspondiente Comité de Archivo y convalidadas por el Archivo General de la Nación o por los Consejos Departamentales de Archivos, según el orden territorial de la entidad.»</div>
+      <p class="art-explicacion">La TRD tiene un proceso de elaboración y aprobación muy específico — y muy preguntado en el examen:</p>
+
+      <div class="trd-flow">
+        <div class="trd-paso">
+          <div class="trd-num">1</div>
+          <div class="trd-content">
+            <div class="trd-title">Levantamiento de información</div>
+            <div class="trd-desc">El archivo de la entidad (con apoyo de las dependencias) identifica qué documentos produce y recibe cada área, sus series y subseries documentales.</div>
+          </div>
+        </div>
+        <div class="trd-paso">
+          <div class="trd-num">2</div>
+          <div class="trd-content">
+            <div class="trd-title">Elaboración de la TRD</div>
+            <div class="trd-desc">El Jefe de Archivo o el área de gestión documental elabora el documento, listando cada serie/subserie con sus tiempos de retención en gestión y central, y la disposición final.</div>
+          </div>
+        </div>
+        <div class="trd-paso">
+          <div class="trd-num">3</div>
+          <div class="trd-content">
+            <div class="trd-title">Aprobación por el Comité de Archivo</div>
+            <div class="trd-desc">El <b>Comité de Archivo</b> de la entidad (órgano interno) revisa y aprueba la TRD. Es el paso obligatorio e interno antes de la convalidación externa.</div>
+          </div>
+        </div>
+        <div class="trd-paso">
+          <div class="trd-num">4</div>
+          <div class="trd-content">
+            <div class="trd-title">Convalidación por el AGN o Consejo Departamental</div>
+            <div class="trd-desc">Las entidades del orden <b>nacional</b>: convalida el <b>AGN (Archivo General de la Nación)</b>. Las del orden <b>territorial</b> (departamental/municipal): convalida el <b>Consejo Departamental de Archivos</b>.</div>
+          </div>
+        </div>
+        <div class="trd-paso">
+          <div class="trd-num">5</div>
+          <div class="trd-content">
+            <div class="trd-title">Aplicación obligatoria</div>
+            <div class="trd-desc">Una vez aprobada y convalidada, la TRD es de aplicación <b>obligatoria</b> en toda la entidad. Las transferencias, eliminaciones y conservación deben seguirla al pie de la letra.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="art-analogia"><strong>💡 Pregunta trampa:</strong> ¿Quién <em>elabora</em> la TRD? La entidad (su área de archivo). ¿Quién la <em>aprueba</em>? El Comité de Archivo (interno). ¿Quién la <em>convalida</em>? El AGN o el Consejo Departamental (externo). Tres actores distintos en tres momentos distintos.</div>
+    </div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 25 — Qué contiene la TRD</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 25 -->
+  <div class="art-card">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 25</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Contenido de las TRD</div>
+        <span class="art-tag">Series · Retención · Disposición final</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Las tablas de retención documental deben contener: la identificación de las series documentales, el tiempo de retención en gestión y en archivo central, y la disposición final de los documentos (conservación total, eliminación, microfilmación o digitalización, o selección).»</div>
+      <p class="art-explicacion">Una TRD tiene cuatro columnas esenciales que debes conocer:</p>
+      <div class="art-clave"><strong>🔑 Estructura de la TRD:</strong>
+        · <b>Código y nombre de la serie/subserie</b>: qué tipo de documento es (ej: "contratos de prestación de servicios")<br>
+        · <b>Retención en Archivo de Gestión</b>: cuántos años permanece en la oficina (ej: 2 años)<br>
+        · <b>Retención en Archivo Central</b>: cuántos años va a la bodega central (ej: 8 años)<br>
+        · <b>Disposición final</b>: qué pasa al terminar el tiempo → CT (Conservación Total) | E (Eliminación) | D (Digitalización) | S (Selección)
+      </div>
+      <div class="art-analogia"><strong>💡 Disposiciones finales explicadas:</strong><br>
+        <b>CT — Conservación Total</b>: se guarda para siempre en el Archivo Histórico (valor permanente).<br>
+        <b>E — Eliminación</b>: se destruye mediante acta firmada por el Comité de Archivo (¡nunca se elimina sin acta!).<br>
+        <b>D — Digitalización</b>: se escanea para preservar sin ocupar espacio físico.<br>
+        <b>S — Selección</b>: se escoge una muestra representativa; el resto se elimina.
+      </div>
+    </div>
+  </div>
+
+  <div class="ley-sep">
+    <div class="ley-sep-line"></div>
+    <div class="ley-sep-label">Art. 26 — Comité de Archivo</div>
+    <div class="ley-sep-line"></div>
+  </div>
+
+  <!-- ART 26 -->
+  <div class="art-card rojo">
+    <div class="art-header" onclick="toggle(this)">
+      <div class="art-num">Art. 26</div>
+      <div class="art-title-wrap">
+        <div class="art-title">Comité de Archivo</div>
+        <span class="art-tag">Órgano de decisión · Quién lo integra</span>
+      </div>
+      <span class="art-toggle">▼</span>
+    </div>
+    <div class="art-body">
+      <div class="art-texto">«Cada entidad del Estado contará con un Comité de Archivo, como órgano interno asesor de la entidad en materia archivística, encargado de definir las políticas, los programas de trabajo y la toma de decisiones en los procesos administrativos y técnicos de los archivos.»</div>
+      <p class="art-explicacion">El Comité de Archivo es el "gobierno" de la gestión documental dentro de cada entidad. Sus funciones son:</p>
+      <div class="art-clave"><strong>🔑 Funciones del Comité de Archivo:</strong>
+        · <b>Aprobar la TRD</b> (y la TVD para fondos acumulados)<br>
+        · Autorizar las <b>transferencias documentales</b> (de gestión a central; de central a histórico)<br>
+        · Autorizar la <b>eliminación de documentos</b> (con acta firmada obligatoria)<br>
+        · Definir qué documentos tienen valor histórico (pasan al Archivo Histórico)<br>
+        · Aprobar el Programa de Gestión Documental (PGD)<br>
+        · Resolver dudas sobre la aplicación de los principios archivísticos
+      </div>
+      <div class="art-analogia"><strong>💡 ¿Quién conforma el Comité de Archivo?</strong> Generalmente: el Secretario General (o quien haga sus veces), el Jefe de la Oficina Jurídica, el Jefe de la Oficina de Sistemas o TIC, el Jefe del Archivo de la entidad, y quien lidere la Oficina de Planeación. La reglamentación específica la establece cada entidad conforme a las guías del AGN.</div>
+    </div>
+  </div>
+
+</div><!-- /trd -->
+
+
+<!-- ====== MAPAS MENTALES ====== -->
+<div id="mapas" class="section">
+
+  <div class="mapa">
+    <div class="mapa-title">🧠 Mapa Mental 1: Ciclo Vital del Documento</div>
+    <div class="mapa-central">CICLO VITAL<br><small style="font-weight:300;font-size:0.85rem">Todo documento nace, vive y termina</small></div>
+    <div class="mapa-ramas">
+      <div class="rama"><div class="rama-icon">📝</div><div class="rama-label">Archivo de Gestión</div><div class="rama-items">En la oficina productora<br>En trámite o uso activo<br>Consulta frecuente<br>Transferencia primaria → Central</div></div>
+      <div class="rama c"><div class="rama-icon">🗄️</div><div class="rama-label">Archivo Central</div><div class="rama-items">Bodega de la entidad<br>Consulta ocasional<br>Vigencia pero poco uso<br>Transferencia secundaria → Histórico</div></div>
+      <div class="rama v"><div class="rama-icon">🏛️</div><div class="rama-label">Archivo Histórico</div><div class="rama-items">Valor permanente<br>Nunca se elimina<br>Patrimonio de la Nación<br>Decide el Comité de Archivo</div></div>
+      <div class="rama r"><div class="rama-icon">🗑️</div><div class="rama-label">Eliminación</div><div class="rama-items">Solo con acta firmada<br>Autoriza el Comité<br>Solo para documentos sin valor histórico<br>¡Nunca sin registro!</div></div>
+    </div>
+  </div>
+
+  <div class="mapa">
+    <div class="mapa-title">🧠 Mapa Mental 2: La TRD — ¿Quién hace qué?</div>
+    <div class="mapa-central">TRD<br><small style="font-weight:300;font-size:0.85rem">Tabla de Retención Documental</small></div>
+    <div class="mapa-ramas">
+      <div class="rama"><div class="rama-icon">🏢</div><div class="rama-label">Elabora</div><div class="rama-items">La entidad<br>(Área de archivo + dependencias)<br>Identifica series y tiempos</div></div>
+      <div class="rama c"><div class="rama-icon">⚖️</div><div class="rama-label">Aprueba</div><div class="rama-items">Comité de Archivo<br>(Órgano interno)<br>Revisa y valida</div></div>
+      <div class="rama r"><div class="rama-icon">🏛️</div><div class="rama-label">Convalida (Nacional)</div><div class="rama-items">AGN<br>(Archivo General de la Nación)<br>Para entidades del orden nacional</div></div>
+      <div class="rama v"><div class="rama-icon">📍</div><div class="rama-label">Convalida (Territorial)</div><div class="rama-items">Consejo Departamental<br>de Archivos<br>Para entidades dpto/municipal</div></div>
+    </div>
+  </div>
+
+  <div class="mapa">
+    <div class="mapa-title">🧠 Mapa Mental 3: Principios Archivísticos (Art. 3)</div>
+    <div class="mapa-central">PRINCIPIOS<br><small style="font-weight:300;font-size:0.85rem">Ley 594 de 2000 · Art. 3</small></div>
+    <div class="mapa-ramas">
+      <div class="rama r"><div class="rama-icon">🏛️</div><div class="rama-label">Procedencia</div><div class="rama-items">No mezclar archivos<br>de distintas entidades<br>Cada fondo = una institución</div></div>
+      <div class="rama a"><div class="rama-icon">🔢</div><div class="rama-label">Orden Original</div><div class="rama-items">Respetar el orden<br>en que se produjeron<br>Refleja el trámite</div></div>
+      <div class="rama v"><div class="rama-icon">🔒</div><div class="rama-label">Integridad</div><div class="rama-items">Conservar íntegros<br>Sin fragmentar<br>Sin dispersar</div></div>
+      <div class="rama c"><div class="rama-icon">⏳</div><div class="rama-label">Ciclo Vital</div><div class="rama-items">Gestión → Central → Histórico<br>La TRD define los tiempos<br>y la disposición final</div></div>
+    </div>
+  </div>
+
+</div><!-- /mapas -->
+
+
+<!-- ====== RESUMEN ====== -->
+<div id="resumen" class="section">
+  <p class="section-subtitle">Tabla de referencia rápida para repasar antes del examen.</p>
+
+  <h3 style="font-family:'Playfair Display',serif;color:var(--azul);margin-bottom:12px;font-size:1.15rem;">Arts. 1–4 — Conceptos y Principios</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Art.</th><th>Título</th><th>Lo más importante</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Objeto de la Ley</td><td>Regula la función archivística del Estado. El AGN es el rector de la política archivística nacional.</td></tr>
+        <tr><td>2</td><td>Definiciones</td><td>Archivo (conjunto de documentos de una entidad) ≠ Documento de archivo (registro de funciones). Serie → Subserie → Expediente. Solo son "documentos de archivo" los que nacen o llegan por la función institucional.</td></tr>
+        <tr><td>3</td><td>Principios</td><td>Procedencia (no mezclar archivos de distintas entidades) y Orden Original (respetar la secuencia del trámite). Son los dos principios rectores de la archivística.</td></tr>
+        <tr><td>4</td><td>Objetivos</td><td>Jurídico, administrativo, histórico, transparencia y eficiencia. Los documentos son prueba de actuación del Estado y garantía de derechos ciudadanos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;color:var(--cafe);margin:28px 0 12px;font-size:1.15rem;">Arts. 7–11 — Ciclo Vital del Documento</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Art.</th><th>Etapa</th><th>Lo más importante</th></tr></thead>
+      <tbody>
+        <tr><td>7</td><td>Archivo de Gestión</td><td>En la oficina productora. Documentos en trámite o de consulta frecuente. Responsable: el jefe de la dependencia. Llegan aquí desde su creación.</td></tr>
+        <tr><td>8</td><td>Archivo Central</td><td>Bodega centralizada de la entidad. Consulta ocasional. Llegan por transferencia primaria. Vigentes pero poco usados (contratos terminados, resoluciones pasadas).</td></tr>
+        <tr><td>9</td><td>Archivo Histórico</td><td>Conservación permanente. Valor científico, cultural o histórico. Llegan por transferencia secundaria. NUNCA se eliminan. Decide el Comité de Archivo.</td></tr>
+        <tr><td>10</td><td>Archivo Total</td><td>Visión integral: la gestión documental abarca desde la producción del documento hasta su disposición final. Incluye todos los procesos.</td></tr>
+        <tr><td>11</td><td>PGD</td><td>Programa de Gestión Documental: obligatorio para todas las entidades. Define la política archivística institucional. Puede incluir tecnologías digitales.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;color:var(--verde);margin:28px 0 12px;font-size:1.15rem;">Arts. 24–26 — TRD y Comité de Archivo</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Art.</th><th>Título</th><th>Lo más importante</th></tr></thead>
+      <tbody>
+        <tr><td>24</td><td>Elaboración y aprobación TRD</td><td>Elabora: la entidad (área de archivo). Aprueba: Comité de Archivo (interno). Convalida: AGN (nacional) o Consejo Departamental de Archivos (territorial). Obligatoria una vez aprobada.</td></tr>
+        <tr><td>25</td><td>Contenido de la TRD</td><td>Serie/subserie + Retención en Gestión (años) + Retención en Central (años) + Disposición final: CT (Conservación Total) | E (Eliminación) | D (Digitalización) | S (Selección).</td></tr>
+        <tr><td>26</td><td>Comité de Archivo</td><td>Órgano interno asesor. Aprueba TRD y TVD, autoriza transferencias y eliminaciones, define valores históricos. La eliminación sin acta del Comité es ilegal.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tips-grid" style="margin-top:28px;">
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-title">Pregunta trampa frecuente</div>
+      <div class="tip-text">¿Quién <b>aprueba</b> la TRD? El <b>Comité de Archivo</b> (interno). ¿Quién la <b>convalida</b>? El <b>AGN</b> o el Consejo Departamental (externo). Son dos pasos diferentes. En el examen preguntan específicamente uno de los dos y confunden a los candidatos.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div class="tip-title">Error común</div>
+      <div class="tip-text">Confundir <b>Procedencia</b> (no mezclar archivos de distintas entidades) con <b>Orden Original</b> (no reordenar internamente el fondo). Son principios distintos. Procedencia protege la identidad del fondo; Orden Original protege su secuencia interna.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📌</div>
+      <div class="tip-title">Regla de oro</div>
+      <div class="tip-text">Lo que llega al <b>Archivo Histórico nunca se elimina</b>. Lo que se va a eliminar jamás debe hacerse sin el <b>acta del Comité de Archivo</b>. Un funcionario que destruye documentos públicos sin autorización comete una falta gravísima.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔑</div>
+      <div class="tip-title">Mnemotecnia ciclo vital</div>
+      <div class="tip-text">Recuerda el ciclo con: <b>G → C → H</b> → <b>G</b>estión (oficina, activo) → <b>C</b>entral (bodega, semiactivo) → <b>H</b>istórico (permanente, patrimonio). Las transferencias: Primaria (G→C) y Secundaria (C→H).</div>
+    </div>
+  </div>
+</div><!-- /resumen -->
+
+
+<!-- ====== QUIZ ====== -->
+<div id="quiz" class="section">
+  <p class="section-subtitle">Pon a prueba lo que aprendiste. Selecciona la respuesta correcta en cada pregunta.</p>
+  <div id="quiz-container"></div>
+  <div id="quiz-score" class="quiz-score"></div>
+</div>
+
+</main>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById(id).classList.add('visible');
+  document.querySelectorAll('nav button').forEach((b,i) => {
+    const ids = ['conceptos','ciclo','trd','mapas','resumen','quiz'];
+    b.classList.toggle('active', ids[i] === id);
+  });
+}
+
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.art-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+
+const questions = [
+  {
+    q: "¿Cuál es el ente rector de la política archivística en Colombia según la Ley 594 de 2000?",
+    opts: ["El Ministerio del Interior", "El Archivo General de la Nación (AGN)", "La Procuraduría General de la Nación", "El Departamento Administrativo de la Función Pública"],
+    correct: 1,
+    fb: "El Archivo General de la Nación (AGN) es el establecimiento público encargado de formular, orientar y controlar la política archivística nacional. Es la entidad rectora de todos los archivos del Estado colombiano."
+  },
+  {
+    q: "El principio de 'procedencia' en archivística significa que:",
+    opts: [
+      "Los documentos deben ordenarse según su fecha de producción",
+      "Los documentos de una entidad no deben mezclarse con los de otra institución diferente",
+      "Solo se pueden consultar los documentos previa autorización de la entidad productora",
+      "Los documentos deben provenir de fuentes oficiales certificadas"
+    ],
+    correct: 1,
+    fb: "El principio de procedencia establece que los documentos producidos por una institución deben mantenerse separados de los de otras entidades. Cada fondo documental refleja la identidad y las funciones de la institución que lo generó."
+  },
+  {
+    q: "¿En qué etapa del ciclo vital se encuentran los documentos que están en trámite y se consultan diariamente en la oficina que los produjo?",
+    opts: ["Archivo Central", "Archivo Histórico", "Archivo de Gestión", "Archivo Muerto"],
+    correct: 2,
+    fb: "El Archivo de Gestión es la primera etapa del ciclo vital. Aquí reposan los documentos en trámite o de consulta frecuente, ubicados en la oficina productora. Es la etapa 'activa' del documento."
+  },
+  {
+    q: "¿Qué ocurre con los documentos que llegan al Archivo Histórico?",
+    opts: [
+      "Se pueden eliminar si ocupan demasiado espacio",
+      "Se digitalizan y el original se destruye",
+      "Se conservan permanentemente y nunca se eliminan",
+      "Se devuelven a la oficina productora cada 10 años para revisión"
+    ],
+    correct: 2,
+    fb: "El Archivo Histórico implica conservación permanente. Los documentos que llegan aquí tienen valor científico, cultural o histórico y son patrimonio de la Nación. Ninguna autoridad puede ordenar su eliminación."
+  },
+  {
+    q: "¿Quién elabora la Tabla de Retención Documental (TRD)?",
+    opts: [
+      "El Archivo General de la Nación",
+      "El Comité de Archivo de la entidad",
+      "La propia entidad, a través de su área de archivo y las dependencias",
+      "El Consejo Departamental de Archivos"
+    ],
+    correct: 2,
+    fb: "La TRD es elaborada por la misma entidad (su área de archivo en coordinación con las dependencias). Luego debe ser aprobada por el Comité de Archivo (interno) y convalidada por el AGN o el Consejo Departamental (externo). Son tres actores diferentes."
+  },
+  {
+    q: "¿Qué entidad convalida la TRD de una alcaldía municipal?",
+    opts: [
+      "El Archivo General de la Nación (AGN)",
+      "El Ministerio del Interior",
+      "El Consejo Departamental de Archivos",
+      "La Procuraduría General de la Nación"
+    ],
+    correct: 2,
+    fb: "Las entidades del orden territorial (departamentos, municipios) deben convalidar sus TRD ante el Consejo Departamental de Archivos. El AGN convalida las TRD de las entidades del orden nacional."
+  },
+  {
+    q: "La 'transferencia primaria' de documentos ocurre cuando:",
+    opts: [
+      "Un documento pasa del Archivo Central al Archivo Histórico",
+      "Un documento pasa del Archivo de Gestión al Archivo Central",
+      "Un documento se transfiere de una entidad a otra",
+      "Un documento digital se convierte en físico"
+    ],
+    correct: 1,
+    fb: "La transferencia primaria es el traslado de documentos del Archivo de Gestión (oficina) al Archivo Central (bodega centralizada de la entidad). La transferencia secundaria es del Archivo Central al Archivo Histórico."
+  },
+  {
+    q: "¿Cuál es la disposición final 'CT' en una TRD?",
+    opts: [
+      "Control Total: el documento nunca sale del archivo central",
+      "Conservación Temporal: se guarda 10 años adicionales",
+      "Conservación Total: el documento se conserva permanentemente en el Archivo Histórico",
+      "Copia Técnica: se digitaliza y el físico se destruye"
+    ],
+    correct: 2,
+    fb: "CT significa Conservación Total: el documento se transfiere al Archivo Histórico y se conserva de forma permanente por tener valor histórico, científico o cultural. Las otras disposiciones finales son: E (Eliminación), D (Digitalización) y S (Selección)."
+  },
+  {
+    q: "El Comité de Archivo de una entidad es responsable de:",
+    opts: [
+      "Convalidar las TRD ante el AGN",
+      "Aprobar la TRD, autorizar transferencias y autorizar la eliminación de documentos",
+      "Elaborar el inventario de documentos de cada dependencia",
+      "Capacitar a los funcionarios en uso de software de gestión documental"
+    ],
+    correct: 1,
+    fb: "El Comité de Archivo es el órgano interno asesor en materia archivística. Sus funciones clave incluyen: aprobar la TRD y la TVD, autorizar las transferencias documentales, y autorizar la eliminación de documentos mediante acta firmada. Sin acta del Comité, ningún documento puede eliminarse."
+  },
+  {
+    q: "¿Qué concepto define la visión integral que abarca desde la producción del documento hasta su disposición final?",
+    opts: ["Ciclo de vida acelerado", "Archivo Total", "Gestión Integral de Información", "Sistema de Archivo Centralizado"],
+    correct: 1,
+    fb: "El concepto de Archivo Total (Art. 10) establece que la gestión documental abarca todos los procesos desde que el documento se produce o recibe hasta su eliminación o conservación permanente. No se trata solo del almacenamiento: incluye producción, distribución, trámite, organización, consulta, conservación y disposición final."
+  }
+];
+
+let answered = 0;
+let score = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+      <div class="quiz-q">${qi+1}. ${q.q}</div>
+      <div class="quiz-opts">
+        ${q.opts.map((o,i) => `<button class="quiz-opt" onclick="answer(this,${qi},${i})">${o}</button>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function answer(btn, qi, chosen) {
+  const q = questions[qi];
+  const opts = btn.closest('.quiz-opts').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  const fb = document.getElementById('fb-'+qi);
+  if (chosen === q.correct) {
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback show ok';
+    fb.innerHTML = '✅ <strong>¡Correcto!</strong> ' + q.fb;
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    opts[q.correct].classList.add('correct');
+    fb.className = 'quiz-feedback show fail';
+    fb.innerHTML = '❌ <strong>Incorrecto.</strong> ' + q.fb;
+  }
+  answered++;
+  if (answered === questions.length) {
+    const scoreDiv = document.getElementById('quiz-score');
+    const pct = Math.round((score/questions.length)*100);
+    let msg = pct >= 90 ? '🏆 ¡Excelente! Dominas la gestión documental.' : pct >= 70 ? '👍 Bien. Repasa los temas que fallaste.' : '📖 Vuelve a los artículos y repasa el ciclo vital.';
+    scoreDiv.innerHTML = `Resultado: ${score}/${questions.length} (${pct}%)<br><small style="font-weight:300">${msg}</small><br><button class="btn-quiz" onclick="resetQuiz()" style="margin-top:14px">🔄 Repetir Quiz</button>`;
+    scoreDiv.style.display = 'block';
+  }
+}
+
+function resetQuiz() {
+  answered = 0; score = 0;
+  document.getElementById('quiz-score').style.display = 'none';
+  buildQuiz();
+}
+
+buildQuiz();
+</script>
+</body>
+</html>

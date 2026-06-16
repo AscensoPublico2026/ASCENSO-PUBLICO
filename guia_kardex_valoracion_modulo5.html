@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Módulo 5 | Kardex y Valoración de Inventarios — Indervalle CNSC OPEC 243477</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   VARIABLES RAÍZ
+================================================================ */
+:root {
+  --azul:          #0A2A5E;
+  --azul-medio:    #1A4A8A;
+  --azul-claro:    #2D6CC0;
+  --azul-suave:    #EBF2FC;
+  --amarillo:      #F5C518;
+  --crema:         #FDF8EE;
+  --crema-borde:   #E8DFC4;
+  --verde:         #1A7A4A;
+  --verde-light:   #E8F7EE;
+  --rojo:          #B03A2E;
+  --rojo-light:    #FDEDEC;
+  --naranja:       #CA6F1E;
+  --naranja-light: #FEF0E0;
+  --morado:        #6C3483;
+  --morado-light:  #F5EEF8;
+  --teal:          #0E7490;
+  --teal-light:    #E0F7FA;
+  --gris-bg:       #F0F3F8;
+  --gris-borde:    #CDD5E2;
+  --gris-texto:    #374151;
+  --blanco:        #FFFFFF;
+  --sombra:        0 3px 18px rgba(10,42,94,0.10);
+  --sombra-lg:     0 8px 36px rgba(10,42,94,0.18);
+  --radio:         13px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--gris-bg);color:var(--gris-texto);font-size:16px;line-height:1.74;}
+
+/* ================================================================
+   HERO PREMIUM
+================================================================ */
+.hero{background:var(--azul);position:relative;overflow:hidden;}
+.hero-top{height:5px;background:linear-gradient(90deg,var(--amarillo),#FFE566,var(--amarillo));}
+.hg{position:absolute;border-radius:50%;pointer-events:none;}
+.hg1{width:520px;height:520px;top:-190px;right:-130px;background:radial-gradient(circle,rgba(245,197,24,0.07) 0%,transparent 70%);}
+.hg2{width:300px;height:300px;bottom:-110px;left:3%;background:radial-gradient(circle,rgba(45,108,192,0.16) 0%,transparent 70%);}
+.hg3{width:160px;height:160px;top:30%;right:20%;background:rgba(255,255,255,0.025);}
+.hero-hatch{position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(-45deg,transparent,transparent 58px,rgba(255,255,255,0.012) 58px,rgba(255,255,255,0.012) 59px);}
+.hero-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:58px 32px 52px;}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(245,197,24,0.14);border:1px solid rgba(245,197,24,0.38);color:var(--amarillo);font-size:10.5px;font-weight:900;letter-spacing:2.8px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:22px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4.8vw,52px);font-weight:900;color:var(--blanco);line-height:1.13;margin-bottom:16px;}
+.hero h1 .ac{color:var(--amarillo);font-style:italic;}
+.hero-desc{font-size:15.5px;color:rgba(255,255,255,0.80);max-width:740px;margin-bottom:32px;line-height:1.7;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:6px 15px;border-radius:20px;}
+.pill.d{background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.17);color:rgba(255,255,255,0.92);}
+.pill.g{background:rgba(245,197,24,0.17);border:1px solid rgba(245,197,24,0.42);color:var(--amarillo);}
+
+/* ================================================================
+   NAV STICKY
+================================================================ */
+.nav-s{position:sticky;top:0;z-index:300;background:var(--azul);border-bottom:3px solid var(--amarillo);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 20px;box-shadow:0 4px 20px rgba(10,42,94,0.35);}
+.nav-s::-webkit-scrollbar{display:none;}
+.nb{background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;color:rgba(255,255,255,0.58);font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.4px;padding:13px 15px;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s;}
+.nb:hover,.nb.on{color:var(--amarillo);border-bottom-color:var(--amarillo);}
+
+/* ================================================================
+   LAYOUT
+================================================================ */
+.wrap{max-width:1040px;margin:0 auto;padding:46px 22px 90px;}
+
+/* ================================================================
+   CARD BASE
+================================================================ */
+.card{background:var(--blanco);border-radius:var(--radio);box-shadow:var(--sombra);padding:40px 44px;margin-bottom:34px;scroll-margin-top:60px;}
+.card-lbl{font-size:10px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.card>h2{font-family:'Playfair Display',serif;font-size:27px;font-weight:700;color:var(--azul);margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--gris-borde);line-height:1.25;}
+.card h3{font-size:18px;font-weight:700;color:var(--azul-medio);margin:28px 0 10px;}
+.card h4{font-size:15.5px;font-weight:700;color:var(--azul);margin:20px 0 8px;}
+.card p{color:var(--gris-texto);margin-bottom:14px;}
+.card ul,.card ol{padding-left:22px;margin-bottom:14px;color:var(--gris-texto);}
+.card li{margin-bottom:7px;}
+.card strong{color:var(--azul);}
+.ley{display:inline-block;background:#D6E4FF;color:var(--azul-medio);font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:4px;margin:0 2px;}
+.dest{background:#FFF9C4;padding:1px 5px;border-radius:3px;font-weight:700;color:#7D6608;}
+.num-azul{color:var(--azul);font-weight:900;font-family:'Playfair Display',serif;}
+
+/* ================================================================
+   OBJETIVOS GRID
+================================================================ */
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0;}
+.obj-card{background:var(--crema);border:1px solid var(--crema-borde);border-left:4px solid var(--azul-claro);border-radius:8px;padding:15px 17px;}
+.obj-card strong{display:block;color:var(--azul);font-size:13px;margin-bottom:5px;}
+.obj-card span{font-size:13.5px;color:var(--gris-texto);}
+
+/* ================================================================
+   TABLAS GENERALES
+================================================================ */
+.tw{overflow-x:auto;margin:18px 0;}
+table.gen{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(10,42,94,0.09);}
+table.gen thead th{background:var(--azul);color:var(--blanco);padding:13px 16px;font-weight:800;font-size:11.5px;letter-spacing:0.8px;text-transform:uppercase;text-align:left;}
+table.gen tbody td{padding:11px 16px;border-bottom:1px solid var(--gris-borde);color:var(--gris-texto);vertical-align:top;}
+table.gen tbody td:first-child{background:#F8FAFD;font-weight:700;color:var(--azul);border-right:2px solid var(--gris-borde);}
+table.gen tbody tr:hover td{background:#EEF3FF!important;}
+table.gen tbody tr:last-child td{border-bottom:none;}
+
+/* ================================================================
+   KARDEX — TABLAS DE EJERCICIO
+================================================================ */
+.kardex-wrapper{overflow-x:auto;margin:24px 0;}
+.kardex-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;min-width:900px;}
+.kardex-panel{border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(10,42,94,0.11);}
+.kp-header{padding:14px 18px;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px;}
+.kp-header.peps{background:var(--azul);color:var(--blanco);}
+.kp-header.pp{background:var(--teal);color:var(--blanco);}
+.kp-badge{font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.kp-badge.peps{background:rgba(245,197,24,0.3);color:var(--amarillo);}
+.kp-badge.pp{background:rgba(255,255,255,0.2);color:var(--blanco);}
+
+table.kardex{width:100%;border-collapse:collapse;font-size:12px;}
+table.kardex thead tr.kh-meta th{background:#E8EDF5;color:var(--azul);font-weight:800;font-size:10.5px;letter-spacing:0.5px;text-transform:uppercase;padding:8px 10px;text-align:center;border:1px solid var(--gris-borde);}
+table.kardex thead tr.kh-meta th.grp-ent{background:#D6E4FF;}
+table.kardex thead tr.kh-meta th.grp-sal{background:#FDEBD0;}
+table.kardex thead tr.kh-meta th.grp-sld{background:#D5F5E3;}
+table.kardex thead tr.kh-sub th{background:#F0F3F8;color:var(--gris-texto);font-weight:700;font-size:10px;letter-spacing:0.3px;text-transform:uppercase;padding:6px 8px;text-align:center;border:1px solid var(--gris-borde);}
+table.kardex tbody td{padding:8px 10px;border:1px solid var(--gris-borde);font-size:12px;text-align:center;color:var(--gris-texto);}
+table.kardex tbody td.mov-desc{text-align:left;font-weight:600;color:var(--azul);min-width:100px;}
+table.kardex tbody td.num{font-family:monospace;font-weight:700;}
+table.kardex tbody td.ent{background:#EBF5FF;}
+table.kardex tbody td.sal{background:#FEF3E8;}
+table.kardex tbody td.sld{background:#EDFAEF;font-weight:700;}
+table.kardex tbody tr.total-row td{background:var(--azul);color:var(--blanco);font-weight:900;font-size:12.5px;}
+table.kardex tbody tr:hover td{filter:brightness(0.96);}
+
+/* Diferencia de saldos */
+.diff-box{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;}
+.diff-card{flex:1;min-width:180px;border-radius:10px;padding:16px 18px;text-align:center;}
+.diff-card.peps-c{background:var(--azul-suave);border:2px solid var(--azul-claro);}
+.diff-card.pp-c{background:var(--teal-light);border:2px solid var(--teal);}
+.diff-card .dc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.diff-card.peps-c .dc-lbl{color:var(--azul-medio);}
+.diff-card.pp-c .dc-lbl{color:var(--teal);}
+.diff-card .dc-val{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;}
+.diff-card.peps-c .dc-val{color:var(--azul);}
+.diff-card.pp-c .dc-val{color:var(--teal);}
+.diff-card .dc-sub{font-size:12px;color:var(--gris-texto);margin-top:4px;}
+
+/* ================================================================
+   ETAPAS
+================================================================ */
+.etapas{display:flex;flex-direction:column;gap:14px;margin:18px 0;}
+.etapa{display:flex;gap:16px;align-items:flex-start;}
+.etapa-num{background:var(--azul);color:var(--blanco);min-width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;flex-shrink:0;margin-top:2px;}
+.etapa-body strong{color:var(--azul);display:block;}
+.etapa-body span{font-size:14px;color:var(--gris-texto);}
+
+/* ================================================================
+   FÓRMULAS
+================================================================ */
+.formula-box{background:var(--crema);border:2px solid var(--crema-borde);border-left:5px solid var(--azul-claro);border-radius:10px;padding:18px 22px;margin:16px 0;font-size:15px;}
+.formula-box .f-title{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--azul-claro);margin-bottom:8px;display:block;}
+.formula-box .f-formula{font-family:monospace;font-size:16px;font-weight:700;color:var(--azul);letter-spacing:0.5px;}
+.formula-box .f-nota{font-size:13px;color:var(--gris-texto);margin-top:6px;}
+
+/* ================================================================
+   CAJAS NORMATIVAS
+================================================================ */
+.caja{border-radius:10px;padding:22px 26px;margin:22px 0;border-left:5px solid;}
+.caja.alerta{background:var(--rojo-light);border-color:var(--rojo);}
+.caja.alerta .ct{color:var(--rojo);}
+.caja.regla{background:var(--azul-suave);border-color:var(--azul-claro);}
+.caja.regla .ct{color:var(--azul-medio);}
+.caja.tip{background:var(--naranja-light);border-color:var(--naranja);}
+.caja.tip .ct{color:var(--naranja);}
+.caja.verde{background:var(--verde-light);border-color:var(--verde);}
+.caja.verde .ct{color:var(--verde);}
+.caja.teal{background:var(--teal-light);border-color:var(--teal);}
+.caja.teal .ct{color:var(--teal);}
+.ct{display:block;font-size:10.5px;font-weight:900;letter-spacing:2.2px;text-transform:uppercase;margin-bottom:10px;}
+.caja p,.caja li{font-size:14.5px;color:var(--gris-texto);}
+.caja ul{padding-left:20px;margin-top:8px;}
+.caja strong{color:var(--azul);}
+
+/* ================================================================
+   QUIZ MBE
+================================================================ */
+.qprog-w{background:var(--gris-borde);border-radius:20px;height:9px;overflow:hidden;margin-bottom:6px;}
+.qprog-b{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--azul),var(--amarillo));transition:width .4s ease;}
+.qcnt{font-size:13px;font-weight:700;color:var(--azul-medio);margin-bottom:22px;}
+
+.qcard{background:var(--gris-bg);border:1px solid var(--gris-borde);border-radius:12px;padding:28px 32px;margin-bottom:22px;transition:box-shadow .2s;}
+.qcard:hover{box-shadow:var(--sombra-lg);}
+.qnum{font-size:10.5px;font-weight:900;letter-spacing:2.2px;text-transform:uppercase;color:var(--azul-claro);margin-bottom:5px;}
+.qtipo{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;margin-left:8px;vertical-align:middle;}
+.qtipo.func{background:#D6E4FF;color:var(--azul-medio);}
+.qtipo.comp{background:var(--verde-light);color:var(--verde);}
+.qtipo.norm{background:var(--morado-light);color:var(--morado);}
+.qtipo.calc{background:var(--teal-light);color:var(--teal);}
+.qctx{background:var(--blanco);border-left:4px solid var(--azul-claro);border-radius:6px;padding:14px 17px;margin-bottom:15px;font-size:14px;color:var(--gris-texto);font-style:italic;line-height:1.68;}
+.qenunciado{font-size:16px;font-weight:700;color:var(--azul);margin-bottom:17px;line-height:1.5;}
+.qopts{display:flex;flex-direction:column;gap:10px;}
+
+.quiz-opt{background:var(--blanco);border:2px solid var(--gris-borde);border-radius:8px;padding:13px 17px;text-align:left;font-family:'Source Sans 3',sans-serif;font-size:14.5px;color:var(--azul);cursor:pointer;transition:all .18s;display:flex;align-items:flex-start;gap:12px;line-height:1.58;min-height:72px;}
+.quiz-opt:hover:not(:disabled){border-color:var(--azul-claro);background:#EEF3FF;transform:translateX(3px);}
+.quiz-opt .ltr{background:var(--gris-borde);color:var(--azul);min-width:28px;height:28px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;transition:all .18s;margin-top:1px;}
+.quiz-opt.ok{background:var(--verde-light);border-color:var(--verde);color:#145A32;}
+.quiz-opt.ok .ltr{background:var(--verde);color:var(--blanco);}
+.quiz-opt.fail{background:var(--rojo-light);border-color:var(--rojo);color:#7B241C;}
+.quiz-opt.fail .ltr{background:var(--rojo);color:var(--blanco);}
+.quiz-opt:disabled{cursor:not-allowed;}
+
+.qfb{display:none;margin-top:15px;padding:16px 20px;border-radius:9px;font-size:14px;line-height:1.67;animation:fadeUp .3s ease;}
+.qfb.show{display:block;}
+.qfb.ok{background:var(--verde-light);border:1px solid var(--verde);color:#145A32;}
+.qfb.fail{background:var(--rojo-light);border:1px solid var(--rojo);color:#7B241C;}
+.qfb strong{display:block;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
+.subfb{margin-top:10px;padding:10px 13px;border-radius:6px;font-size:13.5px;border-left:3px solid;}
+.subfb.sfok{background:#D5F5E3;border-color:var(--verde);color:#145A32;}
+.subfb.sffail{background:#FADBD8;border-color:var(--rojo);color:#7B241C;}
+.subfb .sl{font-weight:800;margin-right:4px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+.tablero{display:none;background:var(--azul);color:var(--blanco);border-radius:14px;padding:38px 44px;margin-top:34px;text-align:center;animation:fadeUp .5s ease;}
+.tablero.show{display:block;}
+.tablero h3{font-family:'Playfair Display',serif;font-size:28px;color:var(--blanco);margin-bottom:6px;}
+.t-sub{font-size:14px;opacity:.75;margin-bottom:6px;}
+.t-pct{font-family:'Playfair Display',serif;font-size:76px;font-weight:900;line-height:1;margin:18px 0 10px;}
+.t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin:26px 0;}
+.t-stat{background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.17);border-radius:10px;padding:16px;}
+.t-stat .v{font-size:32px;font-weight:900;font-family:'Playfair Display',serif;color:var(--amarillo);}
+.t-stat .l{font-size:12px;opacity:.75;margin-top:3px;font-weight:600;letter-spacing:.5px;}
+.t-msg{background:rgba(245,197,24,0.14);border:1px solid rgba(245,197,24,0.34);border-radius:10px;padding:16px 22px;font-size:15px;font-weight:600;color:var(--amarillo);margin-top:6px;}
+.btn-reset{margin-top:24px;background:var(--amarillo);color:var(--azul);border:none;padding:13px 34px;border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.5px;transition:transform .2s,box-shadow .2s;}
+.btn-reset:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(245,197,24,0.42);}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media(max-width:640px){
+  .hero-inner{padding:36px 18px 32px;}
+  .card{padding:24px 18px;}
+  .nb{padding:12px 11px;font-size:11px;}
+  .qcard{padding:20px 16px;}
+  .tablero{padding:28px 18px;}
+  .t-pct{font-size:56px;}
+  .kardex-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <div class="hero-top"></div>
+  <div class="hg hg1"></div><div class="hg hg2"></div><div class="hg hg3"></div>
+  <div class="hero-hatch"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker">📊 CNSC · OPEC 243477 · MÓDULO 5 · NIVEL TÉCNICO OPERATIVO</div>
+    <h1>Kardex y <span class="ac">Valoración de Inventarios</span><br>en el Sector Público</h1>
+    <p class="hero-desc">Método PEPS y Promedio Ponderado — lógica matemática, ejercicio numérico completo con 8 movimientos · Resolución CGN 533/2015 · NICSP adaptadas · Impacto contable y responsabilidad fiscal. Función esencial del Técnico Operativo: manejo de Kardex. 20 preguntas MBE con distractores de alta complejidad psicométrica.</p>
+    <div class="hero-pills">
+      <span class="pill d">📋 Resolución CGN 533/2015</span>
+      <span class="pill d">🌐 NICSP Adaptadas Colombia</span>
+      <span class="pill d">⚖️ Ley 610/2000</span>
+      <span class="pill d">🧮 PEPS vs Promedio Ponderado</span>
+      <span class="pill g">✅ 20 Preguntas MBE Calibradas</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav class="nav-s">
+  <button class="nb on" onclick="ir('s1',this)">1. Encabezado</button>
+  <button class="nb"    onclick="ir('s2',this)">2. ¿Qué es el Kardex?</button>
+  <button class="nb"    onclick="ir('s3',this)">3. Marco Normativo</button>
+  <button class="nb"    onclick="ir('s4',this)">4. Método PEPS</button>
+  <button class="nb"    onclick="ir('s5',this)">5. Promedio Ponderado</button>
+  <button class="nb"    onclick="ir('s6',this)">6. Ejercicio Numérico</button>
+  <button class="nb"    onclick="ir('s7',this)">7. Análisis Comparativo</button>
+  <button class="nb"    onclick="ir('s8',this)">8. Responsabilidad Fiscal</button>
+  <button class="nb"    onclick="ir('s9',this)">9. Alertas y Tips</button>
+  <button class="nb"    onclick="ir('s10',this)">10. Cuestionario MBE</button>
+</nav>
+
+<div class="wrap">
+
+<!-- ─── S1: ENCABEZADO ─── -->
+<section class="card" id="s1">
+  <div class="card-lbl">Sección 1 — Encabezado Técnico del Módulo</div>
+  <h2>Identificación, Objetivos y Vinculación Normativa</h2>
+
+  <h3>1.1 Identificación del Tema</h3>
+  <p><strong>Tema central:</strong> El Kardex es el instrumento de control contable-operativo que registra de forma cronológica, ordenada y permanente cada movimiento (entrada o salida) de los bienes en el almacén de una entidad pública, permitiendo conocer en todo momento el saldo disponible en cantidad y en valor. La valoración de esos saldos es el proceso mediante el cual se determina el costo unitario con que se reconocen las salidas del inventario y el costo del saldo restante, operación que impacta directamente los estados financieros de la entidad. En Colombia, las entidades de gobierno deben seguir el <span class="ley">Marco Normativo para Entidades de Gobierno — Resolución CGN 533/2015</span>, que adopta las Normas Internacionales de Contabilidad del Sector Público (NICSP) adaptadas, y bajo esas normas la valoración de inventarios sigue criterios técnicos precisos que el técnico de almacén debe conocer para cumplir su función esencial.</p>
+
+  <p><strong>Normas y fuentes rectoras:</strong></p>
+  <ul>
+    <li><span class="ley">Resolución 533 de 2015 — CGN</span>: Adoptó el Marco Normativo para Entidades de Gobierno en Colombia, alineado con las NICSP. Esta resolución, junto con sus actualizaciones (Resoluciones 139/2020, 193/2016 y otras concordantes), define las políticas contables para el reconocimiento, medición y revelación de inventarios en entidades del sector público colombiano, incluyendo los métodos de valoración permitidos.</li>
+    <li><span class="ley">NICSP 12 — Inventarios</span> (adaptada para Colombia): Norma Internacional de Contabilidad del Sector Público que regula el tratamiento contable de los inventarios, incluyendo su reconocimiento, medición al costo y los métodos de asignación del costo. En Colombia se adoptó con las adaptaciones de la CGN que precisan los métodos aplicables según el tipo de entidad.</li>
+    <li><span class="ley">Manual de Políticas Contables del Sector Público (CGN)</span>: Desarrolla los criterios de reconocimiento, medición posterior, deterioro y baja de inventarios, y establece la obligación de que el control de existencias se lleve mediante un sistema de inventario permanente (Kardex), no solo al cierre del período.</li>
+    <li><span class="ley">Ley 610 de 2000</span>: Proceso de responsabilidad fiscal. Los errores en la valoración del Kardex que generen reconocimientos incorrectos del costo de los bienes despachados pueden constituir daño fiscal si la entidad paga por bienes que no corresponden con el valor registrado o si los saldos del inventario no reflejan la realidad.</li>
+    <li><span class="ley">Resolución IND-SG No. 220 — Manual de Funciones Indervalle</span>: La función esencial del técnico operativo incluye "manejo de Kardex y actualización de inventarios del almacén según los requerimientos institucionales", que es el eje central de este módulo.</li>
+  </ul>
+
+  <h3>1.2 Objetivos de Aprendizaje</h3>
+  <div class="obj-grid">
+    <div class="obj-card"><strong>OA-1 — Conceptual</strong><span>Definir con precisión técnica qué es el Kardex en una entidad estatal, sus columnas estructurales y su propósito en el control patrimonial y la transparencia fiscal.</span></div>
+    <div class="obj-card"><strong>OA-2 — PEPS</strong><span>Explicar la lógica matemática del método PEPS (capas de costo por lote, agotamiento en orden cronológico), calcular correctamente las salidas y los saldos bajo este método.</span></div>
+    <div class="obj-card"><strong>OA-3 — Promedio Ponderado</strong><span>Calcular el costo unitario promedio ponderado tras cada entrada, diferenciándolo del promedio aritmético simple, y aplicar el recálculo en salidas y saldos.</span></div>
+    <div class="obj-card"><strong>OA-4 — Normativo</strong><span>Identificar cuál método prefiere el sector público colombiano bajo la Resolución 533/2015 y la NICSP 12 adaptada, y explicar las razones técnicas de esa preferencia.</span></div>
+    <div class="obj-card"><strong>OA-5 — Fiscal</strong><span>Explicar cuándo los errores en el Kardex pueden generar responsabilidad fiscal bajo la Ley 610/2000 y cómo la documentación correcta protege al técnico.</span></div>
+  </div>
+</section>
+
+<!-- ─── S2: QUÉ ES EL KARDEX ─── -->
+<section class="card" id="s2">
+  <div class="card-lbl">Sección 2 — El Kardex en el Sector Público</div>
+  <h2>Concepto, Estructura y Propósito en la Transparencia Fiscal</h2>
+
+  <h3>2.1 Definición Técnica del Kardex</h3>
+  <p>El término <strong>Kardex</strong> proviene del sistema de archivos verticales Kardex, marca registrada que se convirtió en el nombre genérico del registro de inventarios en Colombia. En el contexto del almacén público, el Kardex es el <strong>libro auxiliar de control de inventarios</strong> que registra en orden cronológico cada movimiento de un bien específico: sus entradas (recepciones de proveedores o traslados internos), sus salidas (despachos a dependencias o usuarios) y el saldo resultante en cantidad y valor después de cada movimiento.</p>
+  <p>A diferencia de un simple registro de cantidades, el Kardex del sector público colombiano es un instrumento <strong>contable-operativo</strong> porque:</p>
+  <ul>
+    <li>Registra simultáneamente las cantidades físicas y los valores monetarios de cada movimiento, articulando el control físico del almacén con el registro contable de la entidad.</li>
+    <li>Soporta el <strong>sistema de inventario permanente</strong> (también llamado inventario continuo), exigido por el Manual de Políticas Contables del sector público, según el cual el saldo del inventario se conoce en tiempo real tras cada movimiento, sin necesidad de esperar al cierre del período para determinar las existencias.</li>
+    <li>Constituye el soporte documental primario para la <strong>conciliación</strong> entre el inventario físico (lo que está en las estanterías del almacén) y el inventario contable (lo que registra el sistema financiero de la entidad).</li>
+    <li>Es la evidencia principal que presentan los técnicos de almacén ante auditorías de Control Interno y de la Contraloría para demostrar la correcta gestión de los bienes bajo su custodia.</li>
+  </ul>
+
+  <h3>2.2 Estructura del Kardex: Las Columnas Esenciales</h3>
+  <div class="tw">
+  <table class="gen">
+    <thead><tr><th>Columna</th><th>Contenido</th><th>Propósito específico</th></tr></thead>
+    <tbody>
+      <tr><td>Fecha</td><td>Día, mes y año del movimiento</td><td>Establece el orden cronológico esencial para el método PEPS; permite rastrear el historial del bien.</td></tr>
+      <tr><td>Descripción del movimiento</td><td>Tipo de operación (entrada / salida), número del documento soporte (acta, vale de salida, orden de compra)</td><td>Vincula cada movimiento del Kardex con su soporte documental, garantizando trazabilidad.</td></tr>
+      <tr><td>Entradas — Cantidad</td><td>Unidades que ingresan al almacén</td><td>Controla el crecimiento del inventario físico disponible.</td></tr>
+      <tr><td>Entradas — Costo Unitario</td><td>Precio de compra del lote que ingresa (valor factura / unidades)</td><td>Base para calcular el valor total de la entrada y, en Promedio Ponderado, para recalcular el costo promedio.</td></tr>
+      <tr><td>Entradas — Valor Total</td><td>Cantidad × Costo Unitario de la entrada</td><td>Valor monetario del lote recibido; se suma al valor acumulado del saldo.</td></tr>
+      <tr><td>Salidas — Cantidad</td><td>Unidades que salen del almacén</td><td>Reduce el inventario físico disponible.</td></tr>
+      <tr><td>Salidas — Costo Unitario</td><td>Costo al que se valoran las unidades que salen (según el método de valoración aplicado)</td><td>Determina el gasto que se reconoce en el período por los bienes consumidos o entregados.</td></tr>
+      <tr><td>Salidas — Valor Total</td><td>Cantidad × Costo Unitario de salida</td><td>Costo total que se registra como gasto del período por las salidas del período.</td></tr>
+      <tr><td>Saldo — Cantidad</td><td>Unidades disponibles después del movimiento</td><td>Debe coincidir siempre con el conteo físico del bien en el almacén.</td></tr>
+      <tr><td>Saldo — Costo Unitario</td><td>Costo unitario del saldo según el método de valoración</td><td>En PEPS puede variar entre capas; en Promedio Ponderado es siempre el promedio recalculado.</td></tr>
+      <tr><td>Saldo — Valor Total</td><td>Cantidad saldo × Costo Unitario saldo</td><td>Valor monetario del inventario disponible; debe coincidir con el registro contable del Grupo 16 o 19.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>2.3 El Sistema de Inventario Permanente</h3>
+  <p>El <strong>Manual de Políticas Contables del sector público</strong> establece que las entidades deben llevar sus inventarios bajo el sistema permanente (también denominado perpetuo o continuo). Bajo este sistema, el Kardex se actualiza <em>después de cada movimiento</em>, por lo que en cualquier momento se puede conocer el saldo en cantidad y valor sin necesidad de hacer un conteo físico o esperar al cierre contable. Este sistema se contrapone al sistema periódico (donde el saldo solo se determina al cierre del período mediante un conteo físico), que no es aceptable para entidades de gobierno bajo la Resolución 533/2015 de la CGN.</p>
+  <p>La obligatoriedad del sistema permanente tiene consecuencias directas para el técnico de almacén: debe actualizar el Kardex <strong>inmediatamente</strong> después de cada entrada o salida de bienes, no al final del día ni de la semana. Una actualización tardía del Kardex puede generar inconsistencias entre el saldo registrado y el saldo físico real, lo que en una auditoría puede interpretarse como un hallazgo de control interno.</p>
+</section>
+
+<!-- ─── S3: MARCO NORMATIVO ─── -->
+<section class="card" id="s3">
+  <div class="card-lbl">Sección 3 — Marco Normativo de la Valoración de Inventarios</div>
+  <h2>Resolución 533/2015, NICSP 12 y Políticas Contables del Sector Público</h2>
+
+  <h3>3.1 La Resolución 533 de 2015 de la CGN</h3>
+  <p>La <span class="ley">Resolución 533 de 2015</span> de la Contaduría General de la Nación adoptó el <strong>Marco Normativo para Entidades de Gobierno</strong>, que incluye las normas de contabilidad pública, los procedimientos contables, el catálogo general de cuentas y el Marco Conceptual para la preparación de estados financieros de las entidades de gobierno colombianas. Esta resolución transformó el sistema contable público colombiano para alinearlo con los estándares internacionales NICSP.</p>
+  <p>En lo que respecta a inventarios, la Resolución 533/2015 (y sus actualizaciones) establece que:</p>
+  <ul>
+    <li><strong>Los inventarios se reconocen al costo</strong>: el valor inicial con que se registra un bien en el inventario es el costo de adquisición (precio de compra más todos los costos directamente atribuibles para poner el bien en condiciones de uso o distribución).</li>
+    <li><strong>La medición posterior</strong>: después del reconocimiento inicial, los inventarios se miden al menor valor entre el costo y el valor neto de realización (VNR). Para entidades de gobierno que no tienen ánimo de lucro, el VNR generalmente coincide con el costo de reposición o el costo de prestación del servicio.</li>
+    <li><strong>Métodos de valoración permitidos</strong>: la norma colombiana, siguiendo la NICSP 12, permite el uso del método del costo promedio ponderado o del método PEPS (Primero en Entrar, Primero en Salir) para la asignación del costo de los inventarios. El método UEPS (Último en Entrar, Primero en Salir) no está permitido para el sector público colombiano.</li>
+    <li><strong>Consistencia del método</strong>: la entidad debe aplicar el mismo método de valoración a todos los inventarios de naturaleza similar. No puede usar PEPS para unos bienes y Promedio Ponderado para otros dentro de la misma categoría de inventarios sin justificación en la política contable.</li>
+  </ul>
+
+  <h3>3.2 La NICSP 12 — Inventarios (Adaptación Colombiana)</h3>
+  <p>La <strong>NICSP 12</strong> es la norma del Consejo de Normas Internacionales de Contabilidad del Sector Público (IPSASB) que regula específicamente el tratamiento de los inventarios. En su adaptación colombiana por la CGN, los aspectos más relevantes para el técnico de almacén son:</p>
+  <ul>
+    <li><strong>Reconocimiento de inventarios:</strong> un bien se reconoce como inventario cuando es probable que los beneficios económicos futuros o potencial de servicio fluyan a la entidad y cuando el costo pueda medirse con fiabilidad. En el caso de Indervalle, los balones, uniformes y equipos son inventarios porque su uso futuro generará beneficios en forma de servicios deportivos y recreativos.</li>
+    <li><strong>Costo de los inventarios:</strong> incluye el precio de compra, los aranceles de importación, los impuestos no recuperables y los costos de transporte y manipulación directamente atribuibles. Los descuentos comerciales y rebajas se deducen del costo. En la práctica del almacén, el costo unitario que se registra en el Kardex es el precio de factura neto (precio menos descuentos).</li>
+    <li><strong>Deterioro:</strong> cuando el valor recuperable de un inventario es menor que su costo, la entidad debe reconocer una pérdida por deterioro. El técnico de almacén que detecta bienes deteriorados debe reportarlo para que contabilidad evalúe el ajuste correspondiente.</li>
+  </ul>
+
+  <h3>3.3 Método Preferido en el Sector Público Colombiano</h3>
+  <p>Aunque la normativa permite tanto PEPS como Promedio Ponderado, el <strong>Manual de Políticas Contables del sector público</strong> y la práctica contable generalizada en las entidades territoriales colombianas (incluidas las del tipo de Indervalle) prefieren el <strong>método del Costo Promedio Ponderado</strong> por las siguientes razones técnicas:</p>
+  <ul>
+    <li><strong>Razón 1 — Uniformidad:</strong> en entidades con múltiples lotes de compra al año (como Indervalle, que adquiere implementos deportivos en diferentes momentos a distintos precios), el Promedio Ponderado genera un costo unitario uniforme para todos los despachos, simplificando la contabilidad de gastos y reduciendo las fluctuaciones en el estado de resultados.</li>
+    <li><strong>Razón 2 — Consistencia fiscal:</strong> el Promedio Ponderado es más fácil de auditar porque el costo unitario de cada salida se puede verificar directamente con la fórmula de recálculo. Con PEPS, el auditor debe rastrear cada lote individualmente, lo que en entidades con muchos movimientos genera mayor complejidad.</li>
+    <li><strong>Razón 3 — Impacto presupuestal predecible:</strong> el costo promedio estabiliza el valor de las salidas, evitando que en períodos de alta inflación (donde los últimos lotes son más caros) el PEPS subestime el costo de las salidas y genere saldos sobrevaluados.</li>
+    <li><strong>Razón 4 — Reducción de errores operativos:</strong> el técnico que aplica Promedio Ponderado solo necesita un costo unitario para valorar cualquier salida, sin necesidad de rastrear a qué lote específico pertenece cada unidad despachada, reduciendo la probabilidad de errores en el registro.</li>
+  </ul>
+</section>
+
+<!-- ─── S4: MÉTODO PEPS ─── -->
+<section class="card" id="s4">
+  <div class="card-lbl">Sección 4 — Método PEPS</div>
+  <h2>Primeras Entradas, Primeras Salidas — Lógica y Mecánica de Cálculo</h2>
+
+  <h3>4.1 Lógica del Método PEPS</h3>
+  <p>El método <strong>PEPS (Primeras Entradas, Primeras Salidas)</strong> — conocido internacionalmente como FIFO (First In, First Out) — parte del supuesto de que las primeras unidades que ingresan al inventario son las primeras en salir. Esto significa que cuando se despachan bienes del almacén, se valoran al costo de los lotes más antiguos disponibles, hasta agotarlos, antes de usar el costo de los lotes más recientes.</p>
+  <p>Esta lógica tiene una base física real en muchos tipos de inventarios: los bienes perecederos (alimentos, medicamentos) deben despacharse en el orden en que llegaron para evitar vencimientos. En bienes no perecederos como implementos deportivos, el PEPS es un supuesto de flujo de costos, no necesariamente un flujo físico real.</p>
+
+  <h3>4.2 Mecánica de Cálculo PEPS</h3>
+  <div class="etapas">
+    <div class="etapa">
+      <div class="etapa-num">1</div>
+      <div class="etapa-body">
+        <strong>Registro de cada lote de entrada por separado</strong>
+        <span>Cada lote que ingresa al almacén se registra en el Kardex con su propia cantidad y costo unitario. Si entra un lote de 20 balones a $80.000 y luego entra otro de 15 balones a $85.000, quedan dos "capas" de costo separadas en el Kardex.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">2</div>
+      <div class="etapa-body">
+        <strong>Agotamiento en orden cronológico al momento de la salida</strong>
+        <span>Cuando se despachan bienes, se usa primero el costo del lote más antiguo (la "capa" más vieja) hasta agotarlo. Si salen 25 balones, se usan los 20 del primer lote a $80.000 y 5 del segundo lote a $85.000, con sus respectivos valores.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">3</div>
+      <div class="etapa-body">
+        <strong>Saldo con múltiples capas de costo</strong>
+        <span>Después de una salida que no agotó todos los lotes, el saldo puede tener varias capas de costo. En el ejemplo anterior, el saldo de 10 balones (15 - 5 del lote 2) quedaría valorado al costo del segundo lote: $85.000 cada uno.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">4</div>
+      <div class="etapa-body">
+        <strong>La siguiente entrada crea una nueva capa</strong>
+        <span>Si llega un tercer lote de 10 balones a $90.000, el saldo ahora tiene dos capas: los 10 balones del lote 2 a $85.000 y los 10 balones del lote 3 a $90.000, en ese orden de salida para la siguiente vez.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <span class="f-title">Fórmula PEPS — Valor de la Salida</span>
+    <div class="f-formula">Valor Salida = Σ (Cant. de cada capa usada × Costo unitario de esa capa)</div>
+    <div class="f-nota">Se aplica capa por capa desde la más antigua hasta completar las unidades despachadas. Si una salida toca varias capas, el valor total es la suma de los valores de cada capa parcial o total utilizada.</div>
+  </div>
+
+  <h3>4.3 Efecto del PEPS en Períodos de Inflación</h3>
+  <p>En períodos de inflación (precios crecientes), el método PEPS tiene el siguiente efecto: como las primeras unidades en salir son las más baratas (compradas antes), el costo de ventas o el costo de bienes despachados resulta <strong>menor</strong> que bajo el Promedio Ponderado. Esto significa que el saldo del inventario quedará valorado a los costos más recientes (más altos). El saldo en el balance es más alto, pero el gasto reconocido por cada despacho es más bajo, lo que puede subestimar el consumo real de recursos. Esta es una de las razones por las que el sector público colombiano prefiere el Promedio Ponderado: evita esa subestimación del costo de los servicios prestados.</p>
+</section>
+
+<!-- ─── S5: PROMEDIO PONDERADO ─── -->
+<section class="card" id="s5">
+  <div class="card-lbl">Sección 5 — Método Promedio Ponderado</div>
+  <h2>Recálculo del Costo Unitario tras Cada Entrada — Lógica y Mecánica</h2>
+
+  <h3>5.1 Lógica del Método Promedio Ponderado</h3>
+  <p>El método del <strong>Costo Promedio Ponderado</strong> parte del supuesto de que cuando un nuevo lote de bienes ingresa al inventario, su costo se mezcla con el costo de los bienes ya existentes en el saldo, generando un nuevo costo unitario promedio para el total de unidades disponibles. Todas las salidas posteriores a esa entrada se valoran a ese nuevo costo promedio, hasta que ingrese otro lote y se recalcule nuevamente.</p>
+  <p>La palabra <strong>"ponderado"</strong> es clave: el promedio no es simplemente la suma de los costos unitarios dividida entre el número de lotes (eso sería un promedio aritmético simple, que es <em>incorrecto</em> y constituye una informalidad operativa). Es un promedio que <strong>pondera</strong> cada costo unitario por la cantidad de unidades de ese lote, dando más peso a los lotes con mayor cantidad.</p>
+
+  <div class="formula-box">
+    <span class="f-title">Fórmula del Costo Promedio Ponderado — Recálculo tras cada entrada</span>
+    <div class="f-formula">CPU nuevo = (Valor Total del Saldo anterior + Valor Total de la Entrada nueva) / (Cantidad Saldo anterior + Cantidad Entrada nueva)</div>
+    <div class="f-nota">CPU = Costo Por Unidad. Este recálculo se hace SOLO cuando ingresa un nuevo lote. Las salidas no modifican el costo promedio: solo reducen la cantidad y el valor total del saldo al mismo CPU vigente. El próximo recálculo ocurre con la siguiente entrada.</div>
+  </div>
+
+  <h3>5.2 Diferencia entre Promedio Ponderado y Promedio Aritmético Simple</h3>
+  <p>Este es uno de los errores más frecuentes y más evaluados en el concurso MBE. La diferencia es fundamental:</p>
+  <div class="tw">
+  <table class="gen">
+    <thead><tr><th>Concepto</th><th>Promedio Aritmético Simple (INCORRECTO)</th><th>Promedio Ponderado (CORRECTO)</th></tr></thead>
+    <tbody>
+      <tr><td>Cómo se calcula</td><td>Se suman los costos unitarios de cada lote y se dividen por el número de lotes: (80.000 + 85.000) / 2 = 82.500</td><td>Se multiplica cada costo unitario por su cantidad, se suman los productos y se divide por el total de unidades: (20×80.000 + 15×85.000) / 35 = 82.143</td></tr>
+      <tr><td>¿Considera las cantidades?</td><td>No. Da igual peso a cada lote sin importar cuántas unidades tiene.</td><td>Sí. Los lotes con más unidades tienen más peso en el promedio.</td></tr>
+      <tr><td>¿Es correcto normativamente?</td><td>No. La Resolución 533/2015 CGN y la NICSP 12 exigen el promedio ponderado por cantidades.</td><td>Sí. Es el método correcto bajo la normativa colombiana del sector público.</td></tr>
+      <tr><td>¿Cuándo genera error?</td><td>Cuando los lotes tienen cantidades diferentes, el resultado es incorrecto y distorsiona el saldo del inventario.</td><td>Siempre arroja el costo correcto ponderado por las cantidades disponibles.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>5.3 Mecánica Paso a Paso del Promedio Ponderado</h3>
+  <div class="etapas">
+    <div class="etapa">
+      <div class="etapa-num">1</div>
+      <div class="etapa-body">
+        <strong>Primera entrada: establece el costo inicial</strong>
+        <span>El primer lote que ingresa establece el costo unitario inicial del Kardex. Si ingresan 20 balones a $80.000 cada uno, el costo unitario del saldo es $80.000 y el valor total del saldo es $1.600.000.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">2</div>
+      <div class="etapa-body">
+        <strong>Salida antes de nueva entrada: valorar al CPU vigente</strong>
+        <span>Si antes de que llegue otro lote se despachan 5 balones, el costo unitario de salida es $80.000 (el CPU actual). El saldo queda en 15 balones × $80.000 = $1.200.000.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">3</div>
+      <div class="etapa-body">
+        <strong>Nueva entrada: recalcular el CPU</strong>
+        <span>Llegan 10 balones a $90.000. El nuevo CPU = ($1.200.000 + 10×$90.000) / (15 + 10) = ($1.200.000 + $900.000) / 25 = $2.100.000 / 25 = $84.000. A partir de este momento todas las salidas se valoran a $84.000 hasta la próxima entrada.</span>
+      </div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">4</div>
+      <div class="etapa-body">
+        <strong>Salida posterior: usar el nuevo CPU sin cambiar el costo promedio</strong>
+        <span>Si se despachan 8 balones, el costo de salida es 8 × $84.000 = $672.000. El saldo queda en 17 balones × $84.000 = $1.428.000. El CPU no cambia por la salida, solo por las entradas.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="caja teal">
+    <span class="ct">🧮 Regla Crítica del Promedio Ponderado</span>
+    <p><strong>Las salidas NO modifican el CPU:</strong> el costo promedio ponderado se recalcula única y exclusivamente cuando ingresa un nuevo lote. Una salida reduce la cantidad y el valor total del saldo, pero el CPU sigue siendo el mismo hasta la próxima entrada. Confundir esto con el promedio aritmético simple (que no considera cantidades) es la trampa más frecuente en los exámenes del concurso MBE sobre Kardex.</p>
+  </div>
+</section>
+
+<!-- ─── S6: EJERCICIO NUMÉRICO ─── -->
+<section class="card" id="s6">
+  <div class="card-lbl">Sección 6 — Entregable Práctico: Ejercicio Numérico Completo</div>
+  <h2>Kardex de Balones de Baloncesto Profesional — Indervalle · 8 Movimientos</h2>
+  <p style="margin-bottom:6px;"><strong>Bien codificado:</strong> Balón de baloncesto profesional — Código UNSPSC: 49141701 · Cuenta CGN: 1910 (Consumo) · Unidad: Unidad.</p>
+  <p style="margin-bottom:6px;">Los mismos 8 movimientos se procesan por ambos métodos para comparar los resultados. Valores expresados en pesos colombianos (COP).</p>
+
+  <h4>Movimientos del período:</h4>
+  <div class="tw">
+  <table class="gen">
+    <thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Descripción</th><th>Cantidad</th><th>Costo Unitario</th></tr></thead>
+    <tbody>
+      <tr><td>M1</td><td>03-Mar-2025</td><td style="color:var(--verde);font-weight:700;">ENTRADA</td><td>Compra Contrato IND-031-2025 (Factura #4521)</td><td>30 unid.</td><td>$75.000</td></tr>
+      <tr><td>M2</td><td>10-Mar-2025</td><td style="color:var(--rojo);font-weight:700;">SALIDA</td><td>Despacho Vale S-0041 — Área de Recreación Comunitaria</td><td>12 unid.</td><td>—</td></tr>
+      <tr><td>M3</td><td>18-Mar-2025</td><td style="color:var(--verde);font-weight:700;">ENTRADA</td><td>Compra Contrato IND-031-2025 (Factura #4789)</td><td>20 unid.</td><td>$82.000</td></tr>
+      <tr><td>M4</td><td>25-Mar-2025</td><td style="color:var(--rojo);font-weight:700;">SALIDA</td><td>Despacho Vale S-0058 — Programa Juegos Intercolegiados</td><td>15 unid.</td><td>—</td></tr>
+      <tr><td>M5</td><td>02-Abr-2025</td><td style="color:var(--verde);font-weight:700;">ENTRADA</td><td>Donación Gobernación del Valle — Acta Don-012</td><td>10 unid.</td><td>$78.000</td></tr>
+      <tr><td>M6</td><td>09-Abr-2025</td><td style="color:var(--rojo);font-weight:700;">SALIDA</td><td>Despacho Vale S-0071 — Liga de Baloncesto Valle</td><td>8 unid.</td><td>—</td></tr>
+      <tr><td>M7</td><td>17-Abr-2025</td><td style="color:var(--verde);font-weight:700;">ENTRADA</td><td>Compra Contrato IND-052-2025 (Factura #5103)</td><td>25 unid.</td><td>$86.000</td></tr>
+      <tr><td>M8</td><td>28-Abr-2025</td><td style="color:var(--rojo);font-weight:700;">SALIDA</td><td>Despacho Vale S-0089 — Torneos Municipios Prioritarios</td><td>18 unid.</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Tablas Kardex Comparativas — PEPS vs. Promedio Ponderado</h3>
+  <div class="kardex-wrapper">
+  <div class="kardex-grid">
+
+    <!-- ══ PEPS ══ -->
+    <div class="kardex-panel">
+      <div class="kp-header peps">
+        <span>Método PEPS</span>
+        <span class="kp-badge peps">Primeras Entradas, Primeras Salidas</span>
+      </div>
+      <table class="kardex">
+        <thead>
+          <tr class="kh-meta">
+            <th rowspan="2" style="min-width:90px;">Mov.</th>
+            <th colspan="3" class="grp-ent">ENTRADAS</th>
+            <th colspan="3" class="grp-sal">SALIDAS</th>
+            <th colspan="3" class="grp-sld">SALDO</th>
+          </tr>
+          <tr class="kh-sub">
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- M1: Entrada 30 u × $75.000 -->
+          <tr>
+            <td class="mov-desc">M1 Entrada<br><small>03-Mar</small></td>
+            <td class="num ent">30</td><td class="num ent">$75.000</td><td class="num ent">$2.250.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">30</td><td class="num sld">$75.000</td><td class="num sld">$2.250.000</td>
+          </tr>
+          <!-- M2: Salida 12 u → Capa 1: 12×75.000 -->
+          <tr>
+            <td class="mov-desc">M2 Salida<br><small>10-Mar</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">12</td><td class="num sal">$75.000</td><td class="num sal">$900.000</td>
+            <td class="num sld">18</td><td class="num sld">$75.000</td><td class="num sld">$1.350.000</td>
+          </tr>
+          <!-- M3: Entrada 20 u × $82.000 → Saldo: 18×75k + 20×82k -->
+          <tr>
+            <td class="mov-desc">M3 Entrada<br><small>18-Mar</small></td>
+            <td class="num ent">20</td><td class="num ent">$82.000</td><td class="num ent">$1.640.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">38</td><td class="num sld" style="font-size:11px;">2 capas</td><td class="num sld">$2.990.000</td>
+          </tr>
+          <!-- M4: Salida 15 u → PEPS: 15 del lote 1 (75.000) pq quedan 18 de ese lote -->
+          <tr>
+            <td class="mov-desc">M4 Salida<br><small>25-Mar</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">15</td><td class="num sal">$75.000</td><td class="num sal">$1.125.000</td>
+            <td class="num sld">23</td><td class="num sld" style="font-size:11px;">3 u @$75k + 20 u @$82k</td><td class="num sld">$1.865.000</td>
+          </tr>
+          <!-- M5: Entrada 10 u × $78.000 → Saldo: 3×75k + 20×82k + 10×78k -->
+          <tr>
+            <td class="mov-desc">M5 Entrada<br><small>02-Abr</small></td>
+            <td class="num ent">10</td><td class="num ent">$78.000</td><td class="num ent">$780.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">33</td><td class="num sld" style="font-size:11px;">3 capas</td><td class="num sld">$2.645.000</td>
+          </tr>
+          <!-- M6: Salida 8 u → PEPS: 3 del lote1@75k + 5 del lote2@82k -->
+          <tr>
+            <td class="mov-desc">M6 Salida<br><small>09-Abr</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">8</td><td class="num sal" style="font-size:11px;">3@$75k+5@$82k</td><td class="num sal">$635.000</td>
+            <td class="num sld">25</td><td class="num sld" style="font-size:11px;">15@$82k+10@$78k</td><td class="num sld">$2.010.000</td>
+          </tr>
+          <!-- M7: Entrada 25 u × $86.000 → Saldo: 15×82k + 10×78k + 25×86k -->
+          <tr>
+            <td class="mov-desc">M7 Entrada<br><small>17-Abr</small></td>
+            <td class="num ent">25</td><td class="num ent">$86.000</td><td class="num ent">$2.150.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">50</td><td class="num sld" style="font-size:11px;">3 capas</td><td class="num sld">$4.160.000</td>
+          </tr>
+          <!-- M8: Salida 18 u → PEPS: 15@82k + 3@78k -->
+          <tr>
+            <td class="mov-desc">M8 Salida<br><small>28-Abr</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">18</td><td class="num sal" style="font-size:11px;">15@$82k+3@$78k</td><td class="num sal">$1.464.000</td>
+            <td class="num sld">32</td><td class="num sld" style="font-size:11px;">7@$78k+25@$86k</td><td class="num sld">$2.696.000</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="3">TOTAL ENTRADAS</td>
+            <td>85 u</td>
+            <td colspan="2">—</td>
+            <td>$4.124.000</td>
+            <td colspan="2">SALDO FINAL</td>
+            <td>$2.696.000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══ PROMEDIO PONDERADO ══ -->
+    <div class="kardex-panel">
+      <div class="kp-header pp">
+        <span>Método Promedio Ponderado</span>
+        <span class="kp-badge pp">Recálculo tras cada entrada</span>
+      </div>
+      <table class="kardex">
+        <thead>
+          <tr class="kh-meta">
+            <th rowspan="2" style="min-width:90px;">Mov.</th>
+            <th colspan="3" class="grp-ent">ENTRADAS</th>
+            <th colspan="3" class="grp-sal">SALIDAS</th>
+            <th colspan="3" class="grp-sld">SALDO</th>
+          </tr>
+          <tr class="kh-sub">
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+            <th>Cant.</th><th>C.Unit.</th><th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- M1: CPU = 75.000 -->
+          <tr>
+            <td class="mov-desc">M1 Entrada<br><small>03-Mar</small></td>
+            <td class="num ent">30</td><td class="num ent">$75.000</td><td class="num ent">$2.250.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">30</td><td class="num sld">$75.000</td><td class="num sld">$2.250.000</td>
+          </tr>
+          <!-- M2: Salida 12 × 75.000 = 900.000; Saldo: 18 × 75.000 = 1.350.000 -->
+          <tr>
+            <td class="mov-desc">M2 Salida<br><small>10-Mar</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">12</td><td class="num sal">$75.000</td><td class="num sal">$900.000</td>
+            <td class="num sld">18</td><td class="num sld">$75.000</td><td class="num sld">$1.350.000</td>
+          </tr>
+          <!-- M3: CPU nuevo = (1.350.000 + 20×82.000)/(18+20) = (1.350.000+1.640.000)/38 = 2.990.000/38 = 78.684,21 ≈ $78.684 -->
+          <tr>
+            <td class="mov-desc">M3 Entrada<br><small>18-Mar</small></td>
+            <td class="num ent">20</td><td class="num ent">$82.000</td><td class="num ent">$1.640.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">38</td><td class="num sld">$78.684</td><td class="num sld">$2.990.000</td>
+          </tr>
+          <!-- M4: Salida 15 × 78.684 = 1.180.260; Saldo: 23 × 78.684 = 1.809.740 -->
+          <tr>
+            <td class="mov-desc">M4 Salida<br><small>25-Mar</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">15</td><td class="num sal">$78.684</td><td class="num sal">$1.180.260</td>
+            <td class="num sld">23</td><td class="num sld">$78.684</td><td class="num sld">$1.809.740</td>
+          </tr>
+          <!-- M5: CPU nuevo = (1.809.740 + 10×78.000)/(23+10) = (1.809.740+780.000)/33 = 2.589.740/33 = 78.477 -->
+          <tr>
+            <td class="mov-desc">M5 Entrada<br><small>02-Abr</small></td>
+            <td class="num ent">10</td><td class="num ent">$78.000</td><td class="num ent">$780.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">33</td><td class="num sld">$78.477</td><td class="num sld">$2.589.740</td>
+          </tr>
+          <!-- M6: Salida 8 × 78.477 = 627.816; Saldo: 25 × 78.477 = 1.961.924 -->
+          <tr>
+            <td class="mov-desc">M6 Salida<br><small>09-Abr</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">8</td><td class="num sal">$78.477</td><td class="num sal">$627.816</td>
+            <td class="num sld">25</td><td class="num sld">$78.477</td><td class="num sld">$1.961.924</td>
+          </tr>
+          <!-- M7: CPU nuevo = (1.961.924 + 25×86.000)/(25+25) = (1.961.924+2.150.000)/50 = 4.111.924/50 = 82.238 -->
+          <tr>
+            <td class="mov-desc">M7 Entrada<br><small>17-Abr</small></td>
+            <td class="num ent">25</td><td class="num ent">$86.000</td><td class="num ent">$2.150.000</td>
+            <td class="sal">—</td><td class="sal">—</td><td class="sal">—</td>
+            <td class="num sld">50</td><td class="num sld">$82.238</td><td class="num sld">$4.111.924</td>
+          </tr>
+          <!-- M8: Salida 18 × 82.238 = 1.480.284; Saldo: 32 × 82.238 = 2.631.640 -->
+          <tr>
+            <td class="mov-desc">M8 Salida<br><small>28-Abr</small></td>
+            <td class="ent">—</td><td class="ent">—</td><td class="ent">—</td>
+            <td class="num sal">18</td><td class="num sal">$82.238</td><td class="num sal">$1.480.284</td>
+            <td class="num sld">32</td><td class="num sld">$82.238</td><td class="num sld">$2.631.640</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="3">TOTAL ENTRADAS</td>
+            <td>85 u</td>
+            <td colspan="2">—</td>
+            <td>$4.188.360</td>
+            <td colspan="2">SALDO FINAL</td>
+            <td>$2.631.640</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /kardex-grid -->
+  </div><!-- /kardex-wrapper -->
+
+  <h3>Comparación de Saldos Finales</h3>
+  <div class="diff-box">
+    <div class="diff-card peps-c">
+      <div class="dc-lbl">Saldo Final — Método PEPS</div>
+      <div class="dc-val">$2.696.000</div>
+      <div class="dc-sub">32 unidades · 2 capas de costo<br>7 u @$78.000 + 25 u @$86.000</div>
+    </div>
+    <div class="diff-card pp-c">
+      <div class="dc-lbl">Saldo Final — Promedio Ponderado</div>
+      <div class="dc-val">$2.631.640</div>
+      <div class="dc-sub">32 unidades · CPU único $82.238<br>32 u @$82.238</div>
+    </div>
+    <div class="diff-card" style="background:var(--rojo-light);border:2px solid var(--rojo);flex:1;min-width:180px;border-radius:10px;padding:16px 18px;text-align:center;">
+      <div class="dc-lbl" style="color:var(--rojo);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Diferencia entre métodos</div>
+      <div class="dc-val" style="color:var(--rojo);font-family:'Playfair Display',serif;font-size:28px;font-weight:900;">$64.360</div>
+      <div class="dc-sub">PEPS valora más alto el saldo<br>porque conserva el costo del lote $86k en el saldo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── S7: ANÁLISIS COMPARATIVO ─── -->
+<section class="card" id="s7">
+  <div class="card-lbl">Sección 7 — Análisis Comparativo de Resultados</div>
+  <h2>Impacto Contable de Cada Método en los Estados Financieros</h2>
+
+  <h3>7.1 Análisis de los Resultados del Ejercicio</h3>
+  <p>Los resultados del ejercicio de 8 movimientos (85 unidades ingresadas, 53 unidades despachadas, 32 unidades en saldo) muestran una diferencia de <strong>$64.360</strong> en el valor del saldo final entre ambos métodos. Esta diferencia, aunque parece pequeña en un ejercicio didáctico, puede ser significativa en entidades con inventarios de alto valor como Indervalle, donde los equipos de gimnasio, cómputo o implementos especializados pueden tener valores unitarios de varios millones de pesos.</p>
+
+  <div class="tw">
+  <table class="gen">
+    <thead><tr><th>Concepto</th><th>Método PEPS</th><th>Método Promedio Ponderado</th><th>Impacto</th></tr></thead>
+    <tbody>
+      <tr><td>Total despachado (gasto del período)</td><td>$4.124.000</td><td>$4.188.360</td><td>PP reconoce mayor gasto: más conservador.</td></tr>
+      <tr><td>Valor del saldo final (activo)</td><td>$2.696.000</td><td>$2.631.640</td><td>PEPS tiene mayor activo: saldo sobrevaluado respecto a PP.</td></tr>
+      <tr><td>CPU de las últimas salidas</td><td>Mezcla de capas ($82k y $78k)</td><td>$82.238 uniforme</td><td>PP facilita auditoría: un solo valor verificable.</td></tr>
+      <tr><td>Complejidad operativa</td><td>Alta: rastrear capas por lote</td><td>Baja: un CPU para todas las salidas</td><td>PP reduce errores del técnico de almacén.</td></tr>
+      <tr><td>Preferencia normativa Colombia</td><td>Permitido</td><td>Preferido (Manual Políticas CGN)</td><td>PP recomendado para entidades territoriales.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>7.2 Por Qué la Diferencia Importa para el Control Fiscal</h3>
+  <p>La diferencia de $64.360 en el saldo tiene consecuencias contables concretas: si el inventario del Grupo 19 en el balance de Indervalle muestra $2.696.000 (PEPS) cuando la realidad valorada correctamente es $2.631.640 (PP), existe una sobrevaluación de $64.360 en los activos de la entidad. La Contraloría, al cruzar el inventario físico (32 balones) con el valor registrado, podría detectar la inconsistencia si la política contable aprobada indica Promedio Ponderado y el técnico aplicó PEPS sin autorización.</p>
+  <p>Este escenario ilustra por qué el técnico de almacén no puede elegir el método de valoración por iniciativa propia: debe aplicar el método definido en la política contable de la entidad, aprobada por el Contador Público. Cambiar el método o aplicar uno diferente al establecido es una extralimitación de funciones que puede comprometer la integridad de los estados financieros.</p>
+</section>
+
+<!-- ─── S8: RESPONSABILIDAD FISCAL ─── -->
+<section class="card" id="s8">
+  <div class="card-lbl">Sección 8 — Responsabilidad Fiscal en el Manejo del Kardex</div>
+  <h2>Cuándo el Error en el Kardex Genera Daño Fiscal — Ley 610/2000</h2>
+
+  <h3>8.1 Errores Frecuentes del Técnico que Generan Riesgo Fiscal</h3>
+  <div class="tw">
+  <table class="gen">
+    <thead><tr><th>Error en el Kardex</th><th>Tipo de Riesgo</th><th>Norma Aplicable</th><th>Consecuencia Potencial</th></tr></thead>
+    <tbody>
+      <tr><td>Registrar una salida sin soporte (vale de despacho)</td><td>Responsabilidad fiscal por daño patrimonial</td><td>Ley 610/2000 Art. 6; Ley 734/2002 Art. 34</td><td>Si el bien no puede rastrearse, configura pérdida del patrimonio público.</td></tr>
+      <tr><td>Usar promedio aritmético simple en lugar de ponderado</td><td>Inexactitud contable; potencial sobrevaluación o subvaluación del inventario</td><td>Resolución 533/2015 CGN; NICSP 12</td><td>Estados financieros inexactos; hallazgo en auditoría de la Contraloría.</td></tr>
+      <tr><td>No actualizar el Kardex en tiempo real tras cada movimiento</td><td>Inconsistencia entre inventario físico y registro contable</td><td>Manual de Políticas Contables CGN; Ley 87/1993</td><td>Hallazgo de control interno; posible responsabilidad disciplinaria.</td></tr>
+      <tr><td>Registrar una entrada con costo diferente al de la factura</td><td>Falsedad en documento contable; daño fiscal si el error genera pago incorrecto</td><td>Art. 286 C.P.; Ley 610/2000</td><td>Responsabilidad fiscal y penal si el error fue intencional.</td></tr>
+      <tr><td>Aplicar un método de valoración diferente al de la política contable de la entidad</td><td>Inconsistencia en estados financieros; extralimitación de funciones</td><td>Resolución 533/2015 CGN; Ley 734/2002</td><td>Responsabilidad disciplinaria; estados financieros no comparables.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>8.2 La Protección del Técnico: Documentación del Kardex como Blindaje</h3>
+  <p>El técnico de almacén que mantiene el Kardex actualizado, con todos los soportes documentales (vales de entrada y salida, actas de recibo, órdenes de despacho) vinculados a cada movimiento, y que aplica el método de valoración definido en la política contable de la entidad, tiene el máximo nivel de protección ante una investigación fiscal o disciplinaria. Su actuación es demostrable documento a documento.</p>
+  <p>En contraste, el técnico que registra movimientos sin soporte, aplica métodos de valoración informales o no actualiza el Kardex en tiempo real no puede demostrar la correcta gestión de los bienes bajo su custodia, quedando expuesto a responsabilidad por la totalidad del daño que la Contraloría pueda determinar.</p>
+</section>
+
+<!-- ─── S9: ALERTAS Y TIPS ─── -->
+<section class="card" id="s9">
+  <div class="card-lbl">Sección 9 — Alertas CNSC, Regla de Oro y Tips</div>
+  <h2>Cajas Estratégicas para el Concurso</h2>
+
+  <div class="caja alerta">
+    <span class="ct">⚠️ Alerta CNSC — Trampa #1: Confundir el Valor de Factura con el Costo Promedio</span>
+    <p>El distractor más frecuente en preguntas de Kardex presenta una situación donde el técnico debe valorar una salida y opta por usar el "precio de la última factura" en lugar del CPU vigente (Promedio Ponderado). <strong>Esta es siempre la respuesta incorrecta.</strong> El precio de la última factura solo aplica en la salida si exactamente después de esa entrada se hace la salida (cuando el CPU coincide con el precio de compra). En cualquier otro caso, el CPU promedio ponderado recalculado es diferente al precio de cualquier factura individual. El técnico debe usar el CPU del Kardex, no el precio de la factura del último lote.</p>
+  </div>
+
+  <div class="caja alerta">
+    <span class="ct">⚠️ Alerta CNSC — Trampa #2: El Promedio Aritmético Simple como "Promedio Ponderado"</span>
+    <p>Algunos distractores presentan al técnico calculando el promedio dividiendo la suma de los costos unitarios de todos los lotes entre el número de lotes, llamándolo erróneamente "promedio ponderado". Ejemplo: (75.000 + 82.000 + 78.000 + 86.000) / 4 = 80.250. <strong>Esto es incorrecto.</strong> El promedio ponderado multiplica cada costo unitario por su cantidad antes de promediar. El promedio aritmético simple ignora las cantidades y viola la Resolución 533/2015 CGN. El enunciado puede ser tentador porque la respuesta numérica parece razonable, pero el método es incorrecto.</p>
+  </div>
+
+  <div class="caja alerta">
+    <span class="ct">⚠️ Alerta CNSC — Trampa #3: El Técnico Elige el Método de Valoración</span>
+    <p>Un distractor muy frecuente presenta al técnico decidiendo unilateralmente cambiar el método de valoración de PEPS a Promedio Ponderado (o viceversa) porque "el nuevo método simplifica el trabajo" o porque "le parece más correcto técnicamente". <strong>Esta es una extralimitación de funciones.</strong> El método de valoración es una decisión de política contable aprobada por el Contador Público y la dirección de la entidad. El técnico aplica el método establecido; no lo elige ni lo modifica. Cambiarlo sin autorización viola la consistencia contable exigida por la Resolución 533/2015 CGN.</p>
+  </div>
+
+  <div class="caja alerta">
+    <span class="ct">⚠️ Alerta CNSC — Trampa #4: Registrar Salida sin Soporte "para Agilizar"</span>
+    <p>El distractor de "vía de hecho" más recurrente en preguntas de Kardex es la opción que propone registrar una salida en el Kardex "de buena fe" o "provisionalmente" para no retrasar el despacho, con la intención de completar el soporte documental después. <strong>Esta actuación es siempre incorrecta y puede generar responsabilidad fiscal.</strong> El Kardex solo se actualiza con el soporte documental en mano (vale de salida firmado). Registrar salidas sin soporte elimina la trazabilidad del bien y compromete la integridad del inventario.</p>
+  </div>
+
+  <div class="caja regla">
+    <span class="ct">📐 Regla de Oro del Nivel Técnico — Triángulo del Kardex Seguro</span>
+    <p>Ante cualquier situación relacionada con el Kardex y la valoración de inventarios en Indervalle:</p>
+    <ul>
+      <li><strong>1 — ACTUAR DENTRO DE LA COMPETENCIA:</strong> Aplicar el método de valoración definido en la política contable de la entidad (no elegirlo). Actualizar el Kardex con el soporte documental correspondiente. No registrar movimientos sin soporte. No modificar el CPU ni el método de forma unilateral.</li>
+      <li><strong>2 — DOCUMENTAR TODO:</strong> Cada movimiento del Kardex debe estar vinculado a su soporte: entrada ↔ acta de recibo; salida ↔ vale de despacho firmado. La actualización debe ser inmediata (sistema permanente). Conservar los soportes archivados en el orden del Kardex para facilitar auditorías.</li>
+      <li><strong>3 — REPORTAR POR ESCRITO AL JEFE INMEDIATO:</strong> Toda inconsistencia detectada (diferencia entre inventario físico y Kardex, error de valoración heredado, bien sin soporte de entrada o salida) se reporta por escrito al jefe inmediato y a Contabilidad. El técnico no corrige los estados contables: los reporta para que el área competente gestione la corrección formal.</li>
+    </ul>
+  </div>
+
+  <div class="caja tip">
+    <span class="ct">💡 Tips de Memorización — Kardex y Métodos</span>
+    <p><strong>Para recordar qué es el Promedio Ponderado:</strong> <span class="dest">CPU = (Valor Total Saldo + Valor Total Entrada) / (Cant. Saldo + Cant. Entrada)</span>. Solo se recalcula con ENTRADAS, nunca con salidas.</p>
+    <p style="margin-top:10px;"><strong>Para recordar la diferencia PEPS vs PP:</strong> <span class="dest">PEPS = capas (como una cebolla, la más antigua sale primero) · PP = mezcla (como agua, todo tiene el mismo costo)</span>.</p>
+    <p style="margin-top:10px;"><strong>Para la fórmula del CPU Promedio Ponderado:</strong> <span class="dest">"Valor más Valor, partido entre Cantidad más Cantidad"</span>. Siempre el numerador son valores totales y el denominador son cantidades totales.</p>
+    <p style="margin-top:10px;"><strong>Señales de alarma en el Kardex:</strong></p>
+    <ul>
+      <li>Saldo negativo en cantidad → imposible físicamente → error en registro.</li>
+      <li>CPU de salida diferente al CPU vigente del saldo → error de valoración.</li>
+      <li>Movimiento sin número de soporte → falta documental crítica.</li>
+      <li>CPU de saldo cambia después de una salida → error: solo cambia con entradas.</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>Para recordar qué aplica en Colombia:</strong> <span class="dest">Resolución 533/2015 CGN → NICSP 12 → Promedio Ponderado (preferido) o PEPS (permitido) → NUNCA UEPS</span>.</p>
+  </div>
+</section>
+
+<!-- ─── S10: CUESTIONARIO MBE ─── -->
+<section class="card" id="s10">
+  <div class="card-lbl">Sección 10 — Batería de Evaluación MBE Calibrada Psicométricamente</div>
+  <h2>Cuestionario Interactivo — 20 Preguntas con Retroalimentación por Opción</h2>
+  <p style="margin-bottom:6px;">Tres opciones de <strong>longitud y complejidad equivalentes</strong>. Clave aleatoria entre A, B y C sin patrones. Distractores tipo <em>Exceso de Rol</em> y <em>Vía de Hecho</em> de alta complejidad.</p>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin:14px 0 22px;">
+    <span style="font-size:12.5px;background:var(--rojo-light);border:1px solid var(--rojo);color:var(--rojo);padding:4px 12px;border-radius:20px;font-weight:700;">🔴 Exceso de Rol / Extralimitación</span>
+    <span style="font-size:12.5px;background:var(--naranja-light);border:1px solid var(--naranja);color:var(--naranja);padding:4px 12px;border-radius:20px;font-weight:700;">🟠 Vía de Hecho / Informalidad</span>
+    <span style="font-size:12.5px;background:var(--verde-light);border:1px solid var(--verde);color:var(--verde);padding:4px 12px;border-radius:20px;font-weight:700;">✅ Actuación Correcta</span>
+  </div>
+
+  <div class="qprog-w"><div class="qprog-b" id="qBar" style="width:0%"></div></div>
+  <div class="qcnt" id="qCnt">0 de 20 preguntas respondidas</div>
+  <div id="qWrap"></div>
+
+  <div class="tablero" id="tablero">
+    <h3>Resultado Final de la Evaluación</h3>
+    <div class="t-sub">Módulo 5 · Kardex y Valoración de Inventarios · OPEC 243477</div>
+    <div class="t-pct" id="tPct">—</div>
+    <div class="t-grid">
+      <div class="t-stat"><div class="v" id="tC">0</div><div class="l">Correctas</div></div>
+      <div class="t-stat"><div class="v" id="tI">0</div><div class="l">Incorrectas</div></div>
+      <div class="t-stat"><div class="v" id="tT">20</div><div class="l">Total</div></div>
+      <div class="t-stat"><div class="v" id="tN">—</div><div class="l">Nivel</div></div>
+    </div>
+    <div class="t-msg" id="tMsg"></div>
+    <button class="btn-reset" onclick="resetQ()">🔄 Reiniciar Cuestionario</button>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer style="background:var(--azul);color:rgba(255,255,255,0.6);text-align:center;padding:26px;font-size:13px;">
+  <strong style="color:rgba(255,255,255,0.92);">Guía de Estudio · Módulo 5 · Kardex y Valoración de Inventarios en el Sector Público</strong><br>
+  Indervalle · CNSC OPEC 243477 · Resolución CGN 533/2015 · NICSP 12 · Ley 610/2000 · Manual de Políticas Contables CGN
+</footer>
+
+<script>
+/* ── NAV ── */
+function ir(id,btn){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BANCO DE 20 PREGUNTAS MBE
+   Distribución de claves (aleatoria): A×7, B×7, C×6
+   Tipos: func(6), comp(7), norm(4), calc(3)
+══════════════════════════════════════════════════════════════ */
+const PQ=[
+
+/* P1 — clave B */
+{n:1,tipo:'norm',
+ctx:'El Contador Público de Indervalle revisa la política contable de inventarios y constata que la entidad no ha definido formalmente cuál método de valoración debe usar el almacén. El técnico operativo lleva registrando los balones de fútbol con Promedio Ponderado por iniciativa propia desde hace seis meses.',
+q:'¿Cuál es la actuación correcta del técnico operativo ante la ausencia de política contable aprobada sobre el método de valoración?',
+ops:[
+  {l:'A',t:'Continuar aplicando el Promedio Ponderado de forma autónoma y elaborar un memorando al Contador explicando las razones técnicas por las que ese método es superior al PEPS para inventarios de implementos deportivos, para que el Contador lo adopte formalmente en la política.'},
+  {l:'B',t:'Reportar al jefe inmediato y al Contador Público por escrito que el método de valoración no está definido en una política contable formal, y continuar usando el Promedio Ponderado de forma provisional mientras la entidad formaliza la política, documentando esta circunstancia en el Kardex como nota aclaratoria.'},
+  {l:'C',t:'Suspender inmediatamente los registros del Kardex hasta que el Contador apruebe la política contable formal, dado que sin una política aprobada cualquier registro de valoración carece de respaldo normativo y puede generar hallazgos en una auditoría de la Contraloría Departamental.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Exceso de Rol. Elaborar un memorando al Contador Público argumentando la adopción de un método contable específico atribuye al técnico funciones de asesoría contable y de diseño de política que corresponden al Contador y a la dirección de la entidad. El técnico identifica la brecha y reporta; no diseña ni promueve políticas contables.',
+  B:'Correcto. El técnico actúa dentro de su competencia: reporta por escrito la ausencia de política formal (activando el mecanismo institucional para que Contabilidad la apruebe), documenta la situación en el Kardex como nota de contexto, y continúa operando de forma provisional con el método que venía usando para no paralizar la gestión del inventario. Esta actuación equilibra la transparencia con la continuidad operativa.',
+  C:'Incorrecto — Parálisis operativa injustificada. Suspender los registros del Kardex por la ausencia de política contable formal detiene la gestión de inventarios sin respaldo normativo para esa suspensión. La ausencia de política debe reportarse y gestionarse, pero el sistema de inventario permanente (Resolución 533/2015 CGN) exige que los registros se actualicen tras cada movimiento, independientemente de si la política está formalmente aprobada.'
+}},
+
+/* P2 — clave A */
+{n:2,tipo:'calc',
+ctx:'El Kardex de resmas de papel del almacén de Indervalle muestra: saldo de 40 resmas a un CPU de $12.500. El 15 de abril ingresan 60 resmas a $14.000 cada una. La entidad usa el método Promedio Ponderado.',
+q:'¿Cuál es el nuevo Costo Por Unidad (CPU) promedio ponderado después de la entrada del 15 de abril?',
+ops:[
+  {l:'A',t:'CPU = (40×$12.500 + 60×$14.000) / (40+60) = ($500.000 + $840.000) / 100 = $1.340.000 / 100 = $13.400 por resma.'},
+  {l:'B',t:'CPU = ($12.500 + $14.000) / 2 = $26.500 / 2 = $13.250 por resma, calculado como promedio entre los dos costos unitarios del saldo anterior y de la entrada nueva.'},
+  {l:'C',t:'CPU = $14.000 por resma, correspondiente al costo de la última entrada, que reemplaza al costo anterior según el principio de costo más reciente aplicable al método de valoración del sector público colombiano.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. El CPU promedio ponderado se calcula multiplicando cada cantidad por su costo unitario, sumando los productos y dividiendo por el total de unidades. La fórmula es: (Valor Total Saldo + Valor Total Entrada) / (Cant. Saldo + Cant. Entrada) = ($500.000 + $840.000) / 100 = $13.400. Este es el procedimiento exigido por la Resolución 533/2015 CGN y la NICSP 12 adaptada.',
+  B:'Incorrecto — Vía de Hecho / Promedio Aritmético Simple. Dividir la suma de los dos costos unitarios entre 2 es un promedio aritmético simple, no un promedio ponderado. Este método ignora las cantidades y da igual peso a ambos lotes independientemente de cuántas unidades tiene cada uno. La Resolución 533/2015 CGN exige el promedio ponderado por cantidades. El resultado ($13.250) es diferente al correcto ($13.400) porque no considera que el lote nuevo tiene más unidades.',
+  C:'Incorrecto — Vía de Hecho / Costo más reciente. El "costo de la última entrada" como referencia de valoración no existe como método en la normativa contable colombiana del sector público. Ni el PEPS ni el Promedio Ponderado usan el costo de la última entrada como CPU vigente para el saldo total. Ese planteamiento confunde elementos del método UEPS (último en entrar), que no está permitido para el sector público en Colombia.'
+}},
+
+/* P3 — clave C */
+{n:3,tipo:'comp',
+ctx:'El técnico de almacén de Indervalle detecta que en el Kardex de uniformes deportivos hay un movimiento de salida de 30 unidades registrado hace tres días, pero al revisar los soportes documentales del archivo no encuentra el vale de despacho que debió respaldar esa salida. Los uniformes tampoco están físicamente en el almacén.',
+q:'¿Cuál es la actuación correcta del técnico al descubrir una salida registrada sin soporte documental y sin bienes físicos?',
+ops:[
+  {l:'A',t:'Elaborar retroactivamente un vale de despacho con la fecha del movimiento, con los datos que el técnico recuerda del destinatario, y archivarlo como soporte del movimiento registrado, para regularizar la situación antes de que la Contraloría realice la próxima visita de auditoría al almacén.'},
+  {l:'B',t:'Revertir el movimiento de salida en el Kardex, restaurando el saldo de 30 uniformes, y reportar al jefe inmediato que el bien fue registrado como despachado pero se perdió, para que se investigue internamente si el bien fue hurtado o si el movimiento fue un error de digitación.'},
+  {l:'C',t:'Elaborar un informe técnico escrito dirigido al jefe inmediato y a la Oficina de Control Interno describiendo el movimiento sin soporte detectado (fecha, cantidad, bien afectado, ausencia de vale de despacho y ausencia física del bien), sin alterar el Kardex ni crear documentos retroactivos, para que se active la investigación formal.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Falsedad documental. Elaborar retroactivamente un vale de despacho que no existió al momento del movimiento es falsedad en documento público (Art. 286 C.P.), falta disciplinaria gravísima y puede agravar la responsabilidad fiscal del técnico. Crear documentos para "regularizar" situaciones irregulares destruye la evidencia que la investigación necesita y convierte al técnico en partícipe activo de la irregularidad.',
+  B:'Incorrecto — Extralimitación sin investigación previa. Revertir unilateralmente el movimiento del Kardex sin autorización de las áreas competentes altera los registros del sistema de inventarios sin el soporte formal que exige la CGN para correcciones de movimientos. Además, si el movimiento no fue un error sino un despacho real sin soporte, revertirlo distorsiona aún más el saldo. La investigación determina la acción; el técnico no corrige por iniciativa propia.',
+  C:'Correcto. El técnico actúa dentro de su competencia: documenta el hallazgo con todos los detalles relevantes y lo reporta formalmente a Control Interno, que es el órgano competente para investigar irregularidades de este tipo. No crea documentos retroactivos ni altera el Kardex unilateralmente. El informe escrito protege al técnico y activa el mecanismo institucional correcto bajo la Ley 87/1993 y la Ley 734/2002 (Art. 34, deber de denuncia).'
+}},
+
+/* P4 — clave B */
+{n:4,tipo:'func',
+ctx:'El almacén de Indervalle tiene un saldo de 25 cronómetros digitales a un CPU de $320.000 (método Promedio Ponderado). La dependencia de eventos solicita el despacho urgente de 8 cronómetros. El técnico tiene el vale de salida firmado por el funcionario competente.',
+q:'¿A qué valor unitario debe registrar el técnico la salida de los 8 cronómetros en el Kardex?',
+ops:[
+  {l:'A',t:'A $320.000 por unidad, que es el CPU vigente del saldo según el Promedio Ponderado, independientemente del precio de la última factura de compra de los cronómetros o de cualquier otro factor externo al Kardex.'},
+  {l:'B',t:'Al precio que figure en la última factura de compra de los cronómetros, que refleja el costo actual de mercado del bien y es el valor más actualizado y económicamente relevante para valorar la salida del activo del inventario.'},
+  {l:'C',t:'Al precio de lista del proveedor actual de la entidad, como referencia del valor de reposición del bien, dado que la NICSP 12 establece que los inventarios deben medirse al menor valor entre el costo y el valor de reposición en el momento del despacho.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. Bajo el método Promedio Ponderado, todas las salidas se valoran al CPU vigente en el Kardex en el momento de la salida, que es $320.000. Este CPU no cambia con las salidas: solo se recalcula cuando ingresa un nuevo lote. El CPU del Kardex es el único valor correcto para valorar la salida, independientemente del precio de la última factura o del precio de mercado actual.',
+  B:'Incorrecto — Vía de Hecho / Confusión entre precio de factura y CPU. El precio de la última factura solo es relevante para calcular el CPU al momento de la entrada de ese lote. Una vez calculado el CPU promedio ponderado, es ese CPU —no el precio de ninguna factura— el que se usa para valorar las salidas. Usar el precio de la última factura viola la Resolución 533/2015 CGN y genera un valor de salida incorrecto.',
+  C:'Incorrecto — Confusión entre valoración inicial y valoración de salidas. El valor de reposición (o valor neto de realización) se usa en la NICSP 12 para la medición posterior del saldo del inventario cuando este es inferior al costo, no para valorar las salidas individuales del Kardex. Las salidas del Kardex se valoran siempre al costo (PEPS o Promedio Ponderado); nunca al valor de reposición del momento del despacho.'
+}},
+
+/* P5 — clave C */
+{n:5,tipo:'norm',
+ctx:'El jefe de la subdirección técnica de Indervalle le propone verbalmente al técnico de almacén cambiar el método de valoración del Kardex de Promedio Ponderado a PEPS, argumentando que con PEPS los saldos del inventario se ven más altos en el balance y la entidad "luce mejor" ante una evaluación de gestión próxima.',
+q:'¿Cómo debe responder el técnico ante la propuesta del subdirector de cambiar el método de valoración del Kardex?',
+ops:[
+  {l:'A',t:'Implementar el cambio a PEPS de forma inmediata, ya que el subdirector es un superior jerárquico del técnico y sus instrucciones son vinculantes. Registrar el cambio en el Kardex con la fecha de la instrucción verbal y continuar con los movimientos bajo el nuevo método sin interrupción.'},
+  {l:'B',t:'Solicitar al subdirector que la instrucción quede por escrito, implementar provisionalmente el cambio a PEPS en los registros del mes en curso para demostrar diligencia institucional, y reportar el cambio al Contador Público para que este lo valide contablemente en el momento que considere oportuno.'},
+  {l:'C',t:'Explicar respetuosamente al subdirector que el método de valoración del inventario es una política contable aprobada por el Contador Público bajo la Resolución 533/2015 CGN y que cualquier cambio debe ser aprobado formalmente por esa dependencia, sin modificar el Kardex mientras no exista esa aprobación formal.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Ejecución de instrucción que excede la cadena de competencias. El subdirector técnico no tiene competencia para definir el método de valoración contable del inventario: esa es una función del Contador Público como parte de las políticas contables de la entidad. Una instrucción verbal de un superior no puede ordenar una acción que viola las competencias funcionales establecidas por la CGN. El técnico no ejecuta instrucciones contrarias a la norma aunque provengan de un superior.',
+  B:'Incorrecto — Extralimitación con consecuencias contables. Implementar provisionalmente el cambio a PEPS sin aprobación del Contador viola el principio de consistencia contable (Resolución 533/2015 CGN): los métodos de valoración deben mantenerse estables entre períodos y no pueden cambiarse informalmente. Cambiar el método a mitad de período distorsiona la comparabilidad de los estados financieros y puede generar un hallazgo de la Contraloría mayor al que el subdirector pretendía evitar.',
+  C:'Correcto. El técnico actúa dentro de su competencia: explica fundamentadamente por qué la instrucción no puede ejecutarse sin la aprobación formal del Contador Público (cita la norma aplicable), y mantiene el Kardex con el método vigente hasta que exista autorización formal. Esta respuesta demuestra integridad normativa y dominio de las competencias funcionales, que son las competencias que evalúa el concurso MBE en el dominio comportamental.'
+}},
+
+/* P6 — clave A */
+{n:6,tipo:'calc',
+ctx:'El Kardex de balones de baloncesto de Indervalle (método PEPS) tiene el siguiente saldo en dos capas: Capa 1: 5 unidades a $75.000 cada una (lote más antiguo). Capa 2: 20 unidades a $82.000 cada una (lote reciente). El técnico debe registrar una salida de 12 unidades.',
+q:'¿Cuál es el valor total de la salida de 12 unidades bajo el método PEPS?',
+ops:[
+  {l:'A',t:'Salida = (5 u × $75.000) + (7 u × $82.000) = $375.000 + $574.000 = $949.000. Se agota primero la capa más antigua (5 u a $75.000) y luego se toman 7 unidades de la segunda capa a $82.000.'},
+  {l:'B',t:'Salida = 12 u × $75.000 = $900.000. Se usa el costo de la capa más antigua para valorar todas las unidades despachadas, sin importar que solo había 5 unidades en esa capa, porque PEPS siempre usa el precio del lote más antiguo.'},
+  {l:'C',t:'Salida = 12 u × $82.000 = $984.000. Se usa el costo de la capa más reciente porque PEPS privilegia los precios actuales de mercado para que el gasto reconocido refleje el valor económico actual del bien despachado.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. En PEPS, la salida se aplica capa por capa desde la más antigua. Con 12 unidades a despachar y 5 unidades en la capa más antigua (a $75.000), se agotan esas 5 y luego se toman 7 de la capa siguiente (a $82.000). El valor total es (5×$75.000) + (7×$82.000) = $375.000 + $574.000 = $949.000. Después de esta salida, el saldo es de 13 unidades a $82.000 = $1.066.000.',
+  B:'Incorrecto — Error de aplicación del PEPS. En PEPS se agota la capa más antigua hasta su límite y luego se pasa a la siguiente. Si solo hay 5 unidades en la primera capa, no se puede valorar la totalidad de las 12 unidades a $75.000: solo las primeras 5. Aplicar el costo de la capa más antigua a todas las unidades, ignorando que esa capa no tiene suficientes unidades, es un error que sobrevalora las salidas a costos incorrectos.',
+  C:'Incorrecto — Confusión de métodos. En PEPS el orden es el opuesto al descrito: las primeras unidades en entrar son las primeras en salir. Usar el costo de la capa más reciente ($82.000) para todas las salidas correspondería al método UEPS (Último en Entrar, Primero en Salir), que no está permitido para entidades de gobierno en Colombia bajo la Resolución 533/2015 CGN.'
+}},
+
+/* P7 — clave B */
+{n:7,tipo:'func',
+ctx:'El técnico de almacén de Indervalle registra en el Kardex una entrada de 50 camisetas deportivas a $45.000 cada una. Cuando va a calcular el nuevo CPU bajo el método Promedio Ponderado, se da cuenta de que el saldo previo era de cero unidades (el bien se había agotado completamente en el movimiento anterior).',
+q:'¿Cómo debe calcular el técnico el CPU promedio ponderado cuando el saldo previo es de cero unidades?',
+ops:[
+  {l:'A',t:'Promediar el CPU de las últimas tres entradas anteriores para que el nuevo CPU refleje el historial reciente de precios del bien, y usar ese promedio histórico como CPU del nuevo saldo, reportando al Contador la situación de saldo cero que ocurrió antes de la entrada.'},
+  {l:'B',t:'El CPU del nuevo saldo es directamente el costo unitario de la entrada: $45.000, ya que no hay saldo previo que ponderar. La fórmula del promedio ponderado con saldo cero resulta en (0 + 50×$45.000) / (0 + 50) = $45.000.'},
+  {l:'C',t:'Usar el último CPU vigente antes de que el saldo llegara a cero como CPU del nuevo saldo, para mantener la consistencia histórica del Kardex y evitar fluctuaciones abruptas en el costo unitario que puedan generar sorpresas en los estados financieros del período.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Metodología sin respaldo normativo. Promediar los CPU de las últimas tres entradas no es el método de Promedio Ponderado definido por la Resolución 533/2015 CGN. Esta aproximación genera un CPU diferente al correcto y no tiene respaldo en la NICSP 12 ni en el Manual de Políticas Contables. Cuando el saldo es cero, el nuevo CPU es simplemente el costo de la entrada, como lo establece la fórmula matemática.',
+  B:'Correcto. La fórmula del Promedio Ponderado aplicada con saldo cero es: CPU = (Valor Saldo + Valor Entrada) / (Cant. Saldo + Cant. Entrada) = (0 + 50×$45.000) / (0 + 50) = $2.250.000 / 50 = $45.000. Cuando el saldo previo es cero, el resultado siempre es el costo unitario de la nueva entrada, lo cual tiene sentido matemático: no hay valor anterior que ponderar, por lo que el promedio es el precio de la entrada.',
+  C:'Incorrecto — Vía de Hecho / CPU histórico sin respaldo. Usar el último CPU vigente antes de que el saldo llegara a cero no corresponde a la fórmula del Promedio Ponderado. Si el bien cambió de proveedor o de precio entre lotes, el costo histórico puede ser significativamente diferente al costo real de la nueva entrada, generando una valoración incorrecta del inventario. La fórmula matemática siempre produce el resultado correcto, independientemente del historial previo.'
+}},
+
+/* P8 — clave C */
+{n:8,tipo:'comp',
+ctx:'El técnico de almacén actualiza el Kardex de colchonetas de yoga de Indervalle y detecta que el saldo arroja una cantidad negativa de -3 unidades después de registrar una salida de 18 unidades sobre un saldo que él creía era de 15. Al revisar, confirma que el saldo físico real es de 15 unidades: el error está en el Kardex.',
+q:'¿Cuál es la actuación correcta del técnico al detectar un saldo negativo en el Kardex que contradice la realidad física?',
+ops:[
+  {l:'A',t:'Ajustar directamente el Kardex añadiendo una "entrada de ajuste" de 3 unidades sin costo para llevar el saldo a cero y luego registrar la salida de 18 unidades correctamente, documentando en el campo de observaciones que se trata de un ajuste de corrección de saldo sin respaldo en un movimiento real.'},
+  {l:'B',t:'Revertir la salida de 18 unidades, re-examinar todos los movimientos anteriores del Kardex para identificar dónde ocurrió el error de digitación, corregir el movimiento erróneo con el valor correcto, y volver a aplicar la salida de 18 unidades sobre el saldo corregido, todo sin reportar al jefe inmediato.'},
+  {l:'C',t:'No modificar el Kardex por iniciativa propia. Reportar al jefe inmediato y a Contabilidad la inconsistencia detectada (saldo Kardex vs. inventario físico), con la descripción detallada de los movimientos que generaron el saldo negativo, para que el área competente determine la causa y apruebe el ajuste formal con el soporte documental correspondiente.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Registro sin soporte real. Una "entrada de ajuste" sin soporte en un movimiento físico real (no hay bienes que realmente ingresaron) es un registro falso que viola el principio de veracidad del inventario. El Kardex debe reflejar únicamente movimientos reales documentados. Crear asientos ficticios para "regularizar" un error es falsedad en registros contables y puede constituir responsabilidad fiscal bajo la Ley 610/2000.',
+  B:'Incorrecto — Exceso de Rol / Actuación sin autorización. El técnico puede identificar el error y su origen aproximado, pero la corrección de movimientos ya registrados en el Kardex requiere autorización formal de Contabilidad, no una corrección unilateral del técnico. Además, actuar sin reportar al jefe inmediato omite el deber de información establecido en el Art. 34 de la Ley 734/2002 y en el Manual de Funciones IND-SG No. 220.',
+  C:'Correcto. Un saldo negativo en el Kardex es una señal de alarma que indica un error en los registros o una inconsistencia con la realidad física. El técnico no corrige unilateralmente: documenta con precisión la inconsistencia y la escala a las áreas competentes. Contabilidad y el jefe inmediato son quienes autorizan y gestionan los ajustes formales con los soportes documentales apropiados. Esta actuación protege al técnico y garantiza la integridad del sistema de control interno.'
+}},
+
+/* P9 — clave A */
+{n:9,tipo:'norm',
+ctx:'La Contraloría Departamental del Valle del Cauca visita Indervalle para una auditoría de gestión. El auditor solicita al técnico de almacén que explique el método de valoración del Kardex de equipos de cómputo y por qué eligió ese método. El técnico responde que aplicó Promedio Ponderado "porque le parece el más adecuado técnicamente".',
+q:'¿Cuál es el problema con la respuesta del técnico al auditor y cómo debería haber respondido?',
+ops:[
+  {l:'A',t:'El problema es que la respuesta implica que el técnico eligió el método, cuando en realidad el método debe estar definido en la política contable aprobada por el Contador Público. La respuesta correcta es que el técnico aplica el Promedio Ponderado porque así lo establece la política contable de la entidad, aprobada con base en la Resolución 533/2015 CGN.'},
+  {l:'B',t:'El problema es que el técnico no citó la norma técnica que respalda su elección. La respuesta correcta es mencionar que eligió el Promedio Ponderado porque la NICSP 12 y la Resolución 533/2015 de la CGN lo señalan como el método preferido para entidades de gobierno colombianas, lo que le otorga plena autoridad técnica para haberlo seleccionado.'},
+  {l:'C',t:'El problema es que el técnico no informó al auditor que también consideró el método PEPS antes de decidirse por el Promedio Ponderado. La respuesta correcta es explicar el análisis comparativo que el técnico realizó entre ambos métodos y las razones técnicas por las que descartó el PEPS a favor del Promedio Ponderado para los equipos de cómputo.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. La respuesta del técnico es problemática porque revela que él eligió el método, cuando esa no es su competencia: el método de valoración es una política contable definida por el Contador Público bajo las directrices de la CGN (Resolución 533/2015). El técnico aplica la política; no la diseña ni la elige. La respuesta correcta al auditor es referenciar la política contable aprobada como el fundamento de la valoración aplicada.',
+  B:'Incorrecto — Exceso de Rol disfrazado de argumento normativo. Citar la norma que respalda el método no corrige el problema fundamental: que el técnico se atribuye la elección del método cuando esa no es su función. Que la norma "prefiera" el Promedio Ponderado no autoriza al técnico a elegirlo unilateralmente; simplemente lo hace una opción válida dentro de la política contable que el Contador debe aprobar formalmente.',
+  C:'Incorrecto — Exceso de Rol / Atribución de decisión que no corresponde. El técnico no debería haber realizado ningún análisis comparativo entre métodos ni descartado el PEPS por iniciativa propia: ambas acciones corresponden al proceso de diseño de políticas contables, no a la función operativa del técnico de almacén. Describir ese proceso ante el auditor confirmaría que el técnico tomó decisiones fuera de su competencia.'
+}},
+
+/* P10 — clave B */
+{n:10,tipo:'calc',
+ctx:'El Kardex de conos de señalización de Indervalle (método Promedio Ponderado) muestra: saldo de 80 unidades a CPU de $8.500. Ingresan 40 unidades a $9.200. Luego se despachan 30 unidades. El técnico debe calcular el valor de la salida de las 30 unidades.',
+q:'¿Cuál es el valor total de la salida de 30 unidades después de la nueva entrada de 40 unidades a $9.200?',
+ops:[
+  {l:'A',t:'Salida = 30 × $9.200 = $276.000, usando el costo de la última entrada porque en Promedio Ponderado el nuevo CPU se establece con el precio de la entrada más reciente, que es el valor económicamente más actual y relevante para valorar el despacho.'},
+  {l:'B',t:'CPU nuevo = (80×$8.500 + 40×$9.200)/(80+40) = ($680.000+$368.000)/120 = $1.048.000/120 = $8.733,33. Salida = 30 × $8.733 = $261.990, usando el CPU recalculado después de la entrada, que es el único valor correcto bajo el método Promedio Ponderado.'},
+  {l:'C',t:'Salida = 30 × $8.500 = $255.000, usando el CPU del saldo anterior porque las salidas no modifican el CPU y por tanto el costo vigente antes de la entrada ($8.500) es el que aplica para todos los despachos hasta la siguiente entrada, independientemente de que ya hubo una nueva entrada.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / CPU de última entrada. En el Promedio Ponderado, el CPU no es el costo de la última entrada sino el promedio ponderado recalculado que combina el saldo existente con la nueva entrada. Usar $9.200 como CPU sobrevalora la salida porque no considera el efecto de las 80 unidades ya existentes a $8.500.',
+  B:'Correcto. El nuevo CPU se calcula combinando el saldo existente con la nueva entrada: (80×$8.500 + 40×$9.200)/(80+40) = $1.048.000/120 = $8.733,33 (redondeado a $8.733). La salida de 30 unidades se valora a este nuevo CPU: 30 × $8.733 = $261.990. Este es el procedimiento correcto bajo la Resolución 533/2015 CGN: el CPU se recalcula con cada entrada y luego se usa para valorar las salidas hasta la próxima entrada.',
+  C:'Incorrecto — CPU pre-entrada aplicado post-entrada. Una vez que ingresa un nuevo lote y se recalcula el CPU promedio ponderado, el CPU anterior ($8.500) deja de ser válido. Todas las salidas posteriores a esa entrada se valoran al nuevo CPU ($8.733). Usar el CPU anterior a la entrada cuando ya se dispone del nuevo CPU recalculado es un error de valoración que subestima el costo de las salidas.'
+}},
+
+/* P11 — clave C */
+{n:11,tipo:'comp',
+ctx:'El técnico de almacén de Indervalle lleva el Kardex de balones de tenis manualmente (en papel) porque el sistema informático de inventarios estuvo caído durante toda la semana. Al restablecer el sistema, el técnico debe trasladar 7 días de movimientos manuales al sistema digital.',
+q:'¿Cuál es el procedimiento correcto para trasladar los movimientos del Kardex manual al sistema digital?',
+ops:[
+  {l:'A',t:'Digitalizar únicamente los movimientos de entrada (recepciones de bienes), ya que esos son los que tienen impacto contable directo, y registrar los despachos de la semana como una sola salida total al final del período, para simplificar el proceso de carga masiva al sistema y reducir el riesgo de errores de digitación.'},
+  {l:'B',t:'Reportar al jefe inmediato que el sistema estuvo caído y solicitar que el área de tecnología restaure los datos perdidos del servidor, absteniéndose de ingresar los movimientos manualmente al sistema hasta que el técnico tenga la certeza de que no habrá duplicación de registros entre el sistema restaurado y la carga manual.'},
+  {l:'C',t:'Trasladar al sistema cada movimiento de forma individual y en orden cronológico exacto, usando como soporte los documentos físicos de cada entrada y salida de la semana (actas, vales), verificando que los saldos del sistema digital coincidan con los saldos del Kardex manual al final de cada día trasladado.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Agregación no autorizada. Registrar varias salidas como una sola viola el principio del sistema de inventario permanente (Resolución 533/2015 CGN): cada movimiento debe registrarse individualmente con su fecha, cantidad y soporte documental. Un registro agregado elimina la trazabilidad individual de cada despacho, impide verificar a qué vale de salida corresponde cada movimiento y puede constituir un hallazgo en auditoría.',
+  B:'Incorrecto — Parálisis con riesgo mayor. Abstenerse de cargar los movimientos esperando que el sistema se restaure puede resultar en que la restauración no incluya datos (si el sistema falló antes de guardarlos) y los movimientos de la semana queden perdidos definitivamente. Además, la espera prolonga la inconsistencia entre el inventario físico y el digital. El procedimiento correcto es la carga manual ordenada con verificación de saldos.',
+  C:'Correcto. El sistema de inventario permanente exige que cada movimiento quede registrado individualmente con su soporte documental. La carga al sistema digital debe replicar exactamente el Kardex manual: movimiento por movimiento, en orden cronológico, verificando que los saldos cuadren con los del registro físico. Esta verificación cruzada garantiza que no haya errores de digitación y que el sistema digital refleje fielmente la realidad del almacén.'
+}},
+
+/* P12 — clave A */
+{n:12,tipo:'norm',
+ctx:'El técnico de almacén de Indervalle recibe una circular interna del Subgerente Administrativo indicando que, para el cierre del primer semestre, todos los saldos del Kardex deben ajustarse al "precio de mercado actual" de cada bien, argumentando que eso refleja mejor el valor real del inventario en el balance.',
+q:'¿Debe el técnico de almacén implementar la instrucción del Subgerente de ajustar los saldos del Kardex al precio de mercado?',
+ops:[
+  {l:'A',t:'No. La Resolución 533/2015 CGN establece que los inventarios se valoran al costo (no al precio de mercado) como regla general. Cualquier ajuste al valor neto de realización requiere una evaluación formal de deterioro aprobada por el Contador Público. El técnico debe reportar la instrucción al Contador para que este determine si procede un ajuste bajo la normativa CGN, sin modificar el Kardex por la sola circular del Subgerente.'},
+  {l:'B',t:'Sí, parcialmente. El técnico puede ajustar al precio de mercado únicamente los bienes cuyo valor de mercado sea superior al costo registrado en el Kardex, para reflejar mejor los activos de la entidad en el balance semestral, dejando sin modificar los bienes cuyo precio de mercado sea inferior o igual al costo del Kardex.'},
+  {l:'C',t:'Sí, en todos los casos. La NICSP 12 establece que los inventarios deben medirse al menor valor entre el costo y el valor neto de realización, por lo que ajustar al precio de mercado cuando este es menor es un requerimiento normativo que el técnico debe implementar directamente en el Kardex para cumplir con la política contable del sector público.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. La Resolución 533/2015 CGN y la NICSP 12 adaptada establecen que los inventarios se miden inicialmente al costo y las correcciones al valor neto de realización (o valor de reposición para entidades sin ánimo de lucro) solo aplican cuando ese valor es menor que el costo, y requieren un proceso formal de evaluación de deterioro que aprueba el Contador Público. El técnico no puede ajustar los saldos del Kardex al precio de mercado por una circular administrativa; esa decisión es de naturaleza contable y requiere el proceso formal.',
+  B:'Incorrecto — Exceso de Rol / Aplicación parcial sin autorización. Ajustar selectivamente algunos saldos al precio de mercado sin el proceso formal de evaluación de deterioro viola el principio de consistencia contable. Además, el técnico no tiene competencia para determinar cuándo un ajuste de valor procede: esa es la función del Contador bajo las políticas de la CGN. Las acciones parciales no autorizadas generan inconsistencias en el inventario y en los estados financieros.',
+  C:'Incorrecto — Exceso de Rol / Aplicación de norma correcta por actor incorrecto. Aunque la NICSP 12 sí contempla ajustes al valor neto de realización cuando es menor que el costo, estos ajustes no los implementa directamente el técnico en el Kardex: requieren una evaluación formal de deterioro, un asiento contable de ajuste autorizado por el Contador, y la correspondiente revelación en notas a los estados financieros. La norma es correcta pero el actor que la aplica directamente en el Kardex no.'
+}},
+
+/* P13 — clave B */
+{n:13,tipo:'func',
+ctx:'El técnico de almacén de Indervalle debe registrar en el Kardex la salida de 20 juegos de conos de señalización para un evento recreativo. El vale de despacho está firmado pero el técnico no recuerda si el CPU vigente en el Kardex es $8.500 o $8.700, porque el sistema de inventarios está en mantenimiento y no puede consultarlo en este momento.',
+q:'¿Qué debe hacer el técnico si no puede verificar el CPU vigente del Kardex para registrar la salida?',
+ops:[
+  {l:'A',t:'Registrar la salida usando $8.600 como costo unitario, que es el promedio aritmético entre los dos valores que recuerda ($8.500 y $8.700), como una estimación razonable y de buena fe para no retrasar el despacho del evento recreativo que tiene urgencia operativa.'},
+  {l:'B',t:'Registrar el despacho físico de los conos con el vale de salida firmado, pero diferir el registro del valor en el Kardex hasta restablecer el acceso al sistema y verificar el CPU correcto, documentando en el vale la razón del registro diferido y reportando al jefe inmediato la situación.'},
+  {l:'C',t:'Registrar la salida con el costo unitario de la última factura de compra de los conos, que el técnico sí recuerda, como referencia de costo válida bajo el principio de buena fe, y corregir el valor en el Kardex una vez el sistema se restablezca si resulta que el CPU era diferente.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Estimación no autorizada. Usar $8.600 como "promedio aritmético entre dos valores" no es el CPU del Kardex bajo ningún método de valoración autorizado. Registrar un valor estimado que no corresponde al CPU real viola la exactitud del inventario y puede generar una diferencia de valoración que constituya una inexactitud contable. La urgencia del evento no justifica un registro con valor incorrecto.',
+  B:'Correcto. El despacho físico puede realizarse con el soporte documental (vale firmado) aunque el valor en el Kardex se difiera brevemente hasta recuperar el CPU correcto del sistema. Esta situación excepcional debe documentarse en el vale como nota de aclaración y reportarse al jefe inmediato. Una vez el sistema se restablezca, el registro del valor se completa con el CPU correcto verificado. Diferir el valor (no el movimiento físico) es preferible a registrar un valor incorrecto.',
+  C:'Incorrecto — Vía de Hecho / CPU de factura en lugar de CPU de Kardex. Como se explicó en preguntas anteriores, el CPU de la última factura no es necesariamente igual al CPU del Kardex bajo el Promedio Ponderado (que considera todos los lotes). Usarlo como referencia para el registro del Kardex genera el mismo error: un valor que no corresponde al costo promedio ponderado vigente. Aunque la "buena fe" sea real, el registro incorrecto tiene las mismas consecuencias contables que cualquier otro error.'
+}},
+
+/* P14 — clave C */
+{n:14,tipo:'norm',
+ctx:'Al revisar el Kardex de una entidad pública, el auditor de la Contraloría le pregunta al técnico de almacén de Indervalle: "¿Por qué en el Kardex hay un movimiento de entrada sin costo registrado (costo cero) para un lote de 10 balones de fútbol sala recibidos por donación?"',
+q:'¿Cómo debe explicar el técnico el registro de una entrada por donación con costo cero en el Kardex?',
+ops:[
+  {l:'A',t:'El técnico explica que las donaciones no tienen costo porque no generan un pago por parte de la entidad, por lo que es procedente registrarlas con costo cero en el Kardex y en los estados financieros, de acuerdo con el principio de que solo se registra lo que la entidad efectivamente pagó.'},
+  {l:'B',t:'El técnico explica que usó costo cero de forma provisional hasta que el Contador definiera el valor a registrar, y reconoce que debió esperar la instrucción del Contador antes de hacer cualquier registro, dado que la valoración de donaciones es una decisión de política contable que supera su competencia.'},
+  {l:'C',t:'El técnico explica que el bien por donación debió registrarse al valor razonable (precio de mercado del bien o costo de reposición), según lo establece la Resolución 533/2015 CGN para bienes recibidos sin contraprestación, y que el valor razonable debió determinarse con soporte (cotización, avalúo) y aprobarse por el Contador antes del registro. El costo cero puede ser una omisión a corregir mediante el proceso formal correspondiente.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Interpretación normativa incorrecta. Las donaciones no se registran a costo cero bajo la Resolución 533/2015 CGN y la NICSP 23 (Ingresos de transacciones sin contraprestación). Los bienes recibidos por donación se reconocen al valor razonable al momento de la recepción, que es el precio que se recibiría por el bien o el costo de reposición. Registrarlos a costo cero subestima el activo de la entidad y genera estados financieros inexactos.',
+  B:'Incorrecto — Actitud pasiva no completamente incorrecta pero respuesta incompleta. Aunque es verdad que la valoración de donaciones requiere la participación del Contador, el técnico debería saber que el bien debe registrarse al valor razonable (no a cero) y debería haberlo reportado al Contador antes de hacer el registro provisional a cero. La respuesta B no explica el fundamento normativo correcto sino solo la cadena de competencias.',
+  C:'Correcto. La Resolución 533/2015 CGN y la NICSP 23 establecen que los bienes recibidos por donación (transacciones sin contraprestación) se reconocen al valor razonable en la fecha de adquisición. El valor razonable requiere un soporte (cotización de mercado, avalúo o referencia del costo de reposición) y debe aprobarse por el Contador. El registro a costo cero es una omisión que debe corregirse mediante el proceso formal de ajuste contable, con autorización del área competente.'
+}},
+
+/* P15 — clave A */
+{n:15,tipo:'comp',
+ctx:'El técnico de almacén de Indervalle prepara el informe mensual de inventarios para la subdirección administrativa. Al comparar el saldo del Kardex de pitos arbitrales (92 unidades) con el conteo físico del almacén (88 unidades), detecta una diferencia de 4 unidades. Todos los movimientos del Kardex tienen sus soportes en orden.',
+q:'¿Cuál es la actuación correcta del técnico al detectar una diferencia entre el saldo del Kardex y el conteo físico?',
+ops:[
+  {l:'A',t:'Reportar por escrito al jefe inmediato y al área de Contabilidad la diferencia detectada (Kardex: 92 unidades vs. físico: 88 unidades), con detalle de la fecha del conteo y los soportes disponibles, sin ajustar el Kardex hasta que se investigue la causa de la diferencia y se autorice formalmente el ajuste con la documentación correspondiente.'},
+  {l:'B',t:'Ajustar directamente el Kardex registrando una salida de 4 unidades a costo cero, como "ajuste por diferencia de inventario", para que el saldo coincida con el físico real, y documentar en el campo de observaciones del Kardex que se trata de un ajuste por resultado del conteo físico periódico.'},
+  {l:'C',t:'Volver a contar el inventario físico dos veces más para confirmar si la diferencia es real o si fue un error en el conteo, y solo si los tres conteos consecutivos confirman la diferencia reportar al jefe inmediato, para no generar alarmas innecesarias basadas en un posible error de conteo.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. Una diferencia entre el Kardex y el inventario físico, incluso pequeña, es un hallazgo de control interno que debe reportarse de inmediato al jefe inmediato y a Contabilidad. El técnico no ajusta el Kardex unilateralmente: la investigación de la causa (error de registro, pérdida, hurto, diferencia de unidades de medida) determina el ajuste correcto y el tipo de soporte que se requiere. El reporte oportuno protege al técnico y activa el mecanismo formal de investigación.',
+  B:'Incorrecto — Vía de Hecho / Ajuste sin investigación ni autorización. Registrar una "salida a costo cero" en el Kardex para cuadrar el saldo físico sin investigar la causa de la diferencia es una irregularidad contable. La salida ficticia a cero distorsiona el costo del inventario y elimina la evidencia del hallazgo que el proceso de investigación necesita. Además, las 4 unidades faltantes pueden representar un daño fiscal si fueron hurtadas o mal despachadas.',
+  C:'Incorrecto — Demora injustificada en el reporte. Confirmar con múltiples conteos antes de reportar puede ser parte del proceso de verificación, pero no es razón para demorar el reporte inicial al jefe inmediato. Una diferencia verificada en un conteo formal ya constituye un hallazgo que debe comunicarse. El protocolo correcto es reportar la diferencia detectada y que el jefe inmediato decida si se requiere reverificación antes de activar la investigación formal.'
+}},
+
+/* P16 — clave B */
+{n:16,tipo:'calc',
+ctx:'El Kardex de vendas médicas de Indervalle (método PEPS) tiene: Capa 1 (más antigua): 20 unidades a $3.500 cada una. Capa 2: 15 unidades a $4.100 cada una. Se realiza una salida de 20 unidades. A continuación ingresa un nuevo lote de 30 unidades a $4.500.',
+q:'Después de la salida de 20 unidades y la nueva entrada de 30 unidades a $4.500, ¿cuál es el saldo en cantidad y valor del Kardex PEPS?',
+ops:[
+  {l:'A',t:'Saldo = 45 unidades. Valor = (15 u × $4.100) + (30 u × $4.500) = $61.500 + $135.000 = $196.500. La salida de 20 u agotó exactamente la Capa 1 (20 u @ $3.500). El saldo antes de la entrada era 15 u @ $4.100 ($61.500). Tras la entrada de 30 u @ $4.500, el saldo tiene dos capas: 15@$4.100 y 30@$4.500.'},
+  {l:'B',t:'Saldo = 45 unidades. Valor = (15 u × $4.100) + (30 u × $4.500) = $61.500 + $135.000 = $196.500. La salida de 20 u consumió las 20 unidades de la Capa 1 a $3.500 (=$70.000). Quedaron 15 u de la Capa 2. Ingresaron 30 u @ $4.500. Saldo final: 45 u en dos capas con valor $196.500.'},
+  {l:'C',t:'Saldo = 45 unidades. Valor = 45 u × $4.033 = $181.500, calculado como el promedio ponderado de las dos capas del saldo (15 u @ $4.100 y 30 u @ $4.500) dividido entre 45, porque tras una nueva entrada el PEPS permite unificar el saldo en un único costo promedio para simplificar los registros futuros.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Respuesta casi idéntica a B pero con error en la justificación del proceso. Aunque el resultado numérico final es el mismo ($196.500 en 45 unidades), la opción A no describe correctamente que la salida agotó EXACTAMENTE la Capa 1 completa. En un examen MBE la precisión del razonamiento es tan importante como el resultado. Opciones A y B son intencionalmente similares para forzar el análisis del proceso, no solo del número.',
+  B:'Correcto. En PEPS: la salida de 20 unidades agota exactamente la Capa 1 (20 u × $3.500 = $70.000 despachados). El saldo queda en 15 unidades de la Capa 2 a $4.100 = $61.500. Luego ingresa el nuevo lote de 30 u × $4.500 = $135.000. El saldo final tiene dos capas: 15 u @ $4.100 y 30 u @ $4.500, con un valor total de $196.500 en 45 unidades. En PEPS nunca se mezclan las capas; cada lote mantiene su costo individual.',
+  C:'Incorrecto — Confusión de métodos. En el método PEPS los lotes nunca se promedian ni se unifican en un costo único: cada capa mantiene su costo de origen durante toda su permanencia en el inventario. Calcular un promedio del saldo después de una entrada es exactamente lo que hace el Promedio Ponderado, no el PEPS. Aplicar promedio al saldo PEPS es un error que mezcla los dos métodos, generando un resultado que no corresponde a ninguno de los dos correctamente.'
+}},
+
+/* P17 — clave C */
+{n:17,tipo:'comp',
+ctx:'El técnico de almacén de Indervalle recibe la visita de un representante del área de presupuesto quien le indica que, para que la ejecución presupuestal del rubro de implementos deportivos muestre un porcentaje mayor, necesita que el técnico registre en el Kardex como "despachados" algunos bienes que aún están en el almacén, con la intención de reingresarlos formalmente después.',
+q:'¿Cómo debe responder el técnico ante esta solicitud de registrar salidas ficticias en el Kardex para mejorar indicadores presupuestales?',
+ops:[
+  {l:'A',t:'Acceder a la solicitud de forma provisional, registrando las salidas ficticias con una anotación en el Kardex de "despacho temporal para efectos presupuestales — reingreso pendiente", ya que el propósito es institucional y el técnico puede restablecer los registros en cuanto se complete el trámite presupuestal.'},
+  {l:'B',t:'Consultar al jefe inmediato si la práctica es habitual en la entidad antes de tomar una decisión, y si el jefe la avala como un procedimiento interno aceptable, proceder con el registro de las salidas ficticias con la nota correspondiente, manteniendo evidencia de que fue una instrucción de autoridad superior.'},
+  {l:'C',t:'Negarse a registrar salidas que no corresponden a movimientos físicos reales, explicando al representante de presupuesto que el Kardex solo registra movimientos reales documentados con sus soportes, que una salida ficticia constituye falsedad en registros contables y puede generar responsabilidad fiscal y disciplinaria para ambos funcionarios.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Participación en falsedad contable. Una "salida temporal para efectos presupuestales" de bienes que físicamente permanecen en el almacén es un registro falso en el Kardex, independientemente de la anotación que se haga. La responsabilidad fiscal bajo la Ley 610/2000 y la responsabilidad penal por falsedad en documento público (Art. 286 C.P.) aplican desde el momento en que el registro se hace, sin importar la intención declarada de restablecer los datos.',
+  B:'Incorrecto — Delegación de responsabilidad que no exime. Que el jefe inmediato avale la práctica no elimina la responsabilidad individual del técnico por un registro falso. La Ley 734/2002 (Art. 34, num. 2) establece que el servidor no debe ejecutar órdenes que impliquen violación de la Constitución o la ley, aun cuando provengan de superiores jerárquicos. Registros falsos violan el principio de veracidad de los estados financieros públicos, norma de rango superior.',
+  C:'Correcto. El técnico actúa con integridad y conocimiento normativo: identifica que la solicitud implica falsedad en registros contables (lo que viola el Art. 286 C.P., la Ley 610/2000 y el Art. 34 de la Ley 734/2002) y se niega fundamentadamente, explicando las consecuencias legales. Esta actuación demuestra la competencia comportamental de mayor relevancia en el concurso MBE: mantener la integridad ética frente a presiones institucionales.'
+}},
+
+/* P18 — clave A */
+{n:18,tipo:'func',
+ctx:'El área de Contabilidad de Indervalle solicita al técnico de almacén el informe del Kardex de bienes de consumo al 30 de abril para conciliar con los registros contables del Grupo 19. El técnico entrega el informe, pero el Contador detecta que el valor total del saldo del Kardex ($8.240.000) no coincide con el saldo de la cuenta contable ($7.980.000), diferencia de $260.000.',
+q:'¿Cuál es la actuación correcta del técnico ante la diferencia de $260.000 entre el Kardex y la cuenta contable?',
+ops:[
+  {l:'A',t:'Entregar a Contabilidad el detalle de todos los movimientos del Kardex del período (entradas y salidas con sus soportes) para facilitar la conciliación, y reportar al jefe inmediato que existe una diferencia entre los dos registros, sin modificar el Kardex ni la cuenta contable por iniciativa propia, para que Contabilidad determine el origen del descuadre y apruebe el ajuste formal.'},
+  {l:'B',t:'Revisar todos los movimientos del Kardex del período e identificar cuál movimiento tiene el error, corregirlo directamente en el sistema de inventarios para que el saldo del Kardex coincida con el de la cuenta contable, y notificar al Contador que la diferencia fue corregida en el Kardex para que actualice los registros contables correspondientes.'},
+  {l:'C',t:'Ajustar el saldo del Kardex en $260.000 hacia abajo usando un "movimiento de ajuste contable" con costo igual a la diferencia detectada, para que el Kardex quede cuadrado con la cuenta del Grupo 19 del Catálogo General de Cuentas, y entregar el Kardex corregido al Contador para el cierre del período.'}
+],
+ok:'A',
+fbs:{
+  A:'Correcto. La conciliación entre el Kardex y la cuenta contable es un proceso colaborativo entre el técnico de almacén y Contabilidad. El técnico aporta el detalle de sus movimientos y soportes; el Contador identifica si el error está en el Kardex, en la contabilidad, o en ambos. Ninguno de los dos corrige unilateralmente sin determinar primero la causa y sin el proceso formal de ajuste. El reporte al jefe inmediato garantiza trazabilidad de la situación.',
+  B:'Incorrecto — Exceso de Rol / Dirección de corrección incorrecta. El técnico no tiene competencia para definir que el error está en el Kardex (y no en la contabilidad) sin el proceso de conciliación. Si el error estuviera en la contabilidad y el técnico corrige el Kardex para cuadrar con la cuenta incorrecta, estaría introduciendo un nuevo error en el registro correcto. La conciliación debe determinar primero dónde está el origen del descuadre.',
+  C:'Incorrecto — Vía de Hecho / Ajuste sin soporte en movimiento real. Un "movimiento de ajuste contable" en el Kardex de $260.000 no corresponde a ningún movimiento físico de bienes (ni entrada ni salida real). Registrarlo en el Kardex como si fuera un movimiento viola el principio de que el Kardex solo registra hechos reales. Los ajustes por conciliación se gestionan a través de asientos contables formales autorizados por el Contador, no mediante movimientos ficticios en el Kardex.'
+}},
+
+/* P19 — clave B */
+{n:19,tipo:'norm',
+ctx:'El Director de Indervalle, en reunión de comité de gestión, pregunta al técnico de almacén cuál es el saldo valorado de todos los bienes de consumo en el almacén a la fecha. El técnico no tiene el dato actualizado porque no ha registrado los últimos 5 movimientos de la semana en el Kardex.',
+q:'¿Por qué la situación descrita es una vulneración del sistema de inventario permanente exigido por la CGN y cómo debe el técnico resolverla?',
+ops:[
+  {l:'A',t:'No es una vulneración grave porque el sistema permanente permite registrar movimientos al final de la semana o del mes, y el dato puede generarse a partir del último saldo registrado más los comprobantes físicos de la semana pendiente. El técnico puede dar un dato estimado al Director con esa metodología de cálculo.'},
+  {l:'B',t:'Es una vulneración del sistema permanente porque este exige que el Kardex se actualice inmediatamente después de cada movimiento, según la Resolución 533/2015 CGN y el Manual de Políticas Contables. El técnico debe informar al Director que el dato actualizado no está disponible en ese momento, registrar de inmediato los 5 movimientos pendientes con sus soportes, y reportar al jefe inmediato el retraso en la actualización.'},
+  {l:'C',t:'Es una vulneración del sistema permanente, pero el técnico puede resolverla calculando en el momento un promedio del saldo de la semana anterior más el 50% de los movimientos pendientes, como un dato aproximado con margen de error reconocido, mientras se completan los registros formales del Kardex con los soportes correspondientes a los 5 movimientos.'}
+],
+ok:'B',
+fbs:{
+  A:'Incorrecto — Vía de Hecho / Interpretación incorrecta del sistema permanente. El "sistema permanente" o "inventario continuo" se llama así precisamente porque se actualiza de forma continua, es decir, tras cada movimiento, no al final de la semana ni del mes. Dar un dato estimado al Director sin actualizaciones recientes puede ser incorrecto y comprometer decisiones institucionales. El Manual de Políticas Contables de la CGN no permite períodos de actualización semanales o mensuales.',
+  B:'Correcto. El sistema de inventario permanente exigido por la Resolución 533/2015 CGN requiere actualización inmediata tras cada movimiento. Tener 5 movimientos sin registrar es una vulneración de ese principio. El técnico actúa correctamente: informa honestamente al Director la situación, registra de inmediato los movimientos pendientes para restablecer la integridad del Kardex, y reporta el retraso al jefe inmediato. Esta combinación de transparencia y acción correctiva inmediata es la respuesta apropiada.',
+  C:'Incorrecto — Vía de Hecho / Dato estimado sin respaldo en el Kardex. Dar un dato al Director basado en un "promedio del 50% de los movimientos pendientes" no solo es una estimación sin respaldo normativo, sino que compromete la credibilidad de la información del inventario ante la máxima autoridad de la entidad. El dato de inventario que se reporta a la dirección debe ser el saldo real registrado en el Kardex, no una aproximación calculada informalmente.'
+}},
+
+/* P20 — clave C */
+{n:20,tipo:'comp',
+ctx:'Al finalizar el año contable, el Contador Público de Indervalle determina que es necesario cambiar el método de valoración del Kardex de PEPS a Promedio Ponderado para el siguiente período, con base en la política contable actualizada. Le pide al técnico de almacén que a partir del 1 de enero aplique el nuevo método en todos los Kardex del almacén.',
+q:'¿Cuál es la actuación correcta del técnico ante el cambio de método de valoración aprobado formalmente por el Contador?',
+ops:[
+  {l:'A',t:'Solicitar al Contador que recalcule retroactivamente todos los movimientos del período anterior bajo el nuevo método (Promedio Ponderado) antes de implementar el cambio, para garantizar la comparabilidad de los estados financieros entre el año anterior y el nuevo año bajo el mismo método de valoración.'},
+  {l:'B',t:'Negarse a implementar el cambio hasta que la Dirección General de Indervalle emita una resolución administrativa que respalde el cambio de política contable, ya que una instrucción del Contador no tiene la jerarquía normativa suficiente para modificar el método de valoración sin un acto administrativo formal de la entidad.'},
+  {l:'C',t:'Implementar el cambio a Promedio Ponderado a partir del 1 de enero según la instrucción del Contador, registrar en el Kardex el nuevo método aplicable desde esa fecha con el saldo inicial del año (en unidades y valor, tomado del cierre del año anterior), y aplicar la fórmula de Promedio Ponderado para todos los movimientos del nuevo período.'}
+],
+ok:'C',
+fbs:{
+  A:'Incorrecto — Exceso de Rol / Solicitud que supera la competencia del técnico. Recalcular retroactivamente todos los movimientos del período anterior es una tarea de naturaleza contable que corresponde al Contador, no al técnico de almacén. Además, la retroactividad de los cambios de política contable está regulada por la Resolución 533/2015 CGN (que exige revelación en notas a estados financieros, no necesariamente el recálculo de todos los movimientos históricos). El técnico no debe solicitar al Contador que modifique el alcance de la política contable.',
+  B:'Incorrecto — Obstaculización de función del Contador. El Contador Público es el funcionario competente para definir y modificar las políticas contables de la entidad bajo la Resolución 533/2015 CGN. Su instrucción para cambiar el método de valoración es una instrucción dentro de su competencia funcional. Exigir adicionalmente un acto administrativo de la Dirección General como condición previa es añadir un requisito no establecido en la norma y obstruye el cumplimiento de la función contable.',
+  C:'Correcto. El técnico implementa el cambio de método aprobado por el Contador (quien tiene competencia para ello), lo hace a partir de la fecha indicada (no retroactivamente, a menos que el Contador indique lo contrario), usa como saldo inicial el saldo de cierre del año anterior, y aplica correctamente la fórmula del Promedio Ponderado para todos los movimientos del nuevo período. Esta actuación ejecuta la instrucción dentro de su competencia, sin excederse ni resistirse.'
+}}
+
+];
+
+/* ── ESTADO ── */
+let resp=new Array(PQ.length).fill(null);
+
+/* ── BUILD ── */
+function buildQ(){
+  const w=document.getElementById('qWrap');
+  w.innerHTML='';
+  PQ.forEach((p,i)=>{
+    const tLabel={func:'Dominio Funcional',comp:'Dominio Comportamental',norm:'Dominio Normativo',calc:'Cálculo MBE'}[p.tipo]||p.tipo;
+    const d=document.createElement('div');
+    d.className='qcard';d.id='qc'+i;
+    d.innerHTML=`
+      <div class="qnum">Pregunta ${p.n} de ${PQ.length}
+        <span class="qtipo ${p.tipo}">${tLabel}</span>
+      </div>
+      <div class="qctx">📋 <strong>Caso:</strong> ${p.ctx}</div>
+      <div class="qenunciado">${p.q}</div>
+      <div class="qopts">
+        ${p.ops.map(o=>`
+          <button class="quiz-opt" id="qb_${i}_${o.l}" onclick="ans(${i},'${o.l}')">
+            <span class="ltr">${o.l}</span><span>${o.t}</span>
+          </button>`).join('')}
+      </div>
+      <div class="qfb" id="qf_${i}"></div>
+    `;
+    w.appendChild(d);
+  });
+  updP();
+}
+
+function ans(idx,letra){
+  if(resp[idx]!==null)return;
+  resp[idx]=letra;
+  const p=PQ[idx];
+  const isOk=letra===p.ok;
+  p.ops.forEach(o=>{
+    const b=document.getElementById(`qb_${idx}_${o.l}`);
+    b.disabled=true;
+    if(o.l===p.ok)b.classList.add('ok');
+    else if(o.l===letra&&!isOk)b.classList.add('fail');
+  });
+  const fb=document.getElementById('qf_'+idx);
+  fb.className='qfb show '+(isOk?'ok':'fail');
+  let html=`<strong>${isOk?'✅ CORRECTO — Actuación ajustada a competencia':'❌ INCORRECTO — Revisión normativa requerida'}</strong>`;
+  html+=`<p style="margin-bottom:8px;">${p.fbs[letra]}</p>`;
+  p.ops.forEach(o=>{
+    if(o.l===letra)return;
+    const isOk2=o.l===p.ok;
+    html+=`<div class="subfb ${isOk2?'sfok':'sffail'}">
+      <span class="sl">Opción ${o.l}:</span>${p.fbs[o.l]}
+    </div>`;
+  });
+  fb.innerHTML=html;
+  fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+  updP();
+  if(resp.filter(r=>r!==null).length===PQ.length)setTimeout(showBoard,700);
+}
+
+function updP(){
+  const done=resp.filter(r=>r!==null).length;
+  document.getElementById('qBar').style.width=Math.round(done/PQ.length*100)+'%';
+  document.getElementById('qCnt').textContent=`${done} de ${PQ.length} preguntas respondidas`;
+}
+
+function showBoard(){
+  const corr=resp.filter((r,i)=>r===PQ[i].ok).length;
+  const pct=Math.round(corr/PQ.length*100);
+  let nivel,msg;
+  if(pct>=90){nivel='EXPERTO';msg='🏆 Dominio excepcional del Kardex y los métodos de valoración. Distingues con precisión los límites de tu competencia y aplicas correctamente el Promedio Ponderado vs. PEPS bajo la Resolución 533/2015 CGN. Estás listo para el concurso.';}
+  else if(pct>=75){nivel='AVANZADO';msg='✅ Base normativa sólida. Refuerza los cálculos de Promedio Ponderado (especialmente el recálculo tras entradas) y los casos de extralimitación de rol en política contable. Estás en buena posición.';}
+  else if(pct>=60){nivel='INTERMEDIO';msg='⚠️ Brechas importantes en los distractores de Vía de Hecho (promedio aritmético simple, ajustes sin soporte). Regresa a las secciones 4, 5 y 6 y repasa el ejercicio numérico antes de reintentar.';}
+  else{nivel='EN FORMACIÓN';msg='📚 Refuerzo profundo necesario. Lee completas las secciones 4, 5, 6 y 8. La diferencia entre Promedio Ponderado y promedio aritmético simple, y los límites de competencia del técnico en política contable, son los núcleos de este módulo.';}
+  document.getElementById('tPct').textContent=pct+'%';
+  document.getElementById('tPct').style.color=pct>=75?'var(--amarillo)':pct>=60?'#F0A500':'#E74C3C';
+  document.getElementById('tC').textContent=corr;
+  document.getElementById('tI').textContent=PQ.length-corr;
+  document.getElementById('tN').textContent=nivel;
+  document.getElementById('tMsg').textContent=msg;
+  const t=document.getElementById('tablero');
+  t.classList.add('show');
+  t.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetQ(){
+  resp=new Array(PQ.length).fill(null);
+  document.getElementById('tablero').classList.remove('show');
+  buildQ();
+  document.getElementById('s10').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+buildQ();
+</script>
+</body>
+</html>
