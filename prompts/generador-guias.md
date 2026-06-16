@@ -6,7 +6,7 @@
 >
 > **Documento VIVO:** cada vez que mejoremos una guía ("quita esto / agrega esto"), se actualiza este prompt y se anota en el **Changelog** (al final). Así toda guía nueva nace con las mejoras acumuladas.
 >
-> **Versión:** 1.0 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
+> **Versión:** 2.0 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
 
 ---
 
@@ -23,6 +23,20 @@ Actúa como un diseñador instruccional experto en concursos de mérito CNSC y u
 - Logo: SVG inline (flecha de impulso) en el header. Favicon: <link rel="icon" href="../brand/favicon.svg">.
 - HTML 100% autocontenido (CSS y JS embebidos). Debe abrir con doble clic en el navegador.
 - Tiempo de estudio objetivo: 75–110 minutos.
+
+== REUTILIZACIÓN Y CODIFICACIÓN (OBLIGATORIO) ==
+- Las guías FUNCIONALES deben ser REUTILIZABLES entre cargos y entidades: el mismo conocimiento le sirve a un almacenista de una alcaldía, un hospital o un instituto. Por eso NO menciones la entidad específica del aspirante (no "INDERVALLE"). Habla de "tu entidad" en genérico y usa ejemplos de varios tipos de entidad (alcaldía, hospital, instituto, secretaría). Todo lo específico de la entidad vive ÚNICAMENTE en la guía "Conoce tu Entidad" (ENT-xxx).
+- Código de guía funcional: patrón FUN-[FAMILIA]-[Nº] (ej. FUN-ALM-04). La FAMILIA es el dominio de conocimiento (ALM=Almacén, DOC=Gestión Documental, PRO=Procesos/Calidad, MIPG, OFI=Ofimática, ATC=Servicio/apoyo, TIC, FIN, TH, JUR…). El código es global y fijo; el "Día" se asigna por cliente.
+- Guía de entidad: ENT-[SIGLA]-[Nº] (ej. ENT-IDV-01). Esa SÍ es específica y no reutilizable.
+
+== VARIANTE FUNCIONAL v2 (úsala en TODAS las guías FUN-*) ==
+Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero ELEVAN la dinámica de aprendizaje con estos componentes adicionales (más práctica, menos fatiga):
+- HILO NARRATIVO: abre el Objetivo con un bloque ".narr" que pone al estudiante en situación ("Imagina que es tu primer día como Técnico de Almacén de tu entidad…"). Mantén ese tono de mentor cercano a lo largo de la guía.
+- DIAGRAMAS DE PROCESO (".flujo"): cuando el tema sea un proceso/secuencia (ciclo logístico, flujo de recepción, etc.), represéntalo con pasos visuales numerados (".flujo-paso"), no solo con texto.
+- CHECKPOINTS INTERCALADOS (".checkpoint" · "Aplica lo aprendido"): 2 o 3 mini-preguntas situacionales DENTRO del Desarrollo (no solo el simulacro final), cada una con feedback inmediato por opción. Mantienen la atención y verifican comprensión concepto a concepto.
+- TARJETAS "EN LA PRÁCTICA" (".practica"): ejemplos concretos y tangibles (un acta de recibo, un kardex, una tabla de existencias mínimas, una mini-tabla comparativa).
+- MICRO-TIPS "OJO EN LA PRUEBA" (".ojo"): avisos breves dentro del Desarrollo que anticipan cómo cae el tema en el examen.
+- REDACCIÓN: voz de mentor, cercana y clara, con ejemplos reales y CERO relleno. El estudiante debe sentir "aprendí muchísimo y valió la inversión".
 
 == ESTRUCTURA OBLIGATORIA (11 secciones navegables con pestañas) ==
 0. 🎯 Objetivo — qué dominará y para qué le sirve a su cargo (lista + box dorado de promesa).
@@ -45,7 +59,8 @@ Actúa como un diseñador instruccional experto en concursos de mérito CNSC y u
 - 12 preguntas. Distribución: 4 básicas + 5 intermedias + 3 avanzadas.
 - 4 opciones (A, B, C, D); solo una correcta. Las 4 son cursos de acción PLAUSIBLES.
 - TODAS las preguntas llevan contexto (ctx).
-- Retroalimentación POR OPCIÓN: explica por qué cada acción es correcta o incorrecta (aquí SÍ puedes citar el artículo/ley para reforzar). La opción correcta empieza con ✔.
+- Retroalimentación POR OPCIÓN: explica por qué CADA una de las 4 opciones es correcta o incorrecta (no solo la correcta); aquí SÍ puedes citar el artículo/ley para reforzar. La opción correcta empieza con ✔.
+- Los enunciados y contextos deben ser RICOS y realistas (varias líneas de caso), tal como los plantea la CNSC; nada de preguntas de una sola línea.
 - Al final: puntaje + lista de "Temas a reforzar" (según preguntas falladas). Cada pregunta tiene un campo "tema".
 - Distractores basados en errores reales: extralimitación de funciones, omisión de responsabilidades, incumplimiento de procedimiento, afectación al servicio al ciudadano, interpretación parcial, desconocimiento del alcance del cargo.
 - Respuestas correctas distribuidas SIN patrón visible.
@@ -87,6 +102,7 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 
 | Fecha | Versión | Cambio |
 |---|---|---|
+| 2026-06-16 | 2.0 | **Variante Funcional v2** para todas las guías FUN-*: hilo narrativo (.narr), diagramas de proceso (.flujo), checkpoints intercalados "Aplica lo aprendido" (.checkpoint), tarjetas "En la práctica" (.practica) y micro-tips "Ojo en la prueba" (.ojo). Se añade la **regla de reutilización** (guías funcionales entidad-agnósticas) y la **codificación** FUN-[FAMILIA]-Nº + ENT-[SIGLA]-Nº. Se refuerza: feedback por CADA opción y contextos ricos en el simulacro. Primera guía con este estándar: FUN-ALM-01. |
 | 2026-06-13 | 1.0 | Versión inicial del prompt, consolidando todas las decisiones tomadas: identidad 60-30-10, 11 secciones, conceptos en 4 capas + sub-bloques desplegables, flashcards, glosario, botón "Avanzar", y **simulacro de juicio situacional** (12 preguntas, 4 opciones A-D, 4-5-3, retroalimentación por opción + temas a reforzar). Reemplaza la regla antigua de 3 opciones del estándar AP-QA-001. |
 
 > Para detalles de implementación (clases CSS, esquema de los arrays JS, validaciones), ver `ESTANDAR-TECNICO.md` y `PLANTILLA-GUIA.md`.

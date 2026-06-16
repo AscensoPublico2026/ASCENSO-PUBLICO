@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ALM-01 · Fundamentos de la Gestión de Almacén Público — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+
+/* HEADER */
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+
+/* MAIN / SECTIONS */
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+
+/* CONCEPTO 4 CAPAS */
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+
+/* SUB-BLOQUES */
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+
+/* BOXES */
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+
+/* TABLAS */
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+
+/* CASOS */
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+
+/* TRAMPAS */
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+
+/* FLASHCARDS */
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+
+/* RESUMEN + GLOSARIO */
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+
+/* SIMULACRO */
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+
+/* ADVANCE */
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+
+/* ===== COMPONENTES v2 (FUNCIONAL) ===== */
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+
+/* FOOTER */
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ALM-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 9 · Biblioteca Funcional · Almacén</div>
+  <h1>Fundamentos de la Gestión de Almacén Público</h1>
+  <p class="header-sub">Entiende cómo funciona el almacén en una entidad pública y por qué tu cargo es una pieza clave de toda la cadena.</p>
+  <div class="badges">
+    <span class="badge">📅 Día 9 de 21</span>
+    <span class="badge">⏱ 90-110 min</span>
+    <span class="badge">🎯 Prueba escrita CNSC</span>
+    <span class="badge">🔁 Familia ALM</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+
+<!-- ===== SECCIÓN 0 · OBJETIVO ===== -->
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+
+  <div class="narr">
+    <span class="narr-tag">📍 Ponte en situación</span>
+    <p>Imagina que es tu <strong>primer día como Técnico de Almacén</strong> de tu entidad —da igual si es una alcaldía, un hospital, un instituto o una secretaría—. Te entregan unas llaves, un computador con un software de inventarios y un espacio lleno de elementos: resmas de papel, equipos, herramientas, dotación… Y una pregunta enorme en la cabeza: <em>«¿por dónde empiezo y de qué soy responsable?»</em></p>
+    <p>Esta guía te da ese mapa. Hoy entenderás el <strong>terreno completo</strong> donde vas a jugar; en las siguientes guías profundizamos en cada movimiento (recibir, codificar, registrar en el kardex, controlar existencias).</p>
+  </div>
+
+  <div class="card card-lead">
+    <p>Al terminar esta guía vas a poder explicar con tus palabras qué es un almacén público, cómo encaja en la entidad y cuál es exactamente tu papel dentro de la cadena. En concreto:</p>
+    <ul class="lista">
+      <li>Entender <strong>qué es el almacén</strong> y el aprovisionamiento en el sector público y por qué existen.</li>
+      <li>Reconocer el <strong>ciclo logístico</strong> completo: de la planeación de compras hasta la baja de bienes.</li>
+      <li>Diferenciar los <strong>tipos de bienes</strong> (de consumo y devolutivos) y por qué importa.</li>
+      <li>Identificar los <strong>principios</strong> que rigen el manejo de los bienes del Estado.</li>
+      <li>Conectar el almacén con el <strong>Plan Anual de Adquisiciones (PAA)</strong>.</li>
+      <li>Tener claro el <strong>alcance de tu cargo</strong>: qué te corresponde y qué no.</li>
+    </ul>
+  </div>
+
+  <div class="box gold">
+    <div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día tendrás la “fotografía mental” completa del almacén público. Cuando la CNSC te plantee un caso de tu día a día, vas a saber <strong>dónde estás parado</strong> y cuál es la actuación correcta, no por memoria, sino porque entendiste el sistema.</p>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN 1 · IMPORTANCIA ===== -->
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+
+  <p>La prueba de la CNSC para un cargo de almacén <strong>no te va a preguntar la definición de “almacén” de memoria</strong>. Te va a poner en situaciones reales: llega un pedido incompleto, un compañero te pide entregar un elemento sin soporte, descubres una diferencia en el inventario… y tendrás que elegir <strong>la actuación más apropiada</strong>.</p>
+
+  <p>Para responder bien esas preguntas necesitas <strong>entender el sistema completo</strong>, no solo tu tarea puntual. Quien solo memoriza pasos se equivoca cuando el caso cambia; quien entiende el porqué, acierta aunque la situación sea nueva. Por eso esta guía de fundamentos es la base sobre la que se montan todas las demás guías funcionales.</p>
+
+  <p>Además, el manejo de bienes públicos tiene una característica que lo hace <strong>especialmente sensible</strong>: detrás de cada elemento hay recursos del Estado. Un error no es solo administrativo, puede tener consecuencias <strong>fiscales y disciplinarias</strong>. La CNSC sabe esto y por eso evalúa con rigor si entiendes la responsabilidad que implica el cargo.</p>
+
+  <div class="box info">
+    <div class="box-title">ℹ️ Dato clave</div>
+    <p>En las pruebas de competencias funcionales, los temas de <strong>fundamentos y principios</strong> suelen aparecer como el “marco” de muchas preguntas: aunque la pregunta parezca sobre recepción o inventarios, lo que realmente evalúan es si entiendes <strong>el propósito y los límites</strong> de tu rol. Dominar esta guía te da ventaja en todo el bloque funcional.</p>
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN 2 · DESARROLLO ===== -->
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Los fundamentos, paso a paso</h2>
+  <p>Vamos a construir tu mapa mental en seis bloques. Léelos en orden: cada uno se apoya en el anterior. Después de varios conceptos encontrarás un <strong>“Aplica lo aprendido”</strong> para que compruebes que de verdad te quedó claro.</p>
+
+  <!-- CONCEPTO 1 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">🏬</span><span>1. ¿Qué es el almacén en una entidad pública?</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El <strong>almacén</strong> es el área —y el proceso de apoyo— encargada de <strong>recibir, custodiar, conservar y entregar</strong> los bienes y elementos que la entidad adquiere para cumplir su misión y para soportar su funcionamiento administrativo.</p>
+          <p>El <strong>aprovisionamiento</strong> es el conjunto de actividades para asegurar que la entidad <strong>tenga lo que necesita, cuando lo necesita</strong>, en la cantidad y calidad adecuadas, sin desperdicio.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>En la práctica, el almacén es un <strong>“punto de control”</strong>: nada entra ni sale sin quedar registrado y soportado. Eso garantiza que los recursos públicos se usen para lo que fueron comprados y que cualquiera pueda rastrear dónde está cada bien.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏛️</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>En cualquier entidad —una alcaldía, un hospital o un instituto del deporte— cuando llegan 500 resmas de papel, no se reparten “a ojo”: entran al almacén, se registran, y salen poco a poco con un soporte por cada entrega. Así se sabe cuánto había, cuánto se usó y cuánto queda.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Suelen plantear casos donde alguien quiere “saltarse” el almacén (entregar sin registro, recibir sin verificar). La respuesta correcta casi siempre defiende el <strong>control y el soporte</strong>: el almacén existe justamente para que eso no pase.</p>
+        </div>
+      </div>
+
+      <div class="practica full">
+        <div class="practica-head">🧰 En la práctica</div>
+        <div class="practica-body">
+          <p>Piensa en el almacén como el <strong>“banco de los bienes”</strong> de la entidad: igual que un banco no entrega plata sin registrar el retiro, el almacén no entrega elementos sin dejar el rastro. Esa comparación te servirá para resolver muchos casos: ante la duda, pregúntate <em>“¿quedó el movimiento registrado y soportado?”</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 2 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">🔄</span><span>2. El ciclo logístico (la cadena de abastecimiento)</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El <strong>ciclo logístico</strong> es la secuencia ordenada que recorre un bien desde que se planea su compra hasta que sale de servicio. El almacén participa en casi todas sus etapas.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Conocer el ciclo te permite ubicar <strong>en qué etapa estás</strong> ante cualquier situación y saber qué documento o control corresponde. Cada etapa tiene su soporte.</p>
+        </div>
+      </div>
+
+      <div class="full">
+        <div class="flujo">
+          <div class="flujo-paso"><span class="fp-n">1</span><h4>Planear</h4><p>Plan Anual de Adquisiciones (qué se va a comprar)</p></div>
+          <div class="flujo-paso"><span class="fp-n">2</span><h4>Adquirir</h4><p>Contratación / compra del bien</p></div>
+          <div class="flujo-paso"><span class="fp-n">3</span><h4>Recibir</h4><p>Verificar contra la orden y elaborar acta</p></div>
+          <div class="flujo-paso"><span class="fp-n">4</span><h4>Almacenar</h4><p>Custodiar y conservar en buen estado</p></div>
+          <div class="flujo-paso"><span class="fp-n">5</span><h4>Distribuir</h4><p>Entregar con soporte a quien lo necesita</p></div>
+          <div class="flujo-paso"><span class="fp-n">6</span><h4>Dar de baja</h4><p>Retirar lo inservible u obsoleto</p></div>
+        </div>
+      </div>
+
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏛️</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Una entidad planea comprar 20 computadores (paso 1), los contrata (2), los recibe y verifica seriales (3), los guarda (4), los entrega a las áreas con acta (5) y, años después, da de baja los que ya no sirven (6). El almacén toca los pasos 3 a 6.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Te dan una situación y debes identificar <strong>qué etapa</strong> es y qué corresponde hacer. Trampa típica: confundir “recibir” (verificar) con “almacenar” (custodiar), o entregar sin haber recibido formalmente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">Llega un lote de sillas a la entidad. El proveedor te pide que firmes el recibido “de una vez” porque tiene afán, sin abrir las cajas. ¿Qué es lo más apropiado?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="Firmar sin verificar te hace responsable de lo que diga el papel, aunque el contenido no coincida. El afán del proveedor no cambia tu deber.">Firmar para no demorar al proveedor; él es una empresa seria.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto. La etapa de RECEPCIÓN implica verificar contra la orden/contrato ANTES de firmar. El acta soporta lo que realmente entró.">Verificar cantidad y estado contra la orden de compra y solo entonces firmar el acta de recibo.</button>
+      <button class="cp-opt" data-ok="0" data-exp="Recibir sin registrar rompe el control: si después falta algo, no hay forma de saber si llegó o no.">Recibir las sillas y guardarlas; el registro lo haces cuando tengas tiempo.</button>
+    </div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- CONCEPTO 3 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">📦</span><span>3. Tipos de bienes: de consumo y devolutivos</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Los <strong>bienes de consumo</strong> se agotan con el uso (papel, tóner, elementos de aseo, dotación). Los <strong>bienes devolutivos</strong> tienen vida útil prolongada y se pueden devolver (computadores, muebles, herramientas, equipos).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>La diferencia define <strong>cómo se controla cada uno</strong>: el devolutivo se entrega a una persona responsable y lleva <strong>placa de inventario</strong>; el de consumo se descarga del inventario al entregarse, porque se usa y desaparece.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏛️</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Si entregas 10 lapiceros, son de consumo: salen del inventario y no esperas que los devuelvan. Si entregas un portátil, es devolutivo: queda asignado a una persona con su placa, y debe responder por él.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Casos donde se mezcla el tratamiento: tratar un devolutivo como consumo (entregarlo sin asignar responsable) o pedir que “devuelvan” un consumible. La clave: <strong>devolutivo = responsable + placa</strong>.</p>
+        </div>
+      </div>
+
+      <div class="practica full">
+        <div class="practica-head">🧰 En la práctica · Tabla rápida</div>
+        <div class="practica-body">
+          <div class="tabla-wrap">
+            <table>
+              <tr><th>Característica</th><th>De consumo</th><th>Devolutivo</th></tr>
+              <tr><td>Vida útil</td><td>Se agota con el uso</td><td>Prolongada</td></tr>
+              <tr><td>Ejemplos</td><td>Papel, tóner, aseo</td><td>PC, muebles, equipos</td></tr>
+              <tr><td>Placa de inventario</td><td>No</td><td>Sí</td></tr>
+              <tr><td>Responsable asignado</td><td>No (se descarga al entregar)</td><td>Sí (responde por el bien)</td></tr>
+            </table>
+          </div>
+          <p style="margin-top:10px;">Profundizaremos esta clasificación en <strong>FUN-ALM-03 · Clasificación y Codificación de Bienes</strong>. Por ahora basta con que distingas los dos grandes grupos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 4 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">⚖️</span><span>4. Principios del manejo de bienes públicos</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El manejo de bienes del Estado se rige por los <strong>principios de la función administrativa</strong> (art. 209 de la Constitución) aplicados a la logística: <strong>eficiencia, economía, transparencia, responsabilidad y planeación</strong>.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>No son frases bonitas: son la <strong>regla para decidir</strong> cuando un caso no tiene un procedimiento exacto. Ante la duda, la actuación correcta es la que respeta estos principios.</p>
+        </div>
+      </div>
+
+      <div class="sub-bloques">
+        <details class="sb sb-azul" open>
+          <summary>⚙️ Eficiencia y economía</summary>
+          <div class="sb-body">
+            <p><strong>Qué significan:</strong> usar los recursos sin desperdicio, evitar compras innecesarias y cuidar que nada se dañe o venza en bodega.</p>
+            <div class="box warn"><div class="box-title">⚠️ Trampa CNSC</div><p>Comprar “por si acaso” grandes cantidades que luego se vencen NO es previsión: es desperdicio, viola la economía.</p></div>
+          </div>
+        </details>
+        <details class="sb sb-oro">
+          <summary>🔍 Transparencia</summary>
+          <div class="sb-body">
+            <p><strong>Qué significa:</strong> que todo movimiento quede registrado y soportado, de modo que cualquier persona u órgano de control pueda verificarlo.</p>
+            <p>Por eso el soporte (acta, comprobante, kardex) no es burocracia: es la prueba de que actuaste bien.</p>
+          </div>
+        </details>
+        <details class="sb sb-verde">
+          <summary>🛡️ Responsabilidad y planeación</summary>
+          <div class="sb-body">
+            <p><strong>Qué significan:</strong> quien maneja bienes públicos responde por ellos (fiscal y disciplinariamente), y las necesidades se anticipan con planeación, no se improvisan.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="ojo full"><b>👁️ Ojo en la prueba:</b> cuando un caso te ofrezca una opción “más rápida” pero que se salta el registro o el soporte, casi siempre es la trampa. La transparencia pesa más que la rapidez.</div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">Tu jefe te dice que compres una cantidad enorme de un insumo que casi no se usa, “para no quedar cortos nunca”. Sabes que gran parte se vencerá en bodega. ¿Qué principio se estaría afectando?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="1" data-exp="Correcto. Acumular lo que se va a vencer es desperdicio de recursos públicos: vulnera la economía (y la eficiencia). Lo apropiado es dimensionar según el consumo real y, con respeto, advertirlo.">La economía y la eficiencia (se desperdiciarían recursos).</button>
+      <button class="cp-opt" data-ok="0" data-exp="La transparencia se refiere al registro y soporte de los movimientos; aquí el problema es el desperdicio, no la falta de soporte.">La transparencia (faltaría registro del movimiento).</button>
+      <button class="cp-opt" data-ok="0" data-exp="Comprar de más no es planear bien; al contrario, una buena planeación evita justamente este sobrestock.">Ninguno; comprar de más siempre es buena planeación.</button>
+    </div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- CONCEPTO 5 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">📋</span><span>5. El Plan Anual de Adquisiciones (PAA)</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El <strong>Plan Anual de Adquisiciones (PAA)</strong> es el documento donde cada entidad pública planea, al inicio del año, <strong>qué bienes y servicios va a comprar</strong>, cuándo y con qué presupuesto. Es público y se publica en el SECOP.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El almacén <strong>alimenta y se apoya</strong> en el PAA: los datos de consumo histórico y existencias que tú manejas ayudan a planear cuánto comprar. A su vez, lo que llega al almacén debe estar previsto en el plan.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏛️</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Si el kardex muestra que la entidad gasta 100 resmas al mes, esa cifra sirve para que el PAA del próximo año proyecte la compra adecuada: ni de menos (desabastecimiento) ni de más (vencimiento).</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Casos donde llega al almacén algo no planeado, o donde se pide proyectar una compra. La clave: las decisiones de abastecimiento se sustentan en <strong>datos reales</strong> (existencias, consumo) y en el <strong>PAA</strong>, no en la intuición.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 6 -->
+  <div class="concepto">
+    <div class="concepto-head"><span class="ch-icon">👤</span><span>6. Tu rol: el alcance del Técnico de Almacén</span></div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El nivel <strong>técnico</strong> ejecuta y da apoyo especializado a los procesos: recibe, registra, controla y entrega bienes, y <strong>apoya</strong> al nivel profesional. No define políticas ni toma decisiones que le corresponden a otros niveles.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Saber tu alcance evita dos errores opuestos: <strong>extralimitarte</strong> (decidir lo que no te toca) y <strong>quedarte corto</strong> (no hacer lo que sí es tu responsabilidad). Cuando algo excede tu nivel, lo correcto es <strong>informar y escalar</strong>, no callar ni resolver por tu cuenta.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏛️</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Detectas una diferencia grande en el inventario. No te corresponde “arreglar” los números ni ocultarlo: te corresponde <strong>registrar el hallazgo e informar</strong> a tu jefe inmediato para que se tomen las decisiones del caso.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Esta es de las trampas favoritas: ofrecen una opción donde el técnico “resuelve” algo que no le compete. La respuesta correcta respeta el <strong>alcance del cargo</strong>: ejecutar lo propio e informar lo que excede tu nivel.</p>
+        </div>
+      </div>
+
+      <div class="ojo full"><b>👁️ Ojo en la prueba:</b> ante un problema que te supera, la actuación correcta suele ser <strong>“registro + informo a mi jefe inmediato”</strong>. Ni lo ocultas, ni lo decides tú solo.</div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">Durante un conteo encuentras que faltan varios elementos devolutivos y no hay soporte de salida. ¿Cuál es la actuación más apropiada para tu nivel?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="Ajustar el sistema para que “cuadre” oculta el faltante y te expone a responsabilidad fiscal y disciplinaria. Nunca alteres los registros para tapar diferencias.">Ajustar el sistema para que las cantidades cuadren y evitar problemas.</button>
+      <button class="cp-opt" data-ok="0" data-exp="Callar no es opción: como responsable del bien, omitir el reporte también te hace responsable. El silencio agrava tu situación.">No decir nada y esperar a ver si los elementos aparecen después.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto. Tu rol es ejecutar e informar: dejas constancia del hallazgo y lo reportas a tu jefe inmediato para que se adelanten las acciones que correspondan.">Dejar constancia del hallazgo en el inventario e informar de inmediato a tu jefe inmediato.</button>
+    </div>
+    <div class="cp-fb"></div>
+  </div>
+
+</section>
+
+
+<!-- ===== SECCIÓN 3 · COMPARACIONES ===== -->
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ No los confundas</h2>
+  <p>Estos pares de conceptos se parecen y por eso la CNSC los usa para confundir. Tenlos claros.</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aprovisionamiento</th><th>Almacenamiento</th></tr>
+      <tr><td>Asegurar que la entidad <strong>tenga</strong> lo que necesita (planear, adquirir, reponer).</td><td><strong>Guardar y conservar</strong> los bienes que ya están en poder de la entidad.</td></tr>
+      <tr><td>Mira hacia afuera: proveedores, compras, tiempos.</td><td>Mira hacia adentro: bodega, orden, seguridad.</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Usan “aprovisionamiento” y “almacenamiento” como sinónimos. No lo son: aprovisionar es conseguir; almacenar es custodiar lo conseguido.</p></div>
+
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Almacén</th><th>Inventario</th></tr>
+      <tr><td>El <strong>lugar/proceso</strong> que custodia los bienes.</td><td>El <strong>registro</strong> detallado de qué bienes hay y en qué cantidad.</td></tr>
+      <tr><td>“Dónde están” los bienes.</td><td>“Cuántos y cuáles” hay, según los libros.</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Confundir el almacén (físico) con el inventario (registro). Puede haber diferencias entre lo físico y lo registrado: detectarlas y reportarlas es parte del control.</p></div>
+
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Bien de consumo</th><th>Bien devolutivo</th></tr>
+      <tr><td>Se agota con el uso.</td><td>Tiene vida útil prolongada.</td></tr>
+      <tr><td>Se descarga del inventario al entregarse.</td><td>Se asigna a un responsable y lleva placa.</td></tr>
+      <tr><td>No se espera devolución.</td><td>Debe responderse por él; puede reintegrarse.</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Tratar un devolutivo como consumo: entregar un equipo sin asignar responsable ni placa. Si después se pierde, no hay a quién responsabilizar.</p></div>
+</section>
+
+<!-- ===== SECCIÓN 4 · CASOS ===== -->
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2>
+  <p>Cinco situaciones reales del día a día del almacén, resueltas paso a paso. Lee la situación, piensa tu respuesta y luego compárala.</p>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 · El pedido incompleto</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega un pedido de 100 cajas, pero al contar solo hay 90. El proveedor insiste en que firmes por 100 y dice que las 10 restantes “las manda mañana”.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Recibir y firmar solo por lo que realmente llegó (90), dejando constancia del faltante.</strong> El acta debe reflejar la realidad física. Lo pendiente se recibe y se soporta cuando llegue. Firmar por 100 te haría responsable de 10 cajas que no entraron.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 · La entrega “de confianza”</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero de otra área te pide llevarse un videobeam “un momentico” para una reunión, sin firmar nada, porque “es de confianza y lo trae enseguida”.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué debes hacer?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Entregarlo solo con el soporte correspondiente.</strong> El videobeam es un devolutivo; toda salida debe quedar registrada con responsable. La confianza no reemplaza el control: si no vuelve, sin soporte no hay a quién responsabilizar y tú quedas expuesto.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 · El insumo que se vence</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Notas que un insumo comprado en exceso está cerca de su fecha de vencimiento y casi no rota.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la mejor actuación dentro de tu rol?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Informar oportunamente a tu jefe inmediato con el dato de existencias y rotación, para tomar acciones (priorizar su uso, redistribuir).</strong> Tú no decides qué se hace, pero sí debes alertar a tiempo. Dejar que se venza en silencio es desperdicio de recursos públicos.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 4 · La presión por “ahorrar tiempo”</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Hay mucho trabajo y un superior sugiere entregar varios elementos ahora y “registrar todo al final del día de una vez”.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué es lo más apropiado?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Registrar cada movimiento en el momento en que ocurre.</strong> Acumular registros “para después” es la principal causa de descuadres y pérdidas. El soporte debe acompañar al movimiento, no ir por detrás. Se puede ser ágil sin sacrificar el control.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 5 · Algo que no estaba planeado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega al almacén un bien que no aparece en ningún soporte ni estaba previsto en el Plan Anual de Adquisiciones.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cómo procedes?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ No ingresarlo “informalmente”: verificar su origen, soportes y orden, e informar a tu jefe antes de darle entrada.</strong> Todo lo que entra debe tener respaldo y estar previsto. Ingresar algo sin sustento rompe la trazabilidad y puede comprometer a la entidad.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN 5 · ERRORES ===== -->
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores que debes evitar</h2>
+
+  <div class="box danger"><div class="box-title">❌ Error 1 — Firmar recibidos sin verificar</div><p><strong>Por qué falla:</strong> te haces responsable de lo que no llegó. <strong>Corrige:</strong> cuenta y verifica contra la orden antes de firmar.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — Entregar sin soporte “por confianza”</div><p><strong>Por qué falla:</strong> sin registro no hay responsable ni trazabilidad. <strong>Corrige:</strong> toda salida lleva soporte, sin excepción.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Registrar los movimientos “después”</div><p><strong>Por qué falla:</strong> genera descuadres y pérdidas. <strong>Corrige:</strong> registra en el momento en que ocurre el movimiento.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — Tratar devolutivos como consumo</div><p><strong>Por qué falla:</strong> un equipo entregado sin responsable se pierde sin que nadie responda. <strong>Corrige:</strong> devolutivo = responsable + placa.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — Ocultar o “cuadrar” diferencias</div><p><strong>Por qué falla:</strong> es una falta grave con consecuencias fiscales y disciplinarias. <strong>Corrige:</strong> deja constancia e informa el hallazgo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 6 — Extralimitarte en tu rol</div><p><strong>Por qué falla:</strong> tomar decisiones que no te competen genera responsabilidad. <strong>Corrige:</strong> ejecuta lo tuyo e informa lo que excede tu nivel.</p></div>
+</section>
+
+<!-- ===== SECCIÓN 6 · TIPS ===== -->
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Trucos para dominar el tema</h2>
+
+  <div class="box ok"><div class="box-title">✅ Tip 1 — La regla de oro</div><p>Ante cualquier caso, pregúntate: <strong>“¿quedó registrado y soportado?”</strong>. Si la opción rompe el soporte, descártala.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 — Mnemotecnia del ciclo</div><p><strong>“Pla-Ad-Re-Al-Dis-Ba”</strong>: <strong>Pla</strong>near, <strong>Ad</strong>quirir, <strong>Re</strong>cibir, <strong>Al</strong>macenar, <strong>Dis</strong>tribuir, dar de <strong>Ba</strong>ja.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 — Consumo vs devolutivo</div><p>Si <strong>se devuelve o tiene placa</strong>, es devolutivo. Si <strong>se gasta</strong>, es de consumo. Fácil.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 — El “informo y escalo”</div><p>Cuando el caso te supera, la respuesta correcta casi siempre incluye <strong>informar al jefe inmediato</strong>. Ni ocultar, ni decidir solo.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 — Rapidez ≠ saltarse pasos</div><p>Las opciones que prometen “ahorrar tiempo” saltándose el control suelen ser la trampa. Sé ágil <strong>dentro</strong> del procedimiento.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 — Detrás de cada bien hay recursos públicos</div><p>Esa frase te orienta: la opción correcta es la que <strong>cuida el recurso público</strong> (economía, transparencia, responsabilidad).</p></div>
+</section>
+
+<!-- ===== SECCIÓN 7 · TRAMPAS ===== -->
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2>
+
+  <div class="trampa">
+    <div class="trampa-q">«El proveedor es serio, firma el recibido completo aunque no hayas contado todo.»</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">Parece lógico: ahorra tiempo y “no desconfías”.</div>
+      <div class="t-row malo">Es trampa: firmar sin verificar te hace responsable de faltantes.</div>
+      <div class="t-row bueno">Correcto: verificar y firmar solo por lo recibido, con constancia.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">«Cuadra el sistema para que el inventario no muestre diferencias.»</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">Parece “solucionar” el problema rápido.</div>
+      <div class="t-row malo">Es trampa: alterar registros oculta un faltante; falta grave.</div>
+      <div class="t-row bueno">Correcto: dejar constancia del hallazgo e informar al jefe.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">«Como hay afán, entrega ahora y registra todo al final del día.»</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">Parece eficiente ante la carga de trabajo.</div>
+      <div class="t-row malo">Es trampa: registrar “después” genera descuadres y pérdidas.</div>
+      <div class="t-row bueno">Correcto: registrar cada movimiento en el momento.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">«Tú detectaste el problema, así que tú decides cómo resolverlo.»</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">Parece proactividad y compromiso.</div>
+      <div class="t-row malo">Es trampa: decidir lo que no te compete es extralimitación.</div>
+      <div class="t-row bueno">Correcto: ejecutar lo tuyo e informar lo que excede tu nivel.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== SECCIÓN 8 · REPASO (FLASHCARDS) ===== -->
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Repasa con flashcards</h2>
+  <p>Toca la tarjeta para ver la respuesta. Repásalas hasta que las respondas sin dudar.</p>
+  <div class="flashcard-wrap">
+    <div id="flashcard" class="flashcard">
+      <div class="flash-face flash-front">
+        <span class="flash-tag">Pregunta</span>
+        <p id="flashFront"></p>
+        <small class="flash-hint">Toca para ver la respuesta</small>
+      </div>
+      <div class="flash-face flash-back">
+        <span class="flash-tag">Respuesta</span>
+        <p id="flashBack"></p>
+      </div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter">Tarjeta 1 de 10</span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN 9 · RESUMEN + GLOSARIO ===== -->
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen y glosario</h2>
+
+  <div class="resumen">
+    <div class="resumen-item"><h4>Almacén</h4><p>Recibe, custodia y entrega los bienes; es el “punto de control” de la entidad.</p></div>
+    <div class="resumen-item"><h4>Ciclo logístico</h4><p>Planear → Adquirir → Recibir → Almacenar → Distribuir → Dar de baja.</p></div>
+    <div class="resumen-item"><h4>Tipos de bienes</h4><p>De consumo (se gastan) y devolutivos (placa + responsable).</p></div>
+    <div class="resumen-item"><h4>Principios</h4><p>Eficiencia, economía, transparencia, responsabilidad y planeación.</p></div>
+    <div class="resumen-item"><h4>PAA</h4><p>Plan Anual de Adquisiciones: qué compra la entidad; se nutre de datos del almacén.</p></div>
+    <div class="resumen-item"><h4>Tu rol</h4><p>Ejecutar y apoyar; informar y escalar lo que excede tu nivel.</p></div>
+  </div>
+
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3>
+  <dl class="glosario">
+    <dt>Aprovisionamiento</dt><dd>Conjunto de actividades para que la entidad tenga lo que necesita, cuando lo necesita.</dd>
+    <dt>Bien devolutivo</dt><dd>Bien de vida útil prolongada, asignado a un responsable y con placa de inventario.</dd>
+    <dt>Bien de consumo</dt><dd>Bien que se agota con el uso y se descarga del inventario al entregarse.</dd>
+    <dt>Inventario</dt><dd>Registro detallado de qué bienes hay y en qué cantidad.</dd>
+    <dt>PAA</dt><dd>Plan Anual de Adquisiciones; documento público de planeación de compras (SECOP).</dd>
+    <dt>Trazabilidad</dt><dd>Posibilidad de rastrear el recorrido de un bien gracias a sus registros y soportes.</dd>
+  </dl>
+
+  <div class="box gold"><div class="box-title">💎 Para recordar</div><p>El almacén existe para <strong>cuidar el recurso público</strong>. Ante cualquier caso: <em>“¿quedó registrado y soportado?”</em> y <em>“¿esto es de mi nivel o debo informar?”</em>.</p></div>
+</section>
+
+<!-- ===== SECCIÓN 10 · SIMULACRO ===== -->
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+
+  <div class="card card-lead quiz-intro">
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso real</strong> y te pide la <strong>actuación más apropiada</strong>, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p>
+    <div class="dific-tags">
+      <span class="tag b">4 básicas</span>
+      <span class="tag i">5 intermedias</span>
+      <span class="tag a">3 avanzadas</span>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div style="text-align:center;margin:28px 0;">
+    <button id="btnCalcular" class="btn">Ver mi resultado</button>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num" id="scoreNum">0/12</div>
+    <p id="scoreMsg"></p>
+    <div id="temasReforzar"></div>
+    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-ALM-01 · Día 9 · Biblioteca Funcional (familia ALM) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+
+<script>
+/* ===== BARRA DE LECTURA ===== */
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const sc=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  readbar.style.width=sc+'%';
+});
+
+/* ===== NAVEGACIÓN POR SECCIONES ===== */
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){
+  secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));
+  navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+
+/* ===== BOTÓN "AVANZAR" AL FINAL DE CADA SECCIÓN ===== */
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');
+  bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');
+    btn.className='advance-btn';
+    btn.textContent='Avanzar →';
+    btn.addEventListener('click',()=>showSec(i+1));
+    bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');
+    btn.className='advance-btn final';
+    btn.textContent='✅ Finalizar Día 9';
+    btn.addEventListener('click',()=>alert('¡Felicitaciones! Terminaste el Día 9 · FUN-ALM-01.\n\nSigue con FUN-ALM-02 · Recepción y Verificación de Bienes.'));
+    bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+
+/* ===== CHECKPOINTS "APLICA LO APRENDIDO" ===== */
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{
+        b.classList.add('cp-lock');
+        if(b.dataset.ok==='1')b.classList.add('cp-ok');
+      });
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+
+/* ===== FLASHCARDS ===== */
+const flashcards=[
+  {f:'¿Qué es el almacén en una entidad pública?',b:'El área/proceso que recibe, custodia y entrega los bienes; el "punto de control" donde todo entra y sale con registro.'},
+  {f:'¿Cuáles son las etapas del ciclo logístico?',b:'Planear, Adquirir, Recibir, Almacenar, Distribuir y Dar de baja.'},
+  {f:'¿Diferencia entre bien de consumo y devolutivo?',b:'Consumo: se gasta y se descarga al entregar. Devolutivo: vida útil larga, lleva placa y responsable.'},
+  {f:'¿Qué principios rigen el manejo de bienes públicos?',b:'Eficiencia, economía, transparencia, responsabilidad y planeación.'},
+  {f:'¿Qué es el PAA?',b:'Plan Anual de Adquisiciones: documento público (SECOP) donde la entidad planea qué comprar; se nutre de datos del almacén.'},
+  {f:'Aprovisionar vs almacenar, ¿cuál es conseguir?',b:'Aprovisionar es conseguir lo que se necesita; almacenar es custodiar lo ya conseguido.'},
+  {f:'Ante un faltante sin soporte, ¿qué haces?',b:'Dejar constancia del hallazgo e informar al jefe inmediato. Nunca "cuadrar" el sistema.'},
+  {f:'¿Cuándo se registra un movimiento del almacén?',b:'En el momento en que ocurre; nunca "todo junto después".'},
+  {f:'Si un problema excede tu nivel, ¿qué procede?',b:'Ejecutar lo tuyo e informar/escalar a tu jefe inmediato; ni ocultar ni decidir solo.'},
+  {f:'¿Diferencia entre almacén e inventario?',b:'Almacén = lugar/proceso que custodia. Inventario = registro de qué y cuánto hay.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){
+  flashEl.classList.remove('flipped');
+  flashFront.textContent=flashcards[flashIndex].f;
+  flashBack.textContent=flashcards[flashIndex].b;
+  flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;
+}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+
+/* ===== SIMULACRO ===== */
+const preguntas=[
+  {nivel:'b',tema:'Recepción y verificación',
+   ctx:'Llega a tu almacén un pedido que, según la factura, contiene 100 cajas de insumos. El transportador tiene afán y te pide firmar el recibido completo de una vez, antes de que cuentes, prometiendo que todo está correcto.',
+   q:'La actuación más apropiada es:',
+   ops:['Firmar el recibido por 100 cajas, ya que la factura lo respalda y el transportador tiene prisa.',
+        'Contar y revisar el estado de las cajas contra la factura y la orden, y firmar solo por lo que realmente llegó.',
+        'Recibir las cajas sin firmar nada y registrar el ingreso cuando tengas tiempo.',
+        'Rechazar todo el pedido para no asumir riesgos.'],
+   correcta:1,
+   expl:['Firmar sin verificar te hace responsable de faltantes o daños que no detectaste; el afán de un tercero no releva tu deber de control.',
+         '✔ La recepción implica verificar cantidad y estado contra la orden/factura antes de firmar. El acta debe reflejar lo realmente recibido.',
+         'Recibir sin dejar registro rompe la trazabilidad: si luego falta algo, no hay forma de saber si ingresó.',
+         'Rechazar todo es desproporcionado; lo correcto es verificar y recibir lo conforme, dejando constancia de lo que no.']},
+
+  {nivel:'b',tema:'Soporte de salida',
+   ctx:'Un funcionario de otra dependencia llega de afán y te pide entregarle un computador portátil "un momento" para una reunión, sin diligenciar ningún soporte, porque promete devolverlo enseguida.',
+   q:'¿Qué debes hacer?',
+   ops:['Entregarlo sin soporte, pues es un compañero de confianza y lo devolverá pronto.',
+        'Negar la entrega de forma definitiva; los portátiles nunca se prestan.',
+        'Entregarlo registrando la salida con el soporte correspondiente y el responsable.',
+        'Entregarlo y anotarlo en un papel informal para acordarte después.'],
+   correcta:2,
+   expl:['La confianza no reemplaza el control; sin soporte, si el equipo no regresa no hay responsable y tú quedas expuesto.',
+         'El problema no es prestarlo, sino hacerlo sin soporte; no es necesario negarlo de plano si se documenta.',
+         '✔ Es un devolutivo: toda salida debe quedar registrada con su soporte y responsable. Así hay trazabilidad.',
+         'Un papel informal no es soporte válido ni queda en el sistema; no garantiza control ni responsabilidad.']},
+
+  {nivel:'b',tema:'Tipos de bienes',
+   ctx:'Vas a entregar a un área 15 resmas de papel y, por separado, una impresora. Un compañero nuevo te dice que registres ambas entregas de la misma forma.',
+   q:'La forma correcta de manejarlo es:',
+   ops:['Descargar las resmas como consumo y registrar la impresora como devolutivo, con responsable y placa.',
+        'Registrar todo como consumo, porque salió del almacén el mismo día.',
+        'Registrar todo como devolutivo para tener mayor control.',
+        'Entregar sin registrar, ya que es poca cantidad.'],
+   correcta:0,
+   expl:['✔ El papel es de consumo (se gasta) y la impresora es devolutivo (vida útil larga, requiere responsable y placa). Cada uno tiene su tratamiento.',
+         'La impresora no es consumo: si la tratas así, queda sin responsable y se puede perder sin que nadie responda.',
+         'Las resmas no son devolutivos; no tiene sentido asignarles responsable y placa, pues se gastan.',
+         'Toda entrega se registra, sin importar la cantidad; omitirlo rompe el control.']},
+
+  {nivel:'b',tema:'Alcance del cargo',
+   ctx:'Detectas un problema en el manejo de unos bienes que claramente excede tus funciones y requiere una decisión de nivel superior.',
+   q:'Lo más apropiado para tu nivel es:',
+   ops:['Tomar tú la decisión para resolverlo rápido y demostrar iniciativa.',
+        'Ignorarlo, pues no es de tu competencia.',
+        'Comentarlo informalmente con un compañero del mismo nivel.',
+        'Dejar constancia del hecho e informarlo a tu jefe inmediato para que se tomen las decisiones que correspondan.'],
+   correcta:3,
+   expl:['Decidir lo que no te compete es extralimitación de funciones, con consecuencias.',
+         'Ignorar un problema del que tienes conocimiento también compromete tu responsabilidad.',
+         'Comentarlo informalmente no resuelve ni deja soporte; el conducto correcto es tu jefe inmediato.',
+         '✔ El nivel técnico ejecuta e informa: dejar constancia y escalar al jefe inmediato es la actuación correcta.']},
+
+  {nivel:'i',tema:'Transparencia y registro oportuno',
+   ctx:'Es un día de altísima carga. Tu superior sugiere que entregues todos los elementos pendientes ahora y que registres todos los movimientos juntos al final de la jornada para "ahorrar tiempo".',
+   q:'¿Cuál es la actuación más apropiada?',
+   ops:['Acatar sin más: viene de un superior y agiliza el trabajo.',
+        'Negarte a entregar nada hasta que baje la carga de trabajo.',
+        'Registrar cada movimiento en el momento en que ocurre, organizándote para ser ágil sin perder el control.',
+        'Entregar todo y pedirle a un compañero que registre por ti más tarde.'],
+   correcta:2,
+   expl:['Aunque venga de un superior, acumular registros genera descuadres; puedes plantearle, con respeto, hacerlo en el momento.',
+         'Negarte a trabajar no es la salida; el servicio no puede paralizarse.',
+         '✔ El registro debe acompañar al movimiento. Se puede ser ágil dentro del procedimiento, sin sacrificar la trazabilidad.',
+         'Delegar el registro "para después" mantiene el riesgo de descuadre y diluye la responsabilidad.']},
+
+  {nivel:'i',tema:'Economía y eficiencia',
+   ctx:'Revisando existencias, ves que un insumo comprado en gran cantidad casi no rota y una parte está próxima a vencerse.',
+   q:'Dentro de tu rol, lo más apropiado es:',
+   ops:['Informar oportunamente a tu jefe, con los datos de existencias y rotación, para que se tomen acciones.',
+        'Esperar a que se venza y luego darlo de baja sin más.',
+        'Repartirlo rápidamente entre las áreas aunque no lo necesiten, para que no se pierda.',
+        'No intervenir, pues la compra ya se hizo y no es tu asunto.'],
+   correcta:0,
+   expl:['✔ Alertar a tiempo con datos permite priorizar el uso o redistribuir, cuidando el recurso público (economía).',
+         'Dejar que se venza es desperdicio evitable; tu deber es alertar antes.',
+         'Forzar entregas a quien no lo necesita también es desperdicio y descontrola el inventario.',
+         'El manejo eficiente de existencias sí es parte de tu rol; callar contribuye a la pérdida.']},
+
+  {nivel:'i',tema:'Diferencias de inventario',
+   ctx:'Durante un conteo encuentras un faltante de varios elementos devolutivos sin soporte de salida. Un compañero te sugiere ajustar el sistema para que "cuadre" y evitar problemas.',
+   q:'La actuación correcta es:',
+   ops:['Ajustar el sistema como sugiere tu compañero; total, nadie lo notará.',
+        'Dejar constancia del faltante e informarlo a tu jefe inmediato para que se adelanten las acciones del caso.',
+        'Asumir el costo de tu bolsillo para reponerlo y no reportar nada.',
+        'Esperar unos días por si los elementos aparecen antes de decir algo.'],
+   correcta:1,
+   expl:['Alterar registros para ocultar un faltante es una falta grave con consecuencias fiscales y disciplinarias.',
+         '✔ Lo correcto es documentar el hallazgo e informar; el control exige transparencia, no tapar diferencias.',
+         'Reponer en silencio oculta el problema de fondo y no deja la trazabilidad debida.',
+         'Demorar el reporte agrava tu situación; el hallazgo se informa de inmediato.']},
+
+  {nivel:'i',tema:'Trazabilidad y ciclo logístico',
+   ctx:'Llega al almacén un bien que no tiene orden de compra ni soporte, y que no estaba previsto en el Plan Anual de Adquisiciones.',
+   q:'¿Cómo debes proceder?',
+   ops:['Ingresarlo al inventario de una vez para no dejarlo por fuera.',
+        'Rechazarlo y devolverlo sin avisar a nadie.',
+        'No darle entrada informal: verificar origen y soportes e informar a tu jefe antes de ingresarlo.',
+        'Guardarlo aparte y usarlo cuando alguien lo necesite.'],
+   correcta:2,
+   expl:['Ingresar algo sin respaldo rompe la trazabilidad y puede comprometer a la entidad.',
+         'Devolverlo por tu cuenta, sin verificar ni informar, tampoco es correcto: podría tener una explicación válida.',
+         '✔ Todo lo que entra debe tener soporte y estar previsto; verificar e informar antes de ingresar es lo correcto.',
+         'Usar un bien sin entrada formal lo deja por fuera de todo control.']},
+
+  {nivel:'i',tema:'Plan Anual de Adquisiciones',
+   ctx:'El área de planeación te pide insumos para proyectar la compra de papelería del próximo año.',
+   q:'Lo más apropiado que puedes aportar desde el almacén es:',
+   ops:['Sugerir que compren la misma cantidad del año pasado sin revisar nada.',
+        'Decir que no es tu función y no entregar información.',
+        'Recomendar comprar la mayor cantidad posible para no quedar cortos.',
+        'Entregar los datos reales de consumo y existencias del kardex para que la proyección se base en evidencia.'],
+   correcta:3,
+   expl:['Repetir cifras sin analizar puede arrastrar errores; la proyección debe basarse en datos actualizados.',
+         'Aportar información de consumo y existencias sí hace parte de tu rol de apoyo a la planeación.',
+         'Comprar "lo más posible" lleva a sobrestock y vencimientos: viola la economía.',
+         '✔ El PAA debe nutrirse de datos reales de consumo y existencias; eso es justo lo que el almacén aporta.']},
+
+  {nivel:'a',tema:'Responsabilidad fiscal y presión indebida',
+   ctx:'Un superior te presiona para entregar de inmediato unos bienes devolutivos a una persona, sin diligenciar el soporte ni asignar responsable, diciendo que "él responde".',
+   q:'La actuación más apropiada es:',
+   ops:['Obedecer sin objeción; la responsabilidad recae en quien dio la orden.',
+        'Explicar, con respeto, que la entrega requiere soporte y responsable, dejar constancia y, si insiste, pedir la instrucción por escrito.',
+        'Entregar los bienes y registrar a esa persona como responsable sin que firme.',
+        'Negarte rotundamente y reportarlo de inmediato a un órgano de control externo.'],
+   correcta:1,
+   expl:['Una orden no te exime: si manejas el bien, también respondes. Cumplir una instrucción irregular te compromete.',
+         '✔ Lo correcto es sustentar el procedimiento, dejar constancia y, ante la insistencia, solicitar la orden por escrito para proteger el control y a ti mismo.',
+         'Asignar un responsable que no firmó no constituye soporte válido; el control quedaría solo aparente.',
+         'Acudir directo a un órgano de control externo sin agotar el conducto interno y el soporte por escrito es desproporcionado como primera medida.']},
+
+  {nivel:'a',tema:'Transparencia y conflicto de intereses',
+   ctx:'Un proveedor, mientras recibes su entrega, te ofrece un obsequio personal "por tu buena disposición" y para que agilices el recibido y le firmes sin tanta revisión.',
+   q:'¿Qué es lo más apropiado?',
+   ops:['Rechazar el obsequio, realizar la verificación normal y, si corresponde, informar la situación.',
+        'Aceptar el detalle, pues es pequeño, pero igual revisar la entrega.',
+        'Aceptarlo y agilizar el recibido como agradecimiento.',
+        'Rechazarlo, pero igual firmar rápido para no incomodar al proveedor.'],
+   correcta:0,
+   expl:['✔ Aceptar dádivas compromete tu imparcialidad y puede configurar falta; lo correcto es rechazar, verificar normalmente e informar.',
+         'Aceptar un obsequio de un proveedor, aunque sea pequeño, afecta tu objetividad y está prohibido.',
+         'Aceptar y agilizar saltándote la revisión suma dos faltas: la dádiva y la omisión del control.',
+         'Aunque rechaces el obsequio, firmar sin verificar mantiene una falla de control.']},
+
+  {nivel:'a',tema:'Integridad del soporte',
+   ctx:'Te piden firmar un acta de recibo de unos elementos que tú no verificaste personalmente; otro compañero dice que "ya los revisó", pero no hay registro de esa revisión.',
+   q:'Lo más apropiado es:',
+   ops:['Firmar el acta confiando en la palabra de tu compañero.',
+        'Firmar, pero anotar que no fuiste tú quien revisó.',
+        'No firmar lo que no te consta: verificar tú mismo, o que quien revisó lo soporte y firme, antes de avalar el acta.',
+        'Pedirle al proveedor que firme también para repartir la responsabilidad.'],
+   correcta:2,
+   expl:['Firmar sobre algo que no te consta te hace responsable de lo que no verificaste.',
+         'Una anotación no te libera: si firmas, avalas el contenido del acta.',
+         '✔ No debes avalar lo que no te consta; verifica directamente o que quien revisó lo soporte y firme. El acta debe reflejar la verdad verificada.',
+         'La firma del proveedor no reemplaza la verificación interna ni reparte tu responsabilidad.']}
+];
+
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function renderQuiz(){
+  respondidas={};
+  quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    const card=document.createElement('div');
+    card.className='pregunta';
+    let opsHtml='';
+    p.ops.forEach((op,j)=>{
+      const letra=String.fromCharCode(65+j);
+      opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><span>'+op+'</span></div>';
+    });
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div>'
+      +'<div class="q-texto">'+p.q+'</div>'
+      +'<div class="opciones">'+opsHtml+'</div>'
+      +'<div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, oi=+this.dataset.op;
+      if(respondidas[qi]!==undefined)return;
+      respondidas[qi]=oi;
+      const p=preguntas[qi];
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+        o.classList.add('bloqueada');
+        if(k===p.correcta)o.classList.add('correcta');
+      });
+      const fb=document.getElementById('fb-'+qi);
+      const letraCorrecta=String.fromCharCode(65+p.correcta);
+      if(oi===p.correcta){
+        fb.className='feedback ok show';
+        fb.innerHTML='✅ <strong>¡Correcto!</strong> '+p.expl[p.correcta];
+      }else{
+        this.classList.add('incorrecta');
+        fb.className='feedback no show';
+        fb.innerHTML='❌ <strong>Incorrecto.</strong> Tu opción: '+p.expl[oi]
+          +'<br><br>✅ <strong>La respuesta correcta es '+letraCorrecta+':</strong> '+p.expl[p.correcta];
+      }
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0; const temasFallados=[];
+  preguntas.forEach((p,i)=>{
+    if(respondidas[i]===p.correcta)correctas++;
+    else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);
+  });
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/12';
+  let msg; const pct=correctas/12;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas los fundamentos del almacén. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){
+    cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';
+  }else{
+    const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');
+    cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';
+  }
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});
+});
+renderQuiz();
+</script>
+</body>
+</html>
