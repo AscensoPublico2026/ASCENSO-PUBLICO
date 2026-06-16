@@ -1,5 +1,7 @@
 # 📊 PLAN DE PROYECTO — Ascenso Público
 
+> ⚠️ **DOCUMENTO HISTÓRICO / PARCIALMENTE DESACTUALIZADO.** Las fases y pendientes de abajo reflejan un estado anterior. Hoy ya están hechos: contenido (31 guías), plataforma (compra, panel estudiante/admin), BON-01 y BON-02, ENT-IDV-01, asignación por código y correos. **El estado real y el próximo paso (simulacro SIM-001) están en `CONTINUIDAD.md`** (fuente de verdad).
+
 > **Para qué sirve este documento.** Es la **vista de gestión** del proyecto: en qué fase vamos, qué está hecho, qué falta, en qué orden hacerlo, cuánto esfuerzo toma y cómo medir el avance.
 >
 > Complementa a `PROYECTO-MAESTRO.md` (el *qué* y el *porqué*). Aquí está el *cuándo*, *en qué orden* y *cuánto*.
