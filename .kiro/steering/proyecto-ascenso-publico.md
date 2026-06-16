@@ -158,7 +158,7 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 1. Logo V2.
 2. Paleta 60-30-10 (azul + dorado + crema).
 3. Tipografías Source Serif 4 + Plus Jakarta Sans.
-4. Simulacro **de juicio situacional**: 12 preguntas / 4 opciones / retroalimentación por opción / temas a reforzar. (Casos, no memoria de la norma.)
+4. Simulacro **de juicio situacional** — **ESTRUCTURA CONGELADA, NO CAMBIA NUNCA**: 12 preguntas (4 básicas + 5 intermedias + 3 avanzadas) / 4 opciones (A-D) / retroalimentación por opción / temas a reforzar. Cada pregunta = **contexto largo** (caso real, ≥ 220) + **enunciado situacional largo** que replantea el dilema (≥ 120) + **4 opciones largas y plausibles** como cursos de acción completos (≥ 110 c/u, nada corto ni obvio). Casos, no memoria de la norma. Opciones barajadas en cada carga. **Modelo de referencia obligatorio: `motor/contenido/FUN-ALM-04.json`.**
 5. 11 secciones obligatorias.
 6. Patrón 4 capas + sub-bloques.
 7. Botón "Avanzar" al final de cada sección.
