@@ -6,7 +6,7 @@
 >
 > **Documento VIVO:** cada vez que mejoremos una guía ("quita esto / agrega esto"), se actualiza este prompt y se anota en el **Changelog** (al final). Así toda guía nueva nace con las mejoras acumuladas.
 >
-> **Versión:** 2.0 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
+> **Versión:** 2.1 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
 
 ---
 
@@ -36,6 +36,7 @@ Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero 
 - CHECKPOINTS INTERCALADOS (".checkpoint" · "Aplica lo aprendido"): 2 o 3 mini-preguntas situacionales DENTRO del Desarrollo (no solo el simulacro final), cada una con feedback inmediato por opción. Mantienen la atención y verifican comprensión concepto a concepto.
 - TARJETAS "EN LA PRÁCTICA" (".practica"): ejemplos concretos y tangibles (un acta de recibo, un kardex, una tabla de existencias mínimas, una mini-tabla comparativa).
 - MICRO-TIPS "OJO EN LA PRUEBA" (".ojo"): avisos breves dentro del Desarrollo que anticipan cómo cae el tema en el examen.
+- ENLACES A LA FUENTE (".fuentes"): en el Desarrollo, incluye un bloque con enlaces a las fuentes OFICIALES (norma, Constitución, entidad rectora) de los temas tratados, para que el estudiante que quiera profundice por su cuenta. Usa fuentes oficiales y estables (Constitución vía Secretaría del Senado; Función Pública; Contaduría General de la Nación; Colombia Compra Eficiente; etc.). Nunca enlaces inventados.
 - REDACCIÓN: voz de mentor, cercana y clara, con ejemplos reales y CERO relleno. El estudiante debe sentir "aprendí muchísimo y valió la inversión".
 
 == ESTRUCTURA OBLIGATORIA (11 secciones navegables con pestañas) ==
@@ -59,7 +60,7 @@ Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero 
 - 12 preguntas. Distribución: 4 básicas + 5 intermedias + 3 avanzadas.
 - 4 opciones (A, B, C, D); solo una correcta. Las 4 son cursos de acción PLAUSIBLES.
 - TODAS las preguntas llevan contexto (ctx).
-- Retroalimentación POR OPCIÓN: explica por qué CADA una de las 4 opciones es correcta o incorrecta (no solo la correcta); aquí SÍ puedes citar el artículo/ley para reforzar. La opción correcta empieza con ✔.
+- Retroalimentación POR OPCIÓN: al hacer clic en una opción se revelan las explicaciones de LAS 4 opciones (debajo de cada una), indicando por qué cada una es correcta o incorrecta; no solo la elegida ni solo la correcta. Aquí SÍ puedes citar el artículo/ley para reforzar.
 - Los enunciados y contextos deben ser RICOS y realistas (varias líneas de caso), tal como los plantea la CNSC; nada de preguntas de una sola línea.
 - Al final: puntaje + lista de "Temas a reforzar" (según preguntas falladas). Cada pregunta tiene un campo "tema".
 - Distractores basados en errores reales: extralimitación de funciones, omisión de responsabilidades, incumplimiento de procedimiento, afectación al servicio al ciudadano, interpretación parcial, desconocimiento del alcance del cargo.
@@ -102,6 +103,7 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 
 | Fecha | Versión | Cambio |
 |---|---|---|
+| 2026-06-16 | 2.1 | Mejoras al simulacro y al Desarrollo (a partir de feedback en FUN-ALM-01): (1) al hacer clic en una opción se muestran las explicaciones de LAS 4 opciones (por qué cada una es correcta o incorrecta), debajo de cada opción; (2) los contextos y enunciados del simulacro se hacen más largos y difíciles (escenarios con presión, conflicto de intereses, distractores plausibles); (3) el Desarrollo debe incluir un bloque ".fuentes" con enlaces a las fuentes oficiales/normas para profundizar. |
 | 2026-06-16 | 2.0 | **Variante Funcional v2** para todas las guías FUN-*: hilo narrativo (.narr), diagramas de proceso (.flujo), checkpoints intercalados "Aplica lo aprendido" (.checkpoint), tarjetas "En la práctica" (.practica) y micro-tips "Ojo en la prueba" (.ojo). Se añade la **regla de reutilización** (guías funcionales entidad-agnósticas) y la **codificación** FUN-[FAMILIA]-Nº + ENT-[SIGLA]-Nº. Se refuerza: feedback por CADA opción y contextos ricos en el simulacro. Primera guía con este estándar: FUN-ALM-01. |
 | 2026-06-13 | 1.0 | Versión inicial del prompt, consolidando todas las decisiones tomadas: identidad 60-30-10, 11 secciones, conceptos en 4 capas + sub-bloques desplegables, flashcards, glosario, botón "Avanzar", y **simulacro de juicio situacional** (12 preguntas, 4 opciones A-D, 4-5-3, retroalimentación por opción + temas a reforzar). Reemplaza la regla antigua de 3 opciones del estándar AP-QA-001. |
 
