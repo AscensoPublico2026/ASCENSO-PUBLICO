@@ -3,28 +3,18 @@
 > **Para retomar en una nueva sesión de Kiro:** conecta este repositorio y pídele a Kiro:
 > *"Lee CONTINUIDAD.md y ARQUITECTURA-PLATAFORMA.md y continuemos donde quedamos."*
 
-_Última actualización: trabajo sobre el CONTENIDO DE GUÍAS (motor de guías) — estándar profundo aplicado a las 12 funcionales y guía bonus de Ofimática pendiente._
-
-> **⏳ ESTADO DE ESTA LÍNEA DE TRABAJO (contenido de guías, motor):**
->
-> **Rama de trabajo:** `feat/desarrollo-profundo-todas` (PENDIENTE DE MERGE a `main`). Link para mergear: https://github.com/ascensopublico2026/ASCENSO-PUBLICO/pull/new/feat/desarrollo-profundo-todas
->
-> **✅ YA HECHO en esta rama:**
-> 1. **Simulacro tipo CNSC (juicio situacional) reescrito en las 12 guías funcionales** (`motor/contenido/FUN-*.json`): contexto largo (≥220), enunciado situacional largo (≥120) y 4 opciones largas y plausibles (≥110), con opciones **barajadas en cada carga** (aleatorias).
-> 2. **Desarrollo PROFUNDO tipo «mini-libro»** en las 12 funcionales (8-10 temas cada una, 30+ bloques): FUN-ALM-01..07, FUN-ATC-01, FUN-DOC-01, FUN-MIPG-01, FUN-OFI-01, FUN-PRO-01. Generalizadas (sin entidad/OPEC/cargo). Algunas calibradas con las guías manuales del usuario que subió a la raíz del repo (`guia_*.html`, carpeta de referencias).
-> 3. **Motor mejorado** (`motor/base-guia.html` + `motor/construir_guia.py`): nuevos bloques **`calculo`** (fórmulas paso a paso), **`normativa`** (marco legal citado) y **`destacado`** (regla de oro/alerta); **modo BONUS** en badges/footer (cuando `familia=="BON"` o `bonus:true`).
-> 4. **Estándar CONGELADO y VALIDADO por el motor**: el validador avisa si una guía queda por debajo (Desarrollo <7 temas, <25 bloques, sin normativa/tabla/destacado; simulacro sin ctx/q/ops largos). Documentado en `.kiro/steering/proyecto-ascenso-publico.md` y `motor/README.md`. **Toda guía nueva debe cumplir este piso.** Modelos de referencia: `motor/contenido/FUN-DOC-01.json` y `FUN-ALM-04.json`.
->
-> **🔜 PENDIENTE INMEDIATO — Guía BONUS `BON-02` «Ofimática y Habilidades Digitales»:**
-> - Es una guía bonus que irá en **TODOS los cursos** (junto a `BON-01`). Cubre lo que pregunta la **Prueba de Juicio Situacional (PJS)** de la CNSC: **Word** (combinar correspondencia, control de cambios/comentarios, comparar documentos, estilos+tabla de contenido, encabezado/«primera página diferente», saltos de sección/orientación/numeración i-ii-iii, pegado especial, índice/glosario, notas/citas, PDF, atajos), **Excel** (SI/SI anidado, CONTAR.SI, SUMAR.SI, CONTARA, BUSCARV, CONCATENAR, SUBTOTALES, referencias absolutas $, tablas dinámicas y Suma→Cuenta, filtros, ordenar, inmovilizar paneles, buscar/reemplazar, texto en columnas, validación de datos, formato condicional, gráficos línea/circular, error ###), **PowerPoint** (patrón de diapositivas, transición vs animación, animación al hacer clic, SmartArt/organigrama, vista clasificador, modo presentador, hipervínculo, enviar al fondo, F5/Shift+F5, buenas prácticas, plantilla), **Outlook/correo** (Para/CC/CCO, reenviar, reglas, carpetas, libreta Ctrl+Mayús+B, tareas, F9, adjuntos), **atajos de Windows** (Mayús+Supr, Ctrl+flecha, Alt+Enter, Alt+F4, Alt+Tab, Ctrl+Esc, Windows+R), **seguridad informática** (phishing, antivirus/cuarentena, .zip, no compartir credenciales) y **nube/colaboración** (Guardar vs Guardar como, control de versiones, OneDrive/SharePoint coautoría, compartir por enlace, PDF).
-> - **Metadata acordada:** `codigo:"BON-02"`, `archivo:"BON-02-ofimatica-habilidades-digitales.html"`, `titulo:"Ofimática y Habilidades Digitales"`, `familia:"BON"`, `dia:"Bonus"`, `bonus:true`, `proxima:""`, `categoria:"Guía Bonus · Ofimática y Habilidades Digitales"`, `tiempo:"100-120 min"`.
-> - **Debe cumplir el estándar profundo** (8-10 temas, normativa con Ley 1581/2012, Ley 1712/2014, Decreto 1008/2018, Ley 527/1999; tablas de atajos/funciones; destacados de seguridad; simulacro 12 preguntas 4-5-3 tipo PJS sobre los casos del material) y compilar **sin avisos** con `python3 motor/construir_guia.py motor/contenido/BON-02.json`.
-> - El **material/banco de preguntas** que define qué se evalúa está guardado en el repo: **`referencias/ofimatica-banco-preguntas.md`** (Parte A: 57 ítems de conocimiento; Parte B: simulacro PJS de la Convocatoria Antioquia 3). Úsalo como **temario** de BON-02 (no copiar literal: enseñar todos esos conceptos). Falta crear el JSON; el sub-agente que lo intentaba se abortó.
-> - Tras crearla: registrarla en `biblioteca/biblioteca.json` y, en la plataforma, sumarla a la auto-carga de bonus en `lib/autocargarGuias.ts` (hoy carga `BON-01`).
+_Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, automatización de asignación de guías por código, reorden del panel y guía "Conoce tu Entidad" (ENT-IDV-01). **Próximo paso: crear el SIMULACRO (SIM-001).**_
 
 ---
 
-> **NOTA:** El bloque siguiente describe el estado de la PLATAFORMA (todo en producción y mergeado en `main`). La línea de trabajo de arriba (contenido de guías) está en la rama `feat/desarrollo-profundo-todas` aún sin mergear.
+## 0. ESTADO ACTUAL (resumen para arrancar rápido)
+
+- **Plataforma:** 100% en producción en https://ascensopublico.com. Todo mergeado en `main`.
+- **Contenido de guías:** **31 guías publicadas** en la biblioteca, todas con el estándar profundo del motor:
+  - INTRO-00 + Generales (GEN-01/02/03) + 12 por nivel (ASI/TEC/PRO) + 12 funcionales (FUN-*) + 2 bonus (BON-01 Estrategia CNSC, BON-02 Ofimática) + **ENT-IDV-01 (Conoce tu Entidad: INDERVALLE)**.
+- **Flujo de armado de cursos:** el admin ya **asigna guías por código** desde desplegables (no sube HTML a mano). El panel del curso está **ordenado por el plan** (Día 1 + Conoce tu Entidad → generales/nivel → 12 funcionales → simulacro).
+- **Prueba de compra:** hecha desde un perfil de prueba. Correos funcionan (al cliente ✅). **PENDIENTE (acción del usuario):** el aviso al admin llega a `cesardeavilamartinez@gmail.com`; hay que cambiar la variable `ADMIN_EMAIL` en Vercel a `ascensopublico@gmail.com` y **redesplegar** (es solo configuración, el código está bien).
+- **➡️ PRÓXIMO PASO (se hará en una nueva sesión): crear el SIMULACRO `SIM-001`** para el cargo de prueba (INDERVALLE, Técnico Operativo 314-03, Almacén), hacer pruebas de cómo se ve y **definir su diseño/estructura como plantilla de TODOS los simulacros** (igual que se hizo con las guías y con "Conoce tu Entidad").
 
 ---
 
@@ -54,96 +44,115 @@ plataforma/                · App Next.js (CORE, en producción)
   │                          reset-password, perfil, perfil/[cursoId], guia/[id],
   │                          admin/*, api/webhooks/wompi, api/admin/*
   ├─ app/components/       · NavLanding, NivelTabs, ConvocatoriasGrid, ContadorCupos, ScrollReveal
-  ├─ lib/                  · supabase, wompi, wompiApi, email, auth, format,
-  │                          procesarPago, autocargarGuias, catalogoGuias (+ biblioteca.json copia)
+  ├─ lib/                  · supabase, wompi, wompiApi, email, auth, format, procesarPago,
+  │                          autocargarGuias, catalogoGuias (+ biblioteca.json copia)
   ├─ supabase/             · schema.sql, seed-convocatorias.sql, migracion-progreso.sql
-  ├─ public/               · fotos/ (convocatorias+fundador), brand/ (logos), seed-guias/ (30 guías publicadas)
+  ├─ public/               · fotos/, brand/, seed-guias/ (31 guías publicadas, HTML servido estático)
   └─ SETUP.md, DESPLIEGUE.md
 brand/                     · logos originales + brand/fotos (respaldo)
-guias/                     · 30 guías HTML codificadas (INTRO, GEN, nivel, 12 funcionales FUN-*, BON-01/02)
-biblioteca/biblioteca.json · fuente de verdad del catálogo de guías (se copia a plataforma/lib/ con scripts/sync-biblioteca.sh)
-referencias/               · insumos de contenido (ej. banco de preguntas de Ofimática para BON-02)
-prompts/                   · plantillas para automatización futura (generador guías/plan)
+guias/                     · 31 guías HTML codificadas (INTRO, GEN, nivel, 12 FUN-*, BON-01/02, ENT-IDV-01)
+biblioteca/biblioteca.json · FUENTE DE VERDAD del catálogo (se copia a plataforma/lib/ con scripts/sync-biblioteca.sh)
+motor/                     · motor data-driven: base-guia.html + construir_guia.py + contenido/*.json (genera el HTML de las guías)
+referencias/               · insumos de contenido (ej. ofimatica-banco-preguntas.md para BON-02)
+prompts/                   · generador-plan-estudio.md (v3) + generador-guias.md (v2.1) — prompts portables a cualquier IA
+scripts/                   · sync-biblioteca.sh (copia catálogo + HTML a la plataforma), utilidades
 ARQUITECTURA-PLATAFORMA.md · PROYECTO-MAESTRO.md · PLAN-PROYECTO.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md
 ```
 
 ## 5. LO QUE YA ESTÁ HECHO Y FUNCIONANDO ✅
 
 ### Landing (`/`)
-Migrada a Next.js. Convocatorias dinámicas desde Supabase, animaciones de scroll (ScrollReveal), responsive móvil, SEO + Open Graph + favicon + sitemap + robots. Hero, fundador (Julio César Deávila), nivel interactivo, FAQ, política de datos, WhatsApp flotante.
+Migrada a Next.js. Convocatorias dinámicas desde Supabase, ScrollReveal, responsive, SEO + Open Graph + favicon + sitemap + robots. Hero, fundador (Julio César Deávila), nivel interactivo, FAQ, política de datos, WhatsApp flotante.
 
-### Compra (`/comprar`)
-Formulario con **Nombres + Apellidos separados** (normalización Title Case vía `lib/format.ts`), OPEC/cargo/nivel obligatorios, **contador de cupos** (100 de lanzamiento), pre-llena datos si el usuario está logueado (multi-curso). Sube manual PDF a Storage privado.
-
-### Flujo de pago
-`/comprar` → Wompi → **webhook** (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías. Redirect a `/activar` (crear contraseña). `procesarReferencia` es **robusto ante usuarios residuales** (busca por email, evita duplicados por opec).
+### Compra (`/comprar`) y pago
+Formulario con Nombres+Apellidos separados (Title Case vía `lib/format.ts`), OPEC/cargo/nivel obligatorios, contador de cupos (100), pre-llena si está logueado (multi-curso), sube manual PDF a Storage. Flujo: `/comprar` → Wompi → webhook (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías → `/activar`. Robusto ante usuarios residuales.
 
 ### Auto-carga de guías (`lib/autocargarGuias.ts`)
-Al comprar se cargan automáticamente: **Intro (INTRO-00) + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01, BON-02)**.
+Al comprar se cargan automáticamente: **INTRO-00 + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01, BON-02)**. Las **funcionales, el simulacro y "Conoce tu Entidad"** NO se auto-cargan: las asigna el admin por código (ver abajo).
 
-### Asignar guías de la biblioteca por código (NUEVO) (`lib/catalogoGuias.ts`)
-Las **funcionales** (días 9-20) y el **simulacro** ya NO se suben subiendo el HTML a mano. El admin, en `/admin/cursos/[id]`, usa un **desplegable** con las guías publicadas de la biblioteca (funcional + simulacro) y las asigna **por código** (según el plan de estudio); la guía queda cargada al instante referenciando el HTML que ya vive en el bucket `guias`. Se mantiene la **subida manual de HTML** solo como fallback para guías personalizadas (ej. "Conoce tu Entidad").
-- Fuente de verdad: `biblioteca/biblioteca.json` → copia en `plataforma/lib/biblioteca.json` (sincronizar con `scripts/sync-biblioteca.sh`).
-- Requisito: el HTML de la guía debe estar en el bucket. Tras agregar guías nuevas, correr `scripts/sync-biblioteca.sh` y visitar `/api/admin/seed-guias` (admin) para subirlas (idempotente).
+### Asignar guías de la biblioteca por código (`lib/catalogoGuias.ts`)
+El admin, en `/admin/cursos/[id]`, asigna guías publicadas **por código** desde desplegables (sin subir HTML); la guía queda cargada referenciando el HTML que ya vive en el bucket `guias`. Helpers del catálogo: `guiasFuncionalesAsignables`, `guiasSimulacroAsignables`, `guiasEntidadAsignables`, `esRutaEntidad`.
+- Fuente de verdad: `biblioteca/biblioteca.json` → copia en `plataforma/lib/biblioteca.json`.
+- **Al agregar/crear una guía nueva:** correr `scripts/sync-biblioteca.sh` (copia catálogo + HTML a la plataforma) y visitar `/api/admin/seed-guias` (admin) para subir el HTML al bucket (idempotente; sube TODAS las publicadas, 31 hoy).
 
-### Portal del estudiante (`/perfil`)
-Multi-curso con **tarjetas hero** (imagen convocatoria + overlay navy + OPEC badge dorado + cargo en Title Case). `/perfil/[cursoId]` muestra la biblioteca por secciones (Plan / Bonus / Simulacro). **Progreso EN VIVO** (guías leídas / total; columna `leida` en `guias_curso`). Botones "Cambiar contraseña", "Comprar otro curso" y "Panel admin" (solo si rol=admin).
+### Panel admin del curso ordenado por el plan (`/admin/cursos/[id]`)
+Secciones en orden: **📅 Día 1 (Presentación + desplegable "Conoce tu Entidad" → solo guías ENT-*)** · **📚 Generales y por nivel (auto)** · **📝 Guías funcionales (x/12, desplegable)** · **🎯 Simulacro (desplegable)** · **⬆️ Subir HTML personalizado (fallback)**. Más: datos del cliente, manual PDF, y botones "Curso listo" (12h) / "Habilitar ahora".
 
-### Visor de guías (`/guia/[id]`)
-Iframe que carga `/api/guia/[id]` (sirve el HTML desde Storage privado con URL firmada). Marca la guía como leída al abrir y recalcula el progreso.
+### Portal del estudiante (`/perfil`, `/perfil/[cursoId]`)
+Multi-curso con tarjetas hero; biblioteca por secciones (Plan / Bonus / Simulacro); progreso EN VIVO (columna `leida` en `guias_curso`). Visor `/guia/[id]` (iframe → `/api/guia/[id]` con URL firmada), marca leída al abrir.
 
-### Panel admin (`/admin`)
-Layout con sidebar (Dashboard, Cursos, Convocatorias, Usuarios).
-- **`/admin/cursos/[id]`**: datos del cliente + manual PDF + guías auto-cargadas + **asignar guías de la biblioteca por código (desplegable)** + subir HTML personalizado (fallback) + **dos botones**: "Curso listo" (se habilita a las 12h de la compra) y "Habilitar ahora" (acceso inmediato, para casos especiales).
-- **`/admin/convocatorias`**: CRUD con campo `imagen_url`.
-- **`/admin/usuarios`**: listar + eliminar usuarios (no admins).
+### Auth y correos
+`/login` (+ recuperar contraseña), `/reset-password`, `middleware.ts` protege `/perfil` `/guia` `/admin`. Correos (`lib/email.ts`) con plantilla de marca: confirmación al cliente (✅ funciona) + aviso al admin (a `ADMIN_EMAIL`). Remitente `noreply@ascensopublico.com`.
 
-### Auth
-`/login` (con "¿Olvidaste tu contraseña?"), `/reset-password`, `middleware.ts` protege `/perfil` `/guia` `/admin` (excluye `/api/`).
+### Endpoints admin
+- `/api/admin/seed-guias` — sube TODAS las guías publicadas (derivadas del catálogo) al bucket `guias`.
+- `/api/admin/reprocesar?ref=XXX` — reprocesa un pago manualmente.
 
-### Correos (`lib/email.ts`)
-Plantilla HTML profesional con **logo dorado + colores de marca** (encabezado navy, botón CTA, footer con WhatsApp). Confirmación al cliente + aviso al admin. Remitente `noreply@ascensopublico.com`.
-
-### Endpoints admin útiles (se mantienen)
-- `/api/admin/seed-guias` — sube **todas las guías publicadas** (30, derivadas del catálogo `biblioteca.json`) al bucket `guias` (solo admin, idempotente).
-- `/api/admin/reprocesar?ref=XXX` — reprocesa un pago manualmente (herramienta de emergencia).
 
 ## 6. Datos / convenciones (NO cambiar sin avisar)
-- **Tablas Supabase:** `profiles`, `convocatorias`, `preregistros`, `cursos`, `guias_curso`, `pagos`.
-- **Guías:** las 30 guías publicadas viven en `/guias` (repo), se copian a `plataforma/public/seed-guias/` y se suben al bucket privado `guias` de Storage. `biblioteca/biblioteca.json` es la fuente de verdad del catálogo (copia en `plataforma/lib/biblioteca.json`).
+- **Tablas Supabase:** `profiles`, `convocatorias`, `preregistros`, `cursos`, `guias_curso`, `pagos`. Enum `tipo_guia`: `general | nivel | funcional | bonus | simulacro`.
+- **Guías:** las 31 publicadas viven en `/guias` (repo), se copian a `plataforma/public/seed-guias/` y se suben al bucket privado `guias`. `biblioteca/biblioteca.json` es la fuente de verdad (copia en `plataforma/lib/biblioteca.json`).
 - **Fotos:** `/plataforma/public/fotos`. **Logos:** `/plataforma/public/brand`.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
 - **Contacto:** WhatsApp **573151972091** · correo **ascensopublico@gmail.com**.
 - **Precio:** $300.000 COP, pago único. **Cupos de lanzamiento:** 100.
-- **Niveles:** `asistencial` | `tecnico` | `profesional`.
-- **Fundador:** Julio César Deávila.
+- **Niveles:** `asistencial` | `tecnico` | `profesional`. **Fundador:** Julio César Deávila.
 
 ## 7. Flujo de trabajo (IMPORTANTE)
-- Trabajar en **ramas** y hacer push; el usuario mergea desde GitHub.
-- ⚠️ Si la herramienta de **crear PR falla** ("No provider found"), mergear **directo a main** con git (el usuario lo autoriza expresamente).
+- Trabajar en **ramas** y hacer push; el usuario mergea desde GitHub. **Preferencia del usuario:** enviarle el **link directo** para mergear (`.../pull/new/<rama>`), sin pasos intermedios.
+- ⚠️ La herramienta de **crear PR falla** ("No provider found") — es esperado: pasar el link directo de la rama y el usuario crea/mergea el PR.
+- Para **previsualizar una guía renderizada** sin merge: ponerla en `plataforma/public/seed-guias/` y usar la URL de **Preview de Vercel** + `/seed-guias/NOMBRE.html` (se sirve estática). En producción: `https://ascensopublico.com/seed-guias/NOMBRE.html`.
 - Tras cambiar variables en **Vercel**, recordar **redesplegar**.
-- ⚠️ Vercel a veces solo toma el primer commit de una rama si se pushea **después** de abrir el PR: **verificar siempre** que los cambios lleguen a `main` (revisar el contenido en main, no solo el log).
-- 🌐 El sandbox de Kiro tiene red **INTEGRATIONS_ONLY** (sin acceso directo a Supabase/Wompi): Kiro escribe/sube código; el usuario configura paneles externos.
-- 🚫 Nada de testimonios/fotos/cifras inventadas. Solo datos reales.
-- 🔒 Nunca exponer secretos (`service_role`, llaves privadas) en el repo.
+- 🌐 El sandbox de Kiro tiene red **OPEN_INTERNET** pero **sin acceso directo a Supabase/Wompi/Vercel**: Kiro escribe/sube código; el usuario configura paneles externos.
+- 🛠️ **Truco de git en el sandbox:** el clon es *shallow* y `git fetch` directo falla (auth solo por las herramientas MCP de GitHub: `pull_repository`, `push_to_remote`). Para mergear ramas localmente puede tocar `git replace --graft` por el borde shallow (ya resuelto antes).
+- 🚫 Nada de testimonios/fotos/cifras inventadas. Solo datos reales. 🔒 Nunca exponer secretos en el repo.
 
 ## 8. Variables de entorno en Vercel (ya configuradas)
 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
 `NEXT_PUBLIC_WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`,
-`RESEND_API_KEY`, `ADMIN_EMAIL`, `NEXT_PUBLIC_SITE_URL` (=https://ascensopublico.com),
+`RESEND_API_KEY`, **`ADMIN_EMAIL`** (⚠️ revisar: debe ser `ascensopublico@gmail.com`), `NEXT_PUBLIC_SITE_URL` (=https://ascensopublico.com),
 `NEXT_PUBLIC_WOMPI_REDIRECT_URL` (=https://ascensopublico.com/activar), `PRECIO_COP` (=300000).
 
-## 9. PENDIENTES / ROADMAP (en pausa hasta que el usuario lo pida)
-- **CONTENIDO PENDIENTE:**
-  - **"Conoce tu Entidad" (ENT-xxx / INTRO-01):** guía personalizada por entidad del aspirante (la única no reutilizable). Se crea al confirmar la compra.
-  - **SIMULACRO FINAL (SIM-001):** módulo interactivo tipo CNSC (juicio situacional, repetible). Se construye **al final**, cuando un cargo tenga TODO el contenido (generales + nivel + funcionales). Es la pieza estrella.
-- **ASIGNACIÓN POR CÓDIGO (HECHO ✅):** el admin arma el plan asignando guías de la biblioteca desde un desplegable (sin subir HTML). Primer paso hacia la automatización total.
-- **AUTOMATIZACIÓN (Fase 3):** al comprar → IA lee el manual de funciones → genera el plan de estudio → reutiliza guías de la biblioteca que coincidan **100%** (mismo nivel + mismo tema) → genera las faltantes con las plantillas/políticas → las deja en estado "pendiente de revisión" → el admin revisa y publica. Requiere API de IA (costo por uso).
-- **TESTIMONIOS:** tabla + admin + sección en landing. En pausa hasta tener reseñas reales (mantener oculto hasta que el usuario avise).
-- **CHATBOT** de dudas sencillas en el portal del estudiante. Muy a futuro.
-- **Vercel Pro** ($20/mes) cuando se venda formalmente (uso comercial). Correo profesional (`contacto@`) opcional.
+## 9. IDEAS, PROPUESTAS Y DECISIONES (contexto conceptual — leer antes de continuar)
 
-## 10. Cómo quedó esta conversación
-Sesión dedicada a: **guías bonus BON-01 (Estrategia CNSC) y BON-02 (Ofimática)** publicadas y auto-cargadas en todos los cursos; **limpieza** del repo (eliminados 8 HTML prototipo huérfanos de la raíz); y **automatización de la asignación de guías**: ahora todas las guías publicadas (30) se siembran al bucket y el admin las asigna a un curso **por código** desde un desplegable en `/admin/cursos/[id]` (sin subir HTML a mano), basándose en el plan de estudio. Se conserva la subida manual de HTML solo para guías personalizadas.
+### 9.1 Portabilidad: el proyecto NO depende de ninguna IA en particular ✅ (decisión clave)
+El "cómo se hacen las cosas" vive en **documentos + el motor**, no en el asistente. Para no quedar amarrado a Kiro:
+- **`prompts/generador-plan-estudio.md` (v3):** recibe OPEC + manual de funciones y devuelve (1) la **tabla del plan de 21 días** con columna **Estado** (✅ Reusar / 🆕 Crear) y (2) **fichas de contenido** por cada guía a crear, en el formato exacto que espera el generador de guías (temario expandido: subtemas, normas a citar, ejemplos por entidad, qué evalúa la CNSC).
+- **`prompts/generador-guias.md` (v2.1, documento vivo con changelog):** recibe la ficha de una guía y devuelve el HTML completo con el estándar.
+- **`motor/`:** el diseño está **congelado en código** (`base-guia.html` + `construir_guia.py`); la IA solo rellena un JSON de contenido (`motor/contenido/CODIGO.json`) y el script genera el HTML. Así el diseño NUNCA se rompe al cambiar de IA.
+- **Flujo portable completo:** plan → fichas → generar cada guía → guardar en `guias/` → registrar en `biblioteca.json` → `scripts/sync-biblioteca.sh` → `/api/admin/seed-guias` → asignar por código en el panel.
 
-**Todo está mergeado en `main` y desplegado.** Pendientes de contenido: **Conoce tu Entidad** y el **Simulacro Final**.
+### 9.2 "Conoce tu Entidad" (ENT-*) — PLANTILLA DEFINIDA ✅
+`ENT-IDV-01` (INDERVALLE) es el **molde oficial** de todas las guías de entidad. Decisión del usuario: es una **bienvenida institucional GENERAL y rica en información de la entidad**, NO interactiva (sin quiz/trampas/comparaciones), y **sirve para cualquier nivel/cargo de esa entidad** (no menciona OPEC ni cargo). Secciones: Bienvenida · Identidad · Qué hace · En detalle · Marco legal · Organización (misional + apoyo) · Para tu prueba · Cierre. Diseño con la marca (navy/crema/oro). Para otra entidad: reemplazar solo los textos, mantener estructura/estilo.
+
+### 9.3 SIMULACRO (SIM-*) — PRÓXIMO PASO 🔜
+- Es la **pieza estrella**. Se construye cuando el cargo ya tiene todo el contenido (generales + nivel + funcionales). Tipo **juicio situacional** (igual estándar que el simulacro de las funcionales: contexto largo + enunciado + 4 opciones plausibles, feedback por opción, puntaje + temas a reforzar, repetible, opciones barajadas).
+- **Se generará a partir del contenido de las guías del plan** del cliente (sabemos qué cubre cada guía).
+- **Es único por OPEC, pero se GUARDA para reutilizar:** si llega otra compra de la misma OPEC, no se rehace — se carga el ya creado.
+- En la nueva sesión: crear `SIM-001` para el cargo de prueba, **probar cómo se ve, ajustar y CONGELAR su diseño/estructura como plantilla de todos los simulacros**.
+
+### 9.4 "Biblioteca por OPEC" — PROPUESTA (Fase 2, requiere luz verde + migración del usuario)
+Idea del usuario: que al recibir una compra de una **OPEC ya trabajada antes**, el curso se arme **solo** (sin volver a crear ni asignar guía por guía). Diseño propuesto por Kiro:
+- **2 tablas nuevas en Supabase:** `plantillas_opec` (opec, nivel, cargo, created_at) y `plantillas_opec_guias` (opec, titulo, dia, tipo, orden, archivo_path).
+- **Botón "Guardar como plantilla de esta OPEC"** (guarda la "receta" del curso armado) y **"Cargar plantilla de la OPEC"** (arma el curso de una).
+- **Flujo:** OPEC nueva → se arma manual y se guarda como plantilla; OPEC repetida → se carga todo y el admin solo aprueba/habilita.
+- **Decisiones pendientes con el usuario:** (a) ¿clave por OPEC (recomendado) o por cargo+nivel?; (b) ¿aplicar plantilla **automático** al comprar o **avisar** antes? Requiere que el usuario aplique la migración SQL en Supabase.
+
+### 9.5 AUTOMATIZACIÓN total (Fase 3, futuro)
+Al comprar → IA lee el manual → genera el plan (con `generador-plan-estudio.md`) → reutiliza guías 100% coincidentes → genera las faltantes (con `generador-guias.md` + motor) → quedan "pendiente de revisión" → admin publica. Requiere API de IA (costo por uso).
+
+### 9.6 Otros pendientes (en pausa)
+- **TESTIMONIOS:** tabla + admin + sección landing. Oculto hasta tener reseñas reales.
+- **CHATBOT** de dudas en el portal. Muy a futuro.
+- **Vercel Pro** ($20/mes) al vender formalmente. Correo profesional (`contacto@`) opcional.
+
+## 10. Cómo quedó esta sesión
+- ✅ **BON-02 (Ofimática)** creada (basada en `referencias/ofimatica-banco-preguntas.md`) y auto-cargada como bonus.
+- ✅ **Asignación de guías por código** + **panel del curso reordenado** por el plan (Día 1/Entidad → generales/nivel → funcionales → simulacro) + seed de las 31 publicadas + `scripts/sync-biblioteca.sh`.
+- ✅ **`generador-plan-estudio.md` v3** (tabla con Estado + fichas de contenido listas para pegar → portable a cualquier IA).
+- ✅ **Plan de estudio generado** para el cargo de prueba (INDERVALLE Téc. Operativo 314-03, Almacén): las 12 funcionales YA existían (este fue el cargo modelo); solo faltan crear **ENT-IDV-01** (hecha) y **SIM-001** (próximo).
+- ✅ **ENT-IDV-01 "Conoce tu Entidad: INDERVALLE"** creada, generalizada y publicada (molde de todas las ENT-*).
+- ✅ **Limpieza** del repo (sin HTML huérfanos en la raíz).
+- ⚠️ Pendiente del usuario: corregir `ADMIN_EMAIL` en Vercel (aviso de compra debe ir a `ascensopublico@gmail.com`) y redesplegar.
+
+**Todo está mergeado en `main` y desplegado.** ➡️ **PRÓXIMO PASO (nueva sesión): crear el SIMULACRO `SIM-001` y congelar su diseño como plantilla.** Luego, si el usuario da luz verde, construir la "Biblioteca por OPEC" (§9.4).
