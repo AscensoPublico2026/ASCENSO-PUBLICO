@@ -37,3 +37,13 @@ Genera una guía HTML completa **separando el diseño del contenido**. Así crea
 `comparaciones[], casos[], errores[], tips[], trampas[], flashcards[], resumen[], glosario[], para_recordar, simulacro[]`
 
 > Las capas `eje` y `cnsc` son opcionales (algunos conceptos usan sub-bloques en su lugar).
+
+
+## Construir todas de una vez + validación
+
+- `construir_guia.py` ahora **valida** cada guía antes de generarla: 12 preguntas (4-5-3), 4 opciones con sus 4 explicaciones, secciones completas, sin patrones obvios. Si hay un error, no genera y lo reporta.
+- `construir_todas.py` arma **todas** las guías de `contenido/*.json` con un solo comando:
+  ```bash
+  python3 motor/construir_todas.py
+  ```
+  Reporta un resumen (generadas / con errores). Así garantizamos guías **completas y sin errores**.

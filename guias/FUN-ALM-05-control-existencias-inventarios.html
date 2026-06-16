@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ALM-05 · Control de Existencias e Inventarios — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ALM-05</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 13 · Biblioteca Funcional · Almacén</div>
+  <h1>Control de Existencias e Inventarios</h1>
+  <p class="header-sub">Ni te quedes sin nada ni acumules de más: el equilibrio del almacén. Y cuando el físico no cuadra con el sistema, sabes qué hacer.</p>
+  <div class="badges"><span class="badge">📅 Día 13 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🔁 Familia ALM</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0"><span class="eyebrow">Sección 1 · Objetivo</span><h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2><div class="narr"><span class="narr-tag">📍 Ponte en situación</span><p>Un área llega de urgencia: <em>«necesito 50 unidades ya»</em>… y en bodega solo hay 8. O al revés: tienes 4.000 de algo que casi no se usa, ocupando espacio y a punto de vencerse. Ese desequilibrio es el enemigo del almacén.</p><p>Controlar existencias es mantener el <strong>punto justo</strong>: ni desabastecimiento ni sobrestock. Y cuando hagas inventario y el físico no cuadre con el sistema, hoy sabrás exactamente cómo actuar.</p></div><div class="card card-lead"><p>Al terminar esta guía sabrás mantener el almacén en equilibrio y manejar las diferencias con criterio. En concreto:</p><ul class="lista"><li>Entender qué es el <strong>control de existencias</strong> y por qué importa.</li><li>Manejar <strong>existencias mínimas, máximas y punto de reorden</strong>.</li><li>Saber para qué sirve la <strong>verificación periódica</strong> del stock.</li><li>Conocer cómo se hace un <strong>inventario físico</strong>.</li><li>Realizar la <strong>conciliación</strong> entre el físico y el sistema.</li><li>Actuar bien ante <strong>faltantes y sobrantes</strong>, sin “cuadrar”.</li></ul></div><div class="box gold"><div class="box-title">💎 La promesa de esta guía</div><p>Al cerrar el día sabrás cuándo alertar para comprar, cómo hacer un conteo confiable y por qué una diferencia se investiga, nunca se maquilla.</p></div></section>
+<section class="section" data-sec="1"><span class="eyebrow">Sección 2 · Importancia</span><h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2><p>El control de existencias es donde el almacén demuestra su valor: evita que el servicio se pare por desabastecimiento y que se pierdan recursos por sobrestock. La CNSC evalúa si sabes <strong>alertar a tiempo</strong> y <strong>manejar las diferencias correctamente</strong>.</p><p>El momento más sensible es el inventario físico: al contar, casi siempre aparecen diferencias con el sistema. Lo que define a un buen técnico no es que “todo cuadre”, sino <strong>qué hace cuando no cuadra</strong>.</p><p>Aquí se conecta todo lo aprendido: un buen kardex (guía anterior) hace que el control de existencias y la conciliación sean confiables. Y las diferencias mal manejadas tienen consecuencias fiscales y disciplinarias.</p><div class="box info"><div class="box-title">ℹ️ Dato clave</div><p>Regla del día: <strong>alertar antes de quedar en cero, no comprar de más, y ante una diferencia: documentar e investigar, nunca ajustar a mano</strong>.</p></div></section>
+<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span><h2 class="sec-title">📖 Mantener el equilibrio y conciliar</h2><p>Seis bloques para controlar el stock y manejar los inventarios. Hay varios <strong>“Aplica lo aprendido”</strong> en el camino.</p><div class="concepto"><div class="concepto-head"><span class="ch-icon">📊</span><span>1. ¿Qué es el control de existencias?</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>control de existencias</strong> es el seguimiento permanente de cuánto hay de cada bien, para asegurar que la entidad tenga lo necesario sin caer en desabastecimiento ni en sobrestock.</p><p>No es solo “saber cuánto hay”: es <strong>anticiparse</strong> para que nunca falte lo esencial ni sobre lo que no rota.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Permite decidir cuándo pedir más, detectar consumos anormales y dar información real para el Plan Anual de Adquisiciones.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si el consumo mensual de un insumo es estable, el almacén sabe cuándo está por agotarse y alerta a tiempo, antes de que el área quede sin nada.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde se reacciona tarde (ya no hay) o se acumula de más. La clave: el control de existencias es <strong>anticipación</strong>, no reacción.</p></div></div><div class="practica full"><div class="practica-head">🧰 En la práctica</div><div class="practica-body"><p>Piensa en el control de existencias como el <strong>tanque de gasolina</strong>: no esperas a quedar en ceros para tanquear; la aguja te avisa antes. Las existencias mínimas son esa “aguja”.</p></div></div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">📉</span><span>2. Existencias mínimas, máximas y punto de reorden</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>existencia mínima</strong> es el nivel por debajo del cual no se debe bajar (margen de seguridad). La <strong>máxima</strong>, el tope para no sobre-acumular. El <strong>punto de reorden</strong> es el nivel que dispara la alerta para pedir más.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Cuando el stock llega al punto de reorden, se informa para gestionar la compra, con tiempo para que llegue antes de tocar la mínima. Así nunca hay desabastecimiento.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si un área consume 100 al mes y el proveedor demora 15 días, el punto de reorden debe avisar cuando aún quede para cubrir esos 15 días, más un margen.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: esperar a quedar en cero para pedir, o comprar hasta el tope sin necesidad. La clave: <strong>alertar en el punto de reorden</strong>, dimensionando según consumo real.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Un insumo llegó a su punto de reorden (el nivel que dispara la alerta de compra), pero todavía hay algunas unidades. ¿Qué es lo más apropiado?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Esperar a quedar en cero provoca desabastecimiento: la compra toma tiempo en llegar. El punto de reorden existe para alertar antes.">Esperar a que se agote por completo para recién entonces solicitar la compra.</button><button class="cp-opt" data-ok="1" data-exp="El punto de reorden es justo la señal para pedir con tiempo, de modo que llegue antes de tocar la existencia mínima.">Informar oportunamente para gestionar la reposición, ya que se alcanzó el punto de reorden.</button><button class="cp-opt" data-ok="0" data-exp="Comprar hasta el tope sin dimensionar genera sobrestock y posible vencimiento: viola la economía.">Comprar de inmediato la cantidad máxima posible para no volver a preocuparse.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🗓️</span><span>3. Verificación periódica del stock</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>verificación periódica</strong> (por ejemplo, mensual) es la revisión regular de las existencias para confirmar que el sistema refleja la realidad y para anticipar reposiciones.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Permite detectar a tiempo diferencias, consumos anormales o bienes próximos a vencer. No se espera al inventario anual: se revisa con frecuencia.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Una revisión mensual detecta que un insumo se está consumiendo el doble de lo normal: se alerta y se investiga antes de que falte.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde solo se revisa “una vez al año”. La clave: la verificación <strong>periódica</strong> mantiene el control vivo.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> lo que no se mide, se descontrola. Revisar seguido es más fácil que arreglar un desastre acumulado.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔢</span><span>4. El inventario físico</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>inventario físico</strong> es el conteo real de los bienes existentes, que luego se compara con lo que dice el sistema. Es el momento de la verdad del control.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Se hace con orden y método: contar todo (o por muestras según el procedimiento), sin “estimar a ojo”, y registrar el conteo tal como es.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>En una toma de inventario se cuenta físicamente cada ítem y se anota la cantidad real, sin redondear ni asumir que “debe ser igual al sistema”.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: copiar el saldo del sistema en vez de contar de verdad. La clave: el inventario físico <strong>cuenta la realidad</strong>, no confirma el sistema.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Durante la toma de inventario físico de un ítem, un compañero te dice que, como el sistema dice 200 y “seguro está bien”, anotes 200 sin contar para terminar más rápido.</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Copiar el saldo del sistema anula el propósito del inventario: justamente se cuenta para detectar si el sistema está mal.">Anotar 200 confiando en el sistema, así se avanza más rápido.</button><button class="cp-opt" data-ok="1" data-exp="El inventario físico cuenta la realidad; su valor está en detectar las diferencias con el sistema, no en confirmarlo.">Contar físicamente y anotar la cantidad real, sea cual sea, aunque no coincida con el sistema.</button><button class="cp-opt" data-ok="0" data-exp="El conteo debe seguir el método definido, no la comodidad; saltarse ítems deja huecos de control.">Contar solo si el ítem parece importante; los demás, copiarlos del sistema.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔍</span><span>5. Conciliación: físico vs sistema</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>conciliación</strong> compara el conteo físico con el saldo del sistema. Si coinciden, perfecto; si no, aparece un <strong>faltante</strong> (hay menos físico) o un <strong>sobrante</strong> (hay más físico).</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Ante cualquier diferencia, el principio es el mismo: <strong>documentarla, investigar la causa e informar</strong>. Nunca se ajusta el sistema para igualarlo al físico sin sustento.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>El sistema dice 150 y físicamente hay 140: faltante de 10. Se deja constancia, se busca la causa (¿salida sin registrar? ¿error de conteo? ¿pérdida?) y se informa.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos clásicos de faltante/sobrante con la opción de “cuadrar”. La correcta: documentar e investigar, jamás maquillar.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Al conciliar, encuentras un faltante: el sistema dice 150 y físicamente hay 140. No hay soporte que explique la diferencia. ¿Qué es lo más apropiado?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Ajustar el sistema sin sustento oculta la causa del faltante y puede configurar responsabilidad fiscal y disciplinaria.">Ajustar el sistema a 140 para que cuadre con lo contado.</button><button class="cp-opt" data-ok="1" data-exp="Lo correcto es documentar la diferencia, buscar su causa e informar; así se actúa con transparencia y se protegen los recursos.">Dejar constancia del faltante de 10, investigar la posible causa e informar a tu jefe inmediato.</button><button class="cp-opt" data-ok="0" data-exp="Omitir el reporte de un faltante te compromete; ninguna diferencia se asume en silencio.">Asumir las 10 unidades como pérdida normal y no reportar nada.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">👤</span><span>6. Tu rol en el control de existencias</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Tu papel es <strong>monitorear el stock, alertar en el punto de reorden, hacer conteos confiables y reportar las diferencias</strong> con su soporte.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No te corresponde decidir las compras ni “ajustar” inventarios; tampoco callar un faltante. Tu fuerza está en la <strong>información veraz y oportuna</strong> para que la entidad decida bien.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si detectas que un bien va a faltar, no compras tú: alertas con datos. Si hay un faltante, no lo cuadras: lo documentas e informas.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: que el técnico decida compras o ajuste saldos. La correcta respeta el alcance: monitorear, alertar, contar e informar.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> tu mejor aporte al control no es “que todo cuadre”, sino <strong>reportar la verdad a tiempo</strong>.</div></div></div><div class="fuentes"><div class="box-title">📚 Profundiza en las fuentes oficiales</div><p>Para profundizar en control de inventarios y existencias (pestaña nueva):</p><ul class="lista"><li><strong>Control de inventarios, tomas físicas y conciliación</strong> — Contaduría General de la Nación: <a href="https://www.contaduria.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Planeación de compras (PAA) y abastecimiento</strong> — Colombia Compra Eficiente: <a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Principios de la función administrativa</strong> — Constitución, arts. 2 y 209: <a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">consultar</a></li><li><strong>Alcance del nivel técnico</strong> — Decreto 1083 de 2015, Función Pública: <a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener">consultar</a></li></ul></div></section>
+<section class="section" data-sec="3"><span class="eyebrow">Sección 4 · Comparaciones</span><h2 class="sec-title">⚖️ No los confundas</h2><p>Conceptos del control de existencias que se confunden.</p><div class="tabla-wrap"><table><tr><th>Existencia mínima</th><th>Punto de reorden</th></tr><tr><td>Nivel de seguridad por debajo del cual no se debe bajar.</td><td>Nivel que dispara la alerta para pedir más.</td></tr><tr><td>Es el “colchón”.</td><td>Es la “alarma” para reponer a tiempo.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Esperar a tocar la mínima para pedir: la compra demora. El punto de reorden avisa antes, con margen.</p></div><div class="tabla-wrap"><table><tr><th>Desabastecimiento</th><th>Sobrestock</th></tr><tr><td>No hay lo necesario; el servicio se para.</td><td>Hay de más; se ocupa espacio y se vence.</td></tr><tr><td>Falla por reaccionar tarde.</td><td>Falla por comprar sin dimensionar.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Creer que “más es mejor”: el sobrestock también es desperdicio de recursos públicos.</p></div><div class="tabla-wrap"><table><tr><th>Faltante</th><th>Sobrante</th></tr><tr><td>Hay menos físico que en el sistema.</td><td>Hay más físico que en el sistema.</td></tr><tr><td>Posible salida sin registrar o pérdida.</td><td>Posible ingreso sin registrar o error.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Ajustar el sistema para tapar cualquiera de los dos: ambos se documentan e investigan.</p></div></section>
+<section class="section" data-sec="4"><span class="eyebrow">Sección 5 · Casos</span><h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2><p>Cinco situaciones reales de control de existencias, resueltas.</p><div class="caso"><div class="caso-head">📂 Caso 1 · El punto de reorden</div><div class="caso-body"><span class="label">Situación</span><p>Un insumo llegó al punto de reorden, pero aún quedan unidades.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Informar oportunamente para gestionar la reposición.</strong> El punto de reorden es la señal para pedir con tiempo, antes de tocar la mínima y caer en desabastecimiento.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 2 · El conteo “copiado”</div><div class="caso-body"><span class="label">Situación</span><p>En el inventario físico, te proponen anotar el saldo del sistema sin contar, “porque seguro está bien”.</p><span class="label">Pregunta</span><p>¿Es correcto?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No: el inventario físico se cuenta de verdad.</strong> Copiar el sistema anula el propósito del inventario, que es detectar si el sistema está mal.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 3 · El faltante sin soporte</div><div class="caso-body"><span class="label">Situación</span><p>Al conciliar, hay menos físico que en el sistema y no hay soporte que lo explique.</p><span class="label">Pregunta</span><p>¿Cómo procedes?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Dejar constancia del faltante, investigar la causa e informar.</strong> Nunca ajustar el sistema para igualarlo: la diferencia se documenta y se esclarece.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 4 · El sobrestock</div><div class="caso-body"><span class="label">Situación</span><p>Te piden comprar la cantidad máxima de un insumo que casi no rota, “para no quedar cortos”.</p><span class="label">Pregunta</span><p>¿Qué es lo apropiado?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Alertar que comprar de más generaría sobrestock y posible vencimiento, y dimensionar según el consumo real.</strong> Más no es mejor; el sobrestock es desperdicio.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 5 · El consumo anormal</div><div class="caso-body"><span class="label">Situación</span><p>En la verificación mensual notas que un insumo se está consumiendo al doble de lo habitual.</p><span class="label">Pregunta</span><p>¿Cómo actúas?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Dejar constancia e informar para que se investigue la causa.</strong> Un consumo anormal puede indicar un problema (uso indebido, error, fuga) que conviene esclarecer a tiempo.</div></div></div></section>
+<section class="section" data-sec="5"><span class="eyebrow">Sección 6 · Errores frecuentes</span><h2 class="sec-title">⚠️ Errores que debes evitar</h2><div class="box danger"><div class="box-title">❌ Error 1 — Pedir solo al quedar en cero</div><p><strong>Por qué falla:</strong> la compra demora y el servicio se paraliza. <strong>Corrige:</strong> alerta en el punto de reorden, con margen.</p></div><div class="box danger"><div class="box-title">❌ Error 2 — Comprar de más “por si acaso”</div><p><strong>Por qué falla:</strong> genera sobrestock y vencimientos. <strong>Corrige:</strong> dimensiona según el consumo real.</p></div><div class="box danger"><div class="box-title">❌ Error 3 — Copiar el sistema en el conteo</div><p><strong>Por qué falla:</strong> anula el propósito del inventario físico. <strong>Corrige:</strong> cuenta la realidad, sea cual sea.</p></div><div class="box danger"><div class="box-title">❌ Error 4 — Ajustar diferencias a mano</div><p><strong>Por qué falla:</strong> oculta la causa y puede ser una falta grave. <strong>Corrige:</strong> documenta, investiga e informa.</p></div><div class="box danger"><div class="box-title">❌ Error 5 — Revisar solo una vez al año</div><p><strong>Por qué falla:</strong> los problemas se acumulan sin detectarse. <strong>Corrige:</strong> verifica periódicamente (p. ej. mensual).</p></div><div class="box danger"><div class="box-title">❌ Error 6 — Callar un faltante “pequeño”</div><p><strong>Por qué falla:</strong> la omisión también te compromete. <strong>Corrige:</strong> toda diferencia se reporta, sin importar el tamaño.</p></div></section>
+<section class="section" data-sec="6"><span class="eyebrow">Sección 7 · Tips</span><h2 class="sec-title">💡 Trucos para dominar el tema</h2><div class="box ok"><div class="box-title">✅ Tip 1 — El tanque de gasolina</div><p>No esperes el cero: el <strong>punto de reorden</strong> es la aguja que te avisa antes.</p></div><div class="box ok"><div class="box-title">✅ Tip 2 — Más no es mejor</div><p>El sobrestock también es desperdicio. Dimensiona según el consumo real.</p></div><div class="box ok"><div class="box-title">✅ Tip 3 — Cuenta de verdad</div><p>En el inventario físico se <strong>cuenta la realidad</strong>, no se copia el sistema.</p></div><div class="box ok"><div class="box-title">✅ Tip 4 — La diferencia se investiga</div><p>Faltante o sobrante: se documenta e investiga, <strong>nunca se ajusta a mano</strong>.</p></div><div class="box ok"><div class="box-title">✅ Tip 5 — Revisa seguido</div><p>La verificación periódica es más fácil que arreglar un desastre acumulado.</p></div><div class="box ok"><div class="box-title">✅ Tip 6 — Tu aporte es la verdad</div><p>Tu valor no es “que todo cuadre”, sino <strong>reportar a tiempo y con datos</strong>.</p></div></section>
+<section class="section" data-sec="7"><span class="eyebrow">Sección 8 · Trampas</span><h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2><div class="trampa"><div class="trampa-q">«Pide más solo cuando se acabe del todo.»</div><div class="trampa-detail"><div class="t-row parece">Parece evitar comprar de más.</div><div class="t-row malo">Es trampa: la compra demora y habrá desabastecimiento.</div><div class="t-row bueno">Correcto: alertar en el punto de reorden.</div></div></div><div class="trampa"><div class="trampa-q">«El sistema dice 200, anota 200 y no cuentes.»</div><div class="trampa-detail"><div class="t-row parece">Parece ágil.</div><div class="t-row malo">Es trampa: anula el propósito del inventario.</div><div class="t-row bueno">Correcto: contar la realidad.</div></div></div><div class="trampa"><div class="trampa-q">«Falta poco: ajusta el sistema para que cuadre.»</div><div class="trampa-detail"><div class="t-row parece">Parece ordenar el inventario.</div><div class="t-row malo">Es trampa: ajustar oculta el faltante.</div><div class="t-row bueno">Correcto: documentar, investigar e informar.</div></div></div><div class="trampa"><div class="trampa-q">«Compra el máximo para no preocuparte más.»</div><div class="trampa-detail"><div class="t-row parece">Parece previsión.</div><div class="t-row malo">Es trampa: sobrestock y posible vencimiento.</div><div class="t-row bueno">Correcto: dimensionar según consumo real.</div></div></div></section>
+<section class="section" data-sec="8"><span class="eyebrow">Sección 9 · Repaso</span><h2 class="sec-title">🧠 Repasa con flashcards</h2><p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p><div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div></section>
+<section class="section" data-sec="9"><span class="eyebrow">Sección 10 · Resumen</span><h2 class="sec-title">📝 Resumen y glosario</h2><div class="resumen"><div class="resumen-item"><h4>Control de existencias</h4><p>Anticipación: ni desabastecimiento ni sobrestock.</p></div><div class="resumen-item"><h4>Mínima / reorden / máxima</h4><p>Colchón / alarma para pedir / tope para no acumular.</p></div><div class="resumen-item"><h4>Verificación periódica</h4><p>Revisar seguido para detectar diferencias y anticipar.</p></div><div class="resumen-item"><h4>Inventario físico</h4><p>Contar la realidad, no copiar el sistema.</p></div><div class="resumen-item"><h4>Conciliación</h4><p>Físico vs sistema: faltante o sobrante se documenta e investiga.</p></div><div class="resumen-item"><h4>Tu rol</h4><p>Monitorear, alertar, contar y reportar; no comprar ni ajustar.</p></div></div><h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3><dl class="glosario"><dt>Existencia mínima</dt><dd>Nivel de seguridad por debajo del cual no se debe bajar.</dd><dt>Punto de reorden</dt><dd>Nivel de stock que dispara la alerta para reponer.</dd><dt>Sobrestock</dt><dd>Exceso de existencias que ocupa espacio y puede vencerse.</dd><dt>Inventario físico</dt><dd>Conteo real de los bienes existentes.</dd><dt>Conciliación</dt><dd>Comparación entre el conteo físico y el saldo del sistema.</dd><dt>Faltante / Sobrante</dt><dd>Diferencia donde hay menos / más físico que en el sistema.</dd></dl><div class="box gold"><div class="box-title">💎 Para recordar</div><p>Equilibrio y verdad: <strong>alerta en el punto de reorden, no acumules de más, y ante una diferencia documenta e investiga, nunca ajustes a mano</strong>.</p></div></section>
+<section class="section" data-sec="10"><span class="eyebrow">Sección 11 · Simulacro</span><h2 class="sec-title">🎓 Simulacro tipo CNSC</h2><div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p><div class="dific-tags"><span class="tag b">4 básicas</span><span class="tag i">5 intermedias</span><span class="tag a">3 avanzadas</span></div></div><div id="quiz"></div><div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div><div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div></section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-ALM-05 · Día 13 · Biblioteca Funcional (familia ALM) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 13", "alerta": "¡Felicitaciones! Terminaste el Día 13 · FUN-ALM-05.\n\nSigue con FUN-ALM-06 · Almacenamiento, Custodia y Baja de Bienes."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[{"f": "¿Qué es el control de existencias?", "b": "Seguimiento permanente de cuánto hay, para no caer en desabastecimiento ni en sobrestock. Es anticipación."}, {"f": "¿Qué es la existencia mínima?", "b": "El nivel de seguridad por debajo del cual no se debe bajar (el colchón)."}, {"f": "¿Qué es el punto de reorden?", "b": "El nivel que dispara la alerta para pedir más, con tiempo para que llegue antes de tocar la mínima."}, {"f": "¿Cada cuánto se verifica el stock?", "b": "Periódicamente (p. ej. mensual); no se espera al inventario anual."}, {"f": "¿Qué es el inventario físico?", "b": "El conteo real de los bienes, que luego se compara con el sistema. Se cuenta la realidad, no se copia el sistema."}, {"f": "¿Qué es la conciliación?", "b": "Comparar el físico con el saldo del sistema para detectar faltantes o sobrantes."}, {"f": "¿Qué haces ante un faltante o sobrante?", "b": "Documentar, investigar la causa e informar. Nunca ajustar el sistema sin sustento."}, {"f": "¿Por qué el sobrestock es un problema?", "b": "Ocupa espacio, puede vencerse y es desperdicio de recursos públicos. Más no es mejor."}, {"f": "¿Qué puede indicar un consumo anormal?", "b": "Un posible problema (uso indebido, error o fuga) que conviene investigar a tiempo."}, {"f": "¿Cuál es tu rol en el control de existencias?", "b": "Monitorear, alertar en el reorden, contar bien y reportar diferencias; no decides compras ni ajustas saldos."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b", "tema": "Punto de reorden", "ctx": "Un insumo de uso frecuente alcanzó su punto de reorden (el nivel que dispara la alerta para reponer). Todavía quedan algunas unidades, suficientes para unos pocos días, y sabes que el proveedor suele demorar en entregar.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Informar oportunamente para gestionar la reposición, ya que se alcanzó el punto de reorden.", "Esperar a que se agoten por completo las unidades para recién entonces solicitar la compra.", "Comprar de inmediato la máxima cantidad posible para no volver a quedar corto.", "No hacer nada, porque todavía quedan unidades."], "correcta": 0, "expl": ["El punto de reorden es justo la señal para pedir con tiempo, de modo que la reposición llegue antes de tocar la existencia mínima.", "Esperar el cero provoca desabastecimiento, porque la compra demora en llegar; por eso existe el punto de reorden.", "Comprar el máximo sin dimensionar genera sobrestock y posible vencimiento, lo que vulnera la economía.", "No hacer nada lleva directo al desabastecimiento; la alerta debe activarse en el reorden."]}, {"nivel": "b", "tema": "Inventario físico real", "ctx": "Durante la toma de inventario físico, un compañero te dice que, como el sistema indica 200 unidades y “seguramente está bien”, anotes 200 sin contar para terminar más rápido.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Anotar 200 confiando en el sistema, para avanzar más rápido.", "Contar físicamente y registrar la cantidad real, aunque no coincida con el sistema.", "Contar solo los ítems que te parezcan importantes y copiar el resto del sistema.", "Pedir que otra persona decida si hay que contar o no."], "correcta": 1, "expl": ["Copiar el saldo del sistema anula el propósito del inventario: precisamente se cuenta para detectar si el sistema está mal.", "El inventario físico cuenta la realidad; su valor está en revelar las diferencias con el sistema, no en confirmarlo.", "Saltarse ítems por comodidad deja huecos de control; el conteo sigue el método definido, no las ganas.", "La decisión de contar no se delega: el procedimiento de inventario exige conteo real."]}, {"nivel": "b", "tema": "Sobrestock", "ctx": "Un superior te pide comprar la cantidad máxima de un insumo que casi no rota, argumentando que “así no quedamos cortos nunca”. Sabes que buena parte se vencería en bodega.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Comprar el máximo como pide el superior, para no quedar cortos.", "Alertar, con datos de consumo y rotación, que comprar de más generaría sobrestock y vencimiento, y proponer dimensionar según el consumo real.", "Comprar el doble de lo que se consume, como punto intermedio.", "No comprar nada de ese insumo."], "correcta": 1, "expl": ["Comprar el máximo de algo que no rota genera sobrestock y vencimientos: es desperdicio de recursos públicos, aunque venga como orden.", "Lo correcto es alertar con datos y proponer dimensionar según el consumo real; así se cuida la economía y se respeta tu rol de informar.", "Comprar el doble sin sustento sigue siendo sobredimensionar sin análisis.", "No comprar nada puede llevar al extremo contrario (desabastecimiento); la clave es dimensionar, no eliminar."]}, {"nivel": "b", "tema": "Faltante en conciliación", "ctx": "Al conciliar un ítem, el sistema indica 150 unidades pero el conteo físico da 140. No hay ningún soporte que explique la diferencia de 10.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Ajustar el sistema a 140 para que cuadre con el conteo físico.", "Asumir las 10 unidades como pérdida normal y no reportar nada.", "Dejar constancia del faltante de 10, investigar la posible causa e informar a tu jefe inmediato.", "Registrar un egreso de 10 unidades para justificar la diferencia."], "correcta": 2, "expl": ["Ajustar el sistema sin sustento oculta la causa del faltante y puede acarrear responsabilidad fiscal y disciplinaria.", "Omitir el reporte de un faltante, por pequeño que sea, también te compromete; nada se asume en silencio.", "Lo correcto es documentar la diferencia, buscar su causa e informar; así se actúa con transparencia y se protegen los recursos.", "Registrar un egreso inexistente para justificar es falsear el inventario: una conducta indebida, no una solución."]}, {"nivel": "i", "tema": "Verificación periódica", "ctx": "En tu almacén solo se hace inventario una vez al año. Propones revisar las existencias con más frecuencia, pero un compañero dice que “es perder tiempo, total al final del año se cuenta todo”.", "q": "¿Cuál es la postura más apropiada?", "ops": ["Aceptar que basta con el inventario anual, para no perder tiempo.", "Promover una verificación periódica (p. ej. mensual), porque permite detectar diferencias y anticipar reposiciones a tiempo.", "Hacer conteos solo cuando alguien reclame que falta algo.", "Contar únicamente los bienes más costosos una vez al año."], "correcta": 1, "expl": ["Esperar al inventario anual deja que los problemas se acumulen todo el año sin detectarse.", "La verificación periódica mantiene el control vivo: detecta diferencias, consumos anormales y vencimientos a tiempo.", "Reaccionar solo ante reclamos es controlar tarde, cuando el problema ya ocurrió.", "Contar solo lo costoso una vez al año deja sin control la mayoría de los bienes durante meses."]}, {"nivel": "i", "tema": "Consumo anormal", "ctx": "En la revisión mensual detectas que un insumo se está consumiendo al doble de lo habitual, sin una explicación evidente.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["No darle importancia, ya que aún hay existencias suficientes.", "Aumentar de inmediato la compra para cubrir el mayor consumo, sin más análisis.", "Dejar constancia del consumo anormal e informar para que se investigue la causa.", "Reducir las entregas de ese insumo por tu cuenta para frenar el consumo."], "correcta": 2, "expl": ["Un consumo anormal es una alerta: ignorarlo puede dejar pasar un uso indebido, un error o una fuga.", "Aumentar la compra sin entender la causa puede estar alimentando justamente el problema (p. ej. un desperdicio o uso indebido).", "Lo correcto es documentar el hallazgo e informar para investigar la causa; así se actúa a tiempo y dentro de tu rol.", "Reducir entregas por tu cuenta puede afectar el servicio y excede tu competencia; primero se investiga."]}, {"nivel": "i", "tema": "Sobrante en conciliación", "ctx": "Al conciliar, encuentras un sobrante: hay más unidades físicas que las que registra el sistema, y no hay soporte que explique de dónde salieron las adicionales.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Ignorar el sobrante, ya que tener de más no es un problema.", "Repartir el excedente entre las áreas para “aprovecharlo”.", "Dejar constancia del sobrante, investigar su origen e informar, sin ajustar el sistema por tu cuenta.", "Ajustar el sistema hacia arriba para que coincida con lo físico."], "correcta": 2, "expl": ["Un sobrante también es una diferencia que debe esclarecerse: puede esconder un ingreso sin registrar o un error.", "Repartir un excedente de origen desconocido descontrola más el inventario y puede comprometer a la entidad.", "Lo correcto es documentar el sobrante, investigar su origen e informar; las diferencias no se tapan, en ningún sentido.", "Ajustar el sistema sin sustento, aunque sea hacia arriba, oculta la causa real de la diferencia."]}, {"nivel": "i", "tema": "Relación kardex–existencias", "ctx": "El control de existencias de tu almacén es confuso porque los movimientos no se han registrado bien en el kardex. Te preguntan cómo lograr que el control de existencias sea confiable.", "q": "¿Cuál es la respuesta más apropiada?", "ops": ["Comprar más de todo para que nunca falte, sin importar el registro.", "Llevar el kardex al día y con soportes, porque un buen registro de movimientos es la base de un control de existencias confiable.", "Hacer un único inventario físico al año y confiar en él.", "Dejar de registrar movimientos y contar todo a mano cada día."], "correcta": 1, "expl": ["Comprar más no resuelve el descontrol; solo agrega sobrestock sobre un sistema poco confiable.", "Un kardex al día y soportado es la base: si los movimientos están bien registrados, el control de existencias y la conciliación son confiables.", "Un solo inventario anual sobre un kardex mal llevado no da control en el día a día.", "Contar todo a mano cada día es inviable y renuncia al registro que da trazabilidad."]}, {"nivel": "i", "tema": "Anticipación vs reacción", "ctx": "Tu jefe te pregunta cómo evitar que las áreas se queden sin insumos esenciales en plena operación, algo que ya ha ocurrido antes y afectó el servicio.", "q": "¿Cuál es la recomendación más apropiada desde el control de existencias?", "ops": ["Esperar a que un área reclame que no tiene y entonces salir a comprar de urgencia.", "Definir y vigilar los puntos de reorden y las existencias mínimas, y alertar a tiempo para reponer antes de que falte.", "Comprar enormes cantidades de todo una sola vez al año.", "Dejar que cada área consiga sus propios insumos por su cuenta."], "correcta": 1, "expl": ["Reaccionar al reclamo es controlar tarde: la compra de urgencia demora y el servicio ya se vio afectado.", "El control de existencias es anticipación: con puntos de reorden y mínimas bien vigilados se repone antes de que falte.", "Comprar enormes cantidades una sola vez al año genera sobrestock, vencimientos y desperdicio de recursos.", "Que cada área compre por su lado rompe el control centralizado y la planeación del abastecimiento."]}, {"nivel": "a", "tema": "Presión para cuadrar el inventario", "ctx": "Antes de una revisión externa, un superior te pide, con afán, que ajustes los saldos del sistema para que coincidan exactamente con el físico y “no aparezcan diferencias incómodas”, prometiendo que “después se documenta”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Ajustar los saldos como pide el superior, ya que él asume la responsabilidad.", "Explicar con respeto que las diferencias deben documentarse e investigarse, dejar constancia y, si insiste, pedir la instrucción por escrito.", "Ajustar solo las diferencias más grandes y dejar las pequeñas.", "Ajustar los saldos y borrar el rastro de los valores anteriores."], "correcta": 1, "expl": ["Ajustar saldos para ocultar diferencias ante una revisión es falsear el inventario; una orden verbal no te exime de esa responsabilidad.", "Lo correcto es sustentar que las diferencias se documentan e investigan, dejar constancia y, ante la insistencia, pedir la orden por escrito para protegerte.", "Ajustar “solo las grandes” sigue siendo ocultar diferencias: la conducta indebida no depende del tamaño.", "Borrar el rastro de los valores anteriores agrava la irregularidad y elimina la trazabilidad."]}, {"nivel": "a", "tema": "Faltante con indicios", "ctx": "Un faltante recurrente en un bien valioso coincide siempre con los turnos de una misma persona. Un compañero te dice que mejor sigas ajustando el inventario y no “te metas en líos” señalando a nadie.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Seguir ajustando el inventario y no reportar nada, para evitar conflictos.", "Acusar directamente a esa persona ante los demás, ya que las coincidencias son claras.", "Documentar objetivamente los faltantes y las circunstancias e informar a tu jefe inmediato, sin acusar, para que se investigue por los canales que corresponden.", "Dejar de contar ese bien para que no aparezcan más diferencias."], "correcta": 2, "expl": ["Seguir ajustando oculta un posible hurto o irregularidad y te hace partícipe del encubrimiento.", "Acusar públicamente sin pruebas ni competencia para investigar es improcedente y puede ser injusto.", "Lo correcto es documentar objetivamente los hechos e informar a tu jefe para que se investigue por los canales debidos; tú aportas la evidencia, no el juicio.", "Dejar de contar el bien renuncia al control justo donde hay indicios de un problema serio."]}, {"nivel": "a", "tema": "Límite del rol en compras", "ctx": "Detectas que varios insumos están por agotarse. Un compañero te anima a que tú mismo realices directamente la compra para resolver rápido, saltándote el proceso normal.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Realizar tú mismo la compra directamente para resolver rápido.", "Alertar con datos de existencias y consumo a quien corresponde, para que se gestione la compra por el proceso debido.", "No hacer nada hasta que alguien más se dé cuenta del problema.", "Pedirle a un proveedor conocido que envíe los insumos y luego ver cómo se legaliza."], "correcta": 1, "expl": ["Realizar compras directamente excede tu rol y se salta el proceso contractual: es una extralimitación con consecuencias.", "Lo correcto es alertar con datos a quien corresponde para que la compra se gestione por el proceso debido; tú informas, no contratas.", "No hacer nada lleva al desabastecimiento; sí debes actuar, pero dentro de tu rol (alertar).", "Recibir bienes de un proveedor sin proceso previo, para “legalizar después”, rompe toda la legalidad de la contratación."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p.ops.forEach((op,j)=>{const letra=String.fromCharCode(65+j);opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+op+'</span><div class="op-exp" id="oe-'+idx+'-'+j+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, oi=+this.dataset.op;
+      if(respondidas[qi]!==undefined)return;
+      respondidas[qi]=oi;
+      const p=preguntas[qi];const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+        o.classList.add('bloqueada');
+        const exp=document.getElementById('oe-'+qi+'-'+k);const letra=String.fromCharCode(65+k);
+        if(k===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[k];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[k];}
+      });
+      if(oi!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p.correcta);
+      if(oi===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+</body>
+</html>
