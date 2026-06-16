@@ -1,7 +1,9 @@
 # 🔄 CONTINUIDAD DEL PROYECTO — Ascenso Público
 
 > **Para retomar en una nueva sesión de Kiro:** conecta este repositorio y pídele a Kiro:
-> *"Lee CONTINUIDAD.md y ARQUITECTURA-PLATAFORMA.md y continuemos donde quedamos."*
+> *"Lee CONTINUIDAD.md y continuemos donde quedamos."*
+>
+> ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
 _Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, automatización de asignación de guías por código, reorden del panel, guía "Conoce tu Entidad" (ENT-IDV-01) y correos/recuperación de contraseña con marca (SMTP Resend + flujo PKCE). **Próximo paso: crear el SIMULACRO (SIM-001).**_
 
@@ -56,7 +58,7 @@ motor/                     · motor data-driven: base-guia.html + construir_guia
 referencias/               · insumos de contenido (ej. ofimatica-banco-preguntas.md para BON-02)
 prompts/                   · generador-plan-estudio.md (v3) + generador-guias.md (v2.1) — prompts portables a cualquier IA
 scripts/                   · sync-biblioteca.sh (copia catálogo + HTML a la plataforma), utilidades
-ARQUITECTURA-PLATAFORMA.md · PROYECTO-MAESTRO.md · PLAN-PROYECTO.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md
+ARQUITECTURA-PLATAFORMA.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md   (CONTINUIDAD.md = fuente de verdad del estado; PROYECTO-MAESTRO.md y PLAN-PROYECTO.md se eliminaron por estar desactualizados)
 ```
 
 ## 5. LO QUE YA ESTÁ HECHO Y FUNCIONANDO ✅
