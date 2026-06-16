@@ -1,6 +1,7 @@
 const RESEND_URL = "https://api.resend.com/emails";
-// Cambia el remitente por uno de tu dominio verificado en Resend cuando lo tengas.
-const FROM = "Ascenso Público <onboarding@resend.dev>";
+// Remitente del dominio verificado en Resend (ascensopublico.com).
+// "noreply@" es la dirección de origen; no necesita ser un buzón real.
+const FROM = "Ascenso Público <noreply@ascensopublico.com>";
 
 async function enviar(to: string | string[], subject: string, html: string) {
   const key = process.env.RESEND_API_KEY;
