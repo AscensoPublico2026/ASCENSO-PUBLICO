@@ -4,7 +4,7 @@
 >
 > **Cómo se usa:** copia TODO el bloque de prompt (desde `=== INICIO ===` hasta `=== FIN ===`), pégalo en la IA, reemplaza los campos `[Pegar aquí...]` con la info real y envía.
 >
-> **Versión:** 2.0 · **Alineado con:** numeración definitiva (INTRO-00 + GEN-01/02/03) y formato de simulacro situacional.
+> **Versión:** 3.0 · **Alineado con:** numeración definitiva (INTRO-00 + GEN-01/02/03), formato de simulacro situacional y **fichas de contenido listas para pegar** en `generador-guias.md`.
 
 ---
 
@@ -68,10 +68,42 @@ DÍA 21 — Simulacro Integral Final
 TIEMPO DE ESTUDIO
 - Guías funcionales: 75 a 120 min (ideal 90 min).
 
-FORMATO DE SALIDA OBLIGATORIO
+FORMATO DE SALIDA OBLIGATORIO (DOS PARTES)
+
+PARTE 1 — TABLA DEL PLAN (21 días)
 Presenta el plan en una TABLA con estas columnas exactas:
-| Día | Código | Guía | Biblioteca | Temas |
-(Para INTRO-01 y las funcionales, detalla los temas que personalizaste según el cargo.)
+| Día | Código | Guía | Biblioteca | Estado | Temas |
+- Columna "Estado": marca "✅ Reusar" si la guía YA existe en la biblioteca, o "🆕 Crear" si hay que generarla.
+- Reglas para asignar el Estado:
+  • INTRO-00, GEN-01/02/03 y las 4 guías del nivel: SIEMPRE "✅ Reusar".
+  • INTRO-01 / Conoce tu Entidad (ENT-…) y el Simulacro final (SIM-…): SIEMPRE "🆕 Crear" (salvo que se indique que ya existen para esta OPEC).
+  • Guías funcionales (FUN-…): si en la entrada se pegó la lista de códigos existentes en biblioteca.json, marca "✅ Reusar" las que coincidan (mismo dominio/tema) y "🆕 Crear" las demás. Si NO se pegó la lista, márcalas "🆕 Crear (verificar en biblioteca.json)".
+- Para INTRO-01/ENT y las funcionales, detalla en "Temas" lo que personalizaste según el cargo.
+
+PARTE 2 — FICHAS DE CONTENIDO (solo para las guías marcadas "🆕 Crear")
+Por CADA guía a crear, entrega un bloque LISTO PARA PEGAR en el Generador de Guías (`prompts/generador-guias.md`), con EXACTAMENTE este formato (son los "DATOS DE ENTRADA" que ese prompt espera, con el temario ya expandido):
+
+------------------------------------------------------------
+FICHA → [CÓDIGO] · [Título]
+- Código de la guía: [ej. FUN-XXX-0N / ENT-[SIGLA]-01 / SIM-001]
+- Título: […]
+- Día del plan: [N]
+- Categoría/biblioteca: [Funcional / Por Entidad / Simulacro Final]
+- Nivel (si aplica): [Asistencial / Técnico / Profesional / —]
+- Próxima guía (para el botón Finalizar): [código + nombre de la guía del día siguiente]
+- TEMA(S) A DESARROLLAR:
+  • Temas (2 a 4): […]
+  • Subtemas / conceptos clave por tema: […]
+  • Normatividad / artículos a citar (oficiales y verificables): […]
+  • Ejemplos por tipo de entidad (alcaldía, hospital, instituto, secretaría): […]
+  • Qué evalúa la CNSC / trampas típicas del tema: […]
+------------------------------------------------------------
+
+Reglas de las fichas:
+- El contenido debe ser SUFICIENTE para que el Generador de Guías produzca la guía completa SIN volver a leer el manual de funciones.
+- Reutilización: las guías funcionales NO mencionan la entidad del aspirante (son entidad-agnósticas). Lo específico de la entidad va ÚNICAMENTE en la ficha de la guía ENT-…
+- La ficha del Simulacro (SIM-…) NO lista temas nuevos: enumera las GUÍAS del plan que debe integrar (general + nivel + funcionales) para construir el juicio situacional final.
+- Entrega las fichas en el mismo orden de los días.
 
 REGLAS DE CALIDAD (verifícalas antes de entregar)
 - Día 1 = INTRO-00 + INTRO-01. Días 2-4 = GEN-01/02/03.
@@ -80,11 +112,13 @@ REGLAS DE CALIDAD (verifícalas antes de entregar)
 - Cada guía funcional agrupa entre 2 y 4 temas relacionados y coherentes.
 - El simulacro final integra todos los conocimientos.
 - La ruta tiene progresión lógica y se puede completar en 21 días.
+- Cada guía marcada "🆕 Crear" tiene su FICHA DE CONTENIDO (Parte 2) lista para pegar en el generador de guías.
 
 INFORMACIÓN DEL EMPLEO (analiza esto y construye el plan)
 [Pegar aquí el Manual de Funciones]
 [Pegar aquí la información de la OPEC]
 [Pegar aquí información adicional de la entidad, si existe]
+[Pegar aquí (OPCIONAL) la lista de códigos de guías ya existentes en biblioteca.json, para marcar cuáles reutilizar]
 
 === FIN DEL PROMPT ===
 ```
@@ -95,3 +129,15 @@ INFORMACIÓN DEL EMPLEO (analiza esto y construye el plan)
 
 - Si cambia la numeración o la estructura del curso, **actualiza este prompt** y la sección §4 de `PROYECTO-MAESTRO.md`.
 - Las guías que el plan referencia se registran en `biblioteca/biblioteca.json`. Si el generador propone una guía funcional nueva, regístrala allí cuando se cree.
+- **Flujo completo y portable (independiente de cualquier IA):**
+  1. Pega este prompt + el manual + OPEC (+ opcional: códigos existentes de `biblioteca.json`) en cualquier IA → obtienes la **Parte 1 (tabla del plan)** y la **Parte 2 (fichas de contenido)**.
+  2. Por cada guía "🆕 Crear", copia su **ficha** y pégala en `prompts/generador-guias.md` (sección DATOS DE ENTRADA) → la IA devuelve el HTML de la guía.
+  3. Guarda el HTML en `guias/`, registra la guía en `biblioteca/biblioteca.json`, corre `scripts/sync-biblioteca.sh` y sube con `/api/admin/seed-guias`.
+  4. En `/admin/cursos/[id]` asignas la guía por su código.
+
+## Changelog
+
+| Fecha | Versión | Cambio |
+|---|---|---|
+| 2026-06-16 | 3.0 | La salida ahora tiene 2 partes: (1) tabla del plan con columna **Estado** (✅ Reusar / 🆕 Crear), y (2) **fichas de contenido** por cada guía a crear, en el formato exacto de DATOS DE ENTRADA de `generador-guias.md` (temario expandido: subtemas, normas/artículos, ejemplos por tipo de entidad, qué evalúa la CNSC). Nuevo input opcional: lista de códigos existentes en `biblioteca.json` para marcar reutilización. Hace el plan auto-suficiente y portable a cualquier IA. |
+| (previo) | 2.0 | Alineado con numeración definitiva (INTRO-00 + GEN-01/02/03) y simulacro situacional. |
