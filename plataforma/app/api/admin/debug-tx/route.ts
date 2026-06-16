@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * DEBUG: Consulta una transacción de Wompi directamente.
+ * DEBUG: Simula exactamente lo que hace /activar para encontrar el error.
  * Uso: /api/admin/debug-tx?id=12116952-1781566986-41494
- * 
- * Esto permite ver exactamente qué responde la API de Wompi
- * para diagnosticar por qué /activar no la encuentra.
- * 
- * ELIMINAR DESPUÉS DE DEBUGGEAR.
  */
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
@@ -27,15 +22,30 @@ export async function GET(req: NextRequest) {
     });
 
     const status = res.status;
-    const body = await res.text();
+    const json = await res.json();
+    
+    // Esto es lo que hace getTransaction:
+    const txData = json?.data ?? null;
+
+    // Esto es lo que hace /activar:
+    const reference = txData?.reference ?? "NO REFERENCE";
+    const txStatus = txData?.status ?? "NO STATUS";
+    const aprobado = txStatus === "APPROVED";
 
     return NextResponse.json({
-      wompi_url: url,
-      http_status: status,
-      response: body ? JSON.parse(body) : null,
+      paso1_fetch_url: url,
+      paso2_http_status: status,
+      paso3_json_keys: json ? Object.keys(json) : null,
+      paso4_txData_exists: !!txData,
+      paso5_txData_status: txStatus,
+      paso6_txData_status_type: typeof txStatus,
+      paso7_txData_status_length: txStatus?.length,
+      paso8_reference: reference,
+      paso9_aprobado: aprobado,
+      paso10_comparison: `"${txStatus}" === "APPROVED" → ${txStatus === "APPROVED"}`,
       env_check: {
         has_private_key: !!process.env.WOMPI_PRIVATE_KEY,
-        public_key_prefix: pub.substring(0, 12) + "...",
+        public_key_prefix: pub.substring(0, 15) + "...",
         base_url: base,
       },
     });
