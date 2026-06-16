@@ -15,11 +15,31 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
   // Obtener datos de la guía y del curso (para el link de regreso)
   const { data: guia } = await supabase
     .from("guias_curso")
-    .select("id, titulo, archivo_path, dia, tipo, curso_id")
+    .select("id, titulo, archivo_path, dia, tipo, curso_id, leida")
     .eq("id", params.id)
     .single();
 
   if (!guia) notFound();
+
+  // Marcar la guía como leída (si aún no lo está) + recalcular progreso del curso
+  if (!guia.leida) {
+    await supabase
+      .from("guias_curso")
+      .update({ leida: true, fecha_leida: new Date().toISOString() })
+      .eq("id", guia.id);
+
+    // Recalcular progreso: % de guías leídas sobre el total del curso
+    const { data: todas } = await supabase
+      .from("guias_curso")
+      .select("leida")
+      .eq("curso_id", guia.curso_id);
+
+    if (todas && todas.length > 0) {
+      const leidas = todas.filter((g: any) => g.leida).length + 1; // +1 por la que acabamos de marcar
+      const pct = Math.min(100, Math.round((leidas / todas.length) * 100));
+      await supabase.from("cursos").update({ progreso_pct: pct }).eq("id", guia.curso_id);
+    }
+  }
 
   // Si no tiene archivo, mostrar un aviso (guía aún no cargada por admin)
   if (!guia.archivo_path) {

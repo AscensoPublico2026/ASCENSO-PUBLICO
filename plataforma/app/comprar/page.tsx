@@ -10,12 +10,24 @@ const CUPOS_LANZAMIENTO = 100;
 export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
   let convocatorias: { id: string; nombre: string }[] = [];
   let cursosVendidos = 0;
+  let usuarioLogueado: { correo: string; celular: string } | null = null;
+
   try {
     const supabase = createClient();
     const { data } = await supabase.from("convocatorias").select("id,nombre").eq("activa", true).order("orden");
     convocatorias = data || [];
     const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
     cursosVendidos = count || 0;
+
+    // Si el usuario está logueado (comprando otro curso), pre-llenar sus datos de contacto
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase.from("profiles").select("correo, celular").eq("id", user.id).single();
+      usuarioLogueado = {
+        correo: profile?.correo || user.email || "",
+        celular: profile?.celular || "",
+      };
+    }
   } catch {
     convocatorias = [];
   }
@@ -38,6 +50,12 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
 
       <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
 
+      {usuarioLogueado && (
+        <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginBottom: 8, fontSize: ".85rem", color: "var(--verde)" }}>
+          ✓ Estás comprando con tu cuenta (<strong>{usuarioLogueado.correo}</strong>). Tu nuevo curso se sumará a tu perfil. Usa el mismo correo para que quede vinculado.
+        </div>
+      )}
+
       <form action={crearCompra}>
         {/* Nombres y Apellidos separados - OBLIGATORIOS */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -50,10 +68,10 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
         </div>
 
         <label style={label}>Correo *
-          <input style={inputStyle} type="email" name="correo" required placeholder="tucorreo@ejemplo.com" />
+          <input style={inputStyle} type="email" name="correo" required placeholder="tucorreo@ejemplo.com" defaultValue={usuarioLogueado?.correo || ""} />
         </label>
         <label style={label}>Celular (WhatsApp)
-          <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" />
+          <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" defaultValue={usuarioLogueado?.celular || ""} />
         </label>
         <label style={label}>Convocatoria *
           <select style={inputStyle} name="convocatoria_id" defaultValue={searchParams?.conv || ""} required>
