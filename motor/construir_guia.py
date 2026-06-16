@@ -81,6 +81,47 @@ def render_fuentes(f):
             '<p>%s</p><ul class="lista">%s</ul></div>') % (f['intro'], items)
 
 
+# ============================================================
+# DESARROLLO v3 — estilo editorial con bloques flexibles por tema.
+# Cada guía compone su Desarrollo con los bloques que necesite, así
+# cada guía es única y trabaja sus temas con su propia profundidad.
+# ============================================================
+def render_bloque(b):
+    t = b.get('tipo')
+    if t == 'texto':
+        return '<div class="b-texto">%s</div>' % b['html']
+    if t == 'definicion':
+        return '<div class="def-panel"><span class="def-label">Definición</span>%s</div>' % b['html']
+    if t == 'idea':
+        return '<div class="idea"><span class="idea-ic">💡</span><div>%s</div></div>' % b['html']
+    if t == 'ejemplo':
+        return '<div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo</div><div class="ejemplo-body">%s</div></div>' % b['html']
+    if t == 'prueba':
+        return '<div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div>%s</div></div>' % b['html']
+    if t == 'lista':
+        return '<ul class="lista">%s</ul>' % ''.join('<li>%s</li>' % i for i in b['items'])
+    if t == 'tabla':
+        head = ''.join('<th>%s</th>' % h for h in b['head'])
+        filas = ''.join('<tr>%s</tr>' % ''.join('<td>%s</td>' % c for c in f) for f in b['filas'])
+        return '<div class="tabla-wrap"><table><tr>%s</tr>%s</table></div>' % (head, filas)
+    if t == 'acordeon':
+        items = ''
+        for it in b['items']:
+            op = ' open' if it.get('open') else ''
+            items += '<details class="acc"%s><summary>%s</summary><div class="acc-body">%s</div></details>' % (op, it['titulo'], it['html'])
+        return '<div class="acordeon">%s</div>' % items
+    if t == 'minicheck':
+        return render_checkpoint(b)
+    return ''
+
+
+def render_tema(t):
+    bloques = ''.join(render_bloque(b) for b in t.get('bloques', []))
+    chip = t.get('icono') or str(t.get('n', ''))
+    return ('<div class="modulo"><div class="modulo-head"><span class="modulo-n">%s</span><h3>%s</h3></div>%s</div>'
+            % (chip, t['titulo'], bloques))
+
+
 def build_main(d):
     s = []
     # 0 Objetivo
@@ -101,10 +142,16 @@ def build_main(d):
     # 2 Desarrollo
     de = d['desarrollo']
     cuerpo = ''
-    for c in de['conceptos']:
-        cuerpo += render_concepto(c)
-        if c.get('checkpoint'):
-            cuerpo += render_checkpoint(c['checkpoint'])
+    if de.get('temas'):
+        # Estilo editorial v3: cada tema con sus propios bloques (único por guía)
+        for t in de['temas']:
+            cuerpo += render_tema(t)
+    else:
+        # Estilo clásico: conceptos en 4 capas
+        for c in de.get('conceptos', []):
+            cuerpo += render_concepto(c)
+            if c.get('checkpoint'):
+                cuerpo += render_checkpoint(c['checkpoint'])
     if de.get('fuentes'):
         cuerpo += render_fuentes(de['fuentes'])
     s.append('<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span>'
@@ -191,15 +238,26 @@ def validar(d):
             err.append('Falta el campo obligatorio: %s' % k)
     # Desarrollo
     de = d.get('desarrollo', {})
-    cps = de.get('conceptos', [])
-    if len(cps) < 5:
-        warn.append('Hay %d conceptos (recomendado 6-8, mínimo 5)' % len(cps))
-    for i, c in enumerate(cps, 1):
-        if not c.get('def') or not c.get('apl'):
-            err.append('Concepto %d sin def/apl' % i)
-        cp = c.get('checkpoint')
-        if cp and not any(o.get('ok') for o in cp.get('opciones', [])):
-            err.append('Checkpoint del concepto %d no tiene opción correcta' % i)
+    if de.get('temas'):
+        temas = de['temas']
+        if len(temas) < 4:
+            warn.append('Hay %d temas en el desarrollo (recomendado 5-7)' % len(temas))
+        for t in temas:
+            if not t.get('titulo'):
+                err.append('Hay un tema sin título')
+            for b in t.get('bloques', []):
+                if b.get('tipo') == 'minicheck' and not any(o.get('ok') for o in b.get('opciones', [])):
+                    err.append('Minicheck sin opción correcta en el tema "%s"' % t.get('titulo', '?'))
+    else:
+        cps = de.get('conceptos', [])
+        if len(cps) < 5:
+            warn.append('Hay %d conceptos (recomendado 6-8, mínimo 5)' % len(cps))
+        for i, c in enumerate(cps, 1):
+            if not c.get('def') or not c.get('apl'):
+                err.append('Concepto %d sin def/apl' % i)
+            cp = c.get('checkpoint')
+            if cp and not any(o.get('ok') for o in cp.get('opciones', [])):
+                err.append('Checkpoint del concepto %d no tiene opción correcta' % i)
     if not de.get('fuentes', {}).get('items'):
         warn.append('Desarrollo sin enlaces a fuentes (.fuentes)')
     # Conteos recomendados
