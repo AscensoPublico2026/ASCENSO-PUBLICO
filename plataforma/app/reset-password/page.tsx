@@ -12,21 +12,33 @@ export default function ResetPasswordPage() {
   const [err, setErr] = useState("");
   const [done, setDone] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
+  const [linkError, setLinkError] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // Supabase inyecta los tokens en el hash de la URL al redirigir desde el correo.
-    // El cliente de Supabase los detecta automáticamente y establece la sesión.
     const supabase = createClient();
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        setSessionReady(true);
+
+    // Flujo antiguo (token en el #hash): se dispara este evento.
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setSessionReady(true);
+    });
+
+    async function init() {
+      // Flujo nuevo (PKCE): el enlace del correo trae ?code=... → hay que canjearlo por sesión.
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error) { setSessionReady(true); return; }
       }
-    });
-    // También verificar si ya hay sesión (por si el evento ya pasó)
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) setSessionReady(true);
-    });
+      // ¿Ya hay sesión? (el evento ya pasó, o llegó por hash)
+      const { data } = await supabase.auth.getUser();
+      if (data.user) { setSessionReady(true); return; }
+      // Nada funcionó: enlace inválido o expirado.
+      setLinkError(true);
+    }
+    init();
+
+    return () => { sub.subscription.unsubscribe(); };
   }, []);
 
   async function onSubmit(e: React.FormEvent) {
@@ -64,12 +76,14 @@ export default function ResetPasswordPage() {
   if (!sessionReady) {
     return (
       <main style={{ maxWidth: 420, margin: "0 auto", padding: "70px 22px", textAlign: "center" }}>
-        <h1 style={{ fontSize: "1.6rem", marginBottom: 12 }}>Verificando enlace…</h1>
+        <h1 style={{ fontSize: "1.6rem", marginBottom: 12 }}>{linkError ? "Enlace no válido o expirado" : "Verificando enlace…"}</h1>
         <p style={{ color: "var(--texto-suave)" }}>
-          Si el enlace es válido, podrás crear tu nueva contraseña en un momento.
+          {linkError
+            ? "El enlace de recuperación no es válido o ya expiró. Solicita uno nuevo desde el login."
+            : "Si el enlace es válido, podrás crear tu nueva contraseña en un momento."}
         </p>
         <p style={{ color: "var(--texto-suave)", marginTop: 16, fontSize: ".85rem" }}>
-          ¿No funciona? <Link href="/login" style={{ color: "var(--azul)", fontWeight: 700 }}>Volver a login</Link> y solicita otro enlace.
+          <Link href="/login" style={{ color: "var(--azul)", fontWeight: 700 }}>Volver a login</Link> y solicita otro enlace.
         </p>
       </main>
     );
