@@ -279,8 +279,19 @@ def validar(d):
     de = d.get('desarrollo', {})
     if de.get('temas'):
         temas = de['temas']
-        if len(temas) < 4:
-            warn.append('Hay %d temas en el desarrollo (recomendado 5-7)' % len(temas))
+        # PISO MÍNIMO del Desarrollo profundo tipo "mini-libro" (estándar congelado).
+        if len(temas) < 7:
+            warn.append('Desarrollo con %d temas: el estándar profundo exige 7-9 (mini-libro). No puede quedar por debajo.' % len(temas))
+        tipos = [b.get('tipo') for t in temas for b in t.get('bloques', [])]
+        n_bloques = len(tipos)
+        if n_bloques < 25:
+            warn.append('Desarrollo con solo %d bloques: el estándar profundo usa ~30+. Profundiza el contenido.' % n_bloques)
+        if 'normativa' not in tipos:
+            warn.append('Desarrollo sin bloque "normativa" (marco legal citado): el estándar profundo lo exige.')
+        if 'destacado' not in tipos:
+            warn.append('Desarrollo sin bloque "destacado" (regla de oro / alerta): el estándar profundo lo exige.')
+        if 'tabla' not in tipos:
+            warn.append('Desarrollo sin bloque "tabla": el estándar profundo recomienda al menos una.')
         for t in temas:
             if not t.get('titulo'):
                 err.append('Hay un tema sin título')
@@ -289,6 +300,7 @@ def validar(d):
                     err.append('Minicheck sin opción correcta en el tema "%s"' % t.get('titulo', '?'))
     else:
         cps = de.get('conceptos', [])
+        warn.append('Desarrollo en formato antiguo (conceptos): el estándar congelado es el formato profundo de "temas" (7-9, con normativa/tabla/destacado).')
         if len(cps) < 5:
             warn.append('Hay %d conceptos (recomendado 6-8, mínimo 5)' % len(cps))
         for i, c in enumerate(cps, 1):
