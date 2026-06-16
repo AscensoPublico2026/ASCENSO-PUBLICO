@@ -47,15 +47,19 @@ Determina el NIVEL JERÁRQUICO del empleo (Asistencial, Técnico o Profesional) 
 
 DÍAS 9 a 20 — Guías Funcionales Personalizadas
 Analiza a profundidad el cargo: funciones principales, procesos asociados, conocimientos funcionales, normatividad aplicable, procedimientos, herramientas y responsabilidades.
-Construye EXACTAMENTE 12 guías funcionales (FUN-01 a FUN-12). Cada guía debe AGRUPAR:
+Construye EXACTAMENTE 12 guías funcionales. Cada guía debe AGRUPAR:
 - Mínimo 2 temas relacionados.
 - Idealmente 3 temas relacionados.
 - Máximo 4 temas relacionados.
+CODIFICACIÓN Y REUTILIZACIÓN (importante):
+- Cada guía funcional se codifica como FUN-[FAMILIA]-[Nº], donde FAMILIA es el dominio de conocimiento (ALM=Almacén, DOC=Gestión Documental, PRO=Procesos/Calidad, MIPG, OFI=Ofimática, ATC=Servicio/apoyo, TIC, FIN, TH, JUR…). El código es global y reutilizable; el "Día" se asigna en este plan.
+- Distingue guías de DOMINIO (propias del cargo, p. ej. FUN-ALM-*) de guías TRANSVERSALES reutilizables en casi todos los cargos (FUN-PRO-*, FUN-MIPG-*, FUN-DOC-*, FUN-OFI-*, FUN-ATC-*). Antes de proponer una guía nueva, revisa si ya existe una transversal reutilizable en biblioteca.json y reúsala.
+- Las guías funcionales NO mencionan la entidad del aspirante; son entidad-agnósticas. Lo específico de la entidad va solo en la guía de entidad (ENT-[SIGLA]-[Nº]).
 REGLAS:
 - NO crear una guía por cada tema individual.
 - NO copiar el orden literal del manual de funciones.
 - Construye bloques de conocimiento coherentes y estratégicos (piensa como diseñador instruccional).
-Ejemplo correcto → FUN-01 "Gestión Documental y Administración de Archivos" (temas: gestión documental, archivo, tablas de retención).
+Ejemplo correcto → FUN-ALM-01 "Fundamentos de la Gestión de Almacén" (temas: qué es el almacén, ciclo logístico, tipos de bienes).
 Ejemplo incorrecto → una guía por "Gestión documental", otra por "Archivo", otra por "Tablas de retención".
 
 DÍA 21 — Simulacro Integral Final
