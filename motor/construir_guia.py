@@ -310,12 +310,19 @@ def validar(d):
             err.append('Pregunta %d sin contexto (ctx)' % i)
         elif len(ctx) < 200:
             warn.append('Pregunta %d: contexto corto (%d caracteres). Tipo CNSC pide un caso largo y verosímil (ideal ≥ 220).' % (i, len(ctx)))
-        # Las opciones del simulacro no deben ser triviales (muy cortas) ni calcadas entre sí
+        # El enunciado (q) debe ser situacional y largo, no un genérico "¿cuál es la actuación correcta?"
+        q = p.get('q', '')
+        if not q:
+            err.append('Pregunta %d sin enunciado (q)' % i)
+        elif len(q) < 90:
+            warn.append('Pregunta %d: enunciado corto (%d caracteres). Tipo CNSC: el enunciado replantea el dilema y pide el curso de acción (ideal ≥ 120).' % (i, len(q)))
+        # Las opciones del simulacro deben ser cursos de acción elaborados, no cortos ni obvios
         ops = p.get('ops', [])
         if ops and len(set(ops)) != len(ops):
             err.append('Pregunta %d: tiene opciones repetidas' % i)
-        if ops and any(len(o) < 12 for o in ops):
-            warn.append('Pregunta %d: alguna opción es muy corta; los distractores deben ser plausibles.' % i)
+        cortas = [j + 1 for j, o in enumerate(ops) if len(o) < 80]
+        if cortas:
+            warn.append('Pregunta %d: opciones cortas/obvias (posiciones %s). Tipo CNSC: cada opción es un curso de acción elaborado y plausible (ideal ≥ 110 caracteres).' % (i, cortas))
     # Patrón obvio de respuestas (todas iguales)
     corr = [p.get('correcta') for p in sim]
     if len(set(corr)) == 1:

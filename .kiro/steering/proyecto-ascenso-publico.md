@@ -98,13 +98,16 @@ Buenas prácticas: un paso = una operación; mostrar **de dónde sale cada núme
 ### Simulacro — formato CNSC real (JUICIO SITUACIONAL)
 - **Tipo: juicio situacional.** Cada pregunta plantea un **caso/contexto** real del día a día del servidor y un enunciado tipo *"¿qué es lo más apropiado que debe hacer?"*. **NO se pregunta la norma de memoria** (nada de "¿qué dice la ley X?"); se evalúa **aplicar el criterio** a la situación, tal como en la prueba real de competencias de la CNSC.
 - **Contexto largo y verosímil:** el `ctx` debe ser un caso narrado, con suficiente detalle situacional (**ideal ≥ 220 caracteres**). Nada de contextos de una línea. El validador (`construir_guia.py`) avisa cuando un `ctx` es corto.
-- Las 4 opciones son **cursos de acción plausibles**; solo uno refleja la actuación correcta. Los **distractores deben confundir** (parecer correctos pero tener una falla sutil), para entrenar de verdad. No usar opciones triviales ni "de relleno"; el validador avisa si una opción es muy corta o si hay opciones repetidas.
+- **Enunciado (`q`) situacional y largo:** NO usar genéricos secos como "¿Cuál es la actuación más apropiada?". El enunciado **replantea el dilema** (recuerda el principio o la tensión en juego) y luego pide el curso de acción (**ideal ≥ 120 caracteres**). Ej.: *"Teniendo en cuenta que el kardex debe reflejar cada movimiento de forma oportuna y que aplazar el registro causa descuadres, ¿cuál de las siguientes actuaciones permite atender la urgencia sin perder el control?"*.
+- **Opciones (`ops`) largas y plausibles:** cada opción es un **curso de acción completo y elaborado** (con su pequeña justificación), no una frase corta y obvia (**ideal ≥ 110 caracteres cada una**). Las 4 deben sonar razonables; los distractores tienen una falla sutil, no son absurdos. El validador avisa si alguna opción es corta o si hay opciones repetidas.
 - **12 preguntas** total. Distribución: **4 básicas + 5 intermedias + 3 avanzadas**.
 - **4 opciones (A, B, C, D)** — formato real CNSC. **NUNCA usar 3 opciones.**
 - **Todas las preguntas llevan `ctx`** (el caso situacional).
 - **Retroalimentación por opción** (`expl[i]`): explica por qué cada acción es correcta o incorrecta; **aquí sí se cita la norma** (artículo/ley) para reforzar el aprendizaje.
 - **Cada pregunta tiene `tema`** para alimentar la lista de "Temas a reforzar" al final.
 - **Orden de opciones ALEATORIO:** el molde baraja las opciones (A/B/C/D) en cada carga del simulacro (función `barajar()` en `base-guia.html`). El estudiante entrena criterio, no la posición de la respuesta. Por eso el índice `correcta` del JSON no determina la posición visible: igual conviene variar `correcta` entre preguntas.
+
+> **Referencia viva del estándar de simulacro:** `motor/contenido/FUN-ALM-04.json` (Kardex). Sus 12 preguntas son el modelo de `ctx` + `q` + `ops` largas tipo CNSC.
 
 ### Botón "Avanzar"
 Cada sección termina con una barra dorada con botón "Avanzar a {siguiente sección} →". La última sección dice "✅ Finalizar Día N" en verde.
@@ -182,7 +185,8 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 ❌ Usar 3 opciones en el simulacro (es 4).
 ❌ Simulacro con preguntas de memoria de la norma ("¿qué dice la ley X?") — debe ser **juicio situacional** (un caso + "¿qué es lo más apropiado?").
 ❌ Contextos de simulacro de una línea — deben ser casos largos y verosímiles (≥ 220 caracteres).
-❌ Distractores triviales o "de relleno" en el simulacro — las 4 opciones deben ser plausibles y confundir.
+❌ Enunciado de simulacro genérico ("¿Cuál es la actuación correcta?") — debe replantear el dilema y ser situacional (≥ 120 caracteres).
+❌ Distractores triviales o "de relleno" en el simulacro — las 4 opciones deben ser cursos de acción largos, plausibles y que confundan (≥ 110 caracteres c/u).
 ❌ Comprimir fórmulas/cálculos en una línea o celda de tabla — usar siempre el bloque `calculo` paso a paso.
 ❌ Capas de 1 línea (sensación "perdí mi dinero").
 ❌ Capas de 7+ párrafos (fatiga lectora).
