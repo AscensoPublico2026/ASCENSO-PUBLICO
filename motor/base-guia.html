@@ -241,6 +241,29 @@ tr:last-child td{border-bottom:none;}
 .acc-body p{margin-bottom:10px;}
 .acc-body p:last-child{margin-bottom:0;}
 .acc-body em{color:var(--texto-suave);}
+/* ===== Bloque CÁLCULO · fórmulas y procesos matemáticos paso a paso ===== */
+.calculo{background:linear-gradient(180deg,#fff,var(--azul-suave));border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.calculo-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.calculo-intro{padding:14px 18px 0;font-size:.93rem;color:var(--texto);}
+.calculo-intro p{margin-bottom:0;}
+.calc-datos{margin:12px 18px 0;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:11px;padding:11px 15px;font-size:.88rem;}
+.calc-datos .cd-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-bottom:5px;}
+.calc-datos ul{list-style:none;margin:0;}
+.calc-datos li{position:relative;padding-left:18px;margin-bottom:4px;}
+.calc-datos li::before{content:'•';position:absolute;left:2px;color:var(--oro);font-weight:800;}
+.calc-pasos{display:flex;flex-direction:column;gap:11px;padding:14px 18px;}
+.calc-paso{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--gris-borde);border-left:4px solid var(--oro);border-radius:11px;padding:12px 15px;}
+.calc-n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.calc-body{flex:1;min-width:0;}
+.calc-label{font-weight:700;color:var(--azul);font-size:.92rem;margin-bottom:6px;}
+.calc-formula{font-family:'Source Serif 4',serif;font-size:1.02rem;font-weight:600;background:var(--gris-bg);border-radius:8px;padding:9px 13px;margin:5px 0;overflow-x:auto;color:var(--texto);}
+.calc-formula b,.calc-formula strong{color:var(--ambar);}
+.calc-res-paso{font-size:.95rem;color:var(--verde);font-weight:700;margin-top:5px;}
+.calc-res-paso::before{content:'➜ ';color:var(--verde);}
+.calc-total{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 18px 16px;padding:15px 18px;background:var(--verde-suave);border:1.5px solid var(--verde-borde);border-radius:12px;}
+.calc-total .ct-label{font-weight:700;color:var(--verde);font-size:.93rem;}
+.calc-total .ct-valor{font-family:'Source Serif 4',serif;font-size:1.55rem;font-weight:800;color:var(--verde);}
+.calc-nota{font-size:.85rem;color:var(--texto-suave);padding:0 18px 16px;font-style:italic;}
 footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
 footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
 footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
@@ -341,32 +364,39 @@ renderFlash();
 const preguntas={{PREGUNTAS}};
 const quizDiv=document.getElementById('quiz');
 let respondidas={};
+// Baraja una copia de un arreglo (Fisher-Yates). Se usa para que las
+// opciones A/B/C/D salgan en orden ALEATORIO en cada carga: el estudiante
+// entrena criterio, no la posición de la respuesta (estándar tipo CNSC).
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
 function renderQuiz(){
   respondidas={};quizDiv.innerHTML='';
   const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
   preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]); // posición visible (0..3) -> índice original de la opción
     const card=document.createElement('div');card.className='pregunta';
     let opsHtml='';
-    p.ops.forEach((op,j)=>{const letra=String.fromCharCode(65+j);opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+op+'</span><div class="op-exp" id="oe-'+idx+'-'+j+'"></div></div></div>';});
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
     card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
       +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
     quizDiv.appendChild(card);
   });
   document.querySelectorAll('.opcion').forEach(op=>{
     op.addEventListener('click',function(){
-      const qi=+this.dataset.q, oi=+this.dataset.op;
+      const qi=+this.dataset.q, di=+this.dataset.d;
       if(respondidas[qi]!==undefined)return;
-      respondidas[qi]=oi;
-      const p=preguntas[qi];const cont=this.parentElement;
-      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido; // guardamos el ÍNDICE ORIGINAL elegido (el scoring sigue igual)
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
         o.classList.add('bloqueada');
-        const exp=document.getElementById('oe-'+qi+'-'+k);const letra=String.fromCharCode(65+k);
-        if(k===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[k];}
-        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[k];}
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
       });
-      if(oi!==p.correcta)this.classList.add('incorrecta');
-      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p.correcta);
-      if(oi===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
       else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
     });
   });

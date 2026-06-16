@@ -74,15 +74,37 @@ Cada concepto importante se presenta en este orden:
 ### Patrón "concepto madre + sub-bloques"
 Para conceptos con 3+ sub-componentes evaluables (ramas del poder, órganos autónomos, PQRSD, acciones constitucionales): usar `<details class="sb sb-{color}">` con summary, body, trampa CNSC y mini-pregunta tipo CNSC desplegable.
 
+### Fórmulas y procesos matemáticos — SIEMPRE paso a paso (bloque `calculo`)
+**Regla:** todo contenido con fórmulas o cálculos (promedio ponderado, PEPS, rotación de inventario, stock mínimo/máximo, punto de reorden, porcentajes, depreciación, etc.) **se explica con el bloque `calculo`**, nunca comprimido en una sola línea o celda de tabla. Estas guías son lo más valioso para el cliente: la matemática debe quedar cristalina para alguien sin formación previa.
+
+Estructura del bloque (en el JSON del Desarrollo, dentro de `bloques`):
+```json
+{
+  "tipo": "calculo",
+  "titulo": "Promedio ponderado, paso a paso",
+  "intro": "Qué hace el método, en palabras simples.",
+  "datos": ["Dato 1", "Dato 2", "Lo que se pide"],
+  "pasos": [
+    {"n": 1, "label": "Qué se hace en este paso (en lenguaje claro)",
+     "formula": "100 × $10 <b>+</b> 100 × $12 = $1.000 <b>+</b> $1.200",
+     "resultado": "$2.200"}
+  ],
+  "total": {"label": "Resultado final", "valor": "$1.650"},
+  "nota": "Aclaración o trampa típica del cálculo."
+}
+```
+Buenas prácticas: un paso = una operación; mostrar **de dónde sale cada número**; resaltar los operadores con `<b>`; cerrar con `total` (el resultado destacado) y una `nota` que advierta la confusión típica. Cuando aplique, añadir un `minicheck` que haga repetir el cálculo. Referencia viva: `motor/contenido/FUN-ALM-04.json` (PEPS + promedio).
+
 ### Simulacro — formato CNSC real (JUICIO SITUACIONAL)
 - **Tipo: juicio situacional.** Cada pregunta plantea un **caso/contexto** real del día a día del servidor y un enunciado tipo *"¿qué es lo más apropiado que debe hacer?"*. **NO se pregunta la norma de memoria** (nada de "¿qué dice la ley X?"); se evalúa **aplicar el criterio** a la situación, tal como en la prueba real de competencias de la CNSC.
-- Las 4 opciones son **cursos de acción plausibles**; solo uno refleja la actuación correcta.
+- **Contexto largo y verosímil:** el `ctx` debe ser un caso narrado, con suficiente detalle situacional (**ideal ≥ 220 caracteres**). Nada de contextos de una línea. El validador (`construir_guia.py`) avisa cuando un `ctx` es corto.
+- Las 4 opciones son **cursos de acción plausibles**; solo uno refleja la actuación correcta. Los **distractores deben confundir** (parecer correctos pero tener una falla sutil), para entrenar de verdad. No usar opciones triviales ni "de relleno"; el validador avisa si una opción es muy corta o si hay opciones repetidas.
 - **12 preguntas** total. Distribución: **4 básicas + 5 intermedias + 3 avanzadas**.
 - **4 opciones (A, B, C, D)** — formato real CNSC. **NUNCA usar 3 opciones.**
 - **Todas las preguntas llevan `ctx`** (el caso situacional).
 - **Retroalimentación por opción** (`expl[i]`): explica por qué cada acción es correcta o incorrecta; **aquí sí se cita la norma** (artículo/ley) para reforzar el aprendizaje.
 - **Cada pregunta tiene `tema`** para alimentar la lista de "Temas a reforzar" al final.
-- **Respuestas correctas distribuidas sin patrón visible.**
+- **Orden de opciones ALEATORIO:** el molde baraja las opciones (A/B/C/D) en cada carga del simulacro (función `barajar()` en `base-guia.html`). El estudiante entrena criterio, no la posición de la respuesta. Por eso el índice `correcta` del JSON no determina la posición visible: igual conviene variar `correcta` entre preguntas.
 
 ### Botón "Avanzar"
 Cada sección termina con una barra dorada con botón "Avanzar a {siguiente sección} →". La última sección dice "✅ Finalizar Día N" en verde.
@@ -159,6 +181,9 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 
 ❌ Usar 3 opciones en el simulacro (es 4).
 ❌ Simulacro con preguntas de memoria de la norma ("¿qué dice la ley X?") — debe ser **juicio situacional** (un caso + "¿qué es lo más apropiado?").
+❌ Contextos de simulacro de una línea — deben ser casos largos y verosímiles (≥ 220 caracteres).
+❌ Distractores triviales o "de relleno" en el simulacro — las 4 opciones deben ser plausibles y confundir.
+❌ Comprimir fórmulas/cálculos en una línea o celda de tabla — usar siempre el bloque `calculo` paso a paso.
 ❌ Capas de 1 línea (sensación "perdí mi dinero").
 ❌ Capas de 7+ párrafos (fatiga lectora).
 ❌ Cambiar la paleta `:root`.
