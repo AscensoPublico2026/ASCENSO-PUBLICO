@@ -81,3 +81,15 @@ Campos `intro`, `datos`, `total` y `nota` son opcionales. Resalta los operadores
   python3 motor/construir_todas.py
   ```
   Reporta un resumen (generadas / con errores). Así garantizamos guías **completas y sin errores**.
+
+
+## Piso mínimo del Desarrollo (estándar profundo CONGELADO)
+
+Toda guía debe tener un **Desarrollo profundo tipo "mini-libro"**. El motor lo **valida** y avisa si una guía queda por debajo:
+- **7 a 9 `temas`** (avisa si hay menos de 7).
+- **~30+ bloques** en total (avisa si hay menos de 25).
+- Al menos un bloque **`normativa`** (marco legal citado), uno **`destacado`** (regla de oro / alerta) y una **`tabla`**.
+- Todo cálculo/fórmula en bloque **`calculo`** paso a paso.
+- Cierre con tema de **rol del servidor + trampas CNSC**.
+
+Referencias modelo: `contenido/FUN-DOC-01.json` y `contenido/FUN-ALM-04.json`. Ninguna guía nueva puede quedar por debajo de este nivel.
