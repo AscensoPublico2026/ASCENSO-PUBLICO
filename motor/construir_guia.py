@@ -136,6 +136,21 @@ def render_bloque(b):
                 '<div class="calc-pasos">%s</div>%s%s</div>') % (head, intro, datos, pasos, total, nota)
     if t == 'minicheck':
         return render_checkpoint(b)
+    if t == 'normativa':
+        # Marco legal: lista de norma + artículo con su descripción.
+        intro = '<p class="norma-intro">%s</p>' % b['intro'] if b.get('intro') else ''
+        items = ''.join(
+            '<div class="norma-item"><span class="norma-ref">%s</span><div class="norma-txt">%s</div></div>' % (
+                it['norma'], it['texto']) for it in b.get('items', []))
+        return '<div class="normativa"><div class="normativa-head">⚖️ %s</div>%s<div class="norma-list">%s</div></div>' % (
+            b.get('titulo', 'Marco normativo'), intro, items)
+    if t == 'destacado':
+        # Caja resaltada (regla de oro, alerta clave) dentro del desarrollo.
+        color = b.get('color', 'oro')
+        icono = b.get('icono', '📌')
+        titulo = '<span class="dst-title">%s</span>' % b['titulo'] if b.get('titulo') else ''
+        return '<div class="destacado %s"><span class="dst-ic">%s</span><div class="dst-body">%s%s</div></div>' % (
+            color, icono, titulo, b['html'])
     return ''
 
 
