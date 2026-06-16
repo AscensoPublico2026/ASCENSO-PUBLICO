@@ -68,7 +68,8 @@ Campos `intro`, `datos`, `total` y `nota` son opcionales. Resalta los operadores
 ## Simulacro tipo CNSC — reglas que valida el motor
 - **12 preguntas** (4 básicas + 5 intermedias + 3 avanzadas), **4 opciones** y **4 explicaciones** (una por opción).
 - `ctx` obligatorio y **largo** (caso verosímil, ideal ≥ 220 caracteres). El validador avisa si es corto.
-- Opciones no repetidas ni triviales (el validador avisa).
+- `q` (enunciado) **situacional y largo** (ideal ≥ 120): replantea el dilema, no un genérico "¿cuál es la actuación correcta?".
+- `ops` **largas y plausibles** (ideal ≥ 110 caracteres c/u): cursos de acción elaborados, no frases cortas y obvias. No repetidas (el validador avisa).
 - **El molde baraja las opciones (A/B/C/D) en cada carga** (`barajar()` en `base-guia.html`): el orden visible es aleatorio, así que la posición de la respuesta no es predecible.
 
 
