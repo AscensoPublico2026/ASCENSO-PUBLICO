@@ -4,7 +4,7 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 /**
  * API Route: /api/admin/seed-guias
  * 
- * Sube las 17 guías HTML al bucket 'guias' de Supabase Storage.
+ * Sube las guías HTML al bucket 'guias' de Supabase Storage.
  * Solo se puede ejecutar como admin (verifica sesión + rol).
  * 
  * USO: visita https://ascenso-publico.vercel.app/api/admin/seed-guias
@@ -32,6 +32,7 @@ const GUIAS = [
   "PRO-ESP-01-competencias-nivel-profesional.html",
   "PRO-ESP-02-alcance-cargo-profesional.html",
   "BON-01-estrategia-cnsc.html",
+  "BON-02-ofimatica.html",
 ];
 
 export async function GET() {
