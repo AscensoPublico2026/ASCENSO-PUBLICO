@@ -5,7 +5,7 @@
  * - Introducción (INTRO-00): Día 1 → siempre
  * - Generales (GEN-01, GEN-02, GEN-03): Días 2-4 → siempre
  * - Por Nivel (ASI/TEC/PRO según curso.nivel): Días 5-8 → según nivel
- * - Bonus (BON-01): sin día fijo → siempre (sección bonus)
+ * - Bonus (BON-01, BON-02): sin día fijo → siempre (sección bonus)
  * - Funcionales (Días 9-20): NO se auto-cargan (admin las sube personalizadas)
  * - Simulacro Final (Día 21): NO se auto-carga (admin la sube personalizada)
  * - INTRO-01 "Conoce tu Entidad": NO se auto-carga (bajo-demanda, admin la crea)
@@ -44,6 +44,7 @@ const GUIAS_POR_NIVEL: Record<string, Array<{ codigo: string; dia: number; titul
 
 const GUIAS_BONUS = [
   { codigo: "BON-01", dia: null, titulo: "Estrategia CNSC (Bonus)", tipo: "bonus", orden: 100 },
+  { codigo: "BON-02", dia: null, titulo: "Ofimática (Bonus)", tipo: "bonus", orden: 101 },
 ];
 
 // Mapeo de código → archivo en storage (bucket 'guias')
@@ -65,6 +66,7 @@ const ARCHIVOS: Record<string, string> = {
   "PRO-ESP-01": "guias/PRO-ESP-01-competencias-nivel-profesional.html",
   "PRO-ESP-02": "guias/PRO-ESP-02-alcance-cargo-profesional.html",
   "BON-01": "guias/BON-01-estrategia-cnsc.html",
+  "BON-02": "guias/BON-02-ofimatica.html",
 };
 
 /**

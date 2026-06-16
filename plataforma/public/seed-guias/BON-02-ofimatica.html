@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BON-02 · Ofimática — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #0A2A5E;
+    --azul-medio:  #1A4A8A;
+    --azul-claro:  #2D6CC0;
+    --azul-suave:  #EAF1FB;
+    --azul-borde:  #C9DCF4;
+    --oro:         #E8A33D;
+    --oro-claro:   #F6C56B;
+    --oro-suave:   #FDF4E3;
+    --oro-borde:   #F0DCB0;
+    --crema:       #FBF9F4;
+    --blanco:      #FFFFFF;
+    --gris-bg:     #F2F0EA;
+    --gris-borde:  #E6E2D8;
+    --verde:       #1A7A4A;   --verde-suave: #E8F6EE;   --verde-borde:#BFE6CF;
+    --rojo:        #C0392B;   --rojo-suave:  #FCEDEB;   --rojo-borde: #F2CDC8;
+    --ambar:       #B8600A;   --ambar-suave: #FBEFDD;   --ambar-borde:#EFD7B0;
+    --texto:       #2A3441;
+    --texto-suave: #5B6675;
+    --sombra:      0 4px 20px rgba(10,42,94,0.08);
+    --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
+    --radio:       16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  #readbar {
+    position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+    background: linear-gradient(90deg, var(--oro), var(--oro-claro));
+    z-index: 999; transition: width 0.1s linear;
+  }
+  header {
+    background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
+    color: var(--blanco);
+    padding: 42px 20px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
+  }
+  header::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+    background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
+  }
+  .brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+  .brand-logo {
+    width: 50px; height: 50px; border-radius: 13px;
+    background: linear-gradient(135deg, var(--oro-claro), var(--oro));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(232,163,61,0.4); flex-shrink: 0;
+  }
+  .brand-name { font-size: 1.6rem; font-weight: 800; letter-spacing: 0.01em; line-height: 1; }
+  .brand-slogan { font-size: 0.82rem; font-weight: 400; color: rgba(255,255,255,0.78); margin-top: 4px; }
+  .doc-ref {
+    position: absolute; top: 16px; right: 18px; z-index: 3;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.22);
+    padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 11px;
+    margin: 24px 0 12px; position: relative; z-index: 2;
+    color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .kicker::before, .kicker::after {
+    content:''; width: 26px; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--oro), transparent);
+  }
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+    font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
+    position: relative; z-index: 2;
+  }
+  .header-sub {
+    max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
+    color: rgba(255,255,255,0.82); font-size: 0.98rem; font-weight: 400; line-height: 1.6;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 50; background: var(--azul);
+    display: flex; gap: 5px; padding: 11px 12px;
+    overflow-x: auto; scrollbar-width: thin;
+    box-shadow: 0 4px 18px rgba(10,42,94,0.22);
+  }
+  nav::-webkit-scrollbar { height: 5px; }
+  nav::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 10px; }
+  nav button {
+    background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
+    border: none; padding: 9px 16px; border-radius: 9px;
+    cursor: pointer; font-family: inherit; font-size: 0.84rem;
+    font-weight: 600; white-space: nowrap; transition: all 0.2s; flex-shrink: 0;
+  }
+  nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
+  nav button.active { background: linear-gradient(135deg, var(--oro), var(--oro-claro)); color: var(--azul); box-shadow: 0 4px 12px rgba(232,163,61,0.4); }
+  main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
+  .section { display: none; animation: fade 0.4s ease; }
+  .section.visible { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--ambar); font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .eyebrow::before { content:''; width: 26px; height: 3px; background: linear-gradient(90deg,var(--oro),var(--oro-claro)); border-radius: 3px; }
+  h2.sec-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
+    line-height: 1.2; margin-bottom: 20px;
+  }
+  h3 { font-size: 1.2rem; color: var(--azul); margin: 28px 0 11px; font-weight: 700; display: flex; align-items: center; gap: 9px; }
+  h3 .h3-chip {
+    width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+    background: var(--azul-suave); color: var(--azul-claro);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 800;
+  }
+  p { margin-bottom: 14px; color: var(--texto); }
+  strong { color: var(--azul); font-weight: 700; }
+  .card {
+    background: var(--blanco); border: 1px solid var(--gris-borde);
+    border-radius: var(--radio); padding: 26px; margin-bottom: 20px; box-shadow: var(--sombra);
+  }
+  .card-lead { border: none; border-left: 6px solid var(--oro); background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 75%); }
+  ul.lista { list-style: none; margin: 6px 0 16px; }
+  ul.lista li { position: relative; padding-left: 30px; margin-bottom: 11px; }
+  ul.lista li::before {
+    content:'✓'; position: absolute; left: 0; top: 1px;
+    width: 20px; height: 20px; background: var(--verde-suave); color: var(--verde);
+    border-radius: 50%; display:flex; align-items:center; justify-content:center;
+    font-weight: 800; font-size: 0.72rem;
+  }
+  ol.lista-num { margin: 6px 0 16px; list-style: none; counter-reset: paso; }
+  ol.lista-num li { position: relative; padding-left: 38px; margin-bottom: 12px; counter-increment: paso; }
+  ol.lista-num li::before {
+    content: counter(paso); position: absolute; left: 0; top: 0;
+    width: 26px; height: 26px; background: var(--azul); color: #fff;
+    border-radius: 8px; display:flex; align-items:center; justify-content:center;
+    font-weight: 800; font-size: 0.82rem;
+  }
+
+  .box { border-radius: 13px; padding: 18px 20px; margin: 16px 0; border: 1px solid; }
+  .box-title { font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: 0.98rem; }
+  .box p:last-child { margin-bottom: 0; }
+  .box.info   { background: var(--azul-suave); border-color: var(--azul-borde); }
+  .box.info .box-title { color: var(--azul); }
+  .box.ok     { background: var(--verde-suave); border-color: var(--verde-borde); }
+  .box.ok .box-title { color: var(--verde); }
+  .box.warn   { background: var(--ambar-suave); border-color: var(--ambar-borde); }
+  .box.warn .box-title { color: var(--ambar); }
+  .box.danger { background: var(--rojo-suave); border-color: var(--rojo-borde); }
+  .box.danger .box-title { color: var(--rojo); }
+  .box.gold   { background: var(--oro-suave); border-color: var(--oro-borde); }
+  .box.gold .box-title { color: var(--ambar); }
+  .tabla-wrap { overflow-x: auto; margin: 16px 0; border-radius: 13px; box-shadow: var(--sombra); border: 1px solid var(--gris-borde); }
+  table { width: 100%; border-collapse: collapse; background: var(--blanco); min-width: 480px; }
+  th { background: var(--azul); color: #fff; padding: 14px 16px; text-align: left; font-size: 0.86rem; font-weight: 700; }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--gris-borde); font-size: 0.9rem; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAF8F2; }
+  td kbd, p kbd, li kbd {
+    background: var(--azul); color: #fff; border-radius: 6px; padding: 2px 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.78rem; font-weight: 700;
+    white-space: nowrap; box-shadow: 0 2px 4px rgba(10,42,94,0.25);
+  }
+  .caso { background: var(--blanco); border: 1px solid var(--gris-borde); border-radius: 14px; overflow: hidden; margin: 16px 0; box-shadow: var(--sombra); }
+  .caso-head { background: linear-gradient(135deg, var(--azul), var(--azul-medio)); color: #fff; padding: 13px 18px; font-weight: 700; font-size: 0.94rem; display:flex; align-items:center; gap:8px; }
+  .caso-body { padding: 18px 20px; }
+  .caso-body .label { font-weight: 800; color: var(--ambar); display:block; margin-top: 14px; margin-bottom: 3px; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em;}
+  .caso-body .label:first-child { margin-top: 0; }
+  .resp-correcta { background: var(--verde-suave); border-left: 4px solid var(--verde); padding: 11px 15px; border-radius: 9px; margin-top: 8px; }
+  .trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow: var(--sombra);}
+  .trampa-q { background: linear-gradient(100deg, var(--ambar-suave), var(--blanco)); padding: 15px 18px; font-weight: 600; border-left: 5px solid var(--oro); }
+  .trampa-detail { padding: 16px 18px; background: var(--blanco); }
+  .trampa-detail .t-row { margin-bottom: 10px; padding-left: 28px; position: relative; }
+  .trampa-detail .t-row:last-child { margin-bottom: 0; }
+  .trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+  .trampa-detail .t-row.malo::before   { content:'❌'; position:absolute; left:0; }
+  .trampa-detail .t-row.bueno::before  { content:'✅'; position:absolute; left:0; }
+  .quiz-intro { text-align:center; margin-bottom: 24px; }
+  .dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag { font-size:0.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+  .tag.b { background: var(--verde-suave); color: var(--verde); }
+  .tag.i { background: var(--azul-suave); color: var(--azul); }
+  .tag.a { background: var(--rojo-suave); color: var(--rojo); }
+  .pregunta { background: var(--blanco); border: 1px solid var(--gris-borde); border-radius: 14px; padding: 21px 22px; margin-bottom: 16px; box-shadow: var(--sombra); }
+  .pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color: var(--azul); margin-bottom: 5px; }
+  .nivel-pill { font-size:0.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:0.05em; }
+  .nivel-pill.app { background: var(--oro-suave); color: var(--ambar); }
+  .q-texto { font-weight: 600; margin: 9px 0 15px; color: var(--texto); }
+  .opciones { display: flex; flex-direction: column; gap: 9px; }
+  .opcion {
+    display: flex; align-items: flex-start; gap: 12px;
+    border: 1.5px solid var(--gris-borde); border-radius: 11px;
+    padding: 13px 15px; cursor: pointer; transition: all 0.18s; background: #fff;
+  }
+  .opcion:hover { border-color: var(--oro); background: var(--oro-suave); }
+  .opcion .letra { width:27px; height:27px; border-radius:50%; background: var(--gris-bg); color: var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.85rem; }
+  .opcion.correcta { border-color: var(--verde); background: var(--verde-suave); }
+  .opcion.correcta .letra { background: var(--verde); color:#fff; }
+  .opcion.incorrecta { border-color: var(--rojo); background: var(--rojo-suave); }
+  .opcion.incorrecta .letra { background: var(--rojo); color:#fff; }
+  .opcion.bloqueada { pointer-events: none; }
+  .feedback { margin-top: 12px; padding: 12px 15px; border-radius: 10px; font-size: 0.88rem; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--verde-suave); border-left: 4px solid var(--verde); }
+  .feedback.no { background: var(--rojo-suave); border-left: 4px solid var(--rojo); }
+  #resultado {
+    display: none; text-align: center; background: var(--blanco);
+    border: 2px solid var(--oro); border-radius: 18px; padding: 32px;
+    margin-top: 24px; box-shadow: var(--sombra-lg);
+  }
+  #resultado.show { display: block; }
+  .score-num { font-size: 3.2rem; font-weight: 800; color: var(--azul); font-family:'Source Serif 4',serif; }
+  .btn {
+    background: linear-gradient(135deg, var(--azul), var(--azul-medio)); color: #fff; border: none;
+    padding: 13px 30px; border-radius: 11px; font-family: inherit; font-weight: 700;
+    font-size: 0.92rem; cursor: pointer; transition: all 0.2s; margin-top: 16px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--sombra-lg); }
+  .btn.gold { background: linear-gradient(135deg, var(--oro), var(--oro-claro)); color: var(--azul); }
+  .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px,1fr)); gap: 14px; margin: 16px 0; }
+  .resumen-item { background: var(--blanco); border:1px solid var(--gris-borde); border-top: 4px solid var(--oro); border-radius: 13px; padding: 17px 19px; box-shadow: var(--sombra); }
+  .resumen-item h4 { color: var(--azul); font-size: 0.98rem; margin-bottom: 6px; }
+  .resumen-item p { font-size: 0.86rem; margin: 0; color: var(--texto-suave); }
+  .cierre {
+    background: linear-gradient(140deg, var(--azul), var(--azul-medio));
+    color: #fff; border-radius: 18px; padding: 36px 28px; text-align: center;
+    box-shadow: var(--sombra-lg); position: relative; overflow: hidden;
+  }
+  .cierre::before {
+    content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px;
+    border-radius:50%; background: radial-gradient(circle, rgba(232,163,61,0.25), transparent 70%);
+  }
+  .cierre h3 { color: #fff; font-size: 1.45rem; margin: 0 0 10px; justify-content: center; }
+  .cierre p { color: rgba(255,255,255,0.9); position: relative; z-index: 2; }
+  footer { background: var(--azul); color: rgba(255,255,255,0.8); text-align: center; padding: 28px 20px; }
+  footer .fbrand { font-weight: 800; color:#fff; font-size: 1.05rem; }
+  footer .fslogan { font-size: 0.78rem; margin-top: 3px; color: var(--oro-claro); }
+  footer .fmeta { margin-top: 14px; font-size: 0.72rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+  .nav-footer { display:flex; justify-content:space-between; gap:12px; margin-top: 30px; }
+  .nav-footer button {
+    flex:1; background: var(--blanco); border:1.5px solid var(--gris-borde);
+    color: var(--azul); padding: 14px; border-radius: 12px; cursor:pointer;
+    font-family: inherit; font-weight: 700; font-size: 0.88rem; transition: all 0.2s;
+  }
+  .nav-footer button:hover:not(:disabled) { border-color: var(--oro); background: var(--oro-suave); }
+  .nav-footer button:disabled { opacity: 0.4; cursor: not-allowed; }
+  @media (max-width: 560px) {
+    .card { padding: 21px 17px; }
+    header { padding: 34px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+
+<!-- HEADER -->
+<header>
+  <span class="doc-ref">BON-02</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div style="text-align:left;">
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Bonus · Todos los niveles</div>
+  <h1>Ofimática para el Servidor Público: Word, Excel, PowerPoint y más</h1>
+  <p class="header-sub">La prueba de Ofimática de la CNSC no mide memoria: mide si sabes <strong>qué herramienta resuelve cada problema administrativo real</strong>. Esta guía te entrena en las funciones que más preguntan, con casos tipo juicio situacional.</p>
+</header>
+
+<!-- NAV -->
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📝 Word</button>
+  <button data-sec="3">📊 Excel</button>
+  <button data-sec="4">📽️ PowerPoint</button>
+  <button data-sec="5">📧 Correo</button>
+  <button data-sec="6">🪟 Windows y atajos</button>
+  <button data-sec="7">🔐 Seguridad</button>
+  <button data-sec="8">📂 Casos CNSC</button>
+  <button data-sec="9">⚠️ Errores y Tips</button>
+  <button data-sec="10">📋 Resumen</button>
+  <button data-sec="11">🧪 Simulacro</button>
+</nav>
+
+<main>
+
+
+  <!-- 0. OBJETIVO -->
+  <section class="section visible" data-sec="0">
+    <div class="eyebrow">Objetivo de la guía</div>
+    <h2 class="sec-title">¿Qué vas a lograr con esta guía bonus?</h2>
+    <div class="card card-lead">
+      <p style="margin-bottom:0;">La <strong>ofimática</strong> (manejo de Word, Excel, PowerPoint, correo y el sistema operativo) es un requisito <strong>transversal</strong> en casi todas las convocatorias de la CNSC: aparece en las competencias funcionales de niveles asistencial, técnico y profesional. Esta guía te prepara para ese componente con el enfoque que realmente usa la prueba: <strong>juicio situacional</strong> — saber qué herramienta resuelve cada problema de oficina. Aplica a <strong>todos los niveles</strong>.</p>
+    </div>
+    <h3><span class="h3-chip">★</span> Al terminar serás capaz de:</h3>
+    <ul class="lista">
+      <li>Elegir la <strong>herramienta correcta</strong> de Word, Excel o PowerPoint para una tarea administrativa concreta.</li>
+      <li>Dominar las funciones más preguntadas: <strong>combinar correspondencia, tablas dinámicas, BUSCARV, patrón de diapositivas</strong> y muchas más.</li>
+      <li>Usar bien el <strong>correo institucional</strong> (Para / CC / CCO) y reconocer riesgos de <strong>seguridad informática</strong> (phishing).</li>
+      <li>Recordar los <strong>atajos de teclado</strong> que evalúa la prueba en Windows, Word, Excel, PowerPoint y Outlook.</li>
+      <li>Resolver <strong>casos tipo CNSC</strong> y medirte en un <strong>simulacro interactivo</strong>.</li>
+    </ul>
+    <div class="box info">
+      <div class="box-title">📌 Cómo usar esta guía</div>
+      <p>Recórrela por pestañas (Word, Excel, PowerPoint, Correo, Windows, Seguridad). Estudia primero el <strong>"para qué sirve"</strong> de cada herramienta; los atajos memorízalos al final. Cierra con la pestaña <strong>🧪 Simulacro</strong> para comprobar tu dominio.</p>
+    </div>
+  </section>
+
+  <!-- 1. IMPORTANCIA -->
+  <section class="section" data-sec="1">
+    <div class="eyebrow">Importancia del tema</div>
+    <h2 class="sec-title">¿Por qué la ofimática vale puntos?</h2>
+    <p>En el trabajo público diario se redactan oficios, se consolidan datos en hojas de cálculo, se preparan informes y presentaciones, y se gestiona correo. Por eso la CNSC incluye la ofimática como <strong>competencia funcional</strong>: no quiere saber si te memorizaste un menú, sino si <strong>sabes resolver una tarea real</strong> con la herramienta adecuada.</p>
+    <div class="box gold">
+      <div class="box-title">💎 El enfoque de la prueba (PJS)</div>
+      <p>Casi todas las preguntas plantean un <strong>problema de oficina</strong>: "debes enviar 150 cartas personalizadas", "los encabezados desaparecen al desplazarte", "tu jefe quiere el logo en todas las diapositivas". Tu tarea es elegir <strong>la herramienta que lo resuelve de forma eficiente</strong>, no la que "funciona a las malas".</p>
+    </div>
+    <div class="box ok">
+      <div class="box-title">✅ Lo que esta guía cambia en ti</div>
+      <p>Pasas de "sé usar el computador" a <strong>"sé qué función exacta resuelve este problema"</strong>. Esa precisión es la que la CNSC premia con puntos.</p>
+    </div>
+    <div class="box warn">
+      <div class="box-title">⚠️ Regla de oro del componente</div>
+      <p>Ante un problema repetitivo o masivo (muchas cartas, muchos registros, muchas diapositivas), la respuesta correcta <strong>casi nunca es "hacerlo a mano"</strong>: es la función que <strong>automatiza</strong> (combinar correspondencia, tablas dinámicas, patrón de diapositivas, fórmulas).</p>
+    </div>
+  </section>
+
+
+  <!-- 2. WORD -->
+  <section class="section" data-sec="2">
+    <div class="eyebrow">Procesador de texto</div>
+    <h2 class="sec-title">Microsoft Word: documentos oficiales sin sufrir</h2>
+    <p>Word se usa para oficios, memorandos, manuales, informes y actos administrativos. Estas son las funciones que más pregunta la CNSC.</p>
+
+    <h3><span class="h3-chip">1</span> Combinar correspondencia (cartas masivas)</h3>
+    <p>Es <strong>la estrella</strong> del componente Word. Sirve para generar <strong>muchos documentos personalizados</strong> (cartas, certificados, notificaciones) a partir de una <strong>plantilla en Word</strong> + una <strong>base de datos en Excel</strong> (nombres, cédulas, direcciones).</p>
+    <div class="box ok"><div class="box-title">✅ Cuándo usarla</div><p>"Debo enviar una notificación a 150 (o 220) aspirantes, cada una con su nombre y cédula." → <strong>Correspondencia → Combinar correspondencia</strong>, vinculando el documento al archivo de Excel. Nunca copiar y pegar a mano 150 veces.</p></div>
+
+    <h3><span class="h3-chip">2</span> Control de cambios y comentarios (revisión)</h3>
+    <p>Permite que un revisor proponga cambios <strong>sin alterar el original de forma definitiva</strong>: cada modificación queda marcada y se puede aceptar o rechazar. Los <strong>comentarios</strong> añaden sugerencias al margen.</p>
+    <ul class="lista">
+      <li><strong>Activar/usar control de cambios:</strong> pestaña <kbd>Revisar</kbd> → grupo <strong>Seguimiento</strong>.</li>
+      <li><strong>Ver quién cambió qué:</strong> <kbd>Revisar</kbd> → <strong>Panel de revisiones</strong> (lista todos los cambios del documento).</li>
+      <li><strong>Comparar dos versiones</strong> de un documento: <kbd>Revisar</kbd> → <strong>Comparar</strong>.</li>
+    </ul>
+
+    <h3><span class="h3-chip">3</span> Pegado especial (mantener el formato correcto)</h3>
+    <p>Al pegar texto o tablas de otra fuente, Word ofrece varias opciones. Elige según lo que necesites:</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Opción de pegado</th><th>Qué hace</th><th>Cuándo usarla</th></tr></thead>
+        <tbody>
+          <tr><td>Mantener formato de <strong>origen</strong></td><td>Conserva el aspecto que tenía donde lo copiaste.</td><td>Quieres que la tabla quede igual que en el programa original.</td></tr>
+          <tr><td>Mantener formato de <strong>destino</strong></td><td>Adapta el contenido al estilo de tu documento.</td><td>Quieres uniformidad con tu informe.</td></tr>
+          <tr><td>Mantener <strong>solo texto</strong></td><td>Quita todo el formato (colores, fuentes raras) y deja texto plano.</td><td>Copiaste de una web y llegó con colores/fuentes extrañas.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">4</span> Estilos, tabla de contenido e índice</h3>
+    <ul class="lista">
+      <li><strong>Tabla de contenido automática:</strong> primero aplica <strong>Estilos</strong> de título (Título 1, Título 2…) a tus capítulos; luego Word genera el índice y lo actualiza solo.</li>
+      <li><strong>Índice alfabético / glosario:</strong> usa <strong>Marcar entrada</strong> en cada término y luego <strong>Insertar índice</strong>.</li>
+      <li><strong>Citas y bibliografía:</strong> <kbd>Referencias</kbd> → <strong>Insertar cita</strong> o <strong>Insertar nota al pie</strong> para citar fuentes de forma profesional.</li>
+    </ul>
+
+    <h3><span class="h3-chip">5</span> Encabezados, secciones y numeración</h3>
+    <ul class="lista">
+      <li><strong>Logo en todas las páginas menos la portada:</strong> insértalo en el <strong>Encabezado</strong> y marca la casilla <strong>"Primera página diferente"</strong>.</li>
+      <li><strong>Numeración distinta por partes</strong> (introducción i, ii, iii y luego reiniciar en 1, 2, 3) o <strong>una página horizontal</strong> en medio de un documento vertical: inserta un <strong>Salto de sección</strong> y configura cada sección por separado.</li>
+      <li><strong>Número de página automático:</strong> <kbd>Insertar</kbd> → <strong>Número de página</strong> (se actualiza solo; nunca escribirlo a mano).</li>
+    </ul>
+
+    <h3><span class="h3-chip">6</span> Distribución final: PDF</h3>
+    <div class="box info"><div class="box-title">ℹ️ Para que no lo modifiquen</div><p>Cuando un manual o acto debe distribuirse <strong>sin que lo alteren</strong> y verse igual en cualquier dispositivo, guárdalo/expórtalo en <strong>PDF</strong>. El <kbd>.docx</kbd> es editable; el <kbd>.txt</kbd> pierde el formato.</p></div>
+
+    <h3><span class="h3-chip">7</span> Atajos de teclado en Word</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo</th><th>Acción</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>N</kbd></td><td>Negrita</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd></td><td>Cursiva</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>S</kbd></td><td>Subrayado</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>U</kbd></td><td>Nuevo documento en blanco</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td><td>Abrir el cuadro de diálogo <strong>Fuente</strong></td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>E</kbd></td><td>Centrar el texto seleccionado</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td><td>Deshacer la última acción</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Y</kbd></td><td>Rehacer</td></tr>
+          <tr><td>Triple clic sobre una palabra</td><td>Selecciona el <strong>párrafo</strong> completo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box warn"><div class="box-title">⚠️ Pista visual de revisión</div><p>Un subrayado <strong>ondulado verde</strong> señala un posible <strong>error gramatical</strong>; el <strong>rojo</strong>, un posible error ortográfico.</p></div>
+  </section>
+
+
+  <!-- 3. EXCEL -->
+  <section class="section" data-sec="3">
+    <div class="eyebrow">Hoja de cálculo</div>
+    <h2 class="sec-title">Microsoft Excel: datos, fórmulas e informes</h2>
+    <p>Excel es clave para inventarios, bases de datos de PQRSD, nóminas, contratos e informes. Domina estas funciones y fórmulas.</p>
+
+    <h3><span class="h3-chip">1</span> Fórmulas que más pregunta la CNSC</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Fórmula</th><th>Para qué sirve</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SI</strong></td><td>Devuelve un valor u otro según una condición (se puede anidar para varios niveles: bajo/medio/alto).</td><td><kbd>=SI(A2&gt;10;"Aprobado";"Rechazado")</kbd></td></tr>
+          <tr><td><strong>BUSCARV</strong></td><td>Trae un dato de otra tabla/hoja usando una "llave" común (ej. la cédula).</td><td><kbd>=BUSCARV(A2;Hoja1!A:B;2;0)</kbd></td></tr>
+          <tr><td><strong>SUMAR.SI</strong></td><td>Suma solo las filas que cumplen una condición.</td><td><kbd>=SUMAR.SI(A:A;"Secretaría de Obras";B:B)</kbd></td></tr>
+          <tr><td><strong>CONTAR.SI</strong></td><td>Cuenta cuántas filas cumplen una condición.</td><td><kbd>=CONTAR.SI(A:A;"Tesorería")</kbd></td></tr>
+          <tr><td><strong>CONTARA</strong></td><td>Cuenta celdas <strong>no vacías</strong> (cuántos registros hay).</td><td><kbd>=CONTARA(A2:A5001)</kbd></td></tr>
+          <tr><td><strong>CONCATENAR</strong> (o <kbd>&</kbd>)</td><td>Une el contenido de varias celdas.</td><td><kbd>=CONCATENAR(A2;" ";B2)</kbd></td></tr>
+          <tr><td><strong>SUBTOTALES</strong></td><td>Suma/promedia/cuenta <strong>respetando el filtro</strong> (ignora las filas ocultas).</td><td><kbd>=SUBTOTALES(9;B2:B100)</kbd></td></tr>
+          <tr><td>Multiplicación</td><td>Valor total = precio × cantidad.</td><td><kbd>=B2*C2</kbd></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box info"><div class="box-title">ℹ️ Referencias absolutas: el símbolo $</div><p>Escribir <kbd>$B$1</kbd> "fija" esa celda: al copiar la fórmula hacia abajo, siempre apuntará a B1. Es la <strong>referencia absoluta</strong>. Sin <kbd>$</kbd> la referencia es <strong>relativa</strong> y se desplaza.</p></div>
+    <div class="box warn"><div class="box-title">⚠️ PROMEDIO/SUMA vs filtros</div><p><kbd>=PROMEDIO()</kbd> y <kbd>=SUMA()</kbd> calculan sobre <strong>todas</strong> las filas, aunque filtres y ocultes algunas. Si quieres que el cálculo respete el filtro, usa <strong>SUBTOTALES</strong>.</p></div>
+
+    <h3><span class="h3-chip">2</span> Tablas dinámicas (resumir y analizar)</h3>
+    <p>Resumen interactivo de una base de datos: "¿cuánto suman las ventas por región, desglosado por vendedor?". Se arrastran los campos a cuatro áreas: <strong>Filtros, Columnas, Filas y Valores</strong>.</p>
+    <ul class="lista">
+      <li>El área de <strong>Valores</strong> define la operación (suma, conteo, promedio…).</li>
+      <li>Si arrastras "Cédula" a Valores y muestra <strong>"Suma de Cédula"</strong> (un número enorme) en lugar de la cantidad de personas, cambia la <strong>"Configuración de campo de valor"</strong> de <strong>Suma</strong> a <strong>Cuenta</strong>.</li>
+    </ul>
+
+    <h3><span class="h3-chip">3</span> Organizar y limpiar datos</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Necesito…</th><th>Herramienta</th></tr></thead>
+        <tbody>
+          <tr><td>Ver solo ciertos registros (ej. Tipo = "Queja" y Estado = "Abierto") sin borrar el resto</td><td><strong>Filtros</strong> (AutoFilter)</td></tr>
+          <tr><td>Ordenar fechas o textos (más antiguo primero, A→Z, Z→A)</td><td><strong>Ordenar</strong></td></tr>
+          <tr><td>Estandarizar valores mal escritos ("Medellín / medellin / MEDELLIN") o reemplazar masivamente (NA, 8, 0 → N/A)</td><td><strong>Buscar y reemplazar</strong> (botón "Reemplazar todos")</td></tr>
+          <tr><td>Separar "Nombre Apellido" en dos columnas</td><td><strong>Texto en columnas</strong></td></tr>
+          <tr><td>Que solo se puedan elegir opciones de una lista (Abierto/Cerrado/En trámite)</td><td><strong>Validación de datos</strong> (lista desplegable)</td></tr>
+          <tr><td>Resaltar en rojo los valores menores a 1000</td><td><strong>Formato condicional</strong></td></tr>
+          <tr><td>Convertir un rango en una tabla con filtros y formato listos</td><td><strong>Insertar → Tabla</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">4</span> Ver bien la hoja, gráficos y macros</h3>
+    <ul class="lista">
+      <li><strong>Inmovilizar paneles:</strong> fija la primera fila y/o las primeras columnas para que los <strong>encabezados no desaparezcan</strong> al desplazarte. Pestaña <kbd>Vista</kbd> → <strong>Inmovilizar paneles</strong>.</li>
+      <li><strong>Gráficos:</strong> <strong>línea</strong> para una <em>tendencia en el tiempo</em> (quejas mes a mes); <strong>circular</strong> para <em>proporciones</em>; <strong>dispersión</strong> para relación entre dos variables.</li>
+      <li><strong>Macros:</strong> automatizan <strong>acciones repetitivas</strong> para ejecutarlas todas las veces que se desee.</li>
+    </ul>
+
+    <h3><span class="h3-chip">5</span> Atajos y errores de Excel</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo / señal</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Fin</kbd></td><td>Ir a la última celda usada de la hoja</td></tr>
+          <tr><td><kbd>Fin</kbd> + flecha (o <kbd>Ctrl</kbd> + flecha)</td><td>Saltar al extremo de los datos en esa dirección</td></tr>
+          <tr><td><kbd>F2</kbd> o doble clic en la celda</td><td>Editar el contenido de la celda</td></tr>
+          <tr><td><kbd>F1</kbd></td><td>Abrir la Ayuda</td></tr>
+          <tr><td>Error <kbd>#####</kbd></td><td>La columna es muy angosta → <strong>ampliar el ancho de la columna</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- 4. POWERPOINT -->
+  <section class="section" data-sec="4">
+    <div class="eyebrow">Presentaciones</div>
+    <h2 class="sec-title">Microsoft PowerPoint: presentaciones profesionales</h2>
+    <p>Para rendiciones de cuentas, informes ejecutivos y capacitaciones. La prueba evalúa funciones de diseño y buenas prácticas.</p>
+
+    <h3><span class="h3-chip">1</span> Patrón de diapositivas (Slide Master)</h3>
+    <div class="box ok"><div class="box-title">✅ La función estrella de PowerPoint</div><p>El <strong>Patrón de diapositivas</strong> define el <strong>logo, fuentes, colores y diseño</strong> de <em>toda</em> la presentación de una sola vez. Si quieres el logo de la entidad en todas las diapositivas (nuevas y existentes), <strong>no lo pegues una por una</strong>: aplícalo en el patrón. También sirve para guardar la presentación como <strong>plantilla</strong>.</p></div>
+
+    <h3><span class="h3-chip">2</span> Transición vs. Animación (¡no las confundas!)</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Transición</th><th>Animación</th></tr></thead>
+        <tbody>
+          <tr><td>Efecto al <strong>pasar de una diapositiva a otra</strong>.</td><td>Efecto sobre los <strong>elementos dentro</strong> de una diapositiva (texto, imágenes).</td></tr>
+          <tr><td>Ej.: "desvanecer" al cambiar de lámina.</td><td>Ej.: que las 5 viñetas <strong>aparezcan una por una al hacer clic</strong>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">3</span> Herramientas visuales útiles</h3>
+    <ul class="lista">
+      <li><strong>SmartArt:</strong> diagramas visuales (organigramas/jerarquías, procesos, ciclos, listas). Para un <strong>organigrama</strong>, usa SmartArt de tipo Jerarquía.</li>
+      <li><strong>Formato de fondo → Relleno:</strong> poner una imagen como fondo de la diapositiva.</li>
+      <li><strong>Enviar al fondo:</strong> si una imagen tapa el título, clic derecho → "Enviar al fondo" para que el texto vuelva a verse.</li>
+      <li><strong>Hipervínculo:</strong> <kbd>Insertar → Hipervínculo</kbd> para enlazar a una web o a un PDF.</li>
+      <li><strong>Vista clasificador de diapositivas:</strong> muestra todas las láminas en miniatura para ver y reordenar la secuencia.</li>
+      <li><strong>Modo presentador:</strong> tú ves tus <strong>notas y la siguiente diapositiva</strong>; el público solo ve la diapositiva actual.</li>
+    </ul>
+
+    <h3><span class="h3-chip">4</span> Buenas prácticas de diseño (¡también se evalúan!)</h3>
+    <div class="box warn"><div class="box-title">⚠️ Errores típicos de una mala presentación</div>
+      <p>• Texto diminuto (fuente 8) y párrafos de 20 líneas: la diapositiva es un <strong>apoyo visual, no un documento</strong>.<br>• Animaciones exageradas (textos que giran, "explosiones"): <strong>distraen</strong> y restan seriedad en un acto formal.</p>
+    </div>
+
+    <h3><span class="h3-chip">5</span> Atajos de PowerPoint</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo</th><th>Acción</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>F5</kbd></td><td>Iniciar la presentación <strong>desde el principio</strong></td></tr>
+          <tr><td><kbd>Shift</kbd> + <kbd>F5</kbd></td><td>Iniciar <strong>desde la diapositiva actual</strong></td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Salir del modo presentación</td></tr>
+          <tr><td><kbd>Alt</kbd> + <kbd>F4</kbd></td><td>Cerrar el programa</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd></td><td>Cursiva</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- 5. CORREO -->
+  <section class="section" data-sec="5">
+    <div class="eyebrow">Correo electrónico</div>
+    <h2 class="sec-title">Correo institucional y Outlook</h2>
+    <p>El manejo correcto del correo (Outlook) es parte del componente: campos del mensaje, organización y etiqueta institucional.</p>
+
+    <h3><span class="h3-chip">1</span> Para / CC / CCO: el tema que más cae</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Campo</th><th>Quién va ahí</th><th>¿Lo ven los demás?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Para</strong></td><td>El destinatario principal, de quien esperas acción/respuesta.</td><td>Sí</td></tr>
+          <tr><td><strong>CC</strong> (con copia)</td><td>Quien solo debe estar <strong>informado</strong>.</td><td>Sí (todos ven la lista)</td></tr>
+          <tr><td><strong>CCO</strong> (con copia oculta / BCC)</td><td>Destinatarios que <strong>no deben verse entre sí</strong>.</td><td><strong>No</strong> (quedan ocultos)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box ok"><div class="box-title">✅ Casos clave</div>
+      <p>• Informe al jefe e <em>informar</em> al secretario y al líder → <strong>Para:</strong> jefe; <strong>CC:</strong> secretario y líder.<br>• Invitación masiva a 200 ciudadanos <strong>protegiendo su privacidad</strong> → todos en <strong>CCO</strong>, para que nadie vea las direcciones de los demás.</p>
+    </div>
+
+    <h3><span class="h3-chip">2</span> Organización y gestión en Outlook</h3>
+    <ul class="lista">
+      <li><strong>Reglas:</strong> evalúan los mensajes según criterios y ejecutan acciones automáticas (mover, marcar, etc.) → "Gestionar mensajes mediante reglas".</li>
+      <li><strong>Carpetas:</strong> evitan que se acumulen mensajes sin relación en la bandeja de entrada.</li>
+      <li><strong>Panel de navegación:</strong> el árbol que permite moverte entre bandejas y carpetas.</li>
+      <li><strong>Reenviar:</strong> enviar el mensaje a destinatarios que <strong>no estaban</strong> en el original (distinto de "Responder").</li>
+      <li><strong>Tareas:</strong> para hacer seguimiento de una actividad hasta concluirla (crear una tarea y marcarla como completada).</li>
+      <li><strong>Convocar una reunión:</strong> cuando tú eres el organizador de la junta.</li>
+      <li><strong>Archivos adjuntos:</strong> los documentos que se añaden al cuerpo del mensaje.</li>
+      <li><strong>Permisos de delegado:</strong> el rol <strong>Revisor</strong> solo puede <strong>leer</strong>; Autor y Editor pueden crear/modificar.</li>
+    </ul>
+
+    <h3><span class="h3-chip">3</span> Bandejas y atajos de Outlook</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo / elemento</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd></td><td>Abrir la <strong>libreta de direcciones</strong></td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td><td>Eliminar el mensaje activo</td></tr>
+          <tr><td><kbd>F9</kbd></td><td>Enviar y recibir (saca los correos de la <strong>Bandeja de salida</strong>)</td></tr>
+          <tr><td>Bandeja de salida</td><td>Donde quedan los mensajes <strong>antes</strong> de enviarse</td></tr>
+          <tr><td>Borradores</td><td>Mensajes guardados sin enviar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- 6. WINDOWS Y ATAJOS -->
+  <section class="section" data-sec="6">
+    <div class="eyebrow">Sistema operativo</div>
+    <h2 class="sec-title">Windows y atajos esenciales</h2>
+    <p>La prueba incluye combinaciones de teclado del sistema operativo. Estas son las que más aparecen.</p>
+
+    <h3><span class="h3-chip">1</span> Atajos de Windows que debes memorizar</h3>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo</th><th>Acción</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Mayús</kbd> + <kbd>Supr</kbd></td><td>Eliminar <strong>permanentemente</strong> (sin pasar por la papelera de reciclaje)</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>→</kbd></td><td>Mover el cursor al <strong>inicio de la palabra siguiente</strong></td></tr>
+          <tr><td><kbd>Alt</kbd> + <kbd>Enter</kbd></td><td>Ver las <strong>propiedades</strong> del elemento seleccionado</td></tr>
+          <tr><td><kbd>Alt</kbd> + <kbd>F4</kbd></td><td><strong>Cerrar</strong> el elemento activo o salir del programa</td></tr>
+          <tr><td><kbd>Alt</kbd> + <kbd>Tab</kbd></td><td>Cambiar de un <strong>elemento abierto a otro</strong></td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Esc</kbd></td><td>Abrir el <strong>menú Inicio</strong></td></tr>
+          <tr><td><kbd>Windows</kbd> + <kbd>R</kbd></td><td>Abrir el cuadro <strong>Ejecutar</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3><span class="h3-chip">2</span> Atajos universales de ofimática</h3>
+    <p>Funcionan en casi todos los programas de Office:</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Atajo</th><th>Acción</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>C</kbd> / <kbd>Ctrl</kbd> + <kbd>V</kbd></td><td>Copiar / Pegar</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>X</kbd></td><td>Cortar</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td><td><strong>Deshacer</strong> la última acción</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>Y</kbd></td><td>Rehacer</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>G</kbd></td><td>Guardar</td></tr>
+          <tr><td><kbd>Ctrl</kbd> + <kbd>P</kbd></td><td>Imprimir</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box info"><div class="box-title">ℹ️ Guardar vs. Guardar como</div><p><strong>Guardar</strong> actualiza los cambios sobre el archivo existente. <strong>Guardar como</strong> crea una <strong>copia nueva</strong> con otro nombre o en otra ubicación (útil para versionar sin perder el original).</p></div>
+  </section>
+
+  <!-- 7. SEGURIDAD -->
+  <section class="section" data-sec="7">
+    <div class="eyebrow">Seguridad informática</div>
+    <h2 class="sec-title">Seguridad y buenas prácticas digitales</h2>
+    <p>El servidor público maneja información sensible. La prueba evalúa que sepas protegerla y reconocer amenazas.</p>
+
+    <h3><span class="h3-chip">1</span> Phishing (suplantación de identidad)</h3>
+    <div class="box danger"><div class="box-title">❌ Señales de alerta</div><p>Correos "urgentes" de un banco donde no tienes cuenta, o de un supuesto "Soporte Técnico" que <strong>piden tus credenciales</strong> o que hagas clic en un enlace para "verificar". Es <strong>phishing</strong>: buscan robar contraseñas.</p></div>
+    <div class="box ok"><div class="box-title">✅ Qué hacer</div><p><strong>No respondas</strong> ni hagas clic. Nunca envíes tu contraseña por correo. <strong>Verifica</strong> la solicitud por un canal oficial (llama a la mesa de ayuda / TI).</p></div>
+
+    <h3><span class="h3-chip">2</span> Adjuntos, antivirus y archivos comprimidos</h3>
+    <ul class="lista">
+      <li>Si el <strong>antivirus detecta una amenaza</strong> en un adjunto: ponlo en <strong>cuarentena o elimínalo</strong>; <strong>nunca lo abras</strong> "para ver si es importante".</li>
+      <li>Un archivo <kbd>.zip</kbd> es una <strong>carpeta comprimida</strong> (varios archivos reducidos de peso para facilitar el envío); no es un virus por sí mismo, pero verifica el remitente.</li>
+    </ul>
+
+    <h3><span class="h3-chip">3</span> Compartir archivos y trabajo en equipo</h3>
+    <ul class="lista">
+      <li><strong>Archivos pesados</strong> (ej. carpeta de 500 MB): no los adjuntes al correo; súbelos a la <strong>nube</strong> (OneDrive, SharePoint, WeTransfer) y comparte el <strong>enlace</strong>.</li>
+      <li><strong>Control de versiones:</strong> evita el caos de "Informe_FINAL_FINAL_estesí.docx". Usa la <strong>nube con coautoría</strong> (varias personas editan el mismo archivo en tiempo real).</li>
+      <li>Haz <strong>copias de seguridad</strong> y protege los <strong>datos personales</strong> (Ley 1581 de 2012).</li>
+    </ul>
+    <div class="box gold"><div class="box-title">💎 Regla práctica</div><p>Ante cualquier correo que genere <strong>urgencia + miedo + un clic</strong>, desconfía. Esa combinación es la firma del fraude digital.</p></div>
+  </section>
+
+
+  <!-- 8. CASOS CNSC -->
+  <section class="section" data-sec="8">
+    <div class="eyebrow">Casos aplicados CNSC</div>
+    <h2 class="sec-title">El juicio situacional en acción</h2>
+    <p>Así se ven las preguntas reales: un problema de oficina y cuatro herramientas posibles. Razonemos juntos.</p>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 1 — Word</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        Debes enviar una notificación a 150 aspirantes; tienes la plantilla en Word y la lista de nombres y cédulas en Excel.
+        <span class="label">Cómo razonarlo</span>
+        Es una tarea <strong>masiva y personalizada</strong> → descarta "copiar y pegar a mano" e "insertar la tabla de Excel". La función que automatiza es una sola.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Usar <strong>Combinar correspondencia</strong> en Word, vinculada al archivo de Excel.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 2 — Excel</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        En una hoja con ventas (Vendedor, Región, Valor), tu jefe pide cuánto suman las ventas por cada Región, desglosadas por Vendedor.
+        <span class="label">Cómo razonarlo</span>
+        Pide <strong>resumir y cruzar</strong> dos variables → no es una simple SUMA. La herramienta de resumen es una.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Una <strong>Tabla dinámica</strong>.</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 3 — Excel (cruzar tablas)</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        La Hoja1 tiene (Cédula, Salario) y la Hoja2 (Cédula, Nombre). Necesitas traer el salario a la Hoja2 usando la cédula como llave.
+        <span class="label">Cómo razonarlo</span>
+        Hay una <strong>llave común</strong> (cédula) para "buscar" un dato en otra tabla → fórmula de búsqueda.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> <strong>BUSCARV</strong> (VLOOKUP).</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 4 — PowerPoint</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        Quieres que el logo de la entidad aparezca en todas las diapositivas (nuevas y existentes).
+        <span class="label">Cómo razonarlo</span>
+        Cambio que afecta <strong>a toda la presentación</strong> → descarta pegarlo manualmente en cada lámina.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Aplicarlo en el <strong>Patrón de diapositivas</strong> (Slide Master).</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 5 — Correo</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        Debes invitar a un evento a 200 ciudadanos y proteger su privacidad (que no vean las direcciones de los demás).
+        <span class="label">Cómo razonarlo</span>
+        Privacidad de una lista masiva → el campo que oculta a los destinatarios entre sí.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Poner las 200 direcciones en <strong>CCO</strong> (con copia oculta / BCC).</div>
+      </div>
+    </div>
+
+    <div class="caso">
+      <div class="caso-head">📂 Caso 6 — Seguridad</div>
+      <div class="caso-body">
+        <span class="label">Problema</span>
+        Llega un correo "del banco" (donde la entidad no tiene cuentas): "Urgente: su cuenta fue bloqueada, haga clic aquí para verificar".
+        <span class="label">Cómo razonarlo</span>
+        Urgencia + enlace + datos sensibles = señal de fraude.
+        <div class="resp-correcta"><strong>Respuesta correcta:</strong> Es un intento de <strong>phishing</strong>: no hacer clic, no entregar datos y verificar por canal oficial.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 9. ERRORES Y TIPS -->
+  <section class="section" data-sec="9">
+    <div class="eyebrow">Errores frecuentes y tips</div>
+    <h2 class="sec-title">Lo que hace perder (y ganar) puntos</h2>
+
+    <h3><span class="h3-chip">✕</span> Errores frecuentes</h3>
+    <div class="box danger"><div class="box-title">❌ Error 1 — Elegir "hacerlo a mano"</div><p>Ante 150 cartas o 5.000 registros, la opción manual <strong>nunca</strong> es la correcta: existe una función que automatiza.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 2 — Confundir Transición con Animación</div><p>Transición = entre diapositivas. Animación = elementos dentro de una diapositiva.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 3 — Confundir CC con CCO</div><p>CC es visible para todos; CCO oculta a los destinatarios. Para listas masivas, siempre CCO.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 4 — Usar SUMA/PROMEDIO con datos filtrados</div><p>Esas fórmulas ignoran el filtro. Para respetar lo visible, usa SUBTOTALES.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 5 — Abrir adjuntos sospechosos</div><p>Si el antivirus alerta o el remitente es dudoso, no lo abras: cuarentena o eliminar.</p></div>
+    <div class="box danger"><div class="box-title">❌ Error 6 — Numerar o indexar a mano</div><p>Números de página, tablas de contenido e índices deben ser <strong>automáticos</strong> (con Estilos y herramientas de Word).</p></div>
+
+    <h3><span class="h3-chip">★</span> Tips Ascenso Público</h3>
+    <div class="box ok"><div class="box-title">💡 Tip 1 — Lee el problema, no las opciones primero</div><p>Identifica <strong>qué tarea</strong> se necesita (resumir, buscar, automatizar, fijar) y la herramienta saldrá sola.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 2 — Palabras clave = herramienta</div><p>"Personalizado y masivo" → Combinar correspondencia. "Resumir/cruzar" → Tabla dinámica. "Buscar por llave" → BUSCARV. "Que no desaparezcan los encabezados" → Inmovilizar paneles.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 3 — Lo que afecta "a todo" va en la plantilla/patrón</div><p>Logo en todas las diapositivas → Patrón. Logo en todas las páginas → Encabezado.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 4 — Memoriza los atajos por bloques</div><p>Repásalos por programa (Windows, Word, Excel, PowerPoint, Outlook) la víspera del examen.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 5 — Piensa en seguridad</div><p>Urgencia + clic + datos personales = phishing. Verifica siempre por canal oficial.</p></div>
+    <div class="box ok"><div class="box-title">💡 Tip 6 — Practica con el simulacro</div><p>Pasa a la pestaña 🧪 Simulacro y resuelve los casos hasta que el razonamiento te salga automático.</p></div>
+  </section>
+
+  <!-- 10. RESUMEN -->
+  <section class="section" data-sec="10">
+    <div class="eyebrow">Resumen ejecutivo</div>
+    <h2 class="sec-title">La ofimática en una mirada</h2>
+    <div class="resumen-grid">
+      <div class="resumen-item"><h4>📝 Word</h4><p>Combinar correspondencia, control de cambios, estilos + índice automático, saltos de sección, PDF para distribuir.</p></div>
+      <div class="resumen-item"><h4>📊 Excel</h4><p>SI, BUSCARV, SUMAR.SI, CONTAR.SI, CONTARA, tablas dinámicas, filtros, inmovilizar paneles, validación de datos.</p></div>
+      <div class="resumen-item"><h4>📽️ PowerPoint</h4><p>Patrón de diapositivas, transición vs. animación, SmartArt, modo presentador, apoyo visual (no documento).</p></div>
+      <div class="resumen-item"><h4>📧 Correo</h4><p>Para / CC / <strong>CCO</strong>, reglas, carpetas, reenviar, tareas; libreta <kbd>Ctrl+Shift+B</kbd>.</p></div>
+      <div class="resumen-item"><h4>🪟 Windows</h4><p><kbd>Alt+F4</kbd> cerrar, <kbd>Alt+Tab</kbd> cambiar, <kbd>Ctrl+Esc</kbd> Inicio, <kbd>Win+R</kbd> Ejecutar, <kbd>Mayús+Supr</kbd> borrar definitivo.</p></div>
+      <div class="resumen-item"><h4>🔐 Seguridad</h4><p>Phishing: no clic, no datos, verificar por canal oficial. Archivos pesados → nube + enlace. Copias de seguridad.</p></div>
+    </div>
+    <div class="box gold">
+      <div class="box-title">⚡ Frase para recordar</div>
+      <p>"No preguntan si sabes usar el computador: preguntan <strong>qué herramienta resuelve este problema</strong>. Identifica la tarea y elige la función que la automatiza."</p>
+    </div>
+
+    <div class="cierre" style="margin-top:34px;">
+      <h3>🎓 ¡Tienes el componente de Ofimática bajo control!</h3>
+      <p>Ya sabes elegir la herramienta correcta en Word, Excel, PowerPoint y correo, reconocer riesgos de seguridad y recordar los atajos clave. Combínalo con tus demás guías y entra con seguridad. Esta guía bonus estará siempre disponible para repasarla.</p>
+      <p style="margin-bottom:0; font-weight:700; color:#fff;">Tu ruta personalizada hacia el empleo público sigue avanzando. ¡Mucho éxito! 🚀</p>
+    </div>
+
+    <div class="nav-footer">
+      <button id="btnPrev">← Sección anterior</button>
+      <button id="btnNext">Siguiente sección →</button>
+    </div>
+  </section>
+
+
+  <!-- 11. SIMULACRO -->
+  <section class="section" data-sec="11">
+    <div class="eyebrow">Simulacro interactivo</div>
+    <h2 class="sec-title">Mide tu dominio de ofimática</h2>
+    <div class="quiz-intro">
+      <p>30 preguntas tipo CNSC sobre Word, Excel, PowerPoint, correo, Windows y seguridad. Haz clic en la opción que creas correcta: verás de inmediato si acertaste y por qué.</p>
+      <div class="dific-tags">
+        <span class="tag i">📝 Word</span>
+        <span class="tag b">📊 Excel</span>
+        <span class="tag a">📽️ PowerPoint</span>
+        <span class="tag i">📧 Correo</span>
+        <span class="tag b">🪟 Windows</span>
+        <span class="tag a">🔐 Seguridad</span>
+      </div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="resultado">
+      <p style="color:var(--texto-suave); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; font-size:0.78rem;">Tu resultado</p>
+      <div class="score-num" id="scoreNum">0 / 30</div>
+      <p id="scoreMsg" style="font-weight:600;"></p>
+      <button class="btn gold" id="btnReset">↻ Reiniciar simulacro</button>
+    </div>
+
+    <div class="nav-footer">
+      <button id="btnPrev2">← Sección anterior</button>
+      <button id="btnNext2" disabled>Siguiente sección →</button>
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">BON-02 · Ofimática (Bonus) · Aplica a todos los niveles · Estándar AP-QA-001<br>© Ascenso Público. Material de preparación para concursos de mérito CNSC.</div>
+</footer>
+
+<script>
+  // ===== Navegación entre secciones =====
+  const navBtns = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('.section');
+  let current = 0;
+  const total = sections.length;
+
+  function showSection(i) {
+    current = i;
+    sections.forEach(s => s.classList.remove('visible'));
+    navBtns.forEach(b => b.classList.remove('active'));
+    sections[i].classList.add('visible');
+    navBtns[i].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateFooterBtns();
+  }
+  navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+  function updateFooterBtns() {
+    document.querySelectorAll('#btnPrev, #btnPrev2').forEach(b => { if (b) b.disabled = current === 0; });
+    document.querySelectorAll('#btnNext, #btnNext2').forEach(b => { if (b) b.disabled = current === total - 1; });
+  }
+  document.querySelectorAll('#btnPrev, #btnPrev2').forEach(b => b && b.addEventListener('click', () => { if (current > 0) showSection(current - 1); }));
+  document.querySelectorAll('#btnNext, #btnNext2').forEach(b => b && b.addEventListener('click', () => { if (current < total - 1) showSection(current + 1); }));
+
+  // ===== Barra de progreso de lectura =====
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('readbar').style.width = scrolled + '%';
+  });
+
+
+  // ===== Banco de preguntas del simulacro =====
+  const PREGUNTAS = [
+    { app:"Word", q:"Debe enviar una notificación a 150 aspirantes. Tiene la plantilla en Word y la lista de nombres y cédulas en Excel. ¿La forma más eficiente?",
+      o:["Copiar y pegar manualmente el nombre en cada una de las 150 cartas","Insertar la tabla de Excel dentro del documento de Word","Usar Combinar correspondencia (Mail Merge) vinculada al archivo de Excel","Imprimir 150 copias en blanco y llenarlas a mano"], c:2,
+      e:"Combinar correspondencia genera documentos personalizados masivos a partir de una plantilla + una base de datos." },
+    { app:"Word", q:"Necesita el logo en todas las páginas de un manual de 80 páginas, excepto en la portada. ¿Cómo lo configura?",
+      o:["Insertando el logo manualmente en 79 páginas","Insertando el logo en el Encabezado y marcando 'Primera página diferente'","Creando dos documentos separados","Poniéndolo como marca de agua en todo el archivo"], c:1,
+      e:"El logo va en el Encabezado; 'Primera página diferente' lo excluye de la portada." },
+    { app:"Word", q:"Para crear una Tabla de Contenido (índice) automática, ¿qué debe hacer primero en el texto?",
+      o:["Escribir manualmente los títulos y sus páginas","Insertar un hipervínculo en cada título","Aplicar los Estilos de título (Título 1, Título 2) a capítulos y secciones","Subrayar todos los títulos"], c:2,
+      e:"Word arma el índice automático a partir de los Estilos de título aplicados." },
+    { app:"Word", q:"El equipo jurídico debe sugerir cambios a un contrato sin modificar el texto original definitivamente. ¿Qué función usa?",
+      o:["Bloquear el documento con contraseña","Control de cambios / Comentarios","Exportar a PDF","Guardar como solo lectura"], c:1,
+      e:"El control de cambios marca cada modificación para aceptarla o rechazarla; los comentarios sugieren al margen." },
+    { app:"Word", q:"Copia un texto de una web y al pegarlo aparece con colores y fuente extraños. ¿Cómo lo pega para que tome el formato de su informe?",
+      o:["Cambiar el color a negro a mano","Pegar con 'Mantener solo texto'","Pegarlo en otra hoja primero","Convertirlo en imagen"], c:1,
+      e:"'Mantener solo texto' elimina el formato de origen y adopta el de tu documento." },
+    { app:"Word", q:"Para distribuir un manual de forma que NO lo modifiquen y se vea igual en cualquier dispositivo, ¿en qué formato lo envía?",
+      o:[".docx (Word)",".txt (texto plano)",".PDF","Como imagen JPG"], c:2,
+      e:"El PDF conserva el formato y no es editable fácilmente." },
+    { app:"Word", q:"¿Dónde ve el detalle de los cambios hechos con control de cambios en un documento?",
+      o:["Inicio / Edición / Seleccionar","Revisar / Seguimiento / Panel de revisiones","Vista / Mostrar / Panel de navegación","Insertar / Encabezado"], c:1,
+      e:"El Panel de revisiones (pestaña Revisar) lista todos los cambios del documento." },
+    { app:"Word", q:"Si da triple clic sobre una palabra dentro de un texto, ¿qué sucede?",
+      o:["Selecciona solo la palabra","Selecciona el párrafo completo","Selecciona todo el documento","Fija el cursor en la palabra"], c:1,
+      e:"Un clic posiciona; doble clic selecciona la palabra; triple clic selecciona el párrafo." },
+    { app:"Excel", q:"Tiene 5.000 registros de PQR. ¿Qué fórmula cuenta cuántos registros hay en la columna A (no vacíos)?",
+      o:["=SUMA(A2:A5001)","=PROMEDIO(A2:A5001)","=CONTARA(A2:A5001)","=BUSCARV(A2:A5001)"], c:2,
+      e:"CONTARA cuenta las celdas que no están vacías." },
+    { app:"Excel", q:"Quiere ver solo las PQR de Tipo='Queja' y Estado='Abierto' sin borrar los demás registros. ¿Qué usa?",
+      o:["Ordenar de A a Z","Buscar y reemplazar para borrar lo demás","Filtros (AutoFilter) en esas columnas","Inmovilizar paneles"], c:2,
+      e:"Los filtros muestran solo lo que cumple la condición, sin eliminar el resto." },
+    { app:"Excel", q:"Una columna tiene 'Medellín', 'medellin ', ' MEDELLIN'. ¿Mejor herramienta para estandarizar todo a 'Medellín'?",
+      o:["Buscar y reemplazar","Fórmula SI","Filtros","Validación de datos"], c:0,
+      e:"Buscar y reemplazar (Reemplazar todos) unifica los valores de forma masiva." },
+    { app:"Excel", q:"Su jefe pide cuánto suman las ventas por Región, desglosadas por Vendedor. ¿Herramienta ideal?",
+      o:["La fórmula SUMA","Una Tabla dinámica","Una Tabla de contenido","Un gráfico circular"], c:1,
+      e:"La tabla dinámica resume y cruza variables de forma interactiva." },
+    { app:"Excel", q:"Al desplazarse a la fila 2000, los encabezados desaparecen. ¿Cómo los deja fijos?",
+      o:["Reduciendo el zoom al 50%","Copiando los encabezados cada 20 filas","Vista → Inmovilizar paneles","Aplicando un filtro"], c:2,
+      e:"Inmovilizar paneles fija la fila/columna de encabezados al desplazarse." },
+    { app:"Excel", q:"La Hoja1 tiene (Cédula, Salario) y la Hoja2 (Cédula, Nombre). Quiere traer el salario a la Hoja2 usando la cédula. ¿Qué fórmula?",
+      o:["=CONCATENAR","=SI","=BUSCARV (VLOOKUP)","=PROMEDIO"], c:2,
+      e:"BUSCARV trae un dato de otra tabla usando una llave común (la cédula)." },
+    { app:"Excel", q:"En una lista (A: Dependencia, B: Valor) necesita sumar solo los contratos de 'Secretaría de Obras'. ¿Qué fórmula?",
+      o:["=SUMA(B:B)","=CONTAR.SI(A:A;\"Secretaría de Obras\")","=SUMAR.SI(A:A;\"Secretaría de Obras\";B:B)","=BUSCARV(\"Obras\";A:B;2)"], c:2,
+      e:"SUMAR.SI suma los valores cuyas filas cumplen la condición indicada." },
+    { app:"Excel", q:"En la columna B está el precio unitario y en C la cantidad. ¿Qué fórmula calcula el valor total en D2?",
+      o:["=B2+C2","=SUMA(B2:C2)","=B2*C2","=PROMEDIO(B2:C2)"], c:2,
+      e:"El total es precio × cantidad: =B2*C2." },
+    { app:"Excel", q:"En una tabla dinámica, al poner 'Cédula' en Valores muestra 'Suma de Cédula' (un número enorme) en vez de la cantidad de personas. ¿Qué hace?",
+      o:["Rehacer toda la tabla","Formatear la celda como texto","Cambiar la 'Configuración de campo de valor' de Suma a Cuenta","Aplicar un filtro"], c:2,
+      e:"Cambiando de Suma a Cuenta, la tabla cuenta los registros en lugar de sumar las cédulas." },
+    { app:"Excel", q:"Quiere que en la columna 'Estado' solo se pueda elegir Abierto, Cerrado o En trámite (lista desplegable). ¿Qué usa?",
+      o:["Validación de datos","Formato condicional","Tabla dinámica","Filtros"], c:0,
+      e:"La Validación de datos crea listas desplegables y restringe lo que se puede ingresar." },
+    { app:"Excel", q:"La columna A tiene 'Ana Pérez López' y necesita separar el nombre y los apellidos en columnas distintas. ¿Qué herramienta?",
+      o:["Texto en columnas","Buscar y reemplazar","Filtros","Concatenar"], c:0,
+      e:"'Texto en columnas' divide el contenido de una celda en varias usando un separador." },
+    { app:"Excel", q:"Quiere que los valores de la columna C menores a 1000 aparezcan automáticamente en rojo. ¿Qué usa?",
+      o:["Validación de datos","Formato condicional","Estilos de celda","Filtros"], c:1,
+      e:"El Formato condicional aplica color/estilo según una condición." },
+    { app:"Excel", q:"Tras un cálculo aparece el error ##### en la celda. ¿Cómo lo soluciona?",
+      o:["Cambiar el idioma de los formatos","Ampliar el ancho de la columna","Quitar el denominador cero","Usar referencias absolutas"], c:1,
+      e:"##### significa que la columna es muy angosta para mostrar el resultado: se amplía su ancho." },
+    { app:"PowerPoint", q:"Quiere el logo de la entidad en todas las diapositivas (nuevas y existentes). ¿Dónde aplica el cambio?",
+      o:["En la primera diapositiva; se copia al resto","En el Patrón de diapositivas (Slide Master)","Pegándolo manualmente en cada diapositiva","En las transiciones"], c:1,
+      e:"El Patrón de diapositivas define elementos comunes a toda la presentación." },
+    { app:"PowerPoint", q:"¿Cuál es la diferencia entre 'Transición' y 'Animación'?",
+      o:["Son lo mismo","Transición se aplica al texto; animación a imágenes","La transición controla el paso entre diapositivas; la animación, cómo aparecen los elementos dentro de una","La animación solo funciona en versiones antiguas"], c:2,
+      e:"Transición = entre diapositivas. Animación = elementos dentro de una diapositiva." },
+    { app:"PowerPoint", q:"Necesita mostrar el organigrama de la entidad en una diapositiva. ¿Mejor herramienta?",
+      o:["Insertar un SmartArt de tipo Jerarquía","Dibujar líneas y cuadros de texto","Escribir los nombres con viñetas","Insertar una tabla dinámica"], c:0,
+      e:"SmartArt crea diagramas visuales como jerarquías/organigramas." },
+    { app:"PowerPoint", q:"¿Para qué sirve el 'Modo presentador' (Presenter View)?",
+      o:["Imprimir las diapositivas en alta calidad","Que el presentador vea sus notas y la siguiente diapositiva, mientras el público ve solo la actual","Bloquear las imágenes","Comprimir el archivo"], c:1,
+      e:"El modo presentador muestra notas y la diapositiva siguiente solo en la pantalla del expositor." },
+    { app:"PowerPoint", q:"¿Qué atajo inicia la presentación desde la diapositiva ACTUAL (no desde el inicio)?",
+      o:["F5","Shift + F5","Alt + F4","F12"], c:1,
+      e:"F5 inicia desde el principio; Shift+F5 desde la diapositiva seleccionada." },
+    { app:"Correo", q:"Debe invitar a un evento a 200 ciudadanos protegiendo su privacidad (que nadie vea las demás direcciones). ¿Qué campo usa?",
+      o:["Para (To)","CC (Con copia)","CCO (Con copia oculta / BCC)","Asunto"], c:2,
+      e:"CCO oculta los destinatarios entre sí: ideal para envíos masivos." },
+    { app:"Correo", q:"Recibe un correo 'del banco' (donde la entidad no tiene cuentas): 'Urgente, su cuenta fue bloqueada, haga clic aquí'. ¿Qué es?",
+      o:["Publicidad normal (spam)","Un correo legítimo urgente","Un intento de phishing (suplantación) para robar datos","Un archivo comprimido"], c:2,
+      e:"Urgencia + enlace + datos sensibles = phishing. No hacer clic ni entregar datos." },
+    { app:"Windows", q:"¿Qué hace la combinación Alt + F4?",
+      o:["Abrir el menú Inicio","Cerrar el elemento activo o salir del programa","Ver las propiedades","Cambiar entre ventanas"], c:1,
+      e:"Alt+F4 cierra la ventana/programa activo." },
+    { app:"Seguridad", q:"Su equipo necesita compartir una carpeta de 500 MB con un asesor externo. ¿Forma correcta?",
+      o:["Adjuntarla al correo aunque falle","Comprimirla y enviarla esperando que la acepten","Subirla a la nube (OneDrive/WeTransfer) y enviar el enlace de descarga","Dividirla en 50 correos"], c:2,
+      e:"Los archivos pesados se comparten por la nube mediante un enlace, no como adjunto." }
+  ];
+
+
+  // ===== Render del simulacro =====
+  const cont = document.getElementById('quizContainer');
+  const LETRAS = ['A','B','C','D','E'];
+  let respondidas = 0;
+  let aciertos = 0;
+
+  function renderQuiz() {
+    cont.innerHTML = '';
+    respondidas = 0; aciertos = 0;
+    document.getElementById('resultado').classList.remove('show');
+    PREGUNTAS.forEach((p, idx) => {
+      const div = document.createElement('div');
+      div.className = 'pregunta';
+      let html = '<div class="q-num"><span class="nivel-pill app">' + p.app + '</span> Pregunta ' + (idx + 1) + ' de ' + PREGUNTAS.length + '</div>';
+      html += '<div class="q-texto">' + p.q + '</div>';
+      html += '<div class="opciones">';
+      p.o.forEach((op, i) => {
+        html += '<div class="opcion" data-q="' + idx + '" data-i="' + i + '"><span class="letra">' + LETRAS[i] + '</span><span>' + op + '</span></div>';
+      });
+      html += '</div>';
+      html += '<div class="feedback" id="fb-' + idx + '"></div>';
+      div.innerHTML = html;
+      cont.appendChild(div);
+    });
+    cont.querySelectorAll('.opcion').forEach(op => op.addEventListener('click', elegir));
+  }
+
+  function elegir(e) {
+    const op = e.currentTarget;
+    const q = parseInt(op.dataset.q, 10);
+    const i = parseInt(op.dataset.i, 10);
+    const pregunta = PREGUNTAS[q];
+    const grupo = op.parentElement;
+    if (grupo.dataset.bloqueado === '1') return;
+    grupo.dataset.bloqueado = '1';
+
+    grupo.querySelectorAll('.opcion').forEach(o => o.classList.add('bloqueada'));
+    const fb = document.getElementById('fb-' + q);
+    const correcto = (i === pregunta.c);
+    if (correcto) {
+      op.classList.add('correcta');
+      aciertos++;
+      fb.className = 'feedback ok show';
+      fb.innerHTML = '<strong>✅ ¡Correcto!</strong> ' + pregunta.e;
+    } else {
+      op.classList.add('incorrecta');
+      grupo.querySelectorAll('.opcion')[pregunta.c].classList.add('correcta');
+      fb.className = 'feedback no show';
+      fb.innerHTML = '<strong>❌ Revisa.</strong> La correcta es <strong>' + LETRAS[pregunta.c] + '</strong>. ' + pregunta.e;
+    }
+    respondidas++;
+    if (respondidas === PREGUNTAS.length) mostrarResultado();
+  }
+
+  function mostrarResultado() {
+    const res = document.getElementById('resultado');
+    document.getElementById('scoreNum').textContent = aciertos + ' / ' + PREGUNTAS.length;
+    const pct = Math.round((aciertos / PREGUNTAS.length) * 100);
+    let msg;
+    if (pct >= 90) msg = '¡Excelente! Dominas el componente de ofimática. 🏆';
+    else if (pct >= 70) msg = '¡Muy bien! Vas por buen camino; repasa lo que fallaste. 💪';
+    else if (pct >= 50) msg = 'Vas avanzando. Vuelve a las pestañas de contenido y refuerza. 📚';
+    else msg = 'Repasa las secciones por programa y vuelve a intentarlo. ¡Tú puedes! 🚀';
+    document.getElementById('scoreMsg').textContent = 'Acertaste el ' + pct + '%. ' + msg;
+    res.classList.add('show');
+    document.getElementById('btnNext2').disabled = current === total - 1;
+    res.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.getElementById('btnReset').addEventListener('click', renderQuiz);
+
+  // ===== Init =====
+  renderQuiz();
+  updateFooterBtns();
+</script>
+</body>
+</html>

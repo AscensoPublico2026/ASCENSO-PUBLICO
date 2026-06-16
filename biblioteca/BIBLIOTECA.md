@@ -31,6 +31,7 @@
 | ✅ | 8 | [`PRO-ESP-02`](../guias/PRO-ESP-02-alcance-cargo-profesional.html) | Alcance del Cargo Profesional | Por Nivel | Profesional |
 | ✅ | 8 | [`TEC-ESP-02`](../guias/TEC-ESP-02-alcance-cargo-tecnico.html) | Alcance del Cargo Técnico | Por Nivel | Técnico |
 | ✅ | — | [`BON-01`](../guias/BON-01-estrategia-cnsc.html) | Estrategia CNSC (Bonus) | Bonus | — |
+| ✅ | — | [`BON-02`](../guias/BON-02-ofimatica.html) | Ofimática (Bonus) | Bonus | — |
 | ⬜ | 21 | `SIM-001` | Simulacro Integral Final | Simulacro Final | — |
 
 **Leyenda:** ✅ Publicada · ⬜ Pendiente · 🔁 Bajo demanda (se crea con la compra)
@@ -243,6 +244,18 @@ Temas:
 - Técnicas de descarte de distractores
 - Gestión del tiempo en el examen
 - Errores frecuentes y recomendaciones para el día del examen
+
+#### ✅ BON-02 · Ofimática (Bonus)
+**Día:** — · **Estado:** Publicada · **Simulacro:** sí · **Reutilizable:** sí · **Archivo:** [`guias/BON-02-ofimatica.html`](../guias/BON-02-ofimatica.html) · **Aplica a:** Todos los niveles
+
+Temas:
+- Word: combinar correspondencia, control de cambios, estilos e índice automático, saltos de sección, pegado especial, PDF
+- Excel: fórmulas (SI, BUSCARV, SUMAR.SI, CONTAR.SI, CONTARA, SUBTOTALES), tablas dinámicas, filtros, inmovilizar paneles, validación de datos, formato condicional
+- PowerPoint: patrón de diapositivas, transición vs. animación, SmartArt, modo presentador, buenas prácticas de diseño
+- Correo/Outlook: Para/CC/CCO, reglas, carpetas, tareas, permisos de delegado, atajos
+- Windows y atajos de teclado del sistema y de Office
+- Seguridad informática: phishing, antivirus, compartir archivos en la nube, copias de seguridad
+- Casos tipo CNSC (juicio situacional) y simulacro interactivo de 30 preguntas
 
 ### Simulacro Final
 
