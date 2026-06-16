@@ -3,7 +3,7 @@
 > **Para retomar en una nueva sesión de Kiro:** conecta este repositorio y pídele a Kiro:
 > *"Lee CONTINUIDAD.md y ARQUITECTURA-PLATAFORMA.md y continuemos donde quedamos."*
 
-_Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, automatización de asignación de guías por código, reorden del panel y guía "Conoce tu Entidad" (ENT-IDV-01). **Próximo paso: crear el SIMULACRO (SIM-001).**_
+_Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, automatización de asignación de guías por código, reorden del panel, guía "Conoce tu Entidad" (ENT-IDV-01) y correos/recuperación de contraseña con marca (SMTP Resend + flujo PKCE). **Próximo paso: crear el SIMULACRO (SIM-001).**_
 
 ---
 
@@ -13,7 +13,7 @@ _Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, 
 - **Contenido de guías:** **31 guías publicadas** en la biblioteca, todas con el estándar profundo del motor:
   - INTRO-00 + Generales (GEN-01/02/03) + 12 por nivel (ASI/TEC/PRO) + 12 funcionales (FUN-*) + 2 bonus (BON-01 Estrategia CNSC, BON-02 Ofimática) + **ENT-IDV-01 (Conoce tu Entidad: INDERVALLE)**.
 - **Flujo de armado de cursos:** el admin ya **asigna guías por código** desde desplegables (no sube HTML a mano). El panel del curso está **ordenado por el plan** (Día 1 + Conoce tu Entidad → generales/nivel → 12 funcionales → simulacro).
-- **Prueba de compra:** hecha desde un perfil de prueba. Correos funcionan (al cliente ✅). **PENDIENTE (acción del usuario):** el aviso al admin llega a `cesardeavilamartinez@gmail.com`; hay que cambiar la variable `ADMIN_EMAIL` en Vercel a `ascensopublico@gmail.com` y **redesplegar** (es solo configuración, el código está bien).
+- **Prueba de compra y correos:** funcionando. Correo al cliente ✅, aviso de compra al admin a `ascensopublico@gmail.com` ✅, y **recuperación de contraseña** con marca (SMTP Resend + plantilla en español + fix del flujo PKCE) ✅. Único pendiente opcional: registro **DMARC** para mejorar entregabilidad (ver §9.7).
 - **➡️ PRÓXIMO PASO (se hará en una nueva sesión): crear el SIMULACRO `SIM-001`** para el cargo de prueba (INDERVALLE, Técnico Operativo 314-03, Almacén), hacer pruebas de cómo se ve y **definir su diseño/estructura como plantilla de TODOS los simulacros** (igual que se hizo con las guías y con "Conoce tu Entidad").
 
 ---
@@ -146,6 +146,15 @@ Al comprar → IA lee el manual → genera el plan (con `generador-plan-estudio.
 - **CHATBOT** de dudas en el portal. Muy a futuro.
 - **Vercel Pro** ($20/mes) al vender formalmente. Correo profesional (`contacto@`) opcional.
 
+### 9.7 Correos y recuperación de contraseña (estado y config)
+- ✅ **Custom SMTP con Resend** en Supabase (Auth → SMTP): host `smtp.resend.com`, puerto 465, **usuario `resend`**, password = API key `re_...`, remitente `noreply@ascensopublico.com` ("Ascenso Público"). Todos los correos de Auth salen con la marca.
+- ✅ **Plantilla "Reset Password"** personalizada (HTML de marca, en español) en Supabase → Auth → Email Templates.
+- ✅ **URL Configuration** (Supabase → Auth): Site URL `https://ascensopublico.com`; Redirect URLs `https://ascensopublico.com/reset-password` y `/**`. (Sin esto el enlace caía a la home.)
+- ✅ **Fix de código `/reset-password`** (mergeado, PR #78): canjea el `?code=` del flujo PKCE de Supabase (`exchangeCodeForSession`); antes se quedaba en "Verificando…". El disparo está en `app/login/page.tsx` (`resetPasswordForEmail` con `redirectTo` a `/reset-password`).
+- ✅ **Aviso de compra al admin** llega a `ascensopublico@gmail.com` (`ADMIN_EMAIL` en Vercel).
+- ⏳ **Pendiente (config, opcional):** (a) **DMARC** en Cloudflare (TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:ascensopublico@gmail.com`) para mejorar entregabilidad/evitar spam; (b) uniformar las otras plantillas de Auth (Confirm signup / Magic Link) con la misma marca; (c) verificar que todas las cuentas externas (GitHub, Vercel, Supabase, Resend, Cloudflare, dominio, Wompi) estén bajo `ascensopublico@gmail.com`.
+- ℹ️ Si en el correo aparece un enlace crudo al final, es una segunda `{{ .ConfirmationURL }}` sobrante en la plantilla; debe haber solo una (la del botón).
+
 ## 10. Cómo quedó esta sesión
 - ✅ **BON-02 (Ofimática)** creada (basada en `referencias/ofimatica-banco-preguntas.md`) y auto-cargada como bonus.
 - ✅ **Asignación de guías por código** + **panel del curso reordenado** por el plan (Día 1/Entidad → generales/nivel → funcionales → simulacro) + seed de las 31 publicadas + `scripts/sync-biblioteca.sh`.
@@ -153,6 +162,6 @@ Al comprar → IA lee el manual → genera el plan (con `generador-plan-estudio.
 - ✅ **Plan de estudio generado** para el cargo de prueba (INDERVALLE Téc. Operativo 314-03, Almacén): las 12 funcionales YA existían (este fue el cargo modelo); solo faltan crear **ENT-IDV-01** (hecha) y **SIM-001** (próximo).
 - ✅ **ENT-IDV-01 "Conoce tu Entidad: INDERVALLE"** creada, generalizada y publicada (molde de todas las ENT-*).
 - ✅ **Limpieza** del repo (sin HTML huérfanos en la raíz).
-- ⚠️ Pendiente del usuario: corregir `ADMIN_EMAIL` en Vercel (aviso de compra debe ir a `ascensopublico@gmail.com`) y redesplegar.
+- ✅ **Correos y recuperación de contraseña** resueltos de punta a punta: Custom SMTP con Resend, plantilla de marca en español, Site/Redirect URLs, fix del flujo PKCE en `/reset-password` (mergeado) y aviso de compra al admin a `ascensopublico@gmail.com`. Detalle y pendientes en §9.7.
 
 **Todo está mergeado en `main` y desplegado.** ➡️ **PRÓXIMO PASO (nueva sesión): crear el SIMULACRO `SIM-001` y congelar su diseño como plantilla.** Luego, si el usuario da luz verde, construir la "Biblioteca por OPEC" (§9.4).
