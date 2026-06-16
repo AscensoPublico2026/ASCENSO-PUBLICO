@@ -55,13 +55,14 @@ plataforma/                · App Next.js (CORE, en producción)
   │                          admin/*, api/webhooks/wompi, api/admin/*
   ├─ app/components/       · NavLanding, NivelTabs, ConvocatoriasGrid, ContadorCupos, ScrollReveal
   ├─ lib/                  · supabase, wompi, wompiApi, email, auth, format,
-  │                          procesarPago, autocargarGuias
+  │                          procesarPago, autocargarGuias, catalogoGuias (+ biblioteca.json copia)
   ├─ supabase/             · schema.sql, seed-convocatorias.sql, migracion-progreso.sql
-  ├─ public/               · fotos/ (convocatorias+fundador), brand/ (logos), seed-guias/ (17 guías)
+  ├─ public/               · fotos/ (convocatorias+fundador), brand/ (logos), seed-guias/ (30 guías publicadas)
   └─ SETUP.md, DESPLIEGUE.md
 brand/                     · logos originales + brand/fotos (respaldo)
-guias/                     · 17 guías HTML originales (fuente/respaldo)
-biblioteca/biblioteca.json · fuente de verdad del catálogo de guías
+guias/                     · 30 guías HTML codificadas (INTRO, GEN, nivel, 12 funcionales FUN-*, BON-01/02)
+biblioteca/biblioteca.json · fuente de verdad del catálogo de guías (se copia a plataforma/lib/ con scripts/sync-biblioteca.sh)
+referencias/               · insumos de contenido (ej. banco de preguntas de Ofimática para BON-02)
 prompts/                   · plantillas para automatización futura (generador guías/plan)
 ARQUITECTURA-PLATAFORMA.md · PROYECTO-MAESTRO.md · PLAN-PROYECTO.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md
 ```
@@ -78,7 +79,12 @@ Formulario con **Nombres + Apellidos separados** (normalización Title Case vía
 `/comprar` → Wompi → **webhook** (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías. Redirect a `/activar` (crear contraseña). `procesarReferencia` es **robusto ante usuarios residuales** (busca por email, evita duplicados por opec).
 
 ### Auto-carga de guías (`lib/autocargarGuias.ts`)
-Al comprar se cargan automáticamente: **Intro (INTRO-00) + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01)**. Las **funcionales** (días 9-20) y el **simulacro** las sube el admin manualmente.
+Al comprar se cargan automáticamente: **Intro (INTRO-00) + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01, BON-02)**.
+
+### Asignar guías de la biblioteca por código (NUEVO) (`lib/catalogoGuias.ts`)
+Las **funcionales** (días 9-20) y el **simulacro** ya NO se suben subiendo el HTML a mano. El admin, en `/admin/cursos/[id]`, usa un **desplegable** con las guías publicadas de la biblioteca (funcional + simulacro) y las asigna **por código** (según el plan de estudio); la guía queda cargada al instante referenciando el HTML que ya vive en el bucket `guias`. Se mantiene la **subida manual de HTML** solo como fallback para guías personalizadas (ej. "Conoce tu Entidad").
+- Fuente de verdad: `biblioteca/biblioteca.json` → copia en `plataforma/lib/biblioteca.json` (sincronizar con `scripts/sync-biblioteca.sh`).
+- Requisito: el HTML de la guía debe estar en el bucket. Tras agregar guías nuevas, correr `scripts/sync-biblioteca.sh` y visitar `/api/admin/seed-guias` (admin) para subirlas (idempotente).
 
 ### Portal del estudiante (`/perfil`)
 Multi-curso con **tarjetas hero** (imagen convocatoria + overlay navy + OPEC badge dorado + cargo en Title Case). `/perfil/[cursoId]` muestra la biblioteca por secciones (Plan / Bonus / Simulacro). **Progreso EN VIVO** (guías leídas / total; columna `leida` en `guias_curso`). Botones "Cambiar contraseña", "Comprar otro curso" y "Panel admin" (solo si rol=admin).
@@ -88,7 +94,7 @@ Iframe que carga `/api/guia/[id]` (sirve el HTML desde Storage privado con URL f
 
 ### Panel admin (`/admin`)
 Layout con sidebar (Dashboard, Cursos, Convocatorias, Usuarios).
-- **`/admin/cursos/[id]`**: datos del cliente + manual PDF + guías auto-cargadas vs funcionales + subir guías + **dos botones**: "Curso listo" (se habilita a las 12h de la compra) y "Habilitar ahora" (acceso inmediato, para casos especiales).
+- **`/admin/cursos/[id]`**: datos del cliente + manual PDF + guías auto-cargadas + **asignar guías de la biblioteca por código (desplegable)** + subir HTML personalizado (fallback) + **dos botones**: "Curso listo" (se habilita a las 12h de la compra) y "Habilitar ahora" (acceso inmediato, para casos especiales).
 - **`/admin/convocatorias`**: CRUD con campo `imagen_url`.
 - **`/admin/usuarios`**: listar + eliminar usuarios (no admins).
 
@@ -99,12 +105,12 @@ Layout con sidebar (Dashboard, Cursos, Convocatorias, Usuarios).
 Plantilla HTML profesional con **logo dorado + colores de marca** (encabezado navy, botón CTA, footer con WhatsApp). Confirmación al cliente + aviso al admin. Remitente `noreply@ascensopublico.com`.
 
 ### Endpoints admin útiles (se mantienen)
-- `/api/admin/seed-guias` — sube las 17 guías HTML al bucket `guias` (solo admin, idempotente).
+- `/api/admin/seed-guias` — sube **todas las guías publicadas** (30, derivadas del catálogo `biblioteca.json`) al bucket `guias` (solo admin, idempotente).
 - `/api/admin/reprocesar?ref=XXX` — reprocesa un pago manualmente (herramienta de emergencia).
 
 ## 6. Datos / convenciones (NO cambiar sin avisar)
 - **Tablas Supabase:** `profiles`, `convocatorias`, `preregistros`, `cursos`, `guias_curso`, `pagos`.
-- **Guías:** las 17 HTML viven en `/guias` (repo) y en bucket privado `guias` de Storage. `biblioteca/biblioteca.json` es la fuente de verdad del catálogo.
+- **Guías:** las 30 guías publicadas viven en `/guias` (repo), se copian a `plataforma/public/seed-guias/` y se suben al bucket privado `guias` de Storage. `biblioteca/biblioteca.json` es la fuente de verdad del catálogo (copia en `plataforma/lib/biblioteca.json`).
 - **Fotos:** `/plataforma/public/fotos`. **Logos:** `/plataforma/public/brand`.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
 - **Contacto:** WhatsApp **573151972091** · correo **ascensopublico@gmail.com**.
@@ -128,13 +134,16 @@ Plantilla HTML profesional con **logo dorado + colores de marca** (encabezado na
 `NEXT_PUBLIC_WOMPI_REDIRECT_URL` (=https://ascensopublico.com/activar), `PRECIO_COP` (=300000).
 
 ## 9. PENDIENTES / ROADMAP (en pausa hasta que el usuario lo pida)
-- **TESTIMONIOS:** tabla + admin + sección en landing. En pausa hasta tener reseñas reales (mantener oculto hasta que el usuario avise).
-- **SIMULACRO FINAL:** módulo interactivo tipo CNSC (juicio situacional, repetible). Se construye **al final**, cuando un cargo tenga TODO el contenido (generales + nivel + funcionales). Es la pieza estrella.
+- **CONTENIDO PENDIENTE:**
+  - **"Conoce tu Entidad" (ENT-xxx / INTRO-01):** guía personalizada por entidad del aspirante (la única no reutilizable). Se crea al confirmar la compra.
+  - **SIMULACRO FINAL (SIM-001):** módulo interactivo tipo CNSC (juicio situacional, repetible). Se construye **al final**, cuando un cargo tenga TODO el contenido (generales + nivel + funcionales). Es la pieza estrella.
+- **ASIGNACIÓN POR CÓDIGO (HECHO ✅):** el admin arma el plan asignando guías de la biblioteca desde un desplegable (sin subir HTML). Primer paso hacia la automatización total.
 - **AUTOMATIZACIÓN (Fase 3):** al comprar → IA lee el manual de funciones → genera el plan de estudio → reutiliza guías de la biblioteca que coincidan **100%** (mismo nivel + mismo tema) → genera las faltantes con las plantillas/políticas → las deja en estado "pendiente de revisión" → el admin revisa y publica. Requiere API de IA (costo por uso).
+- **TESTIMONIOS:** tabla + admin + sección en landing. En pausa hasta tener reseñas reales (mantener oculto hasta que el usuario avise).
 - **CHATBOT** de dudas sencillas en el portal del estudiante. Muy a futuro.
 - **Vercel Pro** ($20/mes) cuando se venda formalmente (uso comercial). Correo profesional (`contacto@`) opcional.
 
 ## 10. Cómo quedó esta conversación
-Sesión dedicada a: migrar landing a Next.js, rediseño del portal del estudiante (multi-curso, tarjetas hero, progreso), panel admin completo, login + recuperar contraseña, auto-carga de guías, contador de cupos, doble habilitación de curso, **conexión del dominio propio `ascensopublico.com`** (Vercel + Cloudflare), **correos profesionales con Resend** (dominio verificado), SEO + Open Graph + 404, responsive móvil, animaciones de scroll, y **limpieza** del repo (eliminada landing vieja, scripts duplicados y docs de investigación).
+Sesión dedicada a: **guías bonus BON-01 (Estrategia CNSC) y BON-02 (Ofimática)** publicadas y auto-cargadas en todos los cursos; **limpieza** del repo (eliminados 8 HTML prototipo huérfanos de la raíz); y **automatización de la asignación de guías**: ahora todas las guías publicadas (30) se siembran al bucket y el admin las asigna a un curso **por código** desde un desplegable en `/admin/cursos/[id]` (sin subir HTML a mano), basándose en el plan de estudio. Se conserva la subida manual de HTML solo para guías personalizadas.
 
-**Todo está mergeado en `main` y desplegado.** El siguiente módulo lo define el usuario (probablemente: contenido de guías funcionales de un cargo real, o el simulacro cuando haya contenido completo).
+**Todo está mergeado en `main` y desplegado.** Pendientes de contenido: **Conoce tu Entidad** y el **Simulacro Final**.

@@ -3,8 +3,54 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { getGuiaCatalogo } from "@/lib/catalogoGuias";
+
+/**
+ * Asigna una guía YA EXISTENTE de la biblioteca al curso, por su código.
+ * No vuelve a subir el HTML: referencia el archivo que ya vive en el bucket
+ * `guias` (subido vía /api/admin/seed-guias). Es la forma rápida de armar
+ * el plan: el admin solo elige el código del plan de estudio.
+ */
+export async function asignarGuiaDesdeBiblioteca(cursoId: string, formData: FormData) {
+  await requireAdmin();
+  const codigo = String(formData.get("codigo") || "").trim();
+  if (!codigo) throw new Error("Selecciona una guía de la biblioteca.");
+
+  const guia = getGuiaCatalogo(codigo);
+  if (!guia) throw new Error(`La guía "${codigo}" no existe en la biblioteca.`);
+  if (!guia.archivoPath) throw new Error(`La guía "${codigo}" aún no tiene archivo publicado.`);
+
+  // Día/orden: el admin puede ajustarlos según el plan del cliente; si no, se usa el sugerido.
+  const diaForm = Number(formData.get("dia") || 0);
+  const ordenForm = Number(formData.get("orden") || 0);
+  const dia = diaForm > 0 ? diaForm : guia.diaSugerido;
+  const orden = ordenForm > 0 ? ordenForm : (guia.diaSugerido ?? 0);
+
+  const supabase = createAdminClient();
+
+  // Evitar duplicados: si ya está esa guía (mismo archivo) en el curso, no la repite.
+  const { data: existente } = await supabase
+    .from("guias_curso")
+    .select("id")
+    .eq("curso_id", cursoId)
+    .eq("archivo_path", guia.archivoPath)
+    .maybeSingle();
+  if (existente) throw new Error(`La guía "${codigo}" ya está asignada a este curso.`);
+
+  await supabase.from("guias_curso").insert({
+    curso_id: cursoId,
+    titulo: guia.titulo,
+    dia,
+    tipo: guia.tipo,
+    orden,
+    archivo_path: guia.archivoPath,
+  });
+  revalidatePath(`/admin/cursos/${cursoId}`);
+}
 
 // Sube una guía (HTML) al curso y la registra.
+// Se mantiene como fallback para guías PERSONALIZADAS (ej. "Conoce tu Entidad")
+// que no están en la biblioteca reutilizable.
 export async function subirGuia(cursoId: string, formData: FormData) {
   await requireAdmin();
   const titulo = String(formData.get("titulo") || "").trim();

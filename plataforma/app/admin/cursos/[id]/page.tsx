@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca } from "./actions";
+import { guiasAsignables } from "@/lib/catalogoGuias";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,10 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
 
   const guiasAuto = (guias || []).filter((g: any) => ["general", "nivel", "bonus"].includes(g.tipo));
   const guiasManuales = (guias || []).filter((g: any) => ["funcional", "simulacro"].includes(g.tipo));
+
+  // Guías de la biblioteca (funcional + simulacro) que AÚN no están asignadas a este curso.
+  const rutasAsignadas = new Set((guias || []).map((g: any) => g.archivo_path).filter(Boolean));
+  const disponiblesBiblioteca = guiasAsignables().filter((g) => !rutasAsignadas.has(g.archivoPath));
 
   return (
     <div style={{ padding: "40px 28px", maxWidth: 880 }}>
@@ -119,7 +124,43 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           </div>
         )}
 
-        <h3 style={{ fontSize: ".9rem", margin: "14px 0 10px" }}>Subir nueva guía</h3>
+        <h3 style={{ fontSize: ".9rem", margin: "14px 0 10px" }}>➕ Asignar guía de la biblioteca</h3>
+        <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
+          Elige una guía ya creada (según el plan de estudio) y queda cargada al instante. No necesitas subir el HTML: ya vive en el sistema.
+        </p>
+        {disponiblesBiblioteca.length === 0 ? (
+          <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", padding: "8px 0" }}>
+            No quedan guías de la biblioteca por asignar (ya están todas las funcionales/simulacro disponibles).
+          </p>
+        ) : (
+          <form action={asignarGuiaDesdeBiblioteca.bind(null, curso.id)} style={{ display: "grid", gap: 10, gridTemplateColumns: "2fr 1fr 1fr", alignItems: "end" }}>
+            <div style={{ gridColumn: "1/-1" }}>
+              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>GUÍA (código — título)</label>
+              <select style={input} name="codigo" defaultValue="" required>
+                <option value="" disabled>Selecciona del plan de estudio…</option>
+                {disponiblesBiblioteca.map((g) => (
+                  <option key={g.codigo} value={g.codigo}>
+                    {g.codigo} — {g.titulo}{g.tipo === "simulacro" ? " (Simulacro)" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>DÍA (opcional)</label>
+              <input style={input} type="number" name="dia" placeholder="ej. 9" min={1} />
+            </div>
+            <div>
+              <label style={{ fontSize: ".72rem", color: "var(--texto-suave)" }}>ORDEN (opcional)</label>
+              <input style={input} type="number" name="orden" placeholder="ej. 9" min={0} />
+            </div>
+            <button className="btn btn-azul" style={{ padding: 12 }}>Asignar al curso</button>
+          </form>
+        )}
+
+        <h3 style={{ fontSize: ".9rem", margin: "22px 0 10px", paddingTop: 16, borderTop: "1px solid var(--gris-borde)" }}>⬆️ Subir guía personalizada (HTML)</h3>
+        <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginBottom: 10 }}>
+          Solo para guías que NO están en la biblioteca (ej. “Conoce tu Entidad”, personalizada por cliente).
+        </p>
         <form action={subirGuia.bind(null, curso.id)} style={{ display: "grid", gap: 10, gridTemplateColumns: "1fr 1fr" }}>
           <input style={input} type="text" name="titulo" placeholder="Título *" required />
           <input style={input} type="number" name="dia" placeholder="Día (ej. 9)" />

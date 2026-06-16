@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { archivosSeed } from "@/lib/catalogoGuias";
 
 /**
  * API Route: /api/admin/seed-guias
@@ -7,33 +8,16 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
  * Sube las guías HTML al bucket 'guias' de Supabase Storage.
  * Solo se puede ejecutar como admin (verifica sesión + rol).
  * 
- * USO: visita https://ascenso-publico.vercel.app/api/admin/seed-guias
+ * USO: visita https://ascensopublico.com/api/admin/seed-guias
  * (debes estar logueado como admin)
  * 
- * Las guías se leen desde /public/seed-guias/ (embebidas en el deploy)
- * y se suben al bucket 'guias' con la ruta guias/NOMBRE.html
+ * La lista de guías se deriva del catálogo (biblioteca.json): todas las
+ * guías publicadas que tienen archivo. Los HTML se leen desde
+ * /public/seed-guias/ (embebidos en el deploy) y se suben al bucket
+ * 'guias' con la ruta guias/NOMBRE.html. Es idempotente (upsert).
  */
 
-const GUIAS = [
-  "INTRO-00-presentacion-curso.html",
-  "GEN-01-estado-funcion-publica.html",
-  "GEN-02-relacion-estado-ciudadano.html",
-  "GEN-03-marco-institucional.html",
-  "ASI-COM-01-cumplimiento-desarrollo-laboral.html",
-  "ASI-COM-02-atencion-colaboracion.html",
-  "ASI-ESP-01-competencias-nivel-asistencial.html",
-  "ASI-ESP-02-alcance-cargo-asistencial.html",
-  "TEC-COM-01-desempeno-cumplimiento.html",
-  "TEC-COM-02-usuarios-trabajo-colaborativo.html",
-  "TEC-ESP-01-competencias-nivel-tecnico.html",
-  "TEC-ESP-02-alcance-cargo-tecnico.html",
-  "PRO-COM-01-gestion-cumplimiento.html",
-  "PRO-COM-02-servicio-articulacion.html",
-  "PRO-ESP-01-competencias-nivel-profesional.html",
-  "PRO-ESP-02-alcance-cargo-profesional.html",
-  "BON-01-estrategia-cnsc.html",
-  "BON-02-ofimatica.html",
-];
+const GUIAS = archivosSeed();
 
 export async function GET() {
   // Verificar que es admin
