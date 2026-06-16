@@ -75,7 +75,23 @@
           },
           {
             "tipo": "ejemplo",
-            "html": "<p><strong>Aplicado · con números:</strong> un área consume 100 unidades/mes y el proveedor demora 15 días en entregar. Entonces el punto de reorden debe avisar cuando aún queden ~50 unidades (lo de 15 días) más un margen de seguridad. Así, cuando llega el pedido, todavía no te habías quedado sin nada.</p>"
+            "html": "<p><strong>Aplicado:</strong> piensa en el tiempo que tarda el proveedor en entregar. Si mientras llega el pedido vas a seguir consumiendo, el punto de reorden debe avisarte <em>antes</em>, con margen suficiente para no quedar en cero. Veámoslo con números exactos abajo.</p>"
+          },
+          {
+            "tipo": "calculo",
+            "titulo": "¿En qué saldo debo pedir? El punto de reorden, paso a paso",
+            "intro": "El punto de reorden es el saldo que dispara la alerta para comprar. Se calcula sumando lo que vas a consumir mientras llega el pedido más un colchón de seguridad por si el proveedor demora más de lo previsto.",
+            "datos": [
+              "Consumo promedio del insumo: 10 unidades por día",
+              "Tiempo de entrega del proveedor (lo que demora en llegar): 15 días",
+              "Stock de seguridad definido (colchón): 30 unidades"
+            ],
+            "pasos": [
+              {"n": 1, "label": "Calcula cuánto se consumirá mientras llega el pedido", "formula": "consumo diario <b>×</b> tiempo de entrega = 10 <b>×</b> 15", "resultado": "150 unidades"},
+              {"n": 2, "label": "Súmale el stock de seguridad (el colchón por si demora más)", "formula": "150 <b>+</b> 30", "resultado": "180 unidades"}
+            ],
+            "total": {"label": "Punto de reorden", "valor": "180 unidades"},
+            "nota": "Cuando el saldo baje a 180 unidades se solicita la reposición; así el pedido llega antes de tocar la existencia mínima (en este caso, las 30 unidades de seguridad). Pedir cuando ya quedan pocas o esperar al cero es lo que provoca el desabastecimiento."
           },
           {
             "tipo": "minicheck",
@@ -493,12 +509,12 @@
       "nivel": "b",
       "tema": "Punto de reorden",
       "ctx": "Un insumo de uso frecuente alcanzó su punto de reorden (el nivel que dispara la alerta para reponer). Todavía quedan algunas unidades, suficientes para unos pocos días, y sabes que el proveedor suele demorar en entregar.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "q": "Teniendo en cuenta que el punto de reorden existe precisamente para reponer con tiempo antes de tocar la existencia mínima, y que el proveedor suele demorar en entregar, ¿cuál de las siguientes actuaciones es la más apropiada en esta situación?",
       "ops": [
-        "Informar oportunamente para gestionar la reposición, ya que se alcanzó el punto de reorden.",
-        "Esperar a que se agoten por completo las unidades para recién entonces solicitar la compra.",
-        "Comprar de inmediato la máxima cantidad posible para no volver a quedar corto.",
-        "No hacer nada, porque todavía quedan unidades."
+        "Informar oportunamente a quien corresponde para que se gestione la reposición, dado que el insumo ya alcanzó su punto de reorden y la compra toma tiempo en concretarse.",
+        "Esperar a que las unidades se agoten por completo para, recién entonces, solicitar la compra, de modo que no se pida nada mientras todavía quede algo de existencia.",
+        "Comprar de inmediato la máxima cantidad posible del insumo, sin dimensionar el consumo real, con tal de no volver a quedar corto en ningún momento del año.",
+        "No realizar ninguna gestión por ahora, puesto que todavía quedan algunas unidades disponibles y el desabastecimiento aún no se ha producido."
       ],
       "correcta": 0,
       "expl": [
@@ -511,13 +527,13 @@
     {
       "nivel": "b",
       "tema": "Inventario físico real",
-      "ctx": "Durante la toma de inventario físico, un compañero te dice que, como el sistema indica 200 unidades y “seguramente está bien”, anotes 200 sin contar para terminar más rápido.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Durante la toma de inventario físico de fin de mes, vas avanzando ítem por ítem cuando llegas a uno cuyo sistema indica 200 unidades. Un compañero, con afán de terminar, te dice que «seguramente está bien» y que anotes 200 sin contar, para avanzar más rápido y cerrar pronto la jornada de conteo.",
+      "q": "Considerando que el propósito del inventario físico es justamente verificar si el sistema refleja la realidad, y no confirmarlo sin más, ¿cuál de las siguientes actuaciones es la más apropiada durante la toma de inventario?",
       "ops": [
-        "Anotar 200 confiando en el sistema, para avanzar más rápido.",
-        "Contar físicamente y registrar la cantidad real, aunque no coincida con el sistema.",
-        "Contar solo los ítems que te parezcan importantes y copiar el resto del sistema.",
-        "Pedir que otra persona decida si hay que contar o no."
+        "Anotar 200 unidades confiando en lo que indica el sistema, sin contar físicamente, con el fin de terminar la toma de inventario lo más rápido posible.",
+        "Contar físicamente las unidades y registrar la cantidad real obtenida, aunque no coincida con el saldo que muestra el sistema, pues ese es el propósito del inventario.",
+        "Contar únicamente los ítems que a tu juicio parezcan importantes y, para los demás, copiar directamente el saldo que registra el sistema en ese momento.",
+        "Pedir que sea otra persona quien decida si hay que contar o no, para no asumir tú la responsabilidad de esa decisión durante el inventario."
       ],
       "correcta": 1,
       "expl": [
@@ -530,13 +546,13 @@
     {
       "nivel": "b",
       "tema": "Sobrestock",
-      "ctx": "Un superior te pide comprar la cantidad máxima de un insumo que casi no rota, argumentando que “así no quedamos cortos nunca”. Sabes que buena parte se vencería en bodega.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Un superior te pide comprar la cantidad máxima posible de un insumo que casi no rota en el almacén, argumentando que «así no quedamos cortos nunca» y que prefiere tener de sobra. Por el historial de consumo sabes que buena parte de esa compra terminaría venciéndose en la bodega sin llegar a usarse.",
+      "q": "Sabiendo que el sobrestock de un bien que casi no rota implica vencimientos y desperdicio de recursos públicos, y que tu rol es informar con datos, ¿cuál de las siguientes actuaciones es la más apropiada frente a la instrucción del superior?",
       "ops": [
-        "Comprar el máximo como pide el superior, para no quedar cortos.",
-        "Alertar, con datos de consumo y rotación, que comprar de más generaría sobrestock y vencimiento, y proponer dimensionar según el consumo real.",
-        "Comprar el doble de lo que se consume, como punto intermedio.",
-        "No comprar nada de ese insumo."
+        "Comprar la cantidad máxima tal como lo pide el superior, para garantizar que el insumo no se agote nunca, aun sabiendo que buena parte se vencería en la bodega.",
+        "Alertar, con datos de consumo y rotación, que comprar de más generaría sobrestock y vencimientos, y proponer dimensionar la compra según el consumo real del insumo.",
+        "Comprar el doble de lo que se consume habitualmente, como una solución intermedia entre lo que pide el superior y lo que indicaría el consumo real del insumo.",
+        "No comprar absolutamente nada de ese insumo, para evitar por completo cualquier riesgo de que se venza acumulado en la bodega durante los próximos meses."
       ],
       "correcta": 1,
       "expl": [
@@ -549,13 +565,13 @@
     {
       "nivel": "b",
       "tema": "Faltante en conciliación",
-      "ctx": "Al conciliar un ítem, el sistema indica 150 unidades pero el conteo físico da 140. No hay ningún soporte que explique la diferencia de 10.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Al conciliar un ítem después del conteo, encuentras que el sistema indica 150 unidades pero el conteo físico da apenas 140. Revisas los movimientos recientes y no aparece ningún comprobante, acta ni soporte que explique a dónde fueron a parar las 10 unidades que están faltando.",
+      "q": "Dado que toda diferencia entre el sistema y el físico debe esclarecerse, y que el saldo no se modifica sin sustento, ¿cuál de las siguientes actuaciones es la más apropiada ante este faltante de 10 unidades sin soporte que lo explique?",
       "ops": [
-        "Ajustar el sistema a 140 para que cuadre con el conteo físico.",
-        "Asumir las 10 unidades como pérdida normal y no reportar nada.",
-        "Dejar constancia del faltante de 10, investigar la posible causa e informar a tu jefe inmediato.",
-        "Registrar un egreso de 10 unidades para justificar la diferencia."
+        "Ajustar directamente el saldo del sistema a 140 unidades para que coincida con el conteo físico y la diferencia desaparezca de los registros del almacén.",
+        "Asumir las 10 unidades faltantes como una pérdida normal del manejo de inventario y continuar con las labores sin reportar la diferencia a nadie.",
+        "Dejar constancia escrita del faltante de 10 unidades, investigar su posible causa e informar a tu jefe inmediato para que se adelanten las acciones que correspondan.",
+        "Registrar un egreso de 10 unidades, sin soporte real, con el único fin de justificar la diferencia y dejar el saldo del sistema igualado con el físico."
       ],
       "correcta": 2,
       "expl": [
@@ -568,13 +584,13 @@
     {
       "nivel": "i",
       "tema": "Verificación periódica",
-      "ctx": "En tu almacén solo se hace inventario una vez al año. Propones revisar las existencias con más frecuencia, pero un compañero dice que “es perder tiempo, total al final del año se cuenta todo”.",
-      "q": "¿Cuál es la postura más apropiada?",
+      "ctx": "En tu almacén solo se hace inventario una vez al año, al cierre. Propones en una reunión revisar las existencias con más frecuencia para detectar problemas a tiempo, pero un compañero responde que «eso es perder el tiempo, total al final del año se cuenta todo de una vez» y varios parecen estar de acuerdo.",
+      "q": "Teniendo en cuenta que esperar al inventario anual deja que los problemas se acumulen sin detectarse durante meses, ¿cuál de las siguientes posturas es la más apropiada frente a la propuesta de revisar las existencias con más frecuencia?",
       "ops": [
-        "Aceptar que basta con el inventario anual, para no perder tiempo.",
-        "Promover una verificación periódica (p. ej. mensual), porque permite detectar diferencias y anticipar reposiciones a tiempo.",
-        "Hacer conteos solo cuando alguien reclame que falta algo.",
-        "Contar únicamente los bienes más costosos una vez al año."
+        "Aceptar que es suficiente con el inventario que se hace una vez al año, para no invertir tiempo en revisiones que el compañero considera innecesarias.",
+        "Promover una verificación periódica del stock (por ejemplo, mensual), porque permite detectar diferencias, consumos anormales y anticipar reposiciones a tiempo.",
+        "Realizar conteos únicamente cuando alguna área reclame que un insumo le hizo falta, de modo que solo se revise aquello que llegue a generar quejas.",
+        "Contar solamente los bienes más costosos una vez al año y dejar el resto del inventario sin ninguna revisión intermedia durante el resto del tiempo."
       ],
       "correcta": 1,
       "expl": [
@@ -587,13 +603,13 @@
     {
       "nivel": "i",
       "tema": "Consumo anormal",
-      "ctx": "En la revisión mensual detectas que un insumo se está consumiendo al doble de lo habitual, sin una explicación evidente.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Durante la revisión mensual del stock detectas que un insumo se está consumiendo al doble de lo habitual en las últimas semanas, sin que haya habido un aumento de actividad ni ninguna otra explicación evidente que justifique semejante incremento en la salida de ese bien del almacén.",
+      "q": "Considerando que un consumo que se dispara sin explicación puede esconder un uso indebido, un error o una fuga, ¿cuál de las siguientes actuaciones es la más apropiada al detectar que un insumo se consume al doble de lo habitual?",
       "ops": [
-        "No darle importancia, ya que aún hay existencias suficientes.",
-        "Aumentar de inmediato la compra para cubrir el mayor consumo, sin más análisis.",
-        "Dejar constancia del consumo anormal e informar para que se investigue la causa.",
-        "Reducir las entregas de ese insumo por tu cuenta para frenar el consumo."
+        "No darle mayor importancia al hallazgo, dado que por ahora todavía hay existencias suficientes del insumo para atender la operación con normalidad.",
+        "Aumentar de inmediato la compra del insumo para cubrir el mayor consumo detectado, sin detenerte a analizar a qué se debe ese incremento repentino.",
+        "Dejar constancia del consumo anormal e informarlo a quien corresponde para que se investigue la causa, actuando a tiempo y dentro de tu rol.",
+        "Reducir por tu propia cuenta las entregas de ese insumo a las áreas, con el fin de frenar el consumo antes de que las existencias se agoten."
       ],
       "correcta": 2,
       "expl": [
@@ -606,13 +622,13 @@
     {
       "nivel": "i",
       "tema": "Sobrante en conciliación",
-      "ctx": "Al conciliar, encuentras un sobrante: hay más unidades físicas que las que registra el sistema, y no hay soporte que explique de dónde salieron las adicionales.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Al conciliar un ítem encuentras un sobrante: en la bodega hay más unidades físicas que las que registra el sistema. Revisas los ingresos recientes y no aparece ninguna acta ni comprobante que explique de dónde salieron esas unidades adicionales que aparecen de más en el conteo.",
+      "q": "Sabiendo que un sobrante también es una diferencia que debe esclarecerse, pues puede esconder un ingreso sin registrar o un error, ¿cuál de las siguientes actuaciones es la más apropiada al encontrar más unidades físicas que las que registra el sistema?",
       "ops": [
-        "Ignorar el sobrante, ya que tener de más no es un problema.",
-        "Repartir el excedente entre las áreas para “aprovecharlo”.",
-        "Dejar constancia del sobrante, investigar su origen e informar, sin ajustar el sistema por tu cuenta.",
-        "Ajustar el sistema hacia arriba para que coincida con lo físico."
+        "Ignorar el sobrante encontrado, partiendo de que tener unidades de más nunca representa un problema para el control del inventario del almacén.",
+        "Repartir el excedente de unidades entre las distintas áreas para «aprovecharlo», ya que de todos modos estaba disponible físicamente en la bodega.",
+        "Dejar constancia del sobrante, investigar su origen e informar a quien corresponde, sin ajustar el saldo del sistema por tu cuenta mientras no se aclare la causa.",
+        "Ajustar el saldo del sistema hacia arriba para que coincida con lo que hay físicamente, de modo que la diferencia quede resuelta de inmediato."
       ],
       "correcta": 2,
       "expl": [
@@ -625,13 +641,13 @@
     {
       "nivel": "i",
       "tema": "Relación kardex–existencias",
-      "ctx": "El control de existencias de tu almacén es confuso porque los movimientos no se han registrado bien en el kardex. Te preguntan cómo lograr que el control de existencias sea confiable.",
-      "q": "¿Cuál es la respuesta más apropiada?",
+      "ctx": "El control de existencias de tu almacén se ha vuelto confuso y poco confiable porque, desde hace meses, los movimientos no se han registrado bien en el kardex: hay entradas y salidas sin anotar a tiempo. En una reunión te preguntan directamente qué se necesita para que el control de existencias vuelva a ser confiable.",
+      "q": "Partiendo de que un control de existencias confiable se apoya en un registro de movimientos bien llevado, ¿cuál de las siguientes es la respuesta más apropiada sobre cómo lograr que el control de existencias del almacén vuelva a ser confiable?",
       "ops": [
-        "Comprar más de todo para que nunca falte, sin importar el registro.",
-        "Llevar el kardex al día y con soportes, porque un buen registro de movimientos es la base de un control de existencias confiable.",
-        "Hacer un único inventario físico al año y confiar en él.",
-        "Dejar de registrar movimientos y contar todo a mano cada día."
+        "Comprar más cantidad de todos los insumos para que nunca falte nada, sin importar si los movimientos quedan o no bien registrados en el kardex.",
+        "Llevar el kardex al día y con sus soportes, porque un buen registro de cada movimiento es la base sobre la cual el control de existencias y la conciliación resultan confiables.",
+        "Hacer un único inventario físico al año y confiar plenamente en ese resultado para todo el control de existencias durante el resto del periodo.",
+        "Dejar de registrar los movimientos en el sistema y, en su lugar, contar todos los bienes a mano cada día para saber cuánto hay disponible."
       ],
       "correcta": 1,
       "expl": [
@@ -644,13 +660,13 @@
     {
       "nivel": "i",
       "tema": "Anticipación vs reacción",
-      "ctx": "Tu jefe te pregunta cómo evitar que las áreas se queden sin insumos esenciales en plena operación, algo que ya ha ocurrido antes y afectó el servicio.",
-      "q": "¿Cuál es la recomendación más apropiada desde el control de existencias?",
+      "ctx": "Tu jefe te llama y te pregunta, con preocupación, cómo evitar que las áreas se queden sin insumos esenciales en plena operación. Es un problema que ya ocurrió varias veces antes, obligó a compras de urgencia y afectó la prestación del servicio, y quiere una recomendación concreta para que no se repita.",
+      "q": "Teniendo en cuenta que el control de existencias se basa en anticipar y no en reaccionar, ¿cuál de las siguientes recomendaciones es la más apropiada para evitar que las áreas vuelvan a quedarse sin insumos esenciales en plena operación?",
       "ops": [
-        "Esperar a que un área reclame que no tiene y entonces salir a comprar de urgencia.",
-        "Definir y vigilar los puntos de reorden y las existencias mínimas, y alertar a tiempo para reponer antes de que falte.",
-        "Comprar enormes cantidades de todo una sola vez al año.",
-        "Dejar que cada área consiga sus propios insumos por su cuenta."
+        "Esperar a que un área reclame que ya no tiene un insumo esencial y, en ese momento, salir a comprarlo de urgencia para resolver la situación lo antes posible.",
+        "Definir y vigilar los puntos de reorden y las existencias mínimas de los insumos esenciales, y alertar a tiempo para reponerlos antes de que lleguen a faltar.",
+        "Comprar enormes cantidades de todos los insumos en una sola adquisición anual, de modo que no haya que volver a preocuparse por el abastecimiento.",
+        "Dejar que cada área consiga sus propios insumos por su cuenta cuando los necesite, sin depender del control centralizado del almacén."
       ],
       "correcta": 1,
       "expl": [
@@ -664,12 +680,12 @@
       "nivel": "a",
       "tema": "Presión para cuadrar el inventario",
       "ctx": "Antes de una revisión externa, un superior te pide, con afán, que ajustes los saldos del sistema para que coincidan exactamente con el físico y “no aparezcan diferencias incómodas”, prometiendo que “después se documenta”.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "q": "Frente a la presión de un superior que pide ajustar los saldos para ocultar diferencias antes de una revisión externa, y sabiendo que una orden verbal no exime de la responsabilidad por falsear el inventario, ¿cuál es la actuación más apropiada?",
       "ops": [
-        "Ajustar los saldos como pide el superior, ya que él asume la responsabilidad.",
-        "Explicar con respeto que las diferencias deben documentarse e investigarse, dejar constancia y, si insiste, pedir la instrucción por escrito.",
-        "Ajustar solo las diferencias más grandes y dejar las pequeñas.",
-        "Ajustar los saldos y borrar el rastro de los valores anteriores."
+        "Ajustar los saldos del sistema tal como lo pide el superior antes de la revisión, dado que es él quien asumiría la responsabilidad por esa decisión.",
+        "Explicar con respeto que las diferencias deben documentarse e investigarse, dejar constancia de lo sucedido y, si el superior insiste, solicitar que la instrucción se dé por escrito.",
+        "Ajustar únicamente las diferencias más grandes para que no llamen la atención y dejar sin tocar las pequeñas, como una solución intermedia ante la revisión.",
+        "Ajustar los saldos del sistema y, además, borrar el rastro de los valores anteriores para que no quede evidencia de los ajustes realizados."
       ],
       "correcta": 1,
       "expl": [
@@ -682,13 +698,13 @@
     {
       "nivel": "a",
       "tema": "Faltante con indicios",
-      "ctx": "Un faltante recurrente en un bien valioso coincide siempre con los turnos de una misma persona. Un compañero te dice que mejor sigas ajustando el inventario y no “te metas en líos” señalando a nadie.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Notas que un faltante recurrente en un bien valioso del almacén coincide siempre, mes a mes, con los turnos de una misma persona. Un compañero, al ver tu inquietud, te dice que mejor sigas ajustando el inventario como hasta ahora y que no «te metas en líos» señalando a nadie, para evitar problemas internos.",
+      "q": "Sabiendo que aportar evidencia objetiva corresponde a tu rol pero juzgar o acusar no, ¿cuál de las siguientes actuaciones es la más apropiada ante un faltante recurrente de un bien valioso que coincide siempre con los turnos de una misma persona?",
       "ops": [
-        "Seguir ajustando el inventario y no reportar nada, para evitar conflictos.",
-        "Acusar directamente a esa persona ante los demás, ya que las coincidencias son claras.",
-        "Documentar objetivamente los faltantes y las circunstancias e informar a tu jefe inmediato, sin acusar, para que se investigue por los canales que corresponden.",
-        "Dejar de contar ese bien para que no aparezcan más diferencias."
+        "Seguir ajustando el inventario cada vez que aparece el faltante y no reportar nada, con el fin de evitar conflictos con el compañero involucrado.",
+        "Acusar directamente a esa persona delante de los demás compañeros, dado que las coincidencias con sus turnos parecen suficientemente claras.",
+        "Documentar de forma objetiva los faltantes y las circunstancias en que ocurren e informar a tu jefe inmediato, sin acusar a nadie, para que se investigue por los canales que correspondan.",
+        "Dejar de contar ese bien en las próximas conciliaciones para que no vuelvan a aparecer diferencias incómodas asociadas a esos turnos."
       ],
       "correcta": 2,
       "expl": [
@@ -701,13 +717,13 @@
     {
       "nivel": "a",
       "tema": "Límite del rol en compras",
-      "ctx": "Detectas que varios insumos están por agotarse. Un compañero te anima a que tú mismo realices directamente la compra para resolver rápido, saltándote el proceso normal.",
-      "q": "¿Cuál es la actuación más apropiada?",
+      "ctx": "Detectas que varios insumos esenciales están por agotarse y que la reposición se está demorando. Un compañero, con buena intención, te anima a que tú mismo realices directamente la compra con un proveedor para resolver rápido, saltándote el proceso de contratación normal «porque es una urgencia y nadie va a decir nada».",
+      "q": "Considerando que tu rol es alertar con datos pero no contratar ni saltarte el proceso de compras, ¿cuál de las siguientes actuaciones es la más apropiada al detectar que varios insumos están por agotarse?",
       "ops": [
-        "Realizar tú mismo la compra directamente para resolver rápido.",
-        "Alertar con datos de existencias y consumo a quien corresponde, para que se gestione la compra por el proceso debido.",
-        "No hacer nada hasta que alguien más se dé cuenta del problema.",
-        "Pedirle a un proveedor conocido que envíe los insumos y luego ver cómo se legaliza."
+        "Realizar tú mismo la compra de los insumos de manera directa, saltándote el proceso normal, con tal de resolver el desabastecimiento lo más rápido posible.",
+        "Alertar con datos de existencias y consumo a quien corresponde, para que la compra se gestione oportunamente por el proceso contractual debido.",
+        "No hacer ninguna gestión y esperar a que otra persona se dé cuenta del problema y decida cómo resolverlo por su cuenta más adelante.",
+        "Pedirle a un proveedor conocido que envíe de una vez los insumos y, una vez recibidos, buscar después la forma de legalizar esa adquisición."
       ],
       "correcta": 1,
       "expl": [
