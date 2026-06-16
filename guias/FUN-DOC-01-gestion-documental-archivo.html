@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-DOC-01 · Gestión Documental y Archivo (TRD) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-DOC-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 19 · Biblioteca Funcional · Transversal</div>
+  <h1>Gestión Documental y Archivo (TRD)</h1>
+  <p class="header-sub">Los documentos son la memoria y la prueba del Estado. Organizarlos, conservarlos y dar acceso a ellos es un deber de todo servidor.</p>
+  <div class="badges"><span class="badge">📅 Día 19 de 21</span><span class="badge">⏱ 85-105 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🔁 Familia DOC</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0"><span class="eyebrow">Sección 1 · Objetivo</span><h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2><div class="narr"><span class="narr-tag">📍 Ponte en situación</span><p>Te piden un documento de hace dos años y empieza la búsqueda desesperada en cajas sin rotular, carpetas mezcladas y archivos perdidos. Lo que debería tomar un minuto toma una semana… o no aparece.</p><p>La gestión documental es ponerle <strong>orden y reglas</strong> a los documentos para que se encuentren, se conserven y se puedan consultar. Hoy aprendes cómo, y por qué es un deber legal.</p></div><div class="card card-lead"><p>Esta es una guía transversal: aplica a cualquier cargo. Al terminar sabrás:</p><ul class="lista"><li>Qué es la <strong>gestión documental</strong> y por qué es obligatoria (Ley 594 de 2000).</li><li>Qué son las <strong>Tablas de Retención Documental (TRD)</strong>.</li><li>El <strong>ciclo vital</strong> del documento.</li><li>Cómo <strong>organizar y archivar</strong> los soportes.</li><li>Las reglas de <strong>conservación y acceso</strong> a la información.</li><li>Tu <strong>rol</strong>: producir, organizar y conservar bien los documentos.</li></ul></div><div class="box gold"><div class="box-title">💎 La promesa de esta guía</div><p>Al cerrar el día verás los documentos con otros ojos: no como papeles que estorban, sino como la memoria y la prueba de la gestión, que hay que cuidar con método.</p></div></section>
+<section class="section" data-sec="1"><span class="eyebrow">Sección 2 · Importancia</span><h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2><p>Los documentos públicos son <strong>memoria, evidencia y patrimonio</strong>: prueban lo que se hizo, sustentan los derechos de los ciudadanos y deben conservarse. La CNSC evalúa si entiendes que organizarlos y conservarlos es un deber, no una opción.</p><p>Un documento mal archivado o perdido puede significar un derecho que no se puede probar, un proceso que se cae o información que no se puede entregar. Por eso la gestión documental está regulada por ley.</p><p>Es transversal: todo servidor produce y maneja documentos. Y se conecta con todo lo visto: los soportes del almacén, los informes, los expedientes… todos son documentos que hay que gestionar bien.</p><div class="box info"><div class="box-title">ℹ️ Dato clave</div><p>Idea central: cada documento tiene un <strong>tiempo de conservación y un destino definidos</strong> (en las TRD), y debe poder <strong>encontrarse, conservarse y consultarse</strong>. No se archiva “a la suerte” ni se elimina “porque estorba”.</p></div></section>
+<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span><h2 class="sec-title">📖 Ordenar y conservar la memoria pública</h2><p>Seis bloques para dominar la gestión documental. Hay varios <strong>“Aplica lo aprendido”</strong> en el camino.</p><div class="concepto"><div class="concepto-head"><span class="ch-icon">📂</span><span>1. ¿Qué es la gestión documental?</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>gestión documental</strong> es el conjunto de actividades para producir, recibir, organizar, conservar, consultar y disponer de los documentos de la entidad de forma ordenada.</p><p>Está regulada por la <strong>Ley 594 de 2000</strong> (Ley General de Archivos) y la lidera el Archivo General de la Nación.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No es “guardar papeles”: es un sistema para que cada documento tenga su lugar, su tiempo y su forma de consultarse. Aplica también a documentos electrónicos.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un acta, un comprobante, un contrato o un correo oficial son documentos que deben producirse, organizarse y conservarse según las reglas.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde se maneja la documentación “a la suerte”. La clave: la gestión documental es <strong>obligatoria y reglada</strong>.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> documento no es solo papel: un correo oficial o un archivo electrónico también son documentos que hay que gestionar.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🗂️</span><span>2. Las Tablas de Retención Documental (TRD)</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Las <strong>TRD</strong> son el listado que indica, para cada tipo de documento de la entidad, <strong>cuánto tiempo se conserva</strong> y <strong>cuál es su disposición final</strong> (conservar, eliminar, etc.).</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Son la “regla del juego” del archivo: dicen qué se guarda, por cuánto y qué se hace al final. Nada se elimina si las TRD no lo permiten.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Las TRD pueden indicar que cierto documento se conserva X años en archivo de gestión y luego pasa al archivo central; otro, que se conserva permanentemente.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: eliminar documentos “porque ya no se usan”. La clave: la eliminación solo procede según las <strong>TRD</strong> y su procedimiento.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Encuentras unas carpetas antiguas que “ya nadie usa” y un compañero sugiere botarlas para ganar espacio. ¿Qué es lo más apropiado?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Eliminar documentos sin verificar las TRD puede destruir información que debía conservarse: es una falta grave.">Botarlas de una vez, ya que nadie las usa y ocupan espacio.</button><button class="cp-opt" data-ok="1" data-exp="Las TRD definen qué se conserva y por cuánto; la eliminación solo procede según ellas y su procedimiento.">Verificar en las TRD su tiempo de retención y disposición; solo se eliminan si las TRD lo permiten y por el procedimiento debido.</button><button class="cp-opt" data-ok="0" data-exp="Los documentos públicos no se llevan a casa; deben permanecer bajo control de la entidad.">Llevártelas a tu casa por si algún día sirven.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔄</span><span>3. El ciclo vital del documento</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Los documentos pasan por etapas: <strong>archivo de gestión</strong> (uso frecuente, en la oficina), <strong>archivo central</strong> (uso menos frecuente, ya tramitado) y <strong>archivo histórico</strong> (conservación permanente por su valor).</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Saber en qué etapa está un documento define dónde se guarda y por cuánto. El paso de una etapa a otra (transferencia) sigue las TRD.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un expediente activo está en archivo de gestión; cuando se cierra y pasa el tiempo, se transfiere al central; si tiene valor histórico, termina en el histórico.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos sobre dónde debe estar un documento. La clave: el <strong>ciclo vital</strong> define ubicación y conservación.</p></div></div><div class="full"><div class="flujo"><div class="flujo-paso"><span class="fp-n">1</span><h4>Gestión</h4><p>Uso frecuente, en la oficina</p></div><div class="flujo-paso"><span class="fp-n">2</span><h4>Central</h4><p>Ya tramitado, consulta ocasional</p></div><div class="flujo-paso"><span class="fp-n">3</span><h4>Histórico</h4><p>Conservación permanente por su valor</p></div></div></div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">📑</span><span>4. Organización y archivo de soportes</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p><strong>Organizar</strong> es clasificar los documentos en series y expedientes, ordenarlos y describirlos (rotular) para poder encontrarlos. El <strong>archivo</strong> es el lugar y la forma en que se guardan.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Un documento bien organizado se encuentra en segundos; uno mal archivado, prácticamente se pierde. Cada documento va en su expediente, en orden y rotulado.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Los soportes del almacén (actas, comprobantes) se archivan en su serie, en orden cronológico y rotulados, para poder consultarlos cuando se necesiten.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: amontonar documentos sin orden ni rótulo. La clave: <strong>clasificar, ordenar y rotular</strong> para poder encontrar.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Te entregan un montón de documentos sueltos de distintos asuntos y temas, mezclados. ¿Cuál es la forma correcta de archivarlos?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="“Varios” no permite encontrar nada después; mezclar asuntos rompe la organización documental.">Meterlos todos juntos en una sola caja rotulada como “varios”.</button><button class="cp-opt" data-ok="1" data-exp="Clasificar, ordenar y rotular es lo que permite encontrar un documento cuando se necesita.">Clasificarlos por asunto/serie, ordenarlos dentro de su expediente y rotularlos para poder consultarlos.</button><button class="cp-opt" data-ok="0" data-exp="El orden de llegada no respeta la clasificación por series/expedientes; mezcla asuntos distintos.">Archivarlos en el orden en que llegaron, sin importar el tema.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔒</span><span>5. Conservación y acceso</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>conservación</strong> protege los documentos del deterioro (condiciones físicas, respaldo de los electrónicos). El <strong>acceso</strong> es el derecho a consultarlos, con las reservas que la ley establece.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>La información pública es, por regla general, de acceso a los ciudadanos (Ley 1712 de 2014), salvo las excepciones legales (reserva). Los datos personales se protegen.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un ciudadano puede solicitar información pública y la entidad debe entregarla, salvo que tenga reserva legal; los documentos deben estar conservados para poder hacerlo.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos sobre entregar o negar información. La clave: <strong>acceso por regla general; reserva solo por excepción legal</strong>.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> negar información pública “porque sí” es indebido; pero entregar información reservada o datos personales sin fundamento también lo es. La regla: acceso, con las excepciones de ley.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">👤</span><span>6. Tu rol en la gestión documental</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Tu papel es <strong>producir documentos correctos, organizarlos según las TRD, conservarlos y facilitar su consulta</strong>, respetando las reservas y los datos personales.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No te corresponde eliminar documentos por tu cuenta, llevártelos ni manejar información reservada sin fundamento. Si hay que depurar o transferir, se hace según las TRD y el procedimiento.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si te falta espacio, no botas documentos: verificas las TRD y, si procede, tramitas la transferencia o eliminación por el procedimiento.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: que el servidor elimine, se lleve o esconda documentos. La correcta: producir, organizar, conservar y facilitar el acceso, según las reglas.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> los documentos no son “tuyos” ni de tu oficina: son de la entidad y del país. Cuidarlos es cuidar la memoria y los derechos.</div></div></div><div class="fuentes"><div class="box-title">📚 Profundiza en las fuentes oficiales</div><p>Para profundizar en gestión documental y acceso a la información (pestaña nueva):</p><ul class="lista"><li><strong>Ley General de Archivos (Ley 594 de 2000) y TRD</strong> — Archivo General de la Nación: <a href="https://www.archivogeneral.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Acceso a la información pública (Ley 1712 de 2014)</strong> — Función Pública: <a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Protección de datos personales (Ley 1581 de 2012)</strong> — Constitución, art. 15: <a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">consultar</a></li><li><strong>Control interno y soportes documentales</strong> — Contaduría General de la Nación: <a href="https://www.contaduria.gov.co" target="_blank" rel="noopener">consultar</a></li></ul></div></section>
+<section class="section" data-sec="3"><span class="eyebrow">Sección 4 · Comparaciones</span><h2 class="sec-title">⚖️ No los confundas</h2><p>Conceptos de gestión documental que se confunden.</p><div class="tabla-wrap"><table><tr><th>Archivo de gestión</th><th>Archivo central</th></tr><tr><td>Documentos de uso frecuente, en la oficina.</td><td>Documentos ya tramitados, consulta ocasional.</td></tr><tr><td>Etapa activa.</td><td>Etapa intermedia.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Dejar en la oficina (gestión) documentos que ya debían transferirse al central: saturan y se desordenan.</p></div><div class="tabla-wrap"><table><tr><th>Conservar</th><th>Eliminar</th></tr><tr><td>Guardar el documento por su tiempo de retención.</td><td>Retirarlo solo cuando las TRD lo permiten.</td></tr><tr><td>Regla general según valor.</td><td>Excepción reglada, nunca improvisada.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Eliminar “porque estorba”: solo procede según las TRD y su procedimiento.</p></div><div class="tabla-wrap"><table><tr><th>Información pública</th><th>Información reservada</th></tr><tr><td>Acceso general para el ciudadano.</td><td>Acceso restringido por excepción legal.</td></tr><tr><td>Se entrega por regla.</td><td>Se protege por norma.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Negar lo público “por si acaso” o entregar lo reservado/datos personales sin fundamento: ambos son errores.</p></div></section>
+<section class="section" data-sec="4"><span class="eyebrow">Sección 5 · Casos</span><h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2><p>Cinco situaciones reales de gestión documental, resueltas.</p><div class="caso"><div class="caso-head">📂 Caso 1 · Las carpetas viejas</div><div class="caso-body"><span class="label">Situación</span><p>Unas carpetas antiguas “que nadie usa” ocupan espacio y alguien sugiere botarlas.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Verificar en las TRD su retención y disposición; solo se eliminan si las TRD lo permiten y por el procedimiento.</strong> Nunca se botan documentos sin verificar.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 2 · El montón mezclado</div><div class="caso-body"><span class="label">Situación</span><p>Te entregan documentos sueltos de distintos asuntos, todos revueltos.</p><span class="label">Pregunta</span><p>¿Cómo los archivas?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Clasificarlos por serie/asunto, ordenarlos en su expediente y rotularlos.</strong> Así se pueden encontrar; “varios” no sirve.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 3 · El documento que no aparece</div><div class="caso-body"><span class="label">Situación</span><p>Piden un documento de hace años y no se encuentra por mal archivo.</p><span class="label">Pregunta</span><p>¿Qué muestra?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Que sin organización documental se pierde la memoria y la prueba.</strong> Por eso se clasifica, ordena y rotula desde el inicio.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 4 · La solicitud del ciudadano</div><div class="caso-body"><span class="label">Situación</span><p>Un ciudadano solicita información pública de la entidad.</p><span class="label">Pregunta</span><p>¿Se entrega?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Sí, por regla general (Ley 1712), salvo que tenga reserva legal.</strong> Negar lo público “porque sí” es indebido; entregar lo reservado sin fundamento, también.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 5 · El que se lleva documentos</div><div class="caso-body"><span class="label">Situación</span><p>Un compañero quiere llevarse documentos a su casa “para trabajar más cómodo”.</p><span class="label">Pregunta</span><p>¿Es correcto?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No: los documentos públicos permanecen bajo control de la entidad.</strong> No se sacan ni se llevan a casa sin autorización y control.</div></div></div></section>
+<section class="section" data-sec="5"><span class="eyebrow">Sección 6 · Errores frecuentes</span><h2 class="sec-title">⚠️ Errores que debes evitar</h2><div class="box danger"><div class="box-title">❌ Error 1 — Botar documentos sin verificar las TRD</div><p><strong>Por qué falla:</strong> puede destruir información que debía conservarse. <strong>Corrige:</strong> verifica las TRD; elimina solo si procede y por el procedimiento.</p></div><div class="box danger"><div class="box-title">❌ Error 2 — Archivar como “varios”</div><p><strong>Por qué falla:</strong> después no se encuentra nada. <strong>Corrige:</strong> clasifica por serie/expediente, ordena y rotula.</p></div><div class="box danger"><div class="box-title">❌ Error 3 — Saturar el archivo de gestión</div><p><strong>Por qué falla:</strong> se mezcla lo activo con lo ya tramitado. <strong>Corrige:</strong> transfiere al central según las TRD.</p></div><div class="box danger"><div class="box-title">❌ Error 4 — Llevarse documentos a casa</div><p><strong>Por qué falla:</strong> salen del control de la entidad. <strong>Corrige:</strong> permanecen en la entidad; manejo controlado.</p></div><div class="box danger"><div class="box-title">❌ Error 5 — Negar información pública sin fundamento</div><p><strong>Por qué falla:</strong> el acceso es la regla general. <strong>Corrige:</strong> entrega lo público; reserva solo por excepción legal.</p></div><div class="box danger"><div class="box-title">❌ Error 6 — Entregar información reservada o datos personales</div><p><strong>Por qué falla:</strong> vulnera reservas y la protección de datos. <strong>Corrige:</strong> respeta las reservas y el habeas data.</p></div></section>
+<section class="section" data-sec="6"><span class="eyebrow">Sección 7 · Tips</span><h2 class="sec-title">💡 Trucos para dominar el tema</h2><div class="box ok"><div class="box-title">✅ Tip 1 — Las TRD mandan</div><p>Qué se conserva, por cuánto y qué se hace al final lo dicen las TRD; nada se elimina por fuera.</p></div><div class="box ok"><div class="box-title">✅ Tip 2 — Clasificar, ordenar, rotular</div><p>Es lo que permite encontrar un documento en segundos.</p></div><div class="box ok"><div class="box-title">✅ Tip 3 — Ciclo vital</div><p>Gestión → central → histórico: cada documento tiene su etapa y su lugar.</p></div><div class="box ok"><div class="box-title">✅ Tip 4 — Documento no es solo papel</div><p>Un correo oficial o un archivo electrónico también se gestionan.</p></div><div class="box ok"><div class="box-title">✅ Tip 5 — Acceso con excepciones</div><p>La información pública se entrega; la reservada y los datos personales se protegen.</p></div><div class="box ok"><div class="box-title">✅ Tip 6 — Los documentos son del Estado</div><p>No son tuyos ni de tu oficina: no se botan ni se llevan a casa.</p></div></section>
+<section class="section" data-sec="7"><span class="eyebrow">Sección 8 · Trampas</span><h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2><div class="trampa"><div class="trampa-q">«Bota esas carpetas viejas, nadie las usa.»</div><div class="trampa-detail"><div class="t-row parece">Parece liberar espacio.</div><div class="t-row malo">Es trampa: eliminar sin TRD destruye memoria.</div><div class="t-row bueno">Correcto: verificar TRD y proceder solo si aplica.</div></div></div><div class="trampa"><div class="trampa-q">«Mete todo junto en una caja de ‘varios’.»</div><div class="trampa-detail"><div class="t-row parece">Parece rápido.</div><div class="t-row malo">Es trampa: después no se encuentra nada.</div><div class="t-row bueno">Correcto: clasificar, ordenar y rotular.</div></div></div><div class="trampa"><div class="trampa-q">«Llévate los documentos a casa para avanzar.»</div><div class="trampa-detail"><div class="t-row parece">Parece comodidad.</div><div class="t-row malo">Es trampa: salen del control de la entidad.</div><div class="t-row bueno">Correcto: permanecen en la entidad, con control.</div></div></div><div class="trampa"><div class="trampa-q">«Mejor no entregar esa información pública, por si acaso.»</div><div class="trampa-detail"><div class="t-row parece">Parece prudencia.</div><div class="t-row malo">Es trampa: el acceso es la regla general.</div><div class="t-row bueno">Correcto: entregar lo público; reserva solo por ley.</div></div></div></section>
+<section class="section" data-sec="8"><span class="eyebrow">Sección 9 · Repaso</span><h2 class="sec-title">🧠 Repasa con flashcards</h2><p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p><div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div></section>
+<section class="section" data-sec="9"><span class="eyebrow">Sección 10 · Resumen</span><h2 class="sec-title">📝 Resumen y glosario</h2><div class="resumen"><div class="resumen-item"><h4>Gestión documental</h4><p>Producir, organizar, conservar y consultar documentos. Ley 594 de 2000.</p></div><div class="resumen-item"><h4>TRD</h4><p>Definen cuánto se conserva cada documento y su disposición final.</p></div><div class="resumen-item"><h4>Ciclo vital</h4><p>Gestión → central → histórico.</p></div><div class="resumen-item"><h4>Organización</h4><p>Clasificar, ordenar y rotular para encontrar.</p></div><div class="resumen-item"><h4>Acceso</h4><p>Público por regla; reserva y datos personales por excepción.</p></div><div class="resumen-item"><h4>Tu rol</h4><p>Producir, organizar, conservar y facilitar; no botar ni llevarse documentos.</p></div></div><h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3><dl class="glosario"><dt>Gestión documental</dt><dd>Actividades para producir, organizar, conservar y disponer de documentos.</dd><dt>TRD</dt><dd>Tablas de Retención Documental: tiempos de conservación y disposición final.</dd><dt>Ciclo vital</dt><dd>Etapas del documento: gestión, central e histórico.</dd><dt>Serie documental</dt><dd>Conjunto de documentos del mismo tipo o asunto.</dd><dt>Transferencia</dt><dd>Paso de documentos de un archivo a otro según las TRD.</dd><dt>Reserva</dt><dd>Restricción legal de acceso a cierta información.</dd></dl><div class="box gold"><div class="box-title">💎 Para recordar</div><p>Los documentos son la memoria y la prueba del Estado: <strong>se organizan (clasificar, ordenar, rotular), se conservan según las TRD y se consultan con las reservas de ley</strong>. No se botan ni se llevan a casa.</p></div></section>
+<section class="section" data-sec="10"><span class="eyebrow">Sección 11 · Simulacro</span><h2 class="sec-title">🎓 Simulacro tipo CNSC</h2><div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p><div class="dific-tags"><span class="tag b">4 básicas</span><span class="tag i">5 intermedias</span><span class="tag a">3 avanzadas</span></div></div><div id="quiz"></div><div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div><div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div></section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-DOC-01 · Día 19 · Biblioteca Funcional (familia DOC) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 19", "alerta": "¡Felicitaciones! Terminaste el Día 19 · FUN-DOC-01.\n\nSigue con FUN-ATC-01 · Servicio al Usuario y Apoyo a la Supervisión."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[{"f": "¿Qué es la gestión documental?", "b": "El conjunto de actividades para producir, organizar, conservar, consultar y disponer de los documentos. Regulada por la Ley 594 de 2000."}, {"f": "¿Qué son las TRD?", "b": "Las Tablas de Retención Documental: indican cuánto se conserva cada documento y su disposición final."}, {"f": "¿Se puede eliminar un documento porque estorba?", "b": "No: solo se elimina si las TRD lo permiten y por el procedimiento debido."}, {"f": "¿Cuáles son las etapas del ciclo vital?", "b": "Archivo de gestión (frecuente), central (ya tramitado) e histórico (conservación permanente)."}, {"f": "¿Cómo se organizan los documentos?", "b": "Clasificándolos por serie/expediente, ordenándolos y rotulándolos para poder encontrarlos."}, {"f": "¿“Documento” es solo papel?", "b": "No: un correo oficial o un archivo electrónico también son documentos que se gestionan."}, {"f": "¿La información pública se entrega?", "b": "Sí, por regla general (Ley 1712 de 2014), salvo reserva legal; los datos personales se protegen."}, {"f": "¿Se pueden llevar documentos a casa?", "b": "No: los documentos públicos permanecen bajo control de la entidad."}, {"f": "¿Qué pasa si un documento está mal archivado?", "b": "Se pierde la memoria y la prueba; por eso se clasifica, ordena y rotula desde el inicio."}, {"f": "¿Cuál es tu rol en la gestión documental?", "b": "Producir, organizar según las TRD, conservar y facilitar la consulta, respetando reservas y datos personales."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b", "tema": "Eliminación según TRD", "ctx": "Encuentras varias carpetas antiguas que “ya nadie usa” ocupando espacio. Un compañero te sugiere botarlas de una vez para despejar el archivo.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Botarlas, ya que nadie las usa y ocupan espacio.", "Llevártelas a tu casa por si algún día sirven.", "Verificar en las TRD su tiempo de retención y disposición, y eliminarlas solo si las TRD lo permiten y por el procedimiento debido.", "Quemarlas para asegurarte de que nadie las vea."], "correcta": 2, "expl": ["Eliminar documentos sin verificar las TRD puede destruir información que debía conservarse: es una falta grave.", "Los documentos públicos no se llevan a casa; permanecen bajo control de la entidad.", "Las TRD definen qué se conserva y por cuánto; la eliminación solo procede según ellas y su procedimiento.", "Destruir documentos por cuenta propia, y más sin verificar TRD, es una conducta indebida y grave."]}, {"nivel": "b", "tema": "Organización documental", "ctx": "Recibes un montón de documentos sueltos de distintos asuntos, todos mezclados, y debes archivarlos para que luego se puedan consultar.", "q": "¿Cuál es la forma correcta de archivarlos?", "ops": ["Clasificarlos por asunto/serie, ordenarlos dentro de su expediente y rotularlos para poder consultarlos.", "Meterlos todos juntos en una sola caja rotulada como “varios”.", "Archivarlos en el orden de llegada, sin importar el tema.", "Guardarlos en cualquier carpeta que tenga espacio."], "correcta": 0, "expl": ["Clasificar por serie, ordenar en el expediente y rotular es lo que permite encontrar un documento cuando se necesita.", "Una caja de “varios” no permite encontrar nada después; mezclar asuntos rompe la organización.", "El orden de llegada mezcla asuntos distintos y no respeta las series documentales.", "Guardar “donde haya espacio” es justo lo que hace que los documentos se pierdan."]}, {"nivel": "b", "tema": "Custodia del documento", "ctx": "Un compañero quiere llevarse a su casa unos documentos de la entidad “para trabajar más cómodo el fin de semana”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Dejar que se los lleve, ya que es para avanzar el trabajo.", "Explicar que los documentos públicos permanecen bajo control de la entidad y no se sacan ni se llevan a casa sin autorización y control.", "Dejar que se lleve solo copias sin registrar nada.", "Llevártelos tú a tu casa en su lugar."], "correcta": 1, "expl": ["Avanzar el trabajo no justifica sacar documentos públicos del control de la entidad.", "Los documentos públicos permanecen bajo control de la entidad; sacarlos sin autorización rompe su custodia y los pone en riesgo.", "Sacar copias sin ningún control también puede comprometer información reservada o datos personales.", "Que lo hagas tú en su lugar no corrige nada: el problema es sacar los documentos."]}, {"nivel": "b", "tema": "Acceso a la información", "ctx": "Un ciudadano solicita información pública de la entidad, que no tiene ninguna reserva legal. Un compañero, por temor, sugiere no entregarla “por si acaso”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["No entregarla, por si acaso, para evitar problemas.", "Cobrarle un valor alto para desanimar la solicitud.", "Entregarla solo si el ciudadano explica para qué la quiere.", "Entregarla, ya que la información pública es de acceso general por regla (Ley 1712 de 2014) y no tiene reserva."], "correcta": 3, "expl": ["Negar información pública sin fundamento es indebido; el acceso es la regla general.", "Poner barreras para desanimar la solicitud vulnera el derecho de acceso a la información.", "Por regla general no se le puede exigir al ciudadano justificar para qué quiere la información pública.", "La información pública se entrega por regla general (Ley 1712 de 2014), salvo reserva legal, que aquí no existe."]}, {"nivel": "i", "tema": "Ciclo vital", "ctx": "El archivo de gestión de tu oficina está saturado: tiene documentos activos mezclados con muchos expedientes ya cerrados y tramitados hace tiempo.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Botar los expedientes cerrados para hacer espacio.", "Transferir los expedientes ya tramitados al archivo central según las TRD, dejando en gestión solo lo activo.", "Dejar todo como está, ya que igual está guardado.", "Mezclar aún más para que quepa todo en menos cajas."], "correcta": 1, "expl": ["Botar expedientes cerrados sin verificar TRD puede eliminar documentos que debían conservarse o transferirse.", "Lo correcto es transferir lo ya tramitado al archivo central según las TRD, dejando en gestión solo lo activo: así funciona el ciclo vital.", "Dejar todo saturado y mezclado dificulta encontrar lo activo y desordena el archivo.", "Mezclar más empeora la organización y hace imposible la consulta."]}, {"nivel": "i", "tema": "Documento electrónico", "ctx": "En tu área se gestionan muchos asuntos por correo electrónico oficial y archivos digitales. Alguien dice que “eso no es archivo” y que solo los papeles cuentan como documentos.", "q": "¿Cuál es la afirmación correcta?", "ops": ["Tiene razón: solo el papel es documento de archivo.", "Los documentos electrónicos no necesitan conservarse porque están en internet.", "Los documentos electrónicos (correos oficiales, archivos) también son documentos y deben gestionarse y conservarse igual.", "Solo cuentan los documentos que tengan firma manuscrita."], "correcta": 2, "expl": ["El soporte (papel o digital) no define si es documento; el contenido y su carácter oficial sí.", "Estar “en internet” o en un equipo no garantiza conservación; los electrónicos requieren gestión y respaldo.", "Los documentos electrónicos también son documentos y deben gestionarse y conservarse, con sus respaldos.", "La firma manuscrita no es lo que define a un documento; existen firmas y validez electrónicas."]}, {"nivel": "i", "tema": "Datos personales en documentos", "ctx": "Un documento que vas a entregar como información pública contiene, además, datos personales de ciudadanos (como números de identificación y contacto).", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Entregar el documento tal cual, ya que es información pública.", "Entregar el documento solo a cambio de que el solicitante firme un permiso.", "No entregar nada, para no arriesgarse.", "Entregar la información pública protegiendo (reservando) los datos personales que contenga, conforme a la protección de datos."], "correcta": 3, "expl": ["Aunque el documento sea público, no se pueden divulgar sin más los datos personales que contiene.", "Exigir un permiso al solicitante no es el mecanismo: la protección recae en cómo se entrega, no en condicionar al ciudadano.", "Negar todo es excesivo: la parte pública sí debe entregarse, solo se protege lo personal.", "Lo correcto es entregar la información pública protegiendo los datos personales (por ejemplo, omitiéndolos o reservándolos), conforme al habeas data."]}, {"nivel": "i", "tema": "Trazabilidad documental", "ctx": "Surge una controversia sobre una actuación de hace dos años. Gracias a que los documentos se organizaron y conservaron bien, te piden ubicar el expediente.", "q": "¿Qué hace posible resolver la controversia con certeza?", "ops": ["El expediente bien organizado y conservado, que documenta la actuación y permite probar lo ocurrido.", "La memoria de quienes estaban en ese momento.", "Suponer lo que probablemente pasó.", "Pedirle a las partes que reconstruyan los hechos de memoria."], "correcta": 0, "expl": ["Un expediente bien organizado y conservado documenta la actuación y permite probar lo ocurrido: esa es la función probatoria del archivo.", "La memoria no es prueba confiable ni verificable de lo actuado.", "Suponer no resuelve una controversia que requiere prueba documental.", "Reconstruir de memoria no equivale a la evidencia que aporta el expediente."]}, {"nivel": "i", "tema": "Préstamo de documentos", "ctx": "Otra área solicita en préstamo un expediente del archivo para una consulta. Un compañero dice que se lo lleven sin registrar nada, “porque es interno”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Prestarlo sin registrar, ya que es para otra área de la entidad.", "Negar cualquier préstamo de expedientes.", "Prestarlo dejando registro del préstamo (quién lo lleva, cuándo y su devolución), para mantener la trazabilidad del expediente.", "Entregar el original sin control y sacarle copia a todo por si acaso."], "correcta": 2, "expl": ["Que sea interno no exime de control: sin registro, el expediente puede perderse sin saber quién lo tiene.", "Negar todo préstamo no es necesario si se controla; el archivo también sirve para consulta.", "Lo correcto es registrar el préstamo (responsable, fecha, devolución) para mantener la trazabilidad y la custodia del expediente.", "Entregar el original sin control rompe la custodia; copiar todo sin criterio puede ser innecesario o exponer datos."]}, {"nivel": "a", "tema": "Presión para eliminar", "ctx": "Un superior te pide, con afán, eliminar unos documentos que, según las TRD, todavía deben conservarse, argumentando que “ya no sirven” y que hay que despejar el archivo antes de una mudanza.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Eliminar los documentos como pide el superior, ya que él lo ordena.", "Explicar con respeto que las TRD exigen conservarlos, dejar constancia y, si insiste, pedir la instrucción por escrito; no eliminarlos por fuera del procedimiento.", "Eliminar solo algunos para liberar algo de espacio.", "Esconder los documentos durante la mudanza y luego ver qué se hace."], "correcta": 1, "expl": ["Eliminar documentos que las TRD ordenan conservar es una falta grave; una orden verbal no te exime.", "Lo correcto es sustentar que las TRD exigen su conservación, dejar constancia y, ante la insistencia, pedir la orden por escrito; nunca eliminar por fuera del procedimiento.", "Eliminar “solo algunos” sigue siendo destruir documentos que debían conservarse.", "Esconder documentos durante una mudanza también es un manejo indebido del patrimonio documental."]}, {"nivel": "a", "tema": "Manejo de información reservada", "ctx": "Un conocido te pide acceso a unos documentos que contienen información con reserva legal, asegurándote que “es para algo importante” y que “nadie se enteraría”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["No entregar la información reservada para fines ajenos a la función; explicar que tiene reserva legal y, de ser necesario, reportar la solicitud.", "Dárselos, ya que es para algo importante y nadie se enteraría.", "Dárselos solo si promete devolverlos.", "Mostrarle los documentos pero no dejarle copias."], "correcta": 0, "expl": ["Lo correcto es no entregar información reservada para fines ajenos a la función, explicar su reserva y, de ser necesario, reportar la solicitud.", "“Que nadie se enteraría” es justo el tipo de razonamiento que precede a una falta grave; la reserva no depende de eso.", "La devolución no cambia que se trata de información reservada que no debe divulgarse.", "Mostrarla, aunque no deje copias, ya es divulgar información reservada de forma indebida."]}, {"nivel": "a", "tema": "Integridad del expediente", "ctx": "Notas que de un expediente importante han desaparecido algunos documentos y que otros parecen haber sido reemplazados. Un compañero sugiere “completarlo” con copias improvisadas para que “se vea ordenado”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Sacar el expediente del archivo para que nadie note el problema.", "Completar el expediente con copias improvisadas para que se vea ordenado.", "No decir nada, ya que tú no fuiste quien manipuló el expediente.", "Dejar constancia documentada de las faltantes y posibles alteraciones e informar a tu jefe inmediato para que se adelanten las acciones que correspondan."], "correcta": 3, "expl": ["Sacar el expediente para ocultar el problema es manipular el archivo y empeora la situación.", "“Completar” un expediente con copias improvisadas es alterarlo: una conducta indebida que agrava todo.", "Callar ante la alteración de un expediente del que tienes conocimiento también te compromete.", "Lo correcto es documentar las faltantes y posibles alteraciones e informar a tu jefe para que se adelanten las acciones del caso."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p.ops.forEach((op,j)=>{const letra=String.fromCharCode(65+j);opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+op+'</span><div class="op-exp" id="oe-'+idx+'-'+j+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, oi=+this.dataset.op;
+      if(respondidas[qi]!==undefined)return;
+      respondidas[qi]=oi;
+      const p=preguntas[qi];const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+        o.classList.add('bloqueada');
+        const exp=document.getElementById('oe-'+qi+'-'+k);const letra=String.fromCharCode(65+k);
+        if(k===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[k];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[k];}
+      });
+      if(oi!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p.correcta);
+      if(oi===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+</body>
+</html>

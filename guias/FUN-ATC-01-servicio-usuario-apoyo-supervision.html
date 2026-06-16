@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ATC-01 · Servicio al Usuario y Apoyo a la Supervisión — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ATC-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 20 · Biblioteca Funcional · Transversal</div>
+  <h1>Servicio al Usuario y Apoyo a la Supervisión</h1>
+  <p class="header-sub">El ciudadano es el centro de todo. Atender bien y apoyar con eficacia los procesos —incluida la supervisión de contratos— es servicio público en acción.</p>
+  <div class="badges"><span class="badge">📅 Día 20 de 21</span><span class="badge">⏱ 85-105 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🔁 Familia ATC</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0"><span class="eyebrow">Sección 1 · Objetivo</span><h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2><div class="narr"><span class="narr-tag">📍 Ponte en situación</span><p>Llega una persona molesta porque “la han mandado de ventanilla en ventanilla”. De cómo la atiendas depende que se vaya con una solución… o con una queja. Y, puertas adentro, tu apoyo a un proceso o a la supervisión de un contrato puede ser la diferencia entre que algo salga bien o se enrede.</p><p>Servir bien al ciudadano y apoyar con eficacia a tu equipo es la esencia del servicio público. Hoy aprendes a hacerlo con criterio y dentro de tus límites.</p></div><div class="card card-lead"><p>Esta es una guía transversal: aplica a casi cualquier cargo. Al terminar sabrás:</p><ul class="lista"><li>Entender el <strong>servicio al ciudadano</strong> y al usuario interno.</li><li>Aplicar las claves de una <strong>atención efectiva</strong>.</li><li>Conocer las <strong>PQRSD</strong> y los canales de atención.</li><li>Saber cómo <strong>apoyar al profesional en la supervisión</strong> de contratos.</li><li>Tramitar <strong>asuntos del equipo</strong> y coordinarte bien.</li><li>Tener claro tu <strong>rol y tus límites</strong> al servir y apoyar.</li></ul></div><div class="box gold"><div class="box-title">💎 La promesa de esta guía</div><p>Al cerrar el día sabrás que atender bien no es ser “amable y ya”: es resolver con respeto, dentro de la norma y de tu rol, dejando al ciudadano y a tu equipo mejor de como llegaron.</p></div></section>
+<section class="section" data-sec="1"><span class="eyebrow">Sección 2 · Importancia</span><h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2><p>El servicio al ciudadano es la razón de ser del Estado, y una competencia que la CNSC evalúa con fuerza mediante casos: un ciudadano molesto, una solicitud confusa, un compañero que necesita apoyo, una supervisión de contrato que requiere tu insumo.</p><p>La clave es combinar dos cosas: <strong>trato digno y respeto</strong> con <strong>cumplimiento de la norma y de tu rol</strong>. Atender bien no es prometer lo imposible ni saltarse procedimientos; es resolver lo que corresponde y orientar el resto.</p><p>Es la última guía funcional antes del simulacro final: integra mucho de lo visto, porque atender y apoyar bien implica conocer los procesos, la información y los límites del cargo.</p><div class="box info"><div class="box-title">ℹ️ Dato clave</div><p>Idea central: <strong>el ciudadano es el centro</strong>; se le atiende con respeto, se resuelve lo que corresponde a tu rol y se orienta o escala lo demás. Apoyar bien es aportar tu parte con eficacia, sin asumir lo que no te compete.</p></div></section>
+<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span><h2 class="sec-title">📖 Servir y apoyar con criterio</h2><p>Seis bloques para atender y apoyar bien. Hay varios <strong>“Aplica lo aprendido”</strong> en el camino.</p><div class="concepto"><div class="concepto-head"><span class="ch-icon">🤝</span><span>1. Servicio al ciudadano y al usuario interno</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>servicio al ciudadano</strong> es atender a las personas que acuden a la entidad, resolviendo o canalizando sus necesidades con respeto y eficacia.</p><p>El <strong>usuario interno</strong> son tus compañeros y áreas: a ellos también les “prestas un servicio” cuando les entregas información, bienes o apoyo.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Tanto el ciudadano como el usuario interno merecen una atención de calidad: lo que entregas a otra área es parte de un servicio que termina llegando al ciudadano.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Cuando entregas a tiempo y bien un bien o un dato a otra área, esa área puede atender mejor al ciudadano: tu servicio interno se convierte en servicio externo.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde se atiende mal “porque es interno”. La clave: el servicio, interno o externo, <strong>siempre apunta al ciudadano</strong>.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> no hay servicio “de segunda”: atender mal a un compañero termina afectando al ciudadano al final de la cadena.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">💬</span><span>2. Atención efectiva</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Atender bien es <strong>escuchar, comprender la necesidad, responder con claridad y dar un trato digno</strong>, incluso ante personas molestas o difíciles.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Implica paciencia, lenguaje claro (sin tecnicismos), información veraz y no prometer lo que no se puede cumplir. Mantener la calma es parte del profesionalismo.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Ante un ciudadano alterado, escuchar sin interrumpir, validar su molestia y explicar con claridad la solución o el paso siguiente suele desactivar el conflicto.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: responder a la altura del enojo o “quitarse el problema de encima”. La clave: <strong>trato digno + claridad + solución u orientación</strong>.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Un ciudadano llega muy molesto y te habla de mala manera porque lleva rato esperando. ¿Cuál es la actuación más apropiada?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Responder al enojo con enojo escala el conflicto; el trato digno se mantiene incluso ante una persona alterada.">Responderle con la misma energía para que entienda que a ti no te falta el respeto.</button><button class="cp-opt" data-ok="1" data-exp="La atención efectiva combina trato digno, escucha y claridad; mantener la calma desactiva el conflicto y resuelve.">Escuchar con calma, mantener el respeto, comprender su necesidad y orientarlo hacia la solución o el paso que corresponde.</button><button class="cp-opt" data-ok="0" data-exp="Ignorar al ciudadano agrava su molestia y vulnera su derecho a una atención digna.">Ignorarlo hasta que se calme solo.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">📨</span><span>3. PQRSD y canales de atención</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Las <strong>PQRSD</strong> son Peticiones, Quejas, Reclamos, Sugerencias y Denuncias: las formas en que el ciudadano se comunica con la entidad. Los <strong>canales</strong> son los medios (presencial, telefónico, virtual, escrito).</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Cada PQRSD tiene un trámite y unos <strong>plazos</strong> de respuesta; no se ignoran ni se “traspapelan”. Tu papel suele ser recibir, registrar y canalizar correctamente.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Una petición de información tiene un plazo legal de respuesta; recibirla, registrarla y dirigirla al área competente a tiempo es parte del servicio.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos sobre cómo manejar una solicitud. La clave: <strong>recibir, registrar y canalizar</strong>; respetar plazos; no ignorar.</p></div></div><div class="practica full"><div class="practica-head">🧰 En la práctica · PQRSD</div><div class="practica-body"><div class="tabla-wrap"><table><tr><th>Sigla</th><th>Qué es</th></tr><tr><td>P</td><td>Petición (solicitud de información o actuación)</td></tr><tr><td>Q</td><td>Queja (inconformidad por la conducta de un servidor)</td></tr><tr><td>R</td><td>Reclamo (inconformidad por la prestación de un servicio)</td></tr><tr><td>S</td><td>Sugerencia (propuesta de mejora)</td></tr><tr><td>D</td><td>Denuncia (puesta en conocimiento de un hecho irregular)</td></tr></table></div><p style="margin-top:10px;">Toda PQRSD se registra y se responde dentro de los plazos; ninguna se ignora.</p></div></div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🧑‍💼</span><span>4. Apoyo a la supervisión de contratos</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>supervisión</strong> vigila que un contratista cumpla lo pactado. El profesional supervisa; el nivel técnico/asistencial <strong>apoya</strong> con insumos: verificaciones, soportes, informes de lo que observa.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Tú no supervisas ni decides sobre el contrato: aportas información veraz y oportuna (por ejemplo, si lo recibido cumple, si hubo novedades) para que el supervisor decida.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si apoyas la supervisión de un contrato de suministro, tu aporte es verificar las entregas y reportar las novedades; la decisión sobre el cumplimiento es del supervisor.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: que el técnico “supervise”, apruebe pagos o sancione. La clave: el técnico <strong>apoya con insumos</strong>; la supervisión es del profesional.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Apoyas la supervisión de un contrato y detectas que el contratista no cumplió con parte de lo pactado. ¿Cuál es la actuación más apropiada para tu rol?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Sancionar o decidir sobre el contrato no es tu rol: es del supervisor. Hacerlo es extralimitarte.">Aplicarle tú mismo una sanción o descuento al contratista por el incumplimiento.</button><button class="cp-opt" data-ok="1" data-exp="Tu rol es apoyar con insumos veraces: documentar lo observado e informar al supervisor, que tiene la competencia para actuar.">Documentar objetivamente el incumplimiento que observaste e informarlo al supervisor del contrato para que decida.</button><button class="cp-opt" data-ok="0" data-exp="Callar un incumplimiento del que tienes conocimiento también te compromete; tu deber es informarlo.">No decir nada para no meter al contratista en problemas.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔄</span><span>5. Trámite de asuntos y coordinación</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Gran parte del trabajo es <strong>tramitar asuntos</strong> (dar curso a solicitudes, gestionar documentos) y <strong>coordinarte</strong> con tu equipo y otras áreas.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Tramitar bien es dar curso oportuno y completo a lo que llega, sin dejarlo “engavetado”, y comunicarte con quien corresponde. La coordinación evita que las cosas se caigan entre dos áreas.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si recibes un asunto que es de otra área, no lo ignoras: lo rediriges correctamente e informas, para que no se pierda en el camino.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde un asunto se “traspapela” o se devuelve sin más. La clave: <strong>dar curso, coordinar y no dejar caer</strong> los asuntos.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> “eso no es de mi área” no te exime de canalizarlo bien: orientar y redirigir también es servicio.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">👤</span><span>6. Tu rol y tus límites al servir y apoyar</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Tu papel es <strong>atender con respeto, resolver lo que te corresponde, canalizar lo demás y apoyar con insumos veraces</strong>, sin asumir decisiones que no son tuyas.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No te corresponde prometer lo imposible, saltarte procedimientos para “quedar bien”, ni tomar decisiones de supervisión o sanción. Servir bien es resolver dentro de la norma y de tu rol.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si un ciudadano te pide algo que no procede o que no te compete, no se lo niegas “a la brava” ni se lo concedes irregularmente: le explicas con respeto y lo orientas a la vía correcta.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: saltarse la norma para “ayudar” o asumir competencias ajenas. La correcta: servir con respeto, dentro de la norma y del rol; orientar y escalar.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> ayudar de verdad no es saltarse la norma por el ciudadano: es resolver bien lo que se puede y orientarlo con claridad en lo demás.</div></div></div><div class="fuentes"><div class="box-title">📚 Profundiza en las fuentes oficiales</div><p>Para profundizar en servicio al ciudadano, PQRSD y supervisión (pestaña nueva):</p><ul class="lista"><li><strong>Servicio al ciudadano y derecho de petición / PQRSD</strong> (Ley 1755 de 2015) — Función Pública: <a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Supervisión e interventoría de contratos</strong> — Colombia Compra Eficiente: <a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Derecho de petición y trato digno</strong> — Constitución, arts. 23 y 2: <a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">consultar</a></li><li><strong>Alcance del nivel técnico</strong> — Decreto 1083 de 2015, Función Pública: <a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener">consultar</a></li></ul></div></section>
+<section class="section" data-sec="3"><span class="eyebrow">Sección 4 · Comparaciones</span><h2 class="sec-title">⚖️ No los confundas</h2><p>Conceptos del servicio y el apoyo que se confunden.</p><div class="tabla-wrap"><table><tr><th>Supervisar</th><th>Apoyar la supervisión</th></tr><tr><td>Vigilar y decidir sobre el cumplimiento del contrato.</td><td>Aportar insumos veraces (verificaciones, informes).</td></tr><tr><td>Lo hace el profesional/supervisor.</td><td>Lo hace el técnico/asistencial.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Que el técnico “supervise”, apruebe pagos o sancione: eso es del supervisor; el técnico aporta insumos.</p></div><div class="tabla-wrap"><table><tr><th>Queja</th><th>Reclamo</th></tr><tr><td>Inconformidad por la conducta de un servidor.</td><td>Inconformidad por la prestación de un servicio.</td></tr><tr><td>Se refiere a una persona.</td><td>Se refiere a un servicio.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Confundirlas: la queja apunta a la conducta de alguien; el reclamo, a un servicio.</p></div><div class="tabla-wrap"><table><tr><th>Atender</th><th>Complacer saltándose la norma</th></tr><tr><td>Resolver dentro de la norma y del rol.</td><td>Conceder algo irregular para “quedar bien”.</td></tr><tr><td>Es servicio público.</td><td>Es una falta, aunque parezca amable.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Creer que “ayudar” es saltarse procedimientos: eso no es servicio, es una irregularidad.</p></div></section>
+<section class="section" data-sec="4"><span class="eyebrow">Sección 5 · Casos</span><h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2><p>Cinco situaciones reales de servicio y apoyo, resueltas.</p><div class="caso"><div class="caso-head">📂 Caso 1 · El ciudadano molesto</div><div class="caso-body"><span class="label">Situación</span><p>Una persona llega alterada y te trata mal por la espera.</p><span class="label">Pregunta</span><p>¿Cómo actúas?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Escuchar con calma, mantener el respeto, comprender su necesidad y orientarlo a la solución o el paso que corresponde.</strong> El trato digno se mantiene incluso ante el enojo.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 2 · La promesa imposible</div><div class="caso-body"><span class="label">Situación</span><p>Para calmar a un usuario, sientes la tentación de prometerle algo que sabes que no se puede cumplir.</p><span class="label">Pregunta</span><p>¿Es correcto?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No: se informa con claridad y veracidad lo que sí procede.</strong> Prometer lo imposible genera más conflicto y daña la confianza.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 3 · El asunto ajeno</div><div class="caso-body"><span class="label">Situación</span><p>Recibes una solicitud que es competencia de otra área.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Canalizarla correctamente al área competente e informar, sin dejarla caer.</strong> “No es de mi área” no exime de orientar y redirigir.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 4 · El incumplimiento del contratista</div><div class="caso-body"><span class="label">Situación</span><p>Apoyando una supervisión, detectas que el contratista no cumplió parte de lo pactado.</p><span class="label">Pregunta</span><p>¿Qué haces en tu rol?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Documentar el incumplimiento e informarlo al supervisor del contrato.</strong> Tú aportas el insumo; la decisión sobre el contrato es del supervisor.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 5 · El favor irregular</div><div class="caso-body"><span class="label">Situación</span><p>Un ciudadano te pide ‘saltarte un paso’ para agilizar su trámite.</p><span class="label">Pregunta</span><p>¿Es servicio ayudarlo así?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No: se le explica con respeto y se le orienta por la vía correcta.</strong> Saltarse la norma no es ayudar, es una falta.</div></div></div></section>
+<section class="section" data-sec="5"><span class="eyebrow">Sección 6 · Errores frecuentes</span><h2 class="sec-title">⚠️ Errores que debes evitar</h2><div class="box danger"><div class="box-title">❌ Error 1 — Atender mal “porque es interno”</div><p><strong>Por qué falla:</strong> el servicio interno termina afectando al ciudadano. <strong>Corrige:</strong> atiende con calidad a compañeros y áreas también.</p></div><div class="box danger"><div class="box-title">❌ Error 2 — Responder al enojo con enojo</div><p><strong>Por qué falla:</strong> escala el conflicto. <strong>Corrige:</strong> mantén la calma y el trato digno.</p></div><div class="box danger"><div class="box-title">❌ Error 3 — Prometer lo imposible</div><p><strong>Por qué falla:</strong> genera más conflicto y daña la confianza. <strong>Corrige:</strong> informa con claridad y veracidad lo que procede.</p></div><div class="box danger"><div class="box-title">❌ Error 4 — Ignorar o traspapelar una PQRSD</div><p><strong>Por qué falla:</strong> hay plazos y derechos de por medio. <strong>Corrige:</strong> recibe, registra y canaliza a tiempo.</p></div><div class="box danger"><div class="box-title">❌ Error 5 — Asumir la supervisión del contrato</div><p><strong>Por qué falla:</strong> sancionar o decidir no es tu rol. <strong>Corrige:</strong> aporta insumos veraces; decide el supervisor.</p></div><div class="box danger"><div class="box-title">❌ Error 6 — Saltarse la norma para “ayudar”</div><p><strong>Por qué falla:</strong> no es servicio, es una falta. <strong>Corrige:</strong> resuelve dentro de la norma; orienta el resto.</p></div></section>
+<section class="section" data-sec="6"><span class="eyebrow">Sección 7 · Tips</span><h2 class="sec-title">💡 Trucos para dominar el tema</h2><div class="box ok"><div class="box-title">✅ Tip 1 — El ciudadano es el centro</div><p>Todo servicio, interno o externo, termina llegando al ciudadano.</p></div><div class="box ok"><div class="box-title">✅ Tip 2 — Calma ante el enojo</div><p>Escucha, valida la molestia y orienta; no respondas a la altura del enojo.</p></div><div class="box ok"><div class="box-title">✅ Tip 3 — Nunca prometas lo imposible</div><p>Información veraz y clara: es lo que sostiene la confianza.</p></div><div class="box ok"><div class="box-title">✅ Tip 4 — Toda PQRSD se tramita</div><p>Recibir, registrar y canalizar a tiempo; ninguna se ignora.</p></div><div class="box ok"><div class="box-title">✅ Tip 5 — Apoyas, no supervisas</div><p>Aportas insumos veraces; la decisión del contrato es del supervisor.</p></div><div class="box ok"><div class="box-title">✅ Tip 6 — Ayudar no es saltarse la norma</div><p>Resuelve dentro de la norma y del rol; orienta con claridad lo demás.</p></div></section>
+<section class="section" data-sec="7"><span class="eyebrow">Sección 8 · Trampas</span><h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2><div class="trampa"><div class="trampa-q">«Es solo un compañero, atiéndelo cuando puedas.»</div><div class="trampa-detail"><div class="t-row parece">Parece que lo interno es menos urgente.</div><div class="t-row malo">Es trampa: el servicio interno afecta al ciudadano.</div><div class="t-row bueno">Correcto: atender con calidad también a lo interno.</div></div></div><div class="trampa"><div class="trampa-q">«Promételo aunque no se pueda, así se calma.»</div><div class="trampa-detail"><div class="t-row parece">Parece resolver el momento.</div><div class="t-row malo">Es trampa: genera más conflicto y daña la confianza.</div><div class="t-row bueno">Correcto: informar con claridad lo que sí procede.</div></div></div><div class="trampa"><div class="trampa-q">«Tú que apoyas, sanciónalo por incumplir.»</div><div class="trampa-detail"><div class="t-row parece">Parece firmeza.</div><div class="t-row malo">Es trampa: sancionar es del supervisor, no tuyo.</div><div class="t-row bueno">Correcto: documentar e informar al supervisor.</div></div></div><div class="trampa"><div class="trampa-q">«Sáltate ese paso para ayudar al ciudadano.»</div><div class="trampa-detail"><div class="t-row parece">Parece buen servicio.</div><div class="t-row malo">Es trampa: saltarse la norma es una falta.</div><div class="t-row bueno">Correcto: orientar por la vía correcta.</div></div></div></section>
+<section class="section" data-sec="8"><span class="eyebrow">Sección 9 · Repaso</span><h2 class="sec-title">🧠 Repasa con flashcards</h2><p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p><div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div></section>
+<section class="section" data-sec="9"><span class="eyebrow">Sección 10 · Resumen</span><h2 class="sec-title">📝 Resumen y glosario</h2><div class="resumen"><div class="resumen-item"><h4>Servicio</h4><p>Al ciudadano y al usuario interno; todo apunta al ciudadano.</p></div><div class="resumen-item"><h4>Atención efectiva</h4><p>Escuchar, claridad, trato digno; calma ante el enojo.</p></div><div class="resumen-item"><h4>PQRSD</h4><p>Recibir, registrar y canalizar a tiempo; nunca ignorar.</p></div><div class="resumen-item"><h4>Apoyo a la supervisión</h4><p>Aportar insumos veraces; decide el supervisor.</p></div><div class="resumen-item"><h4>Trámite y coordinación</h4><p>Dar curso, coordinar y no dejar caer los asuntos.</p></div><div class="resumen-item"><h4>Tu rol</h4><p>Servir dentro de la norma y del rol; orientar y escalar.</p></div></div><h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3><dl class="glosario"><dt>Usuario interno</dt><dd>Compañeros y áreas a quienes se les presta un servicio dentro de la entidad.</dd><dt>PQRSD</dt><dd>Peticiones, Quejas, Reclamos, Sugerencias y Denuncias.</dd><dt>Queja</dt><dd>Inconformidad por la conducta de un servidor.</dd><dt>Reclamo</dt><dd>Inconformidad por la prestación de un servicio.</dd><dt>Supervisión</dt><dd>Vigilancia del cumplimiento de un contrato, a cargo del supervisor.</dd><dt>Trato digno</dt><dd>Atención respetuosa que merece toda persona, incluso si está molesta.</dd></dl><div class="box gold"><div class="box-title">💎 Para recordar</div><p>El ciudadano es el centro: <strong>atiende con respeto, resuelve lo que te corresponde y orienta o escala lo demás</strong>. Apoyar bien es aportar insumos veraces, sin asumir decisiones que no son tuyas. Ayudar no es saltarse la norma.</p></div></section>
+<section class="section" data-sec="10"><span class="eyebrow">Sección 11 · Simulacro</span><h2 class="sec-title">🎓 Simulacro tipo CNSC</h2><div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p><div class="dific-tags"><span class="tag b">4 básicas</span><span class="tag i">5 intermedias</span><span class="tag a">3 avanzadas</span></div></div><div id="quiz"></div><div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div><div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div></section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-ATC-01 · Día 20 · Biblioteca Funcional (familia ATC) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 20", "alerta": "¡Felicitaciones! Terminaste el Día 20 · FUN-ATC-01.\n\nSigue con SIM-001 · Simulacro Integral Final."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[{"f": "¿Quién es el usuario interno?", "b": "Tus compañeros y áreas: a ellos también les prestas un servicio que termina llegando al ciudadano."}, {"f": "¿Cómo se atiende a un ciudadano molesto?", "b": "Con calma y trato digno: escuchar, comprender la necesidad y orientar a la solución o paso que corresponde."}, {"f": "¿Qué son las PQRSD?", "b": "Peticiones, Quejas, Reclamos, Sugerencias y Denuncias: las formas en que el ciudadano se comunica con la entidad."}, {"f": "¿Diferencia entre queja y reclamo?", "b": "La queja es por la conducta de un servidor; el reclamo, por la prestación de un servicio."}, {"f": "¿Se puede ignorar una PQRSD?", "b": "No: tiene trámite y plazos; se recibe, registra y canaliza a tiempo."}, {"f": "¿El técnico supervisa contratos?", "b": "No: el técnico apoya con insumos veraces; la supervisión y las decisiones son del supervisor (profesional)."}, {"f": "¿Qué haces si ves un incumplimiento en una supervisión que apoyas?", "b": "Documentarlo e informarlo al supervisor; no sancionar ni decidir tú."}, {"f": "¿Qué haces con un asunto que es de otra área?", "b": "Canalizarlo correctamente e informar; no dejarlo caer ni ignorarlo."}, {"f": "¿Ayudar es saltarse la norma por el ciudadano?", "b": "No: eso es una falta. Ayudar es resolver dentro de la norma y orientar lo demás."}, {"f": "¿Cuál es tu rol al servir y apoyar?", "b": "Atender con respeto, resolver lo que te corresponde, canalizar lo demás y apoyar con insumos veraces, sin asumir decisiones ajenas."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b", "tema": "Atención ante el enojo", "ctx": "Un ciudadano llega muy molesto y te habla de mala manera porque lleva mucho rato esperando para ser atendido. No fue tu culpa la demora, pero a ti te toca atenderlo.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Responderle con la misma energía para que entienda que a ti no te falta el respeto.", "Ignorarlo hasta que se calme por su cuenta.", "Escuchar con calma, mantener el respeto, comprender su necesidad y orientarlo hacia la solución o el paso que corresponde.", "Atenderlo de afán y mal para que se vaya rápido."], "correcta": 2, "expl": ["Responder al enojo con enojo escala el conflicto; el trato digno se mantiene incluso ante una persona alterada.", "Ignorar al ciudadano agrava su molestia y vulnera su derecho a una atención digna.", "La atención efectiva combina trato digno, escucha y claridad; mantener la calma desactiva el conflicto y conduce a la solución.", "Atender mal a propósito vulnera el derecho a una atención de calidad y empeora la percepción del servicio."]}, {"nivel": "b", "tema": "Veracidad en la atención", "ctx": "Para calmar a un usuario insistente, sientes la tentación de prometerle que su trámite estará listo en un plazo que sabes que no se puede cumplir.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Informarle con claridad y veracidad el plazo y el procedimiento reales, aunque no sea lo que quiere oír.", "Prometerle el plazo corto para calmarlo, aunque sepas que no se cumplirá.", "No darle ningún plazo para no comprometerte.", "Decirle que vuelva otro día sin explicarle nada."], "correcta": 0, "expl": ["Lo correcto es informar con veracidad el plazo y el procedimiento reales; la honestidad sostiene la confianza, aunque incomode.", "Prometer un plazo imposible solo aplaza y agrava el conflicto, y daña la confianza en la entidad.", "No dar ninguna información deja al ciudadano sin orientación, lo que también es mala atención.", "Despacharlo sin explicar nada vulnera su derecho a una atención clara y oportuna."]}, {"nivel": "b", "tema": "Apoyo, no supervisión", "ctx": "Apoyas la supervisión de un contrato y observas que el contratista no cumplió con parte de lo pactado. Un compañero te dice que “tú que estás ahí, aplícale un descuento”.", "q": "¿Cuál es la actuación más apropiada para tu rol?", "ops": ["Aplicarle tú mismo un descuento o sanción al contratista por el incumplimiento.", "Documentar objetivamente el incumplimiento observado e informarlo al supervisor del contrato, que es quien decide.", "No reportar nada para no perjudicar al contratista.", "Negociar directamente con el contratista una solución."], "correcta": 1, "expl": ["Aplicar descuentos o sanciones no es tu rol: es del supervisor. Hacerlo es extralimitarte.", "Tu rol es apoyar con insumos veraces: documentar lo observado e informar al supervisor, que tiene la competencia para actuar.", "Callar un incumplimiento del que tienes conocimiento también te compromete.", "Negociar con el contratista sobre el cumplimiento del contrato excede tu rol; eso le corresponde al supervisor."]}, {"nivel": "b", "tema": "Canalizar PQRSD", "ctx": "Recibes una petición de un ciudadano que claramente es competencia de otra área de la entidad. Tú no puedes resolverla directamente.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Decirle al ciudadano que ‘eso no es aquí’ y que averigüe por su cuenta a dónde ir.", "Devolverle los documentos al ciudadano sin más explicación.", "Guardar la petición en tu escritorio hasta que alguien la reclame.", "Recibir y registrar la petición y canalizarla al área competente, informando al ciudadano del trámite."], "correcta": 3, "expl": ["Mandar al ciudadano a “averiguar por su cuenta” traslada la carga a quien busca el servicio; eso no es buena atención.", "Devolver los documentos sin orientar deja al ciudadano sin solución ni guía.", "Guardar la petición sin tramitarla la convierte en un asunto traspapelado, con plazos y derechos en riesgo.", "Lo correcto es recibir, registrar y canalizar la petición al área competente, informando al ciudadano; las PQRSD no se dejan caer."]}, {"nivel": "i", "tema": "Servicio interno", "ctx": "Otra área te solicita con urgencia un dato/insumo que tú manejas y que necesita para atender a un ciudadano. Estás ocupado y piensas dejarlo “para después porque es solo un compañero”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Dejarlo para cuando tengas tiempo, ya que es un asunto interno y no del público.", "Atender la solicitud interna con la misma diligencia, entendiendo que ese insumo termina sirviendo para atender al ciudadano.", "Pedirle que ponga la solicitud por escrito y esperar varios días.", "Decirle que ese no es tu problema."], "correcta": 1, "expl": ["Tratar lo interno como “menos importante” es un error: lo que entregas a otra área impacta al ciudadano al final de la cadena.", "Lo correcto es atender con diligencia el servicio interno, porque ese insumo permite que la otra área atienda al ciudadano.", "Burocratizar innecesariamente una solicitud interna urgente afecta al ciudadano que espera al final.", "Desentenderte (“no es mi problema”) rompe la cadena de servicio."]}, {"nivel": "i", "tema": "Queja vs reclamo", "ctx": "Un ciudadano quiere manifestar su inconformidad: en un caso, por el mal trato de un servidor; en otro, por la mala calidad de un servicio recibido. Te preguntan cómo clasificar cada uno.", "q": "¿Cuál es la clasificación correcta?", "ops": ["Ambos son peticiones de información.", "Ambos son denuncias.", "El primero es una queja (por la conducta de un servidor) y el segundo es un reclamo (por la prestación de un servicio).", "El primero es un reclamo y el segundo una sugerencia."], "correcta": 2, "expl": ["No son peticiones de información: expresan inconformidad, no solicitan datos.", "La denuncia es para poner en conocimiento un hecho irregular, no para estas inconformidades.", "Correcto: la queja se refiere a la conducta de un servidor y el reclamo a la prestación de un servicio.", "Está invertido y mal clasificado: no es reclamo+sugerencia, sino queja+reclamo."]}, {"nivel": "i", "tema": "No dejar caer el asunto", "ctx": "Llega a tu puesto un asunto que es competencia de otra área, pero esa área suele demorarse y a veces los asuntos “se pierden” entre las dos dependencias.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Devolver el asunto sin más, ya que no es de tu competencia.", "Dejarlo en tu escritorio a ver si alguien lo reclama.", "Quedártelo y resolverlo tú, aunque no sea tu competencia.", "Canalizarlo correctamente al área competente y dejar constancia/seguimiento para que no se pierda entre las dependencias."], "correcta": 3, "expl": ["Devolverlo “sin más”, sabiendo que suele perderse, es contribuir a que el asunto se caiga.", "Dejarlo a la espera de que alguien lo reclame es justamente como se traspapelan los asuntos.", "Resolver algo que no es de tu competencia es extralimitarte y puede generar errores.", "Lo correcto es canalizarlo y dejar constancia/seguimiento, para que no se pierda entre áreas; coordinar es parte del servicio."]}, {"nivel": "i", "tema": "Insumos para la supervisión", "ctx": "El supervisor de un contrato te pide que le ayudes verificando si las entregas del contratista corresponden a lo pactado, para él tomar decisiones sobre el contrato.", "q": "¿Cuál es el aporte más apropiado desde tu rol?", "ops": ["Verificar objetivamente las entregas contra lo pactado, documentar lo observado (cumplimientos y novedades) y entregárselo al supervisor.", "Decidir tú si el contrato se cumplió o no y comunicárselo al contratista.", "Aprobar los pagos del contrato según tu criterio.", "Decir que eso no es asunto del almacén ni tuyo."], "correcta": 0, "expl": ["Lo correcto es verificar y documentar objetivamente lo observado y entregarlo como insumo al supervisor, que decide.", "Decidir sobre el cumplimiento y comunicarlo al contratista es competencia del supervisor, no tuya.", "Aprobar pagos es una decisión de la supervisión/ordenación del gasto, no de tu rol.", "Apoyar la supervisión con verificaciones sí es parte de tu rol de apoyo; negarlo es quedarte corto."]}, {"nivel": "i", "tema": "Lenguaje claro", "ctx": "Un ciudadano no entiende un requisito porque se lo explicaron con muchos tecnicismos jurídicos, y se va más confundido de como llegó.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Repetirle los mismos términos técnicos, ya que es lo correcto formalmente.", "Decirle que lea la norma por su cuenta.", "Explicarle el requisito en lenguaje claro y sencillo, verificando que comprendió qué debe hacer.", "Atender al siguiente para no perder tiempo."], "correcta": 2, "expl": ["Repetir tecnicismos no resuelve la confusión; el lenguaje claro es parte del buen servicio.", "Remitir al ciudadano a leer la norma solo, sin orientarlo, elude el deber de informar con claridad.", "Lo correcto es explicar en lenguaje claro y verificar que el ciudadano comprendió qué debe hacer: esa es una atención efectiva.", "Despachar al siguiente sin resolver la confusión del ciudadano es mala atención."]}, {"nivel": "a", "tema": "Presión por un favor irregular", "ctx": "Un ciudadano influyente te presiona para que le ‘saltes’ un requisito o un paso del procedimiento y le agilices su trámite por encima de los demás, insinuando que te lo “sabrá agradecer”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Saltarle el paso para evitar problemas y por el agradecimiento que insinúa.", "Explicar con respeto que el trámite debe seguir el procedimiento y el turno que corresponde a todos, y atenderlo conforme a las reglas.", "Saltarle el paso solo si de verdad cumple con casi todo.", "Atenderlo de último a propósito por haberte presionado."], "correcta": 1, "expl": ["Saltar requisitos por presión o por un “agradecimiento” es una falta (y puede ser un delito); ceder no evita problemas, los crea.", "Lo correcto es explicar con respeto que el trámite sigue el procedimiento y el turno de todos, y atender conforme a las reglas; eso es trato igualitario.", "“Casi todo” no es cumplir: saltar un requisito sigue siendo irregular.", "Atenderlo de último por revancha también es un trato indebido; la regla es la imparcialidad, no el castigo."]}, {"nivel": "a", "tema": "Conflicto entre amabilidad y norma", "ctx": "Un usuario en situación difícil te da lástima y te pide que le concedas algo que el procedimiento no permite. Sientes que ‘ayudarlo’ saltándote la norma sería lo humano.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Atenderlo con calidez y empatía, pero dentro de la norma: explicarle lo que sí procede y orientarlo hacia alternativas legítimas o áreas que puedan ayudarlo.", "Saltarte la norma esta vez, ya que es por una buena causa.", "Negarle todo secamente, ya que la norma es la norma.", "Concederle lo que pide y registrar que cumplió, aunque no sea así."], "correcta": 0, "expl": ["Lo correcto es combinar empatía y norma: atender con calidez, explicar lo que sí procede y orientar hacia alternativas legítimas; ayudar de verdad no es violar la regla.", "Saltarse la norma “por buena causa” sigue siendo una falta y abre la puerta a la arbitrariedad y a la inequidad.", "Negar todo secamente, sin empatía ni orientación, es mala atención aunque respete la norma.", "Conceder lo improcedente y, encima, falsear el registro, es una conducta gravemente indebida."]}, {"nivel": "a", "tema": "Límite del rol con datos", "ctx": "Un usuario te pide que le entregues información de otro ciudadano (datos personales de un tercero) para “resolver un asunto personal suyo”, presionándote para que lo hagas rápido.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Entregarle una parte de los datos, no todos.", "Entregársela rápido para resolverle el asunto y quitártelo de encima.", "Entregársela solo si parece una buena persona.", "No entregar datos personales de terceros: explicar que están protegidos y orientar al usuario por la vía que legalmente corresponda."], "correcta": 3, "expl": ["Entregar “solo una parte” de los datos personales de un tercero sigue siendo una divulgación indebida.", "Resolver rápido no justifica entregar datos personales de un tercero; eso vulnera su protección.", "La apariencia del solicitante no autoriza a divulgar datos personales ajenos.", "Lo correcto es no entregar datos de terceros, explicar que están protegidos y orientar al usuario por la vía legal correspondiente."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p.ops.forEach((op,j)=>{const letra=String.fromCharCode(65+j);opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+op+'</span><div class="op-exp" id="oe-'+idx+'-'+j+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, oi=+this.dataset.op;
+      if(respondidas[qi]!==undefined)return;
+      respondidas[qi]=oi;
+      const p=preguntas[qi];const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+        o.classList.add('bloqueada');
+        const exp=document.getElementById('oe-'+qi+'-'+k);const letra=String.fromCharCode(65+k);
+        if(k===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[k];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[k];}
+      });
+      if(oi!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p.correcta);
+      if(oi===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+</body>
+</html>
