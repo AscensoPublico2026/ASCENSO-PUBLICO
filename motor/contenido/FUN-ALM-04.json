@@ -114,11 +114,72 @@
           },
           {
             "tipo": "ejemplo",
-            "html": "<p><strong>Aplicado · ejemplo numérico.</strong> Compras: 100 unidades a $10 y luego 100 a $12. Sale un pedido de 150 unidades:</p><div class=\"tabla-wrap\"><table><tr><th>Método</th><th>Cálculo de la salida</th><th>Valor de la salida</th></tr><tr><td>PEPS</td><td>100 × $10 + 50 × $12</td><td>$1.600</td></tr><tr><td>Promedio</td><td>Costo prom. = (1.000+1.200)/200 = $11 → 150 × $11</td><td>$1.650</td></tr></table></div><p>La <strong>cantidad</strong> que sale es la misma (150 unidades) en ambos; solo cambia el <strong>valor</strong>.</p>"
+            "html": "<p><strong>El escenario que usaremos.</strong> Durante el mes entraron al almacén dos compras del mismo bien, a precios distintos, y luego se despachó un pedido grande:</p><ul class=\"lista\"><li>Primera compra: <strong>100 unidades a $10</strong> cada una.</li><li>Segunda compra: <strong>100 unidades a $12</strong> cada una.</li><li>Salida: se despacha un pedido de <strong>150 unidades</strong>.</li></ul><p>En total entraron 200 unidades y salen 150, así que el saldo final son 50 unidades. Esa cantidad es la misma cualquiera sea el método. Lo que cambia es <strong>con qué valor</strong> sale el pedido. Veámoslo paso a paso con cada método.</p>"
+          },
+          {
+            "tipo": "calculo",
+            "titulo": "Método PEPS, paso a paso",
+            "intro": "PEPS = Primeras En entrar, Primeras En Salir. Las unidades salen en el orden en que entraron: primero se agota el lote más antiguo y luego se toma del siguiente.",
+            "datos": [
+              "Lote 1 (el más antiguo): 100 unidades a $10",
+              "Lote 2 (el más reciente): 100 unidades a $12",
+              "Se deben despachar: 150 unidades"
+            ],
+            "pasos": [
+              {"n": 1, "label": "Toma primero del lote más antiguo (Lote 1)", "formula": "100 unidades × $10", "resultado": "$1.000 (se agotan las 100 del Lote 1)"},
+              {"n": 2, "label": "Aún faltan unidades por despachar", "formula": "150 − 100 = 50 unidades", "resultado": "esas 50 salen del Lote 2 (a $12)"},
+              {"n": 3, "label": "Toma las 50 restantes del Lote 2", "formula": "50 unidades × $12", "resultado": "$600"},
+              {"n": 4, "label": "Suma el valor de los dos tramos", "formula": "$1.000 <b>+</b> $600", "resultado": "$1.600"}
+            ],
+            "total": {"label": "Valor de la salida con PEPS (150 unidades)", "valor": "$1.600"},
+            "nota": "Quedan 50 unidades en el almacén, todas del Lote 2, valoradas a $12 = $600 de saldo."
+          },
+          {
+            "tipo": "calculo",
+            "titulo": "Método de promedio ponderado, paso a paso",
+            "intro": "El promedio ponderado mezcla todos los costos en uno solo: calcula cuánto cuesta en promedio cada unidad y aplica ese costo a toda salida. Se llama «ponderado» porque pesa cada compra según sus cantidades.",
+            "datos": [
+              "Compra 1: 100 unidades a $10",
+              "Compra 2: 100 unidades a $12",
+              "Se deben despachar: 150 unidades"
+            ],
+            "pasos": [
+              {"n": 1, "label": "Costo total de TODAS las existencias (suma lo que costó cada compra)", "formula": "(100 × $10) <b>+</b> (100 × $12) = $1.000 <b>+</b> $1.200", "resultado": "$2.200"},
+              {"n": 2, "label": "Cantidad total de unidades disponibles", "formula": "100 <b>+</b> 100", "resultado": "200 unidades"},
+              {"n": 3, "label": "Costo promedio por unidad (divide el costo total entre las unidades)", "formula": "$2.200 <b>÷</b> 200 unidades", "resultado": "$11 por unidad"},
+              {"n": 4, "label": "Valor de la salida (las unidades que salen, al costo promedio)", "formula": "150 unidades <b>×</b> $11", "resultado": "$1.650"}
+            ],
+            "total": {"label": "Valor de la salida con promedio (150 unidades)", "valor": "$1.650"},
+            "nota": "Las 50 unidades que quedan también se valoran a $11 = $550 de saldo. Fíjate que la clave es el paso 3: el costo promedio ($11) está entre $10 y $12, justo porque «pondera» las dos compras."
+          },
+          {
+            "tipo": "ejemplo",
+            "html": "<p><strong>Los dos métodos, lado a lado.</strong> Misma cantidad de salida (150 unidades), valor distinto:</p><div class=\"tabla-wrap\"><table><tr><th>Método</th><th>Cómo se calcula la salida</th><th>Valor de la salida</th><th>Saldo (50 uds.)</th></tr><tr><td>PEPS</td><td>100 × $10 + 50 × $12</td><td>$1.600</td><td>$600</td></tr><tr><td>Promedio</td><td>150 × $11 (con $11 = $2.200 ÷ 200)</td><td>$1.650</td><td>$550</td></tr></table></div><p>La <strong>cantidad</strong> que sale es idéntica (150 unidades) en ambos; solo cambia el <strong>valor</strong> con que se registra esa salida y el saldo.</p>"
           },
           {
             "tipo": "idea",
-            "html": "<p>Trampa típica: creer que cambiar de método cambia las existencias. <strong>No.</strong> La cantidad siempre es entradas menos salidas; el método solo afecta el valor.</p>"
+            "html": "<p>Trampa típica: creer que cambiar de método cambia las existencias. <strong>No.</strong> La cantidad siempre es entradas menos salidas; el método (PEPS o promedio) solo afecta el <strong>valor</strong>.</p>"
+          },
+          {
+            "tipo": "minicheck",
+            "q": "Con los mismos datos (100 uds. a $10 y 100 uds. a $12), si te piden el COSTO PROMEDIO PONDERADO por unidad, ¿cuál es y cómo se obtiene?",
+            "opciones": [
+              {
+                "texto": "$11, porque es el costo total ($2.200) dividido entre las unidades totales (200).",
+                "ok": true,
+                "exp": "Correcto: promedio ponderado = costo total ÷ unidades totales = $2.200 ÷ 200 = $11 por unidad."
+              },
+              {
+                "texto": "$22, porque se suman los dos precios ($10 + $12).",
+                "ok": false,
+                "exp": "Sumar los precios no da un promedio; además ignora las cantidades. El promedio se calcula dividiendo el costo total entre las unidades."
+              },
+              {
+                "texto": "$10, porque es el precio de la compra más antigua.",
+                "ok": false,
+                "exp": "Ese sería el criterio de PEPS para el primer lote, no el costo promedio ponderado."
+              }
+            ]
           }
         ]
       },
@@ -511,7 +572,7 @@
     {
       "nivel": "b",
       "tema": "Salida sin firma",
-      "ctx": "Entregas unos bienes a un funcionario, pero este se va de afán sin firmar el comprobante de salida. Quedaste con los bienes ya entregados pero sin la firma.",
+      "ctx": "Entregas unos elementos a un funcionario de otra dependencia que llegó de afán. Recibe los bienes, los guarda y se va apresurado a una reunión sin firmar el comprobante de salida. Quedas con la entrega ya hecha físicamente, pero sin la firma de quien recibió en el soporte.",
       "q": "¿Cuál es la actuación más apropiada?",
       "ops": [
         "Registrar la salida igual; ya firmará otro día.",
@@ -530,7 +591,7 @@
     {
       "nivel": "b",
       "tema": "Valor vs cantidad",
-      "ctx": "Un compañero afirma que, al cambiar del método PEPS al promedio ponderado, “van a cambiar las cantidades que hay en el almacén”.",
+      "ctx": "En una reunión del almacén, un compañero comenta preocupado que la entidad va a cambiar el método de valoración de PEPS a promedio ponderado para el próximo año. Afirma con seguridad que, por ese cambio, «van a cambiar las cantidades que hay físicamente en el almacén» y que tocará volver a contarlo todo.",
       "q": "¿Qué es lo correcto frente a esa afirmación?",
       "ops": [
         "El método de valoración cambia el VALOR de las salidas y del saldo, no la cantidad física.",
@@ -549,7 +610,7 @@
     {
       "nivel": "b",
       "tema": "Clasificación del movimiento",
-      "ctx": "Un área devuelve al almacén varios bienes de consumo que finalmente no utilizó. Vas a registrar el movimiento en el kardex.",
+      "ctx": "Un área de la entidad devuelve al almacén varias cajas de bienes de consumo que solicitó semanas atrás pero que finalmente no utilizó. Los bienes llegan en buen estado a tu puesto y debes dejar el movimiento registrado en el kardex del ítem correspondiente.",
       "q": "¿Cómo debe registrarse?",
       "ops": [
         "Como un egreso, porque los bienes están saliendo del área.",
@@ -587,7 +648,7 @@
     {
       "nivel": "i",
       "tema": "Método consistente",
-      "ctx": "Para un informe puntual, alguien sugiere cambiar el método de valoración solo durante este mes, porque “así los números se ven mejor”, y volver al anterior después.",
+      "ctx": "Se acerca la entrega de un informe puntual y un compañero sugiere cambiar el método de valoración únicamente durante este mes, porque «así los números se ven mejor» en el reporte, y volver al método anterior el mes siguiente. Asegura que es algo temporal y que nadie lo notará.",
       "q": "¿Cuál es la actuación más apropiada?",
       "ops": [
         "Cambiar el método este mes y volver al anterior, ya que es algo temporal.",
@@ -606,7 +667,7 @@
     {
       "nivel": "i",
       "tema": "Movimiento sin soporte",
-      "ctx": "Te piden mover unos bienes de una bodega a otra (traslado) sin generar ningún comprobante, “porque siguen siendo de la misma entidad y total no salen de aquí”.",
+      "ctx": "En tu entidad están reorganizando las bodegas y te piden trasladar varias cajas de insumos de la bodega A a la bodega B. Quien da la orden insiste en que no generes ningún comprobante de traslado «porque los bienes siguen siendo de la misma entidad y total no salen de aquí», y que así se evita papeleo innecesario.",
       "q": "¿Cuál es la actuación más apropiada?",
       "ops": [
         "Hacer el traslado sin comprobante, ya que los bienes no salen de la entidad.",
@@ -625,7 +686,7 @@
     {
       "nivel": "i",
       "tema": "Reconstrucción de la historia",
-      "ctx": "Surge una consulta sobre cuántas unidades de un bien se entregaron en los últimos meses y a quién. El kardex se ha llevado al día y con soportes.",
+      "ctx": "La oficina de control interno solicita un reporte detallado de cuántas unidades de un bien específico se entregaron durante los últimos meses, en qué fechas y a qué áreas o responsables. Durante todo ese periodo el kardex se ha llevado al día, registrando cada movimiento en su momento y con sus soportes firmados.",
       "q": "¿Qué permite responder esa consulta con certeza?",
       "ops": [
         "La memoria del personal más antiguo del almacén.",
@@ -644,7 +705,7 @@
     {
       "nivel": "i",
       "tema": "Saldo en tiempo real",
-      "ctx": "Alguien necesita saber, en este preciso momento, cuántas unidades de un bien quedan disponibles, y no hay tiempo de bajar a contar a la bodega.",
+      "ctx": "Tu jefe está en una reunión con otra dependencia y te llama con urgencia: necesita saber en este preciso momento cuántas unidades de un bien quedan disponibles para comprometerlas en una entrega que se decide ya. No hay tiempo de bajar a la bodega a contar una por una, y la cifra que des debe ser confiable.",
       "q": "Si el kardex se ha llevado correctamente, ¿qué permite responder de inmediato?",
       "ops": [
         "Habría que contar físicamente de todos modos; el kardex no sirve para eso.",
@@ -663,7 +724,7 @@
     {
       "nivel": "a",
       "tema": "Presión para falsear",
-      "ctx": "Un superior te pide, con afán, que registres en el kardex una salida que en realidad no ha ocurrido, para “cuadrar” un informe que debe presentar hoy, prometiendo que “luego se corrige”.",
+      "ctx": "Un superior llega afanado a tu puesto y te pide que registres en el kardex una salida que en realidad no ha ocurrido, para «cuadrar» un informe que debe presentar hoy mismo ante la dirección. Te asegura que es solo por esta vez, que él se hace responsable y que «luego eso se corrige» sin problema.",
       "q": "¿Cuál es la actuación más apropiada?",
       "ops": [
         "Registrar la salida que pide el superior, ya que él asume la responsabilidad del informe.",
@@ -701,7 +762,7 @@
     {
       "nivel": "a",
       "tema": "Integridad del registro",
-      "ctx": "Descubres que otra persona ha estado registrando egresos sin los comprobantes firmados, dejando varios movimientos sin soporte. La situación excede tu manejo individual.",
+      "ctx": "Revisando el sistema descubres que otra persona del almacén ha estado registrando egresos sin los comprobantes firmados, dejando varios movimientos sin soporte durante semanas. La situación viene de atrás, involucra a un compañero y claramente excede lo que puedes manejar tú solo desde tu puesto.",
       "q": "¿Cuál es la actuación más apropiada?",
       "ops": [
         "Corregir tú mismo todos los registros de la otra persona a tu criterio.",

@@ -110,6 +110,30 @@ def render_bloque(b):
             op = ' open' if it.get('open') else ''
             items += '<details class="acc"%s><summary>%s</summary><div class="acc-body">%s</div></details>' % (op, it['titulo'], it['html'])
         return '<div class="acordeon">%s</div>' % items
+    if t == 'calculo':
+        # Fórmulas y procesos matemáticos explicados paso a paso.
+        intro = '<div class="calculo-intro"><p>%s</p></div>' % b['intro'] if b.get('intro') else ''
+        datos = ''
+        if b.get('datos'):
+            lis = ''.join('<li>%s</li>' % d for d in b['datos'])
+            datos = '<div class="calc-datos"><span class="cd-label">Datos de partida</span><ul>%s</ul></div>' % lis
+        pasos = ''
+        for i, p in enumerate(b.get('pasos', []), 1):
+            n = p.get('n', i)
+            formula = '<div class="calc-formula">%s</div>' % p['formula'] if p.get('formula') else ''
+            res = '<div class="calc-res-paso">%s</div>' % p['resultado'] if p.get('resultado') else ''
+            pasos += ('<div class="calc-paso"><span class="calc-n">%s</span>'
+                      '<div class="calc-body"><div class="calc-label">%s</div>%s%s</div></div>') % (
+                n, p.get('label', ''), formula, res)
+        total = ''
+        if b.get('total'):
+            tt = b['total']
+            total = ('<div class="calc-total"><span class="ct-label">%s</span>'
+                     '<span class="ct-valor">%s</span></div>') % (tt.get('label', ''), tt.get('valor', ''))
+        nota = '<div class="calc-nota">%s</div>' % b['nota'] if b.get('nota') else ''
+        head = b.get('titulo', 'Cálculo paso a paso')
+        return ('<div class="calculo"><div class="calculo-head">🧮 %s</div>%s%s'
+                '<div class="calc-pasos">%s</div>%s%s</div>') % (head, intro, datos, pasos, total, nota)
     if t == 'minicheck':
         return render_checkpoint(b)
     return ''
@@ -281,8 +305,17 @@ def validar(d):
             err.append('Pregunta %d no tiene 4 explicaciones (una por opción)' % i)
         if not isinstance(p.get('correcta'), int) or not (0 <= p.get('correcta', -1) <= 3):
             err.append('Pregunta %d: "correcta" inválida (debe ser 0-3)' % i)
-        if not p.get('ctx'):
+        ctx = p.get('ctx', '')
+        if not ctx:
             err.append('Pregunta %d sin contexto (ctx)' % i)
+        elif len(ctx) < 200:
+            warn.append('Pregunta %d: contexto corto (%d caracteres). Tipo CNSC pide un caso largo y verosímil (ideal ≥ 220).' % (i, len(ctx)))
+        # Las opciones del simulacro no deben ser triviales (muy cortas) ni calcadas entre sí
+        ops = p.get('ops', [])
+        if ops and len(set(ops)) != len(ops):
+            err.append('Pregunta %d: tiene opciones repetidas' % i)
+        if ops and any(len(o) < 12 for o in ops):
+            warn.append('Pregunta %d: alguna opción es muy corta; los distractores deben ser plausibles.' % i)
     # Patrón obvio de respuestas (todas iguales)
     corr = [p.get('correcta') for p in sim]
     if len(set(corr)) == 1:

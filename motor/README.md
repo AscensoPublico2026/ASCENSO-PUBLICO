@@ -38,6 +38,39 @@ Genera una guía HTML completa **separando el diseño del contenido**. Así crea
 
 > Las capas `eje` y `cnsc` son opcionales (algunos conceptos usan sub-bloques en su lugar).
 
+## Bloques del Desarrollo (estilo editorial v3)
+
+Cada tema del Desarrollo se compone con bloques. Tipos disponibles: `texto`, `definicion`, `idea`, `ejemplo`, `prueba`, `lista`, `tabla`, `acordeon`, `minicheck` y **`calculo`**.
+
+### Bloque `calculo` — fórmulas y procesos matemáticos paso a paso
+Todo cálculo (promedio ponderado, PEPS, rotación, stock mín/máx, punto de reorden, porcentajes…) se explica con este bloque, **nunca comprimido en una línea**.
+
+```json
+{
+  "tipo": "calculo",
+  "titulo": "Promedio ponderado, paso a paso",
+  "intro": "Qué hace el método, en palabras simples.",
+  "datos": ["Compra 1: 100 uds. a $10", "Compra 2: 100 uds. a $12", "Salida: 150 uds."],
+  "pasos": [
+    {"n": 1, "label": "Costo total de las existencias",
+     "formula": "(100 × $10) <b>+</b> (100 × $12) = $1.000 <b>+</b> $1.200",
+     "resultado": "$2.200"},
+    {"n": 2, "label": "Unidades totales", "formula": "100 <b>+</b> 100", "resultado": "200 unidades"},
+    {"n": 3, "label": "Costo promedio por unidad", "formula": "$2.200 <b>÷</b> 200", "resultado": "$11"},
+    {"n": 4, "label": "Valor de la salida", "formula": "150 <b>×</b> $11", "resultado": "$1.650"}
+  ],
+  "total": {"label": "Valor de la salida (150 unidades)", "valor": "$1.650"},
+  "nota": "Aclaración o trampa típica del cálculo."
+}
+```
+Campos `intro`, `datos`, `total` y `nota` son opcionales. Resalta los operadores con `<b>`. Ejemplo vivo: `contenido/FUN-ALM-04.json`.
+
+## Simulacro tipo CNSC — reglas que valida el motor
+- **12 preguntas** (4 básicas + 5 intermedias + 3 avanzadas), **4 opciones** y **4 explicaciones** (una por opción).
+- `ctx` obligatorio y **largo** (caso verosímil, ideal ≥ 220 caracteres). El validador avisa si es corto.
+- Opciones no repetidas ni triviales (el validador avisa).
+- **El molde baraja las opciones (A/B/C/D) en cada carga** (`barajar()` en `base-guia.html`): el orden visible es aleatorio, así que la posición de la respuesta no es predecible.
+
 
 ## Construir todas de una vez + validación
 
