@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ALM-03 · Clasificación y Codificación de Bienes — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ALM-03</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 11 · Biblioteca Funcional · Almacén</div>
+  <h1>Clasificación y Codificación de Bienes</h1>
+  <p class="header-sub">Si cada bien tiene un nombre y un código únicos, el almacén se ordena solo. Aprende a clasificar y codificar bien.</p>
+  <div class="badges"><span class="badge">📅 Día 11 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🔁 Familia ALM</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0"><span class="eyebrow">Sección 1 · Objetivo</span><h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2><div class="narr"><span class="narr-tag">📍 Ponte en situación</span><p>Entras a la bodega y ves cajas por todos lados: unas con papelería, otras con equipos, herramientas, dotación… Si no hay un sistema para nombrarlas y ubicarlas, encontrar algo se vuelve una pesadilla y el inventario se convierte en un caos.</p><p>Clasificar y codificar es ponerle <strong>orden y apellido</strong> a cada bien. Hoy aprendes cómo se agrupan, cómo se les asigna un código único y por qué los devolutivos llevan placa.</p></div><div class="card card-lead"><p>Al terminar esta guía sabrás organizar los bienes de la entidad con criterio técnico. En concreto:</p><ul class="lista"><li>Distinguir con claridad <strong>bienes de consumo y devolutivos</strong> (y los controlados).</li><li>Entender <strong>por qué se clasifica y se codifica</strong>.</li><li>Saber cómo se compone el <strong>código de un bien</strong>.</li><li>Conocer el <strong>catálogo de bienes</strong> como referencia común.</li><li>Entender la <strong>placa de inventario</strong> y para qué sirve.</li><li>Tener claro tu <strong>rol</strong>: aplicar el catálogo, no inventar códigos.</li></ul></div><div class="box gold"><div class="box-title">💎 La promesa de esta guía</div><p>Al cerrar el día entenderás que clasificar y codificar no es burocracia: es lo que hace posible encontrar, controlar y responder por cada bien de la entidad.</p></div></section>
+<section class="section" data-sec="1"><span class="eyebrow">Sección 2 · Importancia</span><h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2><p>La clasificación y la codificación son la base de todo el control: sin un código único, el mismo bien puede aparecer con tres nombres distintos y el inventario deja de ser confiable. La CNSC evalúa si entiendes <strong>para qué sirve</strong> ese orden, no si te memorizas un catálogo.</p><p>Casos típicos: te piden tratar un devolutivo como consumo, inventar un código “a tu manera”, o entregar un equipo sin placa. La actuación correcta siempre defiende el <strong>uso del catálogo oficial y la individualización de los devolutivos</strong>.</p><p>Entender esto te conecta con todo lo demás: un bien bien clasificado y codificado se registra bien en el kardex (siguiente guía) y se controla bien en los inventarios.</p><div class="box info"><div class="box-title">ℹ️ Dato clave</div><p>Idea guía del día: <strong>cada bien, un código único; cada devolutivo, una placa y un responsable</strong>. Con eso resuelves la mayoría de los casos.</p></div></section>
+<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span><h2 class="sec-title">📖 Clasificar y codificar con criterio</h2><p>Seis bloques para ponerle orden a la bodega. Encontrarás varios <strong>“Aplica lo aprendido”</strong> para practicar.</p><div class="concepto"><div class="concepto-head"><span class="ch-icon">📦</span><span>1. De consumo, devolutivos y controlados</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Los <strong>bienes de consumo</strong> se agotan con el uso (papel, aseo, insumos). Los <strong>devolutivos</strong> tienen vida útil prolongada y se asignan a un responsable (equipos, muebles, herramientas).</p><p>Algunos bienes son <strong>controlados</strong>: por su valor o riesgo requieren un control especial aunque sean de consumo (por ejemplo, ciertos insumos costosos o sensibles).</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>La clasificación define el tratamiento: el devolutivo lleva placa y responsable; el de consumo se descarga al entregarse; el controlado exige seguimiento adicional.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Una grapadora puede ser devolutiva; las grapas, de consumo. Un mismo proveedor entrega ambas, pero su control es distinto.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: mezclar el tratamiento (tratar un devolutivo como consumo). La clave: <strong>devolutivo = placa + responsable</strong>.</p></div></div><div class="practica full"><div class="practica-head">🧰 En la práctica</div><div class="practica-body"><p>Regla rápida: pregúntate <strong>“¿esto se gasta o se devuelve?”</strong>. Si se devuelve o conserva valor en el tiempo, es devolutivo y necesita placa. Si se gasta, es de consumo.</p></div></div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🗂️</span><span>2. ¿Por qué clasificar y codificar?</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p><strong>Clasificar</strong> es agrupar los bienes por categorías afines; <strong>codificar</strong> es asignarle a cada uno un identificador único dentro de esa estructura.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Sirve para tres cosas: <strong>encontrar</strong> rápido un bien, <strong>controlar</strong> existencias sin confusiones y <strong>rastrear</strong> su historia. Un código único elimina los “nombres dobles”.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si “tóner”, “toner” y “cartucho de impresora” se registran distinto, el sistema cree que son tres cosas. Con un solo código, es uno solo y el saldo es real.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde el desorden genera errores de inventario. La clave: el código <strong>único y estandarizado</strong> es lo que hace confiable el control.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> un mismo bien NUNCA debe tener dos códigos. Si ya existe en el catálogo, se usa el que está; no se crea uno nuevo.</div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🔢</span><span>3. El código del bien</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>código</strong> identifica al bien de forma única. Suele componerse de una parte que indica el <strong>grupo/categoría</strong> y otra que individualiza el <strong>ítem</strong> dentro del grupo.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Permite ubicar el bien dentro de la estructura (grupo) y distinguirlo de los demás (ítem). Se asigna según el catálogo de la entidad, no “al gusto”.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Un código tipo “0101-0023” puede significar grupo 01-01 (papelería) e ítem 0023 (resma carta). Lo importante no es el formato exacto, sino que sea único y venga del catálogo.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: inventar o cambiar códigos. La clave: el código se toma del <strong>catálogo oficial</strong>; si el bien no existe en él, se gestiona su creación por el conducto debido.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Vas a ingresar un bien y no encuentras su código en el catálogo. ¿Qué es lo más apropiado?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Inventar códigos crea duplicidades y daña la trazabilidad; el código debe ser único y venir del catálogo.">Inventar un código que se parezca a otros para no demorar el ingreso.</button><button class="cp-opt" data-ok="0" data-exp="Usar el código de otro bien mezcla dos ítems distintos y descuadra el inventario.">Usar el código de un bien parecido que ya existe.</button><button class="cp-opt" data-ok="1" data-exp="Si el bien no está en el catálogo, se gestiona su creación formalmente; así el código nace único y bien soportado.">Gestionar la creación del código por el conducto debido antes de ingresarlo, dejando constancia.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">📖</span><span>4. El catálogo de bienes</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>El <strong>catálogo de bienes</strong> es la lista oficial y estandarizada de los bienes de la entidad, con su clasificación y su código. Es la “fuente de verdad” para nombrar y codificar.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Todos deben usar el mismo catálogo: así un bien se llama y se codifica igual en todas las áreas. Evita los nombres dobles y permite consolidar el inventario.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Cuando llega un bien nuevo, primero se busca en el catálogo: si existe, se usa su código; si no, se gestiona su inclusión antes de ingresarlo.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Casos donde cada quien nombra los bienes a su manera. La clave: el <strong>catálogo común</strong> es lo que da consistencia al control.</p></div></div></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">🏷️</span><span>5. La placa de inventario</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>La <strong>placa de inventario</strong> es la marca física (un número/etiqueta) que individualiza cada bien <strong>devolutivo</strong> y lo enlaza con su registro y su responsable.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>Permite saber, mirando el bien, cuál es y a quién está asignado. Sin placa, dos equipos iguales son indistinguibles y nadie responde si uno se pierde.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Dos portátiles del mismo modelo: la placa 00125 está asignada a un funcionario y la 00126 a otro. Si falta uno, se sabe exactamente cuál y de quién era.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: entregar un devolutivo sin placa “porque es igual a otro”. La clave: <strong>cada devolutivo, su placa y su responsable</strong>.</p></div></div></div></div><div class="checkpoint"><div class="cp-tag">✋ Aplica lo aprendido</div><p class="cp-q">Vas a entregar dos monitores idénticos a dos funcionarios distintos. Un compañero dice que, como son iguales, no hace falta placa ni distinguir cuál es cuál. ¿Qué es lo correcto?</p><div class="cp-opts"><button class="cp-opt" data-ok="0" data-exp="Sin placa, si después falta uno no se puede saber cuál ni de quién era; los devolutivos se individualizan siempre.">Entregarlos sin placa, total son idénticos y de la misma compra.</button><button class="cp-opt" data-ok="1" data-exp="Cada devolutivo se individualiza con su placa y su responsable, aunque sean idénticos; así hay control real.">Ponerles placa de inventario a cada uno y asignar cada placa a su responsable.</button><button class="cp-opt" data-ok="0" data-exp="Ambos son devolutivos: los dos requieren placa y responsable, no solo uno.">Ponerle placa solo a uno, para diferenciarlos.</button></div><div class="cp-fb"></div></div><div class="concepto"><div class="concepto-head"><span class="ch-icon">👤</span><span>6. Tu rol al clasificar y codificar</span></div><div class="concepto-body"><div class="capa cap-def"><div class="capa-icon def">📘</div><div class="capa-content"><span class="label">Definición</span><p>Tu papel es <strong>aplicar el catálogo y los criterios establecidos</strong>: clasificar correctamente, usar el código que corresponde y placar los devolutivos.</p></div></div><div class="capa cap-apl"><div class="capa-icon apl">🎯</div><div class="capa-content"><span class="label">Aplicación</span><p>No te corresponde inventar categorías ni cambiar la estructura del catálogo por tu cuenta. Si detectas un bien sin código o una inconsistencia, lo <strong>gestionas e informas</strong>, no lo resuelves a la fuerza.</p></div></div><div class="capa cap-eje"><div class="capa-icon eje">🏛️</div><div class="capa-content"><span class="label">Ejemplo real</span><p>Si llega un bien que no encaja en ninguna categoría, no lo “fuerzas” en una que no es: dejas constancia y gestionas su clasificación correcta.</p></div></div><div class="capa cap-cnsc"><div class="capa-icon cnsc">📝</div><div class="capa-content"><span class="label">Cómo lo evalúa la CNSC</span><p>Trampa: que el técnico “rediseñe” el catálogo o fuerce clasificaciones. La correcta respeta el alcance: aplicar e informar.</p></div></div><div class="ojo full"><b>👁️ Ojo en la prueba:</b> clasificar mal por salir del paso contamina todo el inventario. Mejor preguntar/gestionar que forzar.</div></div></div><div class="fuentes"><div class="box-title">📚 Profundiza en las fuentes oficiales</div><p>Para profundizar en la clasificación y el control de bienes (se abre en pestaña nueva):</p><ul class="lista"><li><strong>Clasificación y control de bienes (consumo/devolutivos, codificación)</strong> — Contaduría General de la Nación: <a href="https://www.contaduria.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Gestión de compras y catálogo</strong> — Colombia Compra Eficiente: <a href="https://www.colombiacompra.gov.co" target="_blank" rel="noopener">consultar</a></li><li><strong>Principios de la función administrativa</strong> — Constitución, arts. 2 y 209: <a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">consultar</a></li><li><strong>Alcance del nivel técnico</strong> — Decreto 1083 de 2015, Función Pública: <a href="https://www.funcionpublica.gov.co" target="_blank" rel="noopener">consultar</a></li></ul></div></section>
+<section class="section" data-sec="3"><span class="eyebrow">Sección 4 · Comparaciones</span><h2 class="sec-title">⚖️ No los confundas</h2><p>Conceptos que se confunden al clasificar y codificar.</p><div class="tabla-wrap"><table><tr><th>Clasificar</th><th>Codificar</th></tr><tr><td>Agrupar por categorías afines.</td><td>Asignar un identificador único.</td></tr><tr><td>Responde “¿a qué grupo pertenece?”.</td><td>Responde “¿cuál es exactamente?”.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Creer que es lo mismo: primero se clasifica (grupo) y luego se codifica (identificador único dentro del grupo).</p></div><div class="tabla-wrap"><table><tr><th>Bien de consumo</th><th>Bien devolutivo</th></tr><tr><td>Se agota con el uso.</td><td>Vida útil prolongada.</td></tr><tr><td>Se descarga al entregar.</td><td>Se asigna a un responsable.</td></tr><tr><td>Sin placa.</td><td>Con placa de inventario.</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Tratar un devolutivo como consumo: queda sin placa ni responsable y se pierde sin que nadie responda.</p></div><div class="tabla-wrap"><table><tr><th>Código del bien</th><th>Placa de inventario</th></tr><tr><td>Identifica el tipo de bien en el catálogo.</td><td>Individualiza una unidad física concreta de un devolutivo.</td></tr><tr><td>Es lógico (en el sistema).</td><td>Es física (pegada al bien).</td></tr></table></div><div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Confundir código con placa: el código dice “qué es”; la placa dice “cuál unidad y de quién es”.</p></div></section>
+<section class="section" data-sec="4"><span class="eyebrow">Sección 5 · Casos</span><h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2><p>Cinco situaciones reales de clasificación y codificación, resueltas.</p><div class="caso"><div class="caso-head">📂 Caso 1 · El bien sin código</div><div class="caso-body"><span class="label">Situación</span><p>Llega un bien nuevo que no aparece en el catálogo.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Gestionar la creación del código por el conducto debido antes de ingresarlo, dejando constancia.</strong> No se inventa ni se usa el de otro bien: el código debe ser único y venir del catálogo.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 2 · El nombre doble</div><div class="caso-body"><span class="label">Situación</span><p>Descubres que un mismo insumo está registrado con dos nombres y dos códigos distintos.</p><span class="label">Pregunta</span><p>¿Cómo procedes?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Dejar constancia e informar para que se unifique en un solo código.</strong> Dos códigos para un mismo bien dañan el saldo; la corrección se gestiona, no se hace por la fuerza.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 3 · El devolutivo sin placa</div><div class="caso-body"><span class="label">Situación</span><p>Te piden entregar un equipo devolutivo “rápido” sin ponerle placa.</p><span class="label">Pregunta</span><p>¿Qué es lo apropiado?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Placar el bien y asignar la placa a su responsable antes de entregarlo.</strong> Sin placa no hay individualización ni responsable: el control se pierde.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 4 · El “fuérzalo en una categoría”</div><div class="caso-body"><span class="label">Situación</span><p>Un bien no encaja claramente en ninguna categoría del catálogo y un compañero sugiere meterlo “en la que más se parezca”.</p><span class="label">Pregunta</span><p>¿Cómo actúas?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No forzar la clasificación: dejar constancia y gestionar la categoría correcta.</strong> Clasificar mal contamina el inventario; mejor gestionar que forzar.</div></div></div><div class="caso"><div class="caso-head">📂 Caso 5 · El controlado tratado como común</div><div class="caso-body"><span class="label">Situación</span><p>Llega un insumo de alto valor que requiere control especial, pero se está manejando como un consumible cualquiera.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Aplicar el control especial que corresponde al bien controlado e informar si el procedimiento no se está siguiendo.</strong> El valor o riesgo del bien define su control, no la costumbre.</div></div></div></section>
+<section class="section" data-sec="5"><span class="eyebrow">Sección 6 · Errores frecuentes</span><h2 class="sec-title">⚠️ Errores que debes evitar</h2><div class="box danger"><div class="box-title">❌ Error 1 — Inventar códigos</div><p><strong>Por qué falla:</strong> crea duplicidades y daña la trazabilidad. <strong>Corrige:</strong> usa el catálogo; si falta, gestiona la creación.</p></div><div class="box danger"><div class="box-title">❌ Error 2 — Usar el código de un bien parecido</div><p><strong>Por qué falla:</strong> mezcla dos ítems y descuadra el saldo. <strong>Corrige:</strong> cada bien, su propio código único.</p></div><div class="box danger"><div class="box-title">❌ Error 3 — Tratar devolutivos como consumo</div><p><strong>Por qué falla:</strong> quedan sin placa ni responsable. <strong>Corrige:</strong> devolutivo = placa + responsable.</p></div><div class="box danger"><div class="box-title">❌ Error 4 — Entregar devolutivos sin placa</div><p><strong>Por qué falla:</strong> no se puede saber cuál es ni de quién. <strong>Corrige:</strong> placa antes de entregar, siempre.</p></div><div class="box danger"><div class="box-title">❌ Error 5 — Forzar clasificaciones</div><p><strong>Por qué falla:</strong> contamina el inventario con datos errados. <strong>Corrige:</strong> ante la duda, gestiona la categoría correcta.</p></div><div class="box danger"><div class="box-title">❌ Error 6 — Nombres dobles para un mismo bien</div><p><strong>Por qué falla:</strong> el sistema cree que son varios y el saldo miente. <strong>Corrige:</strong> unifica en un solo código.</p></div></section>
+<section class="section" data-sec="6"><span class="eyebrow">Sección 7 · Tips</span><h2 class="sec-title">💡 Trucos para dominar el tema</h2><div class="box ok"><div class="box-title">✅ Tip 1 — Se gasta o se devuelve</div><p>Si <strong>se devuelve</strong>, es devolutivo (placa + responsable). Si <strong>se gasta</strong>, es de consumo.</p></div><div class="box ok"><div class="box-title">✅ Tip 2 — Un bien, un código</div><p>Nunca dos códigos para el mismo bien. Si ya existe, se usa el que está.</p></div><div class="box ok"><div class="box-title">✅ Tip 3 — El catálogo manda</div><p>Los códigos salen del <strong>catálogo oficial</strong>, no del gusto de cada quien.</p></div><div class="box ok"><div class="box-title">✅ Tip 4 — Código ≠ placa</div><p>El código dice “qué es” (en el sistema); la placa dice “cuál unidad y de quién” (en el bien).</p></div><div class="box ok"><div class="box-title">✅ Tip 5 — No forzar</div><p>Si un bien no encaja, no lo metas “a la fuerza”: gestiona su categoría correcta.</p></div><div class="box ok"><div class="box-title">✅ Tip 6 — Controlados</div><p>Algunos bienes exigen control especial por su valor o riesgo, aunque sean de consumo. Identifícalos.</p></div></section>
+<section class="section" data-sec="7"><span class="eyebrow">Sección 8 · Trampas</span><h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2><div class="trampa"><div class="trampa-q">«No está en el catálogo, invéntale un código parecido.»</div><div class="trampa-detail"><div class="t-row parece">Parece práctico para no demorar.</div><div class="t-row malo">Es trampa: inventar códigos crea duplicidades.</div><div class="t-row bueno">Correcto: gestionar la creación del código.</div></div></div><div class="trampa"><div class="trampa-q">«Son monitores idénticos, no hace falta placa.»</div><div class="trampa-detail"><div class="t-row parece">Parece lógico, son iguales.</div><div class="t-row malo">Es trampa: sin placa nadie responde si falta uno.</div><div class="t-row bueno">Correcto: placa y responsable para cada uno.</div></div></div><div class="trampa"><div class="trampa-q">«Mete el bien en la categoría que más se parezca.»</div><div class="trampa-detail"><div class="t-row parece">Parece resolver rápido.</div><div class="t-row malo">Es trampa: clasificar mal contamina el inventario.</div><div class="t-row bueno">Correcto: gestionar la categoría correcta.</div></div></div><div class="trampa"><div class="trampa-q">«Usa el código de este otro que es casi igual.»</div><div class="trampa-detail"><div class="t-row parece">Parece ahorrar trámite.</div><div class="t-row malo">Es trampa: mezcla dos bienes distintos.</div><div class="t-row bueno">Correcto: cada bien con su código único.</div></div></div></section>
+<section class="section" data-sec="8"><span class="eyebrow">Sección 9 · Repaso</span><h2 class="sec-title">🧠 Repasa con flashcards</h2><p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p><div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div></section>
+<section class="section" data-sec="9"><span class="eyebrow">Sección 10 · Resumen</span><h2 class="sec-title">📝 Resumen y glosario</h2><div class="resumen"><div class="resumen-item"><h4>Consumo / devolutivo / controlado</h4><p>Se gasta / se devuelve y lleva placa / requiere control especial por valor o riesgo.</p></div><div class="resumen-item"><h4>Clasificar y codificar</h4><p>Agrupar por categoría y asignar un código único.</p></div><div class="resumen-item"><h4>Código</h4><p>Identificador único; sale del catálogo, nunca se inventa.</p></div><div class="resumen-item"><h4>Catálogo de bienes</h4><p>Lista oficial estandarizada: la fuente de verdad para nombrar y codificar.</p></div><div class="resumen-item"><h4>Placa de inventario</h4><p>Individualiza cada devolutivo y lo enlaza con su responsable.</p></div><div class="resumen-item"><h4>Tu rol</h4><p>Aplicar el catálogo; gestionar e informar, no forzar ni inventar.</p></div></div><h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3><dl class="glosario"><dt>Clasificación</dt><dd>Agrupación de los bienes por categorías afines.</dd><dt>Codificación</dt><dd>Asignación de un identificador único a cada bien.</dd><dt>Catálogo de bienes</dt><dd>Lista oficial y estandarizada de bienes con su clasificación y código.</dd><dt>Placa de inventario</dt><dd>Marca física que individualiza un devolutivo y lo enlaza con su responsable.</dd><dt>Bien controlado</dt><dd>Bien que requiere control especial por su valor o riesgo.</dd><dt>Duplicidad</dt><dd>Error de tener un mismo bien con dos códigos o nombres distintos.</dd></dl><div class="box gold"><div class="box-title">💎 Para recordar</div><p>El orden del almacén nace aquí: <strong>cada bien, un código único del catálogo; cada devolutivo, su placa y su responsable</strong>.</p></div></section>
+<section class="section" data-sec="10"><span class="eyebrow">Sección 11 · Simulacro</span><h2 class="sec-title">🎓 Simulacro tipo CNSC</h2><div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p><div class="dific-tags"><span class="tag b">4 básicas</span><span class="tag i">5 intermedias</span><span class="tag a">3 avanzadas</span></div></div><div id="quiz"></div><div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div><div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div></section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-ALM-03 · Día 11 · Biblioteca Funcional (familia ALM) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 11", "alerta": "¡Felicitaciones! Terminaste el Día 11 · FUN-ALM-03.\n\nSigue con FUN-ALM-04 · Kardex y Registro de Movimientos."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[{"f": "¿Diferencia entre clasificar y codificar?", "b": "Clasificar es agrupar por categorías; codificar es asignar un identificador único dentro de esa estructura."}, {"f": "¿Qué es un bien controlado?", "b": "Uno que, por su valor o riesgo, requiere control especial aunque sea de consumo."}, {"f": "¿De dónde sale el código de un bien?", "b": "Del catálogo oficial de la entidad. No se inventa ni se copia de otro bien."}, {"f": "¿Puede un bien tener dos códigos?", "b": "No. Un bien, un código único; los nombres dobles dañan el saldo."}, {"f": "¿Qué es la placa de inventario?", "b": "La marca física que individualiza cada devolutivo y lo enlaza con su responsable."}, {"f": "¿Quién lleva placa: consumo o devolutivo?", "b": "El devolutivo. El de consumo se descarga al entregarse, sin placa."}, {"f": "¿Código vs placa?", "b": "El código dice qué es (en el sistema); la placa dice cuál unidad y de quién (en el bien)."}, {"f": "¿Qué haces si un bien no está en el catálogo?", "b": "Gestionar la creación de su código por el conducto debido antes de ingresarlo."}, {"f": "¿Para qué sirve el catálogo de bienes?", "b": "Es la fuente de verdad para nombrar y codificar igual en todas las áreas."}, {"f": "¿Cuál es tu rol al clasificar?", "b": "Aplicar el catálogo y los criterios; no inventar categorías ni forzar clasificaciones."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b", "tema": "Código del catálogo", "ctx": "Vas a ingresar un bien al sistema y, al buscarlo, descubres que no tiene un código asignado en el catálogo de la entidad. Tienes presión por dejar el ingreso listo hoy.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Inventar un código siguiendo el patrón de otros para no demorar el ingreso.", "Usar el código de un bien parecido que ya existe en el catálogo.", "Gestionar la creación del código por el conducto debido antes de ingresarlo, dejando constancia.", "Ingresar el bien sin código y completarlo cuando haya tiempo."], "correcta": 2, "expl": ["Inventar un código genera duplicidades y rompe la unicidad que hace confiable el inventario.", "Usar el código de otro bien mezcla dos ítems distintos y descuadra los saldos de ambos.", "Si el bien no está en el catálogo, lo correcto es gestionar formalmente su código para que nazca único y soportado.", "Ingresar sin código deja el bien sin identificación y descontrola el registro desde el inicio."]}, {"nivel": "b", "tema": "Individualización de devolutivos", "ctx": "Debes entregar dos equipos devolutivos idénticos a dos personas distintas. Un compañero te dice que, como son iguales y de la misma compra, no vale la pena ponerles placa.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Ponerle placa de inventario a cada equipo y asignar cada placa a su responsable.", "Entregarlos sin placa, ya que son idénticos.", "Ponerle placa solo a uno para poder diferenciarlos.", "Anotar en un papel cuál es de quién, sin placa."], "correcta": 0, "expl": ["Cada devolutivo se individualiza con placa y responsable, aunque sean idénticos; así, si falta uno, se sabe cuál y de quién era.", "Sin placa, dos equipos iguales son indistinguibles y nadie responde si uno se pierde.", "Ambos son devolutivos: los dos requieren placa y responsable, no solo uno.", "Un papel informal no individualiza el bien físicamente ni queda enlazado al registro de control."]}, {"nivel": "b", "tema": "Consumo vs devolutivo", "ctx": "Llega una compra que incluye una impresora y varias cajas de tóner. Un compañero nuevo propone registrar todo de la misma forma, como si fuera consumo.", "q": "¿Cómo debes clasificarlos?", "ops": ["Todo como consumo, porque llegaron juntos en la misma compra.", "Todo como devolutivo, para controlarlo mejor.", "Dejarlo sin clasificar hasta que alguien decida.", "La impresora como devolutivo (placa y responsable) y el tóner como consumo (se descarga al usarse)."], "correcta": 3, "expl": ["El tóner se gasta (consumo), pero la impresora tiene vida útil prolongada: tratarla como consumo la deja sin responsable.", "El tóner no es devolutivo: no tiene sentido placarlo ni asignarle responsable, pues se agota.", "Dejar sin clasificar bloquea el control y el ingreso correcto; la clasificación es parte del proceso.", "La impresora es devolutivo (placa + responsable) y el tóner es de consumo (se descarga al usarse): cada uno con su tratamiento."]}, {"nivel": "b", "tema": "Nombres dobles", "ctx": "Revisando el inventario notas que un mismo insumo aparece registrado dos veces, con nombres y códigos distintos, lo que hace que el saldo total no sea confiable.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Borrar uno de los dos registros por tu cuenta para dejar solo uno.", "Dejar constancia del hallazgo e informar para que se unifique en un único código.", "Dejarlo así, total el bien existe físicamente.", "Sumar manualmente los dos saldos en un cuaderno aparte."], "correcta": 1, "expl": ["Borrar registros por tu cuenta puede perder información y movimientos asociados; la corrección debe gestionarse, no improvisarse.", "Lo correcto es documentar el hallazgo e informar para unificar en un solo código, que es lo que devuelve la confiabilidad al saldo.", "Dejar la duplicidad mantiene un inventario que miente sobre las existencias reales.", "Un cuaderno aparte no corrige el sistema ni resuelve la duplicidad de fondo."]}, {"nivel": "i", "tema": "No forzar la clasificación", "ctx": "Llega un bien que no encaja claramente en ninguna categoría del catálogo. Un compañero te sugiere meterlo “en la que más se parezca” para no complicarse.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Meterlo en la categoría más parecida, como sugiere el compañero.", "Crear tú una categoría nueva en el catálogo para ese bien.", "Dejar constancia y gestionar la clasificación correcta por el conducto debido antes de ingresarlo definitivamente.", "Ingresarlo sin categoría para resolver el detalle después."], "correcta": 2, "expl": ["Forzar la clasificación contamina el inventario con datos errados y dificulta encontrar y controlar el bien.", "Modificar la estructura del catálogo por tu cuenta excede tu rol; eso se gestiona por el conducto debido.", "Lo correcto es no forzar: dejar constancia y gestionar la clasificación adecuada, manteniendo la integridad del catálogo.", "Ingresar sin categoría deja el bien fuera del control estructurado y posterga un problema que se debe resolver bien."]}, {"nivel": "i", "tema": "Bien controlado", "ctx": "Ingresa un insumo de alto valor que, por sus características, requiere un control especial. Sin embargo, ves que se viene manejando como un consumible común y corriente.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Seguir manejándolo como consumible común, ya que así se ha hecho siempre.", "Aplicarle el control especial que corresponde y dejar constancia e informar de que el procedimiento no se está siguiendo.", "Decidir tú mismo cambiar todo el procedimiento de control del área.", "Ignorarlo, pues definir controles no es asunto del almacén."], "correcta": 1, "expl": ["La costumbre no define el control: un bien controlado exige seguimiento especial por su valor o riesgo.", "Lo correcto es aplicar el control que corresponde y dejar constancia e informar de la desviación, dentro de tu rol.", "Rediseñar todo el procedimiento excede tu nivel; tú aplicas e informas, no defines la política.", "El control adecuado de los bienes sí es parte de tu rol; ignorarlo te haría partícipe de la falla."]}, {"nivel": "i", "tema": "Código único", "ctx": "Para agilizar un ingreso, un compañero te ofrece el código de un bien “casi igual” que ya existe en el catálogo, diciendo que “para qué crear otro si total se parecen”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Usar ese código, ya que los bienes se parecen y se ahorra trámite.", "Usarlo temporalmente y luego corregirlo cuando haya tiempo.", "No usarlo: cada bien distinto requiere su propio código único; si falta, se gestiona.", "Crear tú un código nuevo mezclando partes de varios."], "correcta": 2, "expl": ["Compartir código entre dos bienes distintos hace que el sistema los cuente como uno y descuadra ambos saldos.", "Un código “temporal” mal asignado genera movimientos errados que después son difíciles de desenredar.", "Cada bien distinto necesita su propio código único; si no existe, se gestiona su creación: esa es la regla.", "Inventar códigos mezclando partes rompe el estándar del catálogo y crea identificadores no válidos."]}, {"nivel": "i", "tema": "Placa y responsable", "ctx": "Entregaste hace meses varios equipos devolutivos sin asignar placa ni responsable formal. Ahora no se sabe quién tiene cuál y falta uno.", "q": "¿Qué muestra principalmente esta situación?", "ops": ["Que las placas son un trámite innecesario que solo demora las entregas.", "Que el problema es exclusivamente del funcionario que perdió el equipo.", "Que entregar devolutivos sin placa ni responsable elimina la trazabilidad y hace imposible saber quién responde.", "Que basta con revisar las facturas de compra para resolverlo."], "correcta": 2, "expl": ["Las placas no son un trámite vacío: son justo lo que permite saber cuál equipo es cuál y de quién es.", "Sin asignación formal de responsable, no se puede atribuir la responsabilidad solo al usuario; falló el control en la entrega.", "Exacto: sin placa ni responsable formal, se pierde la trazabilidad y nadie responde con certeza; por eso son obligatorias.", "La factura prueba la compra, pero no individualiza ni dice quién tenía cada unidad."]}, {"nivel": "i", "tema": "Trazabilidad por codificación", "ctx": "Te piden ubicar rápidamente todas las unidades de un mismo tipo de bien que están repartidas por distintos lugares de la bodega. En tu almacén cada bien tiene su código único del catálogo y los devolutivos llevan su placa.", "q": "¿Qué es lo que hace posible ubicar y rastrear esos bienes con rapidez y certeza?", "ops": ["La buena memoria del personal sobre dónde se guardó cada cosa.", "La codificación única del catálogo (y la placa en los devolutivos), que identifica y enlaza cada bien con su registro.", "Revisar todas las facturas de compra de los últimos años.", "Contar a ojo y estimar en qué zonas podrían estar."], "correcta": 1, "expl": ["La memoria no es confiable ni verificable; si la persona que “sabe” falta, se pierde la información.", "La codificación única (y la placa en los devolutivos) es justo lo que permite identificar, ubicar y rastrear cada bien con certeza.", "Las facturas prueban las compras, pero no dicen dónde está físicamente cada unidad hoy.", "Estimar a ojo no da certeza ni trazabilidad; es lo contrario del control."]}, {"nivel": "a", "tema": "Integridad de la codificación", "ctx": "Un superior te pide, con afán, que ingreses varios bienes asignándoles códigos “provisionales” inventados por ti, prometiendo que “después se corrigen en el sistema”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Asignar los códigos provisionales como te pide el superior y confiar en que se corrigen luego.", "Explicar con respeto que los códigos deben venir del catálogo, gestionar los que falten y, si insiste, pedir la instrucción por escrito.", "Ingresar los bienes sin ningún código para no inventar nada.", "Asignar a todos el mismo código genérico para diferenciarlos del resto."], "correcta": 1, "expl": ["Los códigos “provisionales” inventados generan duplicidades y movimientos errados que rara vez se corrigen bien después; la orden no cambia eso.", "Lo correcto es sustentar que los códigos vienen del catálogo, gestionar los faltantes y, ante la insistencia, pedir la orden por escrito para proteger el control y a ti mismo.", "Ingresar sin código deja los bienes sin identificación y descontrola el registro.", "Un mismo código para varios bienes los vuelve indistinguibles y arruina la trazabilidad."]}, {"nivel": "a", "tema": "Corrección de inventario", "ctx": "Detectas que, por errores de codificación acumulados, el inventario del sistema no coincide con lo físico en varios ítems. Un compañero propone ajustar los números directamente para que “se vea ordenado”.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Ajustar los números en el sistema para que cuadren con lo físico, como propone el compañero.", "Documentar las diferencias y sus causas e informar para que la corrección se haga por el procedimiento formal, sin alterar registros por cuenta propia.", "Borrar los ítems problemáticos y volver a crearlos desde cero.", "Dejarlo así, ya que corregir codificación no es asunto del almacén."], "correcta": 1, "expl": ["Ajustar números por cuenta propia para que “se vea ordenado” oculta el origen del problema y puede configurar una irregularidad.", "Lo correcto es documentar las diferencias y sus causas e informar para corregir por el procedimiento formal; así se preserva la trazabilidad y la transparencia.", "Borrar y recrear elimina el historial de movimientos y agrava la pérdida de información.", "El orden y la confiabilidad del inventario sí son parte del rol del almacén; ignorarlo perpetúa el error."]}, {"nivel": "a", "tema": "Catálogo común", "ctx": "Cada dependencia ha empezado a nombrar y codificar los bienes a su manera, generando un caos donde un mismo bien tiene varios nombres. Te piden tu criterio técnico.", "q": "¿Cuál es la recomendación más apropiada desde tu rol?", "ops": ["Que cada área siga con su propio sistema, ya que conocen mejor sus bienes.", "Proponer y promover el uso de un único catálogo común estandarizado, e informar la situación para que se adopte formalmente.", "Crear tú, por tu cuenta, un catálogo nuevo e imponerlo a las demás áreas.", "No opinar, porque esa decisión no le interesa al almacén."], "correcta": 1, "expl": ["Que cada área use su propio sistema es justamente la causa del caos: impide consolidar y controlar el inventario.", "Lo correcto es promover un único catálogo común estandarizado e informar para que se adopte formalmente; esa es la base de un control confiable.", "Imponer un catálogo por tu cuenta excede tu rol; la adopción debe gestionarse formalmente.", "El almacén es el más interesado en un catálogo común: de él depende la confiabilidad del inventario."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p.ops.forEach((op,j)=>{const letra=String.fromCharCode(65+j);opsHtml+='<div class="opcion" data-q="'+idx+'" data-op="'+j+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+op+'</span><div class="op-exp" id="oe-'+idx+'-'+j+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, oi=+this.dataset.op;
+      if(respondidas[qi]!==undefined)return;
+      respondidas[qi]=oi;
+      const p=preguntas[qi];const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,k)=>{
+        o.classList.add('bloqueada');
+        const exp=document.getElementById('oe-'+qi+'-'+k);const letra=String.fromCharCode(65+k);
+        if(k===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[k];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[k];}
+      });
+      if(oi!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p.correcta);
+      if(oi===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+</body>
+</html>
