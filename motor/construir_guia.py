@@ -373,16 +373,30 @@ def construir(json_path):
     with open(os.path.join(BASE_DIR, 'base-guia.html'), encoding='utf-8') as fh:
         base = fh.read()
 
-    badges = ('<span class="badge">📅 Día %s de 21</span>'
-              '<span class="badge">⏱ %s</span>'
-              '<span class="badge">🎯 Prueba escrita CNSC</span>'
-              '<span class="badge">🔁 Familia %s</span>') % (d['dia'], d['tiempo'], d['familia'])
-    footer = '%s · Día %s · Biblioteca Funcional (familia %s) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.' % (
-        d['codigo'], d['dia'], d['familia'])
-    finalizar = {
-        'boton': '✅ Finalizar Día %s' % d['dia'],
-        'alerta': '¡Felicitaciones! Terminaste el Día %s · %s.\n\nSigue con %s.' % (d['dia'], d['codigo'], d['proxima'])
-    }
+    es_bonus = bool(d.get('bonus')) or d.get('familia') == 'BON'
+    if es_bonus:
+        badges = ('<span class="badge">🎁 Guía Bonus</span>'
+                  '<span class="badge">⏱ %s</span>'
+                  '<span class="badge">🎯 Prueba CNSC</span>'
+                  '<span class="badge">⭐ Incluida en todos los cursos</span>') % d['tiempo']
+        footer = '%s · Guía Bonus · %s · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.' % (
+            d['codigo'], d.get('categoria', 'Bonus'))
+        finalizar = {
+            'boton': '✅ Finalizar la guía bonus',
+            'alerta': '¡Felicitaciones! Terminaste la guía bonus · %s.%s' % (
+                d['codigo'], ('\n\nSigue con %s.' % d['proxima']) if d.get('proxima') else '')
+        }
+    else:
+        badges = ('<span class="badge">📅 Día %s de 21</span>'
+                  '<span class="badge">⏱ %s</span>'
+                  '<span class="badge">🎯 Prueba escrita CNSC</span>'
+                  '<span class="badge">🔁 Familia %s</span>') % (d['dia'], d['tiempo'], d['familia'])
+        footer = '%s · Día %s · Biblioteca Funcional (familia %s) · v1.0<br>Material de preparación independiente. No afiliado a la CNSC.' % (
+            d['codigo'], d['dia'], d['familia'])
+        finalizar = {
+            'boton': '✅ Finalizar Día %s' % d['dia'],
+            'alerta': '¡Felicitaciones! Terminaste el Día %s · %s.\n\nSigue con %s.' % (d['dia'], d['codigo'], d['proxima'])
+        }
 
     html = base
     repl = {

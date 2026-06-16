@@ -3,7 +3,28 @@
 > **Para retomar en una nueva sesión de Kiro:** conecta este repositorio y pídele a Kiro:
 > *"Lee CONTINUIDAD.md y ARQUITECTURA-PLATAFORMA.md y continuemos donde quedamos."*
 
-_Última actualización: 16 de junio de 2026._
+_Última actualización: trabajo sobre el CONTENIDO DE GUÍAS (motor de guías) — estándar profundo aplicado a las 12 funcionales y guía bonus de Ofimática pendiente._
+
+> **⏳ ESTADO DE ESTA LÍNEA DE TRABAJO (contenido de guías, motor):**
+>
+> **Rama de trabajo:** `feat/desarrollo-profundo-todas` (PENDIENTE DE MERGE a `main`). Link para mergear: https://github.com/ascensopublico2026/ASCENSO-PUBLICO/pull/new/feat/desarrollo-profundo-todas
+>
+> **✅ YA HECHO en esta rama:**
+> 1. **Simulacro tipo CNSC (juicio situacional) reescrito en las 12 guías funcionales** (`motor/contenido/FUN-*.json`): contexto largo (≥220), enunciado situacional largo (≥120) y 4 opciones largas y plausibles (≥110), con opciones **barajadas en cada carga** (aleatorias).
+> 2. **Desarrollo PROFUNDO tipo «mini-libro»** en las 12 funcionales (8-10 temas cada una, 30+ bloques): FUN-ALM-01..07, FUN-ATC-01, FUN-DOC-01, FUN-MIPG-01, FUN-OFI-01, FUN-PRO-01. Generalizadas (sin entidad/OPEC/cargo). Algunas calibradas con las guías manuales del usuario que subió a la raíz del repo (`guia_*.html`, carpeta de referencias).
+> 3. **Motor mejorado** (`motor/base-guia.html` + `motor/construir_guia.py`): nuevos bloques **`calculo`** (fórmulas paso a paso), **`normativa`** (marco legal citado) y **`destacado`** (regla de oro/alerta); **modo BONUS** en badges/footer (cuando `familia=="BON"` o `bonus:true`).
+> 4. **Estándar CONGELADO y VALIDADO por el motor**: el validador avisa si una guía queda por debajo (Desarrollo <7 temas, <25 bloques, sin normativa/tabla/destacado; simulacro sin ctx/q/ops largos). Documentado en `.kiro/steering/proyecto-ascenso-publico.md` y `motor/README.md`. **Toda guía nueva debe cumplir este piso.** Modelos de referencia: `motor/contenido/FUN-DOC-01.json` y `FUN-ALM-04.json`.
+>
+> **🔜 PENDIENTE INMEDIATO — Guía BONUS `BON-02` «Ofimática y Habilidades Digitales»:**
+> - Es una guía bonus que irá en **TODOS los cursos** (junto a `BON-01`). Cubre lo que pregunta la **Prueba de Juicio Situacional (PJS)** de la CNSC: **Word** (combinar correspondencia, control de cambios/comentarios, comparar documentos, estilos+tabla de contenido, encabezado/«primera página diferente», saltos de sección/orientación/numeración i-ii-iii, pegado especial, índice/glosario, notas/citas, PDF, atajos), **Excel** (SI/SI anidado, CONTAR.SI, SUMAR.SI, CONTARA, BUSCARV, CONCATENAR, SUBTOTALES, referencias absolutas $, tablas dinámicas y Suma→Cuenta, filtros, ordenar, inmovilizar paneles, buscar/reemplazar, texto en columnas, validación de datos, formato condicional, gráficos línea/circular, error ###), **PowerPoint** (patrón de diapositivas, transición vs animación, animación al hacer clic, SmartArt/organigrama, vista clasificador, modo presentador, hipervínculo, enviar al fondo, F5/Shift+F5, buenas prácticas, plantilla), **Outlook/correo** (Para/CC/CCO, reenviar, reglas, carpetas, libreta Ctrl+Mayús+B, tareas, F9, adjuntos), **atajos de Windows** (Mayús+Supr, Ctrl+flecha, Alt+Enter, Alt+F4, Alt+Tab, Ctrl+Esc, Windows+R), **seguridad informática** (phishing, antivirus/cuarentena, .zip, no compartir credenciales) y **nube/colaboración** (Guardar vs Guardar como, control de versiones, OneDrive/SharePoint coautoría, compartir por enlace, PDF).
+> - **Metadata acordada:** `codigo:"BON-02"`, `archivo:"BON-02-ofimatica-habilidades-digitales.html"`, `titulo:"Ofimática y Habilidades Digitales"`, `familia:"BON"`, `dia:"Bonus"`, `bonus:true`, `proxima:""`, `categoria:"Guía Bonus · Ofimática y Habilidades Digitales"`, `tiempo:"100-120 min"`.
+> - **Debe cumplir el estándar profundo** (8-10 temas, normativa con Ley 1581/2012, Ley 1712/2014, Decreto 1008/2018, Ley 527/1999; tablas de atajos/funciones; destacados de seguridad; simulacro 12 preguntas 4-5-3 tipo PJS sobre los casos del material) y compilar **sin avisos** con `python3 motor/construir_guia.py motor/contenido/BON-02.json`.
+> - El **material/banco de preguntas** que define qué se evalúa está guardado en el repo: **`referencias/ofimatica-banco-preguntas.md`** (Parte A: 57 ítems de conocimiento; Parte B: simulacro PJS de la Convocatoria Antioquia 3). Úsalo como **temario** de BON-02 (no copiar literal: enseñar todos esos conceptos). Falta crear el JSON; el sub-agente que lo intentaba se abortó.
+> - Tras crearla: registrarla en `biblioteca/biblioteca.json` y, en la plataforma, sumarla a la auto-carga de bonus en `lib/autocargarGuias.ts` (hoy carga `BON-01`).
+
+---
+
+> **NOTA:** El bloque siguiente describe el estado de la PLATAFORMA (todo en producción y mergeado en `main`). La línea de trabajo de arriba (contenido de guías) está en la rama `feat/desarrollo-profundo-todas` aún sin mergear.
 
 ---
 
