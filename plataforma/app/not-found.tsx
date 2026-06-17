@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const metadata = {
   title: "Página no encontrada",
@@ -53,7 +54,7 @@ export default function NotFound() {
       </div>
 
       <p style={{ color: "var(--texto-suave, #5B6675)", fontSize: ".84rem", marginTop: 28 }}>
-        ¿Necesitas ayuda? <a href="https://wa.me/573151972091" target="_blank" rel="noopener" style={{ color: "var(--azul, #0A2A5E)", fontWeight: 700 }}>Escríbenos por WhatsApp</a>
+        ¿Necesitas ayuda? <a href={waUrl(WA_MENSAJES.soporte)} target="_blank" rel="noopener" style={{ color: "var(--azul, #0A2A5E)", fontWeight: 700 }}>Escríbenos por WhatsApp</a>
       </p>
     </main>
   );
