@@ -27,4 +27,15 @@ for f in "$ROOT"/guias/*.html; do
 done
 echo "✓ $copiadas guías HTML copiadas a plataforma/public/seed-guias/"
 
+# 3) Copiar los simulacros FINALES (simulacro/SIM-NNN.html, sin las versiones
+#    de iteración -vN / -demo) a public/seed-guias para poder subirlos al bucket.
+sim=0
+for f in "$ROOT"/simulacro/SIM-[0-9][0-9][0-9].html; do
+  [ -e "$f" ] || continue
+  base="$(basename "$f")"
+  cp "$f" "$ROOT/plataforma/public/seed-guias/$base"
+  sim=$((sim+1))
+done
+echo "✓ $sim simulacro(s) copiado(s) a plataforma/public/seed-guias/"
+
 echo "Listo. Recuerda: tras desplegar, visita /api/admin/seed-guias (como admin) para subirlas al bucket."
