@@ -5,7 +5,7 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo que remite a la guía del curso). **Próximo paso sugerido: motor data-driven de simulacros (separar plantilla de contenido) para acelerar la creación en nuevos cursos.**_
+_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros, + MOTOR de simulacros data-driven construido.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo). Ya existe `simulacro/motor/` (molde + JSON + builder con validación), igual al motor de guías. **Próximo paso: armar simulacros de nuevos cursos llenando un JSON de contenido.**_
 
 ---
 
@@ -23,7 +23,8 @@ _Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO co
   - **Modo examen real:** se responde todo sin ver aciertos → botón "Presentar examen" → resultados con puntaje, %, **revisión pregunta por pregunta** (tu respuesta vs. correcta + explicación breve) y **guía de refuerzo** que remite a la guía del curso donde estudiar cada tema fallado.
   - Opciones barajadas en cada intento; incluye una pregunta de cálculo (promedio ponderado) tipo MBE.
   - **Diseño congelado:** Inter + Crimson Pro, marca navy/gold, único y profesional (no copia de las guías funcionales).
-- **➡️ PRÓXIMO PASO sugerido:** crear el **motor data-driven de simulacros** (plantilla HTML congelada + contenido en JSON, como el `/motor` de las guías) para que armar el simulacro de un **nuevo curso** solo requiera escribir las preguntas (contenido), sin rehacer diseño ni lógica.
+- **✅ MOTOR DE SIMULACROS construido** (`simulacro/motor/`): molde congelado `base-simulacro.html` + contenido en `simulacro/contenido/<CODIGO>.json` + `construir_simulacro.py` (con validación) + `construir_todos.py`. Mismo patrón que el motor de guías. Para un curso nuevo se llena un JSON y el simulacro se ensambla solo. SIM-001 ya está extraído a `contenido/SIM-001.json`.
+- **➡️ PRÓXIMO PASO sugerido:** para cada curso nuevo, copiar `contenido/SIM-001.json`, reutilizar las preguntas transversales (Generales, Nivel, Ofimática) y reescribir solo las **Funcionales** del nuevo cargo; luego `python3 motor/construir_simulacro.py contenido/<CODIGO>.json`.
 
 ---
 
