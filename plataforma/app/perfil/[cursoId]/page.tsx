@@ -56,15 +56,22 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // Obtener el curso con su convocatoria
-  const { data: curso } = await supabase
+  // ¿Es admin? El admin puede previsualizar cualquier curso (no solo los suyos).
+  const { data: perfil } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
+  const esAdmin = perfil?.rol === "admin";
+
+  // Obtener el curso con su convocatoria. El estudiante solo ve los suyos; el admin, cualquiera.
+  let cursoQuery = supabase
     .from("cursos")
     .select("*, convocatorias(nombre, imagen_url, entidad)")
-    .eq("id", params.cursoId)
-    .eq("usuario_id", user.id)
-    .single();
+    .eq("id", params.cursoId);
+  if (!esAdmin) cursoQuery = cursoQuery.eq("usuario_id", user.id);
+  const { data: curso } = await cursoQuery.single();
 
   if (!curso) notFound();
+
+  // Modo vista previa: admin revisando un curso que no es suyo (antes de habilitarlo).
+  const esPreview = esAdmin && curso.usuario_id !== user.id;
 
   // Obtener las guías del curso
   const { data: guias } = await supabase
@@ -82,7 +89,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   // El bonus NO es obligatorio para desbloquear; el simulacro tampoco se cuenta.
   const guiasRequeridas = (guias || []).filter((g: any) => g.tipo !== "simulacro" && g.tipo !== "bonus" && g.archivo_path);
   const requeridasLeidas = guiasRequeridas.filter((g: any) => g.leida).length;
-  const simulacroDesbloqueado = guiasRequeridas.length > 0 && requeridasLeidas === guiasRequeridas.length;
+  const simulacroDesbloqueado = esPreview || (guiasRequeridas.length > 0 && requeridasLeidas === guiasRequeridas.length);
   const faltanSimulacro = guiasRequeridas.length - requeridasLeidas;
 
   // Agrupar guías en MÓDULOS (estilo currículo) y ordenarlas dentro de cada uno.
@@ -119,16 +126,26 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
     : 0;
 
   // Sincronizar el campo del curso (para que aparezca igual en la lista de /perfil)
-  if (curso.estado === "listo" && progresoPct !== curso.progreso_pct) {
+  if (!esPreview && curso.estado === "listo" && progresoPct !== curso.progreso_pct) {
     await supabase.from("cursos").update({ progreso_pct: progresoPct }).eq("id", curso.id);
   }
 
   return (
     <main style={{ maxWidth: 800, margin: "0 auto", padding: "40px 22px 80px" }}>
       {/* Back link */}
-      <Link href="/perfil" style={{ color: "var(--texto-suave)", fontSize: ".88rem", display: "inline-flex", alignItems: "center", gap: 6 }}>
-        ← Mis cursos
+      <Link href={esPreview ? `/admin/cursos/${curso.id}` : "/perfil"} style={{ color: "var(--texto-suave)", fontSize: ".88rem", display: "inline-flex", alignItems: "center", gap: 6 }}>
+        ← {esPreview ? "Volver al panel del curso" : "Mis cursos"}
       </Link>
+
+      {/* Banner de vista previa (admin) */}
+      {esPreview && (
+        <div style={{ marginTop: 14, background: "#FDF4E3", border: "1px solid #F0DCB0", borderRadius: 12, padding: "12px 16px", display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontSize: "1.2rem" }}>👁️</span>
+          <span style={{ fontSize: ".86rem", color: "#B8600A" }}>
+            <strong>Vista previa (admin).</strong> Estás viendo el curso tal como lo verá el estudiante. Aquí no se marca el progreso y el simulacro se muestra desbloqueado para que lo revises.
+          </span>
+        </div>
+      )}
 
       {/* Hero mini del curso */}
       <div style={{
@@ -158,7 +175,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
       </div>
 
       {/* Estado del curso */}
-      {curso.estado === "en_preparacion" && (
+      {curso.estado === "en_preparacion" && !esPreview && (
         <div style={{
           background: "#FDF4E3",
           border: "1px solid #F0DCB0",
@@ -178,11 +195,11 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
       )}
 
       {/* Biblioteca de guías */}
-      {curso.estado === "listo" && (() => {
+      {(curso.estado === "listo" || esPreview) && (() => {
         // Verificar si el deadline ya pasó (si existe)
         const deadlinePasado = !curso.preparacion_deadline || new Date(curso.preparacion_deadline).getTime() <= Date.now();
 
-        if (!deadlinePasado) {
+        if (!esPreview && !deadlinePasado) {
           // Curso listo pero aún no pasan las 12h — mostrar contador
           return (
             <div style={{
