@@ -5,6 +5,17 @@ import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getGuiaCatalogo } from "@/lib/catalogoGuias";
 import { copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
+import { correoCursoListo } from "@/lib/email";
+
+// Formatea fecha/hora en español Colombia (para avisar cuándo estará disponible).
+function fmtFechaHora(iso: string | null): string | undefined {
+  if (!iso) return undefined;
+  try {
+    return new Date(iso).toLocaleString("es-CO", {
+      day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit", hour12: true,
+    });
+  } catch { return undefined; }
+}
 
 /**
  * Asigna una guía YA EXISTENTE de la biblioteca al curso, por su código.
@@ -86,7 +97,27 @@ export async function subirGuia(cursoId: string, formData: FormData) {
 export async function marcarCursoListo(cursoId: string) {
   await requireAdmin();
   const supabase = createAdminClient();
+
+  // Estado previo para decidir si notificar (evita correos duplicados).
+  const { data: prev } = await supabase
+    .from("cursos")
+    .select("estado, preparacion_deadline, profiles(correo, nombre)")
+    .eq("id", cursoId)
+    .single();
+
+  const ahora = Date.now();
+  const deadlineMs = (prev as any)?.preparacion_deadline ? new Date((prev as any).preparacion_deadline).getTime() : null;
+  const yaEstabaDisponible = (prev as any)?.estado === "listo" && deadlineMs != null && deadlineMs <= ahora;
+
   await supabase.from("cursos").update({ estado: "listo" }).eq("id", cursoId);
+
+  // Notifica al cliente que su curso quedó listo (solo si no estaba ya disponible).
+  const correo = (prev as any)?.profiles?.correo;
+  if (correo && !yaEstabaDisponible) {
+    const disponibleAhora = deadlineMs == null || deadlineMs <= ahora;
+    await correoCursoListo((prev as any).profiles.correo, (prev as any).profiles.nombre || "", disponibleAhora, fmtFechaHora((prev as any)?.preparacion_deadline));
+  }
+
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
 
@@ -97,10 +128,28 @@ export async function marcarCursoListo(cursoId: string) {
 export async function habilitarCursoAhora(cursoId: string) {
   await requireAdmin();
   const supabase = createAdminClient();
+
+  const { data: prev } = await supabase
+    .from("cursos")
+    .select("estado, preparacion_deadline, profiles(correo, nombre)")
+    .eq("id", cursoId)
+    .single();
+
+  const ahora = Date.now();
+  const deadlineMs = (prev as any)?.preparacion_deadline ? new Date((prev as any).preparacion_deadline).getTime() : null;
+  const yaEstabaDisponible = (prev as any)?.estado === "listo" && deadlineMs != null && deadlineMs <= ahora;
+
   await supabase.from("cursos").update({
     estado: "listo",
     preparacion_deadline: new Date().toISOString(), // deadline = ahora = ya pasó
   }).eq("id", cursoId);
+
+  // Notifica al cliente que ya puede entrar (solo si antes no estaba disponible).
+  const correo = (prev as any)?.profiles?.correo;
+  if (correo && !yaEstabaDisponible) {
+    await correoCursoListo((prev as any).profiles.correo, (prev as any).profiles.nombre || "", true);
+  }
+
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
 
