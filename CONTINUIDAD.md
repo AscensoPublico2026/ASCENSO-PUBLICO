@@ -5,7 +5,7 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, automatización de asignación de guías por código, reorden del panel, guía "Conoce tu Entidad" (ENT-IDV-01) y correos/recuperación de contraseña con marca (SMTP Resend + flujo PKCE). **Próximo paso: crear el SIMULACRO (SIM-001).**_
+_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo que remite a la guía del curso). **Próximo paso sugerido: motor data-driven de simulacros (separar plantilla de contenido) para acelerar la creación en nuevos cursos.**_
 
 ---
 
@@ -16,7 +16,14 @@ _Última actualización: 16 de junio de 2026 — cierre de sesión tras BON-02, 
   - INTRO-00 + Generales (GEN-01/02/03) + 12 por nivel (ASI/TEC/PRO) + 12 funcionales (FUN-*) + 2 bonus (BON-01 Estrategia CNSC, BON-02 Ofimática) + **ENT-IDV-01 (Conoce tu Entidad: INDERVALLE)**.
 - **Flujo de armado de cursos:** el admin ya **asigna guías por código** desde desplegables (no sube HTML a mano). El panel del curso está **ordenado por el plan** (Día 1 + Conoce tu Entidad → generales/nivel → 12 funcionales → simulacro).
 - **Prueba de compra y correos:** funcionando. Correo al cliente ✅, aviso de compra al admin a `ascensopublico@gmail.com` ✅, y **recuperación de contraseña** con marca (SMTP Resend + plantilla en español + fix del flujo PKCE) ✅. Único pendiente opcional: registro **DMARC** para mejorar entregabilidad (ver §9.7).
-- **➡️ PRÓXIMO PASO (se hará en una nueva sesión): crear el SIMULACRO `SIM-001`** para el cargo de prueba (INDERVALLE, Técnico Operativo 314-03, Almacén), hacer pruebas de cómo se ve y **definir su diseño/estructura como plantilla de TODOS los simulacros** (igual que se hizo con las guías y con "Conoce tu Entidad").
+- **✅ SIMULACRO `SIM-001` CREADO Y CONGELADO** como **plantilla oficial de todos los simulacros** (igual que se hizo con las guías y con "Conoce tu Entidad"). Archivo: `simulacro/SIM-001.html`.
+  - **50 preguntas** de juicio situacional tipo CNSC para el cargo de prueba (INDERVALLE, Técnico Operativo 314-03, Almacén).
+  - **Distribución:** 6 Generales + 6 Nivel Técnico + **32 Funcionales Almacén (FUN-ALM-01 a 07)** + 5 Otras Funcionales (DOC/MIPG/OFI/PRO/ATC) + 1 Ofimática (BON-02).
+  - **Formato CNSC:** contexto (Caso) + párrafo de dilema que incita la decisión + 4 opciones plausibles. Pregunta integrada, NO académica.
+  - **Modo examen real:** se responde todo sin ver aciertos → botón "Presentar examen" → resultados con puntaje, %, **revisión pregunta por pregunta** (tu respuesta vs. correcta + explicación breve) y **guía de refuerzo** que remite a la guía del curso donde estudiar cada tema fallado.
+  - Opciones barajadas en cada intento; incluye una pregunta de cálculo (promedio ponderado) tipo MBE.
+  - **Diseño congelado:** Inter + Crimson Pro, marca navy/gold, único y profesional (no copia de las guías funcionales).
+- **➡️ PRÓXIMO PASO sugerido:** crear el **motor data-driven de simulacros** (plantilla HTML congelada + contenido en JSON, como el `/motor` de las guías) para que armar el simulacro de un **nuevo curso** solo requiera escribir las preguntas (contenido), sin rehacer diseño ni lógica.
 
 ---
 
