@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +20,35 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
   if (!guia?.archivo_path) return new NextResponse("No encontrado", { status: 404 });
 
   const admin = createAdminClient();
-  const { data: blob, error } = await admin.storage.from("guias").download(guia.archivo_path);
-  if (error || !blob) return new NextResponse("No disponible", { status: 404 });
+  let html: string | null = null;
 
-  const html = await blob.text();
+  // 1) Intentar servir desde el bucket (caso normal).
+  const { data: blob } = await admin.storage.from("guias").download(guia.archivo_path);
+  if (blob) {
+    html = await blob.text();
+  } else {
+    // 2) Auto-sanación: el HTML aún no está en el bucket (guía recién publicada).
+    //    Lo tomamos de public/seed-guias/ (incluido en el deploy), lo subimos al
+    //    bucket y lo servimos. Así una guía nueva funciona SOLA, sin tener que
+    //    correr /api/admin/seed-guias a mano.
+    const basename = guia.archivo_path.replace(/^guias\//, "");
+    try {
+      const res = await fetch(`${SITE_URL}/seed-guias/${basename}`);
+      if (res.ok) {
+        const content = await res.arrayBuffer();
+        await admin.storage.from("guias").upload(guia.archivo_path, content, {
+          contentType: "text/html; charset=utf-8",
+          upsert: true,
+        });
+        html = Buffer.from(content).toString("utf-8");
+      }
+    } catch {
+      // Si falla, caemos al 404 de abajo.
+    }
+  }
+
+  if (html == null) return new NextResponse("No disponible", { status: 404 });
+
   return new NextResponse(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",

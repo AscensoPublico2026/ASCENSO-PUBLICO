@@ -1,10 +1,12 @@
 const RESEND_URL = "https://api.resend.com/emails";
+import { SITE_URL } from "@/lib/site";
+
 // Remitente del dominio verificado en Resend (ascensopublico.com).
 // "noreply@" es la dirección de origen; no necesita ser un buzón real.
 const FROM = "Ascenso Público <noreply@ascensopublico.com>";
 
 // URL base del sitio (para logos e imágenes en los correos)
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://ascensopublico.com";
+const SITE = SITE_URL;
 const LOGO_URL = `${SITE}/brand/logo-gold-256.png`;
 const WHATSAPP = "573151972091";
 

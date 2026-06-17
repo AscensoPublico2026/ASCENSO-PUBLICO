@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { archivosSeed } from "@/lib/catalogoGuias";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * API Route: /api/admin/seed-guias
@@ -38,7 +39,7 @@ export async function GET() {
   // Subir guías
   const admin = createAdminClient();
   const results: { file: string; status: "ok" | "error"; message?: string }[] = [];
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ascenso-publico.vercel.app";
+  const siteUrl = SITE_URL;
 
   for (const filename of GUIAS) {
     const storagePath = `guias/${filename}`;
