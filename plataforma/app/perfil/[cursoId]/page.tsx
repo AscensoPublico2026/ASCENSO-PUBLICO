@@ -8,14 +8,20 @@ export const dynamic = "force-dynamic";
 
 // Módulos del currículo (estilo plataforma de aprendizaje). El orden define
 // cómo se muestran al estudiante. Cada guía se clasifica con moduloKey().
-type ModuloDef = { key: string; icon: string; titulo: string; desc: string };
+type ModuloDef = { key: string; icon: string; titulo: string; desc: string; intro: string };
 const MODULOS: ModuloDef[] = [
-  { key: "introduccion", icon: "🚀", titulo: "Introducción", desc: "Empieza aquí: cómo funciona tu curso y tu entidad." },
-  { key: "generales", icon: "🏛️", titulo: "Conocimientos Generales", desc: "El Estado, la función pública y el marco institucional." },
-  { key: "nivel", icon: "🎯", titulo: "Competencias por Nivel", desc: "Competencias comportamentales propias de tu nivel." },
-  { key: "funcional", icon: "🧩", titulo: "Funciones del Cargo", desc: "El conocimiento técnico específico de tu empleo." },
-  { key: "bonus", icon: "🎁", titulo: "Material Bonus", desc: "Contenido extra para reforzar. Opcional, pero recomendado." },
-  { key: "simulacro", icon: "📝", titulo: "Simulacro Final", desc: "Pon a prueba todo lo que aprendiste, como en la prueba real." },
+  { key: "introduccion", icon: "🚀", titulo: "Introducción", desc: "Empieza aquí: cómo funciona tu curso y tu entidad.",
+    intro: "Aquí arranca tu preparación. Conocerás cómo funciona la CNSC, cómo aprovechar al máximo el curso y la entidad a la que aspiras, para llegar con contexto al resto del plan." },
+  { key: "generales", icon: "🏛️", titulo: "Conocimientos Generales", desc: "El Estado, la función pública y el marco institucional.",
+    intro: "En estas guías encontrarás los fundamentos del Estado colombiano: qué es el Estado y la función pública, la relación entre el Estado y el ciudadano, y el marco institucional. Son la base común que la CNSC evalúa en cualquier cargo." },
+  { key: "nivel", icon: "🎯", titulo: "Competencias por Nivel", desc: "Competencias comportamentales propias de tu nivel.",
+    intro: "Aquí estudiarás las competencias comportamentales propias de tu nivel: cómo se espera que actúes, te relaciones y cumplas en tu cargo. La CNSC las evalúa con casos de juicio situacional." },
+  { key: "funcional", icon: "🧩", titulo: "Funciones del Cargo", desc: "El conocimiento técnico específico de tu empleo.",
+    intro: "El corazón de tu preparación: el conocimiento técnico específico de tu empleo. Dominarás las funciones reales del cargo, sus procedimientos y la normatividad que las rige." },
+  { key: "bonus", icon: "🎁", titulo: "Material Bonus", desc: "Contenido extra para reforzar. Opcional, pero recomendado.",
+    intro: "Material extra para potenciar tu preparación: estrategia para presentar la prueba y manejo de herramientas ofimáticas. Es opcional, pero te da una ventaja real el día del examen." },
+  { key: "simulacro", icon: "📝", titulo: "Simulacro Final", desc: "Pon a prueba todo lo que aprendiste, como en la prueba real.",
+    intro: "La prueba final: integra todo tu plan en preguntas tipo CNSC (juicio situacional). Mide tu nivel real, te muestra las respuestas correctas y te dice qué temas reforzar antes del examen." },
 ];
 
 function moduloKey(g: any): string {
@@ -350,6 +356,7 @@ function ModuloGuias({ numero, modulo, guias, total, leidas, rango, abierto }: {
         </span>
       </summary>
       <div className="modulo-body">
+        <p className="modulo-intro"><span className="modulo-intro-ic">💡</span>{modulo.intro}</p>
         {guias.map((g: any) => <FilaGuia key={g.id} g={g} />)}
       </div>
     </details>
@@ -390,6 +397,7 @@ function SimulacroBloqueado({ numero, faltan, total }: { numero: number; faltan:
         </span>
       </div>
       <div className="modulo-body" style={{ paddingTop: 4 }}>
+        <p className="modulo-intro"><span className="modulo-intro-ic">💡</span>La prueba final: integra todo tu plan en preguntas tipo CNSC. Mide tu nivel real y te dice qué reforzar antes del examen.</p>
         <div style={{ background: "var(--crema)", border: "1px dashed var(--gris-borde)", borderRadius: 12, padding: "16px 18px", textAlign: "center" }}>
           <p style={{ color: "var(--texto-suave)", margin: 0, fontSize: ".88rem", lineHeight: 1.55 }}>
             Se desbloquea cuando completes <strong>todas las guías de tu plan</strong>.
