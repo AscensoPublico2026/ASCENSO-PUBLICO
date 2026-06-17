@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getGuiaCatalogo } from "@/lib/catalogoGuias";
+import { copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
 
 /**
  * Asigna una guía YA EXISTENTE de la biblioteca al curso, por su código.
@@ -108,5 +109,19 @@ export async function eliminarGuia(cursoId: string, guiaId: string) {
   await requireAdmin();
   const supabase = createAdminClient();
   await supabase.from("guias_curso").delete().eq("id", guiaId);
+  revalidatePath(`/admin/cursos/${cursoId}`);
+}
+
+/**
+ * "Copiar plan del mismo OPEC" — trae las guías (funcionales, entidad,
+ * simulacro, etc.) de otro curso ya armado con el mismo OPEC, sin duplicar
+ * las que ya estén. Útil para cursos creados antes de la reutilización
+ * automática o para rearmar uno rápido.
+ */
+export async function copiarPlanOPEC(cursoId: string) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+  const { data: curso } = await supabase.from("cursos").select("opec").eq("id", cursoId).single();
+  await copiarPlanDesdeOPEC(supabase, cursoId, curso?.opec ?? null);
   revalidatePath(`/admin/cursos/${cursoId}`);
 }

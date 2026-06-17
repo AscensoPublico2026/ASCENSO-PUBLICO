@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 
 export const dynamic = "force-dynamic";
@@ -211,6 +211,14 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       {/* Funcionales */}
       <div style={box}>
         <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📝 Guías funcionales ({guiasFuncionales.length}/12)</h2>
+        <form action={copiarPlanOPEC.bind(null, curso.id)} style={{ marginBottom: 14, padding: "12px 14px", background: "var(--azul-suave, #EAF1FB)", border: "1px solid #C9DCF4", borderRadius: 10 }}>
+          <button className="btn btn-azul" style={{ padding: "9px 16px", fontSize: ".82rem" }}>
+            ⚡ Copiar plan de otro curso del mismo OPEC
+          </button>
+          <p style={{ color: "var(--texto-suave)", fontSize: ".74rem", marginTop: 6, marginBottom: 0 }}>
+            Trae funcionales, "Conoce tu Entidad" y simulacro desde otro curso ya armado con el mismo OPEC (no duplica lo que ya esté). Ideal para cursos del mismo cargo.
+          </p>
+        </form>
         {guiasFuncionales.length > 0 && (
           <div style={{ display: "grid", gap: 6, marginBottom: 14 }}>{guiasFuncionales.map((g: any) => filaGuia(g, true))}</div>
         )}
