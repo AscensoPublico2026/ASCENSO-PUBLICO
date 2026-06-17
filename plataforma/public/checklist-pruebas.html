@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Checklist de pruebas · Ascenso Público</title>
+<style>
+  :root{--navy:#0A2A5E;--navy2:#1A4A8A;--oro:#E8A33D;--oro2:#F6C56B;--crema:#FBF9F4;--ok:#1E9E5A;--falla:#D64545;--gris:#6B7280;--borde:#E6E2D8;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--crema);color:var(--navy);line-height:1.5;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:22px 18px;position:sticky;top:0;z-index:10;box-shadow:0 4px 14px rgba(10,42,94,.25);}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px;}
+  h1{margin:0 0 4px;font-size:1.25rem;}
+  .sub{margin:0;font-size:.85rem;color:rgba(255,255,255,.8);}
+  .barra-cont{margin-top:14px;background:rgba(255,255,255,.18);border-radius:8px;height:12px;overflow:hidden;}
+  .barra{height:100%;width:0;background:linear-gradient(90deg,var(--oro),var(--oro2));border-radius:8px;transition:width .3s;}
+  .resumen{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.82rem;font-weight:700;}
+  .resumen span{background:rgba(255,255,255,.12);padding:4px 10px;border-radius:20px;}
+  .acciones{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{border:none;cursor:pointer;font-weight:800;font-size:.82rem;border-radius:9px;padding:9px 14px;font-family:inherit;}
+  .btn-oro{background:linear-gradient(135deg,var(--oro),var(--oro2));color:var(--navy);}
+  .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);}
+  main{max-width:900px;margin:22px auto 80px;padding:0 16px;}
+  details{background:#fff;border:1px solid var(--borde);border-radius:14px;margin-bottom:14px;overflow:hidden;}
+  summary{cursor:pointer;padding:16px 18px;font-weight:800;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .cnt{font-size:.78rem;font-weight:700;color:var(--gris);background:var(--crema);padding:3px 9px;border-radius:20px;white-space:nowrap;}
+  .seccion-intro{padding:0 18px 6px;font-size:.82rem;color:var(--gris);margin-top:-6px;}
+  .item{padding:13px 18px;border-top:1px solid var(--borde);}
+  .item-top{display:flex;gap:10px;align-items:flex-start;}
+  .pills{display:flex;gap:6px;flex-shrink:0;}
+  .pill{border:1.5px solid var(--borde);background:#fff;color:var(--gris);font-weight:800;font-size:.72rem;border-radius:7px;padding:5px 8px;cursor:pointer;font-family:inherit;}
+  .pill.ok.activo{background:var(--ok);border-color:var(--ok);color:#fff;}
+  .pill.falla.activo{background:var(--falla);border-color:var(--falla);color:#fff;}
+  .item-body{flex:1;}
+  .item-q{font-size:.93rem;font-weight:700;}
+  .item-c{font-size:.83rem;color:var(--gris);margin-top:3px;}
+  .item-c b{color:var(--navy2);}
+  .item.estado-ok{background:rgba(30,158,90,.06);}
+  .item.estado-falla{background:rgba(214,69,69,.06);}
+  .nota{margin-top:8px;width:100%;border:1px solid var(--borde);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.85rem;resize:vertical;display:none;}
+  .item.estado-falla .nota{display:block;}
+  .foot{text-align:center;font-size:.78rem;color:var(--gris);margin-top:20px;}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-radius:10px;font-weight:700;font-size:.85rem;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>✅ Checklist de pruebas — Pre-lanzamiento</h1>
+    <p class="sub">Ascenso Público · cada paso dice QUÉ hacer y QUÉ esperar. Marca OK o Falla. Tu avance se guarda solo en este navegador.</p>
+    <div class="barra-cont"><div class="barra" id="barra"></div></div>
+    <div class="resumen">
+      <span id="r-prog">0 / 0 revisados</span>
+      <span style="color:var(--oro2)">✓ <b id="r-ok">0</b> OK</span>
+      <span style="color:#FFD0D0">✗ <b id="r-falla">0</b> fallas</span>
+    </div>
+    <div class="acciones">
+      <button class="btn btn-oro" onclick="copiarFallas()">📋 Copiar reporte de fallas</button>
+      <button class="btn btn-ghost" onclick="resetear()">↺ Reiniciar todo</button>
+    </div>
+  </div>
+</header>
+
+<main id="contenido"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+// Cada item: {q: qué validar, c: cómo hacerlo (la acción concreta)}
+const DATA = [
+  {id:"P0", t:"0 · Pre-requisitos (antes de probar)", intro:"Confirmar que el entorno está listo para vender de verdad.", items:[
+    {q:"Wompi está en modo PRODUCCIÓN.", c:"En el panel de Wompi o en Vercel, revisa que la llave pública empiece por <b>pub_prod_</b> (no pub_test_). En sandbox NO se cobra dinero real."},
+    {q:"Variables de Vercel correctas.", c:"En Vercel → Settings → Environment Variables, confirma: <b>ADMIN_EMAIL=ascensopublico@gmail.com</b>, <b>NEXT_PUBLIC_SITE_URL=https://ascensopublico.com</b>, redirect a /activar y <b>PRECIO_COP=300000</b>."},
+    {q:"Tengo material de prueba listo.", c:"Ten a mano: un <b>correo real</b> que puedas revisar, un <b>medio de pago real</b> y un <b>PDF cualquiera</b> para subir como manual de funciones."},
+    {q:"Mi cuenta admin funciona.", c:"Confirma que puedes entrar a <b>/admin</b> con tu cuenta (rol admin)."}
+  ]},
+  {id:"A1", t:"A1 · Hero y menú superior", intro:"La primera pantalla que ve el cliente. Abre ascensopublico.com.", items:[
+    {q:"Se ve la foto de fondo del hero.", c:"Mira la parte de arriba: debe verse la <b>foto de personas celebrando</b> de fondo y el texto blanco legible encima."},
+    {q:"El logo vuelve al inicio.", c:"Haz clic en el <b>logo</b> (arriba a la izquierda). Debe llevarte a la home."},
+    {q:"Menú 'El problema' funciona.", c:"Clic en <b>'El problema'</b> en el menú. Debe bajar suave hasta esa sección."},
+    {q:"Menú 'Cómo funciona' funciona.", c:"Clic en <b>'Cómo funciona'</b>. Debe bajar a la sección de pasos."},
+    {q:"Menú 'Qué incluye' funciona.", c:"Clic en <b>'Qué incluye'</b>. Debe bajar a esa sección."},
+    {q:"Menú 'Convocatorias' funciona.", c:"Clic en <b>'Convocatorias'</b>. Debe bajar a la grilla de convocatorias."},
+    {q:"Menú 'Precio' funciona.", c:"Clic en <b>'Precio'</b>. Debe bajar a la sección de precio."},
+    {q:"Botón 'Iniciar sesión' (menú).", c:"Clic en <b>'Iniciar sesión'</b>. Debe ir a /login. Revisa que el texto del botón se vea <b>nítido</b> (no gris apagado)."},
+    {q:"Botón 'Quiero mi curso' (menú).", c:"Clic en <b>'Quiero mi curso'</b>. Debe ir a /comprar. El texto debe verse nítido."},
+    {q:"Botón hero 'Quiero mi curso personalizado'.", c:"Clic en el botón dorado grande del hero. Debe ir a /comprar."},
+    {q:"Botón hero 'Asesoría por WhatsApp'.", c:"Clic en el botón verde del hero. Debe abrir WhatsApp al <b>3170905177</b> con un mensaje escrito."},
+    {q:"Botón hero 'Ver cómo funciona'.", c:"Clic en ese botón. Debe bajar a la sección Cómo funciona."}
+  ]},
+  {id:"A2", t:"A2 · Secciones de contenido", intro:"Baja por toda la página revisando que cada bloque se vea bien.", items:[
+    {q:"Sección 'El problema' completa.", c:"Léela: textos e íconos deben verse bien, sin huecos ni roto."},
+    {q:"Sección 'La solución' completa.", c:"Revisa que se vea ordenada y completa."},
+    {q:"Sección 'Ejemplo' (guía de muestra).", c:"Revisa el ejemplo de guía/mockup: debe verse claro."},
+    {q:"Sección 'Cómo funciona' (pasos).", c:"Los pasos numerados deben verse bien y en orden."},
+    {q:"Sección 'Qué incluye'.", c:"La lista de lo que incluye el curso debe verse completa."},
+    {q:"Sección 'Nosotros / fundador'.", c:"Debe aparecer Julio César Deávila y el texto del fundador, con foto."},
+    {q:"El selector de nivel cambia el contenido.", c:"Haz clic en las pestañas <b>Asistencial / Técnico / Profesional</b>. El contenido mostrado debe cambiar con cada una."},
+    {q:"Sección 'Precio' correcta.", c:"Debe mostrar <b>$300.000 COP</b> y el contador <b>35/100 cupos vendidos</b>."},
+    {q:"FAQ abre y cierra.", c:"Haz clic en cada pregunta del FAQ. Debe desplegar y plegar la respuesta."},
+    {q:"Sección 'Datos / privacidad'.", c:"Debe verse y el enlace de política debe funcionar."}
+  ]},
+  {id:"A3", t:"A3 · Convocatorias dinámicas", intro:"Las convocatorias vienen de la base de datos.", items:[
+    {q:"Cargan las tarjetas de convocatorias.", c:"En la sección Convocatorias debe haber tarjetas (no vacío). Si está vacío, hay que cargar convocatorias en /admin."},
+    {q:"Las imágenes cargan.", c:"Cada tarjeta debe mostrar su imagen, no un cuadro roto."},
+    {q:"El detalle de la convocatoria abre.", c:"Haz clic en una tarjeta. Debe abrir su página de detalle."},
+    {q:"El botón de comprar del detalle funciona.", c:"En el detalle, el botón de prepararme/comprar debe llevar a /comprar."},
+    {q:"'¿No ves la tuya? Escríbenos' funciona.", c:"Clic en ese enlace. Debe abrir WhatsApp."},
+    {q:"El listado /convocatorias funciona.", c:"Entra a <b>ascensopublico.com/convocatorias</b>. Debe cargar el listado completo."}
+  ]},
+  {id:"A4", t:"A4 · Footer y botón flotante", intro:"", items:[
+    {q:"Botón flotante de WhatsApp.", c:"En la esquina inferior derecha hay un botón verde de WhatsApp. Clic: debe abrir el chat al <b>3170905177</b>."},
+    {q:"Flotante en móvil.", c:"Abre la página en el celular: el botón debe verse como círculo y funcionar."},
+    {q:"Footer → Privacidad.", c:"Clic en 'Política de privacidad' del pie de página. Debe ir a /privacidad."},
+    {q:"Footer → Términos.", c:"Clic en 'Términos' del pie de página. Debe ir a /terminos."},
+    {q:"Footer → correo.", c:"Clic en el correo del pie. Debe abrir tu app de correo hacia <b>ascensopublico@gmail.com</b>."}
+  ]},
+  {id:"A5", t:"A5 · Páginas legales", intro:"", items:[
+    {q:"/privacidad carga completa.", c:"Entra a ascensopublico.com/privacidad. Léela: debe estar completa y con tu marca/datos reales."},
+    {q:"/terminos carga completa.", c:"Entra a ascensopublico.com/terminos. Debe estar completa."},
+    {q:"Datos reales (no relleno).", c:"Verifica que no haya textos de ejemplo tipo 'Lorem ipsum' o datos inventados."}
+  ]},
+  {id:"A6", t:"A6 · Página 404", intro:"", items:[
+    {q:"Muestra el 404 con marca.", c:"Entra a una URL inventada, ej. <b>ascensopublico.com/holaaa</b>. Debe mostrar una página de error con el diseño de la marca."},
+    {q:"Enlace WhatsApp del 404.", c:"Clic en 'Escríbenos por WhatsApp' de esa página. Debe abrir WhatsApp."},
+    {q:"Enlace volver al inicio.", c:"Clic en el botón de volver. Debe llevar a la home."}
+  ]},
+  {id:"B", t:"B · Compra y pago (la ruta del dinero)", intro:"⚠️ Aquí pruebas con datos y pago REALES. Es la prueba más importante.", items:[
+    {q:"Enlace 'Volver al inicio' en /comprar.", c:"En /comprar, clic en volver. Debe ir a la home."},
+    {q:"El formulario exige campos.", c:"Intenta enviar el formulario <b>vacío</b>. El navegador debe pedir que llenes los obligatorios."},
+    {q:"Desplegable 'Convocatoria'.", c:"Ábrelo: debe listar las convocatorias activas."},
+    {q:"Desplegable 'Nivel'.", c:"Debe tener Asistencial / Técnico / Profesional."},
+    {q:"Campo 'Manual' solo acepta PDF.", c:"Intenta subir una imagen: debe rechazarla y solo aceptar PDF."},
+    {q:"Consentimiento obligatorio.", c:"El checkbox de tratamiento de datos debe ser obligatorio y su enlace a /privacidad funcionar."},
+    {q:"Redirige a Wompi con $300.000.", c:"Llena todo + sube un PDF + 'Continuar al pago'. Debe abrir el checkout de Wompi mostrando <b>$300.000</b>."},
+    {q:"Métodos de pago visibles.", c:"En Wompi deben verse PSE, Nequi y tarjeta."},
+    {q:"El pago real se aprueba.", c:"Paga con un medio real. La transacción debe quedar <b>aprobada</b>."},
+    {q:"Redirige a /activar.", c:"Tras aprobar el pago, debe llevarte a la página /activar."},
+    {q:"Sube el contador de pagos en admin.", c:"Entra a /admin: 'Pagos aprobados' debe haber subido en 1."},
+    {q:"Aparece el curso en /admin/cursos.", c:"Debe aparecer el nuevo cliente con su curso en estado 'En preparación'."},
+    {q:"Llega el correo al cliente.", c:"Revisa el correo del comprador (y carpeta de spam): debe llegar la confirmación."},
+    {q:"Llega el aviso al admin.", c:"Revisa <b>ascensopublico@gmail.com</b>: debe llegar el aviso de nueva compra."}
+  ]},
+  {id:"C", t:"C · Activación de cuenta", intro:"Justo después de pagar.", items:[
+    {q:"Muestra pago confirmado y correo.", c:"En /activar debe decir '¡Pago confirmado!' y mostrar el correo correcto del cliente."},
+    {q:"Rechaza contraseñas cortas.", c:"Intenta poner una clave de menos de 6 caracteres: no debe dejar continuar."},
+    {q:"Crea contraseña y entra al perfil.", c:"Pon una clave válida y confirma: debe iniciar sesión y llevar a /perfil."},
+    {q:"Enlace de WhatsApp funciona.", c:"Clic en 'escríbenos por WhatsApp' (si aparece): debe abrir WhatsApp."}
+  ]},
+  {id:"D1", t:"D1 · Login y recuperar contraseña", intro:"", items:[
+    {q:"Logo vuelve a la home.", c:"En /login, clic en el logo: debe ir a /."},
+    {q:"Login con datos incorrectos.", c:"Pon un correo/clave mal: debe mostrar 'Correo o contraseña incorrectos...'."},
+    {q:"Login correcto entra al perfil.", c:"Entra con tus datos correctos: debe llevar a /perfil."},
+    {q:"'¿Olvidaste tu contraseña?'.", c:"Clic ahí: debe cambiar al modo de recuperación."},
+    {q:"Enviar correo de recuperación.", c:"Escribe tu correo y envía: debe mostrar '¡Correo enviado!'."},
+    {q:"Llega el correo de recuperación.", c:"Revisa tu correo (y spam): debe llegar con la marca de Ascenso Público."},
+    {q:"El enlace abre /reset-password.", c:"Clic en el enlace del correo: debe abrir la página para crear clave nueva."},
+    {q:"Cambia la clave y entra.", c:"Crea una clave nueva: debe entrar a /perfil."},
+    {q:"'Volver a iniciar sesión'.", c:"Ese enlace debe regresar al login."}
+  ]},
+  {id:"D2", t:"D2 · Perfil del estudiante", intro:"Ya logueado como cliente.", items:[
+    {q:"Saluda con el nombre.", c:"Debe saludarte con tu nombre bien escrito (mayúscula inicial)."},
+    {q:"Botón 'Panel admin' solo para admin.", c:"Si entras con cuenta admin, debe aparecer; con cuenta de cliente normal, NO."},
+    {q:"Botón cerrar sesión visible.", c:"Debe verse el botón de salir."},
+    {q:"Bloque 'Cambiar contraseña'.", c:"Debe existir la opción de cambiar la contraseña."},
+    {q:"Tarjeta del curso con datos.", c:"Debe mostrar OPEC, cargo, convocatoria, estado y el % de progreso."},
+    {q:"El % NO está en 0 si ya leíste guías.", c:"Si abriste alguna guía, el porcentaje debe reflejarlo (no quedarse en 0%)."},
+    {q:"La tarjeta abre el curso.", c:"Clic en la tarjeta: debe abrir el detalle del curso."},
+    {q:"'+ Comprar otro curso'.", c:"Clic: debe ir a /comprar con tu correo ya prellenado."}
+  ]},
+  {id:"D3", t:"D3 · Detalle del curso y módulos", intro:"", items:[
+    {q:"'Mis cursos' vuelve al perfil.", c:"Ese enlace debe regresar a /perfil."},
+    {q:"Hero del curso correcto.", c:"Debe mostrar OPEC + cargo + convocatoria, con imagen."},
+    {q:"Contador si está en preparación.", c:"Si el curso no está habilitado aún, debe mostrar el contador hacia el plazo (12h)."},
+    {q:"Barra 'Tu ruta de estudio'.", c:"Debe mostrar 'X de Y guías completadas' y el % correcto."},
+    {q:"Banner 'Continúa donde quedaste'.", c:"Debe apuntar a la siguiente guía que no has leído."},
+    {q:"Se ven los módulos.", c:"Deben aparecer agrupados: Intro, Generales, Nivel, Funcionales, Bonus, Simulacro, numerados."},
+    {q:"Cada módulo muestra los días.", c:"Cada módulo debe indicar su <b>rango de días</b>, número de guías, estado y barra de progreso."},
+    {q:"El acordeón abre/cierra.", c:"Clic en el título de un módulo: debe desplegar/plegar sus guías."}
+  ]},
+  {id:"D4", t:"D4 · Visor de guías y progreso", intro:"", items:[
+    {q:"Cada guía muestra 'DÍA n'.", c:"En la lista, cada guía debe indicar su día de forma legible."},
+    {q:"Estado por guía.", c:"Guía sin leer dice 'Comenzar'; guía leída dice 'Completada'."},
+    {q:"La guía abre con su contenido.", c:"Clic en una guía: debe abrir el visor con el contenido bien formateado."},
+    {q:"'Mi curso' vuelve al detalle.", c:"En el visor, ese enlace debe regresar al detalle del curso."},
+    {q:"Marca leída y sube el %.", c:"Al abrir una guía por primera vez y volver, debe quedar 'Completada' y subir el porcentaje."},
+    {q:"Guía 'Próximamente'.", c:"Una guía sin archivo aún debe mostrar el aviso de que está en preparación (no error)."}
+  ]},
+  {id:"D5", t:"D5 · Bloqueo del simulacro", intro:"El simulacro se desbloquea al terminar las guías del plan.", items:[
+    {q:"Simulacro bloqueado al inicio.", c:"Con guías del plan sin terminar, el módulo Simulacro debe mostrarse BLOQUEADO con 'Te faltan N guías'."},
+    {q:"No deja entrar por URL.", c:"Intenta abrir el simulacro por su URL directa: debe mostrar 'Simulacro bloqueado'."},
+    {q:"El bonus NO cuenta.", c:"Aunque no leas las guías bonus, el simulacro debe poder desbloquearse al terminar el resto."},
+    {q:"Se desbloquea al terminar.", c:"Cuando completes todas las guías del plan, el simulacro debe quedar disponible."},
+    {q:"El simulacro funciona.", c:"Ábrelo: responde, pulsa 'Presentar examen' y debe mostrar resultados + temas a reforzar."}
+  ]},
+  {id:"D6", t:"D6 · Cuenta", intro:"", items:[
+    {q:"Cambiar contraseña funciona.", c:"Cámbiala desde /perfil y vuelve a entrar con la nueva: debe funcionar."},
+    {q:"Cerrar sesión.", c:"Sal: debe ir a /login y ya no debe dejarte entrar a /perfil sin loguear."}
+  ]},
+  {id:"E1", t:"E1 · Admin · Panel principal", intro:"Entra a /admin con tu cuenta admin.", items:[
+    {q:"Métricas coherentes.", c:"Revisa los números: cursos, listos, en preparación, convocatorias, pagos. Deben tener sentido."},
+    {q:"'Gestionar cursos'.", c:"Clic: debe ir a /admin/cursos."},
+    {q:"'Gestionar convocatorias'.", c:"Clic: debe ir a /admin/convocatorias."}
+  ]},
+  {id:"E2", t:"E2 · Admin · Lista de cursos", intro:"", items:[
+    {q:"'Panel' vuelve a /admin.", c:"Ese enlace debe regresar al panel."},
+    {q:"La tabla lista los cursos.", c:"Debe mostrar Cliente, Cargo, Nivel y Estado de cada curso."},
+    {q:"Estado correcto.", c:"Cada curso debe decir 'Listo' o 'En preparación' según corresponda."},
+    {q:"'Gestionar' abre el detalle.", c:"Clic: debe abrir el detalle del curso de ese cliente."}
+  ]},
+  {id:"E3", t:"E3 · Admin · Detalle del curso", intro:"El corazón del trabajo del admin: armar el curso del cliente.", items:[
+    {q:"'Todos los cursos' funciona.", c:"Ese enlace debe regresar a la lista."},
+    {q:"Datos del cliente correctos.", c:"Nombre, correo, celular, OPEC, nivel y estado deben coincidir con lo que compró."},
+    {q:"'Ver manual de funciones'.", c:"Clic: debe abrir el PDF que subió el cliente."},
+    {q:"'Previsualizar como estudiante'.", c:"Clic: debe abrir el curso en modo vista previa (banner amarillo, simulacro desbloqueado, sin marcar progreso)."},
+    {q:"Aparecen los botones si no está listo.", c:"Si el curso no está habilitado, deben verse 'Curso listo (12h)' y 'Habilitar ahora'."},
+    {q:"'Curso listo (12h)'.", c:"Clic: debe programar la habilitación a las 12h y cambiar el estado."},
+    {q:"'Habilitar ahora'.", c:"Clic: el cliente debe poder ver el curso de inmediato."},
+    {q:"Cambiar de opinión y habilitar.", c:"Si está programado a 12h, debe aparecer 'Habilitar curso ahora' para adelantarlo, y funcionar."},
+    {q:"Día 1: Intro + 'Conoce tu Entidad'.", c:"Debe mostrar INTRO-00 y un selector que solo lista guías de entidad (ENT-)."},
+    {q:"Asignar guía de entidad por código.", c:"Elige una en el desplegable: debe quedar cargada al instante."},
+    {q:"Generales y por nivel (auto).", c:"Deben listarse las guías auto-cargadas según el nivel del cargo."},
+    {q:"Asignar funcionales por código.", c:"Asigna funcionales (x/12) desde el desplegable: deben cargarse al instante."},
+    {q:"'Copiar plan de otro curso del mismo OPEC'.", c:"Si hay otro curso del mismo OPEC, este botón debe traer su plan sin duplicar."},
+    {q:"Asignar el simulacro por código.", c:"Elige SIM-001 en el desplegable de simulacro: debe quedar asignado (sin subir a mano)."},
+    {q:"Eliminar una guía.", c:"El botón 'Eliminar' en una guía debe quitarla del curso."},
+    {q:"Subir guía personalizada (HTML).", c:"Como respaldo, subir un .html con título/día/tipo debe cargarlo."}
+  ]},
+  {id:"E4", t:"E4 · Admin · Convocatorias", intro:"", items:[
+    {q:"Crear nueva convocatoria.", c:"Llena el formulario y crea: debe aparecer en el listado y en la landing."},
+    {q:"Activar/Desactivar.", c:"Cambia el estado: las inactivas NO deben salir en la landing/compra."},
+    {q:"Eliminar.", c:"El botón eliminar debe borrar la convocatoria."},
+    {q:"Imagen por URL.", c:"Al poner una URL de imagen (ej. /fotos/nacional.jpg), debe verse en la tarjeta."}
+  ]},
+  {id:"E5", t:"E5 · Admin · Usuarios", intro:"", items:[
+    {q:"Lista de usuarios.", c:"Debe mostrar nombre, correo, celular, rol y fecha de cada usuario."},
+    {q:"Admin sin botón eliminar.", c:"Los usuarios admin deben tener el badge 'ADMIN' y NO mostrar el botón de eliminar."},
+    {q:"Eliminar usuario de prueba.", c:"Eliminar un usuario de prueba (no admin) debe funcionar."}
+  ]},
+  {id:"F", t:"F · Correos (entregabilidad)", intro:"", items:[
+    {q:"Confirmación al cliente.", c:"Revisa que el correo de compra al cliente llegue y se vea con la marca."},
+    {q:"Aviso al admin.", c:"El aviso de compra debe llegar a ascensopublico@gmail.com."},
+    {q:"Recuperación de contraseña.", c:"Debe llegar en español, con marca, y el enlace debe funcionar."},
+    {q:"No caen en spam.", c:"Si algún correo cae en spam, anótalo (sería pendiente de configurar DMARC)."},
+    {q:"WhatsApp en los correos.", c:"Los enlaces de WhatsApp dentro de los correos deben apuntar al número correcto."}
+  ]},
+  {id:"G", t:"G · Seguridad y rutas protegidas", intro:"Prueba estando SIN sesión (o en ventana incógnita).", items:[
+    {q:"/perfil sin sesión.", c:"Sin loguear, entra a /perfil: debe redirigir a /login."},
+    {q:"/guia sin sesión.", c:"Sin loguear, entra a una URL de guía: debe redirigir a /login."},
+    {q:"/admin sin sesión.", c:"Sin loguear, entra a /admin: debe redirigir o negar acceso."},
+    {q:"Cliente no entra a admin.", c:"Con una cuenta de cliente normal, intenta entrar a /admin: debe ser rechazado."},
+    {q:"No ver curso ajeno.", c:"Un cliente no debe poder abrir el curso de otro cliente cambiando la URL."},
+    {q:"No ver guía ajena.", c:"Un cliente no debe poder abrir una guía de un curso que no es suyo por URL."}
+  ]},
+  {id:"H", t:"H · Responsive y navegadores", intro:"", items:[
+    {q:"Menú móvil.", c:"En el celular, el menú hamburguesa debe abrir/cerrar y todos sus enlaces funcionar."},
+    {q:"Landing en móvil.", c:"Hero, secciones, convocatorias y footer deben verse bien en pantalla pequeña."},
+    {q:"Páginas clave en móvil.", c:"/comprar, /perfil y el visor de guía deben verse bien en el celular."},
+    {q:"2 navegadores.", c:"Prueba en al menos Chrome + Safari (o Firefox)."},
+    {q:"Flotante WhatsApp móvil.", c:"El botón flotante debe funcionar también en el celular."}
+  ]},
+  {id:"I", t:"I · Segunda compra (automatización por OPEC)", intro:"Para validar que el plan se reutiliza solo.", items:[
+    {q:"Comprar con otro usuario, mismo OPEC.", c:"Haz una segunda compra con OTRO correo pero el MISMO OPEC del primer curso."},
+    {q:"El curso se arma solo.", c:"El nuevo curso debe traer ya las funcionales + entidad + simulacro del primero, sin duplicar las genéricas."},
+    {q:"Visible en admin.", c:"En /admin/cursos, el segundo curso ya debe aparecer con el plan cargado."}
+  ]}
+];
+
+const KEY = "ap_checklist_v2";
+let estado = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+function render(){
+  const cont = document.getElementById("contenido");
+  cont.innerHTML = "";
+  DATA.forEach(sec=>{
+    const det = document.createElement("details");
+    if(sec.id==="P0"||sec.id==="A1") det.open = true;
+    const sum = document.createElement("summary");
+    const cnt = document.createElement("span"); cnt.className="cnt"; cnt.id="cnt-"+sec.id;
+    sum.innerHTML = "<span>"+sec.t+"</span>";
+    sum.appendChild(cnt);
+    det.appendChild(sum);
+    if(sec.intro){const p=document.createElement("p");p.className="seccion-intro";p.textContent=sec.intro;det.appendChild(p);}
+    sec.items.forEach((it,i)=>{
+      const id = sec.id+"-"+i;
+      const st = estado[id] || {};
+      const div = document.createElement("div");
+      div.className = "item" + (st.s==="ok"?" estado-ok":st.s==="falla"?" estado-falla":"");
+      div.id = "item-"+id;
+      div.innerHTML =
+        '<div class="item-top">'+
+          '<div class="pills">'+
+            '<button class="pill ok'+(st.s==="ok"?" activo":"")+'" onclick="setS(\''+id+'\',\'ok\')">✓ OK</button>'+
+            '<button class="pill falla'+(st.s==="falla"?" activo":"")+'" onclick="setS(\''+id+'\',\'falla\')">✗ Falla</button>'+
+          '</div>'+
+          '<div class="item-body">'+
+            '<div class="item-q">'+it.q+'</div>'+
+            '<div class="item-c">👉 '+it.c+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<textarea class="nota" placeholder="¿Qué falló exactamente? Descríbelo aquí..." oninput="setNota(\''+id+'\',this.value)">'+(st.n||"")+'</textarea>';
+      det.appendChild(div);
+    });
+    cont.appendChild(det);
+  });
+  const f=document.createElement("p");f.className="foot";f.textContent="Hecho para Ascenso Público · tu progreso se guarda automáticamente en este navegador.";
+  cont.appendChild(f);
+  actualizar();
+}
+
+function setS(id,s){
+  const cur = estado[id]||{};
+  cur.s = (cur.s===s)?null:s;
+  estado[id]=cur; guardar();
+  const it=document.getElementById("item-"+id);
+  it.className="item"+(cur.s==="ok"?" estado-ok":cur.s==="falla"?" estado-falla":"");
+  it.querySelectorAll(".pill").forEach(p=>p.classList.remove("activo"));
+  if(cur.s) it.querySelector(".pill."+cur.s).classList.add("activo");
+  actualizar();
+}
+function setNota(id,v){const cur=estado[id]||{};cur.n=v;estado[id]=cur;guardar();}
+function guardar(){localStorage.setItem(KEY,JSON.stringify(estado));}
+
+function actualizar(){
+  let total=0,ok=0,falla=0;
+  DATA.forEach(sec=>{
+    let so=0,sf=0,st=sec.items.length;total+=st;
+    sec.items.forEach((_,i)=>{const s=(estado[sec.id+"-"+i]||{}).s;if(s==="ok"){ok++;so++;}if(s==="falla"){falla++;sf++;}});
+    const c=document.getElementById("cnt-"+sec.id);
+    if(c) c.textContent=(so+sf)+"/"+st+(sf>0?" · "+sf+"✗":"");
+  });
+  const rev=ok+falla;
+  document.getElementById("r-prog").textContent=rev+" / "+total+" revisados";
+  document.getElementById("r-ok").textContent=ok;
+  document.getElementById("r-falla").textContent=falla;
+  document.getElementById("barra").style.width=(total?Math.round(rev/total*100):0)+"%";
+}
+
+function copiarFallas(){
+  let out="REPORTE DE FALLAS — Checklist Ascenso Publico\\n\\n";
+  let hay=false;
+  DATA.forEach(sec=>{
+    let bloque="";
+    sec.items.forEach((it,i)=>{
+      const st=estado[sec.id+"-"+i]||{};
+      if(st.s==="falla"){hay=true;bloque+="  - "+it.q+(st.n?("  >> "+st.n):"")+"\\n";}
+    });
+    if(bloque) out+="["+sec.t+"]\\n"+bloque+"\\n";
+  });
+  if(!hay) out="No marcaste ninguna falla. Todo OK!";
+  navigator.clipboard.writeText(out).then(()=>toast("Reporte copiado · pégalo en el chat con Kiro")).catch(()=>{prompt("Copia este reporte:",out);});
+}
+function resetear(){if(confirm("¿Borrar todo tu avance del checklist?")){estado={};guardar();render();toast("Checklist reiniciado");}}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600);}
+
+render();
+</script>
+</body>
+</html>
