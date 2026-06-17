@@ -111,6 +111,33 @@ export async function correoConfirmacionCliente(to: string, nombre: string) {
   await enviar(to, "¡Bienvenido a Ascenso Público! Tu curso está en preparación", html);
 }
 
+/**
+ * Avisa al CLIENTE que su curso ya quedó listo.
+ *  - disponibleAhora=true  → ya puede entrar a estudiar.
+ *  - disponibleAhora=false → estará disponible a partir de `cuando` (las 12h).
+ */
+export async function correoCursoListo(to: string, nombre: string, disponibleAhora: boolean, cuando?: string) {
+  const url = `${SITE}/perfil`;
+  const primerNombre = (nombre || "").split(" ")[0] || "";
+  const html = plantilla({
+    titulo: disponibleAhora
+      ? `¡Tu curso ya está disponible! 🎉`
+      : `¡Tu curso está listo! 🎉`,
+    cuerpo: disponibleAhora
+      ? `
+        <p style="margin:0 0 14px;">${primerNombre ? `${primerNombre}, ` : ""}tu ruta de estudio personalizada ya está <strong style="color:#0A2A5E;">lista y disponible</strong> en tu perfil.</p>
+        <p style="margin:0;">Ya puedes empezar a estudiar guía por guía y, al terminar, presentar tu simulacro final tipo CNSC. ¡A por ese ascenso! 💪</p>
+      `
+      : `
+        <p style="margin:0 0 14px;">${primerNombre ? `${primerNombre}, ` : ""}¡buenas noticias! Tu ruta de estudio personalizada ya está <strong style="color:#0A2A5E;">preparada</strong>.</p>
+        <p style="margin:0 0 14px;">Estará disponible en tu perfil ${cuando ? `a partir de <strong>${cuando}</strong>` : "muy pronto"}. Te avisamos para que estés pendiente.</p>
+        <p style="margin:0;">Cuando entres, podrás estudiar guía por guía y cerrar con tu simulacro final tipo CNSC.</p>
+      `,
+    cta: { texto: disponibleAhora ? "Empezar a estudiar →" : "Ir a mi perfil →", url },
+  });
+  await enviar(to, disponibleAhora ? "✅ Tu curso ya está disponible — Ascenso Público" : "✅ Tu curso está listo — Ascenso Público", html);
+}
+
 export async function correoAvisoAdmin(datos: any) {
   const admin = process.env.ADMIN_EMAIL;
   if (!admin) return;
