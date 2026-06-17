@@ -108,3 +108,84 @@ export async function cargarGuiasAutomaticas(
     }
   }
 }
+
+/**
+ * Reutilización del plan por OPEC.
+ *
+ * Si YA existe otro curso del MISMO OPEC con el plan armado (es decir, con
+ * guías funcionales asignadas), copia TODAS sus guías al curso nuevo. Así, el
+ * primer comprador de un OPEC se arma a mano una sola vez y todos los
+ * siguientes del mismo OPEC quedan con el plan completo automáticamente
+ * (funcionales + "Conoce tu Entidad" + simulacro + generales/nivel/bonus).
+ *
+ * No copia el progreso (leida/fecha_leida): el nuevo alumno empieza de cero.
+ *
+ * @returns true si copió un plan con funcionales; false si no había uno
+ *          (en ese caso el llamador debe usar cargarGuiasAutomaticas).
+ */
+export async function copiarPlanDesdeOPEC(
+  supabase: SupabaseClient,
+  nuevoCursoId: string,
+  opec: string | null
+): Promise<boolean> {
+  if (!opec) return false;
+
+  // Otros cursos del mismo OPEC
+  const { data: cursos } = await supabase
+    .from("cursos")
+    .select("id")
+    .eq("opec", opec)
+    .neq("id", nuevoCursoId);
+  if (!cursos || cursos.length === 0) return false;
+
+  const ids = cursos.map((c: any) => c.id);
+  const { data: guias } = await supabase
+    .from("guias_curso")
+    .select("curso_id, titulo, dia, tipo, orden, archivo_path")
+    .in("curso_id", ids);
+  if (!guias || guias.length === 0) return false;
+
+  // Agrupar por curso y elegir el que tenga MÁS guías funcionales (plan más completo)
+  const porCurso: Record<string, any[]> = {};
+  guias.forEach((g: any) => {
+    (porCurso[g.curso_id] = porCurso[g.curso_id] || []).push(g);
+  });
+  let mejor: any[] | null = null;
+  let mejorFuncionales = 0;
+  for (const arr of Object.values(porCurso)) {
+    const nFunc = arr.filter((g: any) => g.tipo === "funcional").length;
+    if (nFunc > mejorFuncionales) {
+      mejorFuncionales = nFunc;
+      mejor = arr;
+    }
+  }
+  // Si ningún curso del OPEC tiene funcionales, no hay un "plan" que copiar.
+  if (!mejor || mejorFuncionales === 0) return false;
+
+  // Evitar duplicados: no copiar guías cuyo archivo ya esté en el curso destino
+  // (p. ej. si ya tenía las genéricas auto-cargadas).
+  const { data: yaTiene } = await supabase
+    .from("guias_curso")
+    .select("archivo_path")
+    .eq("curso_id", nuevoCursoId);
+  const existentes = new Set((yaTiene || []).map((g: any) => g.archivo_path).filter(Boolean));
+
+  // Copiar las guías del mejor curso que falten en el destino (sin progreso).
+  const registros = mejor
+    .filter((g: any) => !(g.archivo_path && existentes.has(g.archivo_path)))
+    .map((g: any) => ({
+      curso_id: nuevoCursoId,
+      titulo: g.titulo,
+      dia: g.dia,
+      tipo: g.tipo,
+      orden: g.orden,
+      archivo_path: g.archivo_path,
+    }));
+  if (registros.length === 0) return false;
+  const { error } = await supabase.from("guias_curso").insert(registros);
+  if (error) {
+    console.error("[copiarPlanDesdeOPEC] Error al copiar el plan:", error.message);
+    return false;
+  }
+  return true;
+}

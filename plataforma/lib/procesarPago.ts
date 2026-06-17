@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
-import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
+import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
 
 const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
@@ -90,12 +90,22 @@ export async function procesarReferencia(referencia: string, transactionId?: str
 
     cursoId = curso?.id ?? null;
 
-    // Auto-cargar guías (Intro + Generales + Nivel + Bonus) al crear el curso
-    if (cursoId && pre.nivel) {
+    // Auto-cargar guías al crear el curso.
+    // 1) Si ya existe otro curso del MISMO OPEC con el plan armado (funcionales),
+    //    copiamos TODO ese plan (reutilización por OPEC → curso listo de una).
+    // 2) Si no, cargamos solo las genéricas (Intro + Generales + Nivel + Bonus).
+    if (cursoId) {
       try {
-        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
+        const copiado = await copiarPlanDesdeOPEC(supabase, cursoId, pre.opec);
+        if (!copiado && pre.nivel) {
+          await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
+        }
       } catch (err) {
-        console.error("[procesarReferencia] Error en auto-carga de guías:", err);
+        console.error("[procesarReferencia] Error en carga de guías:", err);
+        // Fallback: intentar al menos las genéricas
+        if (pre.nivel) {
+          try { await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel); } catch { /* ignore */ }
+        }
       }
     }
   }
