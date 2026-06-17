@@ -12,6 +12,7 @@ export const dynamic = "force-dynamic";
 
 const WA_URL = waUrl(WA_MENSAJES.comprar);
 const WA_ASESORIA = waUrl(WA_MENSAJES.asesoria);
+const WA_CONVOCATORIA = waUrl(WA_MENSAJES.convocatoria);
 const CUPOS_LANZAMIENTO = 100; // Total de cupos del precio de lanzamiento
 
 export default async function LandingPage() {
@@ -48,7 +49,7 @@ export default async function LandingPage() {
             <p className="vp">Deja de estudiar a ciegas. Sabe <strong>exactamente qué estudiar</strong> para ganar tu ascenso.</p>
             <div className="hero-cta">
               <Link href="/comprar" className="btn btn-oro">Quiero mi curso personalizado</Link>
-              <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa">💬 Asesoría por WhatsApp</a>
+              <a href={WA_CONVOCATORIA} target="_blank" rel="noopener" className="btn btn-wa">📋 Ver convocatorias</a>
               <a href="#como" className="btn btn-ghost">Ver cómo funciona</a>
             </div>
             <a href="#convocatorias" className="btn btn-ghost btn-conv-movil">📋 Ver convocatorias disponibles</a>
