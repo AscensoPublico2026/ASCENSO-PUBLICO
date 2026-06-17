@@ -29,6 +29,21 @@ function moduloKey(g: any): string {
   return "generales";
 }
 
+// Rango de días que cubre un módulo (ej. "Días 2–4", "Día 1") o null si no aplica.
+function rangoDias(gs: any[]): string | null {
+  const dias = gs.map((g) => g.dia).filter((d) => d != null) as number[];
+  if (!dias.length) return null;
+  const min = Math.min(...dias), max = Math.max(...dias);
+  return min === max ? `Día ${min}` : `Días ${min}–${max}`;
+}
+
+const ESTADO_LABEL: Record<string, string> = { completo: "Completado", encurso: "En curso", pendiente: "Pendiente" };
+function estadoModulo(total: number, leidas: number): "completo" | "encurso" | "pendiente" {
+  if (total > 0 && leidas === total) return "completo";
+  if (leidas > 0) return "encurso";
+  return "pendiente";
+}
+
 
 export default async function CursoDetallePage({ params }: { params: { cursoId: string } }) {
   const supabase = createClient();
@@ -78,6 +93,16 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
     (MODULOS.find((m) => (porModulo[m.key] || []).some((g: any) => g.archivo_path && !g.leida)) ||
       MODULOS.find((m) => (porModulo[m.key] || []).length > 0) ||
       { key: "" }).key;
+
+  // Módulos que tienen guías (para numerarlos secuencialmente sin huecos).
+  const modulosVisibles = MODULOS.filter((m) => (porModulo[m.key] || []).length > 0);
+  // Próxima guía a estudiar (primera disponible y no leída, en orden de módulos).
+  let proximaGuia: any = null;
+  for (const m of MODULOS) {
+    if (m.key === "simulacro" && !simulacroDesbloqueado) continue;
+    const next = (porModulo[m.key] || []).find((g: any) => g.archivo_path && !g.leida);
+    if (next) { proximaGuia = next; break; }
+  }
 
   // Calcular progreso EN VIVO: % de guías (con archivo disponible) que ya fueron leídas.
   // Solo cuentan las guías que tienen archivo (las funcionales/simulacro pendientes no penalizan).
@@ -192,23 +217,27 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             </div>
           </div>
 
+          {/* Continúa donde quedaste */}
+          {proximaGuia && <ContinuarBanner guia={proximaGuia} />}
+
           {/* Módulos del currículo (acordeón) */}
-          {MODULOS.map((m) => {
+          {modulosVisibles.map((m, idx) => {
             const gs = porModulo[m.key] || [];
-            if (gs.length === 0) return null;
             // Simulacro bloqueado: tarjeta de bloqueo en vez del módulo.
             if (m.key === "simulacro" && !simulacroDesbloqueado) {
-              return <SimulacroBloqueado key={m.key} faltan={faltanSimulacro} total={guiasRequeridas.length} />;
+              return <SimulacroBloqueado key={m.key} numero={idx + 1} faltan={faltanSimulacro} total={guiasRequeridas.length} />;
             }
             const total = gs.filter((g: any) => g.archivo_path).length;
             const leidas = gs.filter((g: any) => g.archivo_path && g.leida).length;
             return (
               <ModuloGuias
                 key={m.key}
+                numero={idx + 1}
                 modulo={m}
                 guias={gs}
                 total={total}
                 leidas={leidas}
+                rango={rangoDias(gs)}
                 abierto={m.key === moduloAbierto}
               />
             );
@@ -298,27 +327,27 @@ function FilaGuia({ g }: { g: any }) {
   );
 }
 
-function ModuloGuias({ modulo, guias, total, leidas, abierto }: {
-  modulo: ModuloDef; guias: any[]; total: number; leidas: number; abierto: boolean;
+function ModuloGuias({ numero, modulo, guias, total, leidas, rango, abierto }: {
+  numero: number; modulo: ModuloDef; guias: any[]; total: number; leidas: number; rango: string | null; abierto: boolean;
 }) {
-  const completo = total > 0 && leidas === total;
+  const estado = estadoModulo(total, leidas);
   const pct = total > 0 ? Math.round((leidas / total) * 100) : 0;
   return (
     <details className="modulo" open={abierto}>
       <summary className="modulo-sum">
-        <span className="modulo-ic">{completo ? "✅" : modulo.icon}</span>
+        <span className={`modulo-num ${estado}`}>{estado === "completo" ? "✓" : numero}</span>
         <span style={{ flex: 1, minWidth: 0 }}>
-          <span className="modulo-tit">{modulo.titulo}</span>
-          <span className="modulo-desc">{modulo.desc}</span>
-        </span>
-        {total > 0 && (
-          <span className="modulo-meta">
-            <span className="modulo-bar"><span style={{ width: `${pct}%` }} /></span>
-            <span className="modulo-cont" style={completo ? { color: "var(--verde)", borderColor: "#c3e6d3", background: "var(--verde-suave)" } : undefined}>
-              {leidas}/{total}
-            </span>
+          <span className="modulo-tit">{modulo.icon} {modulo.titulo}</span>
+          <span className="modulo-chips">
+            {rango && <span className="chip chip-dia">📅 {rango}</span>}
+            <span className="chip">📖 {total} {total === 1 ? "guía" : "guías"}</span>
+            <span className={`chip estado-${estado}`}>{ESTADO_LABEL[estado]}</span>
           </span>
-        )}
+        </span>
+        <span className="modulo-prog">
+          <span className="modulo-bar"><span style={{ width: `${pct}%` }} /></span>
+          <span className="modulo-cont">{leidas}/{total}</span>
+        </span>
       </summary>
       <div className="modulo-body">
         {guias.map((g: any) => <FilaGuia key={g.id} g={g} />)}
@@ -327,36 +356,47 @@ function ModuloGuias({ modulo, guias, total, leidas, abierto }: {
   );
 }
 
-function SimulacroBloqueado({ faltan, total }: { faltan: number; total: number }) {
+function ContinuarBanner({ guia }: { guia: any }) {
+  return (
+    <Link href={`/guia/${guia.id}`} className="continuar">
+      <div style={{ minWidth: 0 }}>
+        <span className="continuar-label">▶ Continúa donde quedaste</span>
+        <span className="continuar-title">
+          {guia.dia != null ? `Día ${guia.dia} · ` : ""}{guia.titulo}
+        </span>
+      </div>
+      <span className="continuar-btn">Continuar →</span>
+    </Link>
+  );
+}
+
+function SimulacroBloqueado({ numero, faltan, total }: { numero: number; faltan: number; total: number }) {
   const completadas = total - faltan;
   const pct = total > 0 ? Math.round((completadas / total) * 100) : 0;
   return (
-    <div style={{ marginBottom: 28 }}>
-      <h3 style={{ fontSize: ".95rem", color: "var(--azul)", marginBottom: 12, paddingBottom: 8, borderBottom: "1px solid var(--gris-borde)" }}>
-        📝 Simulacro Final
-      </h3>
-      <div style={{
-        background: "var(--gris-bg, #F2F0EA)",
-        border: "1px dashed var(--gris-borde)",
-        borderRadius: 12,
-        padding: "20px 18px",
-        textAlign: "center",
-      }}>
-        <div style={{ fontSize: "1.8rem", marginBottom: 8 }}>🔒</div>
-        <p style={{ fontWeight: 700, color: "var(--azul)", margin: "0 0 6px", fontSize: ".95rem" }}>
-          Simulacro bloqueado
-        </p>
-        <p style={{ color: "var(--texto-suave)", margin: "0 0 14px", fontSize: ".86rem", lineHeight: 1.5 }}>
-          El simulacro final se desbloquea cuando completes <strong>todas las guías</strong> de tu plan de estudio.
-          {faltan > 0 && (
-            <> Te {faltan === 1 ? "falta" : "faltan"} <strong>{faltan}</strong> {faltan === 1 ? "guía" : "guías"} por leer.</>
-          )}
-        </p>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
-          <div style={{ width: 140, height: 8, borderRadius: 4, background: "var(--gris-borde)", overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 4 }} />
-          </div>
-          <span style={{ fontSize: ".8rem", fontWeight: 700, color: "var(--azul)" }}>{completadas}/{total}</span>
+    <div className="modulo modulo-locked">
+      <div className="modulo-sum" style={{ cursor: "default" }}>
+        <span className="modulo-num locked">🔒</span>
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span className="modulo-tit">📝 Simulacro Final</span>
+          <span className="modulo-chips">
+            <span className="chip chip-dia">📅 Día 21</span>
+            <span className="chip estado-bloqueado">Bloqueado</span>
+          </span>
+        </span>
+        <span className="modulo-prog">
+          <span className="modulo-bar"><span style={{ width: `${pct}%` }} /></span>
+          <span className="modulo-cont">{completadas}/{total}</span>
+        </span>
+      </div>
+      <div className="modulo-body" style={{ paddingTop: 4 }}>
+        <div style={{ background: "var(--crema)", border: "1px dashed var(--gris-borde)", borderRadius: 12, padding: "16px 18px", textAlign: "center" }}>
+          <p style={{ color: "var(--texto-suave)", margin: 0, fontSize: ".88rem", lineHeight: 1.55 }}>
+            Se desbloquea cuando completes <strong>todas las guías de tu plan</strong>.
+            {faltan > 0 && (
+              <> Te {faltan === 1 ? "falta" : "faltan"} <strong>{faltan}</strong> {faltan === 1 ? "guía" : "guías"} por leer.</>
+            )}
+          </p>
         </div>
       </div>
     </div>
