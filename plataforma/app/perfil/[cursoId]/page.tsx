@@ -143,30 +143,35 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
         return (
           <div style={{ marginTop: 24 }}>
           {/* Progreso */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-            <h2 style={{ fontSize: "1.15rem", margin: 0 }}>Tu biblioteca</h2>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 120, height: 8, borderRadius: 4, background: "var(--gris-borde)", overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${progresoPct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 4 }} />
+          <div style={{ background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 16, padding: "20px 22px", marginBottom: 26, boxShadow: "0 2px 12px rgba(10,42,94,.05)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
+              <div>
+                <h2 style={{ fontSize: "1.1rem", margin: 0 }}>Tu ruta de estudio</h2>
+                <p style={{ fontSize: ".84rem", color: "var(--texto-suave)", margin: "3px 0 0" }}>
+                  {guiasLeidas} de {guiasDisponibles.length} guías completadas
+                </p>
               </div>
-              <span style={{ fontSize: ".82rem", fontWeight: 700, color: "var(--azul)" }}>{progresoPct}%</span>
+              <span style={{ fontSize: "1.7rem", fontWeight: 800, color: "var(--azul)" }}>{progresoPct}%</span>
+            </div>
+            <div style={{ height: 10, borderRadius: 6, background: "var(--gris-borde)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${progresoPct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 6, transition: "width .4s ease" }} />
             </div>
           </div>
 
           {/* Sección: Plan de estudio */}
           {guiasPlan.length > 0 && (
-            <SeccionGuias titulo="📘 Plan de estudio" guias={guiasPlan} />
+            <SeccionGuias titulo="📘 Plan de estudio" subtitulo="Tu ruta día a día. Estúdialas en orden, una por día." guias={guiasPlan} />
           )}
 
           {/* Sección: Bonus */}
           {guiasBonus.length > 0 && (
-            <SeccionGuias titulo="🎁 Bonus" guias={guiasBonus} />
+            <SeccionGuias titulo="🎁 Material bonus" subtitulo="Contenido extra para reforzar. Opcional, pero recomendado." guias={guiasBonus} />
           )}
 
           {/* Sección: Simulacro Final (se desbloquea al completar todas las guías) */}
           {guiasSimulacro.length > 0 && (
             simulacroDesbloqueado
-              ? <SeccionGuias titulo="📝 Simulacro Final" guias={guiasSimulacro} />
+              ? <SeccionGuias titulo="📝 Simulacro Final" subtitulo="¡Desbloqueado! Pon a prueba todo lo que aprendiste." guias={guiasSimulacro} />
               : <SimulacroBloqueado faltan={faltanSimulacro} total={guiasRequeridas.length} />
           )}
 
@@ -190,84 +195,80 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   );
 }
 
-function SeccionGuias({ titulo, guias }: { titulo: string; guias: any[] }) {
+function SeccionGuias({ titulo, subtitulo, guias }: { titulo: string; subtitulo?: string; guias: any[] }) {
+  const tipoLabel: Record<string, string> = {
+    general: "Conocimiento general",
+    nivel: "Competencias por nivel",
+    funcional: "Funciones del cargo",
+    bonus: "Material extra",
+    simulacro: "Evaluación final",
+  };
   return (
-    <div style={{ marginBottom: 28 }}>
-      <h3 style={{ fontSize: ".95rem", color: "var(--azul)", marginBottom: 12, paddingBottom: 8, borderBottom: "1px solid var(--gris-borde)" }}>
-        {titulo}
-      </h3>
-      <div style={{ display: "grid", gap: 8 }}>
-        {guias.map((g: any) => (
-          <Link
-            key={g.id}
-            href={`/guia/${g.id}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              background: "#fff",
-              border: "1px solid var(--gris-borde)",
-              borderRadius: 12,
-              padding: "12px 16px",
-              transition: "transform .15s, box-shadow .15s",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            {g.dia != null ? (
-              <span style={{
-                width: 36,
-                height: 36,
-                borderRadius: 9,
-                background: "var(--azul)",
-                color: "#fff",
+    <div style={{ marginBottom: 32 }}>
+      <div style={{ marginBottom: 14, paddingBottom: 8, borderBottom: "1px solid var(--gris-borde)" }}>
+        <h3 style={{ fontSize: "1rem", color: "var(--azul)", margin: 0 }}>{titulo}</h3>
+        {subtitulo && <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", margin: "4px 0 0" }}>{subtitulo}</p>}
+      </div>
+      <div style={{ display: "grid", gap: 10 }}>
+        {guias.map((g: any) => {
+          const dispo = !!g.archivo_path;
+          return (
+            <Link
+              key={g.id}
+              href={`/guia/${g.id}`}
+              className="guia-row"
+              style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 800,
-                fontSize: ".78rem",
-                flexShrink: 0,
-              }}>
-                D{g.dia}
-              </span>
-            ) : (
-              <span style={{
-                width: 36,
-                height: 36,
-                borderRadius: 9,
-                background: "linear-gradient(135deg, #E8A33D, #F6C56B)",
-                color: "#0A2A5E",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 800,
-                fontSize: ".9rem",
-                flexShrink: 0,
-              }}>
-                ★
-              </span>
-            )}
-            <div style={{ flex: 1 }}>
-              <span style={{ fontWeight: 600, fontSize: ".92rem" }}>{g.titulo}</span>
-              {g.tipo && (
-                <span style={{ display: "block", fontSize: ".72rem", color: "var(--texto-suave)", marginTop: 2 }}>
-                  {g.tipo === "general" && "Conocimiento general"}
-                  {g.tipo === "nivel" && "Competencias por nivel"}
-                  {g.tipo === "funcional" && "Funciones del cargo"}
-                  {g.tipo === "bonus" && "Material extra"}
-                  {g.tipo === "simulacro" && "Evaluación"}
+                gap: 14,
+                background: "#fff",
+                border: `1px solid ${g.leida ? "#c3e6d3" : "var(--gris-borde)"}`,
+                borderRadius: 14,
+                padding: "13px 16px",
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              {/* Indicador de Día / Extra */}
+              {g.dia != null ? (
+                <span style={{
+                  width: 46, height: 46, borderRadius: 12, flexShrink: 0,
+                  background: g.leida ? "var(--verde)" : "linear-gradient(135deg, #0A2A5E, #1A4A8A)",
+                  color: "#fff", display: "flex", flexDirection: "column",
+                  alignItems: "center", justifyContent: "center", lineHeight: 1,
+                }}>
+                  <span style={{ fontSize: ".5rem", fontWeight: 700, letterSpacing: ".08em", opacity: .85 }}>DÍA</span>
+                  <span style={{ fontSize: "1.15rem", fontWeight: 800 }}>{g.dia}</span>
                 </span>
+              ) : (
+                <span style={{
+                  width: 46, height: 46, borderRadius: 12, flexShrink: 0,
+                  background: "linear-gradient(135deg, #E8A33D, #F6C56B)", color: "#0A2A5E",
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", fontWeight: 800,
+                }}>★</span>
               )}
-            </div>
-            {g.leida ? (
-              <span style={{ color: "var(--verde)", fontSize: ".8rem", fontWeight: 700, display: "flex", alignItems: "center", gap: 4 }}>
-                ✓ Leída
-              </span>
-            ) : (
-              <span style={{ color: "var(--azul)", fontSize: ".85rem", fontWeight: 600 }}>→</span>
-            )}
-          </Link>
-        ))}
+
+              {/* Título + tipo */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ fontWeight: 700, fontSize: ".95rem", color: "var(--azul)", display: "block" }}>{g.titulo}</span>
+                {g.tipo && (
+                  <span style={{ display: "block", fontSize: ".74rem", color: "var(--texto-suave)", marginTop: 2 }}>
+                    {tipoLabel[g.tipo] || g.tipo}
+                  </span>
+                )}
+              </div>
+
+              {/* Estado */}
+              {g.leida ? (
+                <span style={{ color: "var(--verde)", fontSize: ".8rem", fontWeight: 700, whiteSpace: "nowrap" }}>✓ Completada</span>
+              ) : dispo ? (
+                <span style={{ color: "#fff", background: "linear-gradient(135deg, #0A2A5E, #1A4A8A)", fontSize: ".78rem", fontWeight: 700, padding: "7px 14px", borderRadius: 20, whiteSpace: "nowrap" }}>Comenzar →</span>
+              ) : (
+                <span style={{ color: "var(--texto-suave)", fontSize: ".76rem", fontWeight: 600, whiteSpace: "nowrap" }}>Próximamente</span>
+              )}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
