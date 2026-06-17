@@ -5,7 +5,42 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros, + MOTOR de simulacros data-driven construido.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo). Ya existe `simulacro/motor/` + `simulacro/bancos/` (molde + bancos reutilizables + receta por curso + builder con validación), igual al motor de guías. **Próximo paso: armar simulacros de nuevos cursos eligiendo bancos + escribiendo solo las funcionales del cargo.**_
+_Última actualización: 17 de junio de 2026 (tarde) — **PRIMERA VENTA REAL FUNCIONANDO + sesión de pulido pre-lanzamiento.** Se validó el flujo de compra con dinero real (Wompi en producción), se corrigieron los hallazgos del checklist y se prepararon los documentos de continuidad. Ver "## CAMBIOS RECIENTES" abajo. **Próximo paso definitivo: contenido + marketing en TikTok y vender; armar el curso de cada cargo cuando entre la venta.**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 17 jun 2026 — tarde)
+
+**Lanzamiento / pagos:**
+- ✅ **Primera compra real validada de punta a punta** (Wompi en PRODUCCIÓN, `pub_prod_`/`prv_prod_`; `PRECIO_COP=300000`). Para pruebas baratas se baja `PRECIO_COP` temporalmente (ej. 2000) y se vuelve a 300000.
+- ✅ **Vista de pagos** `/admin/pagos`: cada pago aprobado con su cliente/cargo/OPEC, monto correcto (el `monto` se guarda en **centavos** → se divide /100), respaldo por preregistro, marca **(huérfano)** y **botón Eliminar** (acción `eliminarPago`). El stat del dashboard enlaza aquí.
+- ✅ **`/activar` robusto:** si `getTransaction` falla (p. ej. `WOMPI_PRIVATE_KEY` de otro entorno) pero el webhook ya procesó el pago, igual activa (busca el pago aprobado por `wompi_transaction_id`/referencia) y **se auto-recarga cada 6s**. ⚠️ Recordatorio: el webhook (URL de eventos en Wompi producción) debe apuntar a `https://ascensopublico.com/api/webhooks/wompi`.
+
+**Notificaciones:**
+- ✅ **Correo al cliente cuando se habilita el curso** (`correoCursoListo` en `lib/email.ts`), disparado en `marcarCursoListo` y `habilitarCursoAhora`. Si aún faltan las 12h, el correo indica la **hora exacta** de disponibilidad; si ya está disponible, invita a estudiar. No reenvía si ya estaba disponible.
+
+**Landing / UX:**
+- ✅ **WhatsApp** centralizado en `lib/contacto.ts` con **número oficial `573170905177`** y **redes** (`REDES`: TikTok/Instagram) enlazadas en el footer.
+- ✅ **Contador "35/100 cupos vendidos"** (piso base `NEXT_PUBLIC_CUPOS_BASE`, default 35, + ventas reales) en `ContadorCupos`.
+- ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
+- ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).
+- ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **1 a 1½ h/día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
+- ✅ Footer: enlaces a **/privacidad** y **/terminos** (antes apuntaban a `#datos`).
+
+**Admin:**
+- ✅ Ficha del cliente y lista de cursos muestran **OPEC + Entidad**.
+- ✅ **Editar nombre** de usuario/admin en `/admin/usuarios` (acción `actualizarNombreUsuario`).
+- ✅ **Detección automática de OPEC ya preparado:** si existe otro curso del mismo OPEC con funcionales, banner verde "Generar curso automáticamente" (copia el plan); si es el primero, avisa que se arma a mano.
+- ✅ Convocatorias: imagen por **subida a bucket `imagenes`** (público, opcional de crear), **elegir una ya cargada** (desplegable `/fotos`) o **URL**.
+- ✅ **Botón flotante de WhatsApp "¿Dudas?"** dentro del curso del estudiante.
+
+**Herramientas:**
+- ✅ **Checklist interactivo** servido en `https://ascensopublico.com/checklist-pruebas.html` (marca OK/Falla, guarda progreso, copia reporte de fallas). Plan también en `PRE-LANZAMIENTO-PRUEBAS.md`.
+- ✅ **Reset password** soporta flujo `token_hash` (cross-device). Requiere plantilla de Supabase con `{{ .SiteURL }}/reset-password?token_hash={{ .TokenHash }}&type=recovery` (ya configurada).
+
+**Documentos de continuidad creados (esta sesión):**
+- `prompts/CONTINUIDAD-GENERACION.md` — para retomar la **generación de plan + guías** de un cargo en una sesión nueva.
+- `prompts/CONTINUIDAD-DESARROLLO.md` — para retomar **ajustes/mejoras** de la plataforma en una sesión nueva.
 
 ---
 
