@@ -25,6 +25,23 @@ export default async function PerfilPage() {
   const { data: profile } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
   const isAdmin = profile?.rol === "admin";
 
+  // Progreso EN VIVO por curso: % de guías con archivo que ya fueron leídas.
+  // No dependemos del valor guardado (curso.progreso_pct), que puede quedar
+  // desactualizado; lo calculamos desde guias_curso (que el alumno sí puede leer).
+  const progresoPorCurso: Record<string, number> = {};
+  const cursoIds = (cursos || []).map((c: any) => c.id);
+  if (cursoIds.length > 0) {
+    const { data: gs } = await supabase
+      .from("guias_curso")
+      .select("curso_id, archivo_path, leida")
+      .in("curso_id", cursoIds);
+    for (const id of cursoIds) {
+      const disp = (gs || []).filter((g: any) => g.curso_id === id && g.archivo_path);
+      const leidas = disp.filter((g: any) => g.leida).length;
+      progresoPorCurso[id] = disp.length > 0 ? Math.round((leidas / disp.length) * 100) : 0;
+    }
+  }
+
   return (
     <main style={{ maxWidth: 860, margin: "0 auto", padding: "40px 22px 80px" }}>
       {/* Header del perfil */}
@@ -51,7 +68,7 @@ export default async function PerfilPage() {
         <EmptyState />
       ) : cursos.length === 1 ? (
         <>
-          <CursoCard curso={cursos[0]} expanded />
+          <CursoCard curso={cursos[0]} progresoPct={progresoPorCurso[cursos[0].id] ?? 0} expanded />
           <ComprarOtroCurso />
         </>
       ) : (
@@ -61,7 +78,7 @@ export default async function PerfilPage() {
           </h2>
           <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))" }}>
             {cursos.map((curso: any) => (
-              <CursoCard key={curso.id} curso={curso} />
+              <CursoCard key={curso.id} curso={curso} progresoPct={progresoPorCurso[curso.id] ?? 0} />
             ))}
           </div>
           <ComprarOtroCurso />
@@ -121,11 +138,12 @@ function EmptyState() {
   );
 }
 
-function CursoCard({ curso, expanded }: { curso: any; expanded?: boolean }) {
+function CursoCard({ curso, progresoPct, expanded }: { curso: any; progresoPct?: number; expanded?: boolean }) {
   const imagenUrl = curso.convocatorias?.imagen_url || null;
   const convNombre = curso.convocatorias?.nombre || "";
   const cargoNombre = toTitleCase(curso.cargo_nombre || "Curso personalizado");
   const opec = curso.opec || "";
+  const pct = progresoPct ?? curso.progreso_pct ?? 0;
 
   const estadoBadge: Record<string, { label: string; bg: string; color: string }> = {
     en_preparacion: { label: "En preparación", bg: "#FDF4E3", color: "#B8600A" },
@@ -244,13 +262,13 @@ function CursoCard({ curso, expanded }: { curso: any; expanded?: boolean }) {
                 }}>
                   <div style={{
                     height: "100%",
-                    width: `${curso.progreso_pct || 0}%`,
+                    width: `${pct}%`,
                     background: "linear-gradient(90deg, #E8A33D, #F6C56B)",
                     borderRadius: 3,
                   }} />
                 </div>
                 <span style={{ color: "rgba(255,255,255,.7)", fontSize: ".72rem", fontWeight: 600 }}>
-                  {curso.progreso_pct || 0}%
+                  {pct}%
                 </span>
               </div>
             )}
