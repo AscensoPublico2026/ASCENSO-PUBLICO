@@ -158,9 +158,9 @@ export default async function LandingPage() {
           <h2>De la compra a tu ruta de estudio</h2>
           <p className="lead">Un proceso simple. Tú aportas los datos de tu cargo; nosotros armamos tu curso.</p>
           <div className="pasos">
-            <div className="paso"><h3>Compras tu curso</h3><p>Eliges tu convocatoria y realizas el pago de forma segura.</p></div>
-            <div className="paso"><h3>Cargas tus datos</h3><p>Subes tu OPEC, el cargo, el nivel y el manual de funciones (te enseñamos cómo descargarlos).</p></div>
-            <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 12 horas construimos tu plan personalizado de 21 días.</p></div>
+            <div className="paso"><h3>Eliges tu convocatoria y cargas tus datos</h3><p>Seleccionas tu convocatoria y subes tu OPEC, el cargo, el nivel y el manual de funciones (te enseñamos cómo descargarlos).</p></div>
+            <div className="paso"><h3>Pagas de forma segura</h3><p>Realizas un único pago con Wompi (PSE, Nequi o tarjeta de crédito/débito).</p></div>
+            <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 12 horas construimos tu plan personalizado de 21 días y lo dejamos en tu perfil.</p></div>
             <div className="paso"><h3>Estudias y practicas</h3><p>Accedes a tus guías por día y cierras con tu simulacro final tipo CNSC.</p></div>
           </div>
         </div>
