@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import LogoutButton from "./LogoutButton";
 import CambiarPassword from "./CambiarPassword";
+import ContadorMini from "./ContadorMini";
 import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const dynamic = "force-dynamic";
@@ -153,6 +154,11 @@ function CursoCard({ curso, progresoPct, expanded }: { curso: any; progresoPct?:
   };
   const badge = estadoBadge[curso.estado] || estadoBadge.en_preparacion;
 
+  // ¿El curso está en espera de habilitarse? (en preparación, o listo pero aún
+  // no se cumplen las 12h). En ese caso mostramos el contador en la tarjeta.
+  const deadlineMs = curso.preparacion_deadline ? new Date(curso.preparacion_deadline).getTime() : null;
+  const enEspera = curso.estado === "en_preparacion" || (curso.estado === "listo" && !!deadlineMs && deadlineMs > Date.now());
+
   return (
     <Link
       href={`/perfil/${curso.id}`}
@@ -252,7 +258,9 @@ function CursoCard({ curso, progresoPct, expanded }: { curso: any; progresoPct?:
               {badge.label}
             </span>
 
-            {curso.estado === "listo" && (
+            {enEspera && curso.preparacion_deadline ? (
+              <ContadorMini deadline={curso.preparacion_deadline} />
+            ) : curso.estado === "listo" && (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{
                   width: 80,

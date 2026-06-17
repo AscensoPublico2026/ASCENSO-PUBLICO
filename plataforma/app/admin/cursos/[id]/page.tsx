@@ -13,7 +13,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
   const supabase = createClient();
   const { data: curso } = await supabase
     .from("cursos")
-    .select("*, profiles(nombre,correo,celular), convocatorias(nombre)")
+    .select("*, profiles(nombre,correo,celular), convocatorias(nombre,entidad)")
     .eq("id", params.id)
     .single();
   if (!curso) notFound();
@@ -26,6 +26,33 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
   }
 
   const { data: guias } = await supabase.from("guias_curso").select("*").eq("curso_id", params.id).order("orden");
+
+  // Detección automática: ¿este OPEC ya fue preparado antes en otro curso?
+  // Si sí, ofrecemos generar este curso copiando ese plan (sin rehacerlo a mano).
+  let fuenteOPEC: { nombre: string; nFunc: number } | null = null;
+  if (curso.opec) {
+    const { data: otros } = await supabase
+      .from("cursos")
+      .select("id, profiles(nombre)")
+      .eq("opec", curso.opec)
+      .neq("id", params.id);
+    if (otros && otros.length > 0) {
+      const ids = otros.map((o: any) => o.id);
+      const { data: gg } = await supabase
+        .from("guias_curso")
+        .select("curso_id, tipo")
+        .in("curso_id", ids)
+        .eq("tipo", "funcional");
+      const counts: Record<string, number> = {};
+      (gg || []).forEach((g: any) => { counts[g.curso_id] = (counts[g.curso_id] || 0) + 1; });
+      let bestId: string | null = null, best = 0;
+      for (const [id, n] of Object.entries(counts)) { if (n > best) { best = n; bestId = id; } }
+      if (bestId && best > 0) {
+        const src = otros.find((o: any) => o.id === bestId);
+        fuenteOPEC = { nombre: (src as any)?.profiles?.nombre || "otro cliente", nFunc: best };
+      }
+    }
+  }
 
   const input: React.CSSProperties = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".88rem" };
   const box: React.CSSProperties = { background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 14, padding: 22, boxShadow: "0 4px 20px rgba(10,42,94,.06)", marginBottom: 20 };
@@ -103,6 +130,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>CORREO</span><br/><strong>{curso.profiles?.correo || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>CELULAR</span><br/><strong>{curso.profiles?.celular || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>OPEC</span><br/><strong>{curso.opec || "-"}</strong></div>
+          <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>ENTIDAD</span><br/><strong>{curso.convocatorias?.entidad || curso.convocatorias?.nombre || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>NIVEL</span><br/><strong>{curso.nivel || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>ESTADO</span><br/><strong>{curso.estado}</strong></div>
         </div>
@@ -219,14 +247,25 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       {/* Funcionales */}
       <div style={box}>
         <h2 style={{ fontSize: "1rem", marginBottom: 10 }}>📝 Guías funcionales ({guiasFuncionales.length}/12)</h2>
-        <form action={copiarPlanOPEC.bind(null, curso.id)} style={{ marginBottom: 14, padding: "12px 14px", background: "var(--azul-suave, #EAF1FB)", border: "1px solid #C9DCF4", borderRadius: 10 }}>
-          <button className="btn btn-azul" style={{ padding: "9px 16px", fontSize: ".82rem" }}>
-            ⚡ Copiar plan de otro curso del mismo OPEC
-          </button>
-          <p style={{ color: "var(--texto-suave)", fontSize: ".74rem", marginTop: 6, marginBottom: 0 }}>
-            Trae funcionales, "Conoce tu Entidad" y simulacro desde otro curso ya armado con el mismo OPEC (no duplica lo que ya esté). Ideal para cursos del mismo cargo.
-          </p>
-        </form>
+        {fuenteOPEC ? (
+          <form action={copiarPlanOPEC.bind(null, curso.id)} style={{ marginBottom: 14, padding: "14px 16px", background: "var(--verde-suave, #E8F6EE)", border: "1px solid #BFE6CF", borderRadius: 10 }}>
+            <p style={{ color: "var(--verde, #1A7A4A)", fontWeight: 800, margin: "0 0 4px", fontSize: ".9rem" }}>
+              ✅ Este OPEC ya fue preparado antes
+            </p>
+            <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", margin: "0 0 10px" }}>
+              Detectamos un curso del <strong>mismo OPEC ({curso.opec})</strong> con {fuenteOPEC.nFunc} guías funcionales ya armadas (cliente: {fuenteOPEC.nombre}). Puedes <strong>generar este curso automáticamente</strong> copiando ese plan (funcionales + "Conoce tu Entidad" + simulacro), sin duplicar lo que ya esté.
+            </p>
+            <button className="btn btn-oro" style={{ padding: "10px 18px", fontSize: ".85rem" }}>
+              ⚡ Generar curso automáticamente desde el plan del OPEC
+            </button>
+          </form>
+        ) : (
+          <div style={{ marginBottom: 14, padding: "12px 14px", background: "var(--crema)", border: "1px dashed var(--gris-borde)", borderRadius: 10 }}>
+            <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", margin: 0 }}>
+              📋 Este es el <strong>primer curso del OPEC {curso.opec || "—"}</strong>. Ármalo a mano una vez (abajo); los próximos compradores de este mismo OPEC se generarán automáticamente a partir de este.
+            </p>
+          </div>
+        )}
         {guiasFuncionales.length > 0 && (
           <div style={{ display: "grid", gap: 6, marginBottom: 14 }}>{guiasFuncionales.map((g: any) => filaGuia(g, true))}</div>
         )}

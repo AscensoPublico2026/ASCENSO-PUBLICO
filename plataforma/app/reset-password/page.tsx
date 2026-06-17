@@ -24,8 +24,20 @@ export default function ResetPasswordPage() {
     });
 
     async function init() {
-      // Flujo nuevo (PKCE): el enlace del correo trae ?code=... → hay que canjearlo por sesión.
-      const code = new URLSearchParams(window.location.search).get("code");
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const tokenHash = params.get("token_hash");
+      const type = params.get("type");
+
+      // Flujo OTP por token_hash: funciona aunque el enlace se abra en OTRO
+      // dispositivo/navegador (no depende del code_verifier de PKCE). Es el más
+      // confiable para recuperación de contraseña.
+      if (tokenHash) {
+        const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: (type as any) || "recovery" });
+        if (!error) { setSessionReady(true); return; }
+      }
+      // Flujo PKCE: el enlace trae ?code=... → canjearlo por sesión
+      // (solo funciona si se abre en el mismo navegador donde se solicitó).
       if (code) {
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         if (!error) { setSessionReady(true); return; }

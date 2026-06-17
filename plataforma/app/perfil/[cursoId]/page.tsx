@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 import Contador from "../Contador";
 
 export const dynamic = "force-dynamic";
@@ -281,6 +282,26 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
         <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginTop: 24, textAlign: "center" }}>
           Acceso válido hasta {new Date(curso.fecha_vencimiento).toLocaleDateString("es-CO")}.
         </p>
+      )}
+
+      {/* Botón flotante de WhatsApp: dudas / asistencia sobre el curso */}
+      {!esPreview && (
+        <a
+          href={waUrl(WA_MENSAJES.soporte)}
+          target="_blank"
+          rel="noopener"
+          aria-label="¿Dudas? Escríbenos por WhatsApp"
+          style={{
+            position: "fixed", right: 18, bottom: 18, zIndex: 200,
+            display: "inline-flex", alignItems: "center", gap: 9,
+            background: "#25D366", color: "#fff", fontWeight: 800, fontSize: ".9rem",
+            padding: "13px 18px", borderRadius: 30, textDecoration: "none",
+            boxShadow: "0 10px 26px rgba(37,211,102,.45)",
+          }}
+        >
+          <svg width={22} height={22} viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23z"/></svg>
+          <span>¿Dudas?</span>
+        </a>
       )}
     </main>
   );

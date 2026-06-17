@@ -1,5 +1,5 @@
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { inhabilitarUsuario, eliminarUsuario } from "./actions";
+import { inhabilitarUsuario, eliminarUsuario, actualizarNombreUsuario } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -50,9 +50,16 @@ export default async function AdminUsuarios() {
                 </div>
               </div>
 
-              {/* Acciones (no permitir eliminar admins) */}
-              {u.rol !== "admin" && (
-                <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+              {/* Acciones */}
+              <div style={{ display: "flex", gap: 8, flexShrink: 0, alignItems: "center" }}>
+                <details style={{ position: "relative" }}>
+                  <summary style={{ listStyle: "none", cursor: "pointer", border: "1px solid var(--gris-borde)", borderRadius: 8, padding: "6px 12px", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}>✎ Nombre</summary>
+                  <form action={actualizarNombreUsuario.bind(null, u.id)} style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 5, background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 10, padding: 12, boxShadow: "0 8px 24px rgba(10,42,94,.15)", width: 240 }}>
+                    <input name="nombre" defaultValue={u.nombre || ""} placeholder="Nombre completo" style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".85rem" }} />
+                    <button className="btn btn-azul" style={{ width: "100%", padding: "8px", marginTop: 8, fontSize: ".8rem" }}>Guardar nombre</button>
+                  </form>
+                </details>
+                {u.rol !== "admin" && (
                   <form action={eliminarUsuario.bind(null, u.id)}>
                     <button
                       style={{ background: "none", border: "1px solid #fcc", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", fontSize: ".78rem", color: "#b00" }}
@@ -60,8 +67,8 @@ export default async function AdminUsuarios() {
                       Eliminar
                     </button>
                   </form>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ))}
         </div>

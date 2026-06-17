@@ -5,7 +5,7 @@ import NivelTabs from "./components/NivelTabs";
 import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
 import ContadorCupos from "./components/ContadorCupos";
 import ScrollReveal from "./components/ScrollReveal";
-import { waUrl, WA_MENSAJES, CORREO_CONTACTO } from "@/lib/contacto";
+import { waUrl, WA_MENSAJES, CORREO_CONTACTO, REDES } from "@/lib/contacto";
 import "./landing.css";
 
 export const dynamic = "force-dynamic";
@@ -288,7 +288,23 @@ export default async function LandingPage() {
         </div>
         <div className="fslogan">Tu ruta personalizada hacia el empleo público</div>
         <div className="fcont">Escríbenos por <a href={WA_URL} target="_blank" rel="noopener" style={{ color: "#fff", fontWeight: 700, borderBottom: "1px solid var(--oro)" }}>WhatsApp</a> o al correo <a href="mailto:ascensopublico@gmail.com" style={{ color: "#fff", fontWeight: 700, borderBottom: "1px solid var(--oro)" }}>ascensopublico@gmail.com</a></div>
-        <div className="fmeta">© {new Date().getFullYear()} Ascenso Público · Preparación para concursos de mérito CNSC.<br/>No afiliado a la CNSC. Material de preparación independiente.<br/><a href="#datos" style={{ color: "rgba(255,255,255,.7)", borderBottom: "1px solid var(--oro)" }}>Política de tratamiento de datos personales</a></div>
+        {/* Redes sociales */}
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", margin: "16px 0 4px" }}>
+          {REDES.tiktok && (
+            <a href={REDES.tiktok} target="_blank" rel="noopener" aria-label="TikTok de Ascenso Público" style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1-2.59-2.59 2.59 2.59 0 0 1 3.39-2.46V7.3a5.7 5.7 0 0 0-.8-.06A5.66 5.66 0 0 0 4.2 12.9a5.66 5.66 0 0 0 9.66 4 5.66 5.66 0 0 0 1.65-4V9.01a7.33 7.33 0 0 0 4.29 1.37V7.3a4.28 4.28 0 0 1-3.2-1.48z"/></svg>
+            </a>
+          )}
+          {REDES.instagram && (
+            <a href={REDES.instagram} target="_blank" rel="noopener" aria-label="Instagram de Ascenso Público" style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          )}
+          <a href={WA_URL} target="_blank" rel="noopener" aria-label="WhatsApp de Ascenso Público" style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
+            <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.52 11.99c-.25.7-1.47 1.36-2.02 1.41-.55.06-1.05.27-3.53-.74-2.97-1.2-4.84-4.24-4.99-4.44-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.25.6.83 2.07.9 2.22.07.15.12.32.02.52-.1.2-.15.32-.29.49-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.07 1.3 2.36 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.19-.29.39-.24.64-.15.26.09 1.66.78 1.94.93.29.15.48.22.55.34.07.12.07.7-.18 1.4z"/></svg>
+          </a>
+        </div>
+        <div className="fmeta">© {new Date().getFullYear()} Ascenso Público · Preparación para concursos de mérito CNSC.<br/>No afiliado a la CNSC. Material de preparación independiente.<br/><Link href="/privacidad" style={{ color: "rgba(255,255,255,.7)", borderBottom: "1px solid var(--oro)" }}>Política de privacidad</Link> · <Link href="/terminos" style={{ color: "rgba(255,255,255,.7)", borderBottom: "1px solid var(--oro)" }}>Términos y condiciones</Link></div>
       </footer>
 
       {/* ===== WhatsApp flotante ===== */}
