@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIM-001 · Simulacro Final CNSC — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">SIM-001</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">🎯 Simulacro Final · Cargo de Prueba</div>
+  <h1>Simulacro CNSC — INDERVALLE<br>Técnico Operativo 314-03 · Almacén</h1>
+  <p class="header-sub">Demo de 5 preguntas para visualizar el formato real tipo CNSC: juicio situacional + 4 opciones plausibles + retroalimentación completa.</p>
+  <div class="badges"><span class="badge">🎓 Demo con 5 preguntas</span><span class="badge">🎯 Formato CNSC</span><span class="badge">🔁 Nivel Técnico</span></div>
+</header>
+
+<main>
+<div class="card card-lead quiz-intro">
+<p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explica por qué cada opción es correcta o incorrecta.</p>
+<p><strong>Las opciones se barajan en cada carga</strong> para que no memorices la posición de la respuesta, sino el criterio.</p>
+<div class="dific-tags">
+<span class="tag b">Básica</span>
+<span class="tag i">Intermedia</span>
+<span class="tag a">Avanzada</span>
+</div>
+</div>
+
+<div id="quiz"></div>
+
+<div style="text-align:center;margin:24px 0;">
+<button id="btnCalcular" class="btn">📊 Calcular mi resultado</button>
+</div>
+
+
+<div id="resultado">
+<div class="score-num" id="scoreNum">0/5</div>
+<h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:14px 0 6px;">Tu desempeño</h3>
+<p id="scoreMsg" style="font-size:1.05rem;margin-bottom:20px;"></p>
+<div id="temasReforzar" style="text-align:left;max-width:500px;margin:0 auto 24px;"></div>
+<button id="btnReiniciar" class="btn gold">🔄 Reiniciar simulacro</button>
+</div>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">SIM-001 · Demo 5 preguntas · Técnico Operativo 314-03, Almacén · INDERVALLE<br>Material de preparación independiente. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+
+
+// DEMO: 5 preguntas completas de contenido real para el cargo
+const preguntas=[
+{
+  "nivel": "b",
+  "tema": "Recepción y verificación de bienes",
+  "ctx": "Eres técnico operativo de almacén en INDERVALLE. Un lunes por la mañana llega un proveedor con un pedido de 80 cajas de insumos deportivos amparado en un contrato vigente. El transportador trae mucho afán: te entrega la factura por las 80 cajas, te asegura que \"todo viene completo y en perfecto estado\", y te pide que le firmes el recibido de una vez para seguir su ruta porque tiene otras entregas pendientes. En la bodega tienes espacio suficiente y dispones de unos 25 minutos antes de tu siguiente tarea. Sabes que, según el procedimiento, debes verificar cantidad y estado contra el soporte antes de firmar el acta de ingreso.",
+  "q": "Considerando tu responsabilidad sobre los bienes que ingresan al almacén de la entidad y el principio de control y trazabilidad, ¿cuál es la actuación más apropiada?",
+  "ops": [
+    "Firmar el recibido por las 80 cajas confiando en la factura y en la palabra del proveedor, ya que hay un contrato vigente y el transportador tiene mucho afán.",
+    "Verificar físicamente la cantidad y el estado de las cajas contra el contrato y la factura, y firmar el acta de ingreso solo por lo que esté conforme, dejando constancia escrita de cualquier novedad o diferencia.",
+    "Recibir físicamente las cajas para no demorar al transportador y dejar la verificación detallada y el registro en el sistema para cuando tengas menos trabajo durante la tarde.",
+    "Aceptar las cajas en la bodega pero no firmar absolutamente nada hasta que tu jefe inmediato venga personalmente a revisar todo y autorice el ingreso formal."
+  ],
+  "correcta": 1,
+  "expl": [
+    "El contrato y la factura indican lo que DEBERÍA llegar según lo pactado, no lo que realmente llegó en este momento. Si firmas el recibido sin verificar físicamente y luego aparecen faltantes, daños o diferencias, la responsabilidad recae directamente sobre ti como quien dio fe del ingreso; el afán de un tercero (el transportador) no releva tu deber legal de control sobre los bienes públicos.",
+    "La recepción de bienes exige verificar contra el soporte (contrato/orden/factura) ANTES de firmar el acta de ingreso, y el acta debe reflejar exactamente lo que realmente ingresó (principio de transparencia y control). Tienes tiempo disponible (25 min) y espacio: no hay excusa para omitir la verificación. Dejar constancia de novedades protege a la entidad y a ti mismo.",
+    "Separar la recepción física del registro y la verificación abre la puerta a descuadres y pérdidas: si después falta algo o está dañado, no podrás demostrar si realmente ingresó así o si ocurrió durante la custodia. La verificación es parte integral del acto de recibir, no un trámite administrativo posterior que se puede posponer por conveniencia.",
+    "Escalar al jefe inmediato una tarea rutinaria que está claramente dentro de tus funciones como técnico operativo de almacén es quedarte corto en tu rol y, además, entorpece innecesariamente el servicio. La verificación de un ingreso ordinario amparado en contrato te corresponde directamente a ti; solo se escala cuando el problema excede tu nivel (ej: faltante grave sin explicación)."
+  ]
+},
+
+{
+  "nivel": "i",
+  "tema": "Faltante de inventario y trazabilidad",
+  "ctx": "Durante el conteo físico trimestral del inventario de devolutivos del almacén de INDERVALLE, detectas un faltante significativo: 8 computadores portátiles que, según el sistema, deberían estar en la bodega bajo custodia del almacén, pero no aparecen físicamente. No hay ningún comprobante de salida, acta de entrega ni responsable asignado que justifique su ausencia. Revisas los últimos 6 meses de movimientos y no encuentras registro alguno de su salida. Un compañero con varios años en la entidad te dice, en voz baja, que \"eso pasa siempre con los inventarios\" y que lo mejor es ajustar las cantidades en el sistema para que cuadre todo y así nadie hace preguntas incómodas. Te recuerda que si reportas el faltante, van a venir auditorías, investigaciones y todo el mundo va a quedar mal.",
+  "q": "Sabiendo que alterar registros para ocultar un faltante puede configurar responsabilidad fiscal y disciplinaria grave, y considerando los principios de transparencia y control de bienes públicos, ¿cuál es la actuación más apropiada para proteger los recursos del Estado y tu propia actuación?",
+  "ops": [
+    "Seguir el consejo de tu compañero y ajustar manualmente las cantidades en el sistema para que el inventario físico coincida con el registro, ya que él tiene más experiencia y dice que es lo normal en la entidad.",
+    "Reponer los 8 computadores faltantes con tus propios recursos personales o conseguirlos de alguna manera para que el inventario cuadre físicamente y así evitar problemas y auditorías.",
+    "Esperar unos días o semanas por si los equipos aparecen en alguna dependencia o alguien los devuelve, y solo reportar el faltante formalmente si pasado un tiempo prudencial siguen sin aparecer.",
+    "Dejar constancia formal y documentada del faltante detectado, sin alterar ningún registro del sistema, y reportarlo de inmediato a tu jefe inmediato por el conducto regular para que se adelanten las acciones de investigación y control que correspondan según la normativa."
+  ],
+  "correcta": 3,
+  "expl": [
+    "Alterar registros del sistema de inventarios para ocultar un faltante real constituye una falta gravísima que puede derivar en responsabilidad fiscal (Ley 610/2000 - daño al patrimonio) y disciplinaria (incumplimiento del deber funcional). La antigüedad o \"experiencia\" de un compañero no convierte en correcto lo que es una irregularidad; normalizar estas prácticas perpetúa la pérdida de bienes públicos y compromete a todos los involucrados.",
+    "Reponer bienes públicos en silencio con recursos propios tapa el problema de fondo (¿dónde están los equipos originales?), no deja la trazabilidad debida del origen de los nuevos equipos, puede incluso encubrir una irregularidad mayor (robo, malversación) y, además, no es tu responsabilidad personal reponer pérdidas que no causaste; tu deber es informar, no ocultar ni sustituir.",
+    "Demorar intencionalmente el reporte de un hallazgo tan grave como 8 equipos de alto valor sin soporte de salida agrava tu situación: como responsable del control del almacén, la omisión o demora en informar también te compromete. Los hallazgos de control se informan de inmediato, no \"cuando convenga\" o \"si no aparecen\"; el tiempo que pasa sin reporte puede interpretarse como encubrimiento.",
+    "El principio de transparencia (art. 209 CP) y el deber de control interno (Ley 87/1993) exigen documentar inmediatamente el hallazgo e informarlo por el conducto regular, sin alterar ningún registro ni \"cuadrar\" nada artificialmente. Esto protege los recursos públicos (permite investigar qué pasó), protege tu actuación (dejas constancia de tu diligencia) y activa los mecanismos de control que corresponden. La auditoría e investigación NO son el problema; el problema es ocultar la pérdida."
+  ]
+},
+
+{
+  "nivel": "a",
+  "tema": "Presión indebida vs. procedimiento y soporte",
+  "ctx": "Es viernes a las 4:30 pm y estás terminando tu jornada en el almacén de INDERVALLE cuando llega tu jefe inmediato, quien es funcionario de mayor jerarquía. Te da una orden verbal con tono urgente: entregar de inmediato 12 balones y 20 conos de entrenamiento (bienes devolutivos de valor considerable) a una persona que está esperando afuera, sin diligenciar el formato de salida, sin acta, sin comprobante y sin asignar responsable formal. Ante tu expresión de duda, el jefe te dice con firmeza: \"No te preocupes, esto es urgente para un evento del fin de semana, YO asumo toda la responsabilidad, tú solo entrega los elementos ahora y el lunes arreglamos el papeleo\". Te recuerda que es viernes tarde, que el evento es importante para la entidad, y que confía en ti. Conoces el procedimiento: toda salida de devolutivos requiere soporte escrito, responsable identificado y firma ANTES de entregar físicamente.",
+  "q": "Teniendo en cuenta que una orden verbal de un superior no te exime legalmente de la responsabilidad sobre los bienes que manejas físicamente, y considerando los principios de control y trazabilidad de bienes públicos, ¿cuál es la actuación más apropiada para proteger el control institucional y tu propia actuación?",
+  "ops": [
+    "Cumplir la instrucción verbal del jefe sin objetar ni dejar ningún registro, ya que proviene de un superior jerárquico con mayor nivel y él expresamente dijo que asume toda la responsabilidad del procedimiento.",
+    "Negarte de manera tajante a entregar los bienes y, sin más trámite ni explicación, reportar el hecho directamente y de inmediato a un órgano de control externo como la Contraloría o la Procuraduría.",
+    "Explicar con respeto al jefe que la entrega de devolutivos requiere soporte documental y responsable identificado según el procedimiento institucional, dejar constancia escrita de tu observación técnica en el momento, y solicitar que, si la urgencia lo amerita, la instrucción se formalice por escrito antes de proceder a la entrega física.",
+    "Entregar físicamente los bienes ahora mismo para no contradecir al jefe y no generar un conflicto laboral, y luego registrar en el sistema a esa persona como responsable aunque no haya firmado ningún documento de recibido."
+  ],
+  "correcta": 2,
+  "expl": [
+    "Una orden verbal de un superior, por más jerárquico que sea, NO te exime de tu responsabilidad legal sobre los bienes públicos que manejas físicamente: como técnico operativo del almacén, también respondes por las salidas que autorizas o ejecutas. Si entregas sin soporte y luego hay un faltante o daño, la responsabilidad fiscal y disciplinaria te alcanza directamente. La promesa verbal de \"yo respondo\" no constituye un respaldo jurídicamente válido ni te protege en un proceso de control.",
+    "Saltar de inmediato y como primera medida a un órgano de control externo, sin agotar el conducto interno regular ni dejar soporte escrito de tu observación técnica, es una reacción desproporcionada y prematura. El debido proceso exige primero: (1) sustentar técnicamente tu observación, (2) dejar constancia, (3) solicitar formalización de la orden si la urgencia es real, y solo si persiste la irregularidad flagrante y hay riesgo inminente, escalar. Ir directo a control externo puede incluso exponerte a sanciones por romper el conducto regular.",
+    "Lo correcto desde el nivel técnico es: (1) Explicar con respeto y fundamento técnico que el procedimiento exige soporte para proteger los bienes públicos y a todos los involucrados; (2) Dejar constancia escrita de tu observación en el momento (ej: anotación en libro de control o correo al jefe); (3) Solicitar que, si la urgencia institucional lo amerita realmente, la orden se formalice por escrito (puede ser un simple correo o nota firmada identificando el responsable que recibe). Así proteges el control, dejas evidencia de tu actuación diligente y, si aun así insisten sin formalizar, la responsabilidad queda clara y tú has cumplido tu deber de informar y objetar técnicamente.",
+    "Registrar como responsable en el sistema a quien no ha firmado ningún documento de recibido crea un control solo aparente y falso: no hay soporte físico que acredite que esa persona realmente recibió los bienes, aceptó la responsabilidad ni conoce que están a su nombre. Si esa persona niega haber recibido los elementos o si los pierde, no hay cómo demostrar la entrega real. Además, estás alterando el registro para encubrir una entrega irregular, lo cual te compromete disciplinariamente."
+  ]
+},
+
+{
+  "nivel": "b",
+  "tema": "Clasificación de bienes: consumo vs. devolutivo",
+  "ctx": "Estás preparando dos entregas simultáneas para el área administrativa de INDERVALLE. Por un lado, debes entregar: 15 resmas de papel carta, 50 lapiceros, 30 carpetas de cartón y 10 cajas de ganchos de cosedora (todo esto clasificado como bienes de consumo). Por otro lado, debes entregar también: 2 sillas ergonómicas nuevas, 1 escritorio modular y 1 impresora multifuncional (bienes devolutivos de vida útil prolongada). Un compañero recién ingresado, que está ayudándote, te dice que para \"ir más rápido y ser más eficientes\", registres todas estas entregas exactamente de la misma forma y en un solo movimiento, ya que todo va para la misma dependencia el mismo día. Sabes que los bienes de consumo se descargan del inventario al entregarlos, mientras que los devolutivos requieren asignación de responsable, placa de inventario y control permanente.",
+  "q": "Sabiendo que los bienes de consumo y los devolutivos tienen un tratamiento contable y de control completamente distinto en el almacén, y pese a la sugerencia del compañero de registrarlo todo igual para agilizar, ¿cómo debes manejar correctamente estas dos entregas según la normativa?",
+  "ops": [
+    "Manejar el papel, lapiceros, carpetas y ganchos como bienes de consumo que se descargan del inventario al entregarlos; y las sillas, el escritorio y la impresora como devolutivos con responsable identificado y asignado, placa de inventario y control permanente en el sistema.",
+    "Registrar absolutamente todo (papelería, sillas, escritorio e impresora) como bienes de consumo que se descargan, porque todo sale del almacén el mismo día hacia la misma dependencia.",
+    "Registrar absolutamente todo como devolutivos con responsable asignado y placa de inventario, porque así se lleva un control mucho más estricto de todo lo que sale del almacén sin excepción.",
+    "Entregar primero lo más urgente (la papelería) sin hacer ningún registro en el momento para agilizar, y completar todos los registros juntos al final de la tarde cuando haya menos movimiento."
+  ],
+  "correcta": 0,
+  "expl": [
+    "El papel, lapiceros, carpetas y ganchos son bienes de consumo (se agotan con el uso cotidiano) y se descargan del inventario al momento de entregarlos, sin responsable asignado porque no se espera su devolución. Las sillas, el escritorio y la impresora son devolutivos (tienen vida útil prolongada y valor patrimonial) y por norma contable y de control interno requieren: responsable identificado que firma el recibido, placa de inventario adherida físicamente al bien, y registro permanente en el sistema que permita hacer seguimiento. Esta es la única forma correcta de manejar ambos tipos de bienes simultáneamente según el Régimen de Contabilidad Pública (CGN).",
+    "Tratar las sillas, el escritorio y la impresora como bienes de consumo (descargarlos sin responsable asignado ni placa) los deja completamente fuera de control: si se pierden, se dañan o desaparecen, nadie responde por ellos porque no hay un responsable formal identificado, y tú como encargado del almacén quedas directamente expuesto a un proceso de responsabilidad fiscal por pérdida de bienes públicos sin control. El hecho de que vayan a la misma dependencia no cambia su naturaleza contable ni su tratamiento de control.",
+    "Asignar responsable individual y placa de inventario a consumibles como lapiceros, papel y ganchos no tiene ningún sentido técnico ni legal (son bienes que se consumen de inmediato en el uso cotidiano), genera un control innecesario que entorpece la operación, infla artificialmente el inventario de devolutivos y desvirtúa el sistema de control al mezclar lo que debe controlarse permanentemente con lo que simplemente se consume. El control estricto aplica solo donde la norma lo exige: devolutivos.",
+    "Entregar bienes sin registrar el movimiento en el momento, así sea \"por poco tiempo\" para agilizar, rompe completamente el principio de trazabilidad y es la causa número uno de descuadres en los inventarios públicos: si falta algo durante esas horas sin registro, no hay forma de demostrar si salió, si estaba en bodega o si se perdió. El registro DEBE acompañar al movimiento físico del bien, no es un trámite administrativo posterior que se hace cuando sobra tiempo. Todo movimiento: registro inmediato."
+  ]
+},
+
+{
+  "nivel": "i",
+  "tema": "Ofimática BON-02: Excel aplicado al control de inventarios",
+  "ctx": "Tu jefe del área de almacén de INDERVALLE te solicita que prepares un informe mensual de rotación de inventarios para presentar en la reunión de planeación del próximo trimestre. Te pide específicamente que el informe muestre: (1) qué elementos tuvieron mayor y menor salida durante el mes, (2) cuáles están próximos a agotarse según el consumo promedio, y (3) cuáles llevan más de 6 meses sin ningún movimiento de salida. Tienes una hoja de Excel con todas las transacciones del mes (fecha, código, elemento, cantidad entrada, cantidad salida, saldo). Son aproximadamente 2.400 registros. Necesitas analizar esos datos y presentar un resumen claro y ordenado que permita tomar decisiones de compra.",
+  "q": "Considerando las herramientas de Excel que permiten analizar grandes volúmenes de datos de forma eficiente, ¿cuál es la combinación de funciones más apropiada para lograr este análisis y presentación según lo solicitado?",
+  "ops": [
+    "Usar tablas dinámicas para agrupar y sumar las salidas por elemento, filtros para identificar elementos sin movimiento en 6 meses, y formato condicional para resaltar los que están próximos a agotarse según saldo vs. consumo promedio.",
+    "Copiar y pegar manualmente cada registro en hojas separadas por tipo de elemento, sumar a mano con calculadora las cantidades de cada uno, y escribir en Word el informe final copiando los números.",
+    "Usar exclusivamente la función BUSCARV en cada celda para encontrar cada elemento uno por uno, sin tablas dinámicas ni filtros, y ordenar manualmente los resultados copiándolos a otra hoja.",
+    "Imprimir las 2.400 filas de la hoja de Excel, marcar con resaltador amarillo los datos importantes en el papel, y transcribir a mano en un formato de Word el resumen que necesita el jefe."
+  ],
+  "correcta": 0,
+  "expl": [
+    "Las TABLAS DINÁMICAS son la herramienta ideal para agrupar, sumar y analizar grandes volúmenes de datos rápidamente (ej: total de salidas por elemento). Los FILTROS permiten identificar registros que cumplen condiciones específicas (ej: elementos sin salida en 6 meses = filtrar por fecha última salida). El FORMATO CONDICIONAL destaca visualmente datos que cumplen una regla (ej: colorear en rojo elementos cuyo saldo actual es menor al 20% del consumo promedio mensual = alerta de agotamiento inminente). Esta combinación es estándar en ofimática nivel técnico y es exactamente para lo que Excel fue diseñado: análisis eficiente de datos tabulados.",
+    "Copiar y pegar manualmente, sumar con calculadora y escribir en Word cuando tienes 2.400 registros es ineficiente, propenso a errores humanos gravísimos (omisiones, errores de cálculo, transcripciones incorrectas), consume tiempo desproporcionado (podrías tardar días en algo que con Excel toma 15-20 minutos), y no es el nivel de competencia ofimática esperado para un cargo técnico operativo en 2026. Además, si los datos cambian (ej: corrección), tienes que rehacer todo el proceso manual desde cero.",
+    "BUSCARV es útil para relacionar tablas o buscar valores específicos entre conjuntos de datos, pero NO es la herramienta para agrupar, sumar ni analizar volúmenes grandes de transacciones repetitivas. Usar BUSCARV \"en cada celda\" para 2.400 registros sin tablas dinámicas es una aplicación incorrecta de la función, extremadamente ineficiente, y no resuelve el problema de análisis agregado (totales por elemento, promedios, identificación de extremos). Refleja desconocimiento de las herramientas apropiadas de Excel para análisis de datos.",
+    "Imprimir 2.400 filas de Excel para marcarlas con resaltador físico y transcribir a mano es un desperdicio monumental de tiempo, papel, recursos de impresión (gasto público innecesario) y esfuerzo humano, cuando Excel permite hacer TODO ese análisis de forma digital, rápida, precisa y sin consumir una sola hoja de papel. Además, si hay un error en la transcripción manual o si los datos se actualizan, tienes que reimprimir y volver a transcribir todo. Es el enfoque menos eficiente posible y evidencia desconocimiento total de las capacidades básicas de Excel."
+  ]
+}
+];
+
+
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+
+// Función para barajar opciones (Fisher-Yates)
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function renderQuiz(){
+  respondidas={};
+  quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]); // Barajamos el orden de las opciones
+    const card=document.createElement('div');
+    card.className='pregunta';
+    
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{
+      const letra=String.fromCharCode(65+d);
+      opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'">'
+        +'<span class="letra">'+letra+'</span>'
+        +'<div class="op-body">'
+        +'<span class="op-txt">'+p.ops[orig]+'</span>'
+        +'<div class="op-exp" id="oe-'+idx+'-'+d+'"></div>'
+        +'</div></div>';
+    });
+    
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div>'
+      +'<div class="q-texto">'+p.q+'</div>'
+      +'<div class="opciones">'+opsHtml+'</div>'
+      +'<div class="feedback" id="fb-'+idx+'"></div>';
+    
+    quizDiv.appendChild(card);
+  });
+  
+  // Event listeners para las opciones
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q;
+      const di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      
+      const p=preguntas[qi];
+      const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);
+        const letra=String.fromCharCode(65+d);
+        
+        if(orig===p.correcta){
+          o.classList.add('correcta');
+          exp.className='op-exp ok show';
+          exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];
+        }else{
+          exp.className='op-exp no show';
+          exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];
+        }
+      });
+      
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      
+      const fb=document.getElementById('fb-'+qi);
+      const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      
+      if(elegido===p.correcta){
+        fb.className='feedback ok show';
+        fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo encuentras la explicación detallada de por qué cada una de las 4 opciones es correcta o incorrecta.';
+      }else{
+        fb.className='feedback no show';
+        fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo la explicación de cada opción para entender el criterio.';
+      }
+    });
+  });
+}
+
+
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;
+  const temasFallados=[];
+  
+  preguntas.forEach((p,i)=>{
+    if(respondidas[i]===p.correcta){
+      correctas++;
+    }else if(respondidas[i]!==undefined && temasFallados.indexOf(p.tema)===-1){
+      temasFallados.push(p.tema);
+    }
+  });
+  
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  
+  let msg;
+  const pct=correctas/preguntas.length;
+  if(pct>=0.80)msg='🏆 ¡Excelente dominio! Estás listo para este tipo de preguntas.';
+  else if(pct>=0.60)msg='👍 Buen trabajo. Refuerza los temas donde fallaste y repite.';
+  else msg='📚 Vas por buen camino. Repasa el contenido de las guías y vuelve a intentarlo.';
+  
+  document.getElementById('scoreMsg').textContent=msg;
+  
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length>0){
+    cont.innerHTML='<p style="font-weight:700;color:var(--ambar);margin-bottom:8px;">📌 Temas a reforzar:</p><ul style="list-style:none;padding:0;margin:0;">'+temasFallados.map(t=>'<li style="padding:6px 0;border-bottom:1px solid var(--gris-borde);">• '+t+'</li>').join('')+'</ul>';
+  }else{
+    cont.innerHTML='<p style="color:var(--verde);font-weight:600;">✅ Dominaste todos los temas evaluados en este demo.</p>';
+  }
+  
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth'});
+});
+
+document.getElementById('btnReiniciar').addEventListener('click',()=>{
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// Renderizar quiz al cargar
+renderQuiz();
+</script>
+</body>
+</html>
