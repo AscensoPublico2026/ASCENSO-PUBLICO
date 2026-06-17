@@ -12,7 +12,7 @@ Este documento presenta el **diseño completo del primer simulacro (SIM-001)** q
 Replicar con la mayor fidelidad posible la experiencia de la **prueba escrita real de la CNSC** para cargos técnicos, preparando al aspirante para enfrentarse al examen con confianza y dominio.
 
 ### Características principales
-- ✅ **25 preguntas de juicio situacional** (formato CNSC real)
+- ✅ **120 preguntas** (cantidad oficial CNSC para nivel Técnico)
 - ✅ **Contextos largos y realistas** (150-250 palabras por caso)
 - ✅ **4 opciones plausibles** por pregunta (NO absurdas)
 - ✅ **Retroalimentación detallada** POR CADA OPCIÓN (no solo la correcta)
@@ -35,22 +35,23 @@ Basado en la investigación de fuentes oficiales y plataformas de preparación:
 
 2. **Estructura de cada pregunta:**
    ```
-   [CONTEXTO EXTENSO - 150-300 palabras]
+   [CONTEXTO EXTENSO - 200-400 palabras]
    Descripción detallada de una situación laboral con:
    - Personajes (tú como servidor, compañeros, jefes, usuarios)
    - Escenario específico (qué está pasando)
    - Dilema o decisión a tomar
    - Elementos de presión (tiempo, superior, urgencia)
+   - LA PREGUNTA VA DENTRO DEL CONTEXTO (al final)
+   - NO dice explícitamente "¿cuál es la actuación más apropiada?"
+   - Ejemplo: "...debes decidir cómo proceder." o "...tienes que elegir."
    
-   [ENUNCIADO - 30-50 palabras]
-   "Teniendo en cuenta [principio/norma relevante], y pese a [presión del caso],
-   ¿cuál es la actuación más apropiada?"
-   
-   [4 OPCIONES - cada una 20-40 palabras]
+   [4 OPCIONES - cada una 20-50 palabras]
    A. [Opción que parece correcta pero tiene trampa]
    B. [Opción correcta - aplica principios y procedimientos]
    C. [Opción que se extralimita o se queda corta]
    D. [Opción que busca atajos o rompe controles]
+   
+   NO HAY ENUNCIADO SEPARADO - la pregunta está integrada en el contexto.
    ```
 
 3. **Características de las opciones:**
@@ -128,53 +129,47 @@ Basado en la investigación de fuentes oficiales y plataformas de preparación:
 └─────────────────────────────────────────────────────┘
 ```
 
-### Distribución de las 25 preguntas
+### Distribución de las 120 preguntas
 
 #### Por nivel de dificultad:
-- **8 BÁSICAS** (32%): El error es más evidente
-- **12 INTERMEDIAS** (48%): Requiere análisis fino  
-- **5 AVANZADAS** (20%): Varias opciones parecen válidas
+- **38 BÁSICAS** (32%): El error es más evidente
+- **58 INTERMEDIAS** (48%): Requiere análisis fino  
+- **24 AVANZADAS** (20%): Varias opciones parecen válidas
 
-#### Por área temática:
-1. **Fundamentos y principios** (4 preguntas)
-   - Principios de la función administrativa
-   - Responsabilidad fiscal y disciplinaria
-   - Control interno y transparencia
-   
-2. **Recepción y verificación** (3 preguntas)
-   - Verificar contra soporte
-   - Dejar constancia de novedades
-   - No firmar por lo que no llegó
+#### Por contenido del plan (distribución proporcional):
 
-3. **Clasificación y codificación** (3 preguntas)
-   - Tipos de bienes (consumo vs devolutivo)
-   - Placas y responsables
-   - Bienes controlados
+**BLOQUE 1: GENERALES** (15 preguntas - 12.5%)
+1. GEN-01: Estado y Función Pública (5 preguntas)
+2. GEN-02: Relación Estado-Ciudadano (5 preguntas)
+3. GEN-03: Marco Institucional (5 preguntas)
 
-4. **Kardex y movimientos** (3 preguntas)
-   - Registro oportuno
-   - Trazabilidad
-   - Métodos de valoración
+**BLOQUE 2: NIVEL TÉCNICO** (15 preguntas - 12.5%)
+4. TEC-COM-01: Desempeño y Cumplimiento (5 preguntas)
+5. TEC-COM-02: Usuarios y Trabajo Colaborativo (5 preguntas)
+6. TEC-ESP-01: Competencias Nivel Técnico (3 preguntas)
+7. TEC-ESP-02: Alcance del Cargo Técnico (2 preguntas)
 
-5. **Control de existencias** (3 preguntas)
-   - Conteos físicos
-   - Diferencias de inventario
-   - Rotación y obsolescencia
+**BLOQUE 3: FUNCIONALES - ALMACÉN** (70 preguntas - 58%)
+8. FUN-ALM-01: Fundamentos Gestión Almacén (10 preguntas)
+9. FUN-ALM-02: Recepción y Verificación (10 preguntas)
+10. FUN-ALM-03: Clasificación y Codificación (10 preguntas)
+11. FUN-ALM-04: Kardex y Movimientos (10 preguntas)
+12. FUN-ALM-05: Control de Existencias (10 preguntas)
+13. FUN-ALM-06: Almacenamiento y Custodia (10 preguntas)
+14. FUN-ALM-07: Normatividad y Responsabilidad Fiscal (10 preguntas)
 
-6. **Almacenamiento y custodia** (3 preguntas)
-   - Condiciones de conservación
-   - Orden y ubicación
-   - Salida con soporte
+**BLOQUE 4: OTRAS FUNCIONALES** (15 preguntas - 12.5%)
+15. FUN-DOC-01: Gestión Documental (3 preguntas)
+16. FUN-MIPG-01: MIPG (3 preguntas)
+17. FUN-OFI-01: Sistemas de Ofimática (3 preguntas)
+18. FUN-PRO-01: Gestión de Procesos (3 preguntas)
+19. FUN-ATC-01: Servicio al Usuario (3 preguntas)
 
-7. **Normatividad y responsabilidad** (3 preguntas)
-   - Ley 80, Ley 594, Ley 610
-   - Alcance del nivel técnico
-   - Informar vs decidir
+**BLOQUE 5: BONUS** (5 preguntas - 4%)
+20. BON-01: Estrategia CNSC (3 preguntas)
+21. BON-02: Ofimática (2 preguntas)
 
-8. **Generales y contexto institucional** (3 preguntas)
-   - Servicio al ciudadano
-   - Articulación con otras áreas
-   - MIPG y calidad
+**TOTAL: 120 preguntas**
 
 
 
@@ -803,10 +798,7 @@ function barajarSimulacro(preguntas) {
 ### PREGUNTA 1 [BÁSICA] — Recepción y verificación
 
 **Contexto:**
-Eres el técnico de almacén del INDERVALLE y llega un proveedor con un pedido de 100 cajas de insumos deportivos amparado en un contrato vigente. El transportador trae mucho afán: te entrega la factura por las 100 cajas, te asegura que "todo viene completo y en buen estado" y te pide que le firmes el recibido de una vez para seguir su ruta. En la bodega tienes espacio suficiente y unos 20 minutos disponibles para revisar. Tu jefe no está en la oficina en este momento, pero sabes que la recepción de bienes es parte de tus funciones rutinarias. El proveedor insiste en que firma y te vayas, porque "tiene otras entregas pendientes y se le hace tarde".
-
-**Enunciado:**
-Considerando que tu responsabilidad sobre los bienes comienza desde el momento en que firmas el acta de recepción, y pese al afán del transportador y la presión de tiempo, ¿cuál es la actuación más apropiada?
+Eres el técnico de almacén del INDERVALLE y llega un proveedor con un pedido de 100 cajas de insumos deportivos amparado en un contrato vigente. El transportador trae mucho afán: te entrega la factura por las 100 cajas, te asegura que "todo viene completo y en buen estado" y te pide que le firmes el recibido de una vez para seguir su ruta. En la bodega tienes espacio suficiente y unos 20 minutos disponibles para revisar. Tu jefe no está en la oficina en este momento, pero sabes que la recepción de bienes es parte de tus funciones rutinarias. El proveedor insiste en que firmes ya, porque "tiene otras entregas pendientes y se le hace tarde". Sabes que tu responsabilidad sobre los bienes comienza desde el momento en que firmas el acta de recepción. ¿Cómo procedes?
 
 **Opciones:**
 
@@ -874,10 +866,7 @@ La CNSC evalúa si entiendes que el soporte (acta de recepción) debe reflejar l
 ### PREGUNTA 2 [INTERMEDIA] — Alcance del cargo y diferencias de inventario
 
 **Contexto:**
-Estás realizando el conteo físico mensual del almacén y detectas un faltante significativo: según el sistema de inventarios, deberían estar en bodega 15 taladros eléctricos (bienes devolutivos de alto valor), pero físicamente solo encuentras 11. Revisas los soportes de salida de los últimos tres meses y todos los taladros que salieron tienen su respectivo comprobante firmado y su responsable asignado. Los 4 taladros faltantes simplemente no están, y no hay ningún documento que explique su paradero. Un compañero con más antigüedad, al enterarse del hallazgo, te dice en privado que "eso pasa cada cierto tiempo" y que lo más práctico es ajustar las cantidades en el sistema para que coincidan con lo físico, "porque de todas formas nadie va a saber de dónde salió la diferencia y abrir un proceso solo trae problemas para todos". Sabes que alterar registros sin soporte puede tener consecuencias, pero también te preocupa que se te atribuya a ti una responsabilidad por un faltante que pudo ocurrir antes de tu llegada.
-
-**Enunciado:**
-Teniendo en cuenta que alterar los registros de inventario para ocultar un faltante puede configurar responsabilidad fiscal y disciplinaria, y pese al consejo del compañero con más antigüedad y la preocupación de que te atribuyan la pérdida, ¿cuál es la actuación más apropiada?
+Estás realizando el conteo físico mensual del almacén y detectas un faltante significativo: según el sistema de inventarios, deberían estar en bodega 15 taladros eléctricos (bienes devolutivos de alto valor), pero físicamente solo encuentras 11. Revisas los soportes de salida de los últimos tres meses y todos los taladros que salieron tienen su respectivo comprobante firmado y su responsable asignado. Los 4 taladros faltantes simplemente no están, y no hay ningún documento que explique su paradero. Un compañero con más antigüedad, al enterarse del hallazgo, te dice en privado que "eso pasa cada cierto tiempo" y que lo más práctico es ajustar las cantidades en el sistema para que coincidan con lo físico, "porque de todas formas nadie va a saber de dónde salió la diferencia y abrir un proceso solo trae problemas para todos". Sabes que alterar registros sin soporte puede tener consecuencias, pero también te preocupa que se te atribuya a ti una responsabilidad por un faltante que pudo ocurrir antes de tu llegada. Necesitas decidir qué hacer.
 
 **Opciones:**
 
@@ -945,10 +934,7 @@ La CNSC evalúa si entiendes que los faltantes NO se "arreglan", se DOCUMENTAN y
 ### PREGUNTA 3 [AVANZADA] — Presión de superiores vs. procedimiento
 
 **Contexto:**
-Es cierre de mes y el área de almacén tiene una meta institucional de despachar al menos 40 solicitudes de materiales ese día para que las dependencias puedan ejecutar sus actividades del mes siguiente. Hasta el mediodía llevas 22 entregas despachadas y aún hay una fila considerable de funcionarios esperando. Tu jefe inmediato, presionado por la meta y por los reclamos de las otras áreas, te dice textualmente: "Necesito que agilices esto. Despacha a todos ya, toma nota de quién lleva qué en una libreta, y al final de la tarde, con calma, metes todos los movimientos al sistema de una sola vez. Lo importante ahora es cumplir la meta y que nadie se quede sin su material". Sabes por experiencia que acumular los registros para ingresarlos "después" suele generar errores, omisiones y descuadres entre lo físico y lo registrado, porque es fácil que se te olvide un detalle, que cambies cantidades o que alguien no haya firmado el comprobante y ya no lo encuentres al final del día. Sin embargo, la instrucción viene de tu jefe directo y la presión por cumplir la meta es real.
-
-**Enunciado:**
-Considerando que acumular los registros para diligenciarlos "después" es una de las causas más frecuentes de descuadres en los inventarios y que la responsabilidad por los bienes despachados sigue siendo tuya aunque tu jefe te haya dado la instrucción, ¿cuál es la actuación más apropiada ante esta situación?**
+Es cierre de mes y el área de almacén tiene una meta institucional de despachar al menos 40 solicitudes de materiales ese día para que las dependencias puedan ejecutar sus actividades del mes siguiente. Hasta el mediodía llevas 22 entregas despachadas y aún hay una fila considerable de funcionarios esperando. Tu jefe inmediato, presionado por la meta y por los reclamos de las otras áreas, te dice textualmente: "Necesito que agilices esto. Despacha a todos ya, toma nota de quién lleva qué en una libreta, y al final de la tarde, con calma, metes todos los movimientos al sistema de una sola vez. Lo importante ahora es cumplir la meta y que nadie se quede sin su material". Sabes por experiencia que acumular los registros para ingresarlos "después" suele generar errores, omisiones y descuadres entre lo físico y lo registrado, porque es fácil que se te olvide un detalle, que cambies cantidades o que alguien no haya firmado el comprobante y ya no lo encuentres al final del día. Sin embargo, la instrucción viene de tu jefe directo, la presión por cumplir la meta es real, y la responsabilidad por los bienes despachados sigue siendo tuya aunque él te haya dado la instrucción. Debes decidir cómo actuar.
 
 **Opciones:**
 
@@ -1017,10 +1003,12 @@ La CNSC evalúa si puedes identificar una solución que concilie la presión ope
 
 ## ✅ DECISIONES DE DISEÑO FINALES
 
-### 1. ¿Cuántas preguntas? → **25 preguntas**
-- Suficiente para cubrir todas las áreas temáticas
-- Tiempo estimado: **90-120 minutos** (3-5 min por pregunta)
-- Similar a simulacros profesionales de preparación CNSC
+### 1. ¿Cuántas preguntas? → **120 preguntas** (oficial CNSC nivel Técnico)
+- **100 preguntas** para Asistencial
+- **120 preguntas** para Técnico ← ESTE ES NUESTRO CASO
+- **150 preguntas** para Profesional
+- Tiempo estimado: **3-4 horas** (formato real CNSC)
+- Cobertura exhaustiva de todo el contenido del plan
 
 ### 2. ¿Cómo mostrar la retroalimentación? → **Separada, con botón "Ver retroalimentación"**
 - El estudiante elige primero sin ver feedback
@@ -1067,7 +1055,7 @@ La CNSC evalúa si puedes identificar una solución que concilie la presión ope
 
 ### Para esta sesión:
 1. ✅ Revisar y aprobar este diseño
-2. ⏳ Crear el HTML del simulacro (25 preguntas completas)
+2. ⏳ Crear el HTML del simulacro (120 preguntas completas)
 3. ⏳ Implementar la lógica de barajado
 4. ⏳ Probar en preview de Vercel
 5. ⏳ Ajustar según feedback del usuario
@@ -1088,27 +1076,34 @@ Antes de proceder a construir el HTML completo, necesito tu confirmación en:
 1. **¿Te gusta el formato de retroalimentación separada** (con botón "Ver retroalimentación")?
    - ¿O prefieres otro estilo?
 
-2. **¿25 preguntas te parece adecuado** o prefieres más/menos?
-   - Considerando que es un simulacro "final" (completo)
+2. **✅ CORREGIDO: 120 preguntas** (cantidad oficial CNSC para Técnico)
+   - Ya está ajustado en el diseño
 
-3. **¿La distribución de dificultad** (32% básicas, 48% intermedias, 20% avanzadas) está bien?
+3. **✅ CORREGIDO: Pregunta integrada en el contexto** (no enunciado separado)
+   - Ya está ajustado en el diseño
 
-4. **¿Qué te parece el nivel de detalle** de las 3 preguntas de ejemplo?
+4. **¿La distribución de dificultad** (32% básicas, 48% intermedias, 20% avanzadas) está bien?
+
+5. **¿Qué te parece el nivel de detalle** de las 3 preguntas de ejemplo?
    - ¿Necesitas que sean más largas/cortas?
    - ¿El feedback es suficientemente profundo?
 
-5. **¿El diseño visual propuesto** (navy/cream/gold, tarjetas, badges) va con la marca?
+6. **¿El diseño visual propuesto** (navy/cream/gold, tarjetas, badges) va con la marca?
 
-6. **¿Algún ajuste o idea adicional** antes de que construya las 25 preguntas completas?
+7. **¿Algún ajuste o idea adicional** antes de que construya las 120 preguntas completas?
 
 ---
 
 **Una vez apruebes el diseño, procedo a:**
-1. Generar las 25 preguntas completas del simulacro
+1. Generar las 120 preguntas completas del simulacro
 2. Crear el HTML autocontenido (como las guías)
 3. Subirlo para que lo veas en preview
 4. Hacer los ajustes que necesites
 5. Congelar como plantilla oficial
+
+**NOTA IMPORTANTE:** 120 preguntas es un volumen considerable. Podemos:
+- Opción A: Crear las 120 completas (tomará más tiempo pero será el simulacro real)
+- Opción B: Crear primero 30-40 como "demo" para validar formato, y luego completar las 120
 
 **¿Procedemos? 🚀**
 

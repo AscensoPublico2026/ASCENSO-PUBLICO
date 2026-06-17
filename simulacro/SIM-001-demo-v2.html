@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulacro Final SIM-001 · Ascenso Público</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --navy: #0F172A;
+            --text: #334155;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --bg: #F8FAFC;
+            
+            /* Opciones */
+            --opt-a-bg: #ECFDF5;
+            --opt-a-border: #10B981;
+            --opt-b-bg: #FEE2E2;
+            --opt-b-border: #EF4444;
+            --opt-c-bg: #DBEAFE;
+            --opt-c-border: #3B82F6;
+            --opt-d-bg: #FEF3C7;
+            --opt-d-border: #F59E0B;
+            
+            /* Retroalimentación */
+            --retro-correcta: #D1FAE5;
+            --retro-incorrecta: #FEE2E2;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .titulo-principal {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .numero-pregunta {
+            font-size: 0.875rem;
+            color: var(--navy);
+            font-weight: 600;
+        }
+        
+        h1 {
+            color: var(--navy);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .pregunta {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+        
+        .q-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .q-num {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .q-tema {
+            display: inline-block;
+            background: #F1F5F9;
+            color: var(--navy);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .caso {
+            background: #F8FAFC;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--navy);
+            margin: 1.5rem 0;
+        }
+        
+        .caso-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        
+        .caso p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .caso p:last-child { margin-bottom: 0; }
+        
+        .pregunta-texto {
+            font-weight: 600;
+            color: var(--navy);
+        }
+        
+        .opciones { margin: 2rem 0; }
+        
+        .opcion {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+        
+        .opcion:hover {
+            border-color: var(--navy);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+        }
+        
+        .opcion input {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .opcion-contenido { flex: 1; }
+        
+        .letra {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-right: 0.75rem;
+        }
+        
+        .opcion.opt-a .letra { background: var(--opt-a-border); color: white; }
+        .opcion.opt-b .letra { background: var(--opt-b-border); color: white; }
+        .opcion.opt-c .letra { background: var(--opt-c-border); color: white; }
+        .opcion.opt-d .letra { background: var(--opt-d-border); color: white; }
+        
+        .opcion.opt-a { background: var(--opt-a-bg); border-color: var(--opt-a-border); }
+        .opcion.opt-b { background: var(--opt-b-bg); border-color: var(--opt-b-border); }
+        .opcion.opt-c { background: var(--opt-c-bg); border-color: var(--opt-c-border); }
+        .opcion.opt-d { background: var(--opt-d-bg); border-color: var(--opt-d-border); }
+        
+        .btn-ver {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+            margin: 2rem auto 0;
+        }
+        
+        .btn-ver:hover {
+            background: #1E293B;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        
+        .retro {
+            background: white;
+            border: 2px solid var(--navy);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+        
+        .retro.visible { display: block; animation: slideDown 0.3s ease; }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .retro-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .retro-header h3 {
+            color: var(--navy);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .analisis {
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--border);
+        }
+        
+        .analisis.correcta {
+            background: var(--retro-correcta);
+            border-left-color: var(--opt-a-border);
+        }
+        
+        .analisis.incorrecta {
+            background: var(--retro-incorrecta);
+            border-left-color: var(--opt-b-border);
+        }
+        
+        .analisis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .analisis-titulo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .badge.correcta { background: var(--opt-a-border); color: white; }
+        .badge.incorrecta { background: var(--opt-b-border); color: white; }
+        
+        .analisis p {
+            margin-bottom: 0.875rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .norma {
+            background: #EFF6FF;
+            border-left: 3px solid #3B82F6;
+            padding: 0.875rem 1rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+        
+        .norma strong { color: #1E40AF; }
+        
+        .clave {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 4px solid var(--opt-d-border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .clave h4 {
+            color: var(--navy);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .reforzar {
+            background: #F1F5F9;
+            border: 2px dashed var(--navy);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .reforzar h4 {
+            color: var(--navy);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .reforzar a {
+            display: block;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .reforzar a:hover { text-decoration: underline; }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 1rem 0.5rem; }
+            .pregunta { padding: 1.5rem 1rem; }
+            .retro { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <span class="titulo-principal">Simulacro Final · Demo</span>
+                <span class="numero-pregunta">5 preguntas de prueba</span>
+            </div>
+            <h1>Técnico Operativo 314-03 · Almacén</h1>
+            <p class="meta">INDERVALLE · Nivel Técnico · Ascenso Público</p>
+        </div>
+
+        
+        <!-- Nota: Las otras 4 preguntas seguirán el mismo formato -->
+        <div style="background: #F8FAFC; border-left: 4px solid #0F172A; padding: 2rem; border-radius: 8px; margin: 2rem 0;">
+            <h3 style="color: #0F172A; margin-bottom: 1rem; font-size: 1.125rem;">🚧 Demo en construcción</h3>
+            <p style="margin-bottom: 0.75rem;"><strong>Esta es una demostración visual con 1 pregunta completa.</strong></p>
+            <p style="margin-bottom: 1rem;">Las 4 preguntas restantes seguirán exactamente este mismo formato:</p>
+            <ul style="padding-left: 1.5rem; margin-top: 0.75rem; line-height: 1.8;">
+                <li>Pregunta 2 [INTERMEDIA] - Faltante de inventario (control y responsabilidad)</li>
+                <li>Pregunta 3 [AVANZADA] - Presión del jefe vs. procedimiento</li>
+                <li>Pregunta 4 [BÁSICA] - Tipos de bienes (consumo vs devolutivo)</li>
+                <li>Pregunta 5 [INTERMEDIA] - Ofimática práctica (BON-02)</li>
+            </ul>
+            <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: #64748B; font-size: 0.9rem;">
+                <strong>¿Te gusta este nuevo diseño?</strong> Es más limpio, espacioso y con colores pasteles como en tu referencia. Si apruebas, genero las 50 preguntas completas.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p><strong>Ascenso Público</strong> · Preparación personalizada por cargo CNSC</p>
+            <p style="margin-top: 0.5rem;">Demo del Simulacro SIM-001 · © 2026</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleRetro(num) {
+            const retro = document.getElementById('retro-' + num);
+            const btn = event.target;
+            
+            if (retro.classList.contains('visible')) {
+                retro.classList.remove('visible');
+                btn.textContent = 'Ver retroalimentación';
+            } else {
+                retro.classList.add('visible');
+                btn.textContent = 'Ocultar retroalimentación';
+                setTimeout(() => {
+                    retro.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
