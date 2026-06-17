@@ -139,6 +139,36 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         </div>
       )}
 
+      {/* Curso ya marcado listo: permitir habilitarlo de una vez aunque falten las 12h */}
+      {curso.estado === "listo" && (() => {
+        const dl = curso.preparacion_deadline ? new Date(curso.preparacion_deadline) : null;
+        const pendiente = dl && dl.getTime() > Date.now();
+        if (!pendiente) {
+          return (
+            <div style={{ ...box, background: "var(--verde-suave)", border: "1px solid #c3e6d3" }}>
+              <p style={{ color: "var(--verde)", fontWeight: 700, margin: 0 }}>✅ Curso habilitado</p>
+              <p style={{ color: "var(--texto-suave)", fontSize: ".88rem", margin: "6px 0 0" }}>
+                El cliente ya puede ver y usar el curso.
+              </p>
+            </div>
+          );
+        }
+        return (
+          <div style={{ ...box, background: "var(--verde-suave)", border: "1px solid #c3e6d3" }}>
+            <p style={{ color: "var(--verde)", fontWeight: 700, marginBottom: 6 }}>✅ Curso listo — programado</p>
+            <p style={{ color: "var(--texto-suave)", fontSize: ".88rem", marginBottom: 14 }}>
+              El cliente verá el curso automáticamente el <strong>{dl!.toLocaleString("es-CO")}</strong> (12h desde su compra).
+              ¿Cambiaste de opinión? Puedes habilitarlo ya mismo:
+            </p>
+            <form action={habilitarCursoAhora.bind(null, curso.id)}>
+              <button className="btn btn-azul" style={{ padding: "10px 18px", fontSize: ".88rem" }}>
+                ⚡ Habilitar curso ahora
+              </button>
+            </form>
+          </div>
+        );
+      })()}
+
       {/* DÍA 1 — Introducción y tu entidad */}
       <div style={box}>
         <h2 style={{ fontSize: "1rem", marginBottom: 12 }}>📅 Día 1 · Introducción y tu entidad</h2>
