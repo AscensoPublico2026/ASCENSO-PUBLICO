@@ -163,10 +163,19 @@ export default async function LandingPage() {
             <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 12 horas construimos tu plan personalizado de 21 días y lo dejamos en tu perfil.</p></div>
             <div className="paso"><h3>Estudias y practicas</h3><p>Accedes a tus guías por día y cierras con tu simulacro final tipo CNSC.</p></div>
           </div>
+
+          {/* Compromiso de tiempo diario */}
+          <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 18, background: "linear-gradient(135deg,#0A2A5E,#1A4A8A)", borderRadius: 16, padding: "22px 26px", color: "#fff", flexWrap: "wrap" }}>
+            <div style={{ fontSize: "2.4rem", lineHeight: 1, flexShrink: 0 }}>⏱️</div>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <h3 style={{ margin: "0 0 4px", color: "#fff", fontSize: "1.12rem" }}>Con 1 a 1½ hora al día, es suficiente</h3>
+              <p style={{ margin: 0, color: "rgba(255,255,255,.85)", fontSize: ".95rem" }}>
+                Cada guía está diseñada para estudiarse en <strong style={{ color: "var(--oro-claro)" }}>60 a 90 minutos</strong>. Avanzas un paso por día, sin saturarte, y llegas preparad@ a tu prueba en las <strong style={{ color: "var(--oro-claro)" }}>3 semanas</strong> del plan.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
-
-      {/* ===== QUE INCLUYE ===== */}
       <section className="sec" id="incluye">
         <div className="wrap">
           <span className="eyebrow">Qué incluye</span>
@@ -249,6 +258,7 @@ export default async function LandingPage() {
             <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>12 horas</strong> desde tu compra tendrás tu ruta de estudio personalizada disponible en tu perfil.</div></details>
             <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Dentro de la plataforma te explicamos cómo descargarlos de la página de la CNSC.</div></details>
             <details><summary>¿Cómo son los simulacros?</summary><div className="ans">Son de <strong>juicio situacional</strong>, igual que la prueba real de la CNSC: un caso y la mejor actuación, con retroalimentación por cada opción.</div></details>
+            <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Con <strong>1 a 1 hora y media al día</strong> es suficiente. Cada guía está diseñada para estudiarse en <strong>60 a 90 minutos</strong>: avanzas un paso por día, sin saturarte, y completas tu preparación en las 3 semanas del plan.</div></details>
             <details><summary>¿Por cuánto tiempo tengo acceso?</summary><div className="ans">Tendrás acceso a tu curso durante la vigencia definida desde tu fecha de compra, suficiente para prepararte con calma para tu prueba.</div></details>
             <details><summary>¿Cómo pago?</summary><div className="ans">De forma segura con <strong>Wompi</strong>: PSE, Nequi o tarjeta de crédito/débito.</div></details>
           </div>
