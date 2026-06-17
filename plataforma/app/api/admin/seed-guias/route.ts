@@ -38,7 +38,7 @@ export async function GET() {
   // Subir guías
   const admin = createAdminClient();
   const results: { file: string; status: "ok" | "error"; message?: string }[] = [];
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ascenso-publico.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ascensopublico.com";
 
   for (const filename of GUIAS) {
     const storagePath = `guias/${filename}`;
