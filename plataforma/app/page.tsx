@@ -53,6 +53,7 @@ export default async function LandingPage() {
               <a href="#como" className="btn btn-ghost">Ver cómo funciona</a>
             </div>
             <a href="#convocatorias" className="btn btn-ghost btn-conv-movil">📋 Ver convocatorias disponibles</a>
+            <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa btn-wa-movil">💬 Asesoría por WhatsApp</a>
             <div className="hero-mini">
               <span>🎯 Personalizado por cargo</span>
               <span>📅 Plan de 21 días</span>
