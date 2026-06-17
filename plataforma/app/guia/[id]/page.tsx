@@ -21,10 +21,14 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
 
   if (!guia) notFound();
 
+  // ¿El que mira es admin? El admin previsualiza sin marcar progreso ni bloqueos.
+  const { data: perfilV } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
+  const esAdmin = perfilV?.rol === "admin";
+
   // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías del PLAN
   // con archivo (generales/nivel/funcionales) ya fueron leídas. El bonus no
-  // es obligatorio. Evita el acceso directo por URL.
-  if (guia.tipo === "simulacro") {
+  // es obligatorio. Evita el acceso directo por URL. (El admin lo ve siempre.)
+  if (guia.tipo === "simulacro" && !esAdmin) {
     const { data: otras } = await supabase
       .from("guias_curso")
       .select("leida, archivo_path, tipo")
@@ -51,8 +55,9 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
     }
   }
 
-  // Marcar la guía como leída (si aún no lo está) + recalcular progreso del curso
-  if (!guia.leida) {
+  // Marcar la guía como leída (si aún no lo está) + recalcular progreso del curso.
+  // El admin en vista previa NO marca progreso (no contamina el avance del alumno).
+  if (!esAdmin && !guia.leida) {
     await supabase
       .from("guias_curso")
       .update({ leida: true, fecha_leida: new Date().toISOString() })

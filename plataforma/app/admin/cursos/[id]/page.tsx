@@ -113,6 +113,14 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         )}
       </div>
 
+      {/* Previsualizar como estudiante (revisar antes de habilitar) */}
+      <Link href={`/perfil/${curso.id}`} className="btn btn-azul" style={{ display: "flex", justifyContent: "center", padding: "13px 18px", textDecoration: "none" }}>
+        👁️ Previsualizar el curso como lo verá el estudiante
+      </Link>
+      <p style={{ color: "var(--texto-suave)", fontSize: ".78rem", margin: "8px 0 18px", textAlign: "center" }}>
+        Revisa las guías y el simulacro antes de dar "Curso listo" o "Habilitar ahora".
+      </p>
+
       {/* Habilitar acceso */}
       {curso.estado !== "listo" && (
         <div style={{ ...box, background: "#FDF4E3", border: "1px solid #F0DCB0" }}>
