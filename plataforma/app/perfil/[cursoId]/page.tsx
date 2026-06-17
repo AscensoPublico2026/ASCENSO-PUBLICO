@@ -239,6 +239,10 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             <div style={{ height: 10, borderRadius: 6, background: "var(--gris-borde)", overflow: "hidden" }}>
               <div style={{ height: "100%", width: `${progresoPct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 6, transition: "width .4s ease" }} />
             </div>
+            <p style={{ display: "flex", alignItems: "center", gap: 8, margin: "14px 0 0", fontSize: ".82rem", color: "var(--texto-suave)", background: "var(--crema)", borderRadius: 10, padding: "10px 12px" }}>
+              <span style={{ fontSize: "1rem" }}>⏱️</span>
+              <span>Dedica <strong style={{ color: "var(--azul)" }}>1 a 1½ hora al día</strong>: cada guía está diseñada para estudiarse en <strong style={{ color: "var(--azul)" }}>60–90 minutos</strong>. Un paso por día y llegas listo a tu prueba.</span>
+            </p>
           </div>
 
           {/* Continúa donde quedaste */}
