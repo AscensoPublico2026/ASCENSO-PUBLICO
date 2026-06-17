@@ -21,8 +21,9 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
 
   if (!guia) notFound();
 
-  // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías con archivo
-  // (excepto el propio simulacro) ya fueron leídas. Evita el acceso directo por URL.
+  // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías del PLAN
+  // con archivo (generales/nivel/funcionales) ya fueron leídas. El bonus no
+  // es obligatorio. Evita el acceso directo por URL.
   if (guia.tipo === "simulacro") {
     const { data: otras } = await supabase
       .from("guias_curso")
@@ -30,7 +31,7 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
       .eq("curso_id", guia.curso_id)
       .neq("tipo", "simulacro");
 
-    const requeridas = (otras || []).filter((g: any) => g.archivo_path);
+    const requeridas = (otras || []).filter((g: any) => g.archivo_path && g.tipo !== "bonus");
     const faltan = requeridas.filter((g: any) => !g.leida).length;
 
     if (requeridas.length > 0 && faltan > 0) {

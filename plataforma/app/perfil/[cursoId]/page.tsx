@@ -37,9 +37,10 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const guiasBonus = (guias || []).filter((g: any) => g.tipo === "bonus");
   const guiasSimulacro = (guias || []).filter((g: any) => g.tipo === "simulacro");
 
-  // Desbloqueo del simulacro: solo se activa cuando TODAS las guías con archivo
-  // disponible (plan + bonus, excepto el propio simulacro) ya fueron leídas.
-  const guiasRequeridas = (guias || []).filter((g: any) => g.tipo !== "simulacro" && g.archivo_path);
+  // Desbloqueo del simulacro: solo se activa cuando TODAS las guías del PLAN
+  // con archivo disponible (generales/nivel/funcionales) ya fueron leídas.
+  // El bonus NO es obligatorio para desbloquear; el simulacro tampoco se cuenta.
+  const guiasRequeridas = (guias || []).filter((g: any) => g.tipo !== "simulacro" && g.tipo !== "bonus" && g.archivo_path);
   const requeridasLeidas = guiasRequeridas.filter((g: any) => g.leida).length;
   const simulacroDesbloqueado = guiasRequeridas.length > 0 && requeridasLeidas === guiasRequeridas.length;
   const faltanSimulacro = guiasRequeridas.length - requeridasLeidas;
