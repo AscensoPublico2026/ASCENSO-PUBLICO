@@ -15,8 +15,8 @@ export function waUrl(mensaje?: string): string {
 
 /** Mensajes prellenados reutilizables según el contexto del botón. */
 export const WA_MENSAJES = {
-  general: "Hola, quiero información del curso personalizado de Ascenso Público 🎯",
-  comprar: "Hola, quiero mi curso personalizado de Ascenso Público 🎯",
+  general: "Hola, quiero información del curso personalizado de Ascenso Público.",
+  comprar: "Hola, quiero mi curso personalizado de Ascenso Público.",
   asesoria: "Hola, tengo una duda antes de comprar el curso de Ascenso Público.",
   soporte: "Hola, necesito ayuda con mi curso de Ascenso Público.",
   convocatoria: "Hola, quiero saber si mi convocatoria/cargo está disponible en Ascenso Público.",
