@@ -17,6 +17,8 @@ SIM_DIR = os.path.dirname(BASE_DIR)
 
 def main():
     archivos = sorted(glob.glob(os.path.join(SIM_DIR, 'contenido', '*.json')))
+    # Ignorar plantillas y archivos auxiliares (empiezan con "_")
+    archivos = [a for a in archivos if not os.path.basename(a).startswith('_')]
     if not archivos:
         print('No hay archivos de contenido en contenido/')
         return
