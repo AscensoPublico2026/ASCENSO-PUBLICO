@@ -3,6 +3,12 @@ import { crearConvocatoria, toggleConvocatoria, eliminarConvocatoria } from "./a
 
 export const dynamic = "force-dynamic";
 
+// Imágenes ya cargadas en /public/fotos (para el desplegable de "elegir existente").
+const IMAGENES_DISPONIBLES = [
+  "nacional.jpg", "territorial12.jpg", "territorial-uapa.jpg",
+  "dian.jpg", "procuraduria.jpg", "ese.jpg", "hero.jpg",
+];
+
 export default async function AdminConvocatorias() {
   const supabase = createClient();
   const { data: convs } = await supabase.from("convocatorias").select("*").order("orden");
@@ -27,7 +33,25 @@ export default async function AdminConvocatorias() {
           <input style={input} name="etiqueta" placeholder="Etiqueta (ej. Prueba escrita pendiente)" />
           <input style={input} name="vacantes" placeholder="Vacantes (ej. 1.665)" />
           <input style={input} name="fecha_prueba_aprox" placeholder="Fecha de pruebas (texto)" />
-          <input style={input} name="imagen_url" placeholder="URL imagen (ej. /fotos/nacional.jpg)" />
+
+          {/* Imagen — opción A: elegir una ya cargada */}
+          <div>
+            <label style={{ fontSize: ".7rem", color: "var(--texto-suave)" }}>IMAGEN — elegir una ya cargada</label>
+            <select style={input} name="imagen_existente" defaultValue="">
+              <option value="">— Selecciona una imagen existente —</option>
+              {IMAGENES_DISPONIBLES.map((f) => (
+                <option key={f} value={`/fotos/${f}`}>{f}</option>
+              ))}
+            </select>
+          </div>
+          {/* Imagen — opción B: subir una nueva */}
+          <div>
+            <label style={{ fontSize: ".7rem", color: "var(--texto-suave)" }}>IMAGEN — o subir una nueva</label>
+            <input style={input} type="file" name="imagen_file" accept="image/*" />
+          </div>
+          {/* Imagen — opción C: pegar una URL */}
+          <input style={{ ...input, gridColumn: "1/-1" }} name="imagen_url" placeholder="…o pega una URL de imagen (opcional, ej. /fotos/nacional.jpg)" />
+
           <select style={input} name="tema" defaultValue="nacional">
             <option value="nacional">Nacional</option>
             <option value="territorial">Territorial</option>
@@ -36,7 +60,9 @@ export default async function AdminConvocatorias() {
             <option value="salud">Salud</option>
           </select>
           <input style={input} type="number" name="orden" placeholder="Orden" />
-          <div></div>
+          <p style={{ gridColumn: "1/-1", color: "var(--texto-suave)", fontSize: ".74rem", margin: 0 }}>
+            💡 Puedes elegir una imagen ya cargada, subir una nueva, o pegar una URL. Si subes una, queda guardada en el sistema y disponible por su enlace.
+          </p>
           <button className="btn btn-oro" style={{ gridColumn: "1/-1", padding: 12 }}>Agregar convocatoria</button>
         </form>
       </div>

@@ -5,6 +5,20 @@ import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 
 /**
+ * Actualiza el nombre visible de un usuario (en profiles y en Auth).
+ * Útil para que el admin ponga/corrija su propio nombre o el de un cliente.
+ */
+export async function actualizarNombreUsuario(userId: string, formData: FormData) {
+  await requireAdmin();
+  const nombre = String(formData.get("nombre") || "").trim();
+  if (!nombre) throw new Error("El nombre no puede estar vacío.");
+  const supabase = createAdminClient();
+  await supabase.from("profiles").update({ nombre }).eq("id", userId);
+  try { await supabase.auth.admin.updateUserById(userId, { user_metadata: { nombre } }); } catch { /* ignore */ }
+  revalidatePath("/admin/usuarios");
+}
+
+/**
  * Elimina un usuario y todos sus datos asociados (cursos, guías, pagos).
  * NO permite eliminar admins.
  */
