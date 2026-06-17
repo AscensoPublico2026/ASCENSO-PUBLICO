@@ -20,20 +20,48 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SIM_DIR = os.path.dirname(BASE_DIR)
+BANCOS_DIR = os.path.join(SIM_DIR, 'bancos')
 
 NIVELES = {'basic', 'intermediate', 'advanced'}
 
 
-def validar(d):
+def ensamblar_preguntas(d):
+    """Arma la lista de preguntas del simulacro.
+
+    Soporta dos formatos de contenido:
+      - Receta por bancos: 'bancos' (lista de nombres en bancos/<n>.json) +
+        'funcionales' (preguntas propias del cargo). Las preguntas reutilizables
+        se ensamblan desde los bancos; solo las funcionales se escriben por cargo.
+      - Directo: 'preguntas' (lista completa). Retrocompatible.
+    """
+    if 'bancos' in d:
+        preguntas = []
+        fuentes = []
+        for nombre in d.get('bancos', []):
+            ruta = os.path.join(BANCOS_DIR, nombre + '.json')
+            if not os.path.exists(ruta):
+                raise SystemExit('No existe el banco: bancos/%s.json' % nombre)
+            with open(ruta, encoding='utf-8') as fh:
+                banco = json.load(fh)
+            preguntas.extend(banco.get('preguntas', []))
+            fuentes.append('%s(%d)' % (nombre, len(banco.get('preguntas', []))))
+        funcionales = d.get('funcionales', [])
+        preguntas.extend(funcionales)
+        fuentes.append('funcionales-cargo(%d)' % len(funcionales))
+        print('  Ensamblado desde bancos: %s' % ' + '.join(fuentes))
+        return preguntas
+    return d.get('preguntas', [])
+
+
+def validar(d, preguntas):
     """Valida el contenido del simulacro. Devuelve (errores, avisos)."""
     err, warn = [], []
     req = ['codigo', 'archivo', 'kicker', 'titulo', 'hero_sub',
-           'cargo', 'nivel', 'tiempo', 'preguntas']
+           'cargo', 'nivel', 'tiempo']
     for k in req:
         if k not in d:
             err.append('Falta el campo obligatorio: %s' % k)
 
-    preguntas = d.get('preguntas', [])
     n = len(preguntas)
     if n == 0:
         err.append('El simulacro no tiene preguntas')
@@ -84,7 +112,8 @@ def construir(json_path):
     with open(json_path, encoding='utf-8') as fh:
         d = json.load(fh)
 
-    err, warn = validar(d)
+    preguntas = ensamblar_preguntas(d)
+    err, warn = validar(d, preguntas)
     for w in warn:
         print('  AVISO: %s' % w)
     if err:
@@ -96,7 +125,6 @@ def construir(json_path):
     with open(os.path.join(BASE_DIR, 'base-simulacro.html'), encoding='utf-8') as fh:
         base = fh.read()
 
-    preguntas = d['preguntas']
     total = len(preguntas)
     nb = sum(1 for p in preguntas if p['nivel'] == 'basic')
     ni = sum(1 for p in preguntas if p['nivel'] == 'intermediate')

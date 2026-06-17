@@ -5,7 +5,7 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros, + MOTOR de simulacros data-driven construido.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo). Ya existe `simulacro/motor/` (molde + JSON + builder con validación), igual al motor de guías. **Próximo paso: armar simulacros de nuevos cursos llenando un JSON de contenido.**_
+_Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO como plantilla oficial de simulacros, + MOTOR de simulacros data-driven construido.** Simulacro final de 50 preguntas tipo CNSC (juicio situacional) para INDERVALLE Técnico Operativo 314-03 (Almacén): contexto + dilema + 4 opciones + modo examen real (responder todo → presentar → resultados con revisión pregunta por pregunta y guía de refuerzo). Ya existe `simulacro/motor/` + `simulacro/bancos/` (molde + bancos reutilizables + receta por curso + builder con validación), igual al motor de guías. **Próximo paso: armar simulacros de nuevos cursos eligiendo bancos + escribiendo solo las funcionales del cargo.**_
 
 ---
 
@@ -23,8 +23,10 @@ _Última actualización: 17 de junio de 2026 — **SIM-001 creado y CONGELADO co
   - **Modo examen real:** se responde todo sin ver aciertos → botón "Presentar examen" → resultados con puntaje, %, **revisión pregunta por pregunta** (tu respuesta vs. correcta + explicación breve) y **guía de refuerzo** que remite a la guía del curso donde estudiar cada tema fallado.
   - Opciones barajadas en cada intento; incluye una pregunta de cálculo (promedio ponderado) tipo MBE.
   - **Diseño congelado:** Inter + Crimson Pro, marca navy/gold, único y profesional (no copia de las guías funcionales).
-- **✅ MOTOR DE SIMULACROS construido** (`simulacro/motor/`): molde congelado `base-simulacro.html` + contenido en `simulacro/contenido/<CODIGO>.json` + `construir_simulacro.py` (con validación) + `construir_todos.py`. Mismo patrón que el motor de guías. Para un curso nuevo se llena un JSON y el simulacro se ensambla solo. SIM-001 ya está extraído a `contenido/SIM-001.json`.
-- **➡️ PRÓXIMO PASO sugerido:** para cada curso nuevo, copiar `contenido/SIM-001.json`, reutilizar las preguntas transversales (Generales, Nivel, Ofimática) y reescribir solo las **Funcionales** del nuevo cargo; luego `python3 motor/construir_simulacro.py contenido/<CODIGO>.json`.
+- **✅ MOTOR DE SIMULACROS con BANCOS reutilizables** (`simulacro/motor/` + `simulacro/bancos/`): molde congelado `base-simulacro.html` + **bancos de preguntas reutilizables** + receta por curso en `contenido/<CODIGO>.json` + `construir_simulacro.py` (ensambla bancos + funcionales del cargo, con validación) + `construir_todos.py`.
+  - **Bancos:** `generales` (todos los cargos/niveles), `nivel-asistencial`/`nivel-tecnico`/`nivel-profesional` (por nivel; ASI y PRO son semillas vacías por llenar), `ofimatica`, `funcionales-comunes` (DOC/MIPG/OFI/PRO/ATC).
+  - **Receta SIM-001:** ensambla `generales(6) + nivel-tecnico(6) + ofimatica(1) + funcionales-comunes(5)` reutilizables **+ 32 funcionales del cargo (FUN-ALM)** = 50.
+- **➡️ PRÓXIMO PASO sugerido:** para un curso nuevo, copiar una receta, elegir los bancos según el nivel del cargo y escribir SOLO las `funcionales` del cargo; luego `python3 motor/construir_simulacro.py contenido/<CODIGO>.json`. Si es de nivel Asistencial o Profesional, primero llenar el banco de ese nivel (una sola vez).
 
 ---
 
