@@ -37,6 +37,14 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const guiasBonus = (guias || []).filter((g: any) => g.tipo === "bonus");
   const guiasSimulacro = (guias || []).filter((g: any) => g.tipo === "simulacro");
 
+  // Desbloqueo del simulacro: solo se activa cuando TODAS las guías del PLAN
+  // con archivo disponible (generales/nivel/funcionales) ya fueron leídas.
+  // El bonus NO es obligatorio para desbloquear; el simulacro tampoco se cuenta.
+  const guiasRequeridas = (guias || []).filter((g: any) => g.tipo !== "simulacro" && g.tipo !== "bonus" && g.archivo_path);
+  const requeridasLeidas = guiasRequeridas.filter((g: any) => g.leida).length;
+  const simulacroDesbloqueado = guiasRequeridas.length > 0 && requeridasLeidas === guiasRequeridas.length;
+  const faltanSimulacro = guiasRequeridas.length - requeridasLeidas;
+
   // Calcular progreso EN VIVO: % de guías (con archivo disponible) que ya fueron leídas.
   // Solo cuentan las guías que tienen archivo (las funcionales/simulacro pendientes no penalizan).
   const guiasDisponibles = (guias || []).filter((g: any) => g.archivo_path);
@@ -155,9 +163,11 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             <SeccionGuias titulo="🎁 Bonus" guias={guiasBonus} />
           )}
 
-          {/* Sección: Simulacro Final */}
+          {/* Sección: Simulacro Final (se desbloquea al completar todas las guías) */}
           {guiasSimulacro.length > 0 && (
-            <SeccionGuias titulo="📝 Simulacro Final" guias={guiasSimulacro} />
+            simulacroDesbloqueado
+              ? <SeccionGuias titulo="📝 Simulacro Final" guias={guiasSimulacro} />
+              : <SimulacroBloqueado faltan={faltanSimulacro} total={guiasRequeridas.length} />
           )}
 
           {/* Si no hay guías aún */}
@@ -258,6 +268,42 @@ function SeccionGuias({ titulo, guias }: { titulo: string; guias: any[] }) {
             )}
           </Link>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function SimulacroBloqueado({ faltan, total }: { faltan: number; total: number }) {
+  const completadas = total - faltan;
+  const pct = total > 0 ? Math.round((completadas / total) * 100) : 0;
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <h3 style={{ fontSize: ".95rem", color: "var(--azul)", marginBottom: 12, paddingBottom: 8, borderBottom: "1px solid var(--gris-borde)" }}>
+        📝 Simulacro Final
+      </h3>
+      <div style={{
+        background: "var(--gris-bg, #F2F0EA)",
+        border: "1px dashed var(--gris-borde)",
+        borderRadius: 12,
+        padding: "20px 18px",
+        textAlign: "center",
+      }}>
+        <div style={{ fontSize: "1.8rem", marginBottom: 8 }}>🔒</div>
+        <p style={{ fontWeight: 700, color: "var(--azul)", margin: "0 0 6px", fontSize: ".95rem" }}>
+          Simulacro bloqueado
+        </p>
+        <p style={{ color: "var(--texto-suave)", margin: "0 0 14px", fontSize: ".86rem", lineHeight: 1.5 }}>
+          El simulacro final se desbloquea cuando completes <strong>todas las guías</strong> de tu plan de estudio.
+          {faltan > 0 && (
+            <> Te {faltan === 1 ? "falta" : "faltan"} <strong>{faltan}</strong> {faltan === 1 ? "guía" : "guías"} por leer.</>
+          )}
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
+          <div style={{ width: 140, height: 8, borderRadius: 4, background: "var(--gris-borde)", overflow: "hidden" }}>
+            <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg, #E8A33D, #F6C56B)", borderRadius: 4 }} />
+          </div>
+          <span style={{ fontSize: ".8rem", fontWeight: 700, color: "var(--azul)" }}>{completadas}/{total}</span>
+        </div>
       </div>
     </div>
   );

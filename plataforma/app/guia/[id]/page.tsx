@@ -21,6 +21,36 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
 
   if (!guia) notFound();
 
+  // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías del PLAN
+  // con archivo (generales/nivel/funcionales) ya fueron leídas. El bonus no
+  // es obligatorio. Evita el acceso directo por URL.
+  if (guia.tipo === "simulacro") {
+    const { data: otras } = await supabase
+      .from("guias_curso")
+      .select("leida, archivo_path, tipo")
+      .eq("curso_id", guia.curso_id)
+      .neq("tipo", "simulacro");
+
+    const requeridas = (otras || []).filter((g: any) => g.archivo_path && g.tipo !== "bonus");
+    const faltan = requeridas.filter((g: any) => !g.leida).length;
+
+    if (requeridas.length > 0 && faltan > 0) {
+      return (
+        <main style={{ maxWidth: 620, margin: "0 auto", padding: "60px 22px", textAlign: "center" }}>
+          <div style={{ fontSize: "2.6rem", marginBottom: 12 }}>🔒</div>
+          <h1 style={{ fontSize: "1.4rem", marginBottom: 8 }}>Simulacro bloqueado</h1>
+          <p style={{ color: "var(--texto-suave)", marginBottom: 8, lineHeight: 1.6 }}>
+            El simulacro final se desbloquea cuando completes <strong>todas las guías</strong> de tu plan de estudio.
+          </p>
+          <p style={{ color: "var(--texto-suave)", marginBottom: 24 }}>
+            Te {faltan === 1 ? "falta" : "faltan"} <strong>{faltan}</strong> {faltan === 1 ? "guía" : "guías"} por leer.
+          </p>
+          <a href={`/perfil/${guia.curso_id}`} style={{ color: "var(--azul)", fontWeight: 700 }}>← Volver a mi curso</a>
+        </main>
+      );
+    }
+  }
+
   // Marcar la guía como leída (si aún no lo está) + recalcular progreso del curso
   if (!guia.leida) {
     await supabase
