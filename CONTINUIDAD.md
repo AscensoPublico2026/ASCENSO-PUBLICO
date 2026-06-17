@@ -39,6 +39,7 @@ _Última actualización: 17 de junio de 2026 (tarde) — **PRIMERA VENTA REAL FU
 - ✅ **Reset password** soporta flujo `token_hash` (cross-device). Requiere plantilla de Supabase con `{{ .SiteURL }}/reset-password?token_hash={{ .TokenHash }}&type=recovery` (ya configurada).
 
 **Documentos de continuidad creados (esta sesión):**
+- `prompts/PROMPT-MAESTRO.md` — **prompt de arranque de cualquier sesión nueva** (lee todo, comprende el estado y define el modo de trabajo). Reutilizable.
 - `prompts/CONTINUIDAD-GENERACION.md` — para retomar la **generación de plan + guías** de un cargo en una sesión nueva.
 - `prompts/CONTINUIDAD-DESARROLLO.md` — para retomar **ajustes/mejoras** de la plataforma en una sesión nueva.
 
