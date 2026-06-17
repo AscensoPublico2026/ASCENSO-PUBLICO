@@ -39,10 +39,11 @@ export default async function AdminHome() {
           <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--azul)" }}>{totalConvs ?? 0}</div>
           <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Convocatorias activas</div>
         </div>
-        <div style={stat}>
+        <Link href="/admin/pagos" style={{ ...stat, display: "block", textDecoration: "none" }}>
           <div style={{ fontSize: "2rem", fontFamily: "'Source Serif 4',serif", color: "var(--verde, #1A7A4A)" }}>{totalPagos ?? 0}</div>
           <div style={{ fontSize: ".85rem", color: "var(--texto-suave)", marginTop: 4 }}>Pagos aprobados</div>
-        </div>
+          <div style={{ fontSize: ".75rem", color: "var(--azul)", fontWeight: 700, marginTop: 6 }}>Ver detalle →</div>
+        </Link>
       </div>
 
       <h2 style={{ fontSize: "1.1rem", marginBottom: 14 }}>Acciones rápidas</h2>

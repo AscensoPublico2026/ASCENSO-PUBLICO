@@ -7,6 +7,16 @@
 export const WHATSAPP_NUMERO = "573170905177"; // formato internacional, sin "+"
 export const CORREO_CONTACTO = "ascensopublico@gmail.com";
 
+/**
+ * Redes sociales — FUENTE ÚNICA.
+ * Ajusta aquí los usuarios reales (sin tocar el resto del código).
+ * Si una red aún no existe, déjala como cadena vacía "" y su botón no se mostrará.
+ */
+export const REDES = {
+  tiktok: "https://www.tiktok.com/@ascensopublico",
+  instagram: "https://www.instagram.com/ascensopublico",
+};
+
 /** Construye un enlace de WhatsApp (opcionalmente con mensaje prellenado). */
 export function waUrl(mensaje?: string): string {
   const base = `https://wa.me/${WHATSAPP_NUMERO}`;
