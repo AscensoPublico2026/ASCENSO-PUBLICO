@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { SITE_URL } from "@/lib/site";
 
 // Genera una referencia única para la transacción.
 export function generarReferencia(prefix = "AP"): string {
@@ -18,7 +19,7 @@ export function firmaIntegridad(reference: string, amountInCents: number, curren
 export function urlCheckout(opts: { reference: string; amountInCents: number; currency?: string; signature: string }): string {
   const currency = opts.currency ?? "COP";
   const redirect = process.env.NEXT_PUBLIC_WOMPI_REDIRECT_URL
-    || `${process.env.NEXT_PUBLIC_SITE_URL || ""}/preparacion`;
+    || `${SITE_URL}/preparacion`;
   const q = [
     `public-key=${encodeURIComponent(process.env.NEXT_PUBLIC_WOMPI_PUBLIC_KEY || "")}`,
     `currency=${currency}`,
