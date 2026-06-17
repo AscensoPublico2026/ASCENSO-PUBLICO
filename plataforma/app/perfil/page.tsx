@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import LogoutButton from "./LogoutButton";
 import CambiarPassword from "./CambiarPassword";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const dynamic = "force-dynamic";
 
@@ -132,7 +133,7 @@ function EmptyState() {
         Comprar mi curso
       </Link>
       <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", marginTop: 14 }}>
-        ¿Ya pagaste y no ves tu curso? <a href="https://wa.me/573151972091" target="_blank" rel="noopener" style={{ color: "var(--azul)", fontWeight: 700 }}>Escríbenos por WhatsApp</a>
+        ¿Ya pagaste y no ves tu curso? <a href={waUrl(WA_MENSAJES.soporte)} target="_blank" rel="noopener" style={{ color: "var(--azul)", fontWeight: 700 }}>Escríbenos por WhatsApp</a>
       </p>
     </div>
   );

@@ -5,13 +5,13 @@ import NivelTabs from "./components/NivelTabs";
 import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
 import ContadorCupos from "./components/ContadorCupos";
 import ScrollReveal from "./components/ScrollReveal";
+import { waUrl, WA_MENSAJES, CORREO_CONTACTO } from "@/lib/contacto";
 import "./landing.css";
 
 export const dynamic = "force-dynamic";
 
-const WHATSAPP = "573151972091";
-const WA_MSG = encodeURIComponent("Hola, quiero mi curso personalizado de Ascenso Público 🎯");
-const WA_URL = `https://wa.me/${WHATSAPP}?text=${WA_MSG}`;
+const WA_URL = waUrl(WA_MENSAJES.comprar);
+const WA_ASESORIA = waUrl(WA_MENSAJES.asesoria);
 const CUPOS_LANZAMIENTO = 100; // Total de cupos del precio de lanzamiento
 
 export default async function LandingPage() {
@@ -48,6 +48,7 @@ export default async function LandingPage() {
             <p className="vp">Deja de estudiar a ciegas. Sabe <strong>exactamente qué estudiar</strong> para ganar tu ascenso.</p>
             <div className="hero-cta">
               <Link href="/comprar" className="btn btn-oro">Quiero mi curso personalizado</Link>
+              <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa">💬 Asesoría por WhatsApp</a>
               <a href="#como" className="btn btn-ghost">Ver cómo funciona</a>
             </div>
             <a href="#convocatorias" className="btn btn-ghost btn-conv-movil">📋 Ver convocatorias disponibles</a>
@@ -208,7 +209,7 @@ export default async function LandingPage() {
         <div className="wrap">
           <span className="eyebrow">Convocatorias disponibles</span>
           <h2>¿Tu concurso está activo?</h2>
-          <p className="lead">Estas son las convocatorias para las que estamos preparando aspirantes ahora mismo. ¿No ves la tuya? Escríbenos.</p>
+          <p className="lead">Estas son las convocatorias para las que estamos preparando aspirantes ahora mismo. ¿No ves la tuya? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
           <ConvocatoriasGrid convocatorias={convocatorias} />
         </div>
       </section>
@@ -233,7 +234,7 @@ export default async function LandingPage() {
             <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
             <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
             <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
-            <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? Escríbenos por WhatsApp y te asesoramos sin compromiso antes de pagar.</span></div>
+            <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? <a href={WA_ASESORIA} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos por WhatsApp</a> y te asesoramos sin compromiso antes de pagar.</span></div>
           </div>
         </div>
       </section>

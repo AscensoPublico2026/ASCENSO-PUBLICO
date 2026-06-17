@@ -1,6 +1,7 @@
 import { getTransaction } from "@/lib/wompiApi";
 import { procesarReferencia } from "@/lib/procesarPago";
 import ActivarForm from "./ActivarForm";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const dynamic = "force-dynamic";
 
@@ -33,8 +34,8 @@ export default async function ActivarPage({ searchParams }: { searchParams: { id
       <main style={{ maxWidth: 560, margin: "0 auto", padding: "70px 22px", textAlign: "center" }}>
         <h1 style={{ fontSize: "1.6rem" }}>Estamos confirmando tu pago…</h1>
         <p style={{ color: "var(--texto-suave)", marginTop: 12 }}>
-          Si acabas de pagar, espera unos segundos y recarga esta página. Si el problema persiste,
-          escríbenos por WhatsApp y lo resolvemos.
+          Si acabas de pagar, espera unos segundos y recarga esta página. Si el problema persiste,{" "}
+          <a href={waUrl(WA_MENSAJES.soporte)} target="_blank" rel="noopener" style={{ color: "var(--azul)", fontWeight: 700 }}>escríbenos por WhatsApp</a> y lo resolvemos.
         </p>
       </main>
     );
