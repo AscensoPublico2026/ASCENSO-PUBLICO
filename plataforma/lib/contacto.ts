@@ -4,7 +4,7 @@
  * Centraliza el WhatsApp (Business) y el correo para no repetir el número
  * por todo el código. Si cambia, se ajusta en un solo lugar.
  */
-export const WHATSAPP_NUMERO = "573151972091"; // formato internacional, sin "+"
+export const WHATSAPP_NUMERO = "573170905177"; // formato internacional, sin "+"
 export const CORREO_CONTACTO = "ascensopublico@gmail.com";
 
 /** Construye un enlace de WhatsApp (opcionalmente con mensaje prellenado). */
