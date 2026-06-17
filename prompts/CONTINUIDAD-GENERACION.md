@@ -6,9 +6,33 @@
 
 ---
 
-## 🟢 PROMPT PARA PEGAR EN UNA SESIÓN NUEVA DE KIRO
+## 🟢 PROMPT DE ACTIVACIÓN (pégalo apenas abras la sesión nueva, aunque aún no tengas un cargo)
 
-Copia y pega esto tal cual al iniciar sesión (con el repo `ascensopublico2026/ASCENSO-PUBLICO` conectado):
+Úsalo para **dejar la sesión lista y en espera**. Le dice a Kiro cuál es su rol en esta conversación. No hace falta tener un curso pendiente todavía.
+
+```
+Hola Kiro. A partir de ahora, ESTA conversación será usada EXCLUSIVAMENTE para
+GENERAR CONTENIDO de Ascenso Público: planes de estudio, guías y simulacros.
+Aquí NO hacemos desarrollo ni configuración de la plataforma (eso va en otra sesión).
+
+Por ahora no tengo un curso pendiente: solo quiero dejarte listo. Cuando te pase un
+cargo, seguiremos el flujo de prompts/CONTINUIDAD-GENERACION.md.
+
+Para prepararte, lee y confírmame que entendiste:
+1. CONTINUIDAD.md (estado del proyecto)
+2. prompts/CONTINUIDAD-GENERACION.md (este flujo paso a paso)
+3. prompts/generador-plan-estudio.md y prompts/generador-guias.md (los generadores)
+4. ESTANDAR-TECNICO.md y PLANTILLA-GUIA.md (estándar de las guías)
+
+Cuando termines, dime "Listo para generar" y quedamos en espera hasta que te pase
+el primer cargo (OPEC + entidad + cargo/nivel + manual de funciones).
+```
+
+---
+
+## 🟢 PROMPT DE ARRANQUE (cuando YA tengas un cargo para preparar)
+
+Copia y pega esto cuando tengas los datos del cargo (en la misma sesión ya activada):
 
 ```
 Hola Kiro. Vamos a GENERAR EL CURSO de un cargo nuevo para Ascenso Público.
@@ -51,11 +75,15 @@ Esta es la **sección de generación** del proyecto. Cada vez que entra un cargo
 - La IA llena un **JSON de contenido** en `motor/contenido/<CODIGO>.json` (NO escribe el HTML enorme); el script arma el HTML con el diseño congelado. Así el diseño nunca se rompe.
 - Generar simulacro con `simulacro/motor/` + `simulacro/bancos/` (receta en `simulacro/contenido/<CODIGO>.json`): se reusan los bancos (generales, nivel, ofimática, funcionales-comunes) y se escriben solo las funcionales del cargo.
 
-### 4) Registrar en la biblioteca
+### 4) Registrar y PUBLICAR en la biblioteca (Kiro lo sube y mergea, igual que en desarrollo)
 - Guardar el HTML en `guias/` (y simulacro en `simulacro/SIM-NNN.html`).
 - Registrar la guía en `biblioteca/biblioteca.json` (estado `publicada`, `archivo`).
 - Correr `scripts/sync-biblioteca.sh` (copia catálogo + HTML a `plataforma/public/seed-guias/` y a `plataforma/lib/biblioteca.json`).
+- **Kiro publica el cambio (igual que hace en la sesión de desarrollo):** crea una **rama nueva**, commitea los archivos (guía + `biblioteca.json` + `seed-guias` + `motor/contenido`), hace **push** y te entrega el **link de compare** `https://github.com/ascensopublico2026/ASCENSO-PUBLICO/compare/main...NOMBRE_RAMA`.
+- **Tú mergeas** en GitHub → Vercel despliega solo (~1 min) → la guía queda **publicada y disponible** en el catálogo.
 - La auto-sanación del visor sube el HTML al bucket la primera vez que se abre (ya NO hay que correr `/api/admin/seed-guias` a mano).
+
+> 📌 Importante: al mergear, la guía queda **en el catálogo** (seleccionable). Para que aparezca en el **listado del curso de UN cliente**, todavía hay que **asignarla por código** en `/admin/cursos/[id]` (paso 5). Es decir: mergear = publicar en la biblioteca; asignar = mostrarla a ese estudiante.
 
 ### 5) Cargar el curso en el perfil del estudiante
 - En `/admin/cursos/[id]`: las genéricas y de nivel se auto-cargan; **asignar por código** desde los desplegables: "Conoce tu Entidad" (ENT-), funcionales (x/12) y el simulacro (SIM-).
