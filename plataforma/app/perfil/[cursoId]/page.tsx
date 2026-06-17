@@ -6,6 +6,30 @@ import Contador from "../Contador";
 
 export const dynamic = "force-dynamic";
 
+// Módulos del currículo (estilo plataforma de aprendizaje). El orden define
+// cómo se muestran al estudiante. Cada guía se clasifica con moduloKey().
+type ModuloDef = { key: string; icon: string; titulo: string; desc: string };
+const MODULOS: ModuloDef[] = [
+  { key: "introduccion", icon: "🚀", titulo: "Introducción", desc: "Empieza aquí: cómo funciona tu curso y tu entidad." },
+  { key: "generales", icon: "🏛️", titulo: "Conocimientos Generales", desc: "El Estado, la función pública y el marco institucional." },
+  { key: "nivel", icon: "🎯", titulo: "Competencias por Nivel", desc: "Competencias comportamentales propias de tu nivel." },
+  { key: "funcional", icon: "🧩", titulo: "Funciones del Cargo", desc: "El conocimiento técnico específico de tu empleo." },
+  { key: "bonus", icon: "🎁", titulo: "Material Bonus", desc: "Contenido extra para reforzar. Opcional, pero recomendado." },
+  { key: "simulacro", icon: "📝", titulo: "Simulacro Final", desc: "Pon a prueba todo lo que aprendiste, como en la prueba real." },
+];
+
+function moduloKey(g: any): string {
+  if (g.tipo === "simulacro") return "simulacro";
+  if (g.tipo === "bonus") return "bonus";
+  if (g.tipo === "funcional") return "funcional";
+  if (g.tipo === "nivel") return "nivel";
+  // INTRO-00 y "Conoce tu Entidad" (ENT-) van a Introducción; el resto de
+  // generales (GEN-) quedan en Conocimientos Generales.
+  if (/(^|\/)(INTRO|ENT)-/i.test(g.archivo_path || "") || g.dia === 1) return "introduccion";
+  return "generales";
+}
+
+
 export default async function CursoDetallePage({ params }: { params: { cursoId: string } }) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -32,11 +56,6 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const convNombre = curso.convocatorias?.nombre || "";
   const imagenUrl = curso.convocatorias?.imagen_url || null;
 
-  // Agrupar guías por tipo/sección
-  const guiasPlan = (guias || []).filter((g: any) => g.tipo !== "bonus" && g.tipo !== "simulacro");
-  const guiasBonus = (guias || []).filter((g: any) => g.tipo === "bonus");
-  const guiasSimulacro = (guias || []).filter((g: any) => g.tipo === "simulacro");
-
   // Desbloqueo del simulacro: solo se activa cuando TODAS las guías del PLAN
   // con archivo disponible (generales/nivel/funcionales) ya fueron leídas.
   // El bonus NO es obligatorio para desbloquear; el simulacro tampoco se cuenta.
@@ -44,6 +63,21 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const requeridasLeidas = guiasRequeridas.filter((g: any) => g.leida).length;
   const simulacroDesbloqueado = guiasRequeridas.length > 0 && requeridasLeidas === guiasRequeridas.length;
   const faltanSimulacro = guiasRequeridas.length - requeridasLeidas;
+
+  // Agrupar guías en MÓDULOS (estilo currículo) y ordenarlas dentro de cada uno.
+  const porModulo: Record<string, any[]> = {};
+  (guias || []).forEach((g: any) => {
+    const k = moduloKey(g);
+    (porModulo[k] = porModulo[k] || []).push(g);
+  });
+  Object.values(porModulo).forEach((arr) =>
+    arr.sort((a: any, b: any) => (a.orden ?? a.dia ?? 0) - (b.orden ?? b.dia ?? 0))
+  );
+  // Módulo abierto por defecto: el primero que tenga guías por leer.
+  const moduloAbierto =
+    (MODULOS.find((m) => (porModulo[m.key] || []).some((g: any) => g.archivo_path && !g.leida)) ||
+      MODULOS.find((m) => (porModulo[m.key] || []).length > 0) ||
+      { key: "" }).key;
 
   // Calcular progreso EN VIVO: % de guías (con archivo disponible) que ya fueron leídas.
   // Solo cuentan las guías que tienen archivo (las funcionales/simulacro pendientes no penalizan).
@@ -158,22 +192,27 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             </div>
           </div>
 
-          {/* Sección: Plan de estudio */}
-          {guiasPlan.length > 0 && (
-            <SeccionGuias titulo="📘 Plan de estudio" subtitulo="Tu ruta día a día. Estúdialas en orden, una por día." guias={guiasPlan} />
-          )}
-
-          {/* Sección: Bonus */}
-          {guiasBonus.length > 0 && (
-            <SeccionGuias titulo="🎁 Material bonus" subtitulo="Contenido extra para reforzar. Opcional, pero recomendado." guias={guiasBonus} />
-          )}
-
-          {/* Sección: Simulacro Final (se desbloquea al completar todas las guías) */}
-          {guiasSimulacro.length > 0 && (
-            simulacroDesbloqueado
-              ? <SeccionGuias titulo="📝 Simulacro Final" subtitulo="¡Desbloqueado! Pon a prueba todo lo que aprendiste." guias={guiasSimulacro} />
-              : <SimulacroBloqueado faltan={faltanSimulacro} total={guiasRequeridas.length} />
-          )}
+          {/* Módulos del currículo (acordeón) */}
+          {MODULOS.map((m) => {
+            const gs = porModulo[m.key] || [];
+            if (gs.length === 0) return null;
+            // Simulacro bloqueado: tarjeta de bloqueo en vez del módulo.
+            if (m.key === "simulacro" && !simulacroDesbloqueado) {
+              return <SimulacroBloqueado key={m.key} faltan={faltanSimulacro} total={guiasRequeridas.length} />;
+            }
+            const total = gs.filter((g: any) => g.archivo_path).length;
+            const leidas = gs.filter((g: any) => g.archivo_path && g.leida).length;
+            return (
+              <ModuloGuias
+                key={m.key}
+                modulo={m}
+                guias={gs}
+                total={total}
+                leidas={leidas}
+                abierto={m.key === moduloAbierto}
+              />
+            );
+          })}
 
           {/* Si no hay guías aún */}
           {(!guias || guias.length === 0) && (
@@ -195,82 +234,96 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   );
 }
 
-function SeccionGuias({ titulo, subtitulo, guias }: { titulo: string; subtitulo?: string; guias: any[] }) {
-  const tipoLabel: Record<string, string> = {
-    general: "Conocimiento general",
-    nivel: "Competencias por nivel",
-    funcional: "Funciones del cargo",
-    bonus: "Material extra",
-    simulacro: "Evaluación final",
-  };
+const TIPO_LABEL: Record<string, string> = {
+  general: "Conocimiento general",
+  nivel: "Competencias por nivel",
+  funcional: "Funciones del cargo",
+  bonus: "Material extra",
+  simulacro: "Evaluación final",
+};
+
+function FilaGuia({ g }: { g: any }) {
+  const dispo = !!g.archivo_path;
   return (
-    <div style={{ marginBottom: 32 }}>
-      <div style={{ marginBottom: 14, paddingBottom: 8, borderBottom: "1px solid var(--gris-borde)" }}>
-        <h3 style={{ fontSize: "1rem", color: "var(--azul)", margin: 0 }}>{titulo}</h3>
-        {subtitulo && <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", margin: "4px 0 0" }}>{subtitulo}</p>}
-      </div>
-      <div style={{ display: "grid", gap: 10 }}>
-        {guias.map((g: any) => {
-          const dispo = !!g.archivo_path;
-          return (
-            <Link
-              key={g.id}
-              href={`/guia/${g.id}`}
-              className="guia-row"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                background: "#fff",
-                border: `1px solid ${g.leida ? "#c3e6d3" : "var(--gris-borde)"}`,
-                borderRadius: 14,
-                padding: "13px 16px",
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              {/* Indicador de Día / Extra */}
-              {g.dia != null ? (
-                <span style={{
-                  width: 46, height: 46, borderRadius: 12, flexShrink: 0,
-                  background: g.leida ? "var(--verde)" : "linear-gradient(135deg, #0A2A5E, #1A4A8A)",
-                  color: "#fff", display: "flex", flexDirection: "column",
-                  alignItems: "center", justifyContent: "center", lineHeight: 1,
-                }}>
-                  <span style={{ fontSize: ".5rem", fontWeight: 700, letterSpacing: ".08em", opacity: .85 }}>DÍA</span>
-                  <span style={{ fontSize: "1.15rem", fontWeight: 800 }}>{g.dia}</span>
-                </span>
-              ) : (
-                <span style={{
-                  width: 46, height: 46, borderRadius: 12, flexShrink: 0,
-                  background: "linear-gradient(135deg, #E8A33D, #F6C56B)", color: "#0A2A5E",
-                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", fontWeight: 800,
-                }}>★</span>
-              )}
+    <Link
+      href={`/guia/${g.id}`}
+      className="guia-row"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        background: "#fff",
+        border: `1px solid ${g.leida ? "#c3e6d3" : "var(--gris-borde)"}`,
+        borderRadius: 14,
+        padding: "13px 16px",
+        textDecoration: "none",
+        color: "inherit",
+      }}
+    >
+      {g.dia != null ? (
+        <span style={{
+          width: 46, height: 46, borderRadius: 12, flexShrink: 0,
+          background: g.leida ? "var(--verde)" : "linear-gradient(135deg, #0A2A5E, #1A4A8A)",
+          color: "#fff", display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", lineHeight: 1,
+        }}>
+          <span style={{ fontSize: ".5rem", fontWeight: 700, letterSpacing: ".08em", opacity: .85 }}>DÍA</span>
+          <span style={{ fontSize: "1.15rem", fontWeight: 800 }}>{g.dia}</span>
+        </span>
+      ) : (
+        <span style={{
+          width: 46, height: 46, borderRadius: 12, flexShrink: 0,
+          background: "linear-gradient(135deg, #E8A33D, #F6C56B)", color: "#0A2A5E",
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", fontWeight: 800,
+        }}>★</span>
+      )}
 
-              {/* Título + tipo */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ fontWeight: 700, fontSize: ".95rem", color: "var(--azul)", display: "block" }}>{g.titulo}</span>
-                {g.tipo && (
-                  <span style={{ display: "block", fontSize: ".74rem", color: "var(--texto-suave)", marginTop: 2 }}>
-                    {tipoLabel[g.tipo] || g.tipo}
-                  </span>
-                )}
-              </div>
-
-              {/* Estado */}
-              {g.leida ? (
-                <span style={{ color: "var(--verde)", fontSize: ".8rem", fontWeight: 700, whiteSpace: "nowrap" }}>✓ Completada</span>
-              ) : dispo ? (
-                <span style={{ color: "#fff", background: "linear-gradient(135deg, #0A2A5E, #1A4A8A)", fontSize: ".78rem", fontWeight: 700, padding: "7px 14px", borderRadius: 20, whiteSpace: "nowrap" }}>Comenzar →</span>
-              ) : (
-                <span style={{ color: "var(--texto-suave)", fontSize: ".76rem", fontWeight: 600, whiteSpace: "nowrap" }}>Próximamente</span>
-              )}
-            </Link>
-          );
-        })}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <span style={{ fontWeight: 700, fontSize: ".95rem", color: "var(--azul)", display: "block" }}>{g.titulo}</span>
+        {g.tipo && (
+          <span style={{ display: "block", fontSize: ".74rem", color: "var(--texto-suave)", marginTop: 2 }}>
+            {TIPO_LABEL[g.tipo] || g.tipo}
+          </span>
+        )}
       </div>
-    </div>
+
+      {g.leida ? (
+        <span style={{ color: "var(--verde)", fontSize: ".8rem", fontWeight: 700, whiteSpace: "nowrap" }}>✓ Completada</span>
+      ) : dispo ? (
+        <span style={{ color: "#fff", background: "linear-gradient(135deg, #0A2A5E, #1A4A8A)", fontSize: ".78rem", fontWeight: 700, padding: "7px 14px", borderRadius: 20, whiteSpace: "nowrap" }}>Comenzar →</span>
+      ) : (
+        <span style={{ color: "var(--texto-suave)", fontSize: ".76rem", fontWeight: 600, whiteSpace: "nowrap" }}>Próximamente</span>
+      )}
+    </Link>
+  );
+}
+
+function ModuloGuias({ modulo, guias, total, leidas, abierto }: {
+  modulo: ModuloDef; guias: any[]; total: number; leidas: number; abierto: boolean;
+}) {
+  const completo = total > 0 && leidas === total;
+  const pct = total > 0 ? Math.round((leidas / total) * 100) : 0;
+  return (
+    <details className="modulo" open={abierto}>
+      <summary className="modulo-sum">
+        <span className="modulo-ic">{completo ? "✅" : modulo.icon}</span>
+        <span style={{ flex: 1, minWidth: 0 }}>
+          <span className="modulo-tit">{modulo.titulo}</span>
+          <span className="modulo-desc">{modulo.desc}</span>
+        </span>
+        {total > 0 && (
+          <span className="modulo-meta">
+            <span className="modulo-bar"><span style={{ width: `${pct}%` }} /></span>
+            <span className="modulo-cont" style={completo ? { color: "var(--verde)", borderColor: "#c3e6d3", background: "var(--verde-suave)" } : undefined}>
+              {leidas}/{total}
+            </span>
+          </span>
+        )}
+      </summary>
+      <div className="modulo-body">
+        {guias.map((g: any) => <FilaGuia key={g.id} g={g} />)}
+      </div>
+    </details>
   );
 }
 
