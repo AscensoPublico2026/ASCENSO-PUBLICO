@@ -7,23 +7,26 @@ Archivo: **`outro.html`** · Duración aprox: **3.5 s** · Fondo: navy de marca 
 
 ---
 
-## ✅ Método recomendado: grabar el `outro.html`
+## ✅ Método recomendado: DESCARGAR el video (un clic, ya en 9:16)
 
-1. **Abre `outro.html`** en un navegador (Chrome en PC, o tu celular).
-   - En PC es lo más fácil de grabar.
-2. Pulsa **`H`** para ocultar el panel de ayuda (así no sale en la grabación).
-3. Inicia tu **grabadora de pantalla**:
-   - **Windows:** `Win + G` (Xbox Game Bar) → Grabar.
-   - **Mac:** `Cmd + Shift + 5` → Grabar.
-   - **Celular:** grabador de pantalla nativo (Android/iOS).
-4. Pulsa **`R`** para reproducir la animación desde el inicio.
-5. **Detén** la grabación cuando termine (~3.5 s).
-6. Lleva el clip a CapCut, **recórtalo** y ponlo al final de cada video.
-   - Tip: en CapCut puedes recortar los bordes para dejarlo 9:16 perfecto.
-   - Tip: añade un sonido sutil de "swoosh"/marca al aparecer la flecha.
+El archivo `outro.html` **genera y descarga el video solo**, en tu navegador, sin programas
+externos, en formato **TikTok 1080×1920 (9:16)**.
 
-> Como estás en el navegador y no ves los archivos del repo directamente, pídeme que **suba
-> esto a una rama de GitHub** y te paso un enlace para abrirlo y grabarlo desde tu celular/PC.
+1. Abre `outro.html` en el navegador (idealmente **Safari** en iPhone/Mac, o Chrome reciente,
+   para que salga en **.mp4**).
+2. Mira la vista previa (se repite sola).
+3. Pulsa **"⬇ Descargar video (9:16)"**.
+4. Graba una pasada (~4 s) y descarga `outro-ascenso-publico.mp4` (o `.webm`).
+5. Arrástralo al **final de cada video** en CapCut. Tip: añade un sonido "swoosh".
+
+> **Formato del archivo:** en Safari (iPhone/Mac) y Chrome reciente sale **.mp4** (ideal para
+> CapCut). Si tu navegador solo soporta **.webm** y CapCut no lo acepta, conviértelo a mp4
+> (cualquier conversor online) o usa el método de grabación de pantalla de abajo.
+
+### Alternativa: grabar la pantalla
+Si la descarga no funciona en tu equipo: abre `outro.html`, inicia la grabadora de pantalla
+(**Win+G** en PC · **Cmd+Shift+5** en Mac · grabador nativo en celular), pulsa "Repetir vista
+previa", detén al terminar y recorta en CapCut.
 
 ---
 
