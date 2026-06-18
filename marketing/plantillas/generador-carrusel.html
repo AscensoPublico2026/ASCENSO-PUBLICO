@@ -31,8 +31,7 @@
   <canvas id="c" width="1080" height="1920"></canvas>
   <div class="controls">
     <div class="row">
-      <div><label>Slide #</label><input id="num" type="number" value="2" min="1"></div>
-      <div><label>Total</label><input id="tot" type="number" value="6" min="1"></div>
+      <div><label>Slide # (solo para el nombre del PNG)</label><input id="num" type="number" value="1" min="1"></div>
       <div><label>Tema</label><select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
     </div>
     <label>Imagen de fondo (opcional, para portada)</label>
@@ -58,9 +57,9 @@ Le pides que lo done a la oficina.</textarea>
   </div>
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
-const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4';
+const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
-const ids=['num','tot','tema','kicker','titulo','cuerpo','ops','ok','pie'];
+const ids=['num','tema','kicker','titulo','cuerpo','ops','ok','pie'];
 let bgImage=null;
 
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
@@ -79,7 +78,7 @@ function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];
 function render(){
   const cream=$('tema').value==='cream',darkText=cream&&!bgImage;
   const ink=darkText?NAVY:CREAM, sub=darkText?'rgba(10,42,94,.6)':'rgba(251,249,244,.65)';
-  if(cream){ctx.fillStyle=CREAM;ctx.fillRect(0,0,W,Hh);}
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
   else{const g=ctx.createRadialGradient(W/2,Hh*.4,80,W/2,Hh*.4,Hh*.62);
     g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
   if(bgImage){const ir=bgImage.width/bgImage.height,cr=W/Hh;let dw,dh;
@@ -91,7 +90,7 @@ function render(){
   logo(70,HY-55,110);ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';
   ctx.font="800 36px 'Plus Jakarta Sans'";ctx.fillText('Ascenso Público',200,HY);
   ctx.fillStyle=sub;ctx.font="700 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
-  ctx.fillText($('num').value+' / '+$('tot').value,W-70,HY);
+  ctx.fillText('@ascensopublico',W-70,HY);
 
   // medir el contenido para centrarlo en la zona visible
   const kick=$('kicker').value.trim();

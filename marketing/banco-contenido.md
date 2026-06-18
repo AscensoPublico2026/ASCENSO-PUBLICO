@@ -261,3 +261,49 @@ Guarda 📌 y sígueme: una pregunta real cada día.
 
 #CNSC #CarreraAdministrativa #Ley909 #ConcursoDeMeritos #AscensoPublico
 ```
+
+
+
+---
+
+## ⬜ Carrusel 10 — Queja vs Reclamo (NIVEL TÉCNICO) · CREMA
+> Tema CREMA · Total 6. Pregunta PROPIA (no copiada). **Estrena la convención de SERIE por nivel:**
+> el kicker indica siempre el nivel (`NIVEL TÉCNICO` / `ASISTENCIAL` / `PROFESIONAL`). Tema:
+> atención al ciudadano (competencia core del nivel técnico). El "truco" = distinguir si la
+> inconformidad es por la CONDUCTA del servidor (queja) o por el SERVICIO (reclamo).
+> 🔒 VERIFICAR antes de publicar: definiciones de QUEJA (inconformidad por la conducta/actuación
+> de un servidor público) vs RECLAMO (inconformidad por la prestación deficiente o suspensión de
+> un servicio). Fuente: procedimientos PQRSD oficiales (p. ej. Gobernación de Boyacá) y guía DAFP.
+> Confírmalo con tu material antes de publicar.
+
+- **S1 Gancho** (1/6) — Tema: CREMA · Kicker: `EXAMEN CNSC · NIVEL TÉCNICO` · Título: `¿Queja o reclamo?` · Texto: `La pregunta de atención al ciudadano que más confunde. ¿La responderías bien en tu examen?` · Opciones: (ninguna) · Resaltar: Ninguna · Pie: `Desliza →`
+- **S2 Caso** (2/6) — Kicker: `EL CASO` · Texto: `Un ciudadano está molesto porque un funcionario lo atendió de forma grosera y descortés. ¿Qué tipo de solicitud está presentando?` · Opciones:
+  ```
+  Petición
+  Queja
+  Reclamo
+  Denuncia
+  ```
+  · Resaltar: Ninguna · Pie: `¿Cuál eliges? →`
+- **S3 Comenta** (3/6) — Kicker: `ANTES DE SEGUIR` · Título: `¿Ya tienes tu respuesta?` · Texto: `Comenta A, B, C o D 👇 (ojo: el reclamo es la trampa)` · Pie: `La respuesta →`
+- **S4 Respuesta** (4/6) — Kicker: `RESPUESTA` · Texto: `Un ciudadano está molesto porque un funcionario lo atendió de forma grosera y descortés. ¿Qué tipo de solicitud está presentando?` · (mismas opciones) · **Resaltar: B (Queja)** · Pie: `¿Por qué? →`
+- **S5 El truco** (5/6) — Kicker: `EL TRUCO` · Título: `La clave para no confundirte:` · Texto:
+  ```
+  👤 QUEJA → inconformidad por la CONDUCTA de un servidor público
+  🛠️ RECLAMO → inconformidad por un SERVICIO deficiente o suspendido
+  Aquí el problema fue el TRATO del funcionario → es QUEJA.
+  ```
+  · Pie: `Guarda esto 📌`
+- **S6 Cierre** (6/6) — Título: `¿Te sirvió?` · Texto: `Sígueme: cada día una pregunta real de tu examen CNSC, marcada por nivel. Y prepárate por TU cargo.` · Pie: `Sígueme + guarda 📌`
+
+**Caption:**
+```
+Pregunta tipo examen CNSC · NIVEL TÉCNICO 👇 ¿queja o reclamo?
+
+Un ciudadano se queja porque un funcionario lo atendió mal. ¿Eso es una queja o un reclamo? La mayoría se equivoca (el reclamo es la trampa 👀). En atención al ciudadano esto cae casi siempre.
+
+👇 Comenta A, B, C o D
+Guarda 📌 para repasar y comparte con quien está en el concurso. Sígueme: subo una pregunta real cada día, marcada por nivel.
+
+#CNSC #AtencionAlCiudadano #ConcursoDeMeritos #CarreraAdministrativa #AscensoPublico
+```
