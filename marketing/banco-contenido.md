@@ -227,3 +227,37 @@ Guarda 📌 y sígueme: una pregunta real cada día.
 
 #CNSC #Procuraduria #DerechoDisciplinario #ConcursoDeMeritos #AscensoPublico
 ```
+
+
+
+---
+
+## ⬜ Carrusel 9 — Período de prueba (ORIGINAL · nivel examen) · CREMA
+> Tema CREMA · Total 6. Pregunta PROPIA (no copiada). Tema: qué pasa al ganar el concurso.
+> 🔒 VERIFICAR: período de prueba en carrera administrativa = 6 meses (Ley 909 de 2004, art. 31). Confírmalo con tu material.
+
+- **S1 Gancho** (1/6) — Kicker: `CONCURSO CNSC` · Título: `Ganaste el concurso… ¿y ahora?` · Texto: `Esto casi nadie lo sabe (y te puede costar el puesto).` · Pie: `Desliza →`
+- **S2 Caso** (2/6) — Kicker: `EL CASO` · Texto: `Superaste el concurso de méritos y te nombran en la entidad. Según la Ley 909 de 2004, ¿cuánto dura el PERÍODO DE PRUEBA antes de adquirir derechos de carrera?` · Opciones:
+  ```
+  3 meses
+  4 meses
+  6 meses
+  1 año
+  ```
+  · Resaltar: Ninguna · Pie: `¿Cuál eliges? →`
+- **S3 Comenta** (3/6) — Kicker: `ANTES DE SEGUIR` · Título: `¿Ya elegiste?` · Texto: `Comenta A, B, C o D 👇` · Pie: `La respuesta →`
+- **S4 Respuesta** (4/6) — Kicker: `RESPUESTA` · (mismas opciones) · **Resaltar: C (6 meses)** · Pie: `¿Por qué? →`
+- **S5 Por qué** (5/6) — Kicker: `POR QUÉ` · Texto: `Quien supera el concurso es nombrado en período de prueba de 6 meses (Ley 909/2004, art. 31). Al final te evalúan: si apruebas, adquieres derechos de carrera; si no, te retiran. Ganar el concurso no es el final.` · Pie: `Guarda esto 📌`
+- **S6 Cierre** (6/6) — Título: `¿Vas bien preparado?` · Texto: `Sígueme: cada día una pregunta real de tu examen. Y prepárate por TU cargo.` · Pie: `Sígueme + guarda 📌`
+
+**Caption:**
+```
+Ganaste el concurso CNSC… ¿y ahora? 👇 Esto casi nadie lo sabe.
+
+Cuando superas el concurso de méritos NO entras de una a carrera: primero hay período de prueba. ¿Sabes cuánto dura según la Ley 909 de 2004?
+
+👇 Comenta A, B, C o D
+Guarda 📌 y sígueme: una pregunta real cada día.
+
+#CNSC #CarreraAdministrativa #Ley909 #ConcursoDeMeritos #AscensoPublico
+```
