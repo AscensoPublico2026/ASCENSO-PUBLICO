@@ -71,3 +71,41 @@ Guarda 📌 para repasar y sígueme para prepararte por TU cargo.
 ```
 
 > 🔑 Siempre pide **comentar la letra** (dispara comentarios) y **guardar** (señal #1 del algoritmo).
+
+
+
+---
+
+## ⭐ Carrusel 5 — Competencias comportamentales (Decreto 815) · *recomendado para estrenar*
+> Tipo CONOCIMIENTO (alto guardado) + remata con nuestro ángulo "por tu cargo".
+> ⚠️ VERIFICAR antes de publicar: las 6 competencias comunes y que cada nivel tiene las
+> suyas, en el Decreto 815 de 2018 (funcionpublica.gov.co · gestor normativo).
+
+- **S1 Gancho** (1/7) — Kicker: `EXAMEN CNSC` · Título: `El tema que MÁS pesa y casi nadie estudia bien` · Texto: `Y no, no son las leyes.` · Pie: `Desliza →`
+- **S2 La verdad** (2/7) — Kicker: `LA VERDAD` · Texto: `Gran parte de tu puntaje depende de la prueba de COMPETENCIAS COMPORTAMENTALES. La CNSC no mide solo lo que sabes: mide cómo te comportas. (Decreto 815 de 2018)` · Pie: `Sigue →`
+- **S3 Las comunes** (3/7) — Kicker: `LAS EVALÚAN A TODOS` · Título: `Competencias comunes:` · Texto:
+  ```
+  • Aprendizaje continuo
+  • Orientación a resultados
+  • Orientación al usuario y al ciudadano
+  • Compromiso con la organización
+  • Trabajo en equipo
+  • Adaptación al cambio
+  ```
+  · Pie: `Pero ojo 👇`
+- **S4 La trampa** (4/7) — Kicker: `LA TRAMPA` · Título: `Esas son solo las comunes` · Texto: `Además, CADA NIVEL —asistencial, técnico, profesional, asesor, directivo— tiene competencias PROPIAS que también te evalúan.` · Pie: `Sigue →`
+- **S5 El error** (5/7) — Kicker: `EL ERROR` · Título: `Por eso fallan` · Texto: `Un curso genérico te enseña las competencias iguales para todos. Pero a ti te evalúan las de TU nivel y TU cargo. Estudiar "en general" = perder puntos.` · Pie: `→`
+- **S6 Interacción** (6/7) — Kicker: `AHORA TÚ` · Título: `¿Conoces las de tu nivel?` · Texto: `Comenta TU cargo y te digo qué competencias te van a evaluar.` · Pie: `Comenta tu cargo 👇`
+- **S7 Cierre** (7/7) — Título: `Prepárate por TU cargo` · Texto: `Te enseño las competencias exactas de tu cargo, no en general.` · Pie: `Guarda 📌 y sígueme`
+
+**Caption:**
+```
+La parte que MÁS pesa en tu examen CNSC y casi nadie estudia bien 👇
+
+Las competencias comportamentales (Decreto 815) deciden tu puntaje tanto como las leyes. Y cada nivel tiene las suyas.
+
+👇 Comenta TU cargo y te digo qué competencias te van a evaluar.
+Guarda 📌 para no olvidarlo y sígueme para prepararte por TU cargo.
+
+#CNSC #ConcursoDeMeritos #CarreraAdministrativa #EmpleoPublico #AscensoPublico
+```
