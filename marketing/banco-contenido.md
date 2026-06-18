@@ -151,3 +151,43 @@ Compártelo con alguien que esté en el concurso y guárdalo 📌 (info del curs
 
 #CNSC #ConcursoDeMeritos #CarreraAdministrativa #EmpleoPublico #AscensoPublico
 ```
+
+
+
+---
+
+## ⬜ Carrusel 7 — Derecho de petición (versión examen real) · CREMA
+> Tema CREMA · Total 6. Suena a pregunta real CNSC (el "truco" = identificar el tipo).
+> ⚠️ Verificar términos en Ley 1755 de 2015 (general 15 / documentos e información 10 / consultas 30, días hábiles).
+
+- **S1 Gancho** (1/6) — Kicker: `DERECHO DE PETICIÓN` · Título: `La pregunta que CAE casi siempre` · Texto: `¿La responderías bien en tu examen CNSC?` · Pie: `Desliza →`
+- **S2 Caso** (2/6) — Kicker: `EL CASO` · Texto: `Un ciudadano pide COPIA de unos documentos públicos. ¿En cuántos días HÁBILES debe responder la entidad?` · Opciones:
+  ```
+  10 días hábiles
+  15 días hábiles
+  30 días hábiles
+  5 días hábiles
+  ```
+  · Resaltar: Ninguna · Pie: `¿Cuál eliges? →`
+- **S3 Comenta** (3/6) — Kicker: `ANTES DE SEGUIR` · Título: `¿Ya tienes tu respuesta?` · Texto: `Comenta A, B, C o D 👇 (el 15 es trampa)` · Pie: `La respuesta →`
+- **S4 Respuesta** (4/6) — Kicker: `RESPUESTA` · (mismas opciones) · **Resaltar: A (10 días hábiles)** · Pie: `¿Por qué? →`
+- **S5 El truco** (5/6) — Kicker: `EL TRUCO` · Título: `Identifica el tipo (Ley 1755/2015):` · Texto:
+  ```
+  📄 Documentos e información → 10 días
+  📋 Regla general → 15 días
+  ❓ Consultas → 30 días
+  ```
+  · Pie: `Guarda esto 📌`
+- **S6 Cierre** (6/6) — Título: `¿Te sirvió?` · Texto: `Sígueme: cada día, una pregunta real de tu examen CNSC. Y prepárate por TU cargo.` · Pie: `Sígueme + guarda 📌`
+
+**Caption:**
+```
+La pregunta de DERECHO DE PETICIÓN que cae casi siempre en los concursos CNSC 👇 ¿la sabes?
+
+Un ciudadano pide copia de documentos públicos: ¿en cuántos días hábiles debe responder la entidad?
+
+👇 Comenta A, B, C o D (el 15 es trampa 👀)
+Guarda 📌 esta y sígueme: subo una pregunta real cada día.
+
+#CNSC #DerechoDePeticion #ConcursoDeMeritos #CarreraAdministrativa #AscensoPublico
+```
