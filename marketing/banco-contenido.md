@@ -191,3 +191,39 @@ Guarda 📌 esta y sígueme: subo una pregunta real cada día.
 
 #CNSC #DerechoDePeticion #ConcursoDeMeritos #CarreraAdministrativa #AscensoPublico
 ```
+
+
+
+---
+
+## ⬜ Carrusel 8 — Disciplinario / Procuraduría (NIVEL EXAMEN REAL) · CREMA
+> Tema CREMA · Total 6. Réplica mejorada de la pregunta viral de la competencia (608 guardados).
+> 🔒 VERIFICAR OBLIGATORIO antes de publicar: sanción para falta gravísima a título de culpa
+> gravísima en el CGD (Ley 1952/2019, art. 48; mod. Ley 2094/2021). Respuesta propuesta:
+> **destitución e inhabilidad general de 10 a 20 años** — confírmalo con tu material/la ley.
+
+- **S1 Gancho** (1/6) — Kicker: `EXAMEN · DISCIPLINARIO` · Título: `¿Responderías bien esta?` · Texto: `Pregunta real de proceso disciplinario. Este es el nivel que de verdad te evalúan.` · Pie: `Desliza →`
+- **S2 Caso** (2/6) — Kicker: `EL CASO` · Texto: `Un servidor público es hallado responsable de una falta GRAVÍSIMA a título de CULPA GRAVÍSIMA. Según el CGD (Ley 1952/2019, mod. Ley 2094/2021), ¿cuál es la sanción?` · Opciones:
+  ```
+  Suspensión e inhabilidad especial (1 a 12 meses)
+  Destitución e inhabilidad general de 5 a 10 años
+  Destitución e inhabilidad general de 10 a 20 años
+  Multa de 10 a 90 días de salario
+  ```
+  · Resaltar: Ninguna · Pie: `¿Cuál eliges? →`
+- **S3 Comenta** (3/6) — Kicker: `ANTES DE SEGUIR` · Título: `¿Ya tienes tu respuesta?` · Texto: `Comenta A, B, C o D 👇` · Pie: `La respuesta →`
+- **S4 Respuesta** (4/6) — Kicker: `RESPUESTA` · (mismas opciones) · **Resaltar: C** · Pie: `¿Por qué? →`
+- **S5 Por qué** (5/6) — Kicker: `POR QUÉ` · Texto: `Las faltas gravísimas a título de DOLO o CULPA GRAVÍSIMA se sancionan con destitución e inhabilidad general de 10 a 20 años (CGD, art. 48). La culpa gravísima se asimila al dolo para la sanción más alta.` · Pie: `Guarda esto 📌`
+- **S6 Cierre** (6/6) — Título: `¿Vas bien preparado?` · Texto: `Sígueme: cada día una pregunta real de tu examen. Y prepárate por TU cargo.` · Pie: `Sígueme + guarda 📌`
+
+**Caption:**
+```
+Pregunta REAL de proceso disciplinario 👇 ¿la responderías bien en tu examen CNSC?
+
+Falta gravísima a título de culpa gravísima: ¿cuál es la sanción según la Ley 1952 de 2019 (mod. Ley 2094 de 2021)?
+
+👇 Comenta A, B, C o D
+Guarda 📌 y sígueme: una pregunta real cada día.
+
+#CNSC #Procuraduria #DerechoDisciplinario #ConcursoDeMeritos #AscensoPublico
+```
