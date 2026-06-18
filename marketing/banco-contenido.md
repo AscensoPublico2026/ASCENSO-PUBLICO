@@ -109,3 +109,45 @@ Guarda 📌 para no olvidarlo y sígueme para prepararte por TU cargo.
 
 #CNSC #ConcursoDeMeritos #CarreraAdministrativa #EmpleoPublico #AscensoPublico
 ```
+
+
+
+---
+
+## 🟦 Carrusel 6 — Comparativa "Genérico vs por TU cargo" (NAVY · valor/venta suave)
+> Tema NAVY · Total 7 · Sin opciones. Vende el diferenciador sin sonar a venta.
+
+- **S1 Gancho** (1/7) — Kicker: `CONCURSO CNSC` · Título: `Mismo precio. Resultado MUY distinto.` · Texto: `Por qué muchos pagan un curso… y aun así pierden el concurso.` · Pie: `Desliza →`
+- **S2 El problema** (2/7) — Kicker: `EL ERROR` · Título: `El curso genérico` · Texto: `Te enseña lo mismo que a TODOS. Pero la CNSC no te evalúa "en general": te evalúa según TU cargo.` · Pie: `Mira la diferencia →`
+- **S3 Contenido** (3/7) — Kicker: `CONTENIDO` · Texto:
+  ```
+  ❌ Genérico: temario igual para todos
+  ✅ Por tu cargo: solo lo que TU cargo necesita
+  ```
+  · Pie: `Sigue →`
+- **S4 Enfoque** (4/7) — Kicker: `ENFOQUE` · Texto:
+  ```
+  ❌ Genérico: memorizar leyes sueltas
+  ✅ Por tu cargo: juicio situacional de tu rol
+  ```
+  · Pie: `Sigue →`
+- **S5 Resultado** (5/7) — Kicker: `RESULTADO` · Texto:
+  ```
+  ❌ Genérico: estudias de más, rindes de menos
+  ✅ Por tu cargo: estudias lo justo, rindes más
+  ```
+  · Pie: `→`
+- **S6 La clave** (6/7) — Kicker: `LA CLAVE` · Título: `Cada cargo se evalúa distinto` · Texto: `Un asistencial no enfrenta lo mismo que un profesional. Prepararte "en general" es perder puntos que otros sí van a ganar.` · Pie: `→`
+- **S7 Cierre** (7/7) — Título: `Prepárate por TU cargo exacto` · Texto: `Plan de 21 días + guías + simulacro, diseñado para tu cargo específico.` · Pie: `Link en bio 👆 sígueme`
+
+**Caption:**
+```
+Pagar un curso genérico para tu concurso CNSC puede ser botar la plata 👇
+
+La CNSC no te evalúa "en general": te evalúa según TU cargo. Un asistencial no se prepara igual que un profesional.
+
+👇 ¿Para qué cargo te preparas? Cuéntame en comentarios.
+Compártelo con alguien que esté en el concurso y guárdalo 📌 (info del curso en la bio).
+
+#CNSC #ConcursoDeMeritos #CarreraAdministrativa #EmpleoPublico #AscensoPublico
+```
