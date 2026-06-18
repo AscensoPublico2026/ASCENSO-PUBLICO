@@ -44,6 +44,8 @@
         <select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
       <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
     </div>
+    <label>Imagen de fondo (opcional · para portada estilo foto)</label>
+    <input type="file" id="bgimg" accept="image/*">
     <label>Etiqueta superior (kicker)</label>
     <input id="kicker" value="CONVOCATORIA CNSC">
     <label>Título</label>
@@ -64,6 +66,7 @@ const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
 const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4';
 const $=id=>document.getElementById(id);
 const ids=['preset','tema','handle','kicker','titulo','cuerpo','chip','zonas'];
+let bgImage=null;
 
 function wrap(text,maxW,font){ctx.font=font;const words=text.split(/\s+/);const lines=[];let ln='';
   for(const w of words){const t=ln?ln+' '+w:w;if(ctx.measureText(t).width>maxW&&ln){lines.push(ln);ln=w;}else ln=t;}
@@ -90,11 +93,18 @@ function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.18)';ctx.fillRect(0,0
 
 function render(){
   const preset=$('preset').value,cream=$('tema').value==='cream';
-  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.8)';
+  const darkText=cream && !bgImage;
+  const ink=darkText?NAVY:CREAM, sub=darkText?'rgba(10,42,94,.7)':'rgba(251,249,244,.85)';
   // fondo
   if(cream){ctx.fillStyle=CREAM;ctx.fillRect(0,0,W,Hh);}
   else{const g=ctx.createRadialGradient(W/2,Hh*.4,80,W/2,Hh*.4,Hh*.62);
     g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  if(bgImage){const ir=bgImage.width/bgImage.height,cr=W/Hh;let dw,dh;
+    if(ir>cr){dh=Hh;dw=Hh*ir;}else{dw=W;dh=W/ir;}
+    ctx.drawImage(bgImage,(W-dw)/2,(Hh-dh)/2,dw,dh);
+    const ov=ctx.createLinearGradient(0,0,0,Hh);
+    ov.addColorStop(0,'rgba(10,42,94,.35)');ov.addColorStop(.45,'rgba(10,42,94,.62)');
+    ov.addColorStop(1,'rgba(7,32,63,.92)');ctx.fillStyle=ov;ctx.fillRect(0,0,W,Hh);}
   if(preset==='fondo')return;
   // marca arriba
   logo(70,90,120);
@@ -143,6 +153,9 @@ function render(){
 async function boot(){try{await document.fonts.load("700 96px 'Source Serif 4'");
   await document.fonts.load("800 40px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}render();}
 ids.forEach(id=>$(id).addEventListener('input',render));
+$('bgimg').addEventListener('change',e=>{const f=e.target.files[0];
+  if(!f){bgImage=null;render();return;}
+  const img=new Image();img.onload=()=>{bgImage=img;render();};img.src=URL.createObjectURL(f);});
 $('dl').onclick=()=>{render();cv.toBlob(b=>{const a=document.createElement('a');
   a.href=URL.createObjectURL(b);a.download='ascenso-'+$('preset').value+'.png';a.click();
   URL.revokeObjectURL(a.href);},'image/png');};
