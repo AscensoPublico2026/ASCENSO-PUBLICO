@@ -31,8 +31,7 @@
   <canvas id="c" width="1080" height="1920"></canvas>
   <div class="controls">
     <div class="row">
-      <div><label>Slide #</label><input id="num" type="number" value="2" min="1"></div>
-      <div><label>Total</label><input id="tot" type="number" value="6" min="1"></div>
+      <div><label>Slide # (solo para el nombre del PNG)</label><input id="num" type="number" value="1" min="1"></div>
       <div><label>Tema</label><select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
     </div>
     <label>Imagen de fondo (opcional, para portada)</label>
@@ -58,9 +57,9 @@ Le pides que lo done a la oficina.</textarea>
   </div>
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
-const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4';
+const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
-const ids=['num','tot','tema','kicker','titulo','cuerpo','ops','ok','pie'];
+const ids=['num','tema','kicker','titulo','cuerpo','ops','ok','pie'];
 let bgImage=null;
 
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
@@ -79,61 +78,84 @@ function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];
 function render(){
   const cream=$('tema').value==='cream',darkText=cream&&!bgImage;
   const ink=darkText?NAVY:CREAM, sub=darkText?'rgba(10,42,94,.6)':'rgba(251,249,244,.65)';
-  if(cream){ctx.fillStyle=CREAM;ctx.fillRect(0,0,W,Hh);}
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
   else{const g=ctx.createRadialGradient(W/2,Hh*.4,80,W/2,Hh*.4,Hh*.62);
     g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
   if(bgImage){const ir=bgImage.width/bgImage.height,cr=W/Hh;let dw,dh;
     if(ir>cr){dh=Hh;dw=Hh*ir;}else{dw=W;dh=W/ir;}ctx.drawImage(bgImage,(W-dw)/2,(Hh-dh)/2,dw,dh);
     const ov=ctx.createLinearGradient(0,0,0,Hh);ov.addColorStop(0,'rgba(10,42,94,.45)');
     ov.addColorStop(1,'rgba(7,32,63,.92)');ctx.fillStyle=ov;ctx.fillRect(0,0,W,Hh);}
-  // === HEADER (zona segura, bajo la barra de TikTok) ===
-  const HY=310;
-  logo(70,HY-55,110);ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';
-  ctx.font="800 36px 'Plus Jakarta Sans'";ctx.fillText('Ascenso Público',200,HY);
-  ctx.fillStyle=sub;ctx.font="700 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
-  ctx.fillText($('num').value+' / '+$('tot').value,W-70,HY);
+  // === HEADER (marca CENTRADA, más abajo para no quedar tapada por la barra de TikTok) ===
+  const HY=360;
+  ctx.font="800 36px 'Plus Jakarta Sans'";
+  const brand='Ascenso Público';
+  const brandW=ctx.measureText(brand).width;
+  const logoVis=66,gap=14,groupW=logoVis+gap+brandW,gx=(W-groupW)/2;
+  logo(gx-22,HY-55,110);
+  ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText(brand,gx+logoVis+gap,HY);
+  ctx.fillStyle=sub;ctx.font="700 28px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('@ascensopublico',W/2,HY+46);
 
-  // medir el contenido para centrarlo en la zona visible
+  // ===== CONTENIDO AUTO-AJUSTABLE (se adapta a la cantidad de texto) =====
   const kick=$('kicker').value.trim();
   const tit=$('titulo').value.trim();
   const body=$('cuerpo').value.trim();
   const ops=$('ops').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,4);
   const correct=$('ok').value;
-  const titLines=tit?wrap(tit,W-160,"700 78px 'Source Serif 4'"):[];
-  const bodyLines=body?wrap(body,W-160,"500 46px 'Plus Jakarta Sans'"):[];
-  const opData=ops.map(op=>{const l=wrap(op,W-300,"700 42px 'Plus Jakarta Sans'");return{l,h:Math.max(120,l.length*54+46)};});
-  let H=0;
-  if(kick)H+=70;
-  if(titLines.length)H+=titLines.length*92+70;
-  if(bodyLines.length)H+=bodyLines.length*64+(opData.length?40:0);
-  opData.forEach(o=>H+=o.h+26);
-  // centrar bloque en banda segura [480, 1240]
-  const BT=480,BB=1240;
-  let y=BT+Math.max(0,((BB-BT)-H)/2);
-
-  if(kick){ctx.fillStyle=GOLD;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='alphabetic';
-    ctx.fillText(kick.toUpperCase(),80,y);y+=70;}
-  if(titLines.length){ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-    titLines.forEach(l=>{ctx.font="700 78px 'Source Serif 4'";ctx.fillText(l,80,y+64);y+=92;});
-    ctx.strokeStyle=GOLD;ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(84,y+24);ctx.lineTo(264,y+24);ctx.stroke();y+=70;}
-  if(bodyLines.length){ctx.fillStyle=ink;ctx.textAlign='left';
-    bodyLines.forEach(l=>{ctx.font="500 46px 'Plus Jakarta Sans'";ctx.fillText(l,80,y+44);y+=64;});
-    if(opData.length)y+=40;}
-  opData.forEach((o,i)=>{const letter='ABCD'[i];const bh=o.h,x=70,bw=W-140,isOk=correct===letter;
-    ctx.fillStyle=isOk?'rgba(22,194,163,.22)':'rgba(255,255,255,.06)';
-    ctx.strokeStyle=isOk?TEAL:'rgba(255,194,51,.5)';ctx.lineWidth=isOk?6:3;rr(x,y,bw,bh,26);ctx.fill();ctx.stroke();
-    ctx.fillStyle=isOk?TEAL:GOLD;ctx.beginPath();ctx.arc(x+62,y+bh/2,40,0,7);ctx.fill();
-    ctx.fillStyle=NAVY;ctx.font="800 42px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(letter,x+62,y+bh/2+2);
-    ctx.fillStyle=ink;ctx.textAlign='left';ctx.font="700 42px 'Plus Jakarta Sans'";
-    const ty=y+bh/2-(o.l.length-1)*27;o.l.forEach((l,k)=>ctx.fillText(l,x+128,ty+k*54));
-    if(isOk){ctx.fillStyle=TEAL;ctx.font="800 44px 'Plus Jakarta Sans'";ctx.textAlign='right';ctx.fillText('✓',x+bw-30,y+bh/2+2);}
-    y+=bh+26;});
-  // === PIE (zona segura inferior, lejos de la franja de comentarios) ===
   const pie=$('pie').value.trim();
-  if(pie){ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textBaseline='middle';const tw=ctx.measureText(pie).width;
-    const padX=40,h=84,w=tw+padX*2,x=W/2-w/2,py=1300;
-    ctx.fillStyle=GOLD;rr(x,py,w,h,h/2);ctx.fill();
-    ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.fillText(pie,W/2,py+h/2+1);}
+  const MARG=80;
+
+  // banda vertical segura: bajo el header y sobre la zona inferior de TikTok
+  const SAFE_TOP=470,SAFE_BOTTOM=1500,AVAIL=SAFE_BOTTOM-SAFE_TOP;
+
+  // mide el bloque completo (contenido + botón) a una escala S
+  function measure(S){
+    const titLines=tit?wrap(tit,W-MARG*2,`700 ${78*S}px 'Source Serif 4'`):[];
+    const bodyLines=body?wrap(body,W-MARG*2,`500 ${46*S}px 'Plus Jakarta Sans'`):[];
+    const opData=ops.map(op=>{const l=wrap(op,W-300,`700 ${42*S}px 'Plus Jakarta Sans'`);
+      return{l,h:Math.max(120*S,l.length*54*S+46*S)};});
+    let H=0;
+    if(kick)H+=70*S;
+    if(titLines.length)H+=titLines.length*92*S+70*S;
+    if(bodyLines.length)H+=bodyLines.length*64*S+(opData.length?40*S:0);
+    opData.forEach(o=>H+=o.h+26*S);
+    const pieH=pie?84*S:0,pieGap=(pie&&H>0)?34*S:0;
+    return {titLines,bodyLines,opData,S,H,blockH:H+pieGap+pieH};
+  }
+
+  // elige la MAYOR escala que quepa en la banda segura (auto-ajuste al contenido)
+  let m=measure(1);
+  if(m.blockH>AVAIL){for(let S=0.98;S>=0.6;S-=0.02){m=measure(S);if(m.blockH<=AVAIL)break;}}
+  const S=m.S;
+
+  // centra el bloque completo => márgenes simétricos arriba/abajo
+  let y=SAFE_TOP+Math.max(0,(AVAIL-m.blockH)/2);
+
+  if(kick){ctx.fillStyle=GOLD;ctx.font=`800 ${38*S}px 'Plus Jakarta Sans'`;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.fillText(kick.toUpperCase(),MARG,y+40*S);y+=70*S;}
+  if(m.titLines.length){ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.font=`700 ${78*S}px 'Source Serif 4'`;
+    m.titLines.forEach(l=>{ctx.fillText(l,MARG,y+64*S);y+=92*S;});
+    ctx.strokeStyle=GOLD;ctx.lineWidth=9*S;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(MARG+4,y+24*S);ctx.lineTo(MARG+4+180*S,y+24*S);ctx.stroke();y+=70*S;}
+  if(m.bodyLines.length){ctx.fillStyle=ink;ctx.textAlign='left';ctx.font=`500 ${46*S}px 'Plus Jakarta Sans'`;
+    m.bodyLines.forEach(l=>{ctx.fillText(l,MARG,y+44*S);y+=64*S;});
+    if(m.opData.length)y+=40*S;}
+  m.opData.forEach((o,i)=>{const letter='ABCD'[i];const bh=o.h,x=70,bw=W-140,isOk=correct===letter;
+    ctx.fillStyle=isOk?'rgba(22,194,163,.22)':'rgba(255,255,255,.06)';
+    ctx.strokeStyle=isOk?TEAL:'rgba(255,194,51,.5)';ctx.lineWidth=isOk?6:3;rr(x,y,bw,bh,26*S);ctx.fill();ctx.stroke();
+    ctx.fillStyle=isOk?TEAL:GOLD;ctx.beginPath();ctx.arc(x+62*S,y+bh/2,40*S,0,7);ctx.fill();
+    ctx.fillStyle=NAVY;ctx.font=`800 ${42*S}px 'Plus Jakarta Sans'`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(letter,x+62*S,y+bh/2+2);
+    ctx.fillStyle=ink;ctx.textAlign='left';ctx.font=`700 ${42*S}px 'Plus Jakarta Sans'`;
+    const ty=y+bh/2-(o.l.length-1)*27*S;o.l.forEach((l,k)=>ctx.fillText(l,x+128*S,ty+k*54*S));
+    if(isOk){ctx.fillStyle=TEAL;ctx.font=`800 ${44*S}px 'Plus Jakarta Sans'`;ctx.textAlign='right';ctx.fillText('✓',x+bw-30,y+bh/2+2);}
+    y+=bh+26*S;});
+  // === PIE: SIEMPRE justo debajo del contenido (nunca encima), centrado ===
+  if(pie){if(m.H>0)y+=34*S;
+    ctx.font=`800 ${38*S}px 'Plus Jakarta Sans'`;ctx.textBaseline='middle';const tw=ctx.measureText(pie).width;
+    const padX=40*S,h=84*S,w=tw+padX*2,x=W/2-w/2;
+    ctx.fillStyle=GOLD;rr(x,y,w,h,h/2);ctx.fill();
+    ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.fillText(pie,W/2,y+h/2+1);}
 }
 async function boot(){try{await document.fonts.load("700 78px 'Source Serif 4'");
   await document.fonts.load("800 42px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}render();}
