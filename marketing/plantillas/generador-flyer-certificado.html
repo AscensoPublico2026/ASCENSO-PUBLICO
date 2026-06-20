@@ -78,6 +78,7 @@
       <input id="rotval" type="number" min="-10" max="10" value="-4" step="1" style="max-width:90px">
     </div>
 
+    <div class="chk"><input type="checkbox" id="topface"><label for="topface" style="margin:0">Reservar ¼ arriba para tu rostro/video (estilo Pro)</label></div>
     <div class="chk"><input type="checkbox" id="showsticker" checked><label for="showsticker" style="margin:0">Mostrar sticker</label></div>
     <div class="chk"><input type="checkbox" id="showarrow" checked><label for="showarrow" style="margin:0">Mostrar flecha + nota</label></div>
     <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
@@ -316,59 +317,78 @@ function certCard(cx,cy,w,h,rot,caption,cream){ctx.save();ctx.translate(cx,cy);c
   ctx.restore();
   return {top:cy-h/2,left:cx-w/2,right:cx+w/2,bottom:cy+h/2,cy};}
 
-function numItem(n,x,y,maxW,it,ink){
-  ctx.fillStyle=GOLD;ctx.font="700 58px 'Source Serif 4'";ctx.textAlign='left';ctx.textBaseline='alphabetic';
-  ctx.fillText(n,x,y+48);
-  return drawRich(it,x+98,y+2,maxW-98,"700 44px 'Plus Jakarta Sans'",ink,56,'left');
+function numItem(n,x,y,maxW,it,ink,nf,tf,lh){
+  nf=nf||58;tf=tf||44;lh=lh||56;const tx=x+nf*1.62;
+  ctx.fillStyle=GOLD;ctx.font="700 "+nf+"px 'Source Serif 4'";ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText(n,x,y+nf*0.82);
+  return drawRich(it,tx,y+2,maxW-(tx-x),"700 "+tf+"px 'Plus Jakarta Sans'",ink,lh,'left');
 }
+
+function faceGuide(){ctx.save();
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=3;ctx.setLineDash([16,12]);
+  rr(44,44,W-88,Hh*0.25-66,30);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font="700 36px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('🎥 tu rostro / video (¼)',W/2,Hh*0.125);ctx.restore();}
 
 function renderPro(){
   const cream=$('tema').value==='cream';
   const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
+  const face=$('topface').checked;
   ctx.clearRect(0,0,W,Hh);
   if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
   else{const g=ctx.createLinearGradient(0,0,0,Hh);
     g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
   bgDecor(cream);
 
-  // marca
-  logo(M-14,60,104);
-  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
-  ctx.fillText('Ascenso Público',M+96,110);
-  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
-  ctx.fillText($('handle').value,W-M,110);
+  // banda divisoria si reservamos el cuarto superior
+  const top = face ? 496 : 56;
+  if(face){
+    ctx.save();ctx.strokeStyle='rgba(255,194,51,.45)';ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(M,Hh*0.25);ctx.lineTo(W-M,Hh*0.25);ctx.stroke();ctx.restore();
+  }
 
-  // kicker pill centrado
-  let y=206;
+  // marca
+  logo(M-14,top+2,100);
+  ctx.fillStyle=ink;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Público',M+90,top+46);
+  ctx.fillStyle=sub;ctx.font="500 28px 'Plus Jakarta Sans'";ctx.textAlign='right';
+  ctx.fillText($('handle').value,W-M,top+46);
+  let y=top+106;
+
+  // kicker pill
   const kick=$('kicker').value.trim();
-  if(kick){y=pill(W/2,y,kick.toUpperCase(),"800 30px 'Plus Jakarta Sans'")+44;}else{y+=8;}
+  if(kick){y=pill(W/2,y,kick.toUpperCase(),"800 "+(face?28:30)+"px 'Plus Jakarta Sans'")+(face?32:44);}else{y+=8;}
 
   // titular serif
-  y=drawRich($('titulo').value,W/2,y,W-2*M,"700 84px 'Source Serif 4'",ink,100,'center');
+  const hf=face?70:84, hlh=face?84:100;
+  y=drawRich($('titulo').value,W/2,y,W-2*M,"700 "+hf+"px 'Source Serif 4'",ink,hlh,'center');
 
-  // certificado protagonista (centrado, marco dorado)
+  // certificado protagonista
   const rot=+$('rot').value;
-  const cardCy=Math.min(Math.max(y+330,860),940);
-  const ci=certCard(W/2,cardCy,520,560,rot,$('caption').value,cream);
-  if($('showsticker').checked) seal(ci.right-22,ci.top+34,64);
+  const cardW=face?440:520, cardH=face?470:560;
+  const cardCy=Math.min(Math.max(y+cardH/2+24,face?880:860),face?1150:940);
+  const ci=certCard(W/2,cardCy,cardW,cardH,rot,$('caption').value,cream);
+  if($('showsticker').checked) seal(ci.right-22,ci.top+32,face?58:64);
 
   // divisor fino
-  divider(W/2,ci.bottom+50,360);
+  divider(W/2,ci.bottom+(face?40:50),360);
 
-  // lista numerada con aire
-  let by=ci.bottom+106;
+  // lista numerada
+  let by=ci.bottom+(face?94:106);
+  const nf=face?46:58, tf=face?38:44, lh=face?48:56, gp=face?22:30;
   const items=$('bullets').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3);
-  items.forEach((it,i)=>{by=numItem(String(i+1).padStart(2,'0'),M+10,by,W-2*M-10,it,ink)+30;});
+  items.forEach((it,i)=>{by=numItem(String(i+1).padStart(2,'0'),M+10,by,W-2*M-10,it,ink,nf,tf,lh)+gp;});
 
   // pie: chip + CTA
   const chip=$('chip').value.trim();
-  if(chip)pill(W/2,1656,chip,"800 34px 'Plus Jakarta Sans'");
+  if(chip)pill(W/2,face?1748:1656,chip,"800 "+(face?32:34)+"px 'Plus Jakarta Sans'");
   const cta=$('cta').value.trim();
   if(cta){ctx.fillStyle=cream?'rgba(10,42,94,.85)':'rgba(251,249,244,.92)';
-    ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(cta,W/2,1768);}
+    ctx.font="700 "+(face?32:34)+"px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(cta,W/2,face?1850:1768);}
 
-  if($('zonas').checked)zonas();
+  if(face && $('zonas').checked) faceGuide();
+  else if($('zonas').checked) zonas();
 }
 
 function render(){ if($('estilo').value==='pro') renderPro(); else renderClasico(); }
@@ -379,8 +399,9 @@ function loadPreset(){const p=PRESETS[$('preset').value];
   $('chip').value=p.chip;$('cta').value=p.cta;render();}
 
 ['tema','handle','sticker','kicker','titulo','caption','nota','bullets','chip','cta',
- 'showsticker','showarrow','zonas','estilo'].forEach(id=>$(id).addEventListener('input',render));
+ 'showsticker','showarrow','zonas','estilo','topface'].forEach(id=>$(id).addEventListener('input',render));
 $('estilo').addEventListener('change',render);
+$('topface').addEventListener('change',render);
 $('rot').addEventListener('input',()=>{$('rotval').value=$('rot').value;render();});
 $('rotval').addEventListener('input',()=>{$('rot').value=$('rotval').value;render();});
 $('preset').addEventListener('change',loadPreset);
