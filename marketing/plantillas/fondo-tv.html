@@ -62,6 +62,8 @@
   </div>
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1920,H=1080;
+const Q=2;                 // factor de calidad: 1920*2 x 1080*2 = 3840x2160 (4K real)
+cv.width=W*Q;cv.height=H*Q;
 const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
 const rgba=(c,a)=>`rgba(${c},${a})`;
@@ -154,6 +156,7 @@ function keyword(cream){
 }
 
 function draw(t,cream){
+  ctx.setTransform(Q,0,0,Q,0,0);   // dibuja en coords 1920x1080 pero a resolucion 4K
   paintBg(cream);
   const orbs=cream?ORBS_CREAM:ORBS_NAVY;
   orbs.forEach(o=>orb(o,t));
