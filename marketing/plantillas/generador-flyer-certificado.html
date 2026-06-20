@@ -77,6 +77,11 @@
       <input id="rot" type="range" min="-10" max="10" value="-4" step="1">
       <input id="rotval" type="number" min="-10" max="10" value="-4" step="1" style="max-width:90px">
     </div>
+    <label>Tamaño del flyer (estilo Pro) %</label>
+    <div class="row">
+      <input id="escala" type="range" min="55" max="110" value="82" step="1">
+      <input id="escalaval" type="number" min="55" max="110" value="82" step="1" style="max-width:90px">
+    </div>
 
     <div class="chk"><input type="checkbox" id="topface"><label for="topface" style="margin:0">Reservar ¼ arriba para tu rostro/video (estilo Pro)</label></div>
     <div class="chk"><input type="checkbox" id="showsticker" checked><label for="showsticker" style="margin:0">Mostrar sticker</label></div>
@@ -347,6 +352,10 @@ function renderPro(){
     ctx.beginPath();ctx.moveTo(M,Hh*0.25);ctx.lineTo(W-M,Hh*0.25);ctx.stroke();ctx.restore();
   }
 
+  // escala del flyer (se ancla justo bajo la linea del cuarto superior)
+  const sc=(+$('escala').value)/100;
+  ctx.save();ctx.translate(W/2,top);ctx.scale(sc,sc);ctx.translate(-W/2,-top);
+
   // marca
   logo(M-14,top+2,100);
   ctx.fillStyle=ink;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
@@ -387,6 +396,7 @@ function renderPro(){
     ctx.font="700 "+(face?32:34)+"px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(cta,W/2,face?1850:1768);}
 
+  ctx.restore();
   if(face && $('zonas').checked) faceGuide();
   else if($('zonas').checked) zonas();
 }
@@ -404,6 +414,8 @@ $('estilo').addEventListener('change',render);
 $('topface').addEventListener('change',render);
 $('rot').addEventListener('input',()=>{$('rotval').value=$('rot').value;render();});
 $('rotval').addEventListener('input',()=>{$('rot').value=$('rotval').value;render();});
+$('escala').addEventListener('input',()=>{$('escalaval').value=$('escala').value;render();});
+$('escalaval').addEventListener('input',()=>{$('escala').value=$('escalaval').value;render();});
 $('preset').addEventListener('change',loadPreset);
 $('foto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
   const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{userImg=im;render();};im.src=fr.result;};
