@@ -225,11 +225,15 @@ function bgAndHeader(cream){
   else{const g=ctx.createLinearGradient(0,0,0,Hh);
     g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
   bgDecor(cream);
-  logo(M-14,150,104);
-  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
-  ctx.fillText('Ascenso Público',M+96,200);
-  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
-  ctx.fillText($('handle').value,W-M,200);
+  // marca CENTRADA y BAJADA (para que no la tape la UI superior de TikTok)
+  const name='Ascenso Público',s=104,gap=22,baseY=348;
+  ctx.font="800 44px 'Plus Jakarta Sans'";
+  const tw=ctx.measureText(name).width, total=s*0.82+gap+tw, startX=(W-total)/2;
+  logo(startX,baseY-s*0.52,s);
+  ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText(name,startX+s*0.82+gap,baseY);
+  ctx.fillStyle=sub;ctx.font="600 30px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText($('handle').value,W/2,baseY+54);
   return {ink,sub};
 }
 
@@ -237,7 +241,7 @@ function drawSlide(n){
   const cream=$('tema').value==='cream';
   const {ink,sub}=bgAndHeader(cream);
   if(n===1){
-    let y=300;
+    let y=478;
     const k=$('s1kicker').value.trim();
     if(k){y=pill(W/2,y,k.toUpperCase(),"800 32px 'Plus Jakarta Sans'")+34;}
     y=drawRich($('s1title').value,W/2,y,W-2*M,"700 80px 'Source Serif 4'",ink,94,'center');
@@ -245,13 +249,13 @@ function drawSlide(n){
     (function(){const words=$('s1sub').value.split(' ');let line='',yy=y+38;const maxW=W-2*M-30;
       words.forEach(wd=>{const t=line?line+' '+wd:wd;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,W/2,yy);yy+=48;line=wd;}else line=t;});
       if(line)ctx.fillText(line,W/2,yy);y=yy;})();
-    const ci=certCard(W/2,Math.max(y+330,1010),470,520,-3,$('s1caption').value);
+    const ci=certCard(W/2,Math.max(y+300,1130),470,480,-3,$('s1caption').value);
     seal(ci.right-30,ci.top+36,60,'🗳️');
-    pill(W/2,Math.min(ci.bottom+44,1380),$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
+    pill(W/2,Math.min(ci.bottom+40,1400),$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
   }else if(n===2){
-    let y=320;
+    let y=486;
     y=drawRich($('s2title').value,W/2,y,W-2*M,"700 74px 'Source Serif 4'",ink,86,'center');
-    let ry=Math.max(y+50,600);const rw=W-2*M,rh=186,gap=30;
+    let ry=Math.max(y+50,680);const rw=W-2*M,rh=186,gap=30;
     rowCard(M,ry,rw,rh,'1',$('b1t').value,$('b1d').value,false,cream);ry+=rh+gap;
     rowCard(M,ry,rw,rh,'2',$('b2t').value,$('b2d').value,false,cream);ry+=rh+gap;
     rowCard(M,ry,rw,rh,'3',$('b3t').value,$('b3d').value,true,cream);ry+=rh+44;
@@ -260,10 +264,10 @@ function drawSlide(n){
     ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText('Guarda este post 🔖 · '+$('handle').value,W/2,ry+118);
   }else{
-    let y=300;
+    let y=470;
     y=drawRich($('s3title').value,W/2,y,W-2*M,"700 76px 'Source Serif 4'",ink,90,'center');
     const score=$('s3score').value;
-    const cw=(W-2*M-52)/2, chy=Math.max(y+40,580), chh=300;
+    const cw=(W-2*M-52)/2, chy=Math.max(y+40,720), chh=300;
     scoreChip(M,chy,cw,chh,$('s3a').value,score,cream);
     scoreChip(M+cw+52,chy,cw,chh,$('s3b').value,score,cream);
     ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(W/2,chy+chh/2,48,0,7);ctx.fill();
