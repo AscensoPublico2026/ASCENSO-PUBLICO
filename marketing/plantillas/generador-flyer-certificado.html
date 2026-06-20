@@ -29,7 +29,7 @@
 </style>
 </head>
 <body>
-  <h1>Generador de flyers · Certificado electoral · 1080×1920</h1>
+  <h1>Generador de flyers · Certificado electoral · rostro arriba / flyer abajo · 1080×1920</h1>
   <canvas id="c" width="1080" height="1920"></canvas>
   <div class="controls">
     <label>Flyer</label>
@@ -49,16 +49,25 @@
     <textarea id="cuerpo"></textarea>
     <label>Chip (pie)</label>
     <input id="chip">
+    <label>Alto de la zona del rostro (px) — el resto de abajo es el flyer</label>
+    <div class="row">
+      <input id="facezone" type="range" min="300" max="760" value="470" step="10">
+      <input id="facezoneval" type="number" min="300" max="760" value="470" step="10" style="max-width:96px">
+    </div>
+    <div class="chk"><input type="checkbox" id="transp" checked><label for="transp" style="margin:0">Zona del rostro transparente (para montar sobre tu video)</label></div>
     <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
     <button id="dl">⬇ Descargar PNG</button>
-    <div class="hint">Flyer 1: las 2 primeras líneas son los puntajes "empatados" (usa " — " para separar
-    el dato), y la 3ª línea es el resultado resaltado. Flyer 2: cada línea es un beneficio (empieza
+    <div class="hint">El flyer se dibuja en un panel inferior (con borde superior redondeado) y la zona de arriba
+    queda libre para tu rostro/video — móntalo en CapCut sobre tu clip. Ajusta "Alto de la zona del rostro"
+    para subir o bajar el panel. Flyer 1: las 2 primeras líneas son los puntajes "empatados" (usa " — " para
+    separar el dato), y la 3ª línea es el resultado resaltado. Flyer 2: cada línea es un beneficio (empieza
     con un emoji). Mantén el texto corto para que se lea grande en el video.</div>
   </div>
 <script>
 const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
 const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
+let PT=470; // alto de la zona del rostro (arriba). El panel del flyer va de PT a Hh.
 
 const PRESETS={
   flyer1:{kicker:'CONCURSO CNSC',titulo:'¿Empate en el puntaje?',
@@ -88,7 +97,7 @@ function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.18)';ctx.fillRect(0,0
   ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
 
 function header(ink,sub){
-  const HY=300;ctx.font="800 38px 'Plus Jakarta Sans'";
+  const HY=PT+92;ctx.font="800 38px 'Plus Jakarta Sans'";
   const brand='Ascenso Público',bw=ctx.measureText(brand).width,lv=72,gp=16,gw=lv+gp+bw,gx=(W-gw)/2;
   logo(gx-24,HY-60,120);
   ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(brand,gx+lv+gp,HY);
@@ -110,7 +119,7 @@ function titleBlock(ink,startY){
 }
 
 function renderFlyer1(ink){
-  let y=titleBlock(ink,540);
+  let y=titleBlock(ink,PT+332);
   const lines=$('cuerpo').value.split('\n').map(s=>s.trim()).filter(Boolean);
   const score=lines.slice(0,2), result=lines[2]||'';
   const cw=760,cx=(W-cw)/2;
@@ -138,7 +147,7 @@ function renderFlyer1(ink){
 }
 
 function renderFlyer2(ink){
-  let y=titleBlock(ink,520);
+  let y=titleBlock(ink,PT+312);
   const items=$('cuerpo').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,4);
   const cw=820,cx=(W-cw)/2,h=150,gap=28;
   y+=30;
@@ -157,11 +166,25 @@ function renderFlyer2(ink){
   y+=20;const chip=$('chip').value.trim();if(chip)pill(W/2,y,chip,"800 36px 'Plus Jakarta Sans'");
 }
 
+function panelPath(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x,y+h);ctx.lineTo(x,y+r);
+  ctx.arcTo(x,y,x+r,y,r);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h);ctx.closePath();}
+
 function render(){
+  PT=+$('facezone').value;
   const cream=$('tema').value==='cream',ink=cream?NAVY:CREAM,sub=cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.85)';
-  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
-  else{const g=ctx.createRadialGradient(W/2,Hh*.42,80,W/2,Hh*.42,Hh*.62);
-    g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  ctx.clearRect(0,0,W,Hh);
+  // zona del rostro (arriba): transparente para montar sobre tu video, o velo oscuro si se desactiva
+  if(!$('transp').checked){ctx.fillStyle='#0d1118';ctx.fillRect(0,0,W,PT+46);}
+  // panel inferior con borde superior redondeado
+  const r=46;const ph=Hh-PT;
+  ctx.save();panelPath(0,PT,W,ph,r);ctx.clip();
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,PT,W,ph);}
+  else{const g=ctx.createRadialGradient(W/2,PT+ph*.42,80,W/2,PT+ph*.42,ph*.78);
+    g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,PT,W,ph);}
+  ctx.restore();
+  // borde dorado superior + barrita "handle"
+  ctx.strokeStyle='rgba(255,194,51,.55)';ctx.lineWidth=4;panelPath(0,PT,W,ph,r);ctx.stroke();
+  ctx.fillStyle=GOLD;rr(W/2-46,PT+22,92,9,4.5);ctx.fill();
   header(ink,sub);
   if($('preset').value==='flyer1')renderFlyer1(ink);else renderFlyer2(ink);
   if($('zonas').checked)zonas();
@@ -170,7 +193,9 @@ function render(){
 function loadPreset(){const p=PRESETS[$('preset').value];$('kicker').value=p.kicker;$('titulo').value=p.titulo;
   $('cuerpo').value=p.cuerpo;$('chip').value=p.chip;render();}
 
-['tema','handle','kicker','titulo','cuerpo','chip','zonas'].forEach(id=>$(id).addEventListener('input',render));
+['tema','handle','kicker','titulo','cuerpo','chip','transp','zonas'].forEach(id=>$(id).addEventListener('input',render));
+$('facezone').addEventListener('input',()=>{$('facezoneval').value=$('facezone').value;render();});
+$('facezoneval').addEventListener('input',()=>{$('facezone').value=$('facezoneval').value;render();});
 $('preset').addEventListener('change',loadPreset);
 $('dl').onclick=()=>{render();cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download='flyer-certificado-'+$('preset').value+'.png';a.click();URL.revokeObjectURL(a.href);},'image/png');};
