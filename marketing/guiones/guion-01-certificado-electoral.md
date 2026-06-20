@@ -1,41 +1,45 @@
-# Guion Video 01 — El certificado electoral que desempata tu concurso
+# Guion Video 01 — "Mañana votas: guarda tu certificado electoral" (2ª vuelta)
+
+## ⏰ URGENTE / OPORTUNO
+- **Publicar:** HOY sábado 20 / esta noche — para que llegue ANTES de la votación.
+- **Coyuntura:** mañana **domingo 21 de junio** es la **segunda vuelta presidencial**.
+- **Ángulo:** si aspiras a un empleo público, después de votar **guarda tu certificado electoral**: desempata en concursos de méritos + trae beneficios.
+- ⚠️ **No partidista:** anima a votar y a guardar el certificado. **No** menciones candidatos ni digas por quién votar.
 
 ## Ficha técnica
-- **Tema:** el certificado electoral como factor de desempate en concursos de méritos (CNSC).
-- **Duración objetivo:** 30–40 segundos.
-- **Formato:** vertical 9:16. Tú en el **¼ superior** hablando a cámara; **flyer Pro** en los **¾ inferiores**.
-- **Fondo:** TV con el fondo de marca (navy), modo a gusto. Palabra clave sugerida: `CERTIFICADO|ELECTORAL` a la derecha.
-- **Flyer a usar:** generador de flyers → estilo **Pro/Limpio**, plantilla **"Certificado electoral — desempata"**, con ☑ "Reservar ¼ arriba".
-- **Tono:** cercano, claro, con energía pero serio (das información de valor, no vendes humo).
-- **Regla de honestidad:** el certificado **NO garantiza el cargo**. **Desempata** y da beneficios. Dilo así.
+- **Duración:** 30–40 segundos. Vertical 9:16.
+- **Formato:** tú en el **¼ superior**; **flyer Pro** (plantilla **"Certificado electoral — desempata"**) en los **¾ inferiores**, con ☑ "Reservar ¼ arriba".
+- **Fondo TV:** navy de marca. Palabra clave sugerida: `2ª VUELTA|21 JUNIO` o `CERTIFICADO|ELECTORAL`.
+- **Tono:** cercano y con energía; das un tip valioso y oportuno.
+- **Honestidad:** el certificado **NO garantiza** el cargo. **Desempata** y da beneficios.
 
 ---
 
 ## Guion (línea por línea)
 
-> ⏱️ Los primeros **3 segundos** definen si se quedan. Empieza fuerte, mirando al lente.
+> ⏱️ Primeros **3 segundos** = engancha o pierdes. Mira al lente.
 
-**[0:00–0:03] GANCHO** *(mirada directa, energía alta)*
-> "Mucha gente pierde un concurso público **por un solo punto**… y no sabe que este papelito lo puede **desempatar**."
+**[0:00–0:04] GANCHO (urgencia)**
+> "**Mañana, domingo, es la segunda vuelta presidencial.** Y si quieres entrar a trabajar en lo público, hay algo que **tienes que hacer** apenas votes."
 
-*Texto en pantalla:* `¿Empate en el concurso?`
+*Texto en pantalla:* `🗳️ Mañana: 2ª vuelta`
 
-**[0:03–0:10] CONTEXTO**
-> "Hablo del **certificado electoral**. En Colombia, la **Ley 403 de 1997** premia a quien vota, y eso pesa en tu concurso de ascenso."
+**[0:04–0:10] LA ACCIÓN CLAVE**
+> "**Guarda tu certificado electoral.** Ese papelito que casi nadie cuida… puede valerte oro en un concurso de ascenso."
 
-*Texto en pantalla:* `Ley 403 de 1997`
+*Texto en pantalla:* `GUARDA tu certificado electoral`
 
-**[0:10–0:24] LOS BENEFICIOS** *(enuméralos con los dedos, marca el ritmo)*
-> "Mira: **uno**, en un empate por méritos, se prefiere a quien votó. **Dos**, te da **medio día libre remunerado**. Y **tres**, descuentos en trámites como el **pasaporte**."
+**[0:10–0:24] POR QUÉ (los beneficios)** *(enumera con los dedos)*
+> "Por la **Ley 403 de 1997**: **uno**, en un **empate por méritos** se prefiere a quien votó. **Dos**, **medio día libre remunerado**. Y **tres**, descuentos en trámites como el **pasaporte**."
 
-*Texto en pantalla (van saliendo):* `1. Desempata` · `2. Medio día libre` · `3. Descuentos`
+*Texto en pantalla (van saliendo):* `Ley 403/1997` · `1. Desempata` · `2. Medio día libre` · `3. Descuentos`
 
-**[0:24–0:32] HONESTIDAD + ACCIÓN**
-> "Ojo: no te **garantiza** el cargo, pero en un empate puede ser **la diferencia**. Y se consigue gratis: pídelo **con tiempo**, no a última hora."
+**[0:24–0:32] HONESTIDAD + URGENCIA**
+> "Ojo: no te **garantiza** el cargo, pero en un empate puede ser **la diferencia**. Así que mañana **ve, vota… y guarda ese certificado.**"
 
-*Texto en pantalla:* `Consíguelo con tiempo ✅`
+*Texto en pantalla:* `No lo botes ✅`
 
-**[0:32–0:38] CTA (cierre)**
+**[0:32–0:40] CIERRE / CTA**
 > "Si vas por el ascenso público, **guarda** este video y **sígueme**. Comenta **ASCENSO** y te paso la guía gratis."
 
 *Texto en pantalla:* `Guarda 🔖 · Sigue · Comenta "ASCENSO"`
@@ -43,22 +47,24 @@
 ---
 
 ## Variantes de gancho (prueba A/B)
-- **A (pérdida):** "Perder un concurso por un punto duele… y este certificado lo evita."
-- **B (secreto):** "El 90% de los que concursan no usa esto. Y desempata."
-- **C (pregunta):** "¿Sabías que **votar** te puede dar ventaja en tu concurso de ascenso?"
+- **A (urgencia):** "Mañana votas… y si aspiras a un empleo público, NO botes ese papel."
+- **B (secreto):** "El 90% bota el certificado electoral. Y desempata un concurso."
+- **C (pérdida):** "Perder un concurso por un punto duele… y mañana puedes evitarlo."
 
 ## Descripción + hashtags (para subir)
-> Certificado electoral: el detalle que desempata tu concurso de méritos 🗳️ Guárdalo y consíguelo con tiempo. #AscensoPublico #CNSC #ConcursoDeMeritos #EmpleoPublico #Colombia #Ley403
+> Mañana, 2ª vuelta 🗳️ Si aspiras a un empleo público, guarda tu certificado electoral: desempata tu concurso de méritos y trae beneficios (Ley 403). #AscensoPublico #CNSC #SegundaVuelta #ConcursoDeMeritos #EmpleoPublico #Colombia #Ley403 #21DeJunio
 
 ## Checklist antes de grabar
-- [ ] Flyer Pro (electoral) descargado u en pantalla, ¼ arriba reservado.
-- [ ] Fondo TV nítido (4K, HDMI) y **sin reflejo** (luz al frente, no detrás).
-- [ ] iPhone a la **altura de tus ojos**, en 4K 30fps, exposición/enfoque bloqueados en tu cara.
-- [ ] Audio: graba en lugar silencioso (el iPhone capta bien, pero evita eco).
-- [ ] Energía en el primer segundo. Si dudas, repite la toma.
+- [ ] Flyer Pro (electoral) en pantalla, ¼ arriba reservado.
+- [ ] Fondo TV nítido (4K, HDMI) y SIN reflejo (luz al frente, no detrás).
+- [ ] iPhone a la altura de los ojos, 4K 30fps, exposición/enfoque bloqueados en tu cara.
+- [ ] Lugar silencioso, sin eco.
+- [ ] Energía en el primer segundo. Repite si dudas.
+- [ ] **Publicar HOY** para que llegue antes de la votación.
 
 ## Notas de edición
-- Mete los **textos en pantalla** en el ¼ donde estás tú o en los bordes, sin tapar el flyer.
-- Subtítulos automáticos SIEMPRE (mucha gente ve sin sonido).
-- Música de fondo suave, volumen bajo (que no tape tu voz).
-- Mantén el corte dinámico: elimina pausas largas.
+- Textos en pantalla en tu ¼ o en bordes, sin tapar el flyer.
+- **Subtítulos siempre** (muchos ven sin sonido).
+- Música suave a volumen bajo.
+- Cortes dinámicos: elimina pausas.
+- Considera fijar el video / comentario destacado: "Recuerda: guarda el certificado 🗳️".
