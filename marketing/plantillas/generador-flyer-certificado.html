@@ -37,6 +37,11 @@
   <h1>Generador de flyers · Certificado · 1080×1920 · sube tu foto + resalta con [corchetes]</h1>
   <canvas id="c" width="1080" height="1920"></canvas>
   <div class="controls">
+    <label>Estilo</label>
+    <select id="estilo">
+      <option value="pro">✨ Pro / Limpio (recomendado)</option>
+      <option value="clasico">Clásico (sticker + flecha)</option>
+    </select>
     <label>Plantilla</label>
     <select id="preset">
       <option value="laboral">Certificado laboral — suma puntos</option>
@@ -208,7 +213,7 @@ function polaroid(cx,cy,w,h,rot,caption,cream){ctx.save();ctx.translate(cx,cy);c
 function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.16)';ctx.fillRect(0,0,W,150);
   ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
 
-function render(){
+function renderClasico(){
   const cream=$('tema').value==='cream';
   const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
   ctx.clearRect(0,0,W,Hh);
@@ -268,13 +273,114 @@ function render(){
   if($('zonas').checked)zonas();
 }
 
+// ============ ESTILO PRO / LIMPIO ============
+function bgDecor(cream){
+  ctx.save();
+  ctx.globalAlpha=cream?0.30:0.13;ctx.strokeStyle=GOLD;ctx.lineWidth=110;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(W+130,-30,380,0,7);ctx.stroke();
+  ctx.globalAlpha=cream?0.20:0.12;ctx.strokeStyle=TEAL;ctx.lineWidth=80;
+  ctx.beginPath();ctx.arc(-120,Hh+130,360,0,7);ctx.stroke();
+  ctx.restore();
+}
+
+function divider(cx,y,w){const half=w/2;
+  ctx.strokeStyle='rgba(255,194,51,.55)';ctx.lineWidth=3;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx-half,y);ctx.lineTo(cx-28,y);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx+28,y);ctx.lineTo(cx+half,y);ctx.stroke();
+  ctx.save();ctx.translate(cx,y);ctx.rotate(Math.PI/4);ctx.fillStyle=GOLD;rr(-9,-9,18,18,4);ctx.fill();ctx.restore();}
+
+function seal(x,y,r){ctx.save();ctx.translate(x,y);ctx.rotate(-8*Math.PI/180);
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=22;ctx.shadowOffsetY=9;
+  ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,r-10,0,7);ctx.stroke();
+  ctx.fillStyle='#04221c';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="800 52px 'Plus Jakarta Sans'";ctx.fillText('✓',0,2);ctx.restore();}
+
+function certCard(cx,cy,w,h,rot,caption,cream){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot*Math.PI/180);
+  const pad=26,capH=78,r=24;
+  ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=52;ctx.shadowOffsetY=26;
+  ctx.fillStyle='#fff';rr(-w/2,-h/2,w,h,r);ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle=GOLD;ctx.lineWidth=4;rr(-w/2+13,-h/2+13,w-26,h-26,r-9);ctx.stroke();
+  const ix=-w/2+pad,iy=-h/2+pad,iw=w-pad*2,ih=h-pad*2-capH;
+  ctx.save();rr(ix,iy,iw,ih,12);ctx.clip();
+  if(userImg){drawCover(userImg,ix,iy,iw,ih);}
+  else{ctx.fillStyle='#eef3f9';ctx.fillRect(ix,iy,iw,ih);
+    ctx.fillStyle='#9fb1c6';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font="800 110px 'Plus Jakarta Sans'";ctx.fillText('📄',0,iy+ih*0.40);
+    ctx.font="700 32px 'Plus Jakarta Sans'";ctx.fillStyle='#7e93ad';
+    ctx.fillText('Sube la foto de tu',0,iy+ih*0.66);ctx.fillText('certificado',0,iy+ih*0.66+40);}
+  ctx.restore();
+  ctx.strokeStyle='rgba(10,42,94,.10)';ctx.lineWidth=2;rr(ix,iy,iw,ih,12);ctx.stroke();
+  ctx.fillStyle=NAVY;ctx.font="800 32px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(caption,0,h/2-capH/2);
+  ctx.restore();
+  return {top:cy-h/2,left:cx-w/2,right:cx+w/2,bottom:cy+h/2,cy};}
+
+function numItem(n,x,y,maxW,it,ink){
+  ctx.fillStyle=GOLD;ctx.font="700 58px 'Source Serif 4'";ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText(n,x,y+48);
+  return drawRich(it,x+98,y+2,maxW-98,"700 44px 'Plus Jakarta Sans'",ink,56,'left');
+}
+
+function renderPro(){
+  const cream=$('tema').value==='cream';
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
+  ctx.clearRect(0,0,W,Hh);
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
+  else{const g=ctx.createLinearGradient(0,0,0,Hh);
+    g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  bgDecor(cream);
+
+  // marca
+  logo(M-14,60,104);
+  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Público',M+96,110);
+  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
+  ctx.fillText($('handle').value,W-M,110);
+
+  // kicker pill centrado
+  let y=206;
+  const kick=$('kicker').value.trim();
+  if(kick){y=pill(W/2,y,kick.toUpperCase(),"800 30px 'Plus Jakarta Sans'")+44;}else{y+=8;}
+
+  // titular serif
+  y=drawRich($('titulo').value,W/2,y,W-2*M,"700 84px 'Source Serif 4'",ink,100,'center');
+
+  // certificado protagonista (centrado, marco dorado)
+  const rot=+$('rot').value;
+  const cardCy=Math.min(Math.max(y+330,860),940);
+  const ci=certCard(W/2,cardCy,520,560,rot,$('caption').value,cream);
+  if($('showsticker').checked) seal(ci.right-22,ci.top+34,64);
+
+  // divisor fino
+  divider(W/2,ci.bottom+50,360);
+
+  // lista numerada con aire
+  let by=ci.bottom+106;
+  const items=$('bullets').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3);
+  items.forEach((it,i)=>{by=numItem(String(i+1).padStart(2,'0'),M+10,by,W-2*M-10,it,ink)+30;});
+
+  // pie: chip + CTA
+  const chip=$('chip').value.trim();
+  if(chip)pill(W/2,1656,chip,"800 34px 'Plus Jakarta Sans'");
+  const cta=$('cta').value.trim();
+  if(cta){ctx.fillStyle=cream?'rgba(10,42,94,.85)':'rgba(251,249,244,.92)';
+    ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(cta,W/2,1768);}
+
+  if($('zonas').checked)zonas();
+}
+
+function render(){ if($('estilo').value==='pro') renderPro(); else renderClasico(); }
+
 function loadPreset(){const p=PRESETS[$('preset').value];
   $('sticker').value=p.sticker;$('kicker').value=p.kicker;$('titulo').value=p.titulo;
   $('caption').value=p.caption;$('nota').value=p.nota;$('bullets').value=p.bullets;
   $('chip').value=p.chip;$('cta').value=p.cta;render();}
 
 ['tema','handle','sticker','kicker','titulo','caption','nota','bullets','chip','cta',
- 'showsticker','showarrow','zonas'].forEach(id=>$(id).addEventListener('input',render));
+ 'showsticker','showarrow','zonas','estilo'].forEach(id=>$(id).addEventListener('input',render));
+$('estilo').addEventListener('change',render);
 $('rot').addEventListener('input',()=>{$('rotval').value=$('rot').value;render();});
 $('rotval').addEventListener('input',()=>{$('rot').value=$('rotval').value;render();});
 $('preset').addEventListener('change',loadPreset);
