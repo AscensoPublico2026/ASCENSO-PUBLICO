@@ -13,8 +13,8 @@
   body{background:#0d1118;color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
     display:flex;gap:22px;padding:20px;flex-wrap:wrap;justify-content:center;min-height:100vh}
   h1{font-size:15px;color:var(--gold);font-weight:800;width:100%;text-align:center;margin-bottom:4px}
-  .canvases{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-  canvas{height:min(78vh,720px);width:auto;border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.55);background:#000}
+  .canvases{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  canvas{height:min(72vh,640px);width:auto;border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.55);background:#000}
   .cap{font-size:12px;color:#9fb0c9;text-align:center;margin-top:6px;font-weight:700}
   .controls{width:340px;max-width:100%;background:rgba(255,255,255,.04);
     border:1px solid rgba(255,194,51,.28);border-radius:16px;padding:18px;align-self:flex-start}
@@ -22,21 +22,26 @@
   input,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
     color:#e7edf6;padding:10px;font-family:inherit;font-size:14px}
   .row{display:flex;gap:9px}.row>*{flex:1}
+  .sec{margin-top:16px;padding-top:8px;border-top:1px solid rgba(255,194,51,.2);color:var(--gold);font-weight:800;font-size:12.5px}
   .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#cdd6e6}
   .chk input{width:auto}
   button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
     font-size:15px;padding:13px;width:100%;margin-top:14px;background:var(--gold);color:var(--navy)}
   .b2{background:var(--teal);color:#04221c}
+  .filebtn{display:block;text-align:center;background:var(--teal);color:#04221c;border-radius:11px;
+    font-weight:800;padding:12px;margin-top:6px;cursor:pointer}
+  .filebtn input{display:none}
   .hint{font-size:11px;color:#8194b0;margin-top:12px;line-height:1.55}
   .tag{display:inline-block;background:rgba(255,194,51,.14);color:var(--gold);border-radius:6px;
     padding:1px 6px;font-weight:800;font-size:10.5px}
 </style>
 </head>
 <body>
-  <h1>Carrusel · Certificado electoral · 2 slides · 1080×1920</h1>
+  <h1>Carrusel · Certificado electoral · 3 slides · 1080×1920</h1>
   <div class="canvases">
-    <div><canvas id="c1" width="1080" height="1920"></canvas><div class="cap">Slide 1 · Recordatorio</div></div>
-    <div><canvas id="c2" width="1080" height="1920"></canvas><div class="cap">Slide 2 · 3 beneficios</div></div>
+    <div><canvas id="c1" width="1080" height="1920"></canvas><div class="cap">1 · Recordatorio + foto</div></div>
+    <div><canvas id="c2" width="1080" height="1920"></canvas><div class="cap">2 · 3 beneficios</div></div>
+    <div><canvas id="c3" width="1080" height="1920"></canvas><div class="cap">3 · Cómo funciona el desempate</div></div>
   </div>
 
   <div class="controls">
@@ -45,16 +50,21 @@
       <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
     </div>
 
-    <label>SLIDE 1 · Kicker</label>
+    <div class="sec">SLIDE 1 · Recordatorio</div>
+    <label class="filebtn">📤 Subir foto del certificado<input id="foto" type="file" accept="image/*"></label>
+    <label>Pie de la foto</label>
+    <input id="s1caption" value="Certificado electoral">
+    <label>Kicker</label>
     <input id="s1kicker" value="👉 NO LO BOTES">
-    <label>SLIDE 1 · Titular &nbsp;<span class="tag">[resalta]</span></label>
+    <label>Titular &nbsp;<span class="tag">[resalta]</span></label>
     <input id="s1title" value="Guarda tu [certificado electoral]">
-    <label>SLIDE 1 · Subtítulo</label>
+    <label>Subtítulo</label>
     <input id="s1sub" value="Tiene beneficios en los concursos de méritos de la CNSC">
-    <label>SLIDE 1 · Pista de deslizar</label>
-    <input id="s1hint" value="Desliza para ver los 3 beneficios →">
+    <label>Pista de deslizar</label>
+    <input id="s1hint" value="Desliza para ver los beneficios →">
 
-    <label>SLIDE 2 · Título &nbsp;<span class="tag">[resalta]</span></label>
+    <div class="sec">SLIDE 2 · Beneficios</div>
+    <label>Título &nbsp;<span class="tag">[resalta]</span></label>
     <input id="s2title" value="3 [beneficios] de tu certificado electoral">
     <label>Beneficio 1 (título / desc)</label>
     <div class="row"><input id="b1t" value="Medio día libre"><input id="b1d" value="remunerado tras votar"></div>
@@ -62,30 +72,41 @@
     <div class="row"><input id="b2t" value="Descuentos"><input id="b2d" value="pasaporte, libreta, matrícula"></div>
     <label>Beneficio 3 — el clave (título / desc)</label>
     <div class="row"><input id="b3t" value="⭐ Desempata el concurso"><input id="b3d" value="en méritos de la CNSC · Ley 403"></div>
-
     <label>Pie (norma)</label>
     <input id="law" value="Ley 403 de 1997">
 
+    <div class="sec">SLIDE 3 · Cómo funciona el desempate</div>
+    <label>Título &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s3title" value="¿Y si hay un [empate]?">
+    <div class="row">
+      <div><label>Aspirante A</label><input id="s3a" value="Aspirante A"></div>
+      <div><label>Aspirante B</label><input id="s3b" value="Aspirante B"></div>
+    </div>
+    <label>Puntaje (empatado)</label>
+    <input id="s3score" value="98">
+    <label>Resultado (título / desc)</label>
+    <div class="row"><input id="s3rt" value="Pasas tú ✅"><input id="s3rd" value="quien presentó su certificado"></div>
+    <label>Nota honesta</label>
+    <input id="s3note" value="Es un criterio de desempate · No garantiza el cargo">
+
     <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
 
-    <button id="dlboth">⬇ Descargar las 2 imágenes</button>
-    <button id="dl1" class="b2">⬇ Solo slide 1</button>
-    <button id="dl2" class="b2">⬇ Solo slide 2</button>
-    <div class="hint">Sube las 2 como <b>carrusel de fotos</b> en TikTok (en orden 1 → 2). Texto honesto:
-    el certificado <i>desempata</i> y da beneficios, <b>no garantiza</b> el cargo. Para editar un texto,
-    cámbialo arriba y se actualiza al instante.</div>
+    <button id="dlall">⬇ Descargar las 3 imágenes</button>
+    <div class="row"><button id="dl1" class="b2">Slide 1</button><button id="dl2" class="b2">Slide 2</button><button id="dl3" class="b2">Slide 3</button></div>
+    <div class="hint">La foto se carga <b>solo en tu navegador</b> (no se sube a ningún lado). Súbelas como
+    <b>carrusel de fotos</b> en TikTok en orden 1 → 2 → 3. Honesto: el certificado <i>desempata</i> y da
+    beneficios, <b>no garantiza</b> el cargo.</div>
   </div>
 <script>
 const W=1080,Hh=1920,M=92;
 const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
-const c1=$('c1'),c2=$('c2');
-let ctx=c1.getContext('2d');
+const c1=$('c1'),c2=$('c2'),c3=$('c3');
+let ctx=c1.getContext('2d'),userImg=null;
 
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
   ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
 
-// ---- texto con resaltado [..] ----
 function parseHL(str){const out=[];let hl=false,buf='';
   for(const ch of str){if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
     else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}else buf+=ch;}
@@ -136,26 +157,34 @@ function divider(cx,y,w){const half=w/2;ctx.strokeStyle='rgba(255,194,51,.55)';c
   ctx.beginPath();ctx.moveTo(cx+28,y);ctx.lineTo(cx+half,y);ctx.stroke();
   ctx.save();ctx.translate(cx,y);ctx.rotate(Math.PI/4);ctx.fillStyle=GOLD;rr(-9,-9,18,18,4);ctx.fill();ctx.restore();}
 
-function bgAndHeader(cream){
-  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
-  ctx.clearRect(0,0,W,Hh);
-  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
-  else{const g=ctx.createLinearGradient(0,0,0,Hh);
-    g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
-  bgDecor(cream);
-  logo(M-14,150,104);
-  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
-  ctx.fillText('Ascenso Público',M+96,200);
-  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
-  ctx.fillText($('handle').value,W-M,200);
-  return {ink,sub};
-}
-
-function bigSeal(cx,cy,r){ctx.save();ctx.translate(cx,cy);ctx.rotate(-7*Math.PI/180);
-  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=26;ctx.shadowOffsetY=10;
+function seal(x,y,r,glyph){ctx.save();ctx.translate(x,y);ctx.rotate(-8*Math.PI/180);
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=22;ctx.shadowOffsetY=9;
   ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.shadowColor='transparent';
-  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=5;ctx.beginPath();ctx.arc(0,0,r-12,0,7);ctx.stroke();
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="700 90px 'Plus Jakarta Sans'";ctx.fillText('🗳️',0,6);ctx.restore();}
+  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,r-10,0,7);ctx.stroke();
+  ctx.fillStyle=glyph==='✓'?'#04221c':'#fff';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="700 "+(r*0.9)+"px 'Plus Jakarta Sans'";ctx.fillText(glyph,0,glyph==='✓'?2:4);ctx.restore();}
+
+function drawCover(img,x,y,w,h){const s=Math.max(w/img.width,h/img.height);
+  const dw=img.width*s,dh=img.height*s;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh);}
+
+function certCard(cx,cy,w,h,rot,caption){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot*Math.PI/180);
+  const pad=24,capH=70,r=24;
+  ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=50;ctx.shadowOffsetY=24;
+  ctx.fillStyle='#fff';rr(-w/2,-h/2,w,h,r);ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle=GOLD;ctx.lineWidth=4;rr(-w/2+12,-h/2+12,w-24,h-24,r-8);ctx.stroke();
+  const ix=-w/2+pad,iy=-h/2+pad,iw=w-pad*2,ih=h-pad*2-capH;
+  ctx.save();rr(ix,iy,iw,ih,12);ctx.clip();
+  if(userImg)drawCover(userImg,ix,iy,iw,ih);
+  else{ctx.fillStyle='#eef3f9';ctx.fillRect(ix,iy,iw,ih);
+    ctx.fillStyle='#9fb1c6';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font="800 96px 'Plus Jakarta Sans'";ctx.fillText('🗳️',0,iy+ih*0.40);
+    ctx.font="700 30px 'Plus Jakarta Sans'";ctx.fillStyle='#7e93ad';
+    ctx.fillText('Sube la foto de tu',0,iy+ih*0.66);ctx.fillText('certificado',0,iy+ih*0.66+38);}
+  ctx.restore();
+  ctx.strokeStyle='rgba(10,42,94,.10)';ctx.lineWidth=2;rr(ix,iy,iw,ih,12);ctx.stroke();
+  ctx.fillStyle=NAVY;ctx.font="800 30px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(caption,0,h/2-capH/2);
+  ctx.restore();return {top:cy-h/2,right:cx+w/2,bottom:cy+h/2};}
 
 function rowCard(x,y,w,h,n,title,desc,hot,cream){const r=28;
   if(hot){ctx.save();ctx.shadowColor='rgba(255,194,51,.35)';ctx.shadowBlur=30;ctx.fillStyle=GOLD;rr(x,y,w,h,r);ctx.fill();ctx.restore();}
@@ -172,27 +201,54 @@ function rowCard(x,y,w,h,n,title,desc,hot,cream){const r=28;
   ctx.fillStyle=tInk;ctx.font="800 48px 'Plus Jakarta Sans'";ctx.fillText(title,tx,by-4);
   ctx.fillStyle=dInk;ctx.font="500 32px 'Plus Jakarta Sans'";ctx.fillText(desc,tx,by+38);}
 
+function scoreChip(x,y,w,h,name,score,cream){
+  ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.07)';rr(x,y,w,h,26);ctx.fill();
+  ctx.strokeStyle=cream?'rgba(10,42,94,.13)':'rgba(255,255,255,.14)';ctx.lineWidth=2;rr(x,y,w,h,26);ctx.stroke();
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.82)';ctx.font="700 32px 'Plus Jakarta Sans'";
+  ctx.fillText(name,x+w/2,y+54);
+  ctx.fillStyle=GOLD;ctx.font="800 104px 'Source Serif 4'";ctx.fillText(score,x+w/2,y+h-78);
+  ctx.fillStyle=cream?'rgba(10,42,94,.6)':'rgba(251,249,244,.7)';ctx.font="600 28px 'Plus Jakarta Sans'";
+  ctx.fillText('puntos',x+w/2,y+h-26);}
+
+function arrowDown(cx,y1,y2){ctx.save();ctx.strokeStyle=GOLD;ctx.fillStyle=GOLD;ctx.lineWidth=10;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx,y1);ctx.lineTo(cx,y2-14);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,y2+6);ctx.lineTo(cx-22,y2-20);ctx.lineTo(cx+22,y2-20);ctx.closePath();ctx.fill();ctx.restore();}
+
 function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.16)';ctx.fillRect(0,0,W,150);
   ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
+
+function bgAndHeader(cream){
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
+  ctx.clearRect(0,0,W,Hh);
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
+  else{const g=ctx.createLinearGradient(0,0,0,Hh);
+    g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  bgDecor(cream);
+  logo(M-14,150,104);
+  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Público',M+96,200);
+  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
+  ctx.fillText($('handle').value,W-M,200);
+  return {ink,sub};
+}
 
 function drawSlide(n){
   const cream=$('tema').value==='cream';
   const {ink,sub}=bgAndHeader(cream);
   if(n===1){
-    bigSeal(W/2,470,118);
-    let y=640;
+    let y=300;
     const k=$('s1kicker').value.trim();
-    if(k){y=pill(W/2,y,k.toUpperCase(),"800 32px 'Plus Jakarta Sans'")+44;}
-    y=drawRich($('s1title').value,W/2,y,W-2*M,"700 92px 'Source Serif 4'",ink,108,'center');
-    y+=14;
-    ctx.fillStyle=sub;ctx.font="500 40px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
-    // subtítulo en hasta 2 líneas
-    (function(){const words=$('s1sub').value.split(' ');let line='',yy=y+40;const maxW=W-2*M-40;
-      words.forEach(wd=>{const t=line?line+' '+wd:wd;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,W/2,yy);yy+=50;line=wd;}else line=t;});
+    if(k){y=pill(W/2,y,k.toUpperCase(),"800 32px 'Plus Jakarta Sans'")+34;}
+    y=drawRich($('s1title').value,W/2,y,W-2*M,"700 80px 'Source Serif 4'",ink,94,'center');
+    y+=10;ctx.fillStyle=sub;ctx.font="500 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    (function(){const words=$('s1sub').value.split(' ');let line='',yy=y+38;const maxW=W-2*M-30;
+      words.forEach(wd=>{const t=line?line+' '+wd:wd;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,W/2,yy);yy+=48;line=wd;}else line=t;});
       if(line)ctx.fillText(line,W/2,yy);y=yy;})();
-    divider(W/2,y+70,360);
-    pill(W/2,y+140,$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
-  }else{
+    const ci=certCard(W/2,Math.max(y+330,1010),470,520,-3,$('s1caption').value);
+    seal(ci.right-30,ci.top+36,60,'🗳️');
+    pill(W/2,Math.min(ci.bottom+44,1380),$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
+  }else if(n===2){
     let y=320;
     y=drawRich($('s2title').value,W/2,y,W-2*M,"700 74px 'Source Serif 4'",ink,86,'center');
     let ry=Math.max(y+50,600);const rw=W-2*M,rh=186,gap=30;
@@ -203,23 +259,40 @@ function drawSlide(n){
     ctx.fillStyle=cream?'rgba(10,42,94,.8)':'rgba(251,249,244,.9)';
     ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText('Guarda este post 🔖 · '+$('handle').value,W/2,ry+118);
+  }else{
+    let y=300;
+    y=drawRich($('s3title').value,W/2,y,W-2*M,"700 76px 'Source Serif 4'",ink,90,'center');
+    const score=$('s3score').value;
+    const cw=(W-2*M-52)/2, chy=Math.max(y+40,580), chh=300;
+    scoreChip(M,chy,cw,chh,$('s3a').value,score,cream);
+    scoreChip(M+cw+52,chy,cw,chh,$('s3b').value,score,cream);
+    ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(W/2,chy+chh/2,48,0,7);ctx.fill();
+    ctx.fillStyle=NAVY;ctx.font="800 64px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('=',W/2,chy+chh/2-2);
+    ctx.fillStyle=sub;ctx.font="800 36px 'Plus Jakarta Sans'";ctx.fillText('EMPATE',W/2,chy+chh+52);
+    arrowDown(W/2,chy+chh+92,chy+chh+150);
+    rowCard(M,chy+chh+178,W-2*M,190,'✓',$('s3rt').value,$('s3rd').value,true,cream);
+    ctx.fillStyle=sub;ctx.font="600 30px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText($('s3note').value,W/2,chy+chh+178+190+54);
   }
   if($('zonas').checked)zonas();
 }
 
-function renderAll(){ctx=c1.getContext('2d');drawSlide(1);ctx=c2.getContext('2d');drawSlide(2);}
+function renderAll(){ctx=c1.getContext('2d');drawSlide(1);ctx=c2.getContext('2d');drawSlide(2);ctx=c3.getContext('2d');drawSlide(3);}
 
 function dl(canvas,name){canvas.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download=name;a.click();URL.revokeObjectURL(a.href);},'image/png');}
 
-['tema','handle','s1kicker','s1title','s1sub','s1hint','s2title','b1t','b1d','b2t','b2d','b3t','b3d','law','zonas']
-  .forEach(id=>$(id).addEventListener('input',renderAll));
-$('dl1').onclick=()=>{renderAll();dl(c1,'slide1-certificado-electoral.png');};
+['tema','handle','s1caption','s1kicker','s1title','s1sub','s1hint','s2title','b1t','b1d','b2t','b2d','b3t','b3d','law',
+ 's3title','s3a','s3b','s3score','s3rt','s3rd','s3note','zonas'].forEach(id=>$(id).addEventListener('input',renderAll));
+$('foto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();
+  fr.onload=()=>{const im=new Image();im.onload=()=>{userImg=im;renderAll();};im.src=fr.result;};fr.readAsDataURL(f);});
+$('dl1').onclick=()=>{renderAll();dl(c1,'slide1-certificado.png');};
 $('dl2').onclick=()=>{renderAll();dl(c2,'slide2-beneficios.png');};
-$('dlboth').onclick=()=>{renderAll();dl(c1,'slide1-certificado-electoral.png');
-  setTimeout(()=>dl(c2,'slide2-beneficios.png'),600);};
+$('dl3').onclick=()=>{renderAll();dl(c3,'slide3-desempate.png');};
+$('dlall').onclick=()=>{renderAll();dl(c1,'slide1-certificado.png');
+  setTimeout(()=>dl(c2,'slide2-beneficios.png'),500);setTimeout(()=>dl(c3,'slide3-desempate.png'),1000);};
 
-async function boot(){try{await document.fonts.load("700 92px 'Source Serif 4'");
+async function boot(){try{await document.fonts.load("700 80px 'Source Serif 4'");
   await document.fonts.load("800 48px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}renderAll();}
 boot();
 </script>
