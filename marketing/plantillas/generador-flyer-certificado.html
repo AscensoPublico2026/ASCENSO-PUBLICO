@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Generador de flyers — Certificado electoral · Ascenso Público</title>
+<title>Generador de flyers · Certificado · Ascenso Público</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
@@ -13,78 +13,150 @@
   body{background:#0d1118;color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
     display:flex;gap:24px;padding:20px;flex-wrap:wrap;justify-content:center;min-height:100vh}
   h1{font-size:16px;color:var(--gold);font-weight:800;width:100%;text-align:center;margin-bottom:6px}
-  canvas{height:min(80vh,760px);width:auto;border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.55);background:#000}
-  .controls{width:340px;max-width:100%;background:rgba(255,255,255,.04);
+  canvas{height:min(82vh,780px);width:auto;border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.55);background:#000}
+  .controls{width:360px;max-width:100%;background:rgba(255,255,255,.04);
     border:1px solid rgba(255,194,51,.28);border-radius:16px;padding:18px;align-self:flex-start}
   label{display:block;font-size:12.5px;color:#9fb0c9;margin:12px 0 5px;font-weight:700}
   input,textarea,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
     color:#e7edf6;padding:10px;font-family:inherit;font-size:14px}
-  textarea{resize:vertical;min-height:96px}
+  textarea{resize:vertical;min-height:84px}
   .row{display:flex;gap:10px}.row>*{flex:1}
   .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#cdd6e6}
   .chk input{width:auto}
   button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
     font-size:15px;padding:13px;width:100%;margin-top:16px;background:var(--gold);color:var(--navy)}
+  .filebtn{display:block;text-align:center;background:var(--teal);color:#04221c;border-radius:11px;
+    font-weight:800;padding:13px;margin-top:6px;cursor:pointer}
+  .filebtn input{display:none}
   .hint{font-size:11.5px;color:#8194b0;margin-top:10px;line-height:1.5}
+  .tag{display:inline-block;background:rgba(255,194,51,.14);color:var(--gold);border-radius:6px;
+    padding:1px 6px;font-weight:800;font-size:11px}
 </style>
 </head>
 <body>
-  <h1>Generador de flyers · Certificado electoral · rostro arriba / flyer abajo · 1080×1920</h1>
+  <h1>Generador de flyers · Certificado · 1080×1920 · sube tu foto + resalta con [corchetes]</h1>
   <canvas id="c" width="1080" height="1920"></canvas>
   <div class="controls">
-    <label>Flyer</label>
+    <label>Plantilla</label>
     <select id="preset">
-      <option value="flyer1">Flyer 1 — El desempate (gancho)</option>
-      <option value="flyer2">Flyer 2 — Beneficios de votar</option>
+      <option value="laboral">Certificado laboral — suma puntos</option>
+      <option value="electoral">Certificado electoral — desempata</option>
     </select>
+
+    <label class="filebtn">📤 Subir foto del certificado
+      <input id="foto" type="file" accept="image/*">
+    </label>
     <div class="row">
       <div><label>Tema</label><select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
       <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
     </div>
+
+    <label>Sticker (insignia llamativa)</label>
+    <input id="sticker">
     <label>Etiqueta superior (kicker)</label>
     <input id="kicker">
-    <label>Título</label>
+    <label>Titular &nbsp;<span class="tag">usa [palabra] para resaltar en amarillo</span></label>
     <textarea id="titulo"></textarea>
-    <label>Cuerpo (una línea por renglón)</label>
-    <textarea id="cuerpo"></textarea>
-    <label>Chip (pie)</label>
-    <input id="chip">
-    <label>Alto de la zona del rostro (px) — el resto de abajo es el flyer</label>
+    <label>Etiqueta de la foto (pie del polaroid)</label>
+    <input id="caption">
+    <label>Nota de la flecha</label>
+    <input id="nota">
+    <label>Bullets (una por línea · resalta con [corchetes])</label>
+    <textarea id="bullets"></textarea>
     <div class="row">
-      <input id="facezone" type="range" min="300" max="760" value="470" step="10">
-      <input id="facezoneval" type="number" min="300" max="760" value="470" step="10" style="max-width:96px">
+      <div><label>Chip (pie)</label><input id="chip"></div>
+      <div><label>CTA</label><input id="cta"></div>
     </div>
-    <div class="chk"><input type="checkbox" id="transp" checked><label for="transp" style="margin:0">Zona del rostro transparente (para montar sobre tu video)</label></div>
+    <label>Inclinación de la foto</label>
+    <div class="row">
+      <input id="rot" type="range" min="-10" max="10" value="-4" step="1">
+      <input id="rotval" type="number" min="-10" max="10" value="-4" step="1" style="max-width:90px">
+    </div>
+
+    <div class="chk"><input type="checkbox" id="showsticker" checked><label for="showsticker" style="margin:0">Mostrar sticker</label></div>
+    <div class="chk"><input type="checkbox" id="showarrow" checked><label for="showarrow" style="margin:0">Mostrar flecha + nota</label></div>
     <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
+
     <button id="dl">⬇ Descargar PNG</button>
-    <div class="hint">El flyer se dibuja en un panel inferior (con borde superior redondeado) y la zona de arriba
-    queda libre para tu rostro/video — móntalo en CapCut sobre tu clip. Ajusta "Alto de la zona del rostro"
-    para subir o bajar el panel. Flyer 1: las 2 primeras líneas son los puntajes "empatados" (usa " — " para
-    separar el dato), y la 3ª línea es el resultado resaltado. Flyer 2: cada línea es un beneficio (empieza
-    con un emoji). Mantén el texto corto para que se lea grande en el video.</div>
+    <div class="hint">La foto se carga <b>solo en tu navegador</b> (no se sube a ningún lado). Encuádrala bien
+    antes de tomarla: se recorta para llenar el marco. Resalta palabras clave envolviéndolas en
+    <b>[corchetes]</b> tanto en el titular como en los bullets. Mantén el texto corto para que se lea grande.
+    Sé honesto: el certificado <i>ayuda</i> (desempate / méritos), no garantiza el cargo.</div>
   </div>
 <script>
-const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920,M=92;
 const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
 const $=id=>document.getElementById(id);
-let PT=470; // alto de la zona del rostro (arriba). El panel del flyer va de PT a Hh.
+let userImg=null;
 
 const PRESETS={
-  flyer1:{kicker:'CONCURSO CNSC',titulo:'¿Empate en el puntaje?',
-    cuerpo:'Aspirante A — 84.39\nAspirante B — 84.39\nGana quien VOTÓ ✓',chip:'Ley 403 de 1997'},
-  flyer2:{kicker:'TU CERTIFICADO ELECTORAL',titulo:'4 beneficios de votar',
-    cuerpo:'🗳️ Desempata en concursos CNSC\n🏖️ Medio día libre remunerado\n🛂 Descuento en el pasaporte\n🎓 10% en matrícula pública',
-    chip:'Ley 403 de 1997'}
+  laboral:{
+    sticker:'⚡ MUCHA GENTE NO LO SABE', kicker:'CONCURSO DE ASCENSO',
+    titulo:'Tu [certificado laboral] puede sumar puntos',
+    caption:'Certificado laboral', nota:'👀 esto sí suma',
+    bullets:'Acredita tu [experiencia] real\nSuma en la [valoración de méritos]\nPídelo [con tiempo], no a última hora',
+    chip:'Guía gratis en el perfil', cta:'Comenta · Guarda · Comparte'
+  },
+  electoral:{
+    sticker:'⚡ DESEMPATA EL CONCURSO', kicker:'TU CERTIFICADO ELECTORAL',
+    titulo:'En un [empate], gana quien [votó]',
+    caption:'Certificado electoral', nota:'👀 vale oro',
+    bullets:'Desempata en concursos [CNSC]\nMedio día [libre] remunerado\nDescuento en el [pasaporte]',
+    chip:'Ley 403 de 1997', cta:'Comenta · Guarda · Comparte'
+  }
 };
 
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
   ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
-function wrap(text,maxW,font){ctx.font=font;const words=text.split(/\s+/);const lines=[];let ln='';
-  for(const w of words){const t=ln?ln+' '+w:w;if(ctx.measureText(t).width>maxW&&ln){lines.push(ln);ln=w;}else ln=t;}
-  if(ln)lines.push(ln);return lines;}
-function pill(cx,y,txt,font){ctx.font=font;const tw=ctx.measureText(txt).width,padX=34,h=72,w=tw+padX*2,x=cx-w/2,r=h/2;
+
+// ---- texto enriquecido con resaltado [..] ----
+function parseHL(str){const out=[];let hl=false,buf='';
+  for(const ch of str){
+    if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
+    else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}
+    else buf+=ch;}
+  if(buf)out.push({t:buf,hl});return out;}
+function tokens(str){const toks=[];
+  parseHL(str).forEach(s=>{s.t.split(/(\s+)/).forEach(p=>{if(p==='')return;
+    toks.push({w:p,hl:s.hl,space:/^\s+$/.test(p)});});});
+  return toks;}
+function richLines(str,maxW,font){ctx.font=font;const tk=tokens(str);const lines=[];let cur=[],w=0;
+  for(const t of tk){const tw=ctx.measureText(t.w).width;
+    if(w+tw>maxW&&cur.length&&!t.space){lines.push(cur);cur=[];w=0;}
+    if(t.space&&w===0)continue;cur.push({...t,tw});w+=tw;}
+  if(cur.length)lines.push(cur);return lines;}
+function lineWidth(line){let w=0;line.forEach(t=>w+=t.tw);
+  for(let i=line.length-1;i>=0&&line[i].space;i--)w-=line[i].tw;return w;}
+// dibuja texto, devuelve la Y (top) de la siguiente línea libre
+function drawRich(str,anchorX,topY,maxW,font,ink,lineH,align){
+  const lines=richLines(str,maxW,font);ctx.font=font;
+  const fs=parseInt(font.match(/(\d+)px/)[1],10);
+  let y=topY;
+  lines.forEach(line=>{
+    const baseline=y+fs*0.8;
+    const lw=lineWidth(line);
+    let x=align==='center'?anchorX-lw/2:anchorX;
+    const pos=line.map(t=>{const p={...t,x};x+=t.tw;return p;});
+    // resaltados (runs contiguos)
+    let i=0;
+    while(i<pos.length){
+      if(pos[i].hl){let j=i,startX=pos[i].x,endX;
+        while(j<pos.length&&pos[j].hl){endX=pos[j].x+pos[j].tw;j++;}
+        const padX=12;ctx.fillStyle=GOLD;
+        rr(startX-padX,baseline-fs*0.78,(endX-startX)+padX*2,fs*0.96,fs*0.26);ctx.fill();i=j;
+      }else i++;}
+    // texto
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    pos.forEach(t=>{if(t.space)return;ctx.fillStyle=t.hl?NAVY:ink;ctx.fillText(t.w,t.x,baseline);});
+    y+=lineH;
+  });
+  return y;
+}
+
+function pill(cx,y,txt,font){ctx.font=font;const tw=ctx.measureText(txt).width,padX=34,h=74,w=tw+padX*2,x=cx-w/2,r=h/2;
   ctx.fillStyle='rgba(255,194,51,.12)';ctx.strokeStyle=GOLD;ctx.lineWidth=3;rr(x,y,w,h,r);ctx.fill();ctx.stroke();
   ctx.fillStyle=GOLD;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,cx,y+h/2+1);return y+h;}
+
 function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];
   ctx.fillStyle=TEAL;let p=m(24,74);ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(p[0],p[1],3.6/100*s,0,7);ctx.fill();
   p=m(32,70);ctx.globalAlpha=1;ctx.beginPath();ctx.arc(p[0],p[1],4.4/100*s,0,7);ctx.fill();
@@ -93,114 +165,127 @@ function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];
   for(let i=0;i<=40;i++){const c=cb(i/40),q=m(c[0],c[1]);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}ctx.stroke();
   const h0=m(60,30),h1=m(75,28),h2=m(73,44);ctx.beginPath();ctx.moveTo(h0[0],h0[1]);ctx.lineTo(h1[0],h1[1]);ctx.lineTo(h2[0],h2[1]);ctx.stroke();}
 
-function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.18)';ctx.fillRect(0,0,W,150);
+function badge(text,x,y,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot*Math.PI/180);
+  ctx.font="800 32px 'Plus Jakarta Sans'";const tw=ctx.measureText(text).width,padX=30,h=70,w=tw+padX*2;
+  ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=18;ctx.shadowOffsetY=7;
+  ctx.fillStyle=GOLD;rr(-w/2,-h/2,w,h,16);ctx.fill();ctx.shadowColor='transparent';
+  ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,0,2);ctx.restore();}
+
+function note(text,x,y,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot*Math.PI/180);
+  ctx.fillStyle=GOLD;ctx.font="800 36px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(text,0,0);ctx.restore();}
+
+function arrow(x1,y1,cx,cy,x2,y2){ctx.save();ctx.strokeStyle=GOLD;ctx.fillStyle=GOLD;ctx.lineWidth=11;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(cx,cy,x2,y2);ctx.stroke();
+  const ang=Math.atan2(y2-cy,x2-cx),s=38;
+  ctx.beginPath();ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-s*Math.cos(ang-0.45),y2-s*Math.sin(ang-0.45));
+  ctx.lineTo(x2-s*Math.cos(ang+0.45),y2-s*Math.sin(ang+0.45));
+  ctx.closePath();ctx.fill();ctx.restore();}
+
+function drawCover(img,x,y,w,h){const s=Math.max(w/img.width,h/img.height);
+  const dw=img.width*s,dh=img.height*s;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh);}
+
+function polaroid(cx,cy,w,h,rot,caption,cream){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot*Math.PI/180);
+  const pad=22,capH=76;
+  ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=46;ctx.shadowOffsetY=20;
+  ctx.fillStyle='#fff';rr(-w/2,-h/2,w,h+capH,18);ctx.fill();ctx.shadowColor='transparent';
+  const ix=-w/2+pad,iy=-h/2+pad,iw=w-pad*2,ih=h-pad*2;
+  ctx.save();rr(ix,iy,iw,ih,8);ctx.clip();
+  if(userImg){drawCover(userImg,ix,iy,iw,ih);}
+  else{ctx.fillStyle='#e6edf5';ctx.fillRect(ix,iy,iw,ih);
+    ctx.fillStyle='#9fb1c6';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font="800 100px 'Plus Jakarta Sans'";ctx.fillText('📄',0,iy+ih*0.36);
+    ctx.font="700 34px 'Plus Jakarta Sans'";ctx.fillStyle='#7e93ad';
+    ctx.fillText('Sube la foto',0,iy+ih*0.58);ctx.fillText('de tu certificado',0,iy+ih*0.58+44);}
+  ctx.restore();
+  ctx.strokeStyle=TEAL;ctx.lineWidth=7;rr(ix,iy,iw,ih,8);ctx.stroke();
+  ctx.fillStyle=NAVY;ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(caption,0,h/2+capH/2);
+  ctx.restore();
+  return {top:cy-h/2,left:cx-w/2,cy};}
+
+function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.16)';ctx.fillRect(0,0,W,150);
   ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
 
-function header(ink,sub){
-  const HY=PT+92;ctx.font="800 38px 'Plus Jakarta Sans'";
-  const brand='Ascenso Público',bw=ctx.measureText(brand).width,lv=72,gp=16,gw=lv+gp+bw,gx=(W-gw)/2;
-  logo(gx-24,HY-60,120);
-  ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(brand,gx+lv+gp,HY);
-  ctx.fillStyle=sub;ctx.font="500 28px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText($('handle').value,W/2,HY+48);
-}
-
-function titleBlock(ink,startY){
-  const kick=$('kicker').value.trim(),tit=$('titulo').value.trim();
-  let y=startY;
-  if(kick){ctx.fillStyle=GOLD;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(kick.toUpperCase(),W/2,y);y+=78;}
-  const tl=wrap(tit,W-180,"700 80px 'Source Serif 4'");
-  ctx.fillStyle=ink;ctx.font="700 80px 'Source Serif 4'";ctx.textAlign='center';ctx.textBaseline='middle';
-  tl.forEach(l=>{ctx.fillText(l,W/2,y+44);y+=92;});
-  ctx.strokeStyle=GOLD;ctx.lineWidth=10;ctx.lineCap='round';ctx.beginPath();
-  ctx.moveTo(W/2-110,y+18);ctx.lineTo(W/2+110,y+18);ctx.stroke();
-  return y+90;
-}
-
-function renderFlyer1(ink){
-  let y=titleBlock(ink,PT+332);
-  const lines=$('cuerpo').value.split('\n').map(s=>s.trim()).filter(Boolean);
-  const score=lines.slice(0,2), result=lines[2]||'';
-  const cw=760,cx=(W-cw)/2;
-  y+=40;
-  // dos tarjetas de puntaje "empatadas"
-  score.forEach((ln,i)=>{
-    const parts=ln.split('—');const lab=parts[0].trim();const val=(parts[1]||'').trim();
-    const h=130;ctx.fillStyle='rgba(255,255,255,.06)';ctx.strokeStyle='rgba(255,194,51,.45)';ctx.lineWidth=3;
-    rr(cx,y,cw,h,24);ctx.fill();ctx.stroke();
-    ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';ctx.font="700 44px 'Plus Jakarta Sans'";
-    ctx.fillText(lab,cx+40,y+h/2);
-    if(val){ctx.fillStyle=GOLD;ctx.textAlign='right';ctx.font="800 50px 'Plus Jakarta Sans'";ctx.fillText(val,cx+cw-40,y+h/2);}
-    y+=h;
-    if(i===0){ // signo igual entre las dos
-      ctx.fillStyle=GOLD;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="800 70px 'Plus Jakarta Sans'";
-      ctx.fillText('=',W/2,y+44);y+=88;}
-  });
-  // tarjeta resultado (dorada, sólida)
-  y+=40;const rh=160;
-  ctx.fillStyle=GOLD;rr(cx,y,cw,rh,28);ctx.fill();
-  ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="800 54px 'Plus Jakarta Sans'";
-  ctx.fillText(result,W/2,y+rh/2);
-  y+=rh+60;
-  const chip=$('chip').value.trim();if(chip)pill(W/2,y,chip,"800 36px 'Plus Jakarta Sans'");
-}
-
-function renderFlyer2(ink){
-  let y=titleBlock(ink,PT+312);
-  const items=$('cuerpo').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,4);
-  const cw=820,cx=(W-cw)/2,h=150,gap=28;
-  y+=30;
-  items.forEach(it=>{
-    const sp=it.indexOf(' ');const icon=sp>0?it.slice(0,sp):it;const txt=sp>0?it.slice(sp+1).trim():'';
-    ctx.fillStyle='rgba(255,255,255,.06)';ctx.strokeStyle='rgba(255,194,51,.4)';ctx.lineWidth=3;
-    rr(cx,y,cw,h,24);ctx.fill();ctx.stroke();
-    // barra de acento dorada a la izquierda
-    ctx.fillStyle=GOLD;rr(cx,y,12,h,6);ctx.fill();
-    ctx.textAlign='left';ctx.textBaseline='middle';ctx.font="800 64px 'Plus Jakarta Sans'";ctx.fillText(icon,cx+44,y+h/2);
-    ctx.fillStyle=ink;ctx.font="700 42px 'Plus Jakarta Sans'";
-    const tl=wrap(txt,cw-200,"700 42px 'Plus Jakarta Sans'");
-    const ty=y+h/2-(tl.length-1)*26;tl.forEach((l,k)=>ctx.fillText(l,cx+150,ty+k*52));
-    y+=h+gap;
-  });
-  y+=20;const chip=$('chip').value.trim();if(chip)pill(W/2,y,chip,"800 36px 'Plus Jakarta Sans'");
-}
-
-function panelPath(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x,y+h);ctx.lineTo(x,y+r);
-  ctx.arcTo(x,y,x+r,y,r);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h);ctx.closePath();}
-
 function render(){
-  PT=+$('facezone').value;
-  const cream=$('tema').value==='cream',ink=cream?NAVY:CREAM,sub=cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.85)';
+  const cream=$('tema').value==='cream';
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
   ctx.clearRect(0,0,W,Hh);
-  // zona del rostro (arriba): transparente para montar sobre tu video, o velo oscuro si se desactiva
-  if(!$('transp').checked){ctx.fillStyle='#0d1118';ctx.fillRect(0,0,W,PT+46);}
-  // panel inferior con borde superior redondeado
-  const r=46;const ph=Hh-PT;
-  ctx.save();panelPath(0,PT,W,ph,r);ctx.clip();
-  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,PT,W,ph);}
-  else{const g=ctx.createRadialGradient(W/2,PT+ph*.42,80,W/2,PT+ph*.42,ph*.78);
-    g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,PT,W,ph);}
-  ctx.restore();
-  // borde dorado superior + barrita "handle"
-  ctx.strokeStyle='rgba(255,194,51,.55)';ctx.lineWidth=4;panelPath(0,PT,W,ph,r);ctx.stroke();
-  ctx.fillStyle=GOLD;rr(W/2-46,PT+22,92,9,4.5);ctx.fill();
-  header(ink,sub);
-  if($('preset').value==='flyer1')renderFlyer1(ink);else renderFlyer2(ink);
+  // fondo
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
+  else{const g=ctx.createRadialGradient(W/2,Hh*0.42,80,W/2,Hh*0.42,Hh*0.72);
+    g.addColorStop(0,'#16306b');g.addColorStop(.55,NAVY);g.addColorStop(1,'#07203f');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+
+  // marca arriba
+  ctx.font="800 40px 'Plus Jakarta Sans'";
+  logo(M-14,70,108);
+  ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('Ascenso Público',M+100,118);
+  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
+  ctx.fillText($('handle').value,W-M,118);
+
+  // kicker
+  let y=232;
+  const kick=$('kicker').value.trim();
+  if(kick){ctx.fillStyle=GOLD;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.fillText(kick.toUpperCase(),W/2,y);y+=26;}
+
+  // titular
+  y=drawRich($('titulo').value,W/2,y,W-2*M,"700 86px 'Source Serif 4'",ink,104,'center');
+
+  // foto protagonista
+  const rot=+$('rot').value;
+  const pInfo=polaroid(W/2-10,1010,560,620,rot,$('caption').value,cream);
+
+  // flecha + nota apuntando a la foto
+  if($('showarrow').checked){
+    arrow(M+30,690,M-30,800,pInfo.left+70,pInfo.top+90);
+    note($('nota').value,M+150,648,-6);
+  }
+
+  // bullets debajo de la foto
+  let by=1430;
+  const items=$('bullets').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3);
+  items.forEach(it=>{
+    ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(M+34,by+24,30,0,7);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font="800 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('✓',M+34,by+26);
+    const ny=drawRich(it,M+92,by,W-(M+92)-M,"700 44px 'Plus Jakarta Sans'",ink,56,'left');
+    by=ny+24;
+  });
+
+  // pie: chip + CTA
+  const chip=$('chip').value.trim();
+  if(chip)pill(W/2,1742,chip,"800 36px 'Plus Jakarta Sans'");
+  const cta=$('cta').value.trim();
+  if(cta){ctx.fillStyle=cream?'rgba(10,42,94,.8)':'rgba(251,249,244,.9)';
+    ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(cta,W/2,1852);}
+
+  // sticker encima de todo
+  if($('showsticker').checked){const st=$('sticker').value.trim();if(st)badge(st,W-260,206,-9);}
+
   if($('zonas').checked)zonas();
 }
 
-function loadPreset(){const p=PRESETS[$('preset').value];$('kicker').value=p.kicker;$('titulo').value=p.titulo;
-  $('cuerpo').value=p.cuerpo;$('chip').value=p.chip;render();}
+function loadPreset(){const p=PRESETS[$('preset').value];
+  $('sticker').value=p.sticker;$('kicker').value=p.kicker;$('titulo').value=p.titulo;
+  $('caption').value=p.caption;$('nota').value=p.nota;$('bullets').value=p.bullets;
+  $('chip').value=p.chip;$('cta').value=p.cta;render();}
 
-['tema','handle','kicker','titulo','cuerpo','chip','transp','zonas'].forEach(id=>$(id).addEventListener('input',render));
-$('facezone').addEventListener('input',()=>{$('facezoneval').value=$('facezone').value;render();});
-$('facezoneval').addEventListener('input',()=>{$('facezone').value=$('facezoneval').value;render();});
+['tema','handle','sticker','kicker','titulo','caption','nota','bullets','chip','cta',
+ 'showsticker','showarrow','zonas'].forEach(id=>$(id).addEventListener('input',render));
+$('rot').addEventListener('input',()=>{$('rotval').value=$('rot').value;render();});
+$('rotval').addEventListener('input',()=>{$('rot').value=$('rotval').value;render();});
 $('preset').addEventListener('change',loadPreset);
+$('foto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
+  const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{userImg=im;render();};im.src=fr.result;};
+  fr.readAsDataURL(f);});
 $('dl').onclick=()=>{render();cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download='flyer-certificado-'+$('preset').value+'.png';a.click();URL.revokeObjectURL(a.href);},'image/png');};
-async function boot(){try{await document.fonts.load("700 80px 'Source Serif 4'");
-  await document.fonts.load("800 48px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}loadPreset();}
+
+async function boot(){try{await document.fonts.load("700 86px 'Source Serif 4'");
+  await document.fonts.load("800 44px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}loadPreset();}
 boot();
 </script>
 </body>
