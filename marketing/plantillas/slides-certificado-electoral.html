@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Slides · Certificado electoral · Ascenso Público</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A2A5E;--gold:#FFC233;--teal:#16C2A3}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1118;color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    display:flex;gap:22px;padding:20px;flex-wrap:wrap;justify-content:center;min-height:100vh}
+  h1{font-size:15px;color:var(--gold);font-weight:800;width:100%;text-align:center;margin-bottom:4px}
+  .canvases{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  canvas{height:min(78vh,720px);width:auto;border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.55);background:#000}
+  .cap{font-size:12px;color:#9fb0c9;text-align:center;margin-top:6px;font-weight:700}
+  .controls{width:340px;max-width:100%;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,194,51,.28);border-radius:16px;padding:18px;align-self:flex-start}
+  label{display:block;font-size:12px;color:#9fb0c9;margin:11px 0 4px;font-weight:700}
+  input,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
+    color:#e7edf6;padding:10px;font-family:inherit;font-size:14px}
+  .row{display:flex;gap:9px}.row>*{flex:1}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#cdd6e6}
+  .chk input{width:auto}
+  button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
+    font-size:15px;padding:13px;width:100%;margin-top:14px;background:var(--gold);color:var(--navy)}
+  .b2{background:var(--teal);color:#04221c}
+  .hint{font-size:11px;color:#8194b0;margin-top:12px;line-height:1.55}
+  .tag{display:inline-block;background:rgba(255,194,51,.14);color:var(--gold);border-radius:6px;
+    padding:1px 6px;font-weight:800;font-size:10.5px}
+</style>
+</head>
+<body>
+  <h1>Carrusel · Certificado electoral · 2 slides · 1080×1920</h1>
+  <div class="canvases">
+    <div><canvas id="c1" width="1080" height="1920"></canvas><div class="cap">Slide 1 · Recordatorio</div></div>
+    <div><canvas id="c2" width="1080" height="1920"></canvas><div class="cap">Slide 2 · 3 beneficios</div></div>
+  </div>
+
+  <div class="controls">
+    <div class="row">
+      <div><label>Tema</label><select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
+      <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
+    </div>
+
+    <label>SLIDE 1 · Kicker</label>
+    <input id="s1kicker" value="👉 NO LO BOTES">
+    <label>SLIDE 1 · Titular &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s1title" value="Guarda tu [certificado electoral]">
+    <label>SLIDE 1 · Subtítulo</label>
+    <input id="s1sub" value="Tiene beneficios en los concursos de méritos de la CNSC">
+    <label>SLIDE 1 · Pista de deslizar</label>
+    <input id="s1hint" value="Desliza para ver los 3 beneficios →">
+
+    <label>SLIDE 2 · Título &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s2title" value="3 [beneficios] de tu certificado electoral">
+    <label>Beneficio 1 (título / desc)</label>
+    <div class="row"><input id="b1t" value="Medio día libre"><input id="b1d" value="remunerado tras votar"></div>
+    <label>Beneficio 2 (título / desc)</label>
+    <div class="row"><input id="b2t" value="Descuentos"><input id="b2d" value="pasaporte, libreta, matrícula"></div>
+    <label>Beneficio 3 — el clave (título / desc)</label>
+    <div class="row"><input id="b3t" value="⭐ Desempata el concurso"><input id="b3d" value="en méritos de la CNSC · Ley 403"></div>
+
+    <label>Pie (norma)</label>
+    <input id="law" value="Ley 403 de 1997">
+
+    <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
+
+    <button id="dlboth">⬇ Descargar las 2 imágenes</button>
+    <button id="dl1" class="b2">⬇ Solo slide 1</button>
+    <button id="dl2" class="b2">⬇ Solo slide 2</button>
+    <div class="hint">Sube las 2 como <b>carrusel de fotos</b> en TikTok (en orden 1 → 2). Texto honesto:
+    el certificado <i>desempata</i> y da beneficios, <b>no garantiza</b> el cargo. Para editar un texto,
+    cámbialo arriba y se actualiza al instante.</div>
+  </div>
+<script>
+const W=1080,Hh=1920,M=92;
+const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
+const $=id=>document.getElementById(id);
+const c1=$('c1'),c2=$('c2');
+let ctx=c1.getContext('2d');
+
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+// ---- texto con resaltado [..] ----
+function parseHL(str){const out=[];let hl=false,buf='';
+  for(const ch of str){if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
+    else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}else buf+=ch;}
+  if(buf)out.push({t:buf,hl});return out;}
+function tokens(str){const toks=[];parseHL(str).forEach(s=>{s.t.split(/(\s+)/).forEach(p=>{if(p==='')return;
+  toks.push({w:p,hl:s.hl,space:/^\s+$/.test(p)});});});return toks;}
+function richLines(str,maxW,font){ctx.font=font;const tk=tokens(str);const lines=[];let cur=[],w=0;
+  for(const t of tk){const tw=ctx.measureText(t.w).width;
+    if(w+tw>maxW&&cur.length&&!t.space){lines.push(cur);cur=[];w=0;}
+    if(t.space&&w===0)continue;cur.push({...t,tw});w+=tw;}
+  if(cur.length)lines.push(cur);return lines;}
+function lineWidth(line){let w=0;line.forEach(t=>w+=t.tw);
+  for(let i=line.length-1;i>=0&&line[i].space;i--)w-=line[i].tw;return w;}
+function drawRich(str,anchorX,topY,maxW,font,ink,lineH,align){
+  const lines=richLines(str,maxW,font);ctx.font=font;const fs=parseInt(font.match(/(\d+)px/)[1],10);let y=topY;
+  lines.forEach(line=>{const baseline=y+fs*0.8;const lw=lineWidth(line);
+    let x=align==='center'?anchorX-lw/2:anchorX;
+    const pos=line.map(t=>{const p={...t,x};x+=t.tw;return p;});
+    let i=0;while(i<pos.length){if(pos[i].hl){let j=i,startX=pos[i].x,endX;
+      while(j<pos.length&&pos[j].hl){endX=pos[j].x+pos[j].tw;j++;}
+      const padX=12;ctx.fillStyle=GOLD;rr(startX-padX,baseline-fs*0.78,(endX-startX)+padX*2,fs*0.96,fs*0.26);ctx.fill();i=j;}else i++;}
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    pos.forEach(t=>{if(t.space)return;ctx.fillStyle=t.hl?NAVY:ink;ctx.fillText(t.w,t.x,baseline);});
+    y+=lineH;});
+  return y;}
+
+function pill(cx,y,txt,font,solid){ctx.font=font;const tw=ctx.measureText(txt).width,padX=34,h=74,w=tw+padX*2,x=cx-w/2,r=h/2;
+  if(solid){ctx.fillStyle=GOLD;rr(x,y,w,h,r);ctx.fill();ctx.fillStyle=NAVY;}
+  else{ctx.fillStyle='rgba(255,194,51,.12)';ctx.strokeStyle=GOLD;ctx.lineWidth=3;rr(x,y,w,h,r);ctx.fill();ctx.stroke();ctx.fillStyle=GOLD;}
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,cx,y+h/2+1);return y+h;}
+
+function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];ctx.save();
+  ctx.fillStyle=TEAL;let p=m(24,74);ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(p[0],p[1],3.6/100*s,0,7);ctx.fill();
+  p=m(32,70);ctx.globalAlpha=1;ctx.beginPath();ctx.arc(p[0],p[1],4.4/100*s,0,7);ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=9.5/100*s;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  const cb=t=>{const P=[[34,66],[46,62],[56,54],[72,32]],u=1-t;return[u*u*u*P[0][0]+3*u*u*t*P[1][0]+3*u*t*t*P[2][0]+t*t*t*P[3][0],u*u*u*P[0][1]+3*u*u*t*P[1][1]+3*u*t*t*P[2][1]+t*t*t*P[3][1]];};
+  for(let i=0;i<=40;i++){const c=cb(i/40),q=m(c[0],c[1]);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}ctx.stroke();
+  const h0=m(60,30),h1=m(75,28),h2=m(73,44);ctx.beginPath();ctx.moveTo(h0[0],h0[1]);ctx.lineTo(h1[0],h1[1]);ctx.lineTo(h2[0],h2[1]);ctx.stroke();ctx.restore();}
+
+function bgDecor(cream){ctx.save();
+  ctx.globalAlpha=cream?0.30:0.13;ctx.strokeStyle=GOLD;ctx.lineWidth=120;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(W+120,-30,360,0,7);ctx.stroke();
+  ctx.globalAlpha=cream?0.20:0.12;ctx.strokeStyle=TEAL;ctx.lineWidth=86;
+  ctx.beginPath();ctx.arc(-120,Hh+120,360,0,7);ctx.stroke();ctx.restore();}
+
+function divider(cx,y,w){const half=w/2;ctx.strokeStyle='rgba(255,194,51,.55)';ctx.lineWidth=3;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx-half,y);ctx.lineTo(cx-28,y);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx+28,y);ctx.lineTo(cx+half,y);ctx.stroke();
+  ctx.save();ctx.translate(cx,y);ctx.rotate(Math.PI/4);ctx.fillStyle=GOLD;rr(-9,-9,18,18,4);ctx.fill();ctx.restore();}
+
+function bgAndHeader(cream){
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
+  ctx.clearRect(0,0,W,Hh);
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
+  else{const g=ctx.createLinearGradient(0,0,0,Hh);
+    g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  bgDecor(cream);
+  logo(M-14,150,104);
+  ctx.fillStyle=ink;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Público',M+96,200);
+  ctx.fillStyle=sub;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.textAlign='right';
+  ctx.fillText($('handle').value,W-M,200);
+  return {ink,sub};
+}
+
+function bigSeal(cx,cy,r){ctx.save();ctx.translate(cx,cy);ctx.rotate(-7*Math.PI/180);
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=26;ctx.shadowOffsetY=10;
+  ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=5;ctx.beginPath();ctx.arc(0,0,r-12,0,7);ctx.stroke();
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.font="700 90px 'Plus Jakarta Sans'";ctx.fillText('🗳️',0,6);ctx.restore();}
+
+function rowCard(x,y,w,h,n,title,desc,hot,cream){const r=28;
+  if(hot){ctx.save();ctx.shadowColor='rgba(255,194,51,.35)';ctx.shadowBlur=30;ctx.fillStyle=GOLD;rr(x,y,w,h,r);ctx.fill();ctx.restore();}
+  else{ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.07)';rr(x,y,w,h,r);ctx.fill();
+    ctx.strokeStyle=cream?'rgba(10,42,94,.13)':'rgba(255,255,255,.13)';ctx.lineWidth=2;rr(x,y,w,h,r);ctx.stroke();}
+  const bx=x+72,by=y+h/2;
+  ctx.fillStyle=hot?NAVY:TEAL;ctx.beginPath();ctx.arc(bx,by,42,0,7);ctx.fill();
+  ctx.fillStyle=hot?GOLD:'#04221c';ctx.font="800 42px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(n,bx,by+2);
+  const tx=x+140;
+  const tInk=hot?NAVY:(cream?NAVY:CREAM);
+  const dInk=hot?'rgba(10,42,94,.82)':(cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.8)');
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillStyle=tInk;ctx.font="800 48px 'Plus Jakarta Sans'";ctx.fillText(title,tx,by-4);
+  ctx.fillStyle=dInk;ctx.font="500 32px 'Plus Jakarta Sans'";ctx.fillText(desc,tx,by+38);}
+
+function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.16)';ctx.fillRect(0,0,W,150);
+  ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
+
+function drawSlide(n){
+  const cream=$('tema').value==='cream';
+  const {ink,sub}=bgAndHeader(cream);
+  if(n===1){
+    bigSeal(W/2,470,118);
+    let y=640;
+    const k=$('s1kicker').value.trim();
+    if(k){y=pill(W/2,y,k.toUpperCase(),"800 32px 'Plus Jakarta Sans'")+44;}
+    y=drawRich($('s1title').value,W/2,y,W-2*M,"700 92px 'Source Serif 4'",ink,108,'center');
+    y+=14;
+    ctx.fillStyle=sub;ctx.font="500 40px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    // subtítulo en hasta 2 líneas
+    (function(){const words=$('s1sub').value.split(' ');let line='',yy=y+40;const maxW=W-2*M-40;
+      words.forEach(wd=>{const t=line?line+' '+wd:wd;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,W/2,yy);yy+=50;line=wd;}else line=t;});
+      if(line)ctx.fillText(line,W/2,yy);y=yy;})();
+    divider(W/2,y+70,360);
+    pill(W/2,y+140,$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
+  }else{
+    let y=320;
+    y=drawRich($('s2title').value,W/2,y,W-2*M,"700 74px 'Source Serif 4'",ink,86,'center');
+    let ry=Math.max(y+50,600);const rw=W-2*M,rh=186,gap=30;
+    rowCard(M,ry,rw,rh,'1',$('b1t').value,$('b1d').value,false,cream);ry+=rh+gap;
+    rowCard(M,ry,rw,rh,'2',$('b2t').value,$('b2d').value,false,cream);ry+=rh+gap;
+    rowCard(M,ry,rw,rh,'3',$('b3t').value,$('b3d').value,true,cream);ry+=rh+44;
+    pill(W/2,ry,$('law').value,"800 32px 'Plus Jakarta Sans'");
+    ctx.fillStyle=cream?'rgba(10,42,94,.8)':'rgba(251,249,244,.9)';
+    ctx.font="700 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('Guarda este post 🔖 · '+$('handle').value,W/2,ry+118);
+  }
+  if($('zonas').checked)zonas();
+}
+
+function renderAll(){ctx=c1.getContext('2d');drawSlide(1);ctx=c2.getContext('2d');drawSlide(2);}
+
+function dl(canvas,name){canvas.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=name;a.click();URL.revokeObjectURL(a.href);},'image/png');}
+
+['tema','handle','s1kicker','s1title','s1sub','s1hint','s2title','b1t','b1d','b2t','b2d','b3t','b3d','law','zonas']
+  .forEach(id=>$(id).addEventListener('input',renderAll));
+$('dl1').onclick=()=>{renderAll();dl(c1,'slide1-certificado-electoral.png');};
+$('dl2').onclick=()=>{renderAll();dl(c2,'slide2-beneficios.png');};
+$('dlboth').onclick=()=>{renderAll();dl(c1,'slide1-certificado-electoral.png');
+  setTimeout(()=>dl(c2,'slide2-beneficios.png'),600);};
+
+async function boot(){try{await document.fonts.load("700 92px 'Source Serif 4'");
+  await document.fonts.load("800 48px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}renderAll();}
+boot();
+</script>
+</body>
+</html>
