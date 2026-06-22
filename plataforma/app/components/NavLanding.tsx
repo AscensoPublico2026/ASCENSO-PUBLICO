@@ -27,7 +27,7 @@ export default function NavLanding() {
         <nav className="nav-links">
           <a href="#problema">El problema</a>
           <a href="#como">Cómo funciona</a>
-          <a href="#simulacro">Simulacro gratis</a>
+          <a href="#simulacro" className="nav-destacado">Simulacro gratis</a>
           <a href="#incluye">Qué incluye</a>
           <a href="#convocatorias">Convocatorias</a>
           <a href="#precio">Precio</a>
@@ -49,7 +49,7 @@ export default function NavLanding() {
         <nav className="mobile-menu open" aria-label="Menú de navegación móvil">
           <a href="#problema" onClick={() => setOpen(false)}>El problema</a>
           <a href="#como" onClick={() => setOpen(false)}>Cómo funciona</a>
-          <a href="#simulacro" onClick={() => setOpen(false)}>Simulacro gratis</a>
+          <a href="#simulacro" className="nav-destacado" onClick={() => setOpen(false)}>Simulacro gratis</a>
           <a href="#incluye" onClick={() => setOpen(false)}>Qué incluye</a>
           <a href="#convocatorias" onClick={() => setOpen(false)}>Convocatorias</a>
           <a href="#precio" onClick={() => setOpen(false)}>Precio</a>
