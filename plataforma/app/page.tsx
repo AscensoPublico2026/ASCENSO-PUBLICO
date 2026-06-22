@@ -139,6 +139,41 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* ===== SIMULACRO GRATIS ===== */}
+      <section className="sec sim-promo" id="simulacro">
+        <div className="wrap">
+          <div className="sim-promo-head">
+            <span className="sim-promo-tag">🎁 Gratis · sin registro</span>
+            <h2>Haz tu <span className="hl">simulacro gratis</span> y descubre qué te falta</h2>
+            <p className="lead">Mide tu conocimiento del Estado y de los temas base que la CNSC pregunta en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> que te dice qué dominas y qué reforzar —y por dónde empezar.</p>
+          </div>
+          <div className="sim-promo-grid">
+            <Link href="/simulacro/asistencial" className="sim-promo-card">
+              <span className="sim-promo-emoji">🧰</span>
+              <h3>Nivel Asistencial</h3>
+              <p>Estado, atención al ciudadano y competencias del nivel.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </Link>
+            <Link href="/simulacro/tecnico" className="sim-promo-card">
+              <span className="sim-promo-emoji">🛠️</span>
+              <h3>Nivel Técnico</h3>
+              <p>Marco institucional, procesos y competencias técnicas.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </Link>
+            <Link href="/simulacro/profesional" className="sim-promo-card">
+              <span className="sim-promo-emoji">🎓</span>
+              <h3>Nivel Profesional</h3>
+              <p>Función pública, gestión y competencias del nivel.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </Link>
+          </div>
+          <div className="sim-promo-foot">
+            <Link href="/simulacro" className="btn btn-oro">Ver los simulacros gratis →</Link>
+            <span className="sim-promo-mini">~10 min · resultado al instante y a tu correo · sin costo</span>
+          </div>
+        </div>
+      </section>
+
       {/* ===== STATS ===== */}
       <section className="sec" style={{ paddingTop: 64, paddingBottom: 64 }}>
         <div className="wrap">

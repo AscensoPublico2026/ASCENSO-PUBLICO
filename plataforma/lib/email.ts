@@ -160,3 +160,48 @@ export async function correoAvisoAdmin(datos: any) {
   });
   await enviar(admin, "🔔 Nueva compra — Ascenso Público", html);
 }
+
+
+/**
+ * Envía al lead del SIMULACRO GRATIS su resultado + temas a reforzar + CTA al curso.
+ */
+export async function correoResultadoSimulacro(
+  to: string,
+  opts: {
+    nivel: string;
+    porcentaje: number;
+    correctas: number;
+    total: number;
+    temasAReforzar: { tema: string; guia: string }[];
+    temasDominados: { tema: string }[];
+  }
+) {
+  const { nivel, porcentaje, correctas, total, temasAReforzar, temasDominados } = opts;
+  const url = `${SITE}/comprar`;
+
+  const reforzar = temasAReforzar.length
+    ? `<ul style="margin:8px 0 0;padding-left:18px;color:#2A3441;">${temasAReforzar
+        .map((t) => `<li style="margin-bottom:6px;"><strong>${t.tema}</strong> → refuerza la guía <em>${t.guia}</em></li>`)
+        .join("")}</ul>`
+    : `<p style="margin:8px 0 0;color:#2A3441;">¡Ningún tema crítico! Vas con buena base.</p>`;
+
+  const dominados = temasDominados.length
+    ? `<p style="margin:14px 0 0;color:#2A3441;">✅ Ya dominas: ${temasDominados.map((t) => t.tema).join(", ")}.</p>`
+    : "";
+
+  const html = plantilla({
+    titulo: `Tu resultado: ${porcentaje}% 📊`,
+    cuerpo: `
+      <p style="margin:0 0 14px;">Presentaste el simulacro del nivel <strong>${nivel}</strong> y obtuviste
+      <strong style="color:#0A2A5E;">${correctas} de ${total}</strong> respuestas correctas (${porcentaje}%).</p>
+      <p style="margin:0 0 6px;font-weight:700;color:#0A2A5E;">Temas para reforzar:</p>
+      ${reforzar}
+      ${dominados}
+      <p style="margin:18px 0 0;">Con <strong>Ascenso Público</strong> estudias exactamente esto, pero enfocado en
+      <strong>TU cargo específico</strong>: plan de 21 días + guías + simulacro final tipo CNSC.</p>
+    `,
+    cta: { texto: "Quiero prepararme por mi cargo →", url },
+  });
+
+  await enviar(to, `📊 Tu resultado del simulacro CNSC (${porcentaje}%) — Ascenso Público`, html);
+}
