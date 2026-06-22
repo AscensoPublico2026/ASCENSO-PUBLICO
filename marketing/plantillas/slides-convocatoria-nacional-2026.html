@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Slides · Convocatoria Nacional 2026 · Ascenso Público</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A2A5E;--gold:#FFC233;--teal:#16C2A3}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1118;color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    display:flex;gap:22px;padding:20px;flex-wrap:wrap;justify-content:center;min-height:100vh}
+  h1{font-size:15px;color:var(--gold);font-weight:800;width:100%;text-align:center;margin-bottom:4px}
+  .canvases{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  canvas{height:min(72vh,640px);width:auto;border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.55);background:#000}
+  .cap{font-size:12px;color:#9fb0c9;text-align:center;margin-top:6px;font-weight:700}
+  .controls{width:340px;max-width:100%;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,194,51,.28);border-radius:16px;padding:18px;align-self:flex-start}
+  label{display:block;font-size:12px;color:#9fb0c9;margin:11px 0 4px;font-weight:700}
+  input,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
+    color:#e7edf6;padding:10px;font-family:inherit;font-size:14px}
+  .row{display:flex;gap:9px}.row>*{flex:1}
+  .sec{margin-top:16px;padding-top:8px;border-top:1px solid rgba(255,194,51,.2);color:var(--gold);font-weight:800;font-size:12.5px}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#cdd6e6}
+  .chk input{width:auto}
+  button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
+    font-size:15px;padding:13px;width:100%;margin-top:14px;background:var(--gold);color:var(--navy)}
+  .b2{background:var(--teal);color:#04221c}
+  .hint{font-size:11px;color:#8194b0;margin-top:12px;line-height:1.55}
+  .tag{display:inline-block;background:rgba(255,194,51,.14);color:var(--gold);border-radius:6px;
+    padding:1px 6px;font-weight:800;font-size:10.5px}
+  .warn{background:rgba(22,194,163,.12);border:1px solid rgba(22,194,163,.4);border-radius:9px;
+    padding:9px 11px;margin-top:12px;font-size:11.5px;color:#9be7d6;line-height:1.5}
+</style>
+</head>
+<body>
+  <h1>Carrusel · Convocatoria Entidades del Orden Nacional 2026 · 3 slides · 1080×1920</h1>
+  <div class="canvases">
+    <div><canvas id="c1" width="1080" height="1920"></canvas><div class="cap">1 · ¡Confirmado! + vacantes</div></div>
+    <div><canvas id="c2" width="1080" height="1920"></canvas><div class="cap">2 · A quién aplica + entidades</div></div>
+    <div><canvas id="c3" width="1080" height="1920"></canvas><div class="cap">3 · Inscríbete en SIMO + fechas</div></div>
+  </div>
+
+  <div class="controls">
+    <div class="row">
+      <div><label>Tema</label><select id="tema"><option value="navy">Navy</option><option value="cream">Crema</option></select></div>
+      <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
+    </div>
+
+    <div class="sec">SLIDE 1 · Gancho</div>
+    <label>Kicker</label>
+    <input id="s1kicker" value="📢 ¡CONFIRMADO!">
+    <label>Titular &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s1title" value="Abren inscripciones: [Convocatoria Nacional 2026]">
+    <label>Número grande / etiqueta</label>
+    <div class="row"><input id="s1num" value="+1.300"><input id="s1numlbl" value="vacantes"></div>
+    <label>Subtítulo</label>
+    <input id="s1sub" value="CNSC · Entidades del Orden Nacional">
+    <label>Pista de deslizar</label>
+    <input id="s1hint" value="Desliza para ver si aplicas →">
+
+    <div class="sec">SLIDE 2 · A quién aplica</div>
+    <label>Título &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s2title" value="¿A quién le [aplica]?">
+    <label>Nivel 1 (título / desc)</label>
+    <div class="row"><input id="n1t" value="Desde bachiller"><input id="n1d" value="nivel asistencial y técnico"></div>
+    <label>Nivel 2 (título / desc)</label>
+    <div class="row"><input id="n2t" value="Hasta profesional"><input id="n2d" value="con amplia experiencia"></div>
+    <label>Encabezado entidades</label>
+    <input id="s2entlbl" value="Algunas entidades:">
+    <label>Entidades (separadas por coma)</label>
+    <input id="s2ents" value="UNP, INVIMA, ADRES, Contaduría General, y más">
+
+    <div class="sec">SLIDE 3 · Acción + fechas</div>
+    <label>Título &nbsp;<span class="tag">[resalta]</span></label>
+    <input id="s3title" value="¿Cómo te [inscribes]?">
+    <label>Paso (título / desc)</label>
+    <div class="row"><input id="s3stept" value="Regístrate en SIMO"><input id="s3stepd" value="el portal oficial de la CNSC"></div>
+    <label>Etiqueta de fechas</label>
+    <input id="s3datelbl" value="📅 Fechas de inscripción">
+    <label style="color:#ffc233">Fechas (escríbelas del último slide)</label>
+    <input id="s3dates" value="Escribe aquí las fechas exactas">
+    <label>Diferencial / CTA (título / desc)</label>
+    <div class="row"><input id="s3ctat" value="Te asesoramos"><input id="s3ctad" value="en tu inscripción en SIMO"></div>
+    <label>Cierre</label>
+    <input id="s3close" value="Escríbenos por DM 📩">
+
+    <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar zonas seguras de TikTok</label></div>
+
+    <button id="dlall">⬇ Descargar las 3 imágenes</button>
+    <div class="row"><button id="dl1" class="b2">Slide 1</button><button id="dl2" class="b2">Slide 2</button><button id="dl3" class="b2">Slide 3</button></div>
+    <div class="warn">⚠️ <b>Las fechas no están confirmadas en el generador.</b> Escríbelas tú mismo en el campo
+    "Fechas" copiándolas del último slide de la competencia o de la página oficial de la CNSC, para no publicar un dato erróneo.</div>
+    <div class="hint">Súbelas como <b>carrusel de fotos</b> en TikTok en orden 1 → 2 → 3. CTA = <b>asesoría</b>
+    en SIMO (sin guía gratis, sin curso pago). Contenido original con identidad de Ascenso Público.</div>
+  </div>
+<script>
+const W=1080,Hh=1920,M=92;
+const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
+const $=id=>document.getElementById(id);
+const c1=$('c1'),c2=$('c2'),c3=$('c3');
+let ctx=c1.getContext('2d');
+
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function parseHL(str){const out=[];let hl=false,buf='';
+  for(const ch of str){if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
+    else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}else buf+=ch;}
+  if(buf)out.push({t:buf,hl});return out;}
+function tokens(str){const toks=[];parseHL(str).forEach(s=>{s.t.split(/(\s+)/).forEach(p=>{if(p==='')return;
+  toks.push({w:p,hl:s.hl,space:/^\s+$/.test(p)});});});return toks;}
+function richLines(str,maxW,font){ctx.font=font;const tk=tokens(str);const lines=[];let cur=[],w=0;
+  for(const t of tk){const tw=ctx.measureText(t.w).width;
+    if(w+tw>maxW&&cur.length&&!t.space){lines.push(cur);cur=[];w=0;}
+    if(t.space&&w===0)continue;cur.push({...t,tw});w+=tw;}
+  if(cur.length)lines.push(cur);return lines;}
+function lineWidth(line){let w=0;line.forEach(t=>w+=t.tw);
+  for(let i=line.length-1;i>=0&&line[i].space;i--)w-=line[i].tw;return w;}
+function drawRich(str,anchorX,topY,maxW,font,ink,lineH,align){
+  const lines=richLines(str,maxW,font);ctx.font=font;const fs=parseInt(font.match(/(\d+)px/)[1],10);let y=topY;
+  lines.forEach(line=>{const baseline=y+fs*0.8;const lw=lineWidth(line);
+    let x=align==='center'?anchorX-lw/2:anchorX;
+    const pos=line.map(t=>{const p={...t,x};x+=t.tw;return p;});
+    let i=0;while(i<pos.length){if(pos[i].hl){let j=i,startX=pos[i].x,endX;
+      while(j<pos.length&&pos[j].hl){endX=pos[j].x+pos[j].tw;j++;}
+      const padX=12;ctx.fillStyle=GOLD;rr(startX-padX,baseline-fs*0.78,(endX-startX)+padX*2,fs*0.96,fs*0.26);ctx.fill();i=j;}else i++;}
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    pos.forEach(t=>{if(t.space)return;ctx.fillStyle=t.hl?NAVY:ink;ctx.fillText(t.w,t.x,baseline);});
+    y+=lineH;});
+  return y;}
+
+function pill(cx,y,txt,font,solid){ctx.font=font;const tw=ctx.measureText(txt).width,padX=34,h=74,w=tw+padX*2,x=cx-w/2,r=h/2;
+  if(solid){ctx.fillStyle=GOLD;rr(x,y,w,h,r);ctx.fill();ctx.fillStyle=NAVY;}
+  else{ctx.fillStyle='rgba(255,194,51,.12)';ctx.strokeStyle=GOLD;ctx.lineWidth=3;rr(x,y,w,h,r);ctx.fill();ctx.stroke();ctx.fillStyle=GOLD;}
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,cx,y+h/2+1);return y+h;}
+
+function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];ctx.save();
+  ctx.fillStyle=TEAL;let p=m(24,74);ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(p[0],p[1],3.6/100*s,0,7);ctx.fill();
+  p=m(32,70);ctx.globalAlpha=1;ctx.beginPath();ctx.arc(p[0],p[1],4.4/100*s,0,7);ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=9.5/100*s;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  const cb=t=>{const P=[[34,66],[46,62],[56,54],[72,32]],u=1-t;return[u*u*u*P[0][0]+3*u*u*t*P[1][0]+3*u*t*t*P[2][0]+t*t*t*P[3][0],u*u*u*P[0][1]+3*u*u*t*P[1][1]+3*u*t*t*P[2][1]+t*t*t*P[3][1]];};
+  for(let i=0;i<=40;i++){const c=cb(i/40),q=m(c[0],c[1]);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}ctx.stroke();
+  const h0=m(60,30),h1=m(75,28),h2=m(73,44);ctx.beginPath();ctx.moveTo(h0[0],h0[1]);ctx.lineTo(h1[0],h1[1]);ctx.lineTo(h2[0],h2[1]);ctx.stroke();ctx.restore();}
+
+function bgDecor(cream){ctx.save();
+  ctx.globalAlpha=cream?0.30:0.13;ctx.strokeStyle=GOLD;ctx.lineWidth=120;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(W+120,-30,360,0,7);ctx.stroke();
+  ctx.globalAlpha=cream?0.20:0.12;ctx.strokeStyle=TEAL;ctx.lineWidth=86;
+  ctx.beginPath();ctx.arc(-120,Hh+120,360,0,7);ctx.stroke();ctx.restore();}
+
+function divider(cx,y,w){const half=w/2;ctx.strokeStyle='rgba(255,194,51,.55)';ctx.lineWidth=3;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(cx-half,y);ctx.lineTo(cx-28,y);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx+28,y);ctx.lineTo(cx+half,y);ctx.stroke();
+  ctx.save();ctx.translate(cx,y);ctx.rotate(Math.PI/4);ctx.fillStyle=GOLD;rr(-9,-9,18,18,4);ctx.fill();ctx.restore();}
+
+function seal(x,y,r,glyph){ctx.save();ctx.translate(x,y);ctx.rotate(-8*Math.PI/180);
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=22;ctx.shadowOffsetY=9;
+  ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.shadowColor='transparent';
+  ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,r-10,0,7);ctx.stroke();
+  ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="700 "+(r*0.9)+"px 'Plus Jakarta Sans'";ctx.fillText(glyph,0,4);ctx.restore();}
+
+function rowCard(x,y,w,h,n,title,desc,hot,cream){const r=28;
+  if(hot){ctx.save();ctx.shadowColor='rgba(255,194,51,.35)';ctx.shadowBlur=30;ctx.fillStyle=GOLD;rr(x,y,w,h,r);ctx.fill();ctx.restore();}
+  else{ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.07)';rr(x,y,w,h,r);ctx.fill();
+    ctx.strokeStyle=cream?'rgba(10,42,94,.13)':'rgba(255,255,255,.13)';ctx.lineWidth=2;rr(x,y,w,h,r);ctx.stroke();}
+  const bx=x+72,by=y+h/2;
+  ctx.fillStyle=hot?NAVY:TEAL;ctx.beginPath();ctx.arc(bx,by,42,0,7);ctx.fill();
+  ctx.fillStyle=hot?GOLD:'#04221c';ctx.font="800 42px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(n,bx,by+2);
+  const tx=x+140;
+  const tInk=hot?NAVY:(cream?NAVY:CREAM);
+  const dInk=hot?'rgba(10,42,94,.82)':(cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.8)');
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillStyle=tInk;ctx.font="800 48px 'Plus Jakarta Sans'";ctx.fillText(title,tx,by-4);
+  ctx.fillStyle=dInk;ctx.font="500 32px 'Plus Jakarta Sans'";ctx.fillText(desc,tx,by+38);}
+
+// Tarjeta grande con número (slide 1)
+function bigNumber(cx,cy,num,lbl,cream){
+  const w=W-2*M, h=380, x=cx-w/2, y=cy-h/2;
+  ctx.save();ctx.shadowColor='rgba(255,194,51,.30)';ctx.shadowBlur=44;ctx.shadowOffsetY=16;
+  ctx.fillStyle=GOLD;rr(x,y,w,h,40);ctx.fill();ctx.restore();
+  ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="700 200px 'Source Serif 4'";ctx.fillText(num,cx,cy-34);
+  ctx.font="800 60px 'Plus Jakarta Sans'";ctx.fillText(lbl.toUpperCase(),cx,cy+110);}
+
+// Chips de entidades, envueltos en filas centradas (slide 2)
+function entityChips(list,topY,cream){
+  const font="800 40px 'Plus Jakarta Sans'";ctx.font=font;
+  const padX=30,h=84,gap=20,maxW=W-2*M;
+  const items=list.map(t=>({t,w:ctx.measureText(t).width+padX*2}));
+  const rows=[];let cur=[],rw=0;
+  items.forEach(it=>{const add=(cur.length?gap:0)+it.w;
+    if(rw+add>maxW&&cur.length){rows.push({items:cur,w:rw});cur=[];rw=0;}
+    cur.push(it);rw+=(cur.length>1?gap:0)+it.w;});
+  if(cur.length)rows.push({items:cur,w:rw});
+  let y=topY;
+  rows.forEach(row=>{let x=(W-row.w)/2;
+    row.items.forEach(it=>{
+      ctx.fillStyle=cream?'rgba(10,42,94,.07)':'rgba(255,255,255,.08)';
+      ctx.strokeStyle=GOLD;ctx.lineWidth=2.5;rr(x,y,it.w,h,h/2);ctx.fill();ctx.stroke();
+      ctx.fillStyle=cream?NAVY:CREAM;ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(it.t,x+it.w/2,y+h/2+1);
+      x+=it.w+gap;});
+    y+=h+gap;});
+  return y;}
+
+// Tarjeta de fechas destacada (slide 3)
+function dateCard(cx,topY,lbl,dates,cream){
+  const w=W-2*M,h=230,x=cx-w/2,y=topY;
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=34;ctx.shadowOffsetY=14;
+  ctx.fillStyle='#fff';rr(x,y,w,h,32);ctx.fill();ctx.restore();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=5;rr(x+10,y+10,w-20,h-20,24);ctx.stroke();
+  ctx.fillStyle=TEAL;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(lbl,cx,y+62);
+  ctx.fillStyle=NAVY;ctx.font="700 60px 'Source Serif 4'";
+  // ajustar fechas a una linea
+  let f="700 60px 'Source Serif 4'";ctx.font=f;
+  if(ctx.measureText(dates).width>w-70){f="700 46px 'Source Serif 4'";ctx.font=f;}
+  if(ctx.measureText(dates).width>w-70){f="700 38px 'Source Serif 4'";ctx.font=f;}
+  ctx.fillText(dates,cx,y+150);
+  return y+h;}
+
+function zonas(){ctx.save();ctx.fillStyle='rgba(255,60,60,.16)';ctx.fillRect(0,0,W,150);
+  ctx.fillRect(0,Hh-430,W,430);ctx.fillRect(W-150,Hh-980,150,560);ctx.restore();}
+
+function bgAndHeader(cream){
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.72)':'rgba(251,249,244,.85)';
+  ctx.clearRect(0,0,W,Hh);
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,Hh);}
+  else{const g=ctx.createLinearGradient(0,0,0,Hh);
+    g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);}
+  bgDecor(cream);
+  // marca CENTRADA y BAJADA (para que no la tape la UI superior de TikTok)
+  const name='Ascenso Público',s=104,gap=22,baseY=430;
+  ctx.font="800 44px 'Plus Jakarta Sans'";
+  const tw=ctx.measureText(name).width, total=s*0.82+gap+tw, startX=(W-total)/2;
+  logo(startX,baseY-s*0.52,s);
+  ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText(name,startX+s*0.82+gap,baseY);
+  ctx.fillStyle=sub;ctx.font="600 30px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText($('handle').value,W/2,baseY+54);
+  return {ink,sub};
+}
+
+function drawSlide(n){
+  const cream=$('tema').value==='cream';
+  const {ink,sub}=bgAndHeader(cream);
+  if(n===1){
+    let y=560;
+    const k=$('s1kicker').value.trim();
+    if(k){y=pill(W/2,y,k.toUpperCase(),"800 32px 'Plus Jakarta Sans'")+30;}
+    y=drawRich($('s1title').value,W/2,y,W-2*M,"700 74px 'Source Serif 4'",ink,88,'center');
+    bigNumber(W/2,Math.max(y+260,1180),$('s1num').value,$('s1numlbl').value,cream);
+    ctx.fillStyle=sub;ctx.font="600 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText($('s1sub').value,W/2,Math.max(y+260,1180)+250);
+    pill(W/2,1560,$('s1hint').value,"800 34px 'Plus Jakarta Sans'",true);
+  }else if(n===2){
+    let y=560;
+    y=drawRich($('s2title').value,W/2,y,W-2*M,"700 76px 'Source Serif 4'",ink,90,'center');
+    let ry=Math.max(y+50,760);const rw=W-2*M,rh=178,gap=28;
+    rowCard(M,ry,rw,rh,'1',$('n1t').value,$('n1d').value,false,cream);ry+=rh+gap;
+    rowCard(M,ry,rw,rh,'2',$('n2t').value,$('n2d').value,true,cream);ry+=rh+58;
+    ctx.fillStyle=cream?NAVY:CREAM;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText($('s2entlbl').value,W/2,ry);ry+=58;
+    const ents=$('s2ents').value.split(',').map(s=>s.trim()).filter(Boolean);
+    entityChips(ents,ry,cream);
+  }else{
+    let y=552;
+    y=drawRich($('s3title').value,W/2,y,W-2*M,"700 76px 'Source Serif 4'",ink,90,'center');
+    let ry=Math.max(y+50,760);const rw=W-2*M;
+    rowCard(M,ry,rw,178,'1',$('s3stept').value,$('s3stepd').value,false,cream);ry+=178+42;
+    ry=dateCard(W/2,ry,$('s3datelbl').value,$('s3dates').value,cream)+42;
+    rowCard(M,ry,rw,190,'✓',$('s3ctat').value,$('s3ctad').value,true,cream);ry+=190+52;
+    pill(W/2,ry,$('s3close').value,"800 34px 'Plus Jakarta Sans'",true);
+  }
+  if($('zonas').checked)zonas();
+}
+
+function renderAll(){ctx=c1.getContext('2d');drawSlide(1);ctx=c2.getContext('2d');drawSlide(2);ctx=c3.getContext('2d');drawSlide(3);}
+
+function dl(canvas,name){canvas.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=name;a.click();URL.revokeObjectURL(a.href);},'image/png');}
+
+['tema','handle','s1kicker','s1title','s1num','s1numlbl','s1sub','s1hint',
+ 's2title','n1t','n1d','n2t','n2d','s2entlbl','s2ents',
+ 's3title','s3stept','s3stepd','s3datelbl','s3dates','s3ctat','s3ctad','s3close','zonas']
+ .forEach(id=>$(id).addEventListener('input',renderAll));
+$('dl1').onclick=()=>{renderAll();dl(c1,'slide1-convocatoria.png');};
+$('dl2').onclick=()=>{renderAll();dl(c2,'slide2-aplica.png');};
+$('dl3').onclick=()=>{renderAll();dl(c3,'slide3-inscripcion.png');};
+$('dlall').onclick=()=>{renderAll();dl(c1,'slide1-convocatoria.png');
+  setTimeout(()=>dl(c2,'slide2-aplica.png'),500);setTimeout(()=>dl(c3,'slide3-inscripcion.png'),1000);};
+
+async function boot(){try{await document.fonts.load("700 80px 'Source Serif 4'");
+  await document.fonts.load("800 48px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}renderAll();}
+boot();
+</script>
+</body>
+</html>
