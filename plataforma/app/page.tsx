@@ -90,6 +90,41 @@ export default async function LandingPage() {
         </div>
       </div>
 
+      {/* ===== SIMULACRO GRATIS (lead magnet) ===== */}
+      <section className="sim-promo" id="simulacro">
+        <div className="wrap">
+          <div className="sim-promo-head">
+            <span className="sim-promo-tag">🎁 Gratis · sin registro · resultado al instante</span>
+            <h2>Empieza con tu <span className="hl">simulacro gratis</span></h2>
+            <p className="sim-promo-lead">Mide tu nivel en los temas que la CNSC evalúa en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> con lo que ya dominas y lo que debes reforzar. Elige tu nivel:</p>
+          </div>
+          <div className="sim-promo-grid">
+            <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card">
+              <span className="sim-promo-emoji">🧰</span>
+              <h3>Nivel Asistencial</h3>
+              <p>Estado, atención al ciudadano y competencias del nivel.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </a>
+            <a href="/simulacro-gratis/tecnico.html" className="sim-promo-card">
+              <span className="sim-promo-emoji">🛠️</span>
+              <h3>Nivel Técnico</h3>
+              <p>Marco institucional, procesos y competencias técnicas.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </a>
+            <a href="/simulacro-gratis/profesional.html" className="sim-promo-card">
+              <span className="sim-promo-emoji">🎓</span>
+              <h3>Nivel Profesional</h3>
+              <p>Función pública, gestión y competencias del nivel.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </a>
+          </div>
+          <div className="sim-promo-foot">
+            <Link href="/simulacro" className="btn btn-azul">Ver los simulacros gratis →</Link>
+            <span className="sim-promo-mini">20 preguntas · sin costo · sin necesidad de registrarte</span>
+          </div>
+        </div>
+      </section>
+
       {/* ===== PROBLEMA ===== */}
       <section className="sec" id="problema">
         <div className="wrap">
@@ -136,41 +171,6 @@ export default async function LandingPage() {
           <h2>Así se adapta tu ruta según tu nivel</h2>
           <p className="lead">Elige tu nivel y mira un <strong>ejemplo</strong> de cómo cambia el enfoque. Tu curso real va aún más lejos: se ajusta al <strong>manual de funciones de tu cargo específico</strong>.</p>
           <NivelTabs />
-        </div>
-      </section>
-
-      {/* ===== SIMULACRO GRATIS ===== */}
-      <section className="sec sim-promo" id="simulacro">
-        <div className="wrap">
-          <div className="sim-promo-head">
-            <span className="sim-promo-tag">🎁 Gratis · sin registro</span>
-            <h2>Haz tu <span className="hl">simulacro gratis</span> y descubre qué te falta</h2>
-            <p className="lead">Mide tu conocimiento del Estado y de los temas base que la CNSC pregunta en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> que te dice qué dominas y qué reforzar —y por dónde empezar.</p>
-          </div>
-          <div className="sim-promo-grid">
-            <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card">
-              <span className="sim-promo-emoji">🧰</span>
-              <h3>Nivel Asistencial</h3>
-              <p>Estado, atención al ciudadano y competencias del nivel.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-            <a href="/simulacro-gratis/tecnico.html" className="sim-promo-card">
-              <span className="sim-promo-emoji">🛠️</span>
-              <h3>Nivel Técnico</h3>
-              <p>Marco institucional, procesos y competencias técnicas.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-            <a href="/simulacro-gratis/profesional.html" className="sim-promo-card">
-              <span className="sim-promo-emoji">🎓</span>
-              <h3>Nivel Profesional</h3>
-              <p>Función pública, gestión y competencias del nivel.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-          </div>
-          <div className="sim-promo-foot">
-            <Link href="/simulacro" className="btn btn-oro">Ver los simulacros gratis →</Link>
-            <span className="sim-promo-mini">20 preguntas · resultado al instante y a tu correo · sin costo</span>
-          </div>
         </div>
       </section>
 
