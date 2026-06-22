@@ -61,13 +61,15 @@
     <label>Pista de deslizar</label>
     <input id="s1hint" value="Desliza para ver si aplicas →">
 
-    <div class="sec">SLIDE 2 · A quién aplica</div>
+    <div class="sec">SLIDE 2 · A quién aplica + valores</div>
     <label>Título &nbsp;<span class="tag">[resalta]</span></label>
     <input id="s2title" value="¿A quién le [aplica]?">
-    <label>Nivel 1 (título / desc)</label>
-    <div class="row"><input id="n1t" value="Desde bachiller"><input id="n1d" value="nivel asistencial y técnico"></div>
-    <label>Nivel 2 (título / desc)</label>
-    <div class="row"><input id="n2t" value="Hasta profesional"><input id="n2d" value="con amplia experiencia"></div>
+    <label>Etiqueta de valores</label>
+    <input id="s2feelbl" value="💰 Valor de inscripción por nivel">
+    <label>Nivel 1 (título / desc / valor)</label>
+    <div class="row"><input id="n1t" value="Técnico y asistencial"><input id="n1d" value="desde bachiller"><input id="n1p" value="$58.400"></div>
+    <label>Nivel 2 (título / desc / valor)</label>
+    <div class="row"><input id="n2t" value="Asesor y profesional"><input id="n2d" value="con experiencia"><input id="n2p" value="$87.550"></div>
     <label>Encabezado entidades</label>
     <input id="s2entlbl" value="Algunas entidades:">
     <label>Entidades (separadas por coma)</label>
@@ -178,6 +180,19 @@ function rowCard(x,y,w,h,n,title,desc,hot,cream){const r=28;
   ctx.fillStyle=tInk;ctx.font="800 48px 'Plus Jakarta Sans'";ctx.fillText(title,tx,by-4);
   ctx.fillStyle=dInk;ctx.font="500 32px 'Plus Jakarta Sans'";ctx.fillText(desc,tx,by+38);}
 
+// Fila de nivel con etiqueta de precio en dorado (slide 2)
+function feeRow(x,y,w,h,title,desc,price,cream){const r=28;
+  ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.07)';rr(x,y,w,h,r);ctx.fill();
+  ctx.strokeStyle=cream?'rgba(10,42,94,.13)':'rgba(255,255,255,.13)';ctx.lineWidth=2;rr(x,y,w,h,r);ctx.stroke();
+  const by=y+h/2, tx=x+48;
+  const tInk=cream?NAVY:CREAM, dInk=cream?'rgba(10,42,94,.7)':'rgba(251,249,244,.8)';
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillStyle=tInk;ctx.font="800 46px 'Plus Jakarta Sans'";ctx.fillText(title,tx,by-4);
+  ctx.fillStyle=dInk;ctx.font="500 30px 'Plus Jakarta Sans'";ctx.fillText(desc,tx,by+40);
+  ctx.font="800 50px 'Plus Jakarta Sans'";const pw=ctx.measureText(price).width+44,ph=80,px=x+w-pw-24,py=y+(h-ph)/2;
+  ctx.save();ctx.shadowColor='rgba(255,194,51,.30)';ctx.shadowBlur=18;ctx.fillStyle=GOLD;rr(px,py,pw,ph,ph/2);ctx.fill();ctx.restore();
+  ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(price,px+pw/2,py+ph/2+1);}
+
 // Tarjeta grande con número (slide 1)
 function bigNumber(cx,cy,num,lbl,cream){
   const w=W-2*M, h=380, x=cx-w/2, y=cy-h/2;
@@ -261,9 +276,12 @@ function drawSlide(n){
   }else if(n===2){
     let y=560;
     y=drawRich($('s2title').value,W/2,y,W-2*M,"700 76px 'Source Serif 4'",ink,90,'center');
-    let ry=Math.max(y+50,760);const rw=W-2*M,rh=178,gap=28;
-    rowCard(M,ry,rw,rh,'1',$('n1t').value,$('n1d').value,false,cream);ry+=rh+gap;
-    rowCard(M,ry,rw,rh,'2',$('n2t').value,$('n2d').value,true,cream);ry+=rh+58;
+    let ry=Math.max(y+44,712);
+    ctx.fillStyle=cream?NAVY:CREAM;ctx.font="800 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText($('s2feelbl').value,W/2,ry);ry+=58;
+    const rw=W-2*M,rh=178,gap=24;
+    feeRow(M,ry,rw,rh,$('n1t').value,$('n1d').value,$('n1p').value,cream);ry+=rh+gap;
+    feeRow(M,ry,rw,rh,$('n2t').value,$('n2d').value,$('n2p').value,cream);ry+=rh+50;
     ctx.fillStyle=cream?NAVY:CREAM;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText($('s2entlbl').value,W/2,ry);ry+=58;
     const ents=$('s2ents').value.split(',').map(s=>s.trim()).filter(Boolean);
@@ -286,7 +304,7 @@ function dl(canvas,name){canvas.toBlob(b=>{const a=document.createElement('a');a
   a.download=name;a.click();URL.revokeObjectURL(a.href);},'image/png');}
 
 ['tema','handle','s1kicker','s1title','s1num','s1numlbl','s1sub','s1hint',
- 's2title','n1t','n1d','n2t','n2d','s2entlbl','s2ents',
+ 's2title','s2feelbl','n1t','n1d','n1p','n2t','n2d','n2p','s2entlbl','s2ents',
  's3title','s3stept','s3stepd','s3datelbl','s3dates','s3ctat','s3ctad','s3close','zonas']
  .forEach(id=>$(id).addEventListener('input',renderAll));
 $('dl1').onclick=()=>{renderAll();dl(c1,'slide1-convocatoria.png');};
