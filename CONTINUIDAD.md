@@ -5,7 +5,25 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 17 de junio de 2026 (tarde) — **PRIMERA VENTA REAL FUNCIONANDO + sesión de pulido pre-lanzamiento.** Se validó el flujo de compra con dinero real (Wompi en producción), se corrigieron los hallazgos del checklist y se prepararon los documentos de continuidad. Ver "## CAMBIOS RECIENTES" abajo. **Próximo paso definitivo: contenido + marketing en TikTok y vender; armar el curso de cada cargo cuando entre la venta.**_
+_Última actualización: 22 de junio de 2026 — **Feature "Simulacro Gratis" (lead magnet) construida en rama `feature/simulacro-gratis` + LIMPIEZA del repositorio.** Ver "## CAMBIOS RECIENTES" abajo. **Próximo paso: verificar las preguntas borrador del simulacro gratis, aplicar la migración SQL, mergear; y seguir con contenido + marketing en TikTok para vender.**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 22 jun 2026)
+
+**Feature "Simulacro Gratis" (imán de leads para TikTok) — en rama `feature/simulacro-gratis`, PENDIENTE de merge:**
+- ✅ **3 simulacros gratis por nivel** (asistencial / técnico / profesional), **20 preguntas cada uno**, en el **mismo formato HTML congelado del SIM-001** (molde, "modo examen real", revisión pregunta por pregunta y guía de refuerzo).
+- ✅ **Composición = solo guías GENERALES + guías del NIVEL** (10 + 10), **entidad-neutras** (no nombran ninguna entidad ni cargo). Sin ofimática ni funcionales.
+- ✅ **Motor propio del gratis:** molde `simulacro/motor/base-simulacro-gratis.html` (con "puerta" de captura de correo integrada al diseño) + `simulacro/motor/construir_gratis.py` + bancos `simulacro/bancos/gratis-generales|gratis-asistencial|gratis-tecnico|gratis-profesional.json` + recetas `simulacro/contenido/SIM-GRATIS-ASI|TEC|PRO.json`. Regenerar con `cd simulacro && python3 motor/construir_gratis.py`. Salida estática: `plataforma/public/simulacro-gratis/{asistencial,tecnico,profesional}.html`.
+- ✅ **Captura de lead con consentimiento** (correo requerido + WhatsApp opcional + casilla de marketing desmarcada, Ley 1581): API `plataforma/app/api/simulacro/lead/route.ts` → guarda en tabla **`leads_simulacro`** (service role) y envía `correoResultadoSimulacro` (en `lib/email.ts`).
+- ✅ **Landing:** franja clara dorada "Empieza con tu simulacro gratis" arriba (tras la barra de confianza) + selector en `/simulacro` + enlace en el nav.
+- ⚠️ **PENDIENTE para publicar:** (1) **verificar las 60 preguntas BORRADOR** (marcadas `"_verificar": true` en los bancos `gratis-*`), en especial las técnico-legales (derecho de petición, régimen disciplinario, órganos de control, datos personales); (2) **aplicar la migración** `plataforma/supabase/migracion-simulacro.sql` en Supabase (SQL Editor → Run); (3) **mergear** la rama a `main`.
+
+**🧹 LIMPIEZA del repositorio (esta sesión):**
+- Borrados los borradores/versiones viejas del simulacro: `SIM-001-demo-v2.html`, `SIM-001-v3.html`, `SIM-001-v4.html`, `SIM-001-v5.html` (queda solo el final `simulacro/SIM-001.html`).
+- Borrados scripts de un solo uso: `simulacro/generar_demo.py`, `simulacro/generar_v3_completo.sh`.
+- Borrado `DISENO-SIMULACRO-SIM-001.md` (diseño histórico superado; el diseño vivo está congelado en el molde + `simulacro/motor/README.md` + §9.3). Recuperable desde el historial de git si se necesita.
+- Borrada la caché `simulacro/motor/__pycache__/`.
 
 ---
 
