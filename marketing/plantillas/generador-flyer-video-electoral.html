@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Generador Flyer Video · Certificado Electoral · Ascenso Público</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Source+Serif+4:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A2A5E;--gold:#E8A33D;--gold-bright:#FFC233;--teal:#16C2A3;--cream:#FBF9F4;--dark-bg:#0d1118}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--dark-bg);color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    padding:20px;min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:20px}
+  h1{font-size:18px;color:var(--gold);font-weight:800;text-align:center}
+  .subtitle{font-size:13px;color:#8194b0;text-align:center;margin-bottom:10px}
+  .layout{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;width:100%}
+  .preview-wrap{display:flex;flex-direction:column;gap:12px;align-items:center}
+  .preview-wrap h2{font-size:14px;color:var(--teal);font-weight:700}
+  canvas{border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);background:#000}
+  #c1,#c2{height:min(45vh,460px);width:auto}
+  .controls{width:380px;max-width:100%;background:rgba(255,255,255,.04);
+    border:1px solid rgba(232,163,61,.28);border-radius:16px;padding:20px;align-self:flex-start}
+  .section-title{font-size:13px;color:var(--gold);font-weight:800;margin:18px 0 8px;
+    text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(232,163,61,.2);padding-bottom:6px}
+  .section-title:first-child{margin-top:0}
+  label{display:block;font-size:12px;color:#9fb0c9;margin:10px 0 4px;font-weight:700}
+  input,textarea,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
+    color:#e7edf6;padding:10px;font-family:inherit;font-size:13px}
+  textarea{resize:vertical;min-height:70px}
+  .row{display:flex;gap:10px}.row>*{flex:1}
+  .filebtn{display:block;text-align:center;background:var(--teal);color:#04221c;border-radius:11px;
+    font-weight:800;padding:12px;margin-top:6px;cursor:pointer;font-size:14px}
+  .filebtn input{display:none}
+  button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
+    font-size:14px;padding:12px;width:100%;margin-top:10px;background:var(--gold);color:var(--navy)}
+  button.secondary{background:var(--teal);color:#04221c}
+  .hint{font-size:11px;color:#8194b0;margin-top:12px;line-height:1.5}
+  .tag{display:inline-block;background:rgba(232,163,61,.15);color:var(--gold);border-radius:5px;
+    padding:1px 6px;font-weight:800;font-size:10px;margin-left:4px}
+</style>
+</head>
+<body>
+<h1>Generador de Flyers para Video · Certificado Electoral</h1>
+<p class="subtitle">Formato mitad de pantalla (1080×960) — para la parte inferior de tu video TikTok/Reels</p>
+
+<div class="layout">
+  <div class="preview-wrap">
+    <h2>Flyer 1 — Certificado</h2>
+    <canvas id="c1" width="1080" height="960"></canvas>
+    <button id="dl1">⬇ Descargar Flyer 1 (PNG)</button>
+  </div>
+  <div class="preview-wrap">
+    <h2>Flyer 2 — Beneficios</h2>
+    <canvas id="c2" width="1080" height="960"></canvas>
+    <button id="dl2" class="secondary">⬇ Descargar Flyer 2 (PNG)</button>
+  </div>
+
+  <div class="controls">
+    <div class="section-title">FLYER 1 — Foto del certificado</div>
+    <label class="filebtn">📤 Subir foto del certificado
+      <input id="foto" type="file" accept="image/*">
+    </label>
+    <label>Etiqueta superior</label>
+    <input id="f1_tag" value="CONCURSOS CNSC 2026">
+    <label>Titulo principal <span class="tag">[palabra] = resaltado</span></label>
+    <textarea id="f1_titulo">Guarda tu [Certificado Electoral]</textarea>
+    <label>Subtitulo</label>
+    <input id="f1_sub" value="Este documento puede definir si GANAS o pierdes un concurso">
+    <label>Pie de foto (dentro del marco)</label>
+    <input id="f1_caption" value="Certificado Electoral">
+
+    <div class="section-title">FLYER 2 — Beneficios</div>
+    <label>Etiqueta superior</label>
+    <input id="f2_tag" value="2 BENEFICIOS CLAVE">
+    <label>Titulo principal <span class="tag">[palabra] = resaltado</span></label>
+    <textarea id="f2_titulo">El certificado te da [ventaja] en concursos</textarea>
+    <label>Beneficio 1 — Titulo</label>
+    <input id="f2_b1_title" value="Prelacion en empate">
+    <label>Beneficio 1 — Descripcion <span class="tag">[resaltar]</span></label>
+    <textarea id="f2_b1_desc">Si empatas en puntaje y [solo hay una vacante], quien voto tiene prelacion</textarea>
+    <label>Beneficio 2 — Titulo</label>
+    <input id="f2_b2_title" value="Escoger ubicacion">
+    <label>Beneficio 2 — Descripcion <span class="tag">[resaltar]</span></label>
+    <textarea id="f2_b2_desc">Si hay empate, quien voto [escoge primero] la ciudad de la vacante</textarea>
+
+    <div class="section-title">OPCIONES GENERALES</div>
+    <div class="row">
+      <div><label>Tema</label><select id="tema"><option value="navy">Navy (oscuro)</option><option value="cream">Crema (claro)</option></select></div>
+      <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
+    </div>
+    <label>CTA (pie de ambos flyers)</label>
+    <input id="cta" value="Link en bio · ascensopublico.com">
+
+    <div class="hint">
+      <b>Instrucciones:</b> Edita los textos y descarga cada flyer como PNG.
+      La foto se carga <b>solo en tu navegador</b> (no se sube a ningún lado).
+      Usa <b>[corchetes]</b> para resaltar palabras clave en amarillo/oro.
+      Tamaño: 1080×960px (mitad inferior del video 1080×1920).
+    </div>
+  </div>
+</div>
+
+<script>
+const W=1080,H=960;
+const NAVY='#0A2A5E',GOLD='#E8A33D',GOLDBRIGHT='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F2EBDC';
+const $=id=>document.getElementById(id);
+let userImg=null;
+
+// --- Utilidades de dibujo ---
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function parseHL(str){const out=[];let hl=false,buf='';
+  for(const ch of str){if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
+  else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}
+  else buf+=ch;}if(buf)out.push({t:buf,hl});return out;}
+
+function tokens(str){const toks=[];
+  parseHL(str).forEach(s=>{s.t.split(/(\s+)/).forEach(p=>{if(p==='')return;
+    toks.push({w:p,hl:s.hl,space:/^\s+$/.test(p)});});});return toks;}
+
+function richLines(ctx,str,maxW,font){ctx.font=font;const tk=tokens(str);const lines=[];let cur=[],w=0;
+  for(const t of tk){const tw=ctx.measureText(t.w).width;
+    if(w+tw>maxW&&cur.length&&!t.space){lines.push(cur);cur=[];w=0;}
+    if(t.space&&w===0)continue;cur.push({...t,tw});w+=tw;}
+  if(cur.length)lines.push(cur);return lines;}
+
+function lineWidth(line){let w=0;line.forEach(t=>w+=t.tw);return w;}
+
+function drawRich(ctx,str,anchorX,topY,maxW,font,ink,hlColor,lineH,align){
+  const lines=richLines(ctx,str,maxW,font);ctx.font=font;
+  const fs=parseInt(font.match(/(\d+)px/)[1],10);let y=topY;
+  lines.forEach(line=>{
+    const baseline=y+fs*0.82;const lw=lineWidth(line);
+    let x=align==='center'?anchorX-lw/2:anchorX;
+    const pos=line.map(t=>{const p={...t,x};x+=t.tw;return p;});
+    let i=0;
+    while(i<pos.length){if(pos[i].hl){let j=i,startX=pos[i].x,endX;
+      while(j<pos.length&&pos[j].hl){endX=pos[j].x+pos[j].tw;j++;}
+      const padX=10;ctx.fillStyle=hlColor;
+      rr(ctx,startX-padX,baseline-fs*0.8,(endX-startX)+padX*2,fs*1.05,fs*0.22);ctx.fill();i=j;}
+    else i++;}
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    pos.forEach(t=>{if(t.space)return;ctx.fillStyle=t.hl?NAVY:ink;ctx.font=font;ctx.fillText(t.w,t.x,baseline);});
+    y+=lineH;});
+  return y;}
+
+function drawCover(ctx,img,x,y,w,h){const s=Math.max(w/img.width,h/img.height);
+  const dw=img.width*s,dh=img.height*s;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh);}
+
+// --- FLYER 1: Certificado con foto grande ---
+function renderFlyer1(){
+  const cv=$('c1'),ctx=cv.getContext('2d');
+  const cream=$('tema').value==='cream';
+  const ink=cream?NAVY:'#FFFFFF';
+  const sub=cream?'rgba(10,42,94,.7)':'rgba(255,255,255,.75)';
+  ctx.clearRect(0,0,W,H);
+
+  // Fondo
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,H);}
+  else{const g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,'#0e2f6b');g.addColorStop(0.5,NAVY);g.addColorStop(1,'#071e3a');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+
+  // Decoraciones de fondo
+  ctx.save();ctx.globalAlpha=cream?0.15:0.08;
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(W+50,-50,300,0,7);ctx.fill();
+  ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(-80,H+50,250,0,7);ctx.fill();
+  ctx.restore();
+
+  const M=60;let y=40;
+
+  // Tag superior
+  const tag=$('f1_tag').value.trim();
+  if(tag){ctx.font="800 24px 'Plus Jakarta Sans'";
+    const tw=ctx.measureText(tag).width;
+    ctx.fillStyle=GOLD;rr(ctx,W/2-tw/2-20,y,tw+40,46,23);ctx.fill();
+    ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tag,W/2,y+23);
+    y+=66;}
+
+  // Titulo llamativo
+  const titulo=$('f1_titulo').value.trim();
+  if(titulo){y=drawRich(ctx,titulo,W/2,y,W-M*2,"900 56px 'Source Serif 4'",ink,GOLDBRIGHT,68,'center');}
+
+  // Subtitulo
+  const sub_text=$('f1_sub').value.trim();
+  if(sub_text){ctx.font="600 24px 'Plus Jakarta Sans'";ctx.fillStyle=sub;
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    // word wrap simple
+    const words=sub_text.split(' ');let line='',ly=y+10;
+    words.forEach(w=>{const test=line?line+' '+w:w;
+      if(ctx.measureText(test).width>W-M*2){ctx.fillText(line,W/2,ly);ly+=32;line=w;}
+      else line=test;});
+    if(line)ctx.fillText(line,W/2,ly);
+    y=ly+20;}
+
+  // Marco de la foto - grande y centrado
+  const frameW=560,frameH=440;
+  const fx=(W-frameW)/2, fy=Math.min(y+10, H-frameH-110);
+
+  // Sombra
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=40;ctx.shadowOffsetY=15;
+  ctx.fillStyle='#fff';rr(ctx,fx,fy,frameW,frameH,16);ctx.fill();ctx.restore();
+
+  // Borde dorado
+  ctx.strokeStyle=GOLD;ctx.lineWidth=4;rr(ctx,fx,fy,frameW,frameH,16);ctx.stroke();
+
+  // Imagen o placeholder
+  const imgPad=14;
+  ctx.save();rr(ctx,fx+imgPad,fy+imgPad,frameW-imgPad*2,frameH-imgPad*2-60,10);ctx.clip();
+  if(userImg){drawCover(ctx,userImg,fx+imgPad,fy+imgPad,frameW-imgPad*2,frameH-imgPad*2-60);}
+  else{ctx.fillStyle='#eef3f9';ctx.fillRect(fx+imgPad,fy+imgPad,frameW-imgPad*2,frameH-imgPad*2-60);
+    ctx.fillStyle='#7e93ad';ctx.font="800 80px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('📄',W/2,fy+(frameH-60)/2);
+    ctx.font="600 22px 'Plus Jakarta Sans'";ctx.fillText('Sube tu foto aqui',W/2,fy+(frameH-60)/2+60);}
+  ctx.restore();
+
+  // Caption dentro del marco
+  const caption=$('f1_caption').value.trim();
+  if(caption){ctx.font="700 22px 'Plus Jakarta Sans'";ctx.fillStyle=NAVY;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(caption,W/2,fy+frameH-34);}
+
+  // Pie / CTA
+  const cta=$('cta').value.trim();
+  if(cta){ctx.font="700 22px 'Plus Jakarta Sans'";ctx.fillStyle=sub;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cta,W/2,H-36);}
+
+  // Handle
+  ctx.font="600 20px 'Plus Jakarta Sans'";ctx.fillStyle=GOLD;ctx.textAlign='right';
+  ctx.textBaseline='middle';ctx.fillText($('handle').value,W-M,H-36);
+}
+
+// --- FLYER 2: Beneficios ---
+function renderFlyer2(){
+  const cv=$('c2'),ctx=cv.getContext('2d');
+  const cream=$('tema').value==='cream';
+  const ink=cream?NAVY:'#FFFFFF';
+  const sub=cream?'rgba(10,42,94,.7)':'rgba(255,255,255,.75)';
+  ctx.clearRect(0,0,W,H);
+
+  // Fondo
+  if(cream){ctx.fillStyle=CREAMBG;ctx.fillRect(0,0,W,H);}
+  else{const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#0e2f6b');g.addColorStop(0.6,NAVY);g.addColorStop(1,'#071e3a');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+
+  // Decoraciones
+  ctx.save();ctx.globalAlpha=cream?0.12:0.07;
+  ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(-60,-60,220,0,7);ctx.fill();
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(W+40,H+40,200,0,7);ctx.fill();
+  ctx.restore();
+
+  const M=60;let y=40;
+
+  // Tag
+  const tag=$('f2_tag').value.trim();
+  if(tag){ctx.font="800 24px 'Plus Jakarta Sans'";
+    const tw=ctx.measureText(tag).width;
+    ctx.fillStyle=GOLD;rr(ctx,W/2-tw/2-20,y,tw+40,46,23);ctx.fill();
+    ctx.fillStyle=NAVY;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tag,W/2,y+23);
+    y+=66;}
+
+  // Titulo
+  const titulo=$('f2_titulo').value.trim();
+  if(titulo){y=drawRich(ctx,titulo,W/2,y,W-M*2,"900 52px 'Source Serif 4'",ink,GOLDBRIGHT,64,'center');
+    y+=20;}
+
+  // Beneficio 1
+  const cardW=W-M*2,cardH=170,cardX=M,cardR=18;
+  // Card 1
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=20;ctx.shadowOffsetY=8;
+  ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.06)';
+  rr(ctx,cardX,y,cardW,cardH,cardR);ctx.fill();ctx.restore();
+  ctx.strokeStyle='rgba(232,163,61,.4)';ctx.lineWidth=2;rr(ctx,cardX,y,cardW,cardH,cardR);ctx.stroke();
+
+  // Numero 1
+  const numX=cardX+30,numY=y+cardH/2;
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(numX+30,numY,34,0,7);ctx.fill();
+  ctx.fillStyle=NAVY;ctx.font="900 36px 'Source Serif 4'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('1',numX+30,numY+2);
+
+  // Texto beneficio 1
+  const tX=numX+84;
+  ctx.font="800 28px 'Plus Jakarta Sans'";ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText($('f2_b1_title').value,tX,y+44);
+  drawRich(ctx,$('f2_b1_desc').value,tX,y+60,cardW-120,"600 24px 'Plus Jakarta Sans'",sub,GOLDBRIGHT,32,'left');
+
+  y+=cardH+20;
+
+  // Card 2
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=20;ctx.shadowOffsetY=8;
+  ctx.fillStyle=cream?'rgba(10,42,94,.06)':'rgba(255,255,255,.06)';
+  rr(ctx,cardX,y,cardW,cardH,cardR);ctx.fill();ctx.restore();
+  ctx.strokeStyle='rgba(232,163,61,.4)';ctx.lineWidth=2;rr(ctx,cardX,y,cardW,cardH,cardR);ctx.stroke();
+
+  // Numero 2
+  const numX2=cardX+30,numY2=y+cardH/2;
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(numX2+30,numY2,34,0,7);ctx.fill();
+  ctx.fillStyle=NAVY;ctx.font="900 36px 'Source Serif 4'";ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('2',numX2+30,numY2+2);
+
+  // Texto beneficio 2
+  ctx.font="800 28px 'Plus Jakarta Sans'";ctx.fillStyle=ink;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText($('f2_b2_title').value,tX,y+44);
+  drawRich(ctx,$('f2_b2_desc').value,tX,y+60,cardW-120,"600 24px 'Plus Jakarta Sans'",sub,GOLDBRIGHT,32,'left');
+
+  // Linea separadora
+  y+=cardH+30;
+  ctx.strokeStyle='rgba(232,163,61,.3)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(M+100,y);ctx.lineTo(W-M-100,y);ctx.stroke();
+
+  // Logo Ascenso Publico texto
+  y+=30;
+  ctx.font="700 26px 'Source Serif 4'";ctx.fillStyle=GOLD;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Publico',W/2,y);
+
+  // CTA
+  const cta=$('cta').value.trim();
+  if(cta){ctx.font="600 20px 'Plus Jakarta Sans'";ctx.fillStyle=sub;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(cta,W/2,H-36);}
+
+  // Handle
+  ctx.font="600 20px 'Plus Jakarta Sans'";ctx.fillStyle=GOLD;ctx.textAlign='right';
+  ctx.textBaseline='middle';ctx.fillText($('handle').value,W-M,H-36);
+}
+
+function renderAll(){renderFlyer1();renderFlyer2();}
+
+// --- Event listeners ---
+const inputs=['f1_tag','f1_titulo','f1_sub','f1_caption','f2_tag','f2_titulo',
+  'f2_b1_title','f2_b1_desc','f2_b2_title','f2_b2_desc','tema','handle','cta'];
+inputs.forEach(id=>$(id).addEventListener('input',renderAll));
+
+$('foto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
+  const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{userImg=im;renderAll();};
+  im.src=fr.result;};fr.readAsDataURL(f);});
+
+$('dl1').onclick=()=>{renderFlyer1();$('c1').toBlob(b=>{const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download='flyer-certificado-electoral-1.png';a.click();
+  URL.revokeObjectURL(a.href);},'image/png');};
+
+$('dl2').onclick=()=>{renderFlyer2();$('c2').toBlob(b=>{const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download='flyer-certificado-electoral-2.png';a.click();
+  URL.revokeObjectURL(a.href);},'image/png');};
+
+// Boot
+async function boot(){
+  try{await document.fonts.load("900 56px 'Source Serif 4'");
+  await document.fonts.load("800 28px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}
+  renderAll();
+}
+boot();
+</script>
+</body>
+</html>
