@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Generador de flyers para VIDEO · tú arriba + flyer abajo · Ascenso Público</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A2A5E;--gold:#FFC233;--teal:#16C2A3;--cream:#FBF9F4}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1118;color:#e7edf6;font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    display:flex;gap:24px;padding:20px;flex-wrap:wrap;justify-content:center;min-height:100vh}
+  h1{font-size:16px;color:var(--gold);font-weight:800;width:100%;text-align:center;margin-bottom:2px}
+  .sub{font-size:12.5px;color:#8194b0;width:100%;text-align:center;margin-bottom:10px}
+  canvas{height:min(84vh,800px);width:auto;border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.55);background:#000}
+  .controls{width:370px;max-width:100%;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,194,51,.28);border-radius:16px;padding:18px;align-self:flex-start}
+  label{display:block;font-size:12.5px;color:#9fb0c9;margin:12px 0 5px;font-weight:700}
+  input,textarea,select{width:100%;background:#161d2b;border:1px solid #2d3a52;border-radius:9px;
+    color:#e7edf6;padding:10px;font-family:inherit;font-size:14px}
+  textarea{resize:vertical;min-height:70px}
+  .row{display:flex;gap:10px}.row>*{flex:1}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#cdd6e6}
+  .chk input{width:auto}
+  button{cursor:pointer;border:none;border-radius:11px;font-weight:800;font-family:inherit;
+    font-size:15px;padding:13px;width:100%;margin-top:16px;background:var(--gold);color:var(--navy)}
+  .hint{font-size:11.5px;color:#8194b0;margin-top:10px;line-height:1.5}
+  .tag{display:inline-block;background:rgba(255,194,51,.14);color:var(--gold);border-radius:6px;
+    padding:1px 6px;font-weight:800;font-size:11px}
+  .grp{border-top:1px solid #243049;margin-top:14px;padding-top:6px}
+  .grp-t{font-size:11px;color:#6f81a0;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+</style>
+</head>
+<body>
+  <h1>Generador de flyers para VIDEO · 1080×1920 (9:16)</h1>
+  <div class="sub">Formato “tú arriba hablando + flyer abajo”. Resalta palabras con [corchetes].</div>
+  <canvas id="c" width="1080" height="1920"></canvas>
+  <div class="controls">
+    <label>¿Qué vas a publicar? (modo)</label>
+    <select id="modo">
+      <option value="pregunta">❓ Pregunta CNSC (caso + A/B/C/D)</option>
+      <option value="porque">✅ El porqué (respuesta + explicación)</option>
+      <option value="dato">📣 Dato / Convocatoria (cifra + fechas)</option>
+      <option value="tip">💡 Tips / Errores (lista numerada)</option>
+      <option value="simulacro">🎯 Simulacro GRATIS (gancho de venta)</option>
+    </select>
+
+    <div class="row">
+      <div><label>Color del flyer</label>
+        <select id="tema"><option value="cream">Crema (examen)</option><option value="navy">Navy</option></select></div>
+      <div><label>@usuario</label><input id="handle" value="@ascensopublico"></div>
+    </div>
+
+    <label>Etiqueta superior (kicker)</label>
+    <input id="kicker" value="EXAMEN CNSC">
+    <label>Chip de nivel / cargo (opcional)</label>
+    <input id="chip" placeholder="Ej: NIVEL TÉCNICO">
+
+    <label>Título &nbsp;<span class="tag">usa [palabra] para resaltar</span></label>
+    <textarea id="titulo">Un ciudadano te grita por una demora que [no fue tu culpa]. ¿Qué haces?</textarea>
+
+    <div id="grp-opciones" class="grp">
+      <div class="grp-t">Opciones (modos Pregunta / Porqué)</div>
+      <label>Opciones (una por línea, máx 4)</label>
+      <textarea id="opciones">Le respondes igual de fuerte
+Mantienes la calma, escuchas y das una ruta
+Lo ignoras hasta que se calme
+Le dices que vuelva otro día</textarea>
+      <div class="row">
+        <div><label>Respuesta correcta</label>
+          <select id="correcta"><option value="">— ninguna (suspenso) —</option>
+            <option value="0">A</option><option value="1">B</option>
+            <option value="2">C</option><option value="3">D</option></select></div>
+        <div><label>Norma / fuente</label><input id="norma" placeholder="Ej: Decreto 815/2018"></div>
+      </div>
+      <label>Explicación (modo “El porqué”) <span class="tag">[resalta]</span></label>
+      <textarea id="expl">La CNSC mide [autocontrol] y orientación al ciudadano. Lo correcto es mantener el servicio y la calma, no la reacción emocional.</textarea>
+    </div>
+
+    <div id="grp-dato" class="grp">
+      <div class="grp-t">Dato / Convocatoria</div>
+      <label>Cifra grande (opcional)</label>
+      <input id="cifra" placeholder="Ej: 3.044">
+      <label>Texto bajo la cifra</label>
+      <input id="cifrasub" placeholder="Ej: vacantes en concurso">
+      <label>Detalles / fechas (una por línea · “Etiqueta: dato”)</label>
+      <textarea id="detalles">Inscripciones: 15–31 jul
+Compra de PIN: hasta 9 ago
+Aplica en: SIMO</textarea>
+    </div>
+
+    <div id="grp-tip" class="grp">
+      <div class="grp-t">Tips / Errores</div>
+      <label>Puntos (una línea por punto · [resalta])</label>
+      <textarea id="tips">Memorizar [leyes] en vez de entrenar el juicio
+No leer el [caso completo] antes de responder
+Estudiar [genérico] y no por tu cargo
+Dejar el [simulacro] para el final</textarea>
+    </div>
+
+    <div id="grp-sim" class="grp">
+      <div class="grp-t">Simulacro gratis</div>
+      <label>Niveles (uno por línea · “Nivel: detalle”)</label>
+      <textarea id="niveles">Asistencial: 20 preguntas
+Técnico: 20 preguntas
+Profesional: 20 preguntas</textarea>
+    </div>
+
+    <div class="grp">
+      <div class="grp-t">Pie del flyer</div>
+      <label>Pie / CTA (línea inferior)</label>
+      <input id="cta" value="👇 Comenta A, B, C o D">
+      <label>Sello inferior (chip)</label>
+      <input id="footchip" value="Prepárate por TU cargo">
+    </div>
+
+    <div class="chk"><input type="checkbox" id="facetop" checked><label for="facetop" style="margin:0">Reservar la parte de arriba para tu rostro/video</label></div>
+    <div class="chk"><input type="checkbox" id="zonas"><label for="zonas" style="margin:0">Mostrar guías (zona del rostro + seguras)</label></div>
+
+    <button id="dl">⬇ Descargar PNG</button>
+    <div class="hint">Marca <b>“Reservar la parte de arriba”</b> para el formato tú-hablando-arriba: el flyer
+    se acomoda en la mitad inferior y arriba queda tu video. En CapCut: pon tu grabación arriba y esta
+    imagen de fondo. Activa “guías” solo para encuadrar (no se descargan). Verifica SIEMPRE los datos
+    legales antes de publicar.</div>
+  </div>
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1080,Hh=1920;
+const NAVY='#0A2A5E',GOLD='#FFC233',TEAL='#16C2A3',CREAM='#FBF9F4',CREAMBG='#F4EEE1';
+const $=id=>document.getElementById(id);
+
+/* ---------- helpers ---------- */
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+/* texto con resaltado [..] */
+function parseHL(str){const out=[];let hl=false,buf='';
+  for(const ch of str){
+    if(ch==='['){if(buf){out.push({t:buf,hl});buf='';}hl=true;}
+    else if(ch===']'){if(buf){out.push({t:buf,hl});buf='';}hl=false;}
+    else buf+=ch;}
+  if(buf)out.push({t:buf,hl});return out;}
+function tokens(str){const toks=[];
+  parseHL(str).forEach(s=>{s.t.split(/(\s+)/).forEach(p=>{if(p==='')return;
+    toks.push({w:p,hl:s.hl,space:/^\s+$/.test(p)});});});
+  return toks;}
+function richLines(str,maxW,font){ctx.font=font;const tk=tokens(str);const lines=[];let cur=[],w=0;
+  for(const t of tk){const tw=ctx.measureText(t.w).width;
+    if(w+tw>maxW&&cur.length&&!t.space){lines.push(cur);cur=[];w=0;}
+    if(t.space&&w===0)continue;cur.push({...t,tw});w+=tw;}
+  if(cur.length)lines.push(cur);return lines;}
+function lineWidth(line){let w=0;line.forEach(t=>w+=t.tw);
+  for(let i=line.length-1;i>=0&&line[i].space;i--)w-=line[i].tw;return w;}
+function measureRich(str,maxW,font,lineH){return richLines(str,maxW,font).length*lineH;}
+function drawRich(str,anchorX,topY,maxW,font,ink,lineH,align){
+  const lines=richLines(str,maxW,font);ctx.font=font;
+  const fs=parseInt(font.match(/(\d+)px/)[1],10);let y=topY;
+  lines.forEach(line=>{
+    const baseline=y+fs*0.8,lw=lineWidth(line);
+    let x=align==='center'?anchorX-lw/2:anchorX;
+    const pos=line.map(t=>{const p={...t,x};x+=t.tw;return p;});
+    let i=0;
+    while(i<pos.length){
+      if(pos[i].hl){let j=i,sx=pos[i].x,ex;
+        while(j<pos.length&&pos[j].hl){ex=pos[j].x+pos[j].tw;j++;}
+        const padX=12;ctx.fillStyle=GOLD;
+        rr(sx-padX,baseline-fs*0.80,(ex-sx)+padX*2,fs*1.02,fs*0.26);ctx.fill();i=j;
+      }else i++;}
+    ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    pos.forEach(t=>{if(t.space)return;ctx.fillStyle=t.hl?NAVY:ink;ctx.fillText(t.w,t.x,baseline);});
+    y+=lineH;
+  });
+  return y;
+}
+
+function pill(cx,y,txt,font,fill){ctx.font=font;const tw=ctx.measureText(txt).width,padX=30,h=64,w=tw+padX*2,x=cx-w/2,r=h/2;
+  if(fill){ctx.fillStyle=fill;rr(x,y,w,h,r);ctx.fill();ctx.fillStyle=NAVY;}
+  else{ctx.fillStyle='rgba(255,194,51,.14)';ctx.strokeStyle=GOLD;ctx.lineWidth=3;rr(x,y,w,h,r);ctx.fill();ctx.stroke();ctx.fillStyle=GOLD;}
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,cx,y+h/2+1);return y+h;}
+
+function logo(x,y,s){const m=(a,b)=>[x+a/100*s,y+b/100*s];
+  ctx.fillStyle=TEAL;let p=m(24,74);ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(p[0],p[1],3.6/100*s,0,7);ctx.fill();
+  p=m(32,70);ctx.globalAlpha=1;ctx.beginPath();ctx.arc(p[0],p[1],4.4/100*s,0,7);ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=9.5/100*s;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  const cb=t=>{const P=[[34,66],[46,62],[56,54],[72,32]],u=1-t;return[u*u*u*P[0][0]+3*u*u*t*P[1][0]+3*u*t*t*P[2][0]+t*t*t*P[3][0],u*u*u*P[0][1]+3*u*u*t*P[1][1]+3*u*t*t*P[2][1]+t*t*t*P[3][1]];};
+  for(let i=0;i<=40;i++){const c=cb(i/40),q=m(c[0],c[1]);i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}ctx.stroke();
+  const h0=m(60,30),h1=m(75,28),h2=m(73,44);ctx.beginPath();ctx.moveTo(h0[0],h0[1]);ctx.lineTo(h1[0],h1[1]);ctx.lineTo(h2[0],h2[1]);ctx.stroke();}
+
+function bgDecor(){ctx.save();
+  ctx.globalAlpha=0.13;ctx.strokeStyle=GOLD;ctx.lineWidth=110;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(W+130,-30,380,0,7);ctx.stroke();
+  ctx.globalAlpha=0.10;ctx.strokeStyle=TEAL;ctx.lineWidth=80;
+  ctx.beginPath();ctx.arc(-120,Hh+120,360,0,7);ctx.stroke();ctx.restore();}
+
+function faceBackdrop(zoneH){
+  const g=ctx.createLinearGradient(0,0,0,zoneH);
+  g.addColorStop(0,'#0e2c63');g.addColorStop(1,'#08234a');ctx.fillStyle=g;ctx.fillRect(0,0,W,zoneH);
+  ctx.save();ctx.globalAlpha=0.08;logo(W/2-150,zoneH/2-170,300);ctx.restore();
+  // estela dorada de la marca
+  ctx.save();ctx.globalAlpha=0.5;ctx.strokeStyle=GOLD;ctx.lineWidth=6;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(60,zoneH-26);ctx.lineTo(W-60,zoneH-26);ctx.stroke();ctx.restore();}
+
+function brandRow(x,y,w,ink,sub){
+  logo(x-8,y-30,92);
+  ctx.fillStyle=ink;ctx.font="800 36px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Ascenso Público',x+86,y);
+  ctx.fillStyle=sub;ctx.font="600 28px 'Plus Jakarta Sans'";ctx.textAlign='right';ctx.textBaseline='middle';
+  ctx.fillText($('handle').value,x+w,y);}
+
+/* fila de opción A/B/C/D */
+function optionRow(x,y,w,letter,txt,state,cream){
+  // state: 'idle' | 'correct'
+  const padX=26,padY=22,gap=22,badge=64;
+  const txtMaxW=w-padX*2-badge-gap-(state==='correct'?56:0);
+  const lines=richLines(txt,txtMaxW,"700 40px 'Plus Jakarta Sans'");
+  const txtH=lines.length*48;
+  const h=Math.max(badge+padY*2-12, txtH+padY*2);
+  // surface
+  if(state==='correct'){ctx.fillStyle='rgba(22,194,163,.16)';ctx.strokeStyle=TEAL;ctx.lineWidth=4;}
+  else if(cream){ctx.fillStyle='#ffffff';ctx.strokeStyle='rgba(10,42,94,.10)';ctx.lineWidth=2;}
+  else{ctx.fillStyle='rgba(255,255,255,.06)';ctx.strokeStyle='rgba(255,255,255,.16)';ctx.lineWidth=2;}
+  rr(x,y,w,h,22);ctx.fill();ctx.stroke();
+  // badge letra
+  const bx=x+padX,by=y+h/2;
+  ctx.fillStyle=state==='correct'?TEAL:GOLD;ctx.beginPath();ctx.arc(bx+badge/2,by,badge/2,0,7);ctx.fill();
+  ctx.fillStyle=state==='correct'?'#04221c':NAVY;ctx.font="800 36px 'Plus Jakarta Sans'";
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(letter,bx+badge/2,by+1);
+  // texto
+  const ink=cream?NAVY:CREAM;
+  const tx=bx+badge+gap, ty=y+(h-txtH)/2;
+  drawRich(txt,tx,ty,txtMaxW,"700 40px 'Plus Jakarta Sans'",ink,48,'left');
+  // check
+  if(state==='correct'){ctx.fillStyle=TEAL;ctx.font="800 48px 'Plus Jakarta Sans'";
+    ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText('✓',x+w-padX,by);}
+  return y+h;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const modo=$('modo').value, cream=$('tema').value==='cream';
+  const face=$('facetop').checked;
+  ctx.clearRect(0,0,W,Hh);
+  // fondo navy global
+  const g=ctx.createLinearGradient(0,0,0,Hh);
+  g.addColorStop(0,'#0e2c63');g.addColorStop(.5,NAVY);g.addColorStop(1,'#061d3a');ctx.fillStyle=g;ctx.fillRect(0,0,W,Hh);
+  bgDecor();
+
+  const zoneH=Math.round(Hh*0.42);
+  if(face) faceBackdrop(zoneH);
+
+  // tarjeta del flyer
+  const M=46;
+  const cardX=M, cardW=W-M*2;
+  const cardY=face? zoneH+24 : 64;
+  const cardBottom=1876;
+  const cardH=cardBottom-cardY;
+  if(cream){ctx.fillStyle=CREAMBG;}
+  else{const cg=ctx.createLinearGradient(0,cardY,0,cardBottom);
+    cg.addColorStop(0,'#103163');cg.addColorStop(1,'#0a2552');ctx.fillStyle=cg;}
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=40;ctx.shadowOffsetY=14;
+  rr(cardX,cardY,cardW,cardH,40);ctx.fill();ctx.restore();
+  // borde superior dorado
+  ctx.fillStyle=GOLD;rr(cardX,cardY,cardW,12,6);ctx.fill();ctx.fillStyle=cream?CREAMBG:'#0a2552';
+  rr(cardX,cardY+8,cardW,20,0);ctx.fill();
+
+  const ink=cream?NAVY:CREAM, sub=cream?'rgba(10,42,94,.66)':'rgba(251,249,244,.8)';
+  const pad=56, ix=cardX+pad, iw=cardW-pad*2, cx=W/2;
+  let y=cardY+58;
+
+  // marca dentro de la tarjeta
+  brandRow(ix,y+6,iw,ink,sub);
+  y+=64;
+
+  // kicker + chip
+  const kick=$('kicker').value.trim(), chip=$('chip').value.trim();
+  if(kick||chip){
+    let line=[];if(kick)line.push(kick.toUpperCase());
+    ctx.font="800 30px 'Plus Jakarta Sans'";
+    let pillY=y;
+    if(kick){pillY=pill(cx,y,kick.toUpperCase(),"800 30px 'Plus Jakarta Sans'");}
+    if(chip){const cyc=kick? pillY+16 : y;
+      pill(cx,cyc,chip.toUpperCase(),"800 28px 'Plus Jakarta Sans'",GOLD);y=cyc+64;}
+    else y=pillY;
+    y+=34;
+  }
+
+  // título serif
+  if($('titulo').value.trim()){
+    const tf= modo==='simulacro'||modo==='dato' ? "700 70px 'Source Serif 4'":"700 60px 'Source Serif 4'";
+    const tlh= modo==='simulacro'||modo==='dato' ? 80:72;
+    y=drawRich($('titulo').value,cx,y,iw,tf,ink,tlh,'center')+24;
+  }
+
+  /* ----- contenido por modo ----- */
+  if(modo==='pregunta'||modo==='porque'){
+    const ops=$('opciones').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,4);
+    const correcta=$('correcta').value;
+    const letters=['A','B','C','D'];
+    if(modo==='pregunta'){
+      ops.forEach((op,i)=>{const st=(correcta!==''&&+correcta===i)?'correct':'idle';
+        y=optionRow(ix,y,iw,letters[i],op,st,cream)+18;});
+    } else {
+      // porque: muestra la respuesta correcta destacada + explicación
+      if(correcta!==''){
+        y=optionRow(ix,y,iw,letters[+correcta],ops[+correcta]||'',  'correct',cream)+26;
+      }
+      const norma=$('norma').value.trim();
+      if(norma){ctx.fillStyle=TEAL;ctx.font="800 30px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+        ctx.fillText('📚 '+norma,cx,y+24);y+=58;}
+      y=drawRich($('expl').value,cx,y,iw,"600 42px 'Plus Jakarta Sans'",ink,54,'center')+10;
+    }
+  }
+  else if(modo==='dato'){
+    const cifra=$('cifra').value.trim();
+    if(cifra){ctx.fillStyle=GOLD;ctx.font="800 170px 'Source Serif 4'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+      ctx.fillText(cifra,cx,y+150);y+=176;
+      const cs=$('cifrasub').value.trim();
+      if(cs){ctx.fillStyle=ink;ctx.font="700 40px 'Plus Jakarta Sans'";ctx.fillText(cs,cx,y+10);y+=68;}
+      y+=20;}
+    const det=$('detalles').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,5);
+    det.forEach(line=>{
+      const idx=line.indexOf(':');const lab=idx>=0?line.slice(0,idx):line;const val=idx>=0?line.slice(idx+1).trim():'';
+      ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(ix+18,y+22,12,0,7);ctx.fill();
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.fillStyle=ink;ctx.font="700 44px 'Plus Jakarta Sans'";ctx.fillText(lab,ix+54,y+22);
+      if(val){const lw=ctx.measureText(lab+'  ').width;ctx.fillStyle=GOLD;ctx.font="800 44px 'Plus Jakarta Sans'";
+        ctx.fillText(val,ix+54+lw,y+22);}
+      y+=78;});
+  }
+  else if(modo==='tip'){
+    const items=$('tips').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,5);
+    items.forEach((it,i)=>{
+      const n=String(i+1).padStart(2,'0');
+      ctx.fillStyle=GOLD;ctx.font="700 60px 'Source Serif 4'";ctx.textAlign='left';ctx.textBaseline='alphabetic';
+      ctx.fillText(n,ix,y+50);
+      const ny=drawRich(it,ix+108,y+4,iw-108,"700 44px 'Plus Jakarta Sans'",ink,54,'left');
+      y=Math.max(ny,y+72)+18;});
+  }
+  else if(modo==='simulacro'){
+    const nv=$('niveles').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,3);
+    nv.forEach(line=>{
+      const idx=line.indexOf(':');const lab=idx>=0?line.slice(0,idx):line;const val=idx>=0?line.slice(idx+1).trim():'';
+      const h=104;
+      ctx.fillStyle=cream?'#ffffff':'rgba(255,255,255,.06)';
+      ctx.strokeStyle=GOLD;ctx.lineWidth=3;rr(ix,y,iw,h,22);ctx.fill();ctx.stroke();
+      // check teal
+      ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(ix+58,y+h/2,30,0,7);ctx.fill();
+      ctx.fillStyle='#04221c';ctx.font="800 34px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('✓',ix+58,y+h/2+1);
+      ctx.fillStyle=ink;ctx.font="800 46px 'Plus Jakarta Sans'";ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.fillText(lab,ix+108,y+h/2);
+      if(val){ctx.fillStyle=cream?'rgba(10,42,94,.6)':'rgba(251,249,244,.75)';ctx.font="600 34px 'Plus Jakarta Sans'";
+        ctx.textAlign='right';ctx.fillText(val,ix+iw-28,y+h/2);}
+      y+=h+20;});
+    ctx.fillStyle=GOLD;ctx.font="800 40px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.fillText('100% GRATIS · sin tarjeta',cx,y+30);y+=60;
+  }
+
+  /* ----- pie: CTA + sello ----- */
+  const cta=$('cta').value.trim();
+  if(cta){ctx.fillStyle=ink;ctx.font="800 42px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(cta,cx,cardBottom-150);}
+  const fc=$('footchip').value.trim();
+  if(fc){pill(cx,cardBottom-104,fc,"800 32px 'Plus Jakarta Sans'",GOLD);}
+
+  /* ----- guías ----- */
+  if($('zonas').checked){
+    if(face){ctx.save();ctx.strokeStyle='rgba(255,255,255,.5)';ctx.setLineDash([16,12]);ctx.lineWidth=3;
+      rr(50,50,W-100,zoneH-86,28);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.font="700 38px 'Plus Jakarta Sans'";ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('🎥 tu rostro / video aquí',W/2,zoneH/2-20);ctx.restore();}
+    ctx.save();ctx.fillStyle='rgba(255,60,60,.14)';ctx.fillRect(0,Hh-60,W,60);ctx.fillRect(W-130,Hh-900,130,520);ctx.restore();
+  }
+}
+
+/* ---------- presets por modo (textos de ejemplo reales) ---------- */
+const PRESETS={
+  pregunta:{tema:'cream',kicker:'EXAMEN CNSC',chip:'NIVEL TÉCNICO',
+    titulo:'Un ciudadano se queja porque un funcionario lo atendió [grosero]. ¿Qué presentó?',
+    opciones:'Una petición\nUna queja\nUn reclamo\nUna denuncia',correcta:'',norma:'',
+    cta:'👇 Comenta A, B, C o D',footchip:'Una pregunta real cada día'},
+  porque:{tema:'cream',kicker:'LA RESPUESTA',chip:'',
+    titulo:'¿Queja o reclamo? Así no te confundes nunca:',
+    opciones:'Una petición\nUna queja\nUn reclamo\nUna denuncia',correcta:'1',norma:'Guía PQRSD · DAFP',
+    expl:'La [queja] es por la CONDUCTA de un servidor; el reclamo es por un SERVICIO deficiente. Aquí el problema fue el [trato] → es queja.',
+    cta:'¿Te sirvió? Guarda 📌',footchip:'Prepárate por TU cargo'},
+  dato:{tema:'navy',kicker:'CONVOCATORIA CNSC',chip:'',
+    titulo:'Nueva oferta de empleo público',cifra:'3.044',cifrasub:'vacantes en concurso de méritos',
+    detalles:'Inscripciones: 15–31 jul\nCompra de PIN: hasta 9 ago\nPlataforma: SIMO',
+    cta:'¿Vas a aplicar? Cuéntame 👇',footchip:'Te preparo por TU cargo'},
+  tip:{tema:'navy',kicker:'5 ERRORES',chip:'',
+    titulo:'Errores que te [bajan el puntaje] en la prueba',
+    tips:'Memorizar [leyes] en vez de entrenar el juicio\nNo leer el [caso completo]\nEstudiar [genérico], no por tu cargo\nDejar el [simulacro] para el final',
+    cta:'¿Cuál cometías? 👇',footchip:'Prepárate por TU cargo'},
+  simulacro:{tema:'navy',kicker:'SIMULACRO GRATIS',chip:'',
+    titulo:'Mide tu nivel [GRATIS] antes del examen',
+    niveles:'Asistencial: 20 preguntas\nTécnico: 20 preguntas\nProfesional: 20 preguntas',
+    cta:'🔗 Empieza en el link de la bio',footchip:'Tipo examen real CNSC'}
+};
+function applyPreset(){const p=PRESETS[$('modo').value];if(!p)return;
+  for(const k in p){if($(k))$(k).value=p[k];}
+  toggleGroups();render();}
+
+function toggleGroups(){const m=$('modo').value;
+  $('grp-opciones').style.display=(m==='pregunta'||m==='porque')?'block':'none';
+  $('grp-dato').style.display=(m==='dato')?'block':'none';
+  $('grp-tip').style.display=(m==='tip')?'block':'none';
+  $('grp-sim').style.display=(m==='simulacro')?'block':'none';}
+
+['tema','handle','kicker','chip','titulo','opciones','correcta','norma','expl',
+ 'cifra','cifrasub','detalles','tips','niveles','cta','footchip','facetop','zonas']
+ .forEach(id=>$(id).addEventListener('input',render));
+$('facetop').addEventListener('change',render);
+$('zonas').addEventListener('change',render);
+$('modo').addEventListener('change',applyPreset);
+$('dl').onclick=()=>{const z=$('zonas').checked;$('zonas').checked=false;render();
+  cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='flyer-video-'+$('modo').value+'.png';a.click();URL.revokeObjectURL(a.href);
+  $('zonas').checked=z;render();},'image/png');};
+
+async function boot(){try{await document.fonts.load("700 70px 'Source Serif 4'");
+  await document.fonts.load("800 44px 'Plus Jakarta Sans'");await document.fonts.ready;}catch(e){}
+  toggleGroups();render();}
+boot();
+</script>
+</body>
+</html>
