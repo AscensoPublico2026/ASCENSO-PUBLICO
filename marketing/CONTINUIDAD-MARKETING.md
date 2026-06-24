@@ -59,11 +59,20 @@
 - `competencia-tiktok/estudio-competidores.md` — plantilla estudio 6–7 competidores (en proceso).
 
 ## 5. Flujo de trabajo acordado
-- **3 publicaciones/día:** 9am (informativo/reactivo) · 3pm (pregunta CNSC, crema) · 8pm (valor/venta).
+
+### ⭐ Modelo de entrega diaria (acordado jun 2026) — ver `.kiro/steering/marketing-tiktok-workflow.md`
+- **3 videos/día:** 9am · 3pm · 8pm. Formato: **rostro arriba + flyer abajo** (la encargada da la cara).
+- **Videos A y B → los genera Kiro** completos (idea + guion + textos para el generador + caption/hashtags).
+- **Video C → reactivo, lo trae la usuaria:** pasa la idea/guion de la competencia + cifras/datos actuales;
+  Kiro arma NUESTRA versión (qué decir, qué mostrar, cómo organizar las cifras) con el ángulo "por TU cargo".
+- **Duración por tipo (lo que manda es la retención):** quiz 20–35 s · explicativo/"porqué" 45–90 s · reactivo 30–50 s.
+- **Gancho emocional en los primeros 2–3 s** + texto en pantalla desde el frame 1. Subtítulos + outro de marca siempre.
+
+### Operación
 - **Programar** posts en TikTok (Julio trabaja L–V 8–12 y 2–5; engancha en almuerzo y noche).
 - **Domingo:** planear + producir en lote la semana. **Entre semana:** contenido reactivo del día + responder comentarios.
 - **Copia + mejora:** la competencia inspira NIVEL y formato; el contenido es ORIGINAL nuestro.
-- **CTAs en cada post:** comentar (pregunta) + guardar 📌 + compartir.
+- **CTAs en cada post:** comentar (pregunta) + guardar 📌 + compartir. Responder comentarios la 1ª hora.
 - 🔒 **REGLA DE ORO:** las preguntas técnico-legales las **verifica Julio** (con su material/la ley) antes de publicar. Datos exactos = credibilidad.
 
 ## 6. Estado actual de publicaciones
