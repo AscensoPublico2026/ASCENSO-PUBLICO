@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { crearConvocatoria, toggleConvocatoria, eliminarConvocatoria } from "./actions";
+import EditarConvocatoriaForm from "./EditarConvocatoriaForm";
 
 export const dynamic = "force-dynamic";
 
@@ -73,15 +74,16 @@ export default async function AdminConvocatorias() {
       ) : (
         <div style={{ display: "grid", gap: 12 }}>
           {convs.map((c: any) => (
-            <div key={c.id} style={{ ...box, display: "flex", alignItems: "center", gap: 14 }}>
+            <div key={c.id} style={{ ...box, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
               {c.imagen_url && (
                 <img src={c.imagen_url} alt="" style={{ width: 50, height: 50, borderRadius: 8, objectFit: "cover", flexShrink: 0 }} />
               )}
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 200 }}>
                 <strong>{c.nombre}</strong>
                 {!c.activa && <span style={{ color: "#b00", fontSize: ".75rem", marginLeft: 8 }}>(inactiva)</span>}
                 <div style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>{c.entidad} · {c.etiqueta || c.estado}</div>
               </div>
+              <EditarConvocatoriaForm conv={c} />
               <form action={toggleConvocatoria.bind(null, c.id, c.activa)}>
                 <button style={{ background: "none", border: "1px solid var(--gris-borde)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", fontSize: ".82rem" }}>
                   {c.activa ? "Desactivar" : "Activar"}
