@@ -15,7 +15,7 @@
  */
 const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
 
-export default function ContadorCupos({ vendidos, total = 100 }: { vendidos: number; total?: number }) {
+export default function ContadorCupos({ vendidos, total = 200 }: { vendidos: number; total?: number }) {
   // Ventas reales + piso base, sin pasarse del total.
   const vendidosMostrados = Math.min(total, vendidos + CUPOS_BASE);
   const restantes = Math.max(0, total - vendidosMostrados);

@@ -5,7 +5,7 @@ import ContadorCupos from "../components/ContadorCupos";
 
 export const dynamic = "force-dynamic";
 
-const CUPOS_LANZAMIENTO = 100;
+const CUPOS_LANZAMIENTO = 200;
 
 export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
   let convocatorias: { id: string; nombre: string }[] = [];
@@ -49,20 +49,6 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
       <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Precio: $300.000 COP · pago único</p>
 
       <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
-
-      {(() => {
-        const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
-        const vendidosMostrados = Math.min(CUPOS_LANZAMIENTO, cursosVendidos + CUPOS_BASE);
-        if (vendidosMostrados >= CUPOS_LANZAMIENTO) {
-          return (
-            <div style={{ background: "#FFF3CD", border: "1px solid #E8A33D", borderRadius: 12, padding: "18px 22px", marginBottom: 16, textAlign: "center" }}>
-              <p style={{ margin: 0, fontWeight: 700, color: "#0A2A5E", fontSize: "1.05rem" }}>Los cupos del precio de lanzamiento se agotaron</p>
-              <p style={{ margin: "8px 0 0", color: "var(--texto-suave)", fontSize: ".88rem" }}>Escríbenos por WhatsApp para conocer disponibilidad futura.</p>
-            </div>
-          );
-        }
-        return null;
-      })()}
 
       {usuarioLogueado && (
         <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginBottom: 8, fontSize: ".85rem", color: "var(--verde)" }}>
@@ -119,22 +105,9 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
           <span>Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012 y la <Link href="/privacidad" style={{ color: "var(--azul)", textDecoration: "underline" }}>política de privacidad</Link>.</span>
         </label>
 
-        {(() => {
-          const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
-          const vendidosMostrados = Math.min(CUPOS_LANZAMIENTO, cursosVendidos + CUPOS_BASE);
-          if (vendidosMostrados >= CUPOS_LANZAMIENTO) {
-            return (
-              <div style={{ width: "100%", padding: 15, borderRadius: 12, background: "#ccc", color: "#666", fontWeight: 700, textAlign: "center", fontSize: "1rem", cursor: "not-allowed", marginTop: 24 }}>
-                Cupos agotados
-              </div>
-            );
-          }
-          return (
-            <button type="submit" className="btn btn-oro" style={{ width: "100%", padding: 15, marginTop: 24 }}>
-              Continuar al pago seguro →
-            </button>
-          );
-        })()}
+        <button type="submit" className="btn btn-oro" style={{ width: "100%", padding: 15, marginTop: 24 }}>
+          Continuar al pago seguro →
+        </button>
         <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", textAlign: "center", marginTop: 12 }}>
           Pago seguro con Wompi · PSE, Nequi y tarjetas
         </p>
