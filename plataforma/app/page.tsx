@@ -265,8 +265,8 @@ export default async function LandingPage() {
           <h2 className="center">Invierte en tu ascenso</h2>
           <p className="lead center" style={{ margin: "0 auto 38px" }}>Un único pago por tu curso personalizado completo.</p>
           <div className="precio-card">
-            <span className="precio-tag">🚀 Precio de lanzamiento</span>
-            <div className="precio-num">$300.000 <small>COP</small></div>
+            <span className="precio-tag">🚀 Precio de lanzamiento — ¡Agotados!</span>
+            <div className="precio-num" style={{ textDecoration: "line-through", opacity: 0.5 }}>$300.000 <small>COP</small></div>
             <p style={{ color: "var(--texto-suave)" }}>Pago único · Acceso a tu curso completo</p>
             <ul>
               <li>Plan personalizado de 21 días según tu cargo</li>
@@ -275,7 +275,19 @@ export default async function LandingPage() {
               <li>Guía de estrategia CNSC</li>
               <li>Acceso desde tu perfil durante la vigencia del curso</li>
             </ul>
-            <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
+            {(() => {
+              const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
+              const vendidosMostrados = Math.min(CUPOS_LANZAMIENTO, cursosVendidos + CUPOS_BASE);
+              const agotados = vendidosMostrados >= CUPOS_LANZAMIENTO;
+              if (agotados) {
+                return (
+                  <div style={{ width: "100%", padding: 15, borderRadius: 12, background: "#ccc", color: "#666", fontWeight: 700, textAlign: "center", fontSize: "1rem", cursor: "not-allowed" }}>
+                    Cupos agotados
+                  </div>
+                );
+              }
+              return <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>;
+            })()}
             <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
             <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
             <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? <a href={WA_ASESORIA} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos por WhatsApp</a> y te asesoramos sin compromiso antes de pagar.</span></div>

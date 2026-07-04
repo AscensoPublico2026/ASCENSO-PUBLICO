@@ -13,7 +13,7 @@
  *   Si no está definida, usa 35 por defecto. Para cambiar el número: ajusta esa
  *   variable en Vercel (y redespliega) — no hay que tocar código.
  */
-const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 35));
+const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
 
 export default function ContadorCupos({ vendidos, total = 100 }: { vendidos: number; total?: number }) {
   // Ventas reales + piso base, sin pasarse del total.
@@ -61,7 +61,11 @@ export default function ContadorCupos({ vendidos, total = 100 }: { vendidos: num
       </div>
 
       <div style={{ marginTop: 8, fontSize: ".78rem", color: "rgba(255,255,255,.7)" }}>
-        Ya hay <strong style={{ color: "#F6C56B" }}>{vendidosMostrados}</strong> aspirantes preparándose · asegura el tuyo antes de que se agoten.
+        {restantes > 0 ? (
+          <>Ya hay <strong style={{ color: "#F6C56B" }}>{vendidosMostrados}</strong> aspirantes preparándose · asegura el tuyo antes de que se agoten.</>
+        ) : (
+          <>Los <strong style={{ color: "#F6C56B" }}>{total}</strong> cupos del precio de lanzamiento se han agotado. ¡Gracias por la confianza!</>
+        )}
       </div>
     </div>
   );
