@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-SAL-06 · Procedimientos Quirúrgicos por Especialidad — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:        #0A2A5E;
+  --azul-medio:  #1A4A8A;
+  --azul-claro:  #2D6CC0;
+  --azul-suave:  #EAF1FB;
+  --azul-borde:  #C9DCF4;
+  --oro:         #E8A33D;
+  --oro-claro:   #F6C56B;
+  --oro-suave:   #FDF4E3;
+  --oro-borde:   #F0DCB0;
+  --crema:       #FBF9F4;
+  --blanco:      #FFFFFF;
+  --gris-bg:     #F2F0EA;
+  --gris-borde:  #E6E2D8;
+  --verde:       #1A7A4A;
+  --verde-suave: #E8F6EE;
+  --verde-borde: #BFE6CF;
+  --rojo:        #C0392B;
+  --rojo-suave:  #FCEDEB;
+  --rojo-borde:  #F2CDC8;
+  --ambar:       #B8600A;
+  --ambar-suave: #FBEFDD;
+  --ambar-borde: #EFD7B0;
+  --texto:       #2A3441;
+  --texto-suave: #5B6675;
+  --sombra:      0 4px 20px rgba(10,42,94,0.08);
+  --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
+  --radio:       16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+#readbar {
+  position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+  background: linear-gradient(90deg, var(--oro), var(--oro-claro));
+  z-index: 999; transition: width 0.1s linear;
+}
+header {
+  background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
+  color: var(--blanco);
+  padding: 42px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
+}
+header::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
+}
+.brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+.brand-logo {
+  width: 50px; height: 50px; border-radius: 13px;
+  background: linear-gradient(135deg, var(--oro-claro), var(--oro));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(232,163,61,0.4);
+}
+.brand-name { font-size: 1.6rem; font-weight: 800; }
+.brand-slogan { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 4px; }
+.doc-ref {
+  position: absolute; top: 16px; right: 18px; z-index: 3;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
+}
+.kicker {
+  display: inline-flex; align-items: center; gap: 11px;
+  margin: 24px 0 12px; position: relative; z-index: 2;
+  color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.kicker::before, .kicker::after {
+  content:''; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+header h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+.header-sub {
+  max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
+  color: rgba(255,255,255,0.82); font-size: 0.98rem;
+}
+.badges {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px; position: relative; z-index: 2;
+}
+.badge {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--azul);
+  display: flex; gap: 5px; padding: 11px 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 18px rgba(10,42,94,0.22);
+}
+nav button {
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
+  border: none; padding: 9px 16px; border-radius: 9px;
+  cursor: pointer; font-weight: 600; white-space: nowrap;
+  font-size: 0.85rem;
+}
+nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
+nav button.active {
+  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
+  color: var(--azul);
+  box-shadow: 0 4px 12px rgba(232,163,61,0.4);
+}
+main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
+.section { display: none; animation: fade 0.4s ease; }
+.section.visible { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ambar); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+}
+.eyebrow::before {
+  content:''; width: 26px; height: 3px;
+  background: linear-gradient(90deg,var(--oro),var(--oro-claro));
+  border-radius: 3px;
+}
+h2.sec-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
+  line-height: 1.2; margin-bottom: 20px;
+}
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 22px 24px;
+  margin: 16px 0;
+  box-shadow: var(--sombra);
+}
+.card-lead {
+  border-left: 5px solid var(--oro);
+  background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%);
+}
+.lista { list-style:none; margin:6px 0 16px; }
+.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+.narr { background:linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%); border-left:5px solid var(--oro); padding:18px 22px; border-radius:13px; margin:18px 0; font-style:italic; color:var(--texto); }
+.flujo { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:22px; margin:18px 0; box-shadow:var(--sombra); }
+.flujo-paso { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gris-borde); }
+.flujo-paso:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.flujo-num { width:36px; height:36px; border-radius:50%; background:var(--azul); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+.flujo-content h4 { margin:0 0 6px; color:var(--azul); font-size:1rem; }
+.flujo-content p { margin:0; font-size:.9rem; }
+.checkpoint { background:var(--azul-suave); border:2px solid var(--azul-borde); border-radius:14px; padding:18px 20px; margin:20px 0; }
+.checkpoint-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1.05rem; }
+.checkpoint-q { font-weight:600; margin:10px 0; color:var(--texto); }
+.checkpoint-opts { list-style:none; margin:10px 0; padding:0; }
+.checkpoint-opts li { padding:10px 14px; margin:6px 0; background:#fff; border:1.5px solid var(--gris-borde); border-radius:9px; cursor:pointer; transition:all .15s; }
+.checkpoint-opts li:hover { border-color:var(--oro); background:var(--oro-suave); }
+.checkpoint-opts li.ok { border-color:var(--verde); background:var(--verde-suave); }
+.checkpoint-opts li.no { border-color:var(--rojo); background:var(--rojo-suave); opacity:.6; }
+.checkpoint-fb { display:none; margin-top:8px; padding:10px 13px; border-radius:8px; font-size:.88rem; }
+.checkpoint-fb.show { display:block; }
+.checkpoint-fb.ok { background:var(--verde-suave); border-left:3px solid var(--verde); }
+.checkpoint-fb.no { background:var(--rojo-suave); border-left:3px solid var(--rojo); }
+.practica { background:var(--verde-suave); border:1px solid var(--verde-borde); border-left:5px solid var(--verde); border-radius:13px; padding:16px 20px; margin:16px 0; }
+.practica-title { font-weight:800; color:var(--verde); margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+.practica p { margin-bottom:10px; font-size:.9rem; }
+.practica p:last-child { margin-bottom:0; }
+.ojo { background:var(--ambar-suave); border:1px solid var(--ambar-borde); border-radius:10px; padding:11px 16px; margin:14px 0; display:flex; align-items:flex-start; gap:10px; }
+.ojo-icon { font-size:1.2rem; flex-shrink:0; }
+.ojo-text { font-size:.88rem; color:var(--texto); }
+.ojo-text strong { color:var(--ambar); }
+.fuentes { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:18px 22px; margin:22px 0; }
+.fuentes-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1rem; }
+.fuentes ul { list-style:none; padding:0; margin:0; }
+.fuentes ul li { margin-bottom:10px; padding-left:26px; position:relative; }
+.fuentes ul li::before { content:'🔗'; position:absolute; left:0; }
+.fuentes ul li:last-child { margin-bottom:0; }
+.fuentes a { color:var(--azul-claro); font-weight:600; text-decoration:none; border-bottom:1px dotted var(--azul-claro); }
+.fuentes a:hover { color:var(--oro); border-bottom-color:var(--oro); }
+.concepto { background:linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+.concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom:2px dashed var(--oro-borde); }
+.ch-icon { font-size:1.4rem; }
+.concepto-body { padding:6px 14px 12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.capa { padding:13px 15px; border-radius:12px; display:flex; gap:11px; align-items:flex-start; background:var(--blanco); border:1px solid var(--gris-borde); transition:transform .15s; }
+.capa:hover { transform:translateY(-2px); box-shadow:var(--sombra); }
+.capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+.capa-icon.def { background:var(--azul-suave); }
+.capa-icon.apl { background:var(--verde-suave); }
+.capa-icon.eje { background:var(--oro-suave); }
+.capa-icon.cnsc { background:var(--rojo-suave); }
+.capa-content { flex:1; }
+.capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+.capa.cap-def .label { color:var(--azul); }
+.capa.cap-apl .label { color:var(--verde); }
+.capa.cap-eje .label { color:var(--ambar); }
+.capa.cap-cnsc .label { color:var(--rojo); }
+.capa-content p { margin-bottom:0; font-size:.9rem; line-height:1.55; }
+.box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+.box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+.box p:last-child { margin-bottom:0; }
+.box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+.box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+.box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+.box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+.box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+.tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:#FAF8F2; }
+.caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+.caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+.caso-body { padding:18px 20px; }
+.caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+.caso-body .label:first-child { margin-top:0; }
+.resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+.trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+.trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+.trampa-detail { padding:16px 18px; background:var(--blanco); }
+.trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+.trampa-detail .t-row:last-child { margin-bottom:0; }
+.trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+.trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+.trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+.flash-intro { text-align:center; margin-bottom:20px; color:var(--texto-suave); }
+.flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom:12px; }
+.flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+.flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+.flashcard.flipped .flashcard-inner { transform:rotateY(180deg); }
+.flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+.flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+.flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+.flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+.flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+.flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+.flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+.flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+.flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+.flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+.flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+.glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+.glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+.glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+.glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+.quiz-intro { text-align:center; margin-bottom:18px; }
+.quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+.quiz-formato strong { color:var(--azul); }
+.dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+.tag.b { background:var(--verde-suave); color:var(--verde); }
+.tag.i { background:var(--azul-suave); color:var(--azul); }
+.tag.a { background:var(--rojo-suave); color:var(--rojo); }
+.pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+.pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+.nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+.nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+.nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+.nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+.q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+.q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+.opciones { display:flex; flex-direction:column; gap:9px; }
+.opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+.opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+.opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+.opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+.opcion.correcta .letra { background:var(--verde); color:#fff; }
+.opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+.opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+.opcion.bloqueada { pointer-events:none; }
+.feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+.feedback.show { display:block; }
+.feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+.feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+#resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+#resultado.show { display:block; }
+.score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+.btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+.btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+.resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+.resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+.resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+.cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+.cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+.cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+.cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+.advance-bar { margin-top:36px; padding-top:22px; border-top:2px dashed var(--oro); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.advance-hint { color:var(--texto-suave); font-style:italic; }
+.advance-btn { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); border:none; padding:12px 26px; border-radius:11px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(232,163,61,.35); transition:all .2s; font-family:inherit; font-size:.92rem; }
+.advance-btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.advance-btn.final { background:linear-gradient(135deg,var(--verde),#2A9F66); color:#fff; }
+.h3-chip { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--oro); color:var(--azul); font-weight:800; font-size:.82rem; margin-right:8px; }
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-SAL-06</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 60 60" width="32" height="32">
+        <path d="M18 42 L30 18 L35 23 L42 18" stroke="#0A2A5E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M38 16 L42 18 L40 22 Z" fill="#0A2A5E"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada al ascenso público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 14 · Funcional · Salud</div>
+  <h1>Procedimientos Quirúrgicos por Especialidad</h1>
+  <p class="header-sub">Reconoce las particularidades de instrumentación según la especialidad quirúrgica: cada tipo de cirugía exige un rol adaptado del instrumentador</p>
+  <div class="badges">
+    <span class="badge">📅 Día 14 de 21</span>
+    <span class="badge">⏱ 90-105 min</span>
+    <span class="badge">🎯 Prueba escrita CNSC</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+
+
+<!-- SECCIÓN 0: OBJETIVO -->
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+
+  <div class="narr">
+    <strong>Imagina que en la misma semana</strong> te asignan una apendicectomía, una cesárea y una cirugía de fractura. Cada una exige un set distinto, una postura distinta del paciente y hasta un vocabulario técnico distinto. El instrumentador competente no memoriza recetas fijas: entiende la lógica detrás de cada especialidad para adaptarse con seguridad a lo que venga. Esta guía te prepara para responder con seguridad a las preguntas CNSC sobre instrumentación en cirugía general, obstétrica, traumatológica y urológica.
+  </div>
+
+  <div class="card card-lead">
+    <p><strong>Al finalizar esta guía dominarás:</strong></p>
+    <ul class="lista">
+      <li><strong>Instrumentación en cirugía general:</strong> laparotomías, apendicectomía, colecistectomía.</li>
+      <li><strong>Instrumentación en cirugía obstétrica:</strong> la cesárea y sus particularidades.</li>
+      <li><strong>Instrumentación en cirugía traumatológica:</strong> reducción abierta y fijación interna (RAFI), artroscopias.</li>
+      <li><strong>Instrumentación en cirugía urológica:</strong> prostatectomía, nefrectomía.</li>
+      <li><strong>Cómo adaptar tu rol de instrumentador</strong> según las exigencias específicas de cada especialidad.</li>
+    </ul>
+  </div>
+
+  <div class="box gold">
+    <div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al terminar, reconocerás <strong>qué instrumental y qué consideraciones son propias de cada especialidad</strong>, y podrás adaptar tu desempeño según el tipo de cirugía programada. Todo lo que la CNSC pregunta sobre instrumentación por especialidad está aquí, sin relleno.</p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 1: IMPORTANCIA -->
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema aparece en la prueba CNSC?</h2>
+
+  <div class="card">
+    <p>La CNSC evalúa tu <strong>conocimiento de procedimientos por especialidad</strong> porque:</p>
+    <ul class="lista">
+      <li><strong>Refleja la realidad del cargo:</strong> un instrumentador rota entre distintas especialidades según la programación quirúrgica de su institución.</li>
+      <li><strong>Cada especialidad tiene riesgos y consideraciones propias:</strong> la cesárea exige atención a dos pacientes (madre y neonato), la traumatología exige manejo de implantes, la urología a menudo trabaja con endoscopios.</li>
+      <li><strong>Aparece en casos situacionales:</strong> la CNSC pregunta "¿qué debe anticipar el instrumentador en esta cirugía específica?".</li>
+    </ul>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📊 Dato clave</div>
+    <p>Aunque los principios generales de instrumentación (vistos en FUN-SAL-04) son transversales, cada especialidad añade <strong>consideraciones específicas</strong> que la CNSC evalúa para verificar que el aspirante comprende la diversidad real del trabajo quirúrgico.</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Si no dominas este tema</div>
+    <p>Podrías no anticipar necesidades específicas de una especialidad (como material adicional para el recién nacido en una cesárea) o confundir instrumental básico entre especialidades. <strong>Este es un tema de aplicación práctica de los principios generales a contextos concretos.</strong></p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Contenido esencial</h2>
+
+  <p><strong>Esta sección desarrolla 6 conceptos clave.</strong> Cada uno se presenta en 4 capas: <strong style="color:var(--azul);">🟦 Definición</strong> · <strong style="color:var(--verde);">🟩 Aplicación</strong> · <strong style="color:var(--ambar);">🟨 Ejemplo real</strong> · <strong style="color:var(--rojo);">🟥 Trampa CNSC</strong>.</p>
+
+  <!-- CONCEPTO 1 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🔵</span>
+      <span>1. Cirugía General: Laparotomías y Apendicectomía</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>laparotomía</strong> es la apertura quirúrgica de la cavidad abdominal para diagnosticar o tratar patologías. La <strong>apendicectomía</strong> (extracción del apéndice) es uno de los procedimientos de cirugía general más frecuentes, realizada de forma abierta o laparoscópica.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El set básico de cirugía general incluye bisturí, tijeras Mayo y Metzenbaum, pinzas de disección con y sin dientes, pinzas hemostáticas Kelly, separadores (Farabeuf, Balfour) y portaagujas. En apendicectomía, el instrumentador debe anticipar mayor necesidad de gasas si hay perforación o mayor inflamación de lo esperado.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una apendicectomía abierta, el instrumentador organiza el set estándar de cirugía general y, al confirmarse un apéndice perforado, anticipa mayor cantidad de gasas y solución de irrigación para el lavado de la cavidad.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>qué instrumental corresponde al set básico de cirugía general</strong>. <strong>Trampa típica:</strong> confundir el set básico general con instrumental altamente especializado de otras especialidades.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 2 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🤰</span>
+      <span>2. Cirugía Obstétrica: La Cesárea</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La cesárea es el procedimiento quirúrgico para extraer al bebé a través de una incisión abdominal y uterina, cuando el parto vaginal no es posible o seguro. Es un procedimiento de <strong>dos pacientes</strong>: la madre y el recién nacido, cada uno con necesidades de atención simultáneas.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El instrumentador de cesárea debe conocer el set específico (incluye instrumental de histerorrafia para el cierre uterino) y anticipar la coordinación con el equipo de neonatología, que debe estar presente y listo para recibir al recién nacido. La rapidez en la fase de extracción fetal es crítica.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Antes de iniciar una cesárea, el instrumentador confirma que el equipo de neonatología está presente en sala y que la cuna de calor radiante está lista, además de tener organizado el instrumental específico para la histerorrafia.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de cesárea y pregunta <strong>qué coordinación adicional se requiere</strong>. <strong>Trampa típica:</strong> tratar la cesárea como una cirugía abdominal más, sin considerar la coordinación con neonatología.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 1</div>
+    <p class="checkpoint-q"><strong>Antes de iniciar una cesárea, ¿qué coordinación adicional debe verificar el instrumentador que no aplica en una cirugía abdominal general?</strong></p>
+    <ul class="checkpoint-opts" id="cp1">
+      <li data-ok="0">Solo la disponibilidad de instrumental de corte</li>
+      <li data-ok="1">La presencia del equipo de neonatología, listo para recibir al recién nacido</li>
+      <li data-ok="0">Ninguna coordinación adicional distinta a cualquier cirugía abdominal</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb1"></div>
+  </div>
+
+
+  <!-- CONCEPTO 3 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🦴</span>
+      <span>3. Cirugía Traumatológica: RAFI y Artroscopias</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>Reducción Abierta y Fijación Interna (RAFI)</strong> es el procedimiento que corrige fracturas mediante cirugía abierta, usando implantes (placas, tornillos, clavos) para estabilizar el hueso. La <strong>artroscopia</strong> es una técnica mínimamente invasiva que usa una cámara e instrumental especializado para diagnosticar y tratar problemas articulares (rodilla, hombro) a través de pequeñas incisiones.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>En RAFI, el instrumentador maneja instrumental especializado de ortopedia (taladros, destornilladores quirúrgicos, moldeadores de placas) y debe verificar el implante correcto (tamaño, tipo) contra la planificación preoperatoria (radiografías, plantillas). En artroscopia, se requiere manejo de equipos de video y cámaras, además de instrumental miniaturizado específico.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Antes de una RAFI de fémur, el instrumentador verifica que el set de implantes disponible (placas y tornillos de los tamaños indicados según la planificación preoperatoria) esté completo y correctamente identificado, evitando errores de tamaño durante la cirugía.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de RAFI o artroscopia y pregunta <strong>qué verificación específica corresponde</strong>. <strong>Trampa típica:</strong> no verificar el tamaño correcto del implante contra la planificación preoperatoria, asumiendo que "cualquier tamaño disponible sirve".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practica">
+    <div class="practica-title">📋 En la práctica</div>
+    <p><strong>Verificación de implantes en cirugía traumatológica:</strong> siempre cruzar el implante disponible (placa, tornillo, clavo) contra la planificación preoperatoria (radiografías, plantillas de medición) ANTES de abrir el empaque estéril, para evitar desperdicio de material y errores de tamaño durante la cirugía.</p>
+  </div>
+
+  <!-- CONCEPTO 4 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🫘</span>
+      <span>4. Cirugía Urológica: Prostatectomía y Nefrectomía</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>prostatectomía</strong> es la extracción quirúrgica total o parcial de la próstata, frecuentemente por cáncer o hiperplasia benigna. La <strong>nefrectomía</strong> es la extracción quirúrgica de un riñón, total o parcial, por patologías como tumores o daño renal severo. Ambos procedimientos pueden realizarse de forma abierta o laparoscópica/robótica.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>En cirugía urológica frecuentemente se usan equipos de endoscopia (cistoscopios, resectoscopios) y el instrumentador debe conocer su manejo, incluido el sistema de irrigación continua característico de muchos procedimientos urológicos. También se requiere manejo cuidadoso de catéteres y sondas asociadas al procedimiento.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una resección transuretral de próstata (RTU), el instrumentador prepara y verifica el sistema de irrigación continua necesario para mantener la visibilidad del campo durante el procedimiento endoscópico, además del resectoscopio y sus componentes.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario urológico y pregunta <strong>qué equipo o sistema específico corresponde</strong>. <strong>Trampa típica:</strong> no considerar el sistema de irrigación continua como parte esencial de muchos procedimientos endoscópicos urológicos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 2</div>
+    <p class="checkpoint-q"><strong>Antes de una resección transuretral de próstata (procedimiento endoscópico urológico), ¿qué sistema adicional debe preparar el instrumentador, más allá del instrumental básico?</strong></p>
+    <ul class="checkpoint-opts" id="cp2">
+      <li data-ok="0">Un set de implantes traumatológicos</li>
+      <li data-ok="1">Un sistema de irrigación continua para mantener visibilidad del campo endoscópico</li>
+      <li data-ok="0">Instrumental de histerorrafia</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb2"></div>
+  </div>
+
+  <!-- CONCEPTO 5 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🔄</span>
+      <span>5. Adaptación del Rol del Instrumentador según la Especialidad</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La adaptación es la capacidad del instrumentador de ajustar su preparación, conocimiento técnico y anticipación según la especialidad quirúrgica programada, sin perder los principios generales de bioseguridad, asepsia y técnica de entrega vistos en guías anteriores.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Independientemente de la especialidad, el instrumentador siempre: verifica el instrumental contra la lista del procedimiento, mantiene la asepsia, entrega de forma segura y anticipa los tiempos quirúrgicos. Lo que cambia es el CONOCIMIENTO ESPECÍFICO requerido: implantes en traumatología, sistemas de irrigación en urología, coordinación neonatal en obstetricia.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Un instrumentador que rota entre cirugía general, traumatología y urología en la misma semana aplica siempre los mismos principios de asepsia y entrega segura, pero adapta su conocimiento específico y su lista de verificación según la especialidad del día.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea una situación que combina principios generales con un contexto de especialidad específica. <strong>Trampa típica:</strong> pensar que los principios de bioseguridad y asepsia "cambian" según la especialidad; en realidad son constantes, y lo que cambia es el conocimiento técnico específico aplicado sobre esa base.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 6 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">📋</span>
+      <span>6. Verificación Preoperatoria Específica por Especialidad</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Más allá de la Lista de Chequeo de Cirugía Segura general (vista en FUN-SAL-03), cada especialidad exige verificaciones preoperatorias específicas: en traumatología, la disponibilidad de implantes del tamaño correcto según imágenes diagnósticas; en obstetricia, la coordinación con neonatología; en urología, la disponibilidad y funcionamiento de equipos endoscópicos y sistemas de irrigación.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El instrumentador debe conocer, para cada especialidad en la que trabaja, cuál es esa "capa adicional" de verificación específica, sumándola siempre a la verificación general estándar, nunca sustituyéndola.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Antes de una artroscopia de rodilla, el instrumentador realiza la verificación estándar de instrumental y, adicionalmente, verifica el correcto funcionamiento de la torre de video y la cámara artroscópica, un elemento específico de esta técnica.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de una especialidad y pregunta <strong>qué verificación adicional específica corresponde</strong>. <strong>Trampa típica:</strong> omitir la verificación específica de la especialidad asumiendo que la verificación general estándar ya es suficiente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fuentes">
+    <div class="fuentes-title">🔗 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/resolucion-3100-de-2019.pdf" target="_blank">Resolución 3100 de 2019 — Estándares de habilitación de servicios de salud</a> (MinSalud)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1164_2007.html" target="_blank">Ley 1164 de 2007 — Talento Humano en Salud</a> (Secretaría del Senado)</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Diferencias clave</h2>
+
+  <p>La CNSC diseña distractores basados en confusiones típicas. Estas tablas te ayudan a distinguir conceptos que suenan similares pero son distintos.</p>
+
+  <h3><span class="h3-chip">1</span> Instrumental Específico por Especialidad</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Especialidad</th><th>Instrumental/equipo distintivo</th><th>Consideración clave</th></tr>
+      <tr><td><strong>Cirugía general</strong></td><td>Set básico: bisturí, pinzas, separadores, portaagujas</td><td>Anticipar mayor material ante hallazgos inflamatorios</td></tr>
+      <tr><td><strong>Obstétrica</strong></td><td>Instrumental de histerorrafia</td><td>Coordinación con neonatología</td></tr>
+      <tr><td><strong>Traumatológica</strong></td><td>Implantes (placas, tornillos), taladros</td><td>Verificar tamaño contra planificación preoperatoria</td></tr>
+      <tr><td><strong>Urológica</strong></td><td>Endoscopios, sistema de irrigación continua</td><td>Manejo de irrigación y visibilidad del campo</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"El instrumental básico general sirve para cualquier especialidad."</strong> Falso. Cada especialidad añade equipamiento y verificaciones específicas al set básico.</p></div>
+
+  <h3><span class="h3-chip">2</span> Cirugía Abierta vs. Mínimamente Invasiva</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Cirugía abierta</th><th>Mínimamente invasiva (laparoscopia/artroscopia)</th></tr>
+      <tr><td><strong>Incisión</strong></td><td>Amplia, acceso directo</td><td>Pequeñas incisiones, acceso por cámara</td></tr>
+      <tr><td><strong>Equipo distintivo</strong></td><td>Instrumental convencional</td><td>Torre de video, cámara, instrumental miniaturizado</td></tr>
+      <tr><td><strong>Verificación adicional</strong></td><td>Instrumental estándar</td><td>Funcionamiento de la torre de video antes de iniciar</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"No es necesario verificar equipos de video antes de una cirugía mínimamente invasiva."</strong> Falso. La verificación del funcionamiento de cámara y torre de video es esencial antes de iniciar estos procedimientos.</p></div>
+
+  <h3><span class="h3-chip">3</span> Prostatectomía vs. Nefrectomía</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Prostatectomía</th><th>Nefrectomía</th></tr>
+      <tr><td><strong>Órgano</strong></td><td>Próstata</td><td>Riñón</td></tr>
+      <tr><td><strong>Causa frecuente</strong></td><td>Cáncer o hiperplasia benigna</td><td>Tumores o daño renal severo</td></tr>
+      <tr><td><strong>Vía frecuente</strong></td><td>Endoscópica (RTU) o abierta/robótica</td><td>Abierta o laparoscópica</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Todos los procedimientos urológicos usan el mismo sistema de irrigación y equipo."</strong> Falso. La vía de acceso (endoscópica, abierta, laparoscópica) determina el equipo específico requerido.</p></div>
+
+  <h3><span class="h3-chip">4</span> Verificación General vs. Verificación Específica de Especialidad</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Verificación general (Lista OMS)</th><th>Verificación específica de especialidad</th></tr>
+      <tr><td><strong>Aplica a</strong></td><td>Toda cirugía, sin excepción</td><td>Solo a la especialidad correspondiente</td></tr>
+      <tr><td><strong>Ejemplo</strong></td><td>Identidad, sitio, procedimiento</td><td>Tamaño de implante, presencia de neonatología, equipo de video</td></tr>
+      <tr><td><strong>Relación entre ambas</strong></td><td>Se complementan, nunca se sustituyen</td><td>Se complementan, nunca se sustituyen</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"La verificación específica de especialidad sustituye a la Lista de Chequeo general."</strong> Falso. Ambas son complementarias y obligatorias, ninguna sustituye a la otra.</p></div>
+</section>
+
+
+<!-- SECCIÓN 4: CASOS CNSC -->
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos CNSC</span>
+  <h2 class="sec-title">📂 Casos situacionales tipo CNSC</h2>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 · Coordinación en cesárea</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Una cesárea de urgencia está programada para iniciar en pocos minutos. El instrumentador nota que el equipo de neonatología aún no ha llegado a sala.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Comunicar de inmediato la ausencia del equipo de neonatología al circulante y al cirujano, gestionando su llegada urgente antes de proceder con la extracción fetal.</strong> — La presencia de neonatología es una verificación específica indispensable en cesárea, dado que el recién nacido requiere atención inmediata al nacer.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 · Verificación de implante en RAFI</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Antes de una RAFI de fémur, el instrumentador nota que el set de implantes disponible no coincide exactamente con los tamaños indicados en la planificación preoperatoria basada en las radiografías del paciente.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Informar de inmediato la discrepancia antes de abrir cualquier empaque estéril, y gestionar la consecución del set correcto según la planificación preoperatoria.</strong> — Usar un implante de tamaño incorrecto puede comprometer gravemente el resultado quirúrgico y la recuperación del paciente.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 · Sistema de irrigación en cirugía urológica</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Antes de una resección transuretral de próstata, el instrumentador verifica el instrumental básico pero no revisa el sistema de irrigación continua necesario para el procedimiento endoscópico.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué consecuencia puede tener esta omisión?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Comprometer la visibilidad del campo quirúrgico durante el procedimiento, ya que el sistema de irrigación continua es esencial para mantener el campo despejado en cirugía endoscópica urológica.</strong> — La verificación específica de la especialidad se suma siempre a la verificación general básica, nunca se omite.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 4 · Adaptación entre especialidades</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un instrumentador que trabajó toda la mañana en cirugía general debe atender por la tarde una artroscopia de rodilla, especialidad con la que tiene menos experiencia reciente.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Repasar previamente el set y las particularidades específicas de la artroscopia (funcionamiento de la torre de video, instrumental miniaturizado) antes de iniciar, manteniendo siempre los principios generales de asepsia y entrega segura ya dominados.</strong> — La adaptación a cada especialidad requiere actualizar el conocimiento técnico específico, sin perder los principios generales transversales.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 5 · Hallazgo inesperado en apendicectomía</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante una apendicectomía programada como sencilla, el cirujano encuentra un apéndice perforado con mayor inflamación y contaminación de la cavidad de lo esperado.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada del instrumentador?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Anticipar mayor cantidad de gasas y solución de irrigación para el lavado de la cavidad, comunicando al circulante si se requiere material adicional, sin esperar solicitud explícita.</strong> — La anticipación proactiva ante hallazgos inesperados, incluso dentro de la misma especialidad, es una competencia esperada del instrumentador.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5: ERRORES FRECUENTES -->
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Los 6 errores que más cuestan puntos</h2>
+
+  <div class="box danger"><div class="box-title">❌ Error 1 · No coordinar con neonatología antes de una cesárea</div><p><strong>El error:</strong> tratar la cesárea como cualquier cirugía abdominal sin verificar la presencia del equipo de neonatología.</p><p><strong>Por qué falla:</strong> el recién nacido requiere atención inmediata que solo puede dar personal especializado presente en sala.</p><p><strong>Cómo corregir:</strong> verifica siempre la presencia de neonatología antes de iniciar una cesárea.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 2 · No verificar tamaño de implantes en traumatología</div><p><strong>El error:</strong> asumir que "cualquier tamaño disponible sirve" sin cruzar contra la planificación preoperatoria.</p><p><strong>Por qué falla:</strong> un implante de tamaño incorrecto compromete el resultado quirúrgico y la recuperación del paciente.</p><p><strong>Cómo corregir:</strong> cruza siempre el implante disponible contra las imágenes diagnósticas y la planificación antes de abrir el empaque estéril.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 3 · Omitir verificación del sistema de irrigación en urología</div><p><strong>El error:</strong> verificar solo el instrumental básico sin revisar el sistema de irrigación continua en procedimientos endoscópicos.</p><p><strong>Por qué falla:</strong> compromete la visibilidad del campo quirúrgico durante el procedimiento.</p><p><strong>Cómo corregir:</strong> incluye siempre la verificación del sistema de irrigación como parte de la preparación en cirugía urológica endoscópica.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 4 · No verificar torre de video en cirugía mínimamente invasiva</div><p><strong>El error:</strong> omitir la comprobación del funcionamiento de cámara y torre de video antes de iniciar laparoscopia o artroscopia.</p><p><strong>Por qué falla:</strong> una falla técnica del equipo de video en medio del procedimiento genera demoras críticas.</p><p><strong>Cómo corregir:</strong> verifica siempre el funcionamiento de estos equipos antes de que el paciente esté en la mesa.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 5 · Asumir que los principios generales cambian según la especialidad</div><p><strong>El error:</strong> pensar que la asepsia o la entrega segura "se relajan" o "cambian" en ciertas especialidades.</p><p><strong>Por qué falla:</strong> los principios generales de bioseguridad y técnica son constantes; solo cambia el conocimiento técnico específico aplicado sobre ellos.</p><p><strong>Cómo corregir:</strong> mantén siempre los principios generales, adaptando solo el conocimiento específico de cada especialidad.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 6 · No anticipar mayor material ante hallazgos complejos</div><p><strong>El error:</strong> mantener el set y material previstos originalmente aunque el cirujano informe un hallazgo más complejo de lo esperado.</p><p><strong>Por qué falla:</strong> genera demoras evitables al tener que solicitar material adicional en medio del procedimiento.</p><p><strong>Cómo corregir:</strong> anticipa y prepara material adicional en cuanto se anuncia un hallazgo más complejo, sin esperar solicitud explícita.</p></div>
+</section>
+
+<!-- SECCIÓN 6: TIPS -->
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 6 estrategias para ganar puntos</h2>
+
+  <div class="box ok"><div class="box-title">✅ Tip 1 · Principios generales + capa específica</div><p>En cada caso, identifica primero qué principio general aplica (asepsia, entrega segura) y luego qué añade la especialidad (implante, irrigación, neonatología).</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 · Cesárea = dos pacientes</div><p>Recuerda siempre que la cesárea involucra a la madre Y al recién nacido; la coordinación con neonatología es la clave distintiva de esta especialidad.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 · Traumatología = verificación de implante contra planificación</div><p>Ante cualquier caso de RAFI, la respuesta correcta siempre incluye verificar el tamaño del implante contra las imágenes diagnósticas antes de abrir el empaque.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 · Urología endoscópica = irrigación continua</div><p>Si el caso menciona resección transuretral o procedimiento endoscópico urológico, piensa siempre en el sistema de irrigación como elemento clave a verificar.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 · Mínimamente invasivo = verificar torre de video</div><p>Ante laparoscopia o artroscopia, la respuesta correcta siempre incluye verificar el funcionamiento del equipo de video antes de iniciar.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 · La especialidad no cambia los principios, los complementa</div><p>Descarta cualquier opción que sugiera "relajar" bioseguridad o asepsia por el tipo de especialidad; los principios generales siempre se mantienen.</p></div>
+</section>
+
+<!-- SECCIÓN 7: TRAMPAS -->
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 4 trampas diseñadas por la CNSC</h2>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 1 · "La cesárea es solo una cirugía abdominal más"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> ambas involucran abrir el abdomen, parecen equivalentes en preparación.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> la cesárea involucra dos pacientes simultáneos y requiere coordinación con neonatología, algo que no aplica en cirugía abdominal general.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "La cesárea exige verificación adicional de la presencia y disposición del equipo de neonatología antes de proceder."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 2 · "Cualquier implante disponible sirve si es del tipo correcto"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> si el tipo de implante coincide (por ejemplo, placa para fémur), parece suficiente.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> el tamaño exacto debe coincidir con la planificación preoperatoria basada en imágenes diagnósticas del paciente específico.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se verifica el implante exacto (tipo y tamaño) contra la planificación preoperatoria antes de usarlo."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 3 · "El sistema de irrigación es opcional en cirugía urológica"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> parece un elemento secundario frente al instrumental "principal".</div><div class="t-row malo"><strong>Por qué es trampa:</strong> sin irrigación adecuada, la visibilidad del campo endoscópico se compromete gravemente, afectando la seguridad del procedimiento.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "El sistema de irrigación continua es esencial y debe verificarse siempre en procedimientos endoscópicos urológicos."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 4 · "Los principios de asepsia se relajan en cirugías menores o rápidas"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> una cirugía "rápida o sencilla" parece justificar menor rigor.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> los principios de asepsia y bioseguridad son constantes, independientemente de la duración o aparente sencillez del procedimiento.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Los principios de asepsia se mantienen sin excepción, sin importar la duración o especialidad de la cirugía."</div></div></div>
+</section>
+
+
+<!-- SECCIÓN 8: REPASO (Flashcards) -->
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards — Repaso activo</h2>
+  <p class="flash-intro">Estas 10 tarjetas condensan los conceptos esenciales. Haz clic para voltear y ver la respuesta.</p>
+  <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+  <div class="flashcard" id="flashcard">
+    <div class="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <span class="label">Pregunta</span>
+        <p class="pregunta-flash" id="flashFront"></p>
+        <small class="hint">Haz clic para ver la respuesta</small>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <span class="label">Respuesta</span>
+        <p class="respuesta-flash" id="flashBack"></p>
+      </div>
+    </div>
+  </div>
+  <div class="flashcard-controls">
+    <button id="flashPrev">← Anterior</button>
+    <button id="flashFlip" class="primary">Voltear tarjeta</button>
+    <button id="flashNext">Siguiente →</button>
+  </div>
+</section>
+
+<!-- SECCIÓN 9: RESUMEN + GLOSARIO -->
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen y Glosario</span>
+  <h2 class="sec-title">📋 Resumen ejecutivo</h2>
+  <div class="resumen-grid">
+    <div class="resumen-item"><h4>🔵 Cirugía general</h4><p>Set básico estándar: bisturí, pinzas, separadores, portaagujas. Anticipar más material ante hallazgos inflamatorios.</p></div>
+    <div class="resumen-item"><h4>🤰 Obstétrica</h4><p>Cesárea: dos pacientes simultáneos. Coordinación obligatoria con neonatología.</p></div>
+    <div class="resumen-item"><h4>🦴 Traumatológica</h4><p>RAFI exige verificar implantes contra planificación preoperatoria. Artroscopia requiere torre de video.</p></div>
+    <div class="resumen-item"><h4>🫘 Urológica</h4><p>Procedimientos endoscópicos requieren sistema de irrigación continua para visibilidad del campo.</p></div>
+    <div class="resumen-item"><h4>🔄 Adaptación</h4><p>Principios generales constantes; conocimiento técnico específico varía según especialidad.</p></div>
+    <div class="resumen-item"><h4>📋 Verificación específica</h4><p>Se suma siempre a la Lista de Chequeo general, nunca la sustituye.</p></div>
+  </div>
+
+  <h3 style="margin-top:32px;">📚 Glosario</h3>
+  <div class="glosario">
+    <div class="glo-item"><dt>Laparotomía</dt><dd>Apertura quirúrgica de la cavidad abdominal para diagnóstico o tratamiento.</dd></div>
+    <div class="glo-item"><dt>Histerorrafia</dt><dd>Sutura del útero, procedimiento característico del cierre en cesárea.</dd></div>
+    <div class="glo-item"><dt>RAFI</dt><dd>Reducción Abierta y Fijación Interna: corrección quirúrgica de fracturas mediante implantes.</dd></div>
+    <div class="glo-item"><dt>Artroscopia</dt><dd>Técnica mínimamente invasiva con cámara para diagnosticar y tratar problemas articulares.</dd></div>
+    <div class="glo-item"><dt>Resección transuretral (RTU)</dt><dd>Procedimiento endoscópico urológico que requiere sistema de irrigación continua.</dd></div>
+    <div class="glo-item"><dt>Nefrectomía</dt><dd>Extracción quirúrgica total o parcial de un riñón.</dd></div>
+  </div>
+
+  <div class="cierre">
+    <h3>🎯 Frase para recordar</h3>
+    <p><strong>"Los principios no cambian, el conocimiento específico sí: implante en traumatología, neonatología en cesárea, irrigación en urología."</strong></p>
+  </div>
+</section>
+
+<!-- SECCIÓN 10: SIMULACRO -->
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+
+  <div class="card card-lead quiz-intro">
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> real y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones; solo una es correcta.</p>
+    <div class="quiz-formato"><strong>Instrucciones:</strong> lee el caso, identifica el problema y elige la actuación más apropiada. Al hacer clic verás retroalimentación por cada opción.</div>
+    <div class="dific-tags">
+      <span class="tag b">4 básicas</span>
+      <span class="tag i">5 intermedias</span>
+      <span class="tag a">3 avanzadas</span>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div style="text-align:center; margin:28px 0;">
+    <button id="btnCalcular" class="btn">Ver mi resultado</button>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num" id="scoreNum">0/12</div>
+    <p id="scoreMsg"></p>
+    <div id="temasReforzar"></div>
+    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">Ascenso Público</div>
+  <div class="fslogan">Tu ruta personalizada al ascenso público</div>
+  <div class="fmeta">
+    FUN-SAL-06 · Día 14 · v1.0 — julio 2026<br>
+    © Ascenso Público — Todos los derechos reservados
+  </div>
+</footer>
+
+
+<script>
+// ===== NAVEGACIÓN Y BARRA DE LECTURA =====
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('nav button');
+
+function showSection(i) {
+  sections.forEach(s => s.classList.remove('visible'));
+  navBtns.forEach(b => b.classList.remove('active'));
+  sections[i].classList.add('visible');
+  navBtns[i].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('readbar').style.width = scrolled + '%';
+});
+
+// ===== BOTONES "AVANZAR" =====
+const titulosCortos = [
+  'Importancia', 'Desarrollo', 'Comparaciones', 'Casos CNSC',
+  'Errores', 'Tips', 'Trampas', 'Repaso', 'Resumen', 'Simulacro', null
+];
+
+sections.forEach((sec, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'advance-bar';
+  if (i < sections.length - 1) {
+    bar.innerHTML = `
+      <span class="advance-hint">¿Listo para continuar?</span>
+      <button class="advance-btn" data-target="${i + 1}">
+        Avanzar a ${titulosCortos[i]} →
+      </button>`;
+  } else {
+    bar.innerHTML = `
+      <span class="advance-hint">🎓 Has completado todo el contenido</span>
+      <button class="advance-btn final" data-target="finalizar">
+        ✅ Finalizar Día 14
+      </button>`;
+  }
+  sec.appendChild(bar);
+});
+
+document.querySelectorAll('.advance-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.target;
+    if (t === 'finalizar') {
+      alert('🎓 ¡Felicitaciones! Completaste el Día 14.\n\nMañana avanzas con FUN-SAL-07 · Control de Conteos y Registros Intraoperatorios.\n\n🚀');
+    } else {
+      showSection(parseInt(t));
+    }
+  });
+});
+
+// ===== CHECKPOINTS INTERACTIVOS =====
+function setupCheckpoint(cpId, fbId) {
+  const opts = document.querySelectorAll(`#${cpId} li`);
+  const fb = document.getElementById(fbId);
+  opts.forEach(opt => {
+    opt.addEventListener('click', function() {
+      const isOk = this.dataset.ok === '1';
+      opts.forEach(o => o.style.pointerEvents = 'none');
+      this.classList.add(isOk ? 'ok' : 'no');
+      fb.className = isOk ? 'checkpoint-fb ok show' : 'checkpoint-fb no show';
+      if (isOk) {
+        fb.innerHTML = '✅ <strong>¡Correcto!</strong> Esta es la verificación específica apropiada para esta especialidad quirúrgica.';
+      } else {
+        fb.innerHTML = '❌ <strong>Incorrecto.</strong> Revisa el concepto correspondiente en el Desarrollo para entender por qué esta opción no es la más apropiada.';
+      }
+    });
+  });
+}
+setupCheckpoint('cp1', 'cpfb1');
+setupCheckpoint('cp2', 'cpfb2');
+
+// ===== FLASHCARDS =====
+const flashcards = [
+  { f:'¿Qué hace distintiva a la cesárea frente a otras cirugías abdominales?', b:'Involucra dos pacientes simultáneos (madre y recién nacido) y requiere coordinación obligatoria con el equipo de neonatología.' },
+  { f:'¿Qué debe verificar el instrumentador antes de una RAFI?', b:'Que el implante disponible (tipo y tamaño) coincida exactamente con la planificación preoperatoria basada en imágenes diagnósticas.' },
+  { f:'¿Qué sistema es esencial en procedimientos endoscópicos urológicos como la RTU de próstata?', b:'El sistema de irrigación continua, necesario para mantener la visibilidad del campo quirúrgico.' },
+  { f:'¿Qué equipo debe verificarse antes de una artroscopia o laparoscopia?', b:'El funcionamiento de la torre de video y la cámara, esenciales para la visualización en cirugía mínimamente invasiva.' },
+  { f:'¿Cambian los principios de asepsia según la especialidad quirúrgica?', b:'No. Los principios generales (asepsia, entrega segura) son constantes; lo que cambia es el conocimiento técnico específico de cada especialidad.' },
+  { f:'¿Qué instrumental es distintivo del cierre en una cesárea?', b:'El instrumental de histerorrafia, usado para la sutura del útero.' },
+  { f:'¿Qué debe anticipar el instrumentador ante un apéndice perforado durante una apendicectomía?', b:'Mayor cantidad de gasas y solución de irrigación para el lavado de la cavidad, sin esperar solicitud explícita.' },
+  { f:'¿La verificación específica de especialidad sustituye la Lista de Chequeo de Cirugía Segura general?', b:'No. Ambas son complementarias y obligatorias; la específica se suma a la general, nunca la reemplaza.' },
+  { f:'¿Qué diferencia principal hay entre prostatectomía y nefrectomía?', b:'La prostatectomía extrae la próstata (frecuentemente por cáncer o hiperplasia); la nefrectomía extrae un riñón (por tumores o daño severo).' },
+  { f:'¿Qué debe hacer un instrumentador que rota entre especialidades en la misma semana?', b:'Repasar las particularidades específicas de cada especialidad antes de iniciar, manteniendo siempre los principios generales ya dominados.' }
+];
+
+let flashIndex = 0;
+const flashEl = document.getElementById('flashcard');
+const flashFront = document.getElementById('flashFront');
+const flashBack = document.getElementById('flashBack');
+const flashCounter = document.getElementById('flashCounter');
+
+function renderFlash() {
+  flashEl.classList.remove('flipped');
+  flashFront.textContent = flashcards[flashIndex].f;
+  flashBack.textContent = flashcards[flashIndex].b;
+  flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+}
+flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click', e => {
+  e.stopPropagation(); flashEl.classList.toggle('flipped');
+});
+document.getElementById('flashPrev').addEventListener('click', () => {
+  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlash();
+});
+document.getElementById('flashNext').addEventListener('click', () => {
+  flashIndex = (flashIndex + 1) % flashcards.length;
+  renderFlash();
+});
+renderFlash();
+
+
+
+// ===== SIMULACRO =====
+const preguntas = [
+  {
+    nivel: 'b', tema: 'Coordinación en cesárea',
+    ctx: 'Eres instrumentador y estás preparando una cesárea programada. Faltan pocos minutos para iniciar y revisas la lista de verificación estándar.',
+    q: '¿Qué verificación adicional, específica de esta especialidad, no debes omitir?',
+    ops: [
+      'Verificar únicamente el instrumental de corte, igual que en cualquier cirugía abdominal',
+      'Confirmar la presencia y disposición del equipo de neonatología en sala, listo para recibir al recién nacido',
+      'Ninguna verificación adicional distinta a una laparotomía exploratoria',
+      'Solicitar que el anestesiólogo confirme el tipo de anestesia, sin necesidad de coordinar con otros equipos'
+    ],
+    correcta: 1,
+    expl: [
+      'La cesárea tiene una particularidad que la diferencia de otras cirugías abdominales: involucra a un segundo paciente (el recién nacido) que requiere atención inmediata especializada.',
+      '✔ Correcto. La coordinación con neonatología es la verificación específica distintiva de la cesárea, indispensable antes de proceder con la extracción fetal.',
+      'Tratar la cesárea como una laparotomía exploratoria común ignora la necesidad crítica de coordinación con el equipo que atenderá al recién nacido.',
+      'Confirmar el tipo de anestesia es relevante pero no sustituye la verificación específica de la presencia del equipo de neonatología, que es la particularidad clave de esta cirugía.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Verificación de implantes en traumatología',
+    ctx: 'Antes de una cirugía de Reducción Abierta y Fijación Interna (RAFI) de fémur, el instrumentador revisa el set de implantes disponible.',
+    q: '¿Contra qué debe verificar el tamaño y tipo del implante antes de abrir el empaque estéril?',
+    ops: [
+      'Contra el instrumental básico de cirugía general disponible en la sala',
+      'Contra la planificación preoperatoria del paciente, basada en sus imágenes diagnósticas (radiografías, plantillas)',
+      'Contra el criterio personal del instrumentador sobre qué tamaño "parece" adecuado',
+      'No es necesario verificar; cualquier tamaño disponible en el set puede ajustarse durante la cirugía'
+    ],
+    correcta: 1,
+    expl: [
+      'El instrumental básico de cirugía general no tiene relación con la selección de implantes traumatológicos específicos para cada paciente.',
+      '✔ Correcto. El implante debe verificarse siempre contra la planificación preoperatoria específica del paciente, basada en sus imágenes diagnósticas, para evitar errores de tamaño durante la cirugía.',
+      'La selección de implantes no puede basarse en criterio subjetivo o "parecer adecuado"; requiere verificación técnica objetiva contra la planificación del caso.',
+      'Un implante de tamaño incorrecto puede comprometer gravemente el resultado quirúrgico; siempre debe verificarse antes de proceder, no "ajustarse" sobre la marcha.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Sistema de irrigación en cirugía urológica',
+    ctx: 'Se programa una resección transuretral de próstata (procedimiento endoscópico urológico). El instrumentador prepara el instrumental básico habitual.',
+    q: '¿Qué elemento adicional, esencial para este tipo de procedimiento, debe preparar y verificar?',
+    ops: [
+      'Un set de implantes traumatológicos, por si se requieren durante la cirugía',
+      'El sistema de irrigación continua, necesario para mantener la visibilidad del campo endoscópico durante el procedimiento',
+      'Instrumental de histerorrafia, en caso de complicaciones',
+      'Ningún elemento adicional; el instrumental básico es suficiente para cualquier tipo de cirugía'
+    ],
+    correcta: 1,
+    expl: [
+      'Los implantes traumatológicos no tienen relación con un procedimiento urológico endoscópico como la resección transuretral de próstata.',
+      '✔ Correcto. El sistema de irrigación continua es esencial en procedimientos endoscópicos urológicos, ya que mantiene la visibilidad del campo quirúrgico durante toda la intervención.',
+      'El instrumental de histerorrafia corresponde a cirugía obstétrica, sin relación alguna con un procedimiento urológico.',
+      'El instrumental básico no es suficiente para procedimientos endoscópicos; se requieren equipos y sistemas específicos, como la irrigación continua, según la especialidad y técnica.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Verificación de equipo de video en cirugía mínimamente invasiva',
+    ctx: 'Antes de una artroscopia de rodilla, el instrumentador organiza el instrumental miniaturizado específico de esta técnica.',
+    q: '¿Qué verificación adicional no debe omitir antes de que el paciente ingrese a sala?',
+    ops: [
+      'El funcionamiento correcto de la torre de video y la cámara artroscópica',
+      'La disponibilidad de un set completo de implantes de columna',
+      'La coordinación con el equipo de neonatología',
+      'Ninguna verificación adicional; el instrumental miniaturizado es suficiente por sí solo'
+    ],
+    correcta: 0,
+    expl: [
+      '✔ Correcto. La artroscopia depende del correcto funcionamiento de la cámara y la torre de video para la visualización; verificar este equipo antes de iniciar es indispensable en cirugía mínimamente invasiva.',
+      'Los implantes de columna no tienen relación con una artroscopia de rodilla; corresponden a otro tipo de procedimiento traumatológico.',
+      'La coordinación con neonatología es específica de la cesárea, sin relación con una artroscopia de rodilla.',
+      'El instrumental miniaturizado por sí solo no garantiza la visualización necesaria; el sistema de video es un componente esencial y distinto que debe verificarse.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'i', tema: 'Priorización de verificaciones en cirugía combinada de especialidades',
+    ctx: 'Un instrumentador debe preparar en la misma jornada tres cirugías consecutivas: una apendicectomía, una RAFI de tobillo y una cesárea de urgencia programada para media tarde. Cada una tiene tiempos ajustados de programación.',
+    q: '¿Cuál es la actuación más apropiada para gestionar la preparación de estas tres cirugías?',
+    ops: [
+      'Preparar únicamente el instrumental básico general común a las tres cirugías, asumiendo que las particularidades se resolverán sobre la marcha en cada caso',
+      'Para cada cirugía, aplicar la verificación general estándar y sumar la verificación específica correspondiente (material adicional en apendicectomía, implantes en RAFI, coordinación con neonatología en cesárea), organizando los tiempos con antelación suficiente para cada una',
+      'Priorizar exclusivamente la cesárea por ser de urgencia, dejando la verificación de las otras dos cirugías para el último momento antes de cada una',
+      'Delegar la verificación específica de cada especialidad al cirujano correspondiente, limitándose a la preparación del instrumental básico'
+    ],
+    correcta: 1,
+    expl: [
+      'Asumir que las particularidades "se resolverán sobre la marcha" desestima la importancia de la verificación específica anticipada de cada especialidad, generando riesgo de demoras o errores evitables.',
+      '✔ Correcto. La gestión apropiada aplica sistemáticamente la verificación general más la capa específica de cada especialidad, organizando los tiempos de preparación de forma anticipada para cada una de las tres cirugías, sin descuidar ninguna por la carga de trabajo del día.',
+      'Priorizar solo la cesárea por urgencia no exime de realizar la verificación específica adecuada y oportuna de las otras dos cirugías programadas, que también requieren su propia preparación anticipada.',
+      'La verificación específica del instrumental y equipos es una responsabilidad técnica del instrumentador, no una función que se delega al cirujano, quien se enfoca en la ejecución clínica del procedimiento.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Manejo de discrepancia en implante traumatológico',
+    ctx: 'Durante la verificación preoperatoria de una RAFI de muñeca, el instrumentador nota que el set de placas disponible incluye tamaños que no coinciden exactamente con la medición indicada en la planificación preoperatoria del cirujano, aunque son del mismo tipo general de implante.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Usar el tamaño más cercano disponible, confiando en que el cirujano podrá ajustar durante la cirugía si es necesario',
+      'Informar de inmediato la discrepancia de tamaño al cirujano antes de que el paciente ingrese a sala, y gestionar la consecución del tamaño exacto indicado en la planificación',
+      'Proceder sin informar, ya que son del mismo tipo general de implante y la diferencia de tamaño no debería ser relevante',
+      'Esperar a que se presente la discrepancia durante la cirugía para resolverla en ese momento con el cirujano'
+    ],
+    correcta: 1,
+    expl: [
+      'Usar un tamaño "más cercano" sin comunicarlo previamente traslada un riesgo evitable al momento de la cirugía, cuando la corrección es más difícil y hay menos margen de maniobra.',
+      '✔ Correcto. Detectar y comunicar la discrepancia de tamaño ANTES de que el paciente ingrese a sala permite gestionar la solución (conseguir el tamaño correcto) sin la presión del tiempo quirúrgico activo, siendo la actuación más segura y responsable.',
+      'La diferencia de tamaño en implantes traumatológicos sí es clínicamente relevante; no comunicarla desestima un riesgo real para el resultado quirúrgico.',
+      'Esperar a que la discrepancia se presente durante la cirugía, en lugar de anticiparla, genera una situación de mayor presión y riesgo que pudo evitarse con la verificación preoperatoria oportuna.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Falla técnica en equipo de video durante artroscopia',
+    ctx: 'Durante una artroscopia de rodilla ya en curso, la imagen de la cámara comienza a presentar interferencia intermitente, dificultando la visualización clara del campo quirúrgico para el cirujano.',
+    q: '¿Cuál es la actuación más apropiada del instrumentador en este momento?',
+    ops: [
+      'Continuar el procedimiento sin informar, esperando que la interferencia se resuelva por sí sola en poco tiempo',
+      'Informar de inmediato al cirujano sobre el problema técnico y coordinar con el personal de soporte técnico o el circulante para revisar y corregir la conexión o el equipo lo antes posible',
+      'Sugerir al cirujano que continúe basándose en su experiencia previa, sin necesidad de visualización clara en este punto del procedimiento',
+      'Detener por completo el procedimiento de inmediato sin explorar primero si el problema tiene una solución rápida'
+    ],
+    correcta: 1,
+    expl: [
+      'Continuar sin informar sobre un problema de visualización activo pone en riesgo la seguridad y precisión del procedimiento en curso, especialmente en cirugía mínimamente invasiva que depende de la imagen para operar.',
+      '✔ Correcto. Informar de inmediato y coordinar la corrección técnica del problema, mientras se evalúa la situación con el cirujano, es la actuación más apropiada; permite intentar resolver el problema activamente antes de considerar medidas más drásticas.',
+      'Operar sin visualización clara en un procedimiento que depende completamente de la cámara para su ejecución representa un riesgo significativo, independientemente de la experiencia del cirujano.',
+      'Detener por completo de inmediato sin explorar primero una solución técnica rápida (como revisar una conexión) puede ser una reacción prematura si el problema tiene una causa simple y corregible.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Aplicación de principios generales en contexto de especialidad',
+    ctx: 'Un instrumentador en formación comenta que, dado que la artroscopia es "una cirugía menor y rápida" comparada con una laparotomía extensa, considera que se puede ser un poco menos estricto con los tiempos de verificación de asepsia del campo estéril.',
+    q: '¿Es correcta esta afirmación?',
+    ops: [
+      'Sí, ya que la duración y complejidad menor de la cirugía justifican menor rigor en los tiempos de verificación',
+      'No, porque los principios de asepsia y verificación del campo estéril se mantienen sin excepción, independientemente de la duración o aparente sencillez del procedimiento',
+      'Depende del criterio personal de cada instrumentador según su experiencia',
+      'Sí, siempre que el cirujano esté de acuerdo con reducir los tiempos de verificación'
+    ],
+    correcta: 1,
+    expl: [
+      'La duración o complejidad aparente de una cirugía no es un criterio válido para reducir el rigor de los principios de asepsia; el riesgo de contaminación existe independientemente de estos factores.',
+      '✔ Correcto. Los principios generales de asepsia y verificación del campo estéril son constantes y no dependen de la duración, complejidad aparente o especialidad del procedimiento; lo que varía es el conocimiento técnico específico aplicado sobre esa base constante.',
+      'Los principios de asepsia no son una cuestión de criterio personal variable; están establecidos como estándares de seguridad del paciente aplicables universalmente.',
+      'El acuerdo del cirujano no modifica los estándares de asepsia establecidos, que son de cumplimiento obligatorio independientemente de las opiniones individuales sobre la urgencia o sencillez del caso.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Anticipación de material en cirugía obstétrica compleja',
+    ctx: 'Durante una cesárea, el obstetra informa en voz alta que ha detectado sangrado mayor al esperado tras la extracción del bebé, sugiriendo una posible atonía uterina que requerirá manejo activo.',
+    q: '¿Cuál es la actuación más apropiada del instrumentador ante este anuncio?',
+    ops: [
+      'Mantener el set y material previstos originalmente para una cesárea sin complicaciones, esperando indicaciones puntuales',
+      'Anticipar y preparar de inmediato material adicional para manejo de hemorragia postparto (gasas adicionales, posible instrumental de hemostasia uterina), comunicando al circulante la necesidad de recursos adicionales sin esperar solicitud explícita completa',
+      'Detener el procedimiento hasta que llegue personal adicional de refuerzo antes de continuar con cualquier manejo',
+      'Sugerir al obstetra que maneje la situación con el instrumental ya disponible, sin considerar preparar nada adicional'
+    ],
+    correcta: 1,
+    expl: [
+      'Mantener el plan original sin ajustar ante una complicación ya anunciada por el equipo médico desestima la función de anticipación proactiva esperada del instrumentador.',
+      '✔ Correcto. Ante el anuncio de una complicación como la atonía uterina, la anticipación proactiva de material adicional para su manejo, sin esperar una solicitud detallada elemento por elemento, es la actuación esperada y valorada del instrumentador en este contexto de riesgo aumentado.',
+      'Detener el procedimiento completo por esta complicación, que es manejable con recursos adicionales oportunos, es una reacción desproporcionada que puede retrasar la atención necesaria de la hemorragia.',
+      'No preparar nada adicional ante una complicación anunciada, dejando toda la carga de "manejarse con lo disponible" al obstetra, contradice la función activa de anticipación esperada del instrumentador.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'a', tema: 'Gestión integral de instrumentación en jornada multi-especialidad',
+    ctx: 'Eres jefe de instrumentación quirúrgica en un hospital de mediana complejidad con un equipo reducido de instrumentadores. La programación de un día incluye: dos apendicectomías, una RAFI compleja de cadera con implantes especiales que no son de uso frecuente, y una cesárea de urgencia que puede presentarse en cualquier momento de la jornada según la evolución de una gestante en observación. Solo tienes disponibles tres instrumentadores para todo el día.',
+    q: '¿Cuál es la estrategia de gestión más apropiada?',
+    ops: [
+      'Asignar los instrumentadores según disponibilidad de horario, sin considerar la experiencia específica de cada uno en las distintas especialidades del día',
+      'Asignar al instrumentador con mayor experiencia en implantes complejos a la RAFI, verificar con antelación la disponibilidad del set de implantes especiales requerido, mantener un instrumentador con flexibilidad de horario disponible para la cesárea de urgencia potencial, y coordinar la secuencia de las apendicectomías según la disponibilidad real del equipo, revisando constantemente la evolución de la gestante en observación',
+      'Solicitar que se cancelen las apendicectomías programadas para garantizar la disponibilidad total del equipo ante la posible cesárea de urgencia',
+      'Delegar toda la planificación del día a cada instrumentador individualmente, sin una coordinación centralizada de la jefatura'
+    ],
+    correcta: 1,
+    expl: [
+      'Asignar sin considerar la experiencia específica en cada especialidad, especialmente en un caso de implantes complejos poco frecuentes, aumenta el riesgo de errores evitables en un procedimiento de alta especificidad técnica.',
+      '✔ Correcto. La estrategia de nivel avanzado combina múltiples factores: experiencia específica por especialidad, verificación anticipada de recursos críticos (implantes especiales), reserva de flexibilidad para la urgencia potencial, y monitoreo activo de la situación clínica que podría activar la cesárea, optimizando el uso del equipo limitado sin comprometer la seguridad de ningún procedimiento.',
+      'Cancelar procedimientos ya programados sin evidencia de que la cesárea sea inminente es una medida desproporcionada que afecta innecesariamente la atención de otros pacientes.',
+      'La ausencia de coordinación centralizada en un día con múltiples especialidades y recursos limitados aumenta significativamente el riesgo de conflictos de disponibilidad y errores de planificación.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Análisis de patrón de errores por especialidad',
+    ctx: 'Eres coordinador de quirófanos y notas un patrón en los últimos dos meses: los errores de preparación de instrumental reportados se concentran específicamente en las cirugías de RAFI (discrepancias de tamaño de implantes) y en procedimientos urológicos endoscópicos (fallas en el sistema de irrigación), mientras que las cirugías generales y obstétricas no presentan incidentes reportados en el mismo período.',
+    q: '¿Cuál es el análisis y plan de acción más apropiado ante este patrón específico?',
+    ops: [
+      'Concluir que el personal de instrumentación en general necesita refuerzo uniforme en todos los aspectos de su formación, sin distinguir por especialidad',
+      'Reconocer que el patrón apunta a brechas específicas de conocimiento técnico en las verificaciones propias de traumatología (implantes) y urología endoscópica (sistemas de irrigación), diseñando un plan de capacitación focalizado en estas dos áreas específicas, con supervisión reforzada temporal en estos tipos de procedimientos',
+      'Asumir que estas dos especialidades son inherentemente más propensas a errores y que no hay nada que se pueda hacer al respecto',
+      'Rotar a todo el personal de instrumentación fuera de estas dos especialidades de forma permanente, sin ofrecer capacitación de refuerzo'
+    ],
+    correcta: 1,
+    expl: [
+      'Un refuerzo uniforme sin distinguir por especialidad ignora la evidencia específica del patrón de incidentes, que apunta claramente a dos áreas de conocimiento técnico particular, no a una debilidad general.',
+      '✔ Correcto. El análisis correcto identifica que el patrón de incidentes se concentra en las verificaciones específicas de dos especialidades (implantes en traumatología, irrigación en urología), diseñando una respuesta focalizada y basada en evidencia, en lugar de una solución genérica o una atribución fatalista.',
+      'Atribuir los errores a que las especialidades son "inherentemente más propensas" sin intervención posible ignora que la mayoría de estos incidentes son prevenibles con refuerzo específico de conocimiento y protocolo.',
+      'Rotar permanentemente al personal fuera de estas especialidades sin ofrecer capacitación desestima la oportunidad de corregir brechas de conocimiento identificables y corregibles, optando por evitar el problema en lugar de resolverlo.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Decisión bajo conflicto de recursos entre especialidades simultáneas',
+    ctx: 'Eres instrumentador jefe en un hospital con un único set completo de implantes especiales para columna. Se presenta simultáneamente la necesidad de este set para una cirugía de columna programada hace semanas (paciente estable, cirugía electiva) y para un caso de urgencia traumatológica que acaba de llegar con una fractura vertebral inestable que también requiere el mismo tipo de implante especial.',
+    q: '¿Cuál es la decisión más apropiada?',
+    ops: [
+      'Mantener estrictamente el orden de programación original, dando prioridad automática a la cirugía electiva programada primero, sin evaluar la condición clínica del caso de urgencia',
+      'Coordinar de inmediato con los cirujanos de ambos casos y con la dirección médica para evaluar la urgencia clínica real de cada paciente, priorizando el uso del set según el criterio médico de riesgo vital o de daño neurológico irreversible, y gestionar la reprogramación del caso de menor urgencia relativa con la mayor celeridad posible para minimizar el impacto',
+      'Dividir el set de implantes entre ambos casos, usando la mitad de las piezas disponibles en cada cirugía',
+      'Tomar la decisión unilateralmente como instrumentador jefe, sin involucrar a los cirujanos tratantes ni a la dirección médica en la evaluación de la urgencia relativa'
+    ],
+    correcta: 1,
+    expl: [
+      'Mantener el orden de programación sin evaluar la condición clínica ignora que una fractura vertebral inestable con riesgo neurológico puede requerir prioridad clínica sobre un caso electivo estable, independientemente del orden de programación previo.',
+      '✔ Correcto. La respuesta de nivel avanzado no decide unilateralmente ni por orden de llegada, sino que activa una evaluación clínica coordinada con los responsables médicos para determinar la urgencia real de cada caso, priorizando según el riesgo clínico (vital o neurológico) y gestionando activamente la reprogramación del caso postergado.',
+      'Dividir un set de implantes especiales entre dos cirugías compromete la integridad y completitud necesaria de cada procedimiento, generando un riesgo técnico inaceptable en ambos casos.',
+      'Una decisión de esta magnitud, que involucra priorización clínica entre dos pacientes con necesidades reales, no debe tomarse unilateralmente por el instrumentador sin la participación de los criterios médicos y la dirección responsable.'
+    ]
+  }
+];
+
+const quizDiv = document.getElementById('quiz');
+let respondidas = {};
+
+function renderQuiz() {
+  respondidas = {};
+  quizDiv.innerHTML = '';
+  const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+  preguntas.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'pregunta';
+    let opsHtml = '';
+    p.ops.forEach((op, j) => {
+      const letra = String.fromCharCode(65 + j);
+      opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}">
+                    <span class="letra">${letra}</span><span>${op}</span>
+                  </div>`;
+    });
+    const ctxHtml = `<div class="q-contexto"><strong>Contexto:</strong> ${p.ctx}</div>`;
+    card.innerHTML = `
+      <div class="q-num">Pregunta ${idx+1}
+        <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span>
+      </div>
+      ${ctxHtml}
+      <div class="q-texto">${p.q}</div>
+      <div class="opciones">${opsHtml}</div>
+      <div class="feedback" id="fb-${idx}"></div>`;
+    quizDiv.appendChild(card);
+  });
+
+  document.querySelectorAll('.opcion').forEach(op => {
+    op.addEventListener('click', function() {
+      const qi = +this.dataset.q;
+      const oi = +this.dataset.op;
+      if (respondidas[qi] !== undefined) return;
+      respondidas[qi] = oi;
+      const p = preguntas[qi];
+      const cont = this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o, k) => {
+        o.classList.add('bloqueada');
+        if (k === p.correcta) o.classList.add('correcta');
+      });
+      const fb = document.getElementById('fb-' + qi);
+      fb.className = 'feedback show';
+
+      let feedbackHtml = '<div style="margin-bottom:14px;"><strong>Retroalimentación por opción:</strong></div>';
+      p.ops.forEach((opText, k) => {
+        const letra = String.fromCharCode(65 + k);
+        const isCorrect = k === p.correcta;
+        const color = isCorrect ? 'var(--verde)' : 'var(--rojo)';
+        feedbackHtml += `<div style="margin-bottom:10px; padding:8px 12px; background:${isCorrect ? 'var(--verde-suave)' : 'var(--rojo-suave)'}; border-left:3px solid ${color}; border-radius:6px;">
+          <strong style="color:${color};">${letra}.</strong> ${p.expl[k]}
+        </div>`;
+      });
+      fb.innerHTML = feedbackHtml;
+
+      if (oi !== p.correcta) {
+        this.classList.add('incorrecta');
+      }
+    });
+  });
+}
+
+document.getElementById('btnCalcular').addEventListener('click', () => {
+  let correctas = 0;
+  const temasFallados = [];
+  preguntas.forEach((p, i) => {
+    if (respondidas[i] === p.correcta) correctas++;
+    else if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema);
+  });
+  const res = document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent = correctas + '/12';
+
+  let msg;
+  const pct = correctas / 12;
+  if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas los procedimientos quirúrgicos por especialidad. Listo para el siguiente día.';
+  else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados y repasa las comparaciones.';
+  else msg = '📚 Vas por buen camino. Repasa el Desarrollo, las tablas comparativas y repite el simulacro.';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const cont = document.getElementById('temasReforzar');
+  if (temasFallados.length === 0) {
+    cont.innerHTML = '<div class="box ok" style="text-align:left;">' +
+      '<div class="box-title">🎯 ¡Sin temas pendientes!</div>' +
+      '<p>Respondiste todo correctamente. Estás preparado para avanzar.</p></div>';
+  } else {
+    let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+    cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+      '<div class="box-title">📌 Temas que debes reforzar</div>' +
+      '<p>Vuelve a la sección <strong>Desarrollo</strong> y repasa estos conceptos:</p>' +
+      '<ul class="lista">' + items + '</ul></div>';
+  }
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+document.getElementById('btnReiniciar').addEventListener('click', () => {
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({
+    top: document.querySelector('[data-sec="10"]').offsetTop - 80,
+    behavior: 'smooth'
+  });
+});
+
+renderQuiz();
+</script>
+</body>
+</html>
