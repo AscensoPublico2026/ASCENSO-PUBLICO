@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { createAdminClient } from "@/lib/supabase/server";
 import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
-import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
+import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
 
 const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
@@ -31,12 +31,16 @@ export async function procesarReferencia(referencia: string, transactionId?: str
 
   if (existente) {
     userId = existente.id;
+    // Si el usuario ya existe, actualizar su contraseña con la nueva del preregistro
+    if (pre.password) {
+      await supabase.auth.admin.updateUserById(existente.id, { password: pre.password });
+    }
   } else {
-    // 2. No existe → crear nuevo
-    const tempPassword = crypto.randomUUID(); // temporal; el cliente define la suya en /activar
+    // 2. No existe → crear nuevo con la contraseña que el cliente eligió en /comprar
+    const userPassword = pre.password || crypto.randomUUID(); // fallback por si el campo no existe aún
     const { data: created, error: createErr } = await supabase.auth.admin.createUser({
       email: pre.correo,
-      password: tempPassword,
+      password: userPassword,
       email_confirm: true,
       user_metadata: { nombre: pre.nombre },
     });
@@ -90,22 +94,12 @@ export async function procesarReferencia(referencia: string, transactionId?: str
 
     cursoId = curso?.id ?? null;
 
-    // Auto-cargar guías al crear el curso.
-    // 1) Si ya existe otro curso del MISMO OPEC con el plan armado (funcionales),
-    //    copiamos TODO ese plan (reutilización por OPEC → curso listo de una).
-    // 2) Si no, cargamos solo las genéricas (Intro + Generales + Nivel + Bonus).
-    if (cursoId) {
+    // Auto-cargar guías (Intro + Generales + Nivel + Bonus) al crear el curso
+    if (cursoId && pre.nivel) {
       try {
-        const copiado = await copiarPlanDesdeOPEC(supabase, cursoId, pre.opec);
-        if (!copiado && pre.nivel) {
-          await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
-        }
+        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
       } catch (err) {
-        console.error("[procesarReferencia] Error en carga de guías:", err);
-        // Fallback: intentar al menos las genéricas
-        if (pre.nivel) {
-          try { await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel); } catch { /* ignore */ }
-        }
+        console.error("[procesarReferencia] Error en auto-carga de guías:", err);
       }
     }
   }

@@ -6,7 +6,7 @@ import { generarReferencia, firmaIntegridad, urlCheckout } from "@/lib/wompi";
 import { toTitleCase } from "@/lib/format";
 
 // Server Action: recibe el formulario de compra, normaliza los textos,
-// sube el PDF, guarda el pre-registro, crea el pago pendiente y redirige al checkout de Wompi.
+// valida la contraseña, sube el PDF, guarda el pre-registro, crea el pago pendiente y redirige al checkout de Wompi.
 export async function crearCompra(formData: FormData) {
   // Campos obligatorios con normalización Title Case
   const nombres = toTitleCase(String(formData.get("nombres") || "").trim());
@@ -20,9 +20,22 @@ export async function crearCompra(formData: FormData) {
   const nivel = String(formData.get("nivel") || "").trim();
   const consentimiento = formData.get("consentimiento") === "on";
   const manual = formData.get("manual") as File | null;
+  
+  // Contraseña (nuevo campo obligatorio)
+  const password = String(formData.get("password") || "").trim();
+  const confirmPassword = String(formData.get("confirmPassword") || "").trim();
 
   if (!nombres || !apellidos || !correo || !consentimiento) {
     throw new Error("Faltan datos obligatorios o no aceptaste el tratamiento de datos.");
+  }
+
+  // Validar contraseña
+  if (!password || password.length < 6) {
+    throw new Error("La contraseña debe tener al menos 6 caracteres.");
+  }
+
+  if (password !== confirmPassword) {
+    throw new Error("Las contraseñas no coinciden.");
   }
 
   const supabase = createAdminClient();
@@ -40,10 +53,11 @@ export async function crearCompra(formData: FormData) {
     if (upErr) throw new Error("No se pudo subir el manual: " + upErr.message);
   }
 
-  // Guardar pre-registro con nombres normalizados
+  // Guardar pre-registro con nombres normalizados Y la contraseña
   const { error: insErr } = await supabase.from("preregistros").insert({
     referencia, nombre, correo, celular, convocatoria_id,
     opec, cargo_nombre: cargo, nivel, manual_pdf_path, consentimiento,
+    password, // ← contraseña elegida por el cliente ANTES del pago
   });
   if (insErr) throw new Error("No se pudo guardar el registro: " + insErr.message);
 

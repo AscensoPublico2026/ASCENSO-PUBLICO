@@ -1,42 +1,64 @@
+"use client";
+
 import { crearCompra } from "./actions";
-import { createClient } from "@/lib/supabase/server";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ContadorCupos from "../components/ContadorCupos";
 
 export const dynamic = "force-dynamic";
 
-const CUPOS_LANZAMIENTO = 200;
+const CUPOS_LANZAMIENTO = 100;
 
-export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
-  let convocatorias: { id: string; nombre: string }[] = [];
-  let cursosVendidos = 0;
-  let usuarioLogueado: { correo: string; celular: string } | null = null;
+// Componente cliente para manejar el estado del formulario
+function ComprarFormulario({ 
+  convocatorias, 
+  cursosVendidos, 
+  usuarioLogueado, 
+  convDefault 
+}: { 
+  convocatorias: { id: string; nombre: string }[];
+  cursosVendidos: number;
+  usuarioLogueado: { correo: string; celular: string } | null;
+  convDefault: string;
+}) {
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarConfirm, setMostrarConfirm] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
 
-  try {
-    const supabase = createClient();
-    const { data } = await supabase.from("convocatorias").select("id,nombre").eq("activa", true).order("orden");
-    convocatorias = data || [];
-    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
-    cursosVendidos = count || 0;
-
-    // Si el usuario está logueado (comprando otro curso), pre-llenar sus datos de contacto
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase.from("profiles").select("correo, celular").eq("id", user.id).single();
-      usuarioLogueado = {
-        correo: profile?.correo || user.email || "",
-        celular: profile?.celular || "",
-      };
+  // Validar que las contraseñas coincidan
+  useEffect(() => {
+    if (confirmPassword && password !== confirmPassword) {
+      setErrorPassword("Las contraseñas no coinciden");
+    } else {
+      setErrorPassword("");
     }
-  } catch {
-    convocatorias = [];
-  }
+  }, [password, confirmPassword]);
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "12px 14px", borderRadius: 12, border: "1px solid var(--gris-borde)",
     fontFamily: "inherit", fontSize: ".95rem", marginTop: 6, background: "#fff",
   };
   const label: React.CSSProperties = { fontWeight: 700, fontSize: ".9rem", color: "var(--azul)", display: "block", marginTop: 16 };
+
+  const passwordContainerStyle: React.CSSProperties = {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+  };
+
+  const toggleButtonStyle: React.CSSProperties = {
+    position: "absolute",
+    right: "12px",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: ".85rem",
+    color: "var(--azul)",
+    padding: "4px 8px",
+    userSelect: "none",
+  };
 
   return (
     <main style={{ maxWidth: 620, margin: "0 auto", padding: "48px 22px" }}>
@@ -100,12 +122,69 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
           </span>
         </label>
 
+        {/* Campos de contraseña */}
+        <div style={{ background: "var(--crema)", border: "1px solid #e8dcc4", borderRadius: 12, padding: "16px 18px", marginTop: 20 }}>
+          <p style={{ fontSize: ".88rem", color: "var(--azul)", fontWeight: 600, marginBottom: 12 }}>
+            🔐 Crea tu contraseña de acceso
+          </p>
+          <label style={label}>Contraseña *
+            <div style={passwordContainerStyle}>
+              <input 
+                style={{...inputStyle, paddingRight: "70px"}} 
+                type={mostrarPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                minLength={6}
+                required 
+                placeholder="Mínimo 6 caracteres" 
+              />
+              <button
+                type="button"
+                style={toggleButtonStyle}
+                onClick={() => setMostrarPassword(!mostrarPassword)}
+              >
+                {mostrarPassword ? "Ocultar" : "Mostrar"}
+              </button>
+            </div>
+          </label>
+          <label style={label}>Confirma tu contraseña *
+            <div style={passwordContainerStyle}>
+              <input 
+                style={{...inputStyle, paddingRight: "70px", borderColor: errorPassword ? "#d00" : "var(--gris-borde)"}} 
+                type={mostrarConfirm ? "text" : "password"}
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                minLength={6}
+                required 
+                placeholder="Repite la contraseña" 
+              />
+              <button
+                type="button"
+                style={toggleButtonStyle}
+                onClick={() => setMostrarConfirm(!mostrarConfirm)}
+              >
+                {mostrarConfirm ? "Ocultar" : "Mostrar"}
+              </button>
+            </div>
+            {errorPassword && (
+              <span style={{ fontSize: ".78rem", color: "#d00", marginTop: 4, display: "block" }}>
+                {errorPassword}
+              </span>
+            )}
+          </label>
+          <p style={{ fontSize: ".75rem", color: "var(--texto-suave)", marginTop: 8 }}>
+            Usarás esta contraseña para acceder a tu curso después del pago.
+          </p>
+        </div>
+
         <label style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 20, fontSize: ".88rem", color: "var(--texto-suave)" }}>
           <input type="checkbox" name="consentimiento" required style={{ marginTop: 3 }} />
           <span>Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012 y la <Link href="/privacidad" style={{ color: "var(--azul)", textDecoration: "underline" }}>política de privacidad</Link>.</span>
         </label>
 
-        <button type="submit" className="btn btn-oro" style={{ width: "100%", padding: 15, marginTop: 24 }}>
+        <button type="submit" disabled={!!errorPassword} className="btn btn-oro" style={{ width: "100%", padding: 15, marginTop: 24, opacity: errorPassword ? 0.5 : 1, cursor: errorPassword ? "not-allowed" : "pointer" }}>
           Continuar al pago seguro →
         </button>
         <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", textAlign: "center", marginTop: 12 }}>
@@ -113,5 +192,42 @@ export default async function ComprarPage({ searchParams }: { searchParams: { co
         </p>
       </form>
     </main>
+  );
+}
+
+// Componente servidor que carga los datos iniciales
+export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
+  let convocatorias: { id: string; nombre: string }[] = [];
+  let cursosVendidos = 0;
+  let usuarioLogueado: { correo: string; celular: string } | null = null;
+
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = createClient();
+    const { data } = await supabase.from("convocatorias").select("id,nombre").eq("activa", true).order("orden");
+    convocatorias = data || [];
+    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
+    cursosVendidos = count || 0;
+
+    // Si el usuario está logueado (comprando otro curso), pre-llenar sus datos de contacto
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: profile } = await supabase.from("profiles").select("correo, celular").eq("id", user.id).single();
+      usuarioLogueado = {
+        correo: profile?.correo || user.email || "",
+        celular: profile?.celular || "",
+      };
+    }
+  } catch {
+    convocatorias = [];
+  }
+
+  return (
+    <ComprarFormulario 
+      convocatorias={convocatorias}
+      cursosVendidos={cursosVendidos}
+      usuarioLogueado={usuarioLogueado}
+      convDefault={searchParams?.conv || ""}
+    />
   );
 }
