@@ -96,7 +96,7 @@ function ComprarFormulario({
           <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" defaultValue={usuarioLogueado?.celular || ""} />
         </label>
         <label style={label}>Convocatoria *
-          <select style={inputStyle} name="convocatoria_id" defaultValue={searchParams?.conv || ""} required>
+          <select style={inputStyle} name="convocatoria_id" defaultValue={convDefault} required>
             <option value="">Selecciona tu convocatoria</option>
             {convocatorias.map((c) => (<option key={c.id} value={c.id}>{c.nombre}</option>))}
           </select>
