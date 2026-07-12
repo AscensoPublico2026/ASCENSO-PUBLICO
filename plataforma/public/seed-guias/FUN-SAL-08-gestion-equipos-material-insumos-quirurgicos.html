@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-SAL-08 · Gestión de Equipos, Material e Insumos Quirúrgicos — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:        #0A2A5E;
+  --azul-medio:  #1A4A8A;
+  --azul-claro:  #2D6CC0;
+  --azul-suave:  #EAF1FB;
+  --azul-borde:  #C9DCF4;
+  --oro:         #E8A33D;
+  --oro-claro:   #F6C56B;
+  --oro-suave:   #FDF4E3;
+  --oro-borde:   #F0DCB0;
+  --crema:       #FBF9F4;
+  --blanco:      #FFFFFF;
+  --gris-bg:     #F2F0EA;
+  --gris-borde:  #E6E2D8;
+  --verde:       #1A7A4A;
+  --verde-suave: #E8F6EE;
+  --verde-borde: #BFE6CF;
+  --rojo:        #C0392B;
+  --rojo-suave:  #FCEDEB;
+  --rojo-borde:  #F2CDC8;
+  --ambar:       #B8600A;
+  --ambar-suave: #FBEFDD;
+  --ambar-borde: #EFD7B0;
+  --texto:       #2A3441;
+  --texto-suave: #5B6675;
+  --sombra:      0 4px 20px rgba(10,42,94,0.08);
+  --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
+  --radio:       16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+#readbar {
+  position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+  background: linear-gradient(90deg, var(--oro), var(--oro-claro));
+  z-index: 999; transition: width 0.1s linear;
+}
+header {
+  background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
+  color: var(--blanco);
+  padding: 42px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
+}
+header::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
+}
+.brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+.brand-logo {
+  width: 50px; height: 50px; border-radius: 13px;
+  background: linear-gradient(135deg, var(--oro-claro), var(--oro));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(232,163,61,0.4);
+}
+.brand-name { font-size: 1.6rem; font-weight: 800; }
+.brand-slogan { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 4px; }
+.doc-ref {
+  position: absolute; top: 16px; right: 18px; z-index: 3;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
+}
+.kicker {
+  display: inline-flex; align-items: center; gap: 11px;
+  margin: 24px 0 12px; position: relative; z-index: 2;
+  color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.kicker::before, .kicker::after {
+  content:''; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+header h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+.header-sub {
+  max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
+  color: rgba(255,255,255,0.82); font-size: 0.98rem;
+}
+.badges {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px; position: relative; z-index: 2;
+}
+.badge {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--azul);
+  display: flex; gap: 5px; padding: 11px 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 18px rgba(10,42,94,0.22);
+}
+nav button {
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
+  border: none; padding: 9px 16px; border-radius: 9px;
+  cursor: pointer; font-weight: 600; white-space: nowrap;
+  font-size: 0.85rem;
+}
+nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
+nav button.active {
+  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
+  color: var(--azul);
+  box-shadow: 0 4px 12px rgba(232,163,61,0.4);
+}
+main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
+.section { display: none; animation: fade 0.4s ease; }
+.section.visible { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ambar); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+}
+.eyebrow::before {
+  content:''; width: 26px; height: 3px;
+  background: linear-gradient(90deg,var(--oro),var(--oro-claro));
+  border-radius: 3px;
+}
+h2.sec-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
+  line-height: 1.2; margin-bottom: 20px;
+}
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 22px 24px;
+  margin: 16px 0;
+  box-shadow: var(--sombra);
+}
+.card-lead {
+  border-left: 5px solid var(--oro);
+  background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%);
+}
+.lista { list-style:none; margin:6px 0 16px; }
+.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+.narr { background:linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%); border-left:5px solid var(--oro); padding:18px 22px; border-radius:13px; margin:18px 0; font-style:italic; color:var(--texto); }
+.flujo { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:22px; margin:18px 0; box-shadow:var(--sombra); }
+.flujo-paso { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gris-borde); }
+.flujo-paso:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.flujo-num { width:36px; height:36px; border-radius:50%; background:var(--azul); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+.flujo-content h4 { margin:0 0 6px; color:var(--azul); font-size:1rem; }
+.flujo-content p { margin:0; font-size:.9rem; }
+.checkpoint { background:var(--azul-suave); border:2px solid var(--azul-borde); border-radius:14px; padding:18px 20px; margin:20px 0; }
+.checkpoint-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1.05rem; }
+.checkpoint-q { font-weight:600; margin:10px 0; color:var(--texto); }
+.checkpoint-opts { list-style:none; margin:10px 0; padding:0; }
+.checkpoint-opts li { padding:10px 14px; margin:6px 0; background:#fff; border:1.5px solid var(--gris-borde); border-radius:9px; cursor:pointer; transition:all .15s; }
+.checkpoint-opts li:hover { border-color:var(--oro); background:var(--oro-suave); }
+.checkpoint-opts li.ok { border-color:var(--verde); background:var(--verde-suave); }
+.checkpoint-opts li.no { border-color:var(--rojo); background:var(--rojo-suave); opacity:.6; }
+.checkpoint-fb { display:none; margin-top:8px; padding:10px 13px; border-radius:8px; font-size:.88rem; }
+.checkpoint-fb.show { display:block; }
+.checkpoint-fb.ok { background:var(--verde-suave); border-left:3px solid var(--verde); }
+.checkpoint-fb.no { background:var(--rojo-suave); border-left:3px solid var(--rojo); }
+.practica { background:var(--verde-suave); border:1px solid var(--verde-borde); border-left:5px solid var(--verde); border-radius:13px; padding:16px 20px; margin:16px 0; }
+.practica-title { font-weight:800; color:var(--verde); margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+.practica p { margin-bottom:10px; font-size:.9rem; }
+.practica p:last-child { margin-bottom:0; }
+.ojo { background:var(--ambar-suave); border:1px solid var(--ambar-borde); border-radius:10px; padding:11px 16px; margin:14px 0; display:flex; align-items:flex-start; gap:10px; }
+.ojo-icon { font-size:1.2rem; flex-shrink:0; }
+.ojo-text { font-size:.88rem; color:var(--texto); }
+.ojo-text strong { color:var(--ambar); }
+.fuentes { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:18px 22px; margin:22px 0; }
+.fuentes-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1rem; }
+.fuentes ul { list-style:none; padding:0; margin:0; }
+.fuentes ul li { margin-bottom:10px; padding-left:26px; position:relative; }
+.fuentes ul li::before { content:'🔗'; position:absolute; left:0; }
+.fuentes ul li:last-child { margin-bottom:0; }
+.fuentes a { color:var(--azul-claro); font-weight:600; text-decoration:none; border-bottom:1px dotted var(--azul-claro); }
+.fuentes a:hover { color:var(--oro); border-bottom-color:var(--oro); }
+.concepto { background:linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+.concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom:2px dashed var(--oro-borde); }
+.ch-icon { font-size:1.4rem; }
+.concepto-body { padding:6px 14px 12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.capa { padding:13px 15px; border-radius:12px; display:flex; gap:11px; align-items:flex-start; background:var(--blanco); border:1px solid var(--gris-borde); transition:transform .15s; }
+.capa:hover { transform:translateY(-2px); box-shadow:var(--sombra); }
+.capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+.capa-icon.def { background:var(--azul-suave); }
+.capa-icon.apl { background:var(--verde-suave); }
+.capa-icon.eje { background:var(--oro-suave); }
+.capa-icon.cnsc { background:var(--rojo-suave); }
+.capa-content { flex:1; }
+.capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+.capa.cap-def .label { color:var(--azul); }
+.capa.cap-apl .label { color:var(--verde); }
+.capa.cap-eje .label { color:var(--ambar); }
+.capa.cap-cnsc .label { color:var(--rojo); }
+.capa-content p { margin-bottom:0; font-size:.9rem; line-height:1.55; }
+.box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+.box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+.box p:last-child { margin-bottom:0; }
+.box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+.box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+.box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+.box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+.box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+.tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:#FAF8F2; }
+.caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+.caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+.caso-body { padding:18px 20px; }
+.caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+.caso-body .label:first-child { margin-top:0; }
+.resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+.trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+.trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+.trampa-detail { padding:16px 18px; background:var(--blanco); }
+.trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+.trampa-detail .t-row:last-child { margin-bottom:0; }
+.trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+.trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+.trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+.flash-intro { text-align:center; margin-bottom:20px; color:var(--texto-suave); }
+.flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom:12px; }
+.flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+.flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+.flashcard.flipped .flashcard-inner { transform:rotateY(180deg); }
+.flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+.flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+.flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+.flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+.flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+.flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+.flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+.flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+.flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+.flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+.flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+.glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+.glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+.glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+.glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+.quiz-intro { text-align:center; margin-bottom:18px; }
+.quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+.quiz-formato strong { color:var(--azul); }
+.dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+.tag.b { background:var(--verde-suave); color:var(--verde); }
+.tag.i { background:var(--azul-suave); color:var(--azul); }
+.tag.a { background:var(--rojo-suave); color:var(--rojo); }
+.pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+.pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+.nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+.nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+.nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+.nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+.q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+.q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+.opciones { display:flex; flex-direction:column; gap:9px; }
+.opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+.opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+.opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+.opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+.opcion.correcta .letra { background:var(--verde); color:#fff; }
+.opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+.opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+.opcion.bloqueada { pointer-events:none; }
+.feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+.feedback.show { display:block; }
+.feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+.feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+#resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+#resultado.show { display:block; }
+.score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+.btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+.btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+.resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+.resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+.resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+.cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+.cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+.cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+.cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+.advance-bar { margin-top:36px; padding-top:22px; border-top:2px dashed var(--oro); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.advance-hint { color:var(--texto-suave); font-style:italic; }
+.advance-btn { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); border:none; padding:12px 26px; border-radius:11px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(232,163,61,.35); transition:all .2s; font-family:inherit; font-size:.92rem; }
+.advance-btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.advance-btn.final { background:linear-gradient(135deg,var(--verde),#2A9F66); color:#fff; }
+.h3-chip { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--oro); color:var(--azul); font-weight:800; font-size:.82rem; margin-right:8px; }
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-SAL-08</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 60 60" width="32" height="32">
+        <path d="M18 42 L30 18 L35 23 L42 18" stroke="#0A2A5E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M38 16 L42 18 L40 22 Z" fill="#0A2A5E"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada al ascenso público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 16 · Funcional · Salud</div>
+  <h1>Gestión de Equipos, Material e Insumos Quirúrgicos</h1>
+  <p class="header-sub">Domina el inventario, la solicitud y el manejo eficiente de los recursos del quirófano: sin insumos disponibles, no hay cirugía segura</p>
+  <div class="badges">
+    <span class="badge">📅 Día 16 de 21</span>
+    <span class="badge">⏱ 90-105 min</span>
+    <span class="badge">🎯 Prueba escrita CNSC</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+
+
+<!-- SECCIÓN 0: OBJETIVO -->
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+
+  <div class="narr">
+    <strong>Imagina que un quirófano se detiene</strong> a mitad de una cirugía porque nadie verificó que hubiera suficiente sutura del calibre necesario, o porque el electrobisturí falló sin que existiera un plan de respaldo. La gestión de equipos e insumos no es un tema "administrativo" ajeno al instrumentador: es la base logística silenciosa que hace posible cada cirugía. Esta guía te prepara para responder con seguridad a las preguntas CNSC sobre inventario de instrumental, solicitud de insumos, reporte de fallas, uso eficiente de recursos y manejo de equipos médicos del quirófano.
+  </div>
+
+  <div class="card card-lead">
+    <p><strong>Al finalizar esta guía dominarás:</strong></p>
+    <ul class="lista">
+      <li><strong>El inventario de instrumental y material quirúrgico</strong> del servicio.</li>
+      <li><strong>La solicitud y verificación de insumos</strong> antes de las cirugías programadas.</li>
+      <li><strong>El reporte de fallas o pérdida de instrumental</strong> ante los canales correspondientes.</li>
+      <li><strong>El uso eficiente de recursos</strong> en el quirófano.</li>
+      <li><strong>La coordinación con almacén y proveeduría</strong> del hospital.</li>
+      <li><strong>El manejo básico de equipos médicos</strong>: electrobisturí, monitores, aspiradores.</li>
+    </ul>
+  </div>
+
+  <div class="box gold">
+    <div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al terminar, sabrás <strong>cómo anticipar necesidades de insumos</strong>, <strong>qué hacer ante una falla de equipo</strong> y <strong>cómo comunicarte eficazmente con almacén</strong>. Todo lo que la CNSC pregunta sobre gestión de recursos quirúrgicos está aquí, sin relleno.</p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 1: IMPORTANCIA -->
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema aparece en la prueba CNSC?</h2>
+
+  <div class="card">
+    <p>La CNSC evalúa tu <strong>conocimiento de gestión de equipos e insumos</strong> porque:</p>
+    <ul class="lista">
+      <li><strong>Es parte de la responsabilidad operativa del cargo:</strong> aunque el instrumentador no gestiona la compra, sí es responsable de detectar, reportar y prevenir faltantes que afecten la atención.</li>
+      <li><strong>Previene interrupciones críticas:</strong> un quirófano detenido por falta de insumo o falla de equipo pone en riesgo directo al paciente en la mesa.</li>
+      <li><strong>Conecta con el uso eficiente de recursos públicos:</strong> como servidor público, el manejo cuidadoso de insumos evita desperdicio de recursos del sistema de salud.</li>
+      <li><strong>Aparece en casos situacionales:</strong> la CNSC pregunta "¿qué debe hacer el instrumentador si detecta un faltante o una falla de equipo?".</li>
+    </ul>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📊 Dato clave</div>
+    <p>El manual de funciones exige explícitamente "llevar los controles y registros exigidos según las exigencias del área", lo cual incluye la gestión de inventario y el reporte oportuno de necesidades e incidencias relacionadas con equipos e insumos.</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Si no dominas este tema</div>
+    <p>Podrías no saber cuándo y cómo reportar un faltante, o confundir tu responsabilidad de detección con la responsabilidad de compra (que no te corresponde). <strong>Este es un tema de rol y canales de comunicación claros, más que de conocimiento técnico complejo.</strong></p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Contenido esencial</h2>
+
+  <p><strong>Esta sección desarrolla 6 conceptos clave.</strong> Cada uno se presenta en 4 capas: <strong style="color:var(--azul);">🟦 Definición</strong> · <strong style="color:var(--verde);">🟩 Aplicación</strong> · <strong style="color:var(--ambar);">🟨 Ejemplo real</strong> · <strong style="color:var(--rojo);">🟥 Trampa CNSC</strong>.</p>
+
+  <!-- CONCEPTO 1 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">📊</span>
+      <span>1. Inventario de Instrumental y Material Quirúrgico</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El inventario del servicio quirúrgico es el registro actualizado de las cajas de instrumental, equipos y material disponible, incluyendo cantidades, estado (en uso, en esterilización, en reparación) y ubicación. Un inventario preciso permite anticipar necesidades y detectar faltantes antes de que afecten una cirugía programada.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El instrumentador contribuye al inventario reportando el uso, el estado y las novedades del instrumental que maneja directamente, sin esperar a que "otro" lleve ese control. La actualización oportuna del inventario permite a la coordinación planificar la programación quirúrgica con recursos reales disponibles.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Al finalizar su turno, un instrumentador reporta que dos cajas de instrumental de cirugía general están en reparación por instrumental dañado, permitiendo que la coordinación del día siguiente sepa con cuántas cajas completas puede programar cirugías.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>quién es responsable de mantener actualizado el inventario</strong>. <strong>Trampa típica:</strong> pensar que el inventario es responsabilidad exclusiva de almacén, sin ninguna participación del instrumentador en su actualización.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 2 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">📋</span>
+      <span>2. Solicitud y Verificación de Insumos antes de las Cirugías</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Antes de cada jornada quirúrgica, se debe verificar la disponibilidad de insumos de consumo (suturas, gasas, guantes, soluciones) según la programación del día, solicitando con antelación cualquier faltante detectado a almacén o proveeduría, en lugar de descubrirlo al momento de necesitarlo durante una cirugía.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>La verificación se hace cruzando la programación quirúrgica del día (qué cirugías, cuántas, de qué tipo) contra el stock disponible de insumos de consumo específicos para esos procedimientos, anticipando la cantidad necesaria con margen razonable.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Al revisar la programación de tres cirugías de columna para el día siguiente, el instrumentador verifica que hay suficiente sutura del calibre específico requerido para este tipo de procedimiento, y detecta que solo alcanza para dos cirugías, solicitando el faltante con antelación a almacén.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de programación quirúrgica y pregunta <strong>cuándo debe verificarse la disponibilidad de insumos</strong>. <strong>Trampa típica:</strong> verificar solo el día de la cirugía, sin margen de tiempo para solicitar y recibir un faltante detectado tardíamente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 1</div>
+    <p class="checkpoint-q"><strong>Al revisar la programación quirúrgica del día siguiente, detectas que el stock de un insumo específico solo alcanza para la mitad de las cirugías programadas. ¿Cuándo debes actuar?</strong></p>
+    <ul class="checkpoint-opts" id="cp1">
+      <li data-ok="0">El mismo día de la cirugía, cuando ya se necesite el insumo</li>
+      <li data-ok="1">De inmediato, con antelación suficiente para solicitar y recibir el faltante antes de la programación</li>
+      <li data-ok="0">No es necesario actuar; se resolverá improvisando durante la cirugía si falta</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb1"></div>
+  </div>
+
+
+  <!-- CONCEPTO 3 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🚨</span>
+      <span>3. Reporte de Fallas o Pérdida de Instrumental</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Cualquier instrumento dañado (que no corta bien, que no cierra correctamente, corroído) o extraviado debe reportarse de inmediato a través del canal institucional establecido (jefatura de instrumentación, coordinación de quirófanos), documentando qué ocurrió, cuándo y las circunstancias relevantes.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Un instrumento dañado NUNCA se reincorpora silenciosamente al set esperando que "nadie lo note"; se retira, se reporta y se gestiona su reparación o reemplazo. El reporte oportuno permite que la institución mantenga sets completos y funcionales para las próximas cirugías.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una cirugía, el instrumentador nota que una pinza hemostática no cierra correctamente. La retira del set, la etiqueta como dañada y, al finalizar el procedimiento, reporta la incidencia a la jefatura de instrumentación para su reparación o reemplazo.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de instrumento dañado y pregunta <strong>qué debe hacer el instrumentador</strong>. <strong>Trampa típica:</strong> devolver el instrumento dañado al set sin reportarlo, "para no generar papeleo", exponiendo a la siguiente cirugía al mismo riesgo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 4 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">♻️</span>
+      <span>4. Uso Eficiente de Recursos en el Quirófano</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El uso eficiente de recursos implica abrir solo el material que realmente se va a necesitar (no abrir "por si acaso" grandes cantidades que luego se desechan sin usar), y aprovechar correctamente los insumos sin comprometer la seguridad del paciente. Es una responsabilidad ética y económica del servidor público en el manejo de recursos del sistema de salud.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Se abre material estéril según la necesidad razonablemente anticipada del procedimiento, no en exceso. Sin embargo, esta eficiencia NUNCA debe traducirse en escatimar recursos necesarios para la seguridad: ante duda entre "puede que se necesite" y la seguridad del paciente, prevalece siempre la seguridad.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Para una cirugía menor programada, el instrumentador abre la cantidad de gasas estándar para ese tipo de procedimiento, en lugar de abrir "por costumbre" una cantidad excesiva que probablemente se desechará sin usar al finalizar.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de uso de recursos y pregunta <strong>si la actuación fue eficiente o si comprometió la seguridad</strong>. <strong>Trampa típica:</strong> confundir eficiencia con escatimar recursos necesarios; la eficiencia es evitar desperdicio innecesario, nunca poner en riesgo al paciente por ahorrar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practica">
+    <div class="practica-title">📋 En la práctica</div>
+    <p><strong>Regla de uso eficiente:</strong> abre según necesidad razonable del procedimiento estándar; si durante la cirugía se requiere más, se solicita de inmediato (nunca se escatima por "ahorrar"). La eficiencia se mide evitando el desperdicio innecesario, no reduciendo lo necesario para la seguridad.</p>
+  </div>
+
+  <!-- CONCEPTO 5 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🤝</span>
+      <span>5. Coordinación con Almacén y Proveeduría</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El almacén y proveeduría del hospital son las áreas responsables de adquirir y distribuir los insumos según las solicitudes de los servicios. El instrumentador NO gestiona directamente la compra, pero sí es el canal que detecta y comunica necesidades reales del servicio quirúrgico, siguiendo el conducto regular institucional.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Las solicitudes se comunican de forma clara, específica (tipo, cantidad, urgencia) y a través del canal formal establecido (formato de solicitud, sistema de información), evitando solicitudes verbales informales que se pierden o no tienen trazabilidad.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>El instrumentador detecta que el stock de un tipo específico de sutura está bajo y completa el formato formal de solicitud a almacén, especificando el tipo exacto, la cantidad necesaria y la urgencia relativa según la programación quirúrgica próxima.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>cuál es el canal correcto de solicitud</strong> ante una necesidad detectada. <strong>Trampa típica:</strong> pensar que una solicitud verbal informal es suficiente, sin dejar registro formal que permita trazabilidad y seguimiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 2</div>
+    <p class="checkpoint-q"><strong>Detectas que un insumo específico está por agotarse. ¿Cuál es la forma correcta de solicitarlo a almacén?</strong></p>
+    <ul class="checkpoint-opts" id="cp2">
+      <li data-ok="0">Comentarlo verbalmente de forma informal al pasar por almacén, sin dejar registro</li>
+      <li data-ok="1">Completar el formato formal de solicitud especificando tipo, cantidad y urgencia, siguiendo el canal institucional establecido</li>
+      <li data-ok="0">Esperar a que almacén detecte el faltante por su cuenta en su propio inventario</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb2"></div>
+  </div>
+
+  <!-- CONCEPTO 6 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">⚡</span>
+      <span>6. Manejo Básico de Equipos Médicos del Quirófano</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Equipos como el <strong>electrobisturí</strong> (corta y cauteriza tejido mediante corriente eléctrica), <strong>monitores</strong> (signos vitales del paciente) y <strong>aspiradores</strong> (succión de fluidos y sangre del campo quirúrgico) requieren verificación de funcionamiento antes de cada cirugía y conocimiento básico de su operación por parte del personal de instrumentación.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Antes de iniciar, se verifica que el electrobisturí tenga la placa de retorno correctamente colocada en el paciente (para evitar quemaduras), que el aspirador funcione con succión adecuada, y que los monitores estén correctamente conectados y calibrados. Cualquier falla detectada se reporta y resuelve antes de que el paciente esté en la mesa.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Antes de una cirugía, el instrumentador verifica que el aspirador succione correctamente probándolo brevemente, y confirma con el circulante que la placa de retorno del electrobisturí está bien adherida a la piel del paciente, previniendo un posible quemadura por mal contacto.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de falla de equipo médico y pregunta <strong>qué verificación debió realizarse antes</strong>. <strong>Trampa típica:</strong> pensar que la verificación de equipos es responsabilidad exclusiva de ingeniería biomédica, sin ninguna verificación básica previa por parte del equipo quirúrgico.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fuentes">
+    <div class="fuentes-title">🔗 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/resolucion-3100-de-2019.pdf" target="_blank">Resolución 3100 de 2019 — Estándares de habilitación de servicios de salud</a> (MinSalud)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1474_2011.html" target="_blank">Ley 1474 de 2011 — Estatuto Anticorrupción (uso eficiente de recursos públicos)</a> (Secretaría del Senado)</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Diferencias clave</h2>
+
+  <p>La CNSC diseña distractores basados en confusiones típicas. Estas tablas te ayudan a distinguir conceptos que suenan similares pero son distintos.</p>
+
+  <h3><span class="h3-chip">1</span> Rol del Instrumentador vs. Rol de Almacén/Proveeduría</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Instrumentador</th><th>Almacén/Proveeduría</th></tr>
+      <tr><td><strong>Función</strong></td><td>Detecta, reporta y solicita necesidades</td><td>Adquiere y distribuye insumos según solicitudes</td></tr>
+      <tr><td><strong>Decisión de compra</strong></td><td>No le corresponde</td><td>Es su responsabilidad, según procedimientos institucionales</td></tr>
+      <tr><td><strong>Canal de comunicación</strong></td><td>Formato formal de solicitud</td><td>Recibe y gestiona según el formato recibido</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"El instrumentador no tiene ninguna responsabilidad sobre el inventario."</strong> Falso. Aunque no decide la compra, SÍ es responsable de reportar novedades y solicitar formalmente lo necesario.</p></div>
+
+  <h3><span class="h3-chip">2</span> Eficiencia vs. Escatimar Recursos</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Uso eficiente</th><th>Escatimar recursos</th></tr>
+      <tr><td><strong>Objetivo</strong></td><td>Evitar desperdicio innecesario</td><td>Reducir uso aunque comprometa seguridad</td></tr>
+      <tr><td><strong>Prioridad</strong></td><td>Seguridad del paciente + uso razonable</td><td>Ahorro por encima de la seguridad (incorrecto)</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Ser eficiente significa usar lo mínimo posible siempre."</strong> Falso. La eficiencia evita desperdicio, pero nunca debe comprometer la seguridad del paciente por ahorrar recursos necesarios.</p></div>
+
+  <h3><span class="h3-chip">3</span> Solicitud Formal vs. Solicitud Informal</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Solicitud formal (formato/sistema)</th><th>Solicitud informal (verbal)</th></tr>
+      <tr><td><strong>Trazabilidad</strong></td><td>Registrada, con seguimiento posible</td><td>Sin registro, se puede perder o ignorar</td></tr>
+      <tr><td><strong>Recomendación</strong></td><td>Siempre usar este canal</td><td>Insuficiente como único método</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Un comentario verbal a almacén es suficiente para solicitar un insumo."</strong> Falso. Se requiere el canal formal establecido para garantizar trazabilidad y seguimiento adecuado.</p></div>
+
+  <h3><span class="h3-chip">4</span> Instrumento Dañado: Reportar vs. Reincorporar sin Reportar</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Reportar de inmediato</th><th>Reincorporar sin reportar</th></tr>
+      <tr><td><strong>Riesgo</strong></td><td>Ninguno; se gestiona reparación/reemplazo</td><td>Expone a la siguiente cirugía al mismo riesgo</td></tr>
+      <tr><td><strong>Práctica correcta</strong></td><td>Siempre</td><td>Nunca es aceptable</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Se puede devolver un instrumento levemente dañado al set para no generar papeleo."</strong> Falso. Cualquier instrumento dañado debe reportarse siempre, sin excepción.</p></div>
+</section>
+
+
+<!-- SECCIÓN 4: CASOS CNSC -->
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos CNSC</span>
+  <h2 class="sec-title">📂 Casos situacionales tipo CNSC</h2>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 · Insumo insuficiente para la programación</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Revisando la programación quirúrgica de la próxima semana, un instrumentador detecta que el stock de un tipo de sutura solo alcanza para la mitad de las cirugías programadas que la requieren.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Solicitar de inmediato el faltante a almacén mediante el canal formal establecido, con la antelación suficiente para que el insumo esté disponible antes de las cirugías programadas.</strong> — Detectar el faltante con anticipación permite resolverlo sin afectar la atención, a diferencia de descubrirlo el día de la cirugía.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 · Instrumento dañado durante la cirugía</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante una cirugía, el instrumentador nota que una tijera no corta correctamente. Un compañero sugiere "devolverla al set tal cual está, para no generar papeleo adicional".</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Retirar el instrumento del set, etiquetarlo como dañado y reportarlo formalmente a la jefatura de instrumentación para su reparación o reemplazo, sin importar el "papeleo" adicional que esto implique.</strong> — Reincorporar un instrumento dañado sin reportarlo expone a la siguiente cirugía al mismo riesgo, comprometiendo la seguridad de futuros procedimientos.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 · Uso eficiente vs. escatimar</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Para una cirugía con riesgo de sangrado mayor al habitual, un instrumentador considera abrir solo la cantidad mínima de gasas para "ser eficiente con los recursos", aunque el riesgo sugiere que podría necesitarse más.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Es correcta esta decisión?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ No es correcta. La eficiencia busca evitar desperdicio innecesario, pero nunca debe traducirse en escatimar recursos necesarios para la seguridad del paciente ante un riesgo identificado.</strong> — Se debe anticipar la cantidad razonable según el riesgo real del procedimiento, no limitarse artificialmente por una noción equivocada de "ahorro".</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 4 · Falla de electrobisturí</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Antes de iniciar una cirugía, el instrumentador prueba el electrobisturí y detecta que no está funcionando correctamente.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Reportar de inmediato la falla y gestionar un equipo de respaldo o la reparación antes de que el paciente ingrese a sala, verificando el funcionamiento correcto antes de proceder.</strong> — Detectar la falla antes de iniciar permite resolverla sin poner en riesgo al paciente ya en la mesa quirúrgica.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 5 · Solicitud informal a almacén</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un instrumentador comenta verbalmente al personal de almacén, de paso por el pasillo, que "van a necesitar más gasas la próxima semana", sin completar ningún formato ni dejar constancia.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Es suficiente esta forma de solicitud?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ No es suficiente. Se debe completar el formato formal de solicitud especificando tipo, cantidad y urgencia, siguiendo el canal institucional establecido, para garantizar trazabilidad y seguimiento adecuado.</strong> — Una solicitud verbal informal puede perderse u olvidarse fácilmente, sin ningún respaldo documental que permita dar seguimiento.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5: ERRORES FRECUENTES -->
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Los 6 errores que más cuestan puntos</h2>
+
+  <div class="box danger"><div class="box-title">❌ Error 1 · No actualizar el inventario por asumir que "no es su función"</div><p><strong>El error:</strong> no reportar novedades de instrumental pensando que el inventario es exclusivamente responsabilidad de almacén.</p><p><strong>Por qué falla:</strong> el instrumentador es quien tiene contacto directo con el estado real del instrumental y debe reportarlo.</p><p><strong>Cómo corregir:</strong> reporta siempre novedades de instrumental que manejas directamente.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 2 · Detectar faltantes solo el día de la cirugía</div><p><strong>El error:</strong> verificar disponibilidad de insumos sin margen de tiempo para resolver faltantes.</p><p><strong>Por qué falla:</strong> no deja tiempo suficiente para solicitar y recibir el insumo antes de que se necesite.</p><p><strong>Cómo corregir:</strong> verifica la disponibilidad con antelación suficiente, cruzando programación contra stock real.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 3 · Reincorporar instrumental dañado sin reportarlo</div><p><strong>El error:</strong> devolver un instrumento dañado al set "para no generar papeleo".</p><p><strong>Por qué falla:</strong> expone a la siguiente cirugía al mismo riesgo del instrumento defectuoso.</p><p><strong>Cómo corregir:</strong> reporta siempre cualquier instrumento dañado, sin excepción.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 4 · Confundir eficiencia con escatimar seguridad</div><p><strong>El error:</strong> reducir el material abierto por debajo de lo razonablemente necesario "para ahorrar".</p><p><strong>Por qué falla:</strong> pone en riesgo al paciente si el material resulta insuficiente durante el procedimiento.</p><p><strong>Cómo corregir:</strong> abre según necesidad razonable del procedimiento y el riesgo específico, nunca por debajo de eso.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 5 · Solicitar insumos solo verbalmente</div><p><strong>El error:</strong> comunicar necesidades de forma informal, sin dejar registro formal.</p><p><strong>Por qué falla:</strong> sin trazabilidad, la solicitud puede perderse u olvidarse.</p><p><strong>Cómo corregir:</strong> usa siempre el formato o canal formal establecido para cualquier solicitud a almacén.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 6 · No verificar equipos médicos antes de la cirugía</div><p><strong>El error:</strong> asumir que el equipo funcionará sin probarlo previamente.</p><p><strong>Por qué falla:</strong> una falla detectada con el paciente ya en la mesa genera un riesgo mucho mayor que detectarla antes.</p><p><strong>Cómo corregir:</strong> verifica siempre el funcionamiento de electrobisturí, aspirador y monitores antes de que el paciente ingrese a sala.</p></div>
+</section>
+
+<!-- SECCIÓN 6: TIPS -->
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 6 estrategias para ganar puntos</h2>
+
+  <div class="box ok"><div class="box-title">✅ Tip 1 · El instrumentador SÍ tiene rol en el inventario</div><p>No decide la compra, pero SÍ reporta el estado y novedades del instrumental que maneja directamente.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 · Verificación de insumos = con antelación, nunca el mismo día</div><p>Cruza siempre la programación quirúrgica contra el stock disponible con suficiente margen de tiempo para resolver faltantes.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 · Instrumento dañado = reportar siempre, sin excepción</div><p>Ninguna razón (ni "evitar papeleo") justifica reincorporar un instrumento defectuoso sin reportarlo.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 · Eficiencia ≠ escatimar seguridad</div><p>Si la pregunta describe reducir material por debajo de lo necesario para el riesgo del caso, es un error, no eficiencia.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 · Solicitudes siempre por canal formal</div><p>Descarta cualquier opción que sugiera que un comentario verbal informal es suficiente para solicitar insumos.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 · Verifica equipos ANTES de que el paciente esté en la mesa</div><p>Cualquier caso de falla de equipo detectada con el paciente ya presente indica que faltó verificación previa.</p></div>
+</section>
+
+<!-- SECCIÓN 7: TRAMPAS -->
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 4 trampas diseñadas por la CNSC</h2>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 1 · "El inventario es responsabilidad exclusiva de almacén"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> almacén gestiona compras, parece lógico que también sea el único responsable del inventario.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> el instrumentador tiene contacto directo con el estado real del instrumental y debe reportar novedades activamente.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "El instrumentador reporta el estado y novedades del instrumental que maneja, contribuyendo a un inventario preciso."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 2 · "Ser eficiente significa siempre usar la menor cantidad posible"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> menos uso parece siempre más eficiente y responsable con los recursos.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> la eficiencia busca evitar desperdicio, no comprometer la seguridad del paciente reduciendo recursos necesarios.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se abre la cantidad razonable según el procedimiento y su riesgo, sin escatimar lo necesario para la seguridad."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 3 · "Un comentario verbal a almacén es una solicitud válida"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> comunicar la necesidad, aunque sea verbalmente, parece suficiente si el mensaje llega.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> sin registro formal, la solicitud carece de trazabilidad y puede perderse fácilmente.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se utiliza siempre el canal formal establecido (formato o sistema) para solicitar insumos a almacén."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 4 · "Un instrumento levemente dañado se puede seguir usando sin reportar"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> si el daño es "leve", parece innecesario generar un reporte formal.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> cualquier daño, sin importar su magnitud percibida, puede comprometer la funcionalidad del instrumento en un momento crítico.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Cualquier instrumento dañado, sin importar la magnitud aparente del daño, se retira y se reporta siempre."</div></div></div>
+</section>
+
+
+<!-- SECCIÓN 8: REPASO (Flashcards) -->
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards — Repaso activo</h2>
+  <p class="flash-intro">Estas 10 tarjetas condensan los conceptos esenciales. Haz clic para voltear y ver la respuesta.</p>
+  <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+  <div class="flashcard" id="flashcard">
+    <div class="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <span class="label">Pregunta</span>
+        <p class="pregunta-flash" id="flashFront"></p>
+        <small class="hint">Haz clic para ver la respuesta</small>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <span class="label">Respuesta</span>
+        <p class="respuesta-flash" id="flashBack"></p>
+      </div>
+    </div>
+  </div>
+  <div class="flashcard-controls">
+    <button id="flashPrev">← Anterior</button>
+    <button id="flashFlip" class="primary">Voltear tarjeta</button>
+    <button id="flashNext">Siguiente →</button>
+  </div>
+</section>
+
+<!-- SECCIÓN 9: RESUMEN + GLOSARIO -->
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen y Glosario</span>
+  <h2 class="sec-title">📋 Resumen ejecutivo</h2>
+  <div class="resumen-grid">
+    <div class="resumen-item"><h4>📊 Inventario</h4><p>El instrumentador reporta estado y novedades del instrumental; no decide compras pero sí contribuye al registro.</p></div>
+    <div class="resumen-item"><h4>📋 Solicitud de insumos</h4><p>Verificar con antelación, cruzando programación contra stock, para resolver faltantes antes de necesitarlos.</p></div>
+    <div class="resumen-item"><h4>🚨 Reporte de fallas</h4><p>Cualquier instrumento dañado se retira y reporta siempre, sin excepción, por "leve" que parezca el daño.</p></div>
+    <div class="resumen-item"><h4>♻️ Uso eficiente</h4><p>Evita desperdicio, pero nunca escatima recursos necesarios para la seguridad del paciente.</p></div>
+    <div class="resumen-item"><h4>🤝 Canal formal</h4><p>Las solicitudes a almacén siempre por formato o sistema formal, nunca solo verbal.</p></div>
+    <div class="resumen-item"><h4>⚡ Equipos médicos</h4><p>Verificar electrobisturí, aspirador y monitores antes de que el paciente esté en la mesa.</p></div>
+  </div>
+
+  <h3 style="margin-top:32px;">📚 Glosario</h3>
+  <div class="glosario">
+    <div class="glo-item"><dt>Inventario quirúrgico</dt><dd>Registro actualizado de cajas, equipos y material disponible en el servicio, con cantidades, estado y ubicación.</dd></div>
+    <div class="glo-item"><dt>Proveeduría</dt><dd>Área institucional responsable de la adquisición de insumos según las solicitudes de los servicios.</dd></div>
+    <div class="glo-item"><dt>Placa de retorno</dt><dd>Componente del electrobisturí que debe adherirse correctamente al paciente para prevenir quemaduras.</dd></div>
+    <div class="glo-item"><dt>Uso eficiente de recursos</dt><dd>Aprovechamiento adecuado de insumos evitando desperdicio, sin comprometer la seguridad del paciente.</dd></div>
+    <div class="glo-item"><dt>Canal formal de solicitud</dt><dd>Formato o sistema institucional establecido para comunicar necesidades de insumos con trazabilidad.</dd></div>
+    <div class="glo-item"><dt>Trazabilidad de solicitud</dt><dd>Capacidad de dar seguimiento documentado a una solicitud de insumo desde que se registra hasta que se resuelve.</dd></div>
+  </div>
+
+  <div class="cierre">
+    <h3>🎯 Frase para recordar</h3>
+    <p><strong>"Verifica con antelación, reporta siempre lo dañado, sé eficiente sin escatimar seguridad, y solicita por el canal formal."</strong></p>
+  </div>
+</section>
+
+<!-- SECCIÓN 10: SIMULACRO -->
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+
+  <div class="card card-lead quiz-intro">
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> real y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones; solo una es correcta.</p>
+    <div class="quiz-formato"><strong>Instrucciones:</strong> lee el caso, identifica el problema y elige la actuación más apropiada. Al hacer clic verás retroalimentación por cada opción.</div>
+    <div class="dific-tags">
+      <span class="tag b">4 básicas</span>
+      <span class="tag i">5 intermedias</span>
+      <span class="tag a">3 avanzadas</span>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div style="text-align:center; margin:28px 0;">
+    <button id="btnCalcular" class="btn">Ver mi resultado</button>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num" id="scoreNum">0/12</div>
+    <p id="scoreMsg"></p>
+    <div id="temasReforzar"></div>
+    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">Ascenso Público</div>
+  <div class="fslogan">Tu ruta personalizada al ascenso público</div>
+  <div class="fmeta">
+    FUN-SAL-08 · Día 16 · v1.0 — julio 2026<br>
+    © Ascenso Público — Todos los derechos reservados
+  </div>
+</footer>
+
+
+<script>
+// ===== NAVEGACIÓN Y BARRA DE LECTURA =====
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('nav button');
+
+function showSection(i) {
+  sections.forEach(s => s.classList.remove('visible'));
+  navBtns.forEach(b => b.classList.remove('active'));
+  sections[i].classList.add('visible');
+  navBtns[i].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('readbar').style.width = scrolled + '%';
+});
+
+// ===== BOTONES "AVANZAR" =====
+const titulosCortos = [
+  'Importancia', 'Desarrollo', 'Comparaciones', 'Casos CNSC',
+  'Errores', 'Tips', 'Trampas', 'Repaso', 'Resumen', 'Simulacro', null
+];
+
+sections.forEach((sec, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'advance-bar';
+  if (i < sections.length - 1) {
+    bar.innerHTML = `
+      <span class="advance-hint">¿Listo para continuar?</span>
+      <button class="advance-btn" data-target="${i + 1}">
+        Avanzar a ${titulosCortos[i]} →
+      </button>`;
+  } else {
+    bar.innerHTML = `
+      <span class="advance-hint">🎓 Has completado todo el contenido</span>
+      <button class="advance-btn final" data-target="finalizar">
+        ✅ Finalizar Día 16
+      </button>`;
+  }
+  sec.appendChild(bar);
+});
+
+document.querySelectorAll('.advance-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.target;
+    if (t === 'finalizar') {
+      alert('🎓 ¡Felicitaciones! Completaste el Día 16.\n\nMañana avanzas con FUN-SAL-09 · Trabajo en Equipo Quirúrgico y Comunicación Efectiva.\n\n🚀');
+    } else {
+      showSection(parseInt(t));
+    }
+  });
+});
+
+// ===== CHECKPOINTS INTERACTIVOS =====
+function setupCheckpoint(cpId, fbId) {
+  const opts = document.querySelectorAll(`#${cpId} li`);
+  const fb = document.getElementById(fbId);
+  opts.forEach(opt => {
+    opt.addEventListener('click', function() {
+      const isOk = this.dataset.ok === '1';
+      opts.forEach(o => o.style.pointerEvents = 'none');
+      this.classList.add(isOk ? 'ok' : 'no');
+      fb.className = isOk ? 'checkpoint-fb ok show' : 'checkpoint-fb no show';
+      if (isOk) {
+        fb.innerHTML = '✅ <strong>¡Correcto!</strong> Esta es la actuación apropiada según la gestión responsable de recursos quirúrgicos.';
+      } else {
+        fb.innerHTML = '❌ <strong>Incorrecto.</strong> Revisa el concepto correspondiente en el Desarrollo para entender por qué esta opción no es la más apropiada.';
+      }
+    });
+  });
+}
+setupCheckpoint('cp1', 'cpfb1');
+setupCheckpoint('cp2', 'cpfb2');
+
+// ===== FLASHCARDS =====
+const flashcards = [
+  { f:'¿Tiene el instrumentador algún rol en el inventario de instrumental?', b:'Sí. Aunque no decide la compra, es responsable de reportar el estado y las novedades del instrumental que maneja directamente.' },
+  { f:'¿Cuándo debe verificarse la disponibilidad de insumos para cirugías programadas?', b:'Con antelación suficiente, cruzando la programación quirúrgica contra el stock disponible, nunca solo el día de la cirugía.' },
+  { f:'¿Qué se hace con un instrumento dañado durante una cirugía?', b:'Se retira, se etiqueta como dañado y se reporta formalmente para su reparación o reemplazo, sin excepción.' },
+  { f:'¿Qué significa "uso eficiente de recursos" en el quirófano?', b:'Evitar desperdicio innecesario, abriendo material según la necesidad razonable del procedimiento, sin comprometer la seguridad del paciente.' },
+  { f:'¿Es válida una solicitud verbal informal a almacén?', b:'No. Se debe usar siempre el canal formal establecido (formato o sistema) para garantizar trazabilidad y seguimiento.' },
+  { f:'¿Qué debe verificarse en el electrobisturí antes de una cirugía?', b:'Que la placa de retorno esté correctamente adherida al paciente, para prevenir quemaduras por mal contacto.' },
+  { f:'¿Quién gestiona la adquisición de insumos en el hospital?', b:'Almacén y proveeduría, según las solicitudes formales recibidas de los servicios; el instrumentador detecta y solicita, no compra directamente.' },
+  { f:'¿Qué debe hacerse si un aspirador no succiona correctamente antes de la cirugía?', b:'Reportar la falla de inmediato y gestionar la reparación o un equipo de respaldo antes de que el paciente ingrese a sala.' },
+  { f:'¿Es correcto reducir el material abierto por debajo de lo necesario para "ahorrar"?', b:'No. La eficiencia nunca debe traducirse en escatimar recursos necesarios para la seguridad del paciente.' },
+  { f:'¿Qué norma respalda el uso eficiente de recursos públicos en salud?', b:'La Ley 1474 de 2011 (Estatuto Anticorrupción), que exige el manejo responsable y transparente de los recursos del sistema de salud.' }
+];
+
+let flashIndex = 0;
+const flashEl = document.getElementById('flashcard');
+const flashFront = document.getElementById('flashFront');
+const flashBack = document.getElementById('flashBack');
+const flashCounter = document.getElementById('flashCounter');
+
+function renderFlash() {
+  flashEl.classList.remove('flipped');
+  flashFront.textContent = flashcards[flashIndex].f;
+  flashBack.textContent = flashcards[flashIndex].b;
+  flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+}
+flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click', e => {
+  e.stopPropagation(); flashEl.classList.toggle('flipped');
+});
+document.getElementById('flashPrev').addEventListener('click', () => {
+  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlash();
+});
+document.getElementById('flashNext').addEventListener('click', () => {
+  flashIndex = (flashIndex + 1) % flashcards.length;
+  renderFlash();
+});
+renderFlash();
+
+
+
+// ===== SIMULACRO =====
+const preguntas = [
+  {
+    nivel: 'b', tema: 'Verificación anticipada de insumos',
+    ctx: 'Eres instrumentador y revisas la programación quirúrgica de la próxima semana. Detectas que el stock de un tipo específico de sutura solo alcanza para la mitad de las cirugías programadas que la requieren.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Esperar hasta el día de cada cirugía para verificar si realmente hace falta la sutura',
+      'Solicitar de inmediato el faltante a almacén mediante el canal formal, con antelación suficiente antes de que se necesite',
+      'No hacer nada, ya que la gestión de compras no es responsabilidad del instrumentador',
+      'Comentarlo verbalmente al personal de almacén la próxima vez que los veas, sin urgencia particular'
+    ],
+    correcta: 1,
+    expl: [
+      'Esperar hasta el día de cada cirugía elimina el margen de tiempo necesario para resolver el faltante sin afectar la atención de los pacientes programados.',
+      '✔ Correcto. Detectar el faltante con anticipación y solicitarlo de inmediato por el canal formal permite resolver la situación sin que se produzca una interrupción crítica durante alguna de las cirugías programadas.',
+      'Aunque la decisión de compra no corresponde al instrumentador, sí es su responsabilidad detectar y comunicar formalmente las necesidades identificadas.',
+      'Un comentario verbal informal sin urgencia particular no garantiza que la solicitud sea atendida a tiempo ni deja registro para seguimiento.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Reporte de instrumental dañado',
+    ctx: 'Durante una cirugía, notas que una pinza hemostática no cierra correctamente. Un compañero sugiere devolverla al set sin decir nada, "para no generar papeleo adicional al final de un turno largo".',
+    q: '¿Cuál es la actuación correcta?',
+    ops: [
+      'Seguir la sugerencia del compañero y devolver la pinza al set sin reportarlo, dado lo largo que ha sido el turno',
+      'Retirar la pinza del set, etiquetarla como dañada y reportarla formalmente para su reparación o reemplazo',
+      'Usar la pinza solo en cirugías de baja complejidad donde su mal funcionamiento sea menos riesgoso',
+      'Desecharla directamente sin informar a nadie, asumiendo que ya no servirá para ningún uso futuro'
+    ],
+    correcta: 1,
+    expl: [
+      'Devolver el instrumento dañado sin reportarlo expone a la siguiente cirugía al mismo riesgo, independientemente de lo largo o cansador que haya sido el turno.',
+      '✔ Correcto. Todo instrumento dañado debe reportarse siempre, sin excepción, para gestionar su reparación o reemplazo y evitar que el riesgo se traslade a futuros procedimientos.',
+      'No existe una categoría de "uso aceptable" para instrumental defectuoso según la complejidad de la cirugía; el riesgo de mal funcionamiento existe independientemente del tipo de procedimiento.',
+      'Desechar sin informar no permite que la institución gestione el reemplazo del instrumento ni identifique patrones de fallas que requieran atención.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Uso eficiente vs. escatimar recursos',
+    ctx: 'Para una cirugía con riesgo de sangrado mayor al habitual según la valoración preoperatoria, un instrumentador considera abrir solo la cantidad mínima estándar de gasas, argumentando ser "eficiente con los recursos".',
+    q: '¿Es apropiada esta decisión?',
+    ops: [
+      'Sí, la eficiencia siempre implica usar la menor cantidad posible de recursos disponibles',
+      'No, porque la eficiencia busca evitar desperdicio innecesario, pero nunca debe traducirse en escatimar recursos necesarios ante un riesgo identificado',
+      'Sí, siempre que el cirujano no haya solicitado explícitamente más cantidad',
+      'Es una decisión que depende exclusivamente del criterio personal de cada instrumentador'
+    ],
+    correcta: 1,
+    expl: [
+      'La eficiencia no equivale a usar siempre la menor cantidad posible; ese enfoque puede comprometer la seguridad del paciente cuando existe un riesgo identificado que requiere mayor preparación.',
+      '✔ Correcto. Ante un riesgo de sangrado mayor identificado en la valoración preoperatoria, la cantidad razonable de gasas debe anticiparse acorde a ese riesgo; reducir por debajo de eso no es eficiencia, es un riesgo evitable.',
+      'El instrumentador tiene un rol activo de anticipación; no depender exclusivamente de una solicitud explícita del cirujano para prepararse ante un riesgo ya identificado en la valoración preoperatoria.',
+      'La decisión sobre la cantidad de material a preparar ante un riesgo identificado no es un asunto de criterio personal libre, sino que debe basarse en la valoración objetiva del riesgo del caso.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Verificación de equipos médicos',
+    ctx: 'Antes de iniciar una cirugía, pruebas el electrobisturí y notas que no está funcionando correctamente.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Continuar con la preparación de la cirugía, asumiendo que el equipo funcionará bien una vez que se use en el procedimiento real',
+      'Reportar de inmediato la falla y gestionar la reparación o un equipo de respaldo antes de que el paciente ingrese a sala',
+      'Usar el equipo de todas formas, ya que las fallas menores durante la prueba no suelen repetirse durante el uso real',
+      'Esperar a que el problema se presente durante la cirugía para decidir qué hacer en ese momento'
+    ],
+    correcta: 1,
+    expl: [
+      'Asumir sin evidencia que el equipo "funcionará bien" en el procedimiento real, a pesar de haber detectado una falla en la prueba previa, es una suposición peligrosa e injustificada.',
+      '✔ Correcto. Detectar la falla antes de que el paciente ingrese a sala permite resolverla (reparación o equipo de respaldo) sin comprometer la seguridad durante un procedimiento ya en curso.',
+      'No existe fundamento para asumir que una falla detectada en la prueba previa "no se repetirá"; el equipo debe funcionar correctamente antes de ser usado en un paciente.',
+      'Esperar a que el problema se presente durante la cirugía traslada un riesgo evitable a un momento de mucha mayor presión y consecuencias potencialmente graves para el paciente.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'i', tema: 'Canal formal de solicitud bajo presión de tiempo',
+    ctx: 'Un instrumentador detecta que un insumo crítico está por agotarse justo antes de un fin de semana largo, cuando el personal administrativo de almacén tiene disponibilidad reducida. Considera que enviar un mensaje informal por un chat interno del hospital podría ser más rápido que completar el formato formal de solicitud.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Enviar únicamente el mensaje informal por chat, considerando que la rapidez es más importante que el formato formal en esta situación urgente',
+      'Completar el formato formal de solicitud especificando la urgencia del caso, y adicionalmente notificar por los canales de comunicación disponibles para asegurar atención oportuna dada la circunstancia del fin de semana largo',
+      'Esperar hasta que termine el fin de semana largo para realizar cualquier gestión, dado que el personal de almacén tiene disponibilidad reducida',
+      'Resolver el problema tomando insumos de otro servicio del hospital sin autorización, dada la urgencia de la situación'
+    ],
+    correcta: 1,
+    expl: [
+      'Depender únicamente de un mensaje informal, sin el respaldo del formato formal, elimina la trazabilidad necesaria y puede generar confusión sobre la prioridad real de la solicitud.',
+      '✔ Correcto. La respuesta más apropiada combina el canal formal (que garantiza trazabilidad y registro) con la comunicación adicional oportuna que la urgencia de la circunstancia (fin de semana largo) amerita, sin sacrificar ninguno de los dos aspectos.',
+      'Esperar hasta después del fin de semana largo, sabiendo que el insumo se agotará antes, pone en riesgo la atención de pacientes durante ese período sin necesidad, cuando existe la alternativa de gestionar con antelación.',
+      'Tomar insumos de otro servicio sin autorización, incluso ante una urgencia, no es un procedimiento válido ni autorizado; puede generar un problema similar en el servicio del que se toman los recursos.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Gestión de múltiples fallas de instrumental',
+    ctx: 'Durante una jornada quirúrgica intensa, un instrumentador detecta tres instrumentos distintos con fallas menores (una tijera que no corta perfectamente, una pinza con el resorte débil, y un portaagujas con leve desalineación) en tres cirugías diferentes del mismo día.',
+    q: '¿Cuál es la actuación más apropiada respecto a estos tres hallazgos?',
+    ops: [
+      'Reportar solo el instrumento con la falla más evidente, considerando que las otras dos son "menores" y no justifican reportes adicionales el mismo día',
+      'Retirar y reportar formalmente cada uno de los tres instrumentos con falla, documentando las circunstancias específicas de cada caso, sin importar que ocurran en el mismo día',
+      'Esperar a que termine la semana para hacer un solo reporte consolidado de todas las fallas detectadas, para no generar múltiples reportes separados',
+      'Continuar usando los tres instrumentos con las fallas detectadas hasta el final del turno, ya que ninguna falla individual parece crítica por sí sola'
+    ],
+    correcta: 1,
+    expl: [
+      'Clasificar fallas como "menores" sin reportarlas desestima que cualquier defecto en instrumental quirúrgico representa un riesgo potencial, independientemente de su magnitud aparente.',
+      '✔ Correcto. Cada instrumento con falla detectada debe reportarse individualmente y de forma oportuna, documentando las circunstancias específicas, sin importar cuántas fallas se detecten en el mismo día ni la magnitud aparente de cada una.',
+      'Consolidar los reportes al final de la semana retrasa innecesariamente la gestión de reparación o reemplazo de instrumental que ya representa un riesgo desde el momento en que se detectó la falla.',
+      'Continuar usando instrumental con fallas detectadas, sin importar cuán "menor" parezca cada una, mantiene un riesgo activo que pudo evitarse retirando y reportando oportunamente cada instrumento defectuoso.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Balance entre eficiencia y seguridad ante presupuesto limitado',
+    ctx: 'Se comunica al servicio de instrumentación que, por restricciones presupuestales institucionales, se debe reducir el gasto en insumos de consumo del trimestre. Un instrumentador interpreta esto como una instrucción para reducir la cantidad de gasas abiertas en todas las cirugías, incluidas aquellas con riesgo identificado de sangrado mayor.',
+    q: '¿Es correcta esta interpretación?',
+    ops: [
+      'Sí, ya que la instrucción institucional de reducir gastos debe aplicarse de manera uniforme a todos los procedimientos sin distinción',
+      'No, porque la restricción presupuestal debe traducirse en eliminar desperdicios innecesarios (por ejemplo, abrir cantidades excesivas sin justificación), pero nunca en reducir recursos necesarios para la seguridad de procedimientos con riesgo identificado',
+      'Sí, siempre que se informe al paciente sobre la limitación presupuestal antes de la cirugía',
+      'Es una decisión que corresponde exclusivamente a la dirección financiera del hospital, sin que el instrumentador deba interpretarla de ninguna forma'
+    ],
+    correcta: 1,
+    expl: [
+      'Aplicar una reducción uniforme sin distinguir el nivel de riesgo de cada procedimiento interpreta erróneamente la instrucción institucional, priorizando el ahorro por encima de la seguridad del paciente en casos de riesgo identificado.',
+      '✔ Correcto. Una restricción presupuestal legítima se traduce en eliminar el desperdicio real (uso excesivo sin justificación clínica), no en comprometer la seguridad de procedimientos con riesgo identificado; estas dos cosas no son equivalentes y deben distinguirse claramente.',
+      'Informar al paciente sobre una limitación presupuestal no convierte en aceptable una reducción de recursos que compromete su seguridad; esto no es un tema de consentimiento informado sobre riesgos clínicos.',
+      'Aunque la decisión presupuestal general corresponde a la dirección financiera, la interpretación clínica correcta de cómo aplicarla en la práctica diaria sí es responsabilidad del personal de instrumentación, que debe distinguir entre ahorro razonable y riesgo inaceptable.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Verificación de equipos en cirugía de alta dependencia tecnológica',
+    ctx: 'Antes de una cirugía laparoscópica, que depende completamente del funcionamiento de la torre de video, la cámara y el sistema de insuflación de gas, un instrumentador nuevo en el servicio verifica únicamente el instrumental manual, asumiendo que "el técnico biomédico ya revisó los equipos electrónicos en la mañana".',
+    q: '¿Es suficiente esta verificación?',
+    ops: [
+      'Sí, ya que la revisión técnica biomédica matutina es suficiente y no requiere verificación adicional por parte del instrumentador',
+      'No, el instrumentador también debe verificar el funcionamiento operativo de los equipos electrónicos específicos para el procedimiento (torre de video, cámara, insuflador) inmediatamente antes de iniciar, independientemente de la revisión biomédica general de la mañana',
+      'Sí, siempre que el circulante confirme verbalmente que "todo está bien" sin necesidad de una prueba operativa real',
+      'No es necesario verificar ningún equipo si la cirugía anterior en la misma sala se realizó sin ningún problema técnico'
+    ],
+    correcta: 1,
+    expl: [
+      'Una revisión técnica biomédica general de la mañana no sustituye la verificación operativa específica inmediatamente antes de cada procedimiento, ya que pueden presentarse fallas intermedias entre ambos momentos.',
+      '✔ Correcto. El instrumentador debe verificar el funcionamiento operativo real de los equipos específicos que se usarán (torre de video, cámara, insuflador) justo antes de iniciar, sin depender exclusivamente de una revisión general realizada horas antes.',
+      'Una confirmación verbal sin prueba operativa real no constituye una verificación válida del funcionamiento efectivo de equipos críticos para un procedimiento de alta dependencia tecnológica.',
+      'El funcionamiento correcto de un equipo en un procedimiento previo no garantiza su funcionamiento en el siguiente; cada cirugía requiere su propia verificación previa, independientemente del historial inmediato de la sala.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Priorización de reporte ante múltiples necesidades simultáneas',
+    ctx: 'Durante el cierre de turno, un instrumentador identifica simultáneamente tres situaciones: una caja de instrumental con dos piezas dañadas, un stock bajo de un insumo de consumo frecuente, y una discrepancia menor en el registro de un equipo prestado a otro servicio. Tiene tiempo limitado antes de finalizar su turno.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Reportar únicamente la situación que considere personalmente "más grave", dejando las otras dos para el turno siguiente sin ninguna anotación',
+      'Documentar y reportar formalmente las tres situaciones antes de finalizar el turno, aunque esto implique invertir tiempo adicional, dejando registro claro para que cualquier turno siguiente tenga la información completa y actualizada',
+      'Resolver las tres situaciones por su cuenta sin generar ningún reporte formal, para agilizar el cierre de turno',
+      'Reportar solo verbalmente al compañero del siguiente turno, sin dejar ningún registro escrito de las tres situaciones'
+    ],
+    correcta: 1,
+    expl: [
+      'Priorizar solo una situación según un criterio personal subjetivo, sin dejar registro de las otras dos, deja al siguiente turno sin la información necesaria para dar continuidad adecuada.',
+      '✔ Correcto. La responsabilidad profesional exige documentar y reportar formalmente todas las situaciones detectadas antes de finalizar el turno, garantizando que la información esté disponible y actualizada para la continuidad del servicio, independientemente del tiempo adicional que esto requiera.',
+      'Resolver por cuenta propia sin generar reporte formal elimina la trazabilidad necesaria para que la institución dé seguimiento adecuado a cada situación, especialmente la relacionada con instrumental dañado y equipo prestado a otro servicio.',
+      'Un reporte solo verbal, sin registro escrito, no garantiza que la información se transmita completa y correctamente, ni deja constancia documental ante una eventual necesidad de seguimiento posterior.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'a', tema: 'Gestión estratégica de inventario ante patrón de fallas recurrentes',
+    ctx: 'Eres jefe de instrumentación quirúrgica. En los últimos tres meses, notas un patrón: las pinzas hemostáticas de un proveedor específico presentan fallas de resorte con mucho mayor frecuencia que las de otros proveedores utilizados anteriormente, generando múltiples reportes individuales de instrumental dañado y afectando la disponibilidad de sets completos.',
+    q: '¿Cuál es la actuación más apropiada como jefe de instrumentación ante este patrón?',
+    ops: [
+      'Continuar reportando cada falla individualmente sin realizar ningún análisis adicional sobre el origen común del problema',
+      'Consolidar y analizar el patrón de fallas por proveedor específico, documentar la evidencia recopilada de los reportes individuales, y escalar formalmente esta información a las áreas responsables de adquisiciones y calidad institucional para evaluar la continuidad de ese proveedor o exigir garantías de calidad',
+      'Dejar de usar completamente las pinzas de ese proveedor sin informar a nadie, sustituyéndolas silenciosamente por instrumental de otros proveedores disponibles en el inventario',
+      'Solicitar a los instrumentadores que dejen de reportar fallas menores de este tipo específico, para reducir la carga administrativa de reportes repetitivos sobre el mismo problema'
+    ],
+    correcta: 1,
+    expl: [
+      'Continuar reportando cada falla de forma aislada, sin identificar ni escalar el patrón común, pierde la oportunidad de resolver la causa raíz del problema a nivel de adquisiciones institucionales.',
+      '✔ Correcto. La respuesta de nivel avanzado va más allá del reporte individual: identifica el patrón sistemático por proveedor, documenta la evidencia y escala la información a las áreas institucionales responsables (adquisiciones, calidad) para una solución de fondo, que es la función esperada de un rol de coordinación.',
+      'Sustituir silenciosamente sin informar formalmente a las áreas responsables pierde la oportunidad de que la institución tome decisiones informadas sobre el proveedor y no corrige el problema de raíz a nivel de adquisiciones.',
+      'Reducir el reporte de fallas para disminuir la "carga administrativa" es contraproducente: elimina precisamente la evidencia documentada necesaria para identificar y resolver el patrón sistemático del problema.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Decisión ante conflicto entre restricción de recursos y necesidad clínica urgente',
+    ctx: 'Eres instrumentador jefe en un hospital que atraviesa una restricción presupuestal temporal que limita las compras de insumos no urgentes. Se presenta una cirugía de urgencia vital que requiere un tipo específico de sutura especializada, de la cual solo queda una unidad en el stock institucional, y el proceso de compra de emergencia tomaría al menos 48 horas en completarse según los canales administrativos habituales.',
+    q: '¿Cuál es la decisión más apropiada?',
+    ops: [
+      'Usar la única unidad disponible para esta cirugía de urgencia vital, e iniciar de inmediato el proceso de gestión urgente de reabastecimiento por canales excepcionales de emergencia, comunicando la criticidad de la situación a las instancias correspondientes para acelerar el proceso',
+      'Negar la disponibilidad del insumo para esta cirugía, argumentando que debe reservarse "por si surge una necesidad futura similarmente urgente"',
+      'Usar la unidad disponible sin iniciar ninguna gestión adicional, asumiendo que "ya se resolverá cuando se necesite de nuevo"',
+      'Buscar sustituir la sutura especializada por un tipo genérico disponible en mayor cantidad, sin consultar al cirujano sobre la idoneidad clínica de ese cambio'
+    ],
+    correcta: 0,
+    expl: [
+      '✔ Correcto. Ante una urgencia vital real, se prioriza el uso del recurso disponible para la necesidad presente y confirmada, mientras se activa de inmediato el proceso de reabastecimiento urgente por canales excepcionales, gestionando proactivamente el riesgo de una futura escasez sin negar la atención actual.',
+      'Negar la disponibilidad de un insumo ya existente para una urgencia vital confirmada, especulando sobre una necesidad futura hipotética, prioriza incorrectamente un escenario incierto sobre una necesidad real y presente.',
+      'Usar el insumo sin iniciar ninguna gestión de reabastecimiento deja a la institución sin ese recurso crítico para cualquier necesidad similar que surja después, sin haber tomado ninguna acción preventiva.',
+      'Sustituir un insumo especializado por uno genérico sin consultar la idoneidad clínica con el cirujano responsable es una decisión técnica que excede el ámbito de responsabilidad del instrumentador y puede comprometer el resultado quirúrgico.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Priorización de mantenimiento de equipos con recursos limitados',
+    ctx: 'Eres coordinador de quirófanos. El servicio cuenta con dos electrobisturíes: uno con mantenimiento preventivo actualizado y funcionando de forma óptima, y otro que ha presentado fallas intermitentes en las últimas semanas, pero cuyo mantenimiento correctivo tomaría varios días y dejaría a un quirófano sin equipo de respaldo durante ese período, en un contexto de alta demanda quirúrgica.',
+    q: '¿Cuál es la decisión más apropiada?',
+    ops: [
+      'Postergar indefinidamente el mantenimiento del equipo con fallas intermitentes, priorizando mantener ambos quirófanos operativos sin equipo de respaldo alguno durante el proceso',
+      'Programar el mantenimiento correctivo del equipo con fallas en el momento de menor demanda quirúrgica posible, gestionando con antelación un plan de contingencia (equipo prestado, reorganización temporal de programación) para minimizar el impacto operativo mientras se garantiza la reparación necesaria',
+      'Continuar usando el equipo con fallas intermitentes indefinidamente sin programar ningún mantenimiento, ya que "funciona la mayoría de las veces"',
+      'Retirar de servicio ambos equipos simultáneamente hasta que se resuelva el mantenimiento del que presenta fallas, dejando el servicio sin electrobisturí disponible'
+    ],
+    correcta: 1,
+    expl: [
+      'Postergar indefinidamente el mantenimiento de un equipo con fallas intermitentes conocidas mantiene un riesgo activo latente que puede materializarse en cualquier procedimiento futuro.',
+      '✔ Correcto. La respuesta de nivel avanzado no ignora el riesgo ni paraliza el servicio: planifica el mantenimiento necesario en el momento de menor impacto, gestionando proactivamente alternativas de contingencia para equilibrar la necesidad de reparación con la continuidad operativa del servicio.',
+      'Continuar usando un equipo con fallas conocidas "porque funciona la mayoría de las veces" es una normalización peligrosa de un riesgo identificado que puede materializarse en un momento crítico durante una cirugía.',
+      'Retirar ambos equipos simultáneamente sin necesidad, cuando uno funciona correctamente, es una medida desproporcionada que paraliza innecesariamente la capacidad operativa del servicio.'
+    ]
+  }
+];
+
+const quizDiv = document.getElementById('quiz');
+let respondidas = {};
+
+function renderQuiz() {
+  respondidas = {};
+  quizDiv.innerHTML = '';
+  const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+  preguntas.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'pregunta';
+    let opsHtml = '';
+    p.ops.forEach((op, j) => {
+      const letra = String.fromCharCode(65 + j);
+      opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}">
+                    <span class="letra">${letra}</span><span>${op}</span>
+                  </div>`;
+    });
+    const ctxHtml = `<div class="q-contexto"><strong>Contexto:</strong> ${p.ctx}</div>`;
+    card.innerHTML = `
+      <div class="q-num">Pregunta ${idx+1}
+        <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span>
+      </div>
+      ${ctxHtml}
+      <div class="q-texto">${p.q}</div>
+      <div class="opciones">${opsHtml}</div>
+      <div class="feedback" id="fb-${idx}"></div>`;
+    quizDiv.appendChild(card);
+  });
+
+  document.querySelectorAll('.opcion').forEach(op => {
+    op.addEventListener('click', function() {
+      const qi = +this.dataset.q;
+      const oi = +this.dataset.op;
+      if (respondidas[qi] !== undefined) return;
+      respondidas[qi] = oi;
+      const p = preguntas[qi];
+      const cont = this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o, k) => {
+        o.classList.add('bloqueada');
+        if (k === p.correcta) o.classList.add('correcta');
+      });
+      const fb = document.getElementById('fb-' + qi);
+      fb.className = 'feedback show';
+
+      let feedbackHtml = '<div style="margin-bottom:14px;"><strong>Retroalimentación por opción:</strong></div>';
+      p.ops.forEach((opText, k) => {
+        const letra = String.fromCharCode(65 + k);
+        const isCorrect = k === p.correcta;
+        const color = isCorrect ? 'var(--verde)' : 'var(--rojo)';
+        feedbackHtml += `<div style="margin-bottom:10px; padding:8px 12px; background:${isCorrect ? 'var(--verde-suave)' : 'var(--rojo-suave)'}; border-left:3px solid ${color}; border-radius:6px;">
+          <strong style="color:${color};">${letra}.</strong> ${p.expl[k]}
+        </div>`;
+      });
+      fb.innerHTML = feedbackHtml;
+
+      if (oi !== p.correcta) {
+        this.classList.add('incorrecta');
+      }
+    });
+  });
+}
+
+document.getElementById('btnCalcular').addEventListener('click', () => {
+  let correctas = 0;
+  const temasFallados = [];
+  preguntas.forEach((p, i) => {
+    if (respondidas[i] === p.correcta) correctas++;
+    else if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema);
+  });
+  const res = document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent = correctas + '/12';
+
+  let msg;
+  const pct = correctas / 12;
+  if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas la gestión de equipos, material e insumos quirúrgicos. Listo para el siguiente día.';
+  else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados y repasa las comparaciones.';
+  else msg = '📚 Vas por buen camino. Repasa el Desarrollo, las tablas comparativas y repite el simulacro.';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const cont = document.getElementById('temasReforzar');
+  if (temasFallados.length === 0) {
+    cont.innerHTML = '<div class="box ok" style="text-align:left;">' +
+      '<div class="box-title">🎯 ¡Sin temas pendientes!</div>' +
+      '<p>Respondiste todo correctamente. Estás preparado para avanzar.</p></div>';
+  } else {
+    let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+    cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+      '<div class="box-title">📌 Temas que debes reforzar</div>' +
+      '<p>Vuelve a la sección <strong>Desarrollo</strong> y repasa estos conceptos:</p>' +
+      '<ul class="lista">' + items + '</ul></div>';
+  }
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+document.getElementById('btnReiniciar').addEventListener('click', () => {
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({
+    top: document.querySelector('[data-sec="10"]').offsetTop - 80,
+    behavior: 'smooth'
+  });
+});
+
+renderQuiz();
+</script>
+</body>
+</html>

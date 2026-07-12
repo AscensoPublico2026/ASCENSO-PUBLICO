@@ -27,12 +27,16 @@ for f in "$ROOT"/guias/*.html; do
 done
 echo "✓ $copiadas guías HTML copiadas a plataforma/public/seed-guias/"
 
-# 3) Copiar los simulacros FINALES (simulacro/SIM-NNN.html, sin las versiones
-#    de iteración -vN / -demo) a public/seed-guias para poder subirlos al bucket.
+# 3) Copiar los simulacros FINALES (simulacro/SIM-NNN.html o simulacro/SIM-XXX-NNN.html,
+#    ej. SIM-001.html o SIM-HUH-001.html; sin las versiones de iteración -vN / -demo)
+#    a public/seed-guias para poder subirlos al bucket.
 sim=0
-for f in "$ROOT"/simulacro/SIM-[0-9][0-9][0-9].html; do
+for f in "$ROOT"/simulacro/SIM-*.html; do
   [ -e "$f" ] || continue
   base="$(basename "$f")"
+  case "$base" in
+    *-v[0-9]*|*-demo*) continue ;;  # descarta versiones de iteración/demo
+  esac
   cp "$f" "$ROOT/plataforma/public/seed-guias/$base"
   sim=$((sim+1))
 done
