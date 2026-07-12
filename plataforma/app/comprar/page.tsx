@@ -7,7 +7,7 @@ import ContadorCupos from "../components/ContadorCupos";
 
 export const dynamic = "force-dynamic";
 
-const CUPOS_LANZAMIENTO = 100;
+const CUPOS_LANZAMIENTO = 200;
 
 // Componente cliente para manejar el estado del formulario
 function ComprarFormulario({ 

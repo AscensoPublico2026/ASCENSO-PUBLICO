@@ -227,27 +227,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ===== FUNDADOR ===== */}
-      <section className="sec sec-alt" id="nosotros">
-        <div className="wrap">
-          <div className="founder">
-            <div className="founder-photo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/fotos/fundador.jpg?v=2" alt="Fundador de Ascenso Público" loading="lazy" />
-            </div>
-            <div>
-              <span className="eyebrow c">Quién está detrás</span>
-              <h2>Yo también estudié de más… y para lo que no era</h2>
-              <p className="rol">Julio C. — Fundador de Ascenso Público · Servidor público por concurso de méritos</p>
-              <p>Cuando me preparé para mi concurso, compré un curso <strong>carísimo</strong>… y el día de la prueba sentí que no había valido la pena. Había estudiado muchísimo, pero <strong>nada enfocado</strong> en lo que de verdad me evaluaron.</p>
-              <p>Después de presentar varias pruebas escritas aprendí a estudiar distinto: <strong>enfocado</strong> en el cargo y en lo que realmente preguntan. Así <strong>logré quedar</strong>. Entonces empecé a orientar a amigos y conocidos con ese mismo método… y también lo lograron.</p>
-              <p>De ahí nació <strong>Ascenso Público</strong>: para darte la preparación enfocada que a mí me habría encantado tener, y que más personas alcancen el cargo que merecen.</p>
-              <p style={{ fontFamily: "'Source Serif 4',serif", color: "var(--azul)", fontWeight: 700, marginTop: 6 }}>— Julio C.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== CONVOCATORIAS ===== */}
       <section className="sec sec-alt" id="convocatorias">
         <div className="wrap">
