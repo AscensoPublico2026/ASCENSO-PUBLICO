@@ -4,28 +4,66 @@ import { crearCompra } from "./actions";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import ContadorCupos from "../components/ContadorCupos";
-
-export const dynamic = "force-dynamic";
+import { createClient } from "@/lib/supabase/client";
 
 const CUPOS_LANZAMIENTO = 200;
 
-// Componente cliente para manejar el estado del formulario
-function ComprarFormulario({ 
-  convocatorias, 
-  cursosVendidos, 
-  usuarioLogueado, 
-  convDefault 
-}: { 
-  convocatorias: { id: string; nombre: string }[];
-  cursosVendidos: number;
-  usuarioLogueado: { correo: string; celular: string } | null;
-  convDefault: string;
-}) {
+// Componente principal (ahora completamente cliente)
+export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string } }) {
+  const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string }[]>([]);
+  const [cursosVendidos, setCursosVendidos] = useState(0);
+  const [usuarioLogueado, setUsuarioLogueado] = useState<{ correo: string; celular: string } | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [mostrarConfirm, setMostrarConfirm] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+
+  // Cargar datos al montar
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const supabase = createClient();
+        
+        // Cargar convocatorias
+        const { data: convData } = await supabase
+          .from("convocatorias")
+          .select("id,nombre")
+          .eq("activa", true)
+          .order("orden");
+        setConvocatorias(convData || []);
+
+        // Contar cursos vendidos
+        const { count } = await supabase
+          .from("pagos")
+          .select("*", { count: "exact", head: true })
+          .eq("estado", "aprobado");
+        setCursosVendidos(count || 0);
+
+        // Verificar si hay usuario logueado
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("correo, celular")
+            .eq("id", user.id)
+            .single();
+          setUsuarioLogueado({
+            correo: profile?.correo || user.email || "",
+            celular: profile?.celular || "",
+          });
+        }
+      } catch (error) {
+        console.error("Error cargando datos:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, []);
 
   // Validar que las contraseñas coincidan
   useEffect(() => {
@@ -59,6 +97,14 @@ function ComprarFormulario({
     padding: "4px 8px",
     userSelect: "none",
   };
+
+  if (loading) {
+    return (
+      <main style={{ maxWidth: 620, margin: "0 auto", padding: "48px 22px", textAlign: "center" }}>
+        <p style={{ color: "var(--texto-suave)" }}>Cargando...</p>
+      </main>
+    );
+  }
 
   return (
     <main style={{ maxWidth: 620, margin: "0 auto", padding: "48px 22px" }}>
@@ -96,7 +142,7 @@ function ComprarFormulario({
           <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" defaultValue={usuarioLogueado?.celular || ""} />
         </label>
         <label style={label}>Convocatoria *
-          <select style={inputStyle} name="convocatoria_id" defaultValue={convDefault} required>
+          <select style={inputStyle} name="convocatoria_id" defaultValue={searchParams?.conv || ""} required>
             <option value="">Selecciona tu convocatoria</option>
             {convocatorias.map((c) => (<option key={c.id} value={c.id}>{c.nombre}</option>))}
           </select>
@@ -192,42 +238,5 @@ function ComprarFormulario({
         </p>
       </form>
     </main>
-  );
-}
-
-// Componente servidor que carga los datos iniciales
-export default async function ComprarPage({ searchParams }: { searchParams: { conv?: string } }) {
-  let convocatorias: { id: string; nombre: string }[] = [];
-  let cursosVendidos = 0;
-  let usuarioLogueado: { correo: string; celular: string } | null = null;
-
-  try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = createClient();
-    const { data } = await supabase.from("convocatorias").select("id,nombre").eq("activa", true).order("orden");
-    convocatorias = data || [];
-    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
-    cursosVendidos = count || 0;
-
-    // Si el usuario está logueado (comprando otro curso), pre-llenar sus datos de contacto
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase.from("profiles").select("correo, celular").eq("id", user.id).single();
-      usuarioLogueado = {
-        correo: profile?.correo || user.email || "",
-        celular: profile?.celular || "",
-      };
-    }
-  } catch {
-    convocatorias = [];
-  }
-
-  return (
-    <ComprarFormulario 
-      convocatorias={convocatorias}
-      cursosVendidos={cursosVendidos}
-      usuarioLogueado={usuarioLogueado}
-      convDefault={searchParams?.conv || ""}
-    />
   );
 }
