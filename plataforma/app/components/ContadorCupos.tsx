@@ -4,16 +4,16 @@
  *
  * Props:
  * - vendidos: número de pagos aprobados REALES (cursos vendidos)
- * - total: cupos totales del lanzamiento (default: 100)
+ * - total: cupos totales del lanzamiento (default: 200)
  *
  * Piso de cupos (prueba social):
  * - Para generar confianza desde el inicio, se suma un "piso" base a las ventas
  *   reales. Así el contador nunca arranca en 0 y crece con cada venta real.
- * - Se controla con la variable de entorno NEXT_PUBLIC_CUPOS_BASE (ej. 35).
- *   Si no está definida, usa 35 por defecto. Para cambiar el número: ajusta esa
+ * - Se controla con la variable de entorno NEXT_PUBLIC_CUPOS_BASE (ej. 138).
+ *   Si no está definida, usa 138 por defecto. Para cambiar el número: ajusta esa
  *   variable en Vercel (y redespliega) — no hay que tocar código.
  */
-const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 100));
+const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 138));
 
 export default function ContadorCupos({ vendidos, total = 200 }: { vendidos: number; total?: number }) {
   // Ventas reales + piso base, sin pasarse del total.
