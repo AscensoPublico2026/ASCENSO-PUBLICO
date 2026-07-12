@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-SAL-04 · Instrumentación Quirúrgica Básica — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:        #0A2A5E;
+  --azul-medio:  #1A4A8A;
+  --azul-claro:  #2D6CC0;
+  --azul-suave:  #EAF1FB;
+  --azul-borde:  #C9DCF4;
+  --oro:         #E8A33D;
+  --oro-claro:   #F6C56B;
+  --oro-suave:   #FDF4E3;
+  --oro-borde:   #F0DCB0;
+  --crema:       #FBF9F4;
+  --blanco:      #FFFFFF;
+  --gris-bg:     #F2F0EA;
+  --gris-borde:  #E6E2D8;
+  --verde:       #1A7A4A;
+  --verde-suave: #E8F6EE;
+  --verde-borde: #BFE6CF;
+  --rojo:        #C0392B;
+  --rojo-suave:  #FCEDEB;
+  --rojo-borde:  #F2CDC8;
+  --ambar:       #B8600A;
+  --ambar-suave: #FBEFDD;
+  --ambar-borde: #EFD7B0;
+  --texto:       #2A3441;
+  --texto-suave: #5B6675;
+  --sombra:      0 4px 20px rgba(10,42,94,0.08);
+  --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
+  --radio:       16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+#readbar {
+  position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+  background: linear-gradient(90deg, var(--oro), var(--oro-claro));
+  z-index: 999; transition: width 0.1s linear;
+}
+header {
+  background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
+  color: var(--blanco);
+  padding: 42px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
+}
+header::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
+}
+.brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+.brand-logo {
+  width: 50px; height: 50px; border-radius: 13px;
+  background: linear-gradient(135deg, var(--oro-claro), var(--oro));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(232,163,61,0.4);
+}
+.brand-name { font-size: 1.6rem; font-weight: 800; }
+.brand-slogan { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 4px; }
+.doc-ref {
+  position: absolute; top: 16px; right: 18px; z-index: 3;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
+}
+.kicker {
+  display: inline-flex; align-items: center; gap: 11px;
+  margin: 24px 0 12px; position: relative; z-index: 2;
+  color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.kicker::before, .kicker::after {
+  content:''; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+header h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+.header-sub {
+  max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
+  color: rgba(255,255,255,0.82); font-size: 0.98rem;
+}
+.badges {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px; position: relative; z-index: 2;
+}
+.badge {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--azul);
+  display: flex; gap: 5px; padding: 11px 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 18px rgba(10,42,94,0.22);
+}
+nav button {
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
+  border: none; padding: 9px 16px; border-radius: 9px;
+  cursor: pointer; font-weight: 600; white-space: nowrap;
+  font-size: 0.85rem;
+}
+nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
+nav button.active {
+  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
+  color: var(--azul);
+  box-shadow: 0 4px 12px rgba(232,163,61,0.4);
+}
+main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
+.section { display: none; animation: fade 0.4s ease; }
+.section.visible { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ambar); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+}
+.eyebrow::before {
+  content:''; width: 26px; height: 3px;
+  background: linear-gradient(90deg,var(--oro),var(--oro-claro));
+  border-radius: 3px;
+}
+h2.sec-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
+  line-height: 1.2; margin-bottom: 20px;
+}
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 22px 24px;
+  margin: 16px 0;
+  box-shadow: var(--sombra);
+}
+.card-lead {
+  border-left: 5px solid var(--oro);
+  background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%);
+}
+.lista { list-style:none; margin:6px 0 16px; }
+.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+.narr { background:linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%); border-left:5px solid var(--oro); padding:18px 22px; border-radius:13px; margin:18px 0; font-style:italic; color:var(--texto); }
+.flujo { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:22px; margin:18px 0; box-shadow:var(--sombra); }
+.flujo-paso { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gris-borde); }
+.flujo-paso:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.flujo-num { width:36px; height:36px; border-radius:50%; background:var(--azul); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+.flujo-content h4 { margin:0 0 6px; color:var(--azul); font-size:1rem; }
+.flujo-content p { margin:0; font-size:.9rem; }
+.checkpoint { background:var(--azul-suave); border:2px solid var(--azul-borde); border-radius:14px; padding:18px 20px; margin:20px 0; }
+.checkpoint-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1.05rem; }
+.checkpoint-q { font-weight:600; margin:10px 0; color:var(--texto); }
+.checkpoint-opts { list-style:none; margin:10px 0; padding:0; }
+.checkpoint-opts li { padding:10px 14px; margin:6px 0; background:#fff; border:1.5px solid var(--gris-borde); border-radius:9px; cursor:pointer; transition:all .15s; }
+.checkpoint-opts li:hover { border-color:var(--oro); background:var(--oro-suave); }
+.checkpoint-opts li.ok { border-color:var(--verde); background:var(--verde-suave); }
+.checkpoint-opts li.no { border-color:var(--rojo); background:var(--rojo-suave); opacity:.6; }
+.checkpoint-fb { display:none; margin-top:8px; padding:10px 13px; border-radius:8px; font-size:.88rem; }
+.checkpoint-fb.show { display:block; }
+.checkpoint-fb.ok { background:var(--verde-suave); border-left:3px solid var(--verde); }
+.checkpoint-fb.no { background:var(--rojo-suave); border-left:3px solid var(--rojo); }
+.practica { background:var(--verde-suave); border:1px solid var(--verde-borde); border-left:5px solid var(--verde); border-radius:13px; padding:16px 20px; margin:16px 0; }
+.practica-title { font-weight:800; color:var(--verde); margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+.practica p { margin-bottom:10px; font-size:.9rem; }
+.practica p:last-child { margin-bottom:0; }
+.ojo { background:var(--ambar-suave); border:1px solid var(--ambar-borde); border-radius:10px; padding:11px 16px; margin:14px 0; display:flex; align-items:flex-start; gap:10px; }
+.ojo-icon { font-size:1.2rem; flex-shrink:0; }
+.ojo-text { font-size:.88rem; color:var(--texto); }
+.ojo-text strong { color:var(--ambar); }
+.fuentes { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:18px 22px; margin:22px 0; }
+.fuentes-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1rem; }
+.fuentes ul { list-style:none; padding:0; margin:0; }
+.fuentes ul li { margin-bottom:10px; padding-left:26px; position:relative; }
+.fuentes ul li::before { content:'🔗'; position:absolute; left:0; }
+.fuentes ul li:last-child { margin-bottom:0; }
+.fuentes a { color:var(--azul-claro); font-weight:600; text-decoration:none; border-bottom:1px dotted var(--azul-claro); }
+.fuentes a:hover { color:var(--oro); border-bottom-color:var(--oro); }
+.concepto { background:linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+.concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom:2px dashed var(--oro-borde); }
+.ch-icon { font-size:1.4rem; }
+.concepto-body { padding:6px 14px 12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.capa { padding:13px 15px; border-radius:12px; display:flex; gap:11px; align-items:flex-start; background:var(--blanco); border:1px solid var(--gris-borde); transition:transform .15s; }
+.capa:hover { transform:translateY(-2px); box-shadow:var(--sombra); }
+.capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+.capa-icon.def { background:var(--azul-suave); }
+.capa-icon.apl { background:var(--verde-suave); }
+.capa-icon.eje { background:var(--oro-suave); }
+.capa-icon.cnsc { background:var(--rojo-suave); }
+.capa-content { flex:1; }
+.capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+.capa.cap-def .label { color:var(--azul); }
+.capa.cap-apl .label { color:var(--verde); }
+.capa.cap-eje .label { color:var(--ambar); }
+.capa.cap-cnsc .label { color:var(--rojo); }
+.capa-content p { margin-bottom:0; font-size:.9rem; line-height:1.55; }
+.box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+.box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+.box p:last-child { margin-bottom:0; }
+.box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+.box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+.box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+.box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+.box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+.tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:#FAF8F2; }
+.caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+.caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+.caso-body { padding:18px 20px; }
+.caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+.caso-body .label:first-child { margin-top:0; }
+.resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+.trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+.trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+.trampa-detail { padding:16px 18px; background:var(--blanco); }
+.trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+.trampa-detail .t-row:last-child { margin-bottom:0; }
+.trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+.trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+.trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+.flash-intro { text-align:center; margin-bottom:20px; color:var(--texto-suave); }
+.flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom:12px; }
+.flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+.flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+.flashcard.flipped .flashcard-inner { transform:rotateY(180deg); }
+.flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+.flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+.flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+.flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+.flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+.flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+.flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+.flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+.flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+.flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+.flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+.glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+.glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+.glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+.glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+.quiz-intro { text-align:center; margin-bottom:18px; }
+.quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+.quiz-formato strong { color:var(--azul); }
+.dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+.tag.b { background:var(--verde-suave); color:var(--verde); }
+.tag.i { background:var(--azul-suave); color:var(--azul); }
+.tag.a { background:var(--rojo-suave); color:var(--rojo); }
+.pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+.pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+.nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+.nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+.nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+.nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+.q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+.q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+.opciones { display:flex; flex-direction:column; gap:9px; }
+.opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+.opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+.opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+.opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+.opcion.correcta .letra { background:var(--verde); color:#fff; }
+.opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+.opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+.opcion.bloqueada { pointer-events:none; }
+.feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+.feedback.show { display:block; }
+.feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+.feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+#resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+#resultado.show { display:block; }
+.score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+.btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+.btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+.resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+.resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+.resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+.cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+.cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+.cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+.cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+.advance-bar { margin-top:36px; padding-top:22px; border-top:2px dashed var(--oro); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.advance-hint { color:var(--texto-suave); font-style:italic; }
+.advance-btn { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); border:none; padding:12px 26px; border-radius:11px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(232,163,61,.35); transition:all .2s; font-family:inherit; font-size:.92rem; }
+.advance-btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.advance-btn.final { background:linear-gradient(135deg,var(--verde),#2A9F66); color:#fff; }
+.h3-chip { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--oro); color:var(--azul); font-weight:800; font-size:.82rem; margin-right:8px; }
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-SAL-04</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 60 60" width="32" height="32">
+        <path d="M18 42 L30 18 L35 23 L42 18" stroke="#0A2A5E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M38 16 L42 18 L40 22 Z" fill="#0A2A5E"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada al ascenso público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 12 · Funcional · Salud</div>
+  <h1>Instrumentación Quirúrgica Básica</h1>
+  <p class="header-sub">Reconoce y domina el manejo del instrumental quirúrgico: la base técnica de tu rol como instrumentador</p>
+  <div class="badges">
+    <span class="badge">📅 Día 12 de 21</span>
+    <span class="badge">⏱ 90-105 min</span>
+    <span class="badge">🎯 Prueba escrita CNSC</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+
+
+<!-- SECCIÓN 0: OBJETIVO -->
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+
+  <div class="narr">
+    <strong>Imagina que el cirujano extiende la mano</strong> sin mirar, esperando que la pinza correcta llegue en el momento exacto. Ese gesto de confianza ciega es posible solo porque el instrumentador conoce cada pieza del set: su nombre, su función, su forma de entrega. No reconocer un instrumento, entregarlo mal o confundir su uso puede retrasar una maniobra crítica o incluso lesionar al paciente. Esta guía te prepara para responder con seguridad a las preguntas CNSC sobre clasificación del instrumental quirúrgico, técnica de entrega, anticipación de tiempos quirúrgicos y resolución de imprevistos.
+  </div>
+
+  <div class="card card-lead">
+    <p><strong>Al finalizar esta guía dominarás:</strong></p>
+    <ul class="lista">
+      <li><strong>La clasificación del instrumental quirúrgico</strong> por función: corte, disección, hemostasia, exposición y síntesis.</li>
+      <li><strong>La técnica correcta de entrega de instrumental</strong> al cirujano, con seguridad y sin generar lesiones.</li>
+      <li><strong>La anticipación de los tiempos quirúrgicos</strong>: cómo prever qué instrumento se necesitará a continuación.</li>
+      <li><strong>La coordinación con cirujano y ayudantes</strong> durante el acto quirúrgico.</li>
+      <li><strong>La resolución de situaciones imprevistas</strong> durante la cirugía relacionadas con el instrumental.</li>
+    </ul>
+  </div>
+
+  <div class="box gold">
+    <div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al terminar, identificarás con precisión <strong>a qué familia funcional pertenece cada instrumento</strong>, <strong>cómo se entrega de forma segura</strong> y <strong>qué hacer ante un imprevisto</strong> en medio del acto quirúrgico. Todo lo que la CNSC pregunta sobre instrumentación básica está aquí, sin relleno.</p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 1: IMPORTANCIA -->
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema aparece en la prueba CNSC?</h2>
+
+  <div class="card">
+    <p>La CNSC evalúa tu <strong>conocimiento de instrumentación quirúrgica básica</strong> porque:</p>
+    <ul class="lista">
+      <li><strong>Es el núcleo técnico del cargo:</strong> el manual de funciones del Técnico de Instrumentación exige "asistir a los cirujanos aplicando las técnicas de utilización del equipamiento e insumos quirúrgicos".</li>
+      <li><strong>Afecta directamente el tiempo quirúrgico:</strong> una entrega incorrecta o tardía de instrumental puede prolongar la anestesia y aumentar riesgos para el paciente.</li>
+      <li><strong>Previene lesiones al equipo quirúrgico:</strong> una técnica de entrega inadecuada (instrumentos con filo o punta mal dirigidos) puede lesionar al cirujano o al mismo instrumentador.</li>
+      <li><strong>Aparece en casos situacionales:</strong> la CNSC pregunta "¿qué instrumento corresponde entregar?" o "¿cómo debe entregarse de forma segura?" ante escenarios descritos.</li>
+    </ul>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📊 Dato clave</div>
+    <p>La clasificación funcional del instrumental (corte, disección, hemostasia, exposición, síntesis) es la base sobre la que se construyen todas las preguntas técnicas de instrumentación en la prueba CNSC, y también la base de las guías FUN-SAL-05 y FUN-SAL-06 que siguen en tu plan de estudio.</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Si no dominas este tema</div>
+    <p>Podrías confundir una pinza de disección con una de hemostasia, o no anticipar la secuencia lógica del acto quirúrgico. La CNSC construye distractores sobre estas confusiones. <strong>Este es un tema que se domina con clasificación clara, no con memorización aislada de nombres.</strong></p>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Contenido esencial</h2>
+
+  <p><strong>Esta sección desarrolla 6 conceptos clave.</strong> Cada uno se presenta en 4 capas: <strong style="color:var(--azul);">🟦 Definición</strong> · <strong style="color:var(--verde);">🟩 Aplicación</strong> · <strong style="color:var(--ambar);">🟨 Ejemplo real</strong> · <strong style="color:var(--rojo);">🟥 Trampa CNSC</strong>.</p>
+
+  <!-- CONCEPTO 1 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🔪</span>
+      <span>1. Instrumental de Corte</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Instrumentos diseñados para seccionar tejidos con un filo cortante. Los más representativos son el <strong>bisturí</strong> (mango con hoja intercambiable, usado para la incisión inicial y disecciones precisas) y las <strong>tijeras quirúrgicas</strong>, que se clasifican en tijeras de tejido (Mayo, para tejido grueso) y tijeras de sutura (Metzenbaum, más finas, para tejido delicado y disección fina).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El bisturí se entrega con el filo hacia abajo y el mango firmemente sujeto, nunca deslizándolo sobre la piel del cirujano. Las tijeras Metzenbaum se reservan para tejidos delicados (vasos, nervios); usarlas en tejido grueso las desafila rápidamente y compromete su precisión en usos posteriores.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>En una cirugía abdominal, el instrumentador entrega el bisturí para la incisión inicial de piel y, minutos después, entrega tijeras Metzenbaum al cirujano para disecar con precisión el tejido adiposo alrededor de un vaso sanguíneo, sin dañarlo.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Presenta un momento quirúrgico y pregunta <strong>qué instrumento de corte corresponde</strong>. <strong>Trampa típica:</strong> usar tijeras Mayo (para tejido grueso) donde se requiere disección fina con Metzenbaum, o viceversa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 2 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🔬</span>
+      <span>2. Instrumental de Disección</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Instrumentos utilizados para separar tejidos por planos, exponer estructuras y facilitar la manipulación sin cortar. Los principales son las <strong>pinzas de disección</strong> (con dientes, para tejidos resistentes como piel y fascia; sin dientes, para tejidos delicados como intestino o vasos) y los <strong>disectores</strong> (instrumentos romos que separan planos tisulares sin lesionar estructuras vecinas).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Las pinzas con dientes se usan para sostener piel o fascia durante la sutura, sin que se deslicen; las pinzas sin dientes se usan para manipular tejidos delicados sin desgarrarlos. Elegir la pinza equivocada puede lesionar el tejido o dificultar la maniobra del cirujano.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante el cierre de una herida abdominal, el cirujano solicita una pinza de disección con dientes para sostener firmemente los bordes de la piel mientras sutura, evitando que se deslicen y comprometan la aproximación de los bordes.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>qué tipo de pinza corresponde según el tejido descrito</strong>. <strong>Trampa típica:</strong> usar pinza con dientes en tejido delicado (intestino, vasos), lo que puede desgarrarlo o perforarlo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 1</div>
+    <p class="checkpoint-q"><strong>El cirujano necesita manipular un segmento de intestino delgado sin lesionarlo. ¿Qué tipo de pinza de disección es la apropiada?</strong></p>
+    <ul class="checkpoint-opts" id="cp1">
+      <li data-ok="0">Pinza con dientes, para sujetar con firmeza</li>
+      <li data-ok="1">Pinza sin dientes, para no desgarrar el tejido delicado</li>
+      <li data-ok="0">Cualquier pinza disponible, ya que la diferencia no es relevante</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb1"></div>
+  </div>
+
+  <!-- CONCEPTO 3 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🩸</span>
+      <span>3. Instrumental de Hemostasia</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Instrumentos diseñados para controlar el sangrado durante la cirugía, pinzando vasos sanguíneos. Los más frecuentes son las <strong>pinzas hemostáticas</strong>: Kelly (curva, de uso general, para vasos de mediano calibre) y Mosquito (más pequeña y delicada, para vasos finos, como en cirugía de tiroides o pediátrica).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Ante un sangrado inesperado, el instrumentador debe anticipar y tener lista la pinza hemostática adecuada según el calibre del vaso involucrado. Esta es una de las situaciones donde la <strong>rapidez de entrega es crítica</strong>: cada segundo de retraso significa mayor pérdida de sangre.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una tiroidectomía, se produce un sangrado inesperado de un vaso pequeño. El instrumentador, que ya anticipaba este riesgo por el tipo de cirugía, tiene lista una pinza Mosquito y la entrega de inmediato al cirujano para el control hemostático.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de sangrado y pregunta <strong>qué instrumento debe anticiparse o entregarse</strong>. <strong>Trampa típica:</strong> usar una pinza Kelly (para vasos de mediano calibre) en cirugía de vasos muy finos, donde una Mosquito es la opción más precisa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ojo">
+    <span class="ojo-icon">👁️</span>
+    <div class="ojo-text"><strong>Ojo en la prueba:</strong> Ante sangrado, la respuesta correcta SIEMPRE prioriza la <strong>rapidez y precisión de la entrega</strong> de la pinza hemostática adecuada al calibre del vaso, nunca "esperar a ver si se detiene solo".</div>
+  </div>
+
+
+  <!-- CONCEPTO 4 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🖐️</span>
+      <span>4. Instrumental de Exposición y Técnica de Entrega Segura</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Los <strong>separadores</strong> (manuales como el Farabeuf, o autostáticos como el Balfour) mantienen expuesto el campo quirúrgico, separando tejidos y órganos para que el cirujano visualice y trabaje con claridad. La <strong>técnica de entrega segura</strong> consiste en colocar el instrumento firmemente en la mano del cirujano, en la posición y orientación de uso inmediato, sin que este deba reajustar su agarre ni exponerse a filos o puntas.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Los instrumentos con filo o punta (bisturí, tijeras, agujas) se entregan con la parte cortante o punzante dirigida hacia el instrumentador o hacia abajo, nunca hacia el cirujano ni hacia terceros. El "chasquido" firme y directo en la palma de la mano, sin necesidad de que el cirujano mire, es la técnica estándar.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>El instrumentador entrega un bisturí sujetándolo por el centro del mango, con el filo hacia abajo y hacia sí mismo, colocándolo con firmeza en la palma extendida del cirujano, quien lo recibe sin necesidad de mirar ni reajustar el agarre.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un escenario de entrega de instrumental y pregunta <strong>cuál es la técnica correcta y segura</strong>. <strong>Trampa típica:</strong> entregar un instrumento con filo o punta orientado hacia el cirujano o de forma insegura, generando riesgo de corte o pinchazo accidental.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practica">
+    <div class="practica-title">📋 En la práctica</div>
+    <p><strong>Regla de entrega segura:</strong> instrumentos con filo o punta (bisturí, tijeras, agujas) SIEMPRE se entregan con la parte cortante/punzante hacia el instrumentador, colocados con firmeza en la palma del cirujano, sin que este deba mirar ni reajustar el agarre.</p>
+  </div>
+
+  <!-- CONCEPTO 5 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🧵</span>
+      <span>5. Instrumental de Síntesis</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>Instrumentos utilizados para el cierre de tejidos al final del procedimiento (o durante, si se requiere). Los principales son el <strong>portaagujas</strong> (sujeta la aguja de sutura para que el cirujano pueda pasarla a través del tejido) y las <strong>pinzas de Adson</strong> (una variante de pinza de disección fina, usada frecuentemente durante la sutura para sostener los bordes de la piel).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El portaagujas se monta con la aguja sujeta a un tercio de la distancia desde el punto de la aguja (el extremo opuesto al hilo), en un ángulo que facilite el paso a través del tejido. El instrumentador debe conocer el calibre de sutura solicitado por el cirujano y montar la aguja correctamente antes de entregarla.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Al iniciar el cierre de piel de una laparotomía, el instrumentador monta la aguja con sutura no absorbible en el portaagujas, en la posición correcta, y la entrega junto con una pinza de Adson para que el cirujano pueda sostener el borde de la piel mientras sutura.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>qué instrumental corresponde al momento de cierre/síntesis</strong>. <strong>Trampa típica:</strong> confundir el momento de síntesis (cierre) con el de disección (apertura), asumiendo que se usan los mismos instrumentos en ambos momentos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 2</div>
+    <p class="checkpoint-q"><strong>El cirujano está a punto de iniciar el cierre de piel al final de una cirugía. ¿Qué instrumental debe tener preparado el instrumentador?</strong></p>
+    <ul class="checkpoint-opts" id="cp2">
+      <li data-ok="0">Bisturí y tijeras Mayo, iguales a los usados en la apertura</li>
+      <li data-ok="1">Portaagujas con la aguja de sutura montada y pinza de Adson</li>
+      <li data-ok="0">Separador Balfour, para mantener expuesto el campo durante el cierre</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb2"></div>
+  </div>
+
+  <!-- CONCEPTO 6 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">⏱️</span>
+      <span>6. Anticipación de Tiempos Quirúrgicos y Resolución de Imprevistos</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>anticipación quirúrgica</strong> es la capacidad del instrumentador de prever, según el conocimiento de la técnica quirúrgica programada, qué instrumento se necesitará a continuación, teniéndolo listo antes de que el cirujano lo solicite verbalmente. Un <strong>imprevisto</strong> es cualquier situación inesperada (sangrado mayor, hallazgo anatómico distinto, falla de equipo) que exige adaptación inmediata del instrumentador y del equipo.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>La anticipación se construye conociendo la secuencia estándar de cada procedimiento (los "tiempos quirúrgicos"): incisión, disección, exposición, tratamiento de la patología, hemostasia, cierre. Ante un imprevisto, el instrumentador comunica de inmediato al equipo, mantiene la calma y adapta la entrega de instrumental sin abandonar el campo estéril ni generar más contaminación o riesgo.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una apendicectomía que se esperaba simple, el cirujano encuentra un apéndice perforado con mayor inflamación de la prevista. El instrumentador, anticipando la complejidad añadida, tiene lista mayor cantidad de gasas y pinzas hemostáticas adicionales, sin necesidad de que se lo soliciten explícitamente.</p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Plantea un imprevisto durante la cirugía y pregunta <strong>cuál es la actuación más apropiada del instrumentador</strong>. <strong>Trampa típica:</strong> pensar que el instrumentador solo "reacciona" a lo que pide el cirujano, sin ningún rol proactivo de anticipación; en realidad, la anticipación es una competencia esperada y valorada del cargo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flujo">
+    <p style="font-weight:800; color:var(--azul); margin-bottom:14px;">⏱️ Diagrama de proceso: Tiempos quirúrgicos estándar y el instrumental típico de cada fase</p>
+    <div class="flujo-paso">
+      <div class="flujo-num">1</div>
+      <div class="flujo-content">
+        <h4>Incisión</h4>
+        <p>Instrumental de corte (bisturí) para abrir piel y planos superficiales.</p>
+      </div>
+    </div>
+    <div class="flujo-paso">
+      <div class="flujo-num">2</div>
+      <div class="flujo-content">
+        <h4>Disección y exposición</h4>
+        <p>Pinzas de disección, disectores y separadores para acceder y visualizar la estructura objetivo.</p>
+      </div>
+    </div>
+    <div class="flujo-paso">
+      <div class="flujo-num">3</div>
+      <div class="flujo-content">
+        <h4>Tratamiento de la patología</h4>
+        <p>Instrumental específico según el procedimiento (ej. extracción de la vesícula, resección de un segmento intestinal).</p>
+      </div>
+    </div>
+    <div class="flujo-paso">
+      <div class="flujo-num">4</div>
+      <div class="flujo-content">
+        <h4>Hemostasia</h4>
+        <p>Pinzas hemostáticas (Kelly, Mosquito) para controlar el sangrado antes de proceder al cierre.</p>
+      </div>
+    </div>
+    <div class="flujo-paso">
+      <div class="flujo-num">5</div>
+      <div class="flujo-content">
+        <h4>Síntesis (cierre)</h4>
+        <p>Portaagujas con sutura montada y pinzas de Adson para el cierre por planos hasta la piel.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fuentes">
+    <div class="fuentes-title">🔗 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/resolucion-3100-de-2019.pdf" target="_blank">Resolución 3100 de 2019 — Estándares de habilitación de servicios quirúrgicos</a> (MinSalud)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1164_2007.html" target="_blank">Ley 1164 de 2007 — Talento Humano en Salud</a> (Secretaría del Senado)</li>
+      <li><a href="https://www.who.int/teams/integrated-health-services/patient-safety/research/safe-surgery" target="_blank">OMS — Cirugía segura</a> (Organización Mundial de la Salud)</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Diferencias clave</h2>
+
+  <p>La CNSC diseña distractores basados en confusiones típicas. Estas tablas te ayudan a distinguir conceptos que suenan similares pero son distintos.</p>
+
+  <h3><span class="h3-chip">1</span> Tijeras Mayo vs. Metzenbaum</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Tijeras Mayo</th><th>Tijeras Metzenbaum</th></tr>
+      <tr><td><strong>Robustez</strong></td><td>Más gruesas y resistentes</td><td>Más finas y delicadas</td></tr>
+      <tr><td><strong>Uso</strong></td><td>Corte de tejido grueso, suturas, materiales</td><td>Disección fina de tejido delicado (vasos, nervios)</td></tr>
+      <tr><td><strong>Riesgo si se intercambian</strong></td><td>Desafilarse rápido si se usan en tejido fino</td><td>Dañarse o lesionar tejido si se usan en tejido grueso</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Cualquier tijera sirve para cualquier tejido."</strong> Falso. Usar la tijera equivocada compromete tanto el instrumento como la seguridad del tejido del paciente.</p></div>
+
+  <h3><span class="h3-chip">2</span> Pinza Kelly vs. Pinza Mosquito</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Pinza Kelly</th><th>Pinza Mosquito</th></tr>
+      <tr><td><strong>Tamaño</strong></td><td>Mayor, robusta</td><td>Pequeña, delicada</td></tr>
+      <tr><td><strong>Uso típico</strong></td><td>Vasos de mediano calibre, cirugía general</td><td>Vasos finos, cirugía delicada (tiroides, pediátrica)</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"La pinza hemostática es una sola, sin variantes según el vaso."</strong> Falso. Elegir el tamaño equivocado puede ser ineficaz para el control del sangrado o lesionar tejido fino.</p></div>
+
+  <h3><span class="h3-chip">3</span> Pinza con Dientes vs. Sin Dientes</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Aspecto</th><th>Con dientes</th><th>Sin dientes</th></tr>
+      <tr><td><strong>Tejido indicado</strong></td><td>Resistente (piel, fascia)</td><td>Delicado (intestino, vasos)</td></tr>
+      <tr><td><strong>Riesgo si se usa mal</strong></td><td>Desgarra tejido delicado</td><td>Puede deslizarse en tejido resistente</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Los dientes de la pinza siempre son mejores porque sujetan con más firmeza."</strong> Falso. En tejido delicado, los dientes desgarran; la elección depende del tipo de tejido, no de la firmeza per se.</p></div>
+
+  <h3><span class="h3-chip">4</span> Instrumental por Tiempo Quirúrgico</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr><th>Tiempo</th><th>Instrumental típico</th></tr>
+      <tr><td><strong>Incisión</strong></td><td>Bisturí</td></tr>
+      <tr><td><strong>Disección/exposición</strong></td><td>Pinzas de disección, disectores, separadores</td></tr>
+      <tr><td><strong>Hemostasia</strong></td><td>Pinzas hemostáticas (Kelly, Mosquito)</td></tr>
+      <tr><td><strong>Síntesis (cierre)</strong></td><td>Portaagujas con sutura, pinzas de Adson</td></tr>
+    </table>
+  </div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"El mismo set de instrumental sirve para toda la cirugía sin variación."</strong> Falso. El instrumental cambia según el tiempo quirúrgico; anticipar esta secuencia es clave del rol del instrumentador.</p></div>
+</section>
+
+<!-- SECCIÓN 4: CASOS CNSC -->
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos CNSC</span>
+  <h2 class="sec-title">📂 Casos situacionales tipo CNSC</h2>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 · Entrega insegura de bisturí</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un instrumentador, apurado por el ritmo de la cirugía, entrega el bisturí al cirujano sujetándolo por la hoja, con el filo hacia arriba, esperando que el cirujano lo tome rápido de donde pueda.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué error se cometió y cuál es la técnica correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ El error es entregar el instrumento con el filo expuesto y hacia arriba, en riesgo de lesionar al cirujano. La técnica correcta es sujetar el bisturí por el mango, con el filo hacia abajo y hacia el instrumentador, colocándolo firmemente en la palma del cirujano.</strong> — La velocidad nunca debe sacrificar la seguridad en la entrega de instrumental cortante o punzante.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 · Elección de pinza de disección</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El cirujano necesita manipular un segmento delicado de intestino durante una cirugía abdominal. El instrumentador tiene disponibles pinzas con dientes y sin dientes.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál debe entregar?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Pinza de disección sin dientes, ya que el intestino es tejido delicado que se desgarraría con una pinza dentada.</strong> — La elección del instrumento depende de la naturaleza del tejido, no de la preferencia o la disponibilidad inmediata.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 · Sangrado inesperado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante una cirugía de tiroides, se produce un sangrado inesperado de un vaso pequeño. El instrumentador tiene disponibles pinzas Kelly y pinzas Mosquito.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Entregar de inmediato la pinza Mosquito, más adecuada para vasos finos como los de la región tiroidea, priorizando la rapidez de la respuesta.</strong> — Ante sangrado, la rapidez y precisión de la entrega son críticas; retrasar la respuesta aumenta el riesgo para el paciente.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 4 · Anticipación ante hallazgo inesperado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante una apendicectomía que se esperaba sencilla, el cirujano encuentra un apéndice perforado, más complejo de lo previsto, con mayor sangrado esperado.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada del instrumentador?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Anticipar la mayor necesidad de gasas y pinzas hemostáticas adicionales, teniéndolas disponibles sin esperar a que el cirujano las solicite explícitamente, y comunicar al circulante si se requiere material adicional.</strong> — La anticipación proactiva ante hallazgos inesperados es una competencia esperada del instrumentador, no una función exclusivamente reactiva.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 5 · Montaje de portaagujas</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Al iniciar el cierre de una laparotomía, el instrumentador monta la aguja de sutura en el portaagujas sujetándola exactamente por la mitad, en lugar de a un tercio de distancia del extremo opuesto al hilo.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué consecuencia puede tener este error?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><strong>✅ Dificultar el paso adecuado de la aguja a través del tejido y aumentar el riesgo de doblarla o de un paso impreciso durante la sutura.</strong> — El montaje correcto de la aguja (a un tercio de distancia del extremo opuesto al hilo) facilita el control y la precisión del cirujano durante la síntesis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5: ERRORES FRECUENTES -->
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Los 6 errores que más cuestan puntos</h2>
+
+  <div class="box danger"><div class="box-title">❌ Error 1 · Entregar instrumental con filo/punta mal orientado</div><p><strong>El error:</strong> entregar bisturí, tijeras o agujas con el filo o punta hacia el cirujano o hacia terceros.</p><p><strong>Por qué falla:</strong> genera riesgo real de corte o pinchazo accidental durante la entrega.</p><p><strong>Cómo corregir:</strong> orienta siempre la parte cortante/punzante hacia ti, entregando con firmeza en la palma del cirujano.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 2 · Confundir pinzas con dientes y sin dientes</div><p><strong>El error:</strong> usar pinza dentada en tejido delicado o sin dientes en tejido que requiere sujeción firme.</p><p><strong>Por qué falla:</strong> puede desgarrar tejido delicado o permitir que la pinza se deslice en tejido resistente.</p><p><strong>Cómo corregir:</strong> selecciona la pinza según la naturaleza del tejido a manipular, no por disponibilidad inmediata.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 3 · Retrasar la entrega de pinza hemostática ante sangrado</div><p><strong>El error:</strong> demorar la entrega esperando "ver si el sangrado se detiene solo".</p><p><strong>Por qué falla:</strong> cada segundo de retraso aumenta la pérdida de sangre y el riesgo para el paciente.</p><p><strong>Cómo corregir:</strong> anticipa y entrega de inmediato la pinza hemostática adecuada al calibre del vaso.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 4 · Usar tijeras Mayo en tejido delicado</div><p><strong>El error:</strong> emplear tijeras robustas donde se requiere disección fina.</p><p><strong>Por qué falla:</strong> puede lesionar estructuras delicadas como vasos o nervios.</p><p><strong>Cómo corregir:</strong> reserva las Metzenbaum para disección fina y las Mayo para tejido grueso o suturas.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 5 · No anticipar el instrumental del siguiente tiempo quirúrgico</div><p><strong>El error:</strong> reaccionar solo a lo que el cirujano solicita verbalmente, sin preparación previa.</p><p><strong>Por qué falla:</strong> genera demoras evitables que prolongan el tiempo quirúrgico y la exposición anestésica del paciente.</p><p><strong>Cómo corregir:</strong> conoce la secuencia estándar del procedimiento y prepara el instrumental del siguiente tiempo con antelación.</p></div>
+
+  <div class="box danger"><div class="box-title">❌ Error 6 · Montar mal la aguja en el portaagujas</div><p><strong>El error:</strong> sujetar la aguja en un punto incorrecto, dificultando su paso a través del tejido.</p><p><strong>Por qué falla:</strong> compromete la precisión del cirujano y puede doblar o dañar la aguja.</p><p><strong>Cómo corregir:</strong> monta la aguja a un tercio de distancia del extremo opuesto al hilo, en el ángulo adecuado.</p></div>
+</section>
+
+<!-- SECCIÓN 6: TIPS -->
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 6 estrategias para ganar puntos</h2>
+
+  <div class="box ok"><div class="box-title">✅ Tip 1 · Las 5 familias funcionales</div><p>Corte, disección, hemostasia, exposición, síntesis. Si identificas a qué familia pertenece el instrumento descrito, puedes deducir su función incluso sin conocer el nombre exacto.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 · Dientes = tejido resistente; sin dientes = tejido delicado</div><p>Regla simple para pinzas de disección: si el tejido es duro o resistente (piel, fascia), dientes. Si es delicado (intestino, vasos), sin dientes.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 · Tamaño de la pinza hemostática según el vaso</div><p>Vaso grande → Kelly. Vaso fino → Mosquito. Piensa en la escala: a mayor delicadeza del tejido, menor y más fina la pinza.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 · Filo siempre hacia el instrumentador al entregar</div><p>Regla de oro de seguridad en la entrega: cualquier instrumento cortante o punzante se entrega con la parte de riesgo orientada hacia quien lo entrega, no hacia quien lo recibe.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 · Sigue la secuencia de los tiempos quirúrgicos</div><p>Incisión → disección/exposición → tratamiento → hemostasia → síntesis. Memorizar esta secuencia te ayuda a anticipar qué instrumental corresponde en cada momento del caso descrito.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 · Ante sangrado, la respuesta correcta siempre es "rapidez + precisión"</div><p>Descarta cualquier opción de respuesta que implique "esperar" o "ver qué pasa" ante un sangrado; la actuación correcta siempre es inmediata.</p></div>
+</section>
+
+<!-- SECCIÓN 7: TRAMPAS -->
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 4 trampas diseñadas por la CNSC</h2>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 1 · "Cualquier pinza hemostática sirve para cualquier vaso"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> todas las pinzas hemostáticas "hacen lo mismo": pinzar un vaso.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> el tamaño y precisión de la pinza deben ajustarse al calibre del vaso; una pinza inadecuada puede ser inefectiva o lesionar tejido circundante.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se selecciona la pinza hemostática según el calibre del vaso: Kelly para vasos de mediano calibre, Mosquito para vasos finos."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 2 · "El instrumentador solo reacciona a lo que pide el cirujano"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> el instrumentador es un rol pasivo de "entrega bajo solicitud".</div><div class="t-row malo"><strong>Por qué es trampa:</strong> la anticipación de los tiempos quirúrgicos y de imprevistos es una competencia activa y esperada del cargo.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "El instrumentador anticipa el instrumental necesario según la secuencia quirúrgica y los hallazgos intraoperatorios, sin esperar siempre la solicitud verbal."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 3 · "La pinza con dientes es mejor porque sujeta con más firmeza siempre"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> más firmeza de sujeción parece siempre preferible.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> en tejido delicado, los dientes desgarran y dañan la estructura; la elección depende del tipo de tejido, no de la firmeza en abstracto.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se usa pinza con dientes en tejido resistente y sin dientes en tejido delicado, según el riesgo de desgarro."</div></div></div>
+
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 4 · "El mismo instrumental sirve para toda la cirugía"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> simplificar el proceso usando el mismo set desde el inicio hasta el final.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> cada tiempo quirúrgico (incisión, disección, hemostasia, síntesis) requiere instrumental específico; usar el mismo instrumental todo el tiempo compromete la técnica.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "El instrumental se adapta a cada tiempo quirúrgico: corte para incisión, disección para exposición, hemostasia para sangrado, síntesis para cierre."</div></div></div>
+</section>
+
+
+<!-- SECCIÓN 8: REPASO (Flashcards) -->
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards — Repaso activo</h2>
+  <p class="flash-intro">Estas 10 tarjetas condensan los conceptos esenciales. Haz clic para voltear y ver la respuesta.</p>
+  <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+  <div class="flashcard" id="flashcard">
+    <div class="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <span class="label">Pregunta</span>
+        <p class="pregunta-flash" id="flashFront"></p>
+        <small class="hint">Haz clic para ver la respuesta</small>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <span class="label">Respuesta</span>
+        <p class="respuesta-flash" id="flashBack"></p>
+      </div>
+    </div>
+  </div>
+  <div class="flashcard-controls">
+    <button id="flashPrev">← Anterior</button>
+    <button id="flashFlip" class="primary">Voltear tarjeta</button>
+    <button id="flashNext">Siguiente →</button>
+  </div>
+</section>
+
+<!-- SECCIÓN 9: RESUMEN + GLOSARIO -->
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen y Glosario</span>
+  <h2 class="sec-title">📋 Resumen ejecutivo</h2>
+  <div class="resumen-grid">
+    <div class="resumen-item"><h4>🔪 Corte</h4><p>Bisturí (incisión), tijeras Mayo (tejido grueso) y Metzenbaum (disección fina).</p></div>
+    <div class="resumen-item"><h4>🔬 Disección</h4><p>Pinzas con dientes (tejido resistente) y sin dientes (tejido delicado); disectores para separar planos.</p></div>
+    <div class="resumen-item"><h4>🩸 Hemostasia</h4><p>Kelly (vasos medianos), Mosquito (vasos finos). Rapidez de entrega es crítica.</p></div>
+    <div class="resumen-item"><h4>🖐️ Exposición y entrega</h4><p>Separadores mantienen el campo visible. Filo/punta siempre hacia el instrumentador al entregar.</p></div>
+    <div class="resumen-item"><h4>🧵 Síntesis</h4><p>Portaagujas con sutura montada a un tercio de distancia, pinzas de Adson para sostener bordes.</p></div>
+    <div class="resumen-item"><h4>⏱️ Anticipación</h4><p>Conocer la secuencia de tiempos quirúrgicos permite anticipar el instrumental sin esperar solicitud verbal.</p></div>
+  </div>
+
+  <h3 style="margin-top:32px;">📚 Glosario</h3>
+  <div class="glosario">
+    <div class="glo-item"><dt>Pinza Kelly</dt><dd>Pinza hemostática curva, robusta, para vasos de mediano calibre.</dd></div>
+    <div class="glo-item"><dt>Pinza Mosquito</dt><dd>Pinza hemostática pequeña y delicada, para vasos finos.</dd></div>
+    <div class="glo-item"><dt>Tijeras Metzenbaum</dt><dd>Tijeras finas para disección delicada de tejido (vasos, nervios).</dd></div>
+    <div class="glo-item"><dt>Separador de Balfour</dt><dd>Separador autostático que mantiene expuesto el campo abdominal sin necesidad de sujeción manual continua.</dd></div>
+    <div class="glo-item"><dt>Portaagujas</dt><dd>Instrumento que sujeta la aguja de sutura para permitir su paso controlado por el tejido.</dd></div>
+    <div class="glo-item"><dt>Tiempos quirúrgicos</dt><dd>Secuencia estándar de un procedimiento: incisión, disección/exposición, tratamiento, hemostasia, síntesis.</dd></div>
+  </div>
+
+  <div class="cierre">
+    <h3>🎯 Frase para recordar</h3>
+    <p><strong>"Dientes para lo resistente, sin dientes para lo delicado; filo siempre hacia ti al entregar; anticipa el siguiente tiempo antes de que te lo pidan."</strong></p>
+  </div>
+</section>
+
+<!-- SECCIÓN 10: SIMULACRO -->
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+
+  <div class="card card-lead quiz-intro">
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> real y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones; solo una es correcta.</p>
+    <div class="quiz-formato"><strong>Instrucciones:</strong> lee el caso, identifica el problema y elige la actuación más apropiada. Al hacer clic verás retroalimentación por cada opción.</div>
+    <div class="dific-tags">
+      <span class="tag b">4 básicas</span>
+      <span class="tag i">5 intermedias</span>
+      <span class="tag a">3 avanzadas</span>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div style="text-align:center; margin:28px 0;">
+    <button id="btnCalcular" class="btn">Ver mi resultado</button>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num" id="scoreNum">0/12</div>
+    <p id="scoreMsg"></p>
+    <div id="temasReforzar"></div>
+    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">Ascenso Público</div>
+  <div class="fslogan">Tu ruta personalizada al ascenso público</div>
+  <div class="fmeta">
+    FUN-SAL-04 · Día 12 · v1.0 — julio 2026<br>
+    © Ascenso Público — Todos los derechos reservados
+  </div>
+</footer>
+
+
+<script>
+// ===== NAVEGACIÓN Y BARRA DE LECTURA =====
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('nav button');
+
+function showSection(i) {
+  sections.forEach(s => s.classList.remove('visible'));
+  navBtns.forEach(b => b.classList.remove('active'));
+  sections[i].classList.add('visible');
+  navBtns[i].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('readbar').style.width = scrolled + '%';
+});
+
+// ===== BOTONES "AVANZAR" =====
+const titulosCortos = [
+  'Importancia', 'Desarrollo', 'Comparaciones', 'Casos CNSC',
+  'Errores', 'Tips', 'Trampas', 'Repaso', 'Resumen', 'Simulacro', null
+];
+
+sections.forEach((sec, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'advance-bar';
+  if (i < sections.length - 1) {
+    bar.innerHTML = `
+      <span class="advance-hint">¿Listo para continuar?</span>
+      <button class="advance-btn" data-target="${i + 1}">
+        Avanzar a ${titulosCortos[i]} →
+      </button>`;
+  } else {
+    bar.innerHTML = `
+      <span class="advance-hint">🎓 Has completado todo el contenido</span>
+      <button class="advance-btn final" data-target="finalizar">
+        ✅ Finalizar Día 12
+      </button>`;
+  }
+  sec.appendChild(bar);
+});
+
+document.querySelectorAll('.advance-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.target;
+    if (t === 'finalizar') {
+      alert('🎓 ¡Felicitaciones! Completaste el Día 12.\n\nMañana avanzas con FUN-SAL-05 · Asepsia, Esterilización y Manejo de Instrumental.\n\n🚀');
+    } else {
+      showSection(parseInt(t));
+    }
+  });
+});
+
+// ===== CHECKPOINTS INTERACTIVOS =====
+function setupCheckpoint(cpId, fbId) {
+  const opts = document.querySelectorAll(`#${cpId} li`);
+  const fb = document.getElementById(fbId);
+  opts.forEach(opt => {
+    opt.addEventListener('click', function() {
+      const isOk = this.dataset.ok === '1';
+      opts.forEach(o => o.style.pointerEvents = 'none');
+      this.classList.add(isOk ? 'ok' : 'no');
+      fb.className = isOk ? 'checkpoint-fb ok show' : 'checkpoint-fb no show';
+      if (isOk) {
+        fb.innerHTML = '✅ <strong>¡Correcto!</strong> Esta es la elección apropiada según la clasificación funcional del instrumental.';
+      } else {
+        fb.innerHTML = '❌ <strong>Incorrecto.</strong> Revisa el concepto correspondiente en el Desarrollo para entender por qué esta opción no es la más apropiada.';
+      }
+    });
+  });
+}
+setupCheckpoint('cp1', 'cpfb1');
+setupCheckpoint('cp2', 'cpfb2');
+
+// ===== FLASHCARDS =====
+const flashcards = [
+  { f:'¿Para qué se usan las tijeras Metzenbaum?', b:'Para disección fina de tejido delicado, como vasos y nervios. Son más finas que las tijeras Mayo.' },
+  { f:'¿Cuándo se usa una pinza de disección con dientes?', b:'En tejido resistente, como piel o fascia, donde se necesita sujeción firme sin que se deslice.' },
+  { f:'¿Qué pinza hemostática se usa para vasos finos?', b:'La pinza Mosquito, más pequeña y delicada que la Kelly, ideal para cirugía de tiroides o pediátrica.' },
+  { f:'¿Cómo se debe entregar un bisturí de forma segura?', b:'Sujetándolo por el mango, con el filo hacia abajo y hacia el instrumentador, colocándolo firmemente en la palma del cirujano.' },
+  { f:'¿Dónde se monta la aguja en el portaagujas?', b:'A un tercio de distancia del extremo opuesto al hilo, en el ángulo adecuado para facilitar el paso por el tejido.' },
+  { f:'¿Cuáles son las 5 familias funcionales del instrumental quirúrgico?', b:'Corte, disección, hemostasia, exposición y síntesis.' },
+  { f:'¿Qué instrumento corresponde al tiempo de incisión?', b:'El bisturí, usado para abrir piel y planos superficiales al inicio de la cirugía.' },
+  { f:'¿Qué debe hacer el instrumentador ante un hallazgo inesperado durante la cirugía?', b:'Anticipar y preparar instrumental adicional (gasas, pinzas hemostáticas) sin esperar solicitud verbal explícita, y comunicar al equipo.' },
+  { f:'¿Qué separador se usa para mantener expuesto un campo abdominal amplio?', b:'El separador de Balfour, de tipo autostático.' },
+  { f:'¿Por qué es crítica la rapidez de entrega ante un sangrado?', b:'Porque cada segundo de retraso aumenta la pérdida de sangre y el riesgo para el paciente; se debe anticipar y entregar la pinza hemostática adecuada de inmediato.' }
+];
+
+let flashIndex = 0;
+const flashEl = document.getElementById('flashcard');
+const flashFront = document.getElementById('flashFront');
+const flashBack = document.getElementById('flashBack');
+const flashCounter = document.getElementById('flashCounter');
+
+function renderFlash() {
+  flashEl.classList.remove('flipped');
+  flashFront.textContent = flashcards[flashIndex].f;
+  flashBack.textContent = flashcards[flashIndex].b;
+  flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+}
+flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click', e => {
+  e.stopPropagation(); flashEl.classList.toggle('flipped');
+});
+document.getElementById('flashPrev').addEventListener('click', () => {
+  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlash();
+});
+document.getElementById('flashNext').addEventListener('click', () => {
+  flashIndex = (flashIndex + 1) % flashcards.length;
+  renderFlash();
+});
+renderFlash();
+
+
+
+// ===== SIMULACRO =====
+const preguntas = [
+  {
+    nivel: 'b', tema: 'Entrega segura de instrumental cortante',
+    ctx: 'Eres instrumentador y estás entregando un bisturí al cirujano al inicio de una cirugía. Tienes prisa porque el equipo está listo para comenzar de inmediato.',
+    q: '¿Cuál es la forma correcta de entregarlo?',
+    ops: [
+      'Sujetarlo por la hoja y entregarlo rápidamente con el filo hacia arriba, para que el cirujano lo tome de inmediato',
+      'Sujetarlo por el mango, con el filo hacia abajo y hacia ti, colocándolo firmemente en la palma extendida del cirujano',
+      'Dejarlo sobre la mesa de mayo para que el cirujano lo tome directamente cuando lo necesite',
+      'Entregarlo con el filo hacia el cirujano para que pueda verlo y confirmar que es el instrumento correcto'
+    ],
+    correcta: 1,
+    expl: [
+      'Sujetar por la hoja y con el filo hacia arriba expone al instrumentador a riesgo de corte y no sigue la técnica de entrega segura.',
+      '✔ Correcto. La técnica correcta es sujetar por el mango, filo hacia abajo y hacia el instrumentador, colocándolo firmemente en la palma del cirujano, sin necesidad de que este mire.',
+      'Dejarlo sobre la mesa retrasa la disponibilidad inmediata del instrumento y no corresponde a la dinámica de entrega directa esperada en cirugía activa.',
+      'Orientar el filo hacia el cirujano genera riesgo de corte accidental; la orientación del filo debe ser siempre hacia quien entrega, no hacia quien recibe.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Selección de pinza de disección según tejido',
+    ctx: 'El cirujano está disecando un segmento de intestino delgado durante una cirugía abdominal y solicita una pinza de disección para sujetarlo momentáneamente.',
+    q: '¿Qué tipo de pinza debe entregar el instrumentador?',
+    ops: [
+      'Pinza con dientes, porque sujeta con más firmeza y evita que se resbale de las manos',
+      'Pinza sin dientes, porque el intestino es tejido delicado que se desgarraría con una pinza dentada',
+      'Cualquiera de las dos, ya que la diferencia entre ellas no afecta el tejido intestinal',
+      'Una pinza hemostática, ya que también puede usarse para sujetar tejido'
+    ],
+    correcta: 1,
+    expl: [
+      'La firmeza de sujeción no es el criterio principal; en tejido delicado como el intestino, los dientes desgarran y pueden perforarlo.',
+      '✔ Correcto. El intestino es tejido delicado; se requiere pinza de disección sin dientes para manipularlo sin causar desgarros o perforaciones.',
+      'La elección sí afecta significativamente al tejido: usar pinza dentada en intestino puede causar lesión grave.',
+      'Las pinzas hemostáticas están diseñadas para pinzar vasos, no para la manipulación general de tejido durante la disección.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Selección de pinza hemostática según calibre',
+    ctx: 'Durante una tiroidectomía, se produce sangrado de un vaso de calibre muy pequeño, típico de esta región anatómica.',
+    q: '¿Qué pinza hemostática es la más apropiada?',
+    ops: [
+      'Pinza Kelly, por ser la pinza hemostática de uso más general en cualquier cirugía',
+      'Pinza Mosquito, por su tamaño pequeño y delicado, adecuado para vasos finos',
+      'Cualquier pinza disponible en la mesa de mayo en ese momento',
+      'Una pinza de disección con dientes, ya que también puede sujetar el vaso'
+    ],
+    correcta: 1,
+    expl: [
+      'La pinza Kelly, aunque de uso general, es de mayor tamaño y menos precisa para vasos muy finos como los de la región tiroidea.',
+      '✔ Correcto. La pinza Mosquito, por su tamaño pequeño y delicado, es la indicada para vasos de calibre fino, como es típico en cirugía de tiroides.',
+      'Elegir "cualquier pinza disponible" sin considerar el calibre del vaso puede ser inefectivo o generar daño tisular adicional.',
+      'Una pinza de disección con dientes no está diseñada para el control hemostático y puede lesionar el vaso en lugar de controlarlo.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Montaje de aguja en portaagujas',
+    ctx: 'El instrumentador está preparando el portaagujas con la aguja de sutura para el cierre de piel al final de una cirugía.',
+    q: '¿En qué punto debe sujetar la aguja con el portaagujas?',
+    ops: [
+      'Exactamente en el extremo donde está anudado el hilo, para máxima estabilidad',
+      'A un tercio de distancia desde el extremo opuesto al hilo, en el ángulo adecuado para facilitar el paso por el tejido',
+      'En el punto medio exacto de la aguja, sin importar la orientación del hilo',
+      'En cualquier punto, ya que la posición no afecta significativamente el resultado de la sutura'
+    ],
+    correcta: 1,
+    expl: [
+      'Sujetar en el extremo del hilo dificulta el manejo y el paso adecuado de la aguja a través del tejido.',
+      '✔ Correcto. El montaje estándar sujeta la aguja a un tercio de distancia del extremo opuesto al hilo (la punta), facilitando el control y el paso preciso por el tejido.',
+      'El punto medio exacto no es la posición estándar recomendada; puede dificultar el control de la punta de la aguja.',
+      'La posición de montaje sí afecta significativamente el control y la precisión durante la sutura; no es indiferente.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'i', tema: 'Diferenciación de tijeras según tejido',
+    ctx: 'Durante una cirugía vascular, el cirujano necesita disecar con precisión el tejido conectivo alrededor de una arteria de mediano calibre sin lesionarla. El instrumentador tiene disponibles tijeras Mayo y tijeras Metzenbaum.',
+    q: '¿Cuál debe entregar?',
+    ops: [
+      'Tijeras Mayo, porque son más resistentes y permiten cortar con mayor seguridad',
+      'Tijeras Metzenbaum, por ser más finas y adecuadas para disección delicada de estructuras como arterias',
+      'Cualquiera de las dos, ya que ambas cortan igual de bien cualquier tipo de tejido',
+      'Ninguna tijera; se debe usar directamente el bisturí para esta disección'
+    ],
+    correcta: 1,
+    expl: [
+      'Las tijeras Mayo son más robustas y están indicadas para tejido grueso o corte de suturas, no para disección fina de estructuras delicadas como una arteria.',
+      '✔ Correcto. Las tijeras Metzenbaum, al ser más finas y delicadas, son las indicadas para disecar con precisión estructuras vasculares sin lesionarlas.',
+      'Usar indistintamente ambas tijeras ignora sus diferencias de diseño y puede comprometer tanto la seguridad del vaso como la vida útil del instrumento.',
+      'El bisturí no es el instrumento adecuado para disección fina de tejido conectivo alrededor de una estructura delicada; se requiere un instrumento de disección más controlado.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Anticipación de imprevistos quirúrgicos',
+    ctx: 'Durante una apendicectomía programada como sencilla, el cirujano informa en voz alta que ha encontrado un apéndice perforado con mayor inflamación de la esperada, lo que probablemente implicará mayor sangrado y necesidad de más material.',
+    q: '¿Cuál es la actuación más apropiada del instrumentador en ese momento?',
+    ops: [
+      'Continuar con el set de instrumental y material previsto originalmente, ya que cambiar el plan podría generar confusión',
+      'Anticipar y preparar mayor cantidad de gasas y pinzas hemostáticas adicionales de inmediato, y comunicar al circulante si se requiere material adicional, sin esperar solicitud explícita',
+      'Esperar a que el cirujano solicite verbalmente cada elemento adicional que necesite, uno por uno',
+      'Detener el procedimiento hasta que llegue un instrumentador de refuerzo con más experiencia'
+    ],
+    correcta: 1,
+    expl: [
+      'Mantener el plan original sin ajustar ante un hallazgo que ya fue anunciado por el cirujano ignora la función de anticipación esperada del instrumentador.',
+      '✔ Correcto. La anticipación proactiva ante hallazgos inesperados, preparando material adicional y comunicando a tiempo, es una competencia esperada y valorada del rol del instrumentador quirúrgico.',
+      'Esperar solicitud verbal elemento por elemento genera demoras evitables en un momento donde la rapidez de respuesta puede ser relevante para la seguridad del paciente.',
+      'Detener el procedimiento por un hallazgo que, aunque más complejo de lo esperado, es manejable por el equipo actual, es una reacción desproporcionada que no corresponde a la situación descrita.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Uso de pinzas con y sin dientes',
+    ctx: 'Durante el cierre de una herida abdominal, el cirujano necesita sostener firmemente los bordes de la piel (tejido resistente) mientras sutura, evitando que se deslicen.',
+    q: '¿Qué tipo de pinza de disección es la más apropiada para esta tarea?',
+    ops: [
+      'Pinza sin dientes, para no lesionar la piel durante la sutura',
+      'Pinza con dientes, adecuada para tejido resistente como la piel, evitando que se deslice',
+      'Pinza hemostática Kelly, ya que también puede sujetar tejido con firmeza',
+      'Disector romo, ya que su función es separar planos, no sujetar bordes'
+    ],
+    correcta: 1,
+    expl: [
+      'Una pinza sin dientes puede deslizarse en tejido resistente como la piel, dificultando la sujeción firme necesaria durante la sutura.',
+      '✔ Correcto. La piel es tejido resistente; una pinza con dientes permite sujetarla firmemente sin que se deslice, facilitando la aproximación de los bordes durante la sutura.',
+      'La pinza hemostática está diseñada para pinzar vasos, no para la sujeción de bordes de piel durante la sutura; su uso en este contexto no es el apropiado.',
+      'El disector romo tiene una función de separación de planos tisulares, no de sujeción firme de bordes durante el cierre.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Secuencia de tiempos quirúrgicos',
+    ctx: 'Eres instrumentador en formación y estás organizando mentalmente la secuencia de instrumental para una colecistectomía abierta: incisión, disección de la vesícula, control de la arteria y conducto cístico, extracción de la vesícula, y cierre por planos.',
+    q: '¿En qué momento de esta secuencia corresponde tener lista una pinza hemostática como la Kelly o Mosquito?',
+    ops: [
+      'Únicamente al inicio, durante la incisión de la piel',
+      'Durante el control de la arteria y el conducto cístico, momento de hemostasia dentro de la secuencia',
+      'Solo al final, durante el cierre por planos',
+      'La pinza hemostática no es necesaria en este tipo de procedimiento'
+    ],
+    correcta: 1,
+    expl: [
+      'Durante la incisión de piel se usa instrumental de corte (bisturí), no hemostático, salvo sangrado incidental menor.',
+      '✔ Correcto. El control de la arteria y el conducto cístico es precisamente el momento de hemostasia dentro de la secuencia quirúrgica, donde corresponde tener lista la pinza hemostática adecuada.',
+      'El cierre por planos corresponde al tiempo de síntesis, con instrumental como portaagujas y pinzas de Adson, no principalmente pinzas hemostáticas.',
+      'El control vascular es un tiempo estándar y crítico en la colecistectomía; la pinza hemostática es indispensable en ese momento de la secuencia.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Separadores y exposición del campo',
+    ctx: 'Durante una cirugía abdominal amplia, el cirujano necesita mantener expuesto un campo grande sin que un ayudante deba sujetar manualmente el separador durante todo el procedimiento, ya que se requieren sus manos para otras tareas.',
+    q: '¿Qué tipo de separador es el más apropiado para esta situación?',
+    ops: [
+      'Separador de Farabeuf, que es manual y debe sostenerse permanentemente',
+      'Separador autostático tipo Balfour, que se fija y mantiene la exposición sin necesidad de sujeción manual continua',
+      'Pinza de disección con dientes, utilizada como sustituto de separador',
+      'Ningún separador; el cirujano puede trabajar sin exposición adicional del campo'
+    ],
+    correcta: 1,
+    expl: [
+      'El separador de Farabeuf es manual y requeriría que alguien lo sostenga continuamente, lo cual contradice la necesidad descrita de liberar las manos del ayudante.',
+      '✔ Correcto. El separador autostático tipo Balfour se fija en posición y mantiene la exposición del campo sin necesidad de sujeción manual continua, siendo la opción apropiada para este escenario.',
+      'Una pinza de disección no está diseñada para mantener expuesto un campo amplio; no es un sustituto funcional de un separador.',
+      'Trabajar sin exposición adecuada del campo en cirugía abdominal amplia compromete la visibilidad y seguridad del procedimiento.'
+    ]
+  },
+
+
+
+  {
+    nivel: 'a', tema: 'Análisis integral de un evento adverso por instrumental',
+    ctx: 'Eres coordinador de instrumentación quirúrgica en un hospital. Se reporta un incidente donde, durante una cirugía, el instrumentador entregó en tres ocasiones instrumental incorrecto según el tiempo quirúrgico (una pinza hemostática en el momento de disección, tijeras Mayo para disección fina, y una pinza sin dientes para sujetar piel durante el cierre), generando demoras acumuladas de varios minutos y comentarios de frustración del cirujano.',
+    q: '¿Cuál es el análisis y plan de acción más apropiado?',
+    ops: [
+      'Concluir que el instrumentador simplemente tuvo un mal día y no requiere ninguna acción adicional',
+      'Analizar si el instrumentador tiene un dominio insuficiente de la clasificación funcional del instrumental (corte, disección, hemostasia, exposición, síntesis) y de la secuencia de tiempos quirúrgicos, y diseñar un plan de refuerzo específico en estas áreas, con supervisión en las próximas cirugías',
+      'Sancionar de inmediato al instrumentador sin evaluar las causas de fondo del error',
+      'Cambiar de forma permanente al instrumentador a otro servicio sin ofrecer oportunidad de refuerzo o capacitación'
+    ],
+    correcta: 1,
+    expl: [
+      'Atribuir el patrón repetido de errores a "un mal día" ignora que los tres errores apuntan sistemáticamente a una confusión de clasificación funcional y secuencia, un patrón que requiere atención específica.',
+      '✔ Correcto. El análisis correcto identifica el patrón (confusión de clasificación funcional y de secuencia de tiempos quirúrgicos) y responde con un plan de refuerzo específico y supervisado, en lugar de una sanción genérica o una atribución superficial.',
+      'Sancionar sin analizar la causa de fondo no corrige el patrón de error ni previene su repetición con este o con otro personal en situación similar.',
+      'Remover permanentemente sin ofrecer oportunidad de refuerzo desestima la posibilidad de una brecha de capacitación corregible, que es lo que sugiere el patrón de errores descrito.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Toma de decisiones bajo presión con recursos limitados',
+    ctx: 'Eres instrumentador jefe en un quirófano rural con recursos limitados. Durante una cirugía de urgencia, descubres que el set completo de pinzas Mosquito está siendo esterilizado y no estará disponible a tiempo, mientras que el paciente presenta sangrado de vasos finos que normalmente requerirían este instrumento. Solo tienes disponibles pinzas Kelly de mayor tamaño.',
+    q: '¿Cuál es la decisión más apropiada?',
+    ops: [
+      'Suspender la cirugía de urgencia hasta que las pinzas Mosquito estén disponibles, sin importar el tiempo que esto tome',
+      'Usar las pinzas Kelly disponibles con mayor cuidado y precisión técnica para el control de los vasos finos, informando al cirujano de la limitación de recursos disponible, mientras se gestiona la disponibilidad de instrumental más adecuado para casos futuros',
+      'Improvisar con una pinza de disección con dientes como sustituto de pinza hemostática',
+      'Continuar la cirugía sin intentar controlar el sangrado de los vasos finos, asumiendo que se resolverá espontáneamente'
+    ],
+    correcta: 1,
+    expl: [
+      'Suspender una cirugía de urgencia por la indisponibilidad temporal de un instrumento específico puede poner en riesgo mayor al paciente que adaptar la técnica con el instrumental disponible.',
+      '✔ Correcto. Ante una limitación real de recursos en una urgencia, la respuesta más apropiada es adaptar la técnica con el instrumental disponible de la forma más segura posible, comunicando la limitación al equipo y gestionando la mejora de recursos para el futuro, sin poner en pausa la atención urgente del paciente.',
+      'Una pinza de disección con dientes no está diseñada para el control hemostático y su uso como sustituto puede ser inefectivo o lesionar el vaso.',
+      'No intentar controlar el sangrado de ningún tipo, asumiendo resolución espontánea, es una omisión grave que pone en riesgo directo la vida del paciente.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Coordinación de equipo ante instrumental faltante durante cirugía compleja',
+    ctx: 'Durante una cirugía vascular compleja y de larga duración, el instrumentador nota que el set de tijeras Metzenbaum disponible se ha desafilado progresivamente tras varias horas de uso continuo, comprometiendo la precisión de la disección fina que el procedimiento aún requiere en sus siguientes etapas.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Continuar usando las mismas tijeras desafiladas hasta el final del procedimiento, ya que cambiarlas podría interrumpir el ritmo quirúrgico',
+      'Informar de inmediato al circulante para gestionar el reemplazo de las tijeras Metzenbaum por un set nuevo o afilado, coordinando el momento más seguro para hacer el cambio sin comprometer el campo estéril ni el procedimiento en curso',
+      'Usar tijeras Mayo como sustituto para las etapas restantes de disección fina, ya que "cortan de todas formas"',
+      'Esperar a que termine completamente la cirugía para reportar el problema del instrumental desafilado'
+    ],
+    correcta: 1,
+    expl: [
+      'Continuar con instrumental desafilado compromete la precisión de la disección fina requerida, aumentando el riesgo de lesión a estructuras vasculares delicadas.',
+      '✔ Correcto. La respuesta de nivel avanzado anticipa el problema técnico, comunica oportunamente al circulante para gestionar el reemplazo, y coordina el momento seguro del cambio sin comprometer la esterilidad ni interrumpir abruptamente el procedimiento.',
+      'Sustituir con tijeras Mayo, más robustas y menos precisas, en una etapa que requiere disección fina, aumenta el riesgo de lesión a estructuras vasculares delicadas.',
+      'Esperar hasta el final del procedimiento para reportar el problema desestima el riesgo activo que representa el instrumental desafilado durante las etapas restantes de la cirugía en curso.'
+    ]
+  }
+];
+
+const quizDiv = document.getElementById('quiz');
+let respondidas = {};
+
+function renderQuiz() {
+  respondidas = {};
+  quizDiv.innerHTML = '';
+  const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+  preguntas.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'pregunta';
+    let opsHtml = '';
+    p.ops.forEach((op, j) => {
+      const letra = String.fromCharCode(65 + j);
+      opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}">
+                    <span class="letra">${letra}</span><span>${op}</span>
+                  </div>`;
+    });
+    const ctxHtml = `<div class="q-contexto"><strong>Contexto:</strong> ${p.ctx}</div>`;
+    card.innerHTML = `
+      <div class="q-num">Pregunta ${idx+1}
+        <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span>
+      </div>
+      ${ctxHtml}
+      <div class="q-texto">${p.q}</div>
+      <div class="opciones">${opsHtml}</div>
+      <div class="feedback" id="fb-${idx}"></div>`;
+    quizDiv.appendChild(card);
+  });
+
+  document.querySelectorAll('.opcion').forEach(op => {
+    op.addEventListener('click', function() {
+      const qi = +this.dataset.q;
+      const oi = +this.dataset.op;
+      if (respondidas[qi] !== undefined) return;
+      respondidas[qi] = oi;
+      const p = preguntas[qi];
+      const cont = this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o, k) => {
+        o.classList.add('bloqueada');
+        if (k === p.correcta) o.classList.add('correcta');
+      });
+      const fb = document.getElementById('fb-' + qi);
+      fb.className = 'feedback show';
+
+      let feedbackHtml = '<div style="margin-bottom:14px;"><strong>Retroalimentación por opción:</strong></div>';
+      p.ops.forEach((opText, k) => {
+        const letra = String.fromCharCode(65 + k);
+        const isCorrect = k === p.correcta;
+        const color = isCorrect ? 'var(--verde)' : 'var(--rojo)';
+        feedbackHtml += `<div style="margin-bottom:10px; padding:8px 12px; background:${isCorrect ? 'var(--verde-suave)' : 'var(--rojo-suave)'}; border-left:3px solid ${color}; border-radius:6px;">
+          <strong style="color:${color};">${letra}.</strong> ${p.expl[k]}
+        </div>`;
+      });
+      fb.innerHTML = feedbackHtml;
+
+      if (oi !== p.correcta) {
+        this.classList.add('incorrecta');
+      }
+    });
+  });
+}
+
+document.getElementById('btnCalcular').addEventListener('click', () => {
+  let correctas = 0;
+  const temasFallados = [];
+  preguntas.forEach((p, i) => {
+    if (respondidas[i] === p.correcta) correctas++;
+    else if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema);
+  });
+  const res = document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent = correctas + '/12';
+
+  let msg;
+  const pct = correctas / 12;
+  if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas la instrumentación quirúrgica básica. Listo para el siguiente día.';
+  else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados y repasa las comparaciones.';
+  else msg = '📚 Vas por buen camino. Repasa el Desarrollo, las tablas comparativas y repite el simulacro.';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const cont = document.getElementById('temasReforzar');
+  if (temasFallados.length === 0) {
+    cont.innerHTML = '<div class="box ok" style="text-align:left;">' +
+      '<div class="box-title">🎯 ¡Sin temas pendientes!</div>' +
+      '<p>Respondiste todo correctamente. Estás preparado para avanzar.</p></div>';
+  } else {
+    let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+    cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+      '<div class="box-title">📌 Temas que debes reforzar</div>' +
+      '<p>Vuelve a la sección <strong>Desarrollo</strong> y repasa estos conceptos:</p>' +
+      '<ul class="lista">' + items + '</ul></div>';
+  }
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+document.getElementById('btnReiniciar').addEventListener('click', () => {
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({
+    top: document.querySelector('[data-sec="10"]').offsetTop - 80,
+    behavior: 'smooth'
+  });
+});
+
+renderQuiz();
+</script>
+</body>
+</html>
