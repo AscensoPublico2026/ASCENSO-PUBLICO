@@ -91,8 +91,8 @@ export async function subirGuia(cursoId: string, formData: FormData) {
 /**
  * "Curso listo" — Admin terminó de preparar el curso.
  * El curso pasa a estado "listo" pero el cliente SOLO lo verá
- * cuando se cumplan las 12h desde la compra (preparacion_deadline).
- * Si ya pasaron las 12h, se ve inmediatamente.
+ * cuando se cumplan las 24h desde la compra (preparacion_deadline).
+ * Si ya pasaron las 24h, se ve inmediatamente.
  */
 export async function marcarCursoListo(cursoId: string) {
   await requireAdmin();

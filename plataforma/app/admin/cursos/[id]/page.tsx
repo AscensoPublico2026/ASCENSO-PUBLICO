@@ -5,6 +5,8 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
+import BarraTiempoAdmin from "../BarraTiempoAdmin";
+import BarraProgresoAdmin from "../BarraProgresoAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +61,10 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
 
   const todas = (guias || []) as any[];
   const rutasAsignadas = new Set(todas.map((g) => g.archivo_path).filter(Boolean));
+
+  // Avance real del estudiante: guías con archivo asignadas vs. cuántas marcó como leídas.
+  const guiasConArchivo = todas.filter((g) => g.archivo_path);
+  const guiasLeidas = guiasConArchivo.filter((g) => g.leida);
 
   // Día 1: Introducción (INTRO-00) y Conoce tu Entidad
   const intro = todas.find((g) => g.dia === 1 && g.tipo === "general") || todas.find((g) => /INTRO-00/.test(g.archivo_path || ""));
@@ -141,6 +147,29 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         )}
       </div>
 
+      {/* Tiempo de preparación (24h) y avance real del estudiante */}
+      <div style={box}>
+        <h2 style={{ fontSize: "1rem", marginBottom: 16 }}>⏱️ Tiempo y avance</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div>
+            <p style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".03em" }}>
+              Plazo de preparación
+            </p>
+            <BarraTiempoAdmin
+              fechaCompra={curso.fecha_compra}
+              deadline={curso.preparacion_deadline}
+              listo={curso.estado === "listo"}
+            />
+          </div>
+          <div>
+            <p style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".03em" }}>
+              Avance del estudiante
+            </p>
+            <BarraProgresoAdmin leidas={guiasLeidas.length} total={guiasConArchivo.length} />
+          </div>
+        </div>
+      </div>
+
       {/* Previsualizar como estudiante (revisar antes de habilitar) */}
       <Link href={`/perfil/${curso.id}`} className="btn btn-azul" style={{ display: "flex", justifyContent: "center", padding: "13px 18px", textDecoration: "none" }}>
         👁️ Previsualizar el curso como lo verá el estudiante
@@ -159,7 +188,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <form action={marcarCursoListo.bind(null, curso.id)}>
               <button className="btn btn-oro" style={{ padding: "10px 18px", fontSize: ".88rem" }}>
-                ✅ Curso listo (se habilita a las 12h)
+                ✅ Curso listo (se habilita a las 24h)
               </button>
             </form>
             <form action={habilitarCursoAhora.bind(null, curso.id)}>
@@ -169,13 +198,13 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
             </form>
           </div>
           <p style={{ color: "var(--texto-suave)", fontSize: ".78rem", marginTop: 10 }}>
-            <strong>Curso listo:</strong> el cliente verá el curso cuando se cumplan las 12h desde su compra.<br/>
+            <strong>Curso listo:</strong> el cliente verá el curso cuando se cumplan las 24h desde su compra.<br/>
             <strong>Habilitar ahora:</strong> el cliente ve el curso de inmediato (para amigos o casos especiales).
           </p>
         </div>
       )}
 
-      {/* Curso ya marcado listo: permitir habilitarlo de una vez aunque falten las 12h */}
+      {/* Curso ya marcado listo: permitir habilitarlo de una vez aunque falten las 24h */}
       {curso.estado === "listo" && (() => {
         const dl = curso.preparacion_deadline ? new Date(curso.preparacion_deadline) : null;
         const pendiente = dl && dl.getTime() > Date.now();
@@ -193,7 +222,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           <div style={{ ...box, background: "var(--verde-suave)", border: "1px solid #c3e6d3" }}>
             <p style={{ color: "var(--verde)", fontWeight: 700, marginBottom: 6 }}>✅ Curso listo — programado</p>
             <p style={{ color: "var(--texto-suave)", fontSize: ".88rem", marginBottom: 14 }}>
-              El cliente verá el curso automáticamente el <strong>{dl!.toLocaleString("es-CO")}</strong> (12h desde su compra).
+              El cliente verá el curso automáticamente el <strong>{dl!.toLocaleString("es-CO")}</strong> (24h desde su compra).
               ¿Cambiaste de opinión? Puedes habilitarlo ya mismo:
             </p>
             <form action={habilitarCursoAhora.bind(null, curso.id)}>
