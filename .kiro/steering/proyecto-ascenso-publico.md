@@ -119,6 +119,14 @@ Buenas prácticas: un paso = una operación; mostrar **de dónde sale cada núme
 
 > **Referencia viva del estándar de simulacro:** `motor/contenido/FUN-ALM-04.json` (Kardex). Sus 12 preguntas son el modelo de `ctx` + `q` + `ops` largas tipo CNSC.
 
+### ⚠️ Bancos reutilizables del simulacro (`simulacro/bancos/*.json`) — SIEMPRE genéricos, NUNCA con nombre de entidad
+Los bancos `generales.json`, `nivel-asistencial.json`, `nivel-tecnico.json`, `nivel-profesional.json`, `ofimatica.json` y `funcionales-comunes.json` se mezclan automáticamente en **TODOS** los simulacros de **TODOS** los clientes (el motor los ensambla junto con las `funcionales` propias del cargo). Por eso:
+- **Prohibido** escribir en un banco el nombre de una entidad real (INDERVALLE, DIAN, SENA, Hospital X, etc.) o un contexto operativo específico de un solo cargo (p. ej. "almacén", "instrumentación quirúrgica"). Usar siempre lenguaje neutral: **"tu entidad"**, **"la entidad"**, **"tu área"**, **"un funcionario de otra dependencia"**.
+- La entidad y el contexto específico del cargo SOLO van en: (a) la guía "Conoce tu Entidad" (`ENT-*`), y (b) el bloque `funcionales` de la receta `contenido/<CODIGO>.json` de CADA simulacro (ahí sí es correcto mencionar la entidad y las funciones reales del cargo, porque esas preguntas no se reutilizan).
+- **Antes de agregar o editar una pregunta en un banco**, correr `grep -i` sobre el archivo buscando nombres propios de entidades ya usadas (INDERVALLE, Hospital, etc.) para confirmar que sigue neutral.
+- **Después de crear cualquier simulacro nuevo**, verificar con `grep -ci "nombre_entidad_anterior" simulacro/SIM-XXX.html` que el HTML generado no arrastre menciones de una entidad ajena al cliente. Si aparece, el problema está en un banco, no en la receta — corregir el banco, reconstruir con `construir_simulacro.py` **todos** los simulacros que lo usan (no solo el nuevo), y resincronizar con `scripts/sync-biblioteca.sh`.
+- Incidente de referencia: los 4 bancos se escribieron originalmente copiando texto de SIM-001 (INDERVALLE, Técnico de Almacén) sin generalizar, lo que hizo que el simulacro SIM-HUH-001 (Hospital Universitario HMP, salud) mostrara "INDERVALLE" en 18 preguntas. Corregido en el PR `fix/bancos-simulacro-generico`.
+
 ### Botón "Avanzar"
 Cada sección termina con una barra dorada con botón "Avanzar a {siguiente sección} →". La última sección dice "✅ Finalizar Día N" en verde.
 
@@ -203,7 +211,8 @@ Cada sección termina con una barra dorada con botón "Avanzar a {siguiente secc
 ❌ Cambiar la paleta `:root`.
 ❌ Quitar el slogan del header o footer.
 ❌ Conceptos sin norma/artículo explícitos.
-❌ Casos abstractos sin nombres reales (siempre Indervalle, DIAN, SENA, etc.).
+❌ Casos abstractos sin nombres reales en las **guías** (siempre Indervalle, DIAN, SENA, etc. — o la entidad real del cliente en la guía "Conoce tu Entidad").
+❌ **Nombrar una entidad real o un contexto de cargo específico (ej. "almacén") dentro de `simulacro/bancos/*.json`** — esos bancos son reutilizables por TODOS los simulacros; deben decir siempre "tu entidad"/"tu área". La entidad y el cargo real solo van en el bloque `funcionales` de cada receta `contenido/<CODIGO>.json`.
 ❌ Hacer un único `fs_write` gigantesco para guías extensas (falla por tamaño).
 ❌ Modificar archivos sin leerlos primero.
 ❌ Asumir contexto de chats anteriores sin validar el estado real del repo.
