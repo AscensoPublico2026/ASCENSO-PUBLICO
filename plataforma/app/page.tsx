@@ -75,7 +75,7 @@ export default async function LandingPage() {
               <div className="mk-bar"><i></i></div>
               <div className="mk-prog"><span>Progreso</span><span>13 de 21 días</span></div>
             </div>
-            <div className="float-badge fb-2"><span className="fb-ic">⚡</span> Listo en 12 h</div>
+            <div className="float-badge fb-2"><span className="fb-ic">⚡</span> Listo en 24 h</div>
           </div>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default async function LandingPage() {
           <span>🔒 <b>Pago seguro</b> con Wompi</span>
           <span>🏦 PSE · Nequi · Tarjetas</span>
           <span>🛡️ Datos protegidos · <b>Ley 1581</b></span>
-          <span>⚡ Tu ruta lista en <b>12 horas</b></span>
+          <span>⚡ Tu ruta lista en <b>24 horas</b></span>
         </div>
       </div>
 
@@ -180,7 +180,7 @@ export default async function LandingPage() {
           <div className="stats">
             <div className="stat"><div className="n">21<span className="u"> días</span></div><p>de plan estructurado paso a paso</p></div>
             <div className="stat"><div className="n">100<span className="u">%</span></div><p>enfocado en tu cargo y tu nivel</p></div>
-            <div className="stat"><div className="n">12<span className="u"> h</span></div><p>y tu ruta queda lista en tu perfil</p></div>
+            <div className="stat"><div className="n">24<span className="u"> h</span></div><p>y tu ruta queda lista en tu perfil</p></div>
             <div className="stat"><div className="n">CNSC</div><p>simulacros de juicio situacional</p></div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export default async function LandingPage() {
           <div className="pasos">
             <div className="paso"><h3>Eliges tu convocatoria y cargas tus datos</h3><p>Seleccionas tu convocatoria y subes tu OPEC, el cargo, el nivel y el manual de funciones (te enseñamos cómo descargarlos).</p></div>
             <div className="paso"><h3>Pagas de forma segura</h3><p>Realizas un único pago con Wompi (PSE, Nequi o tarjeta de crédito/débito).</p></div>
-            <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 12 horas construimos tu plan personalizado de 21 días y lo dejamos en tu perfil.</p></div>
+            <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 24 horas construimos tu plan personalizado de 21 días y lo dejamos en tu perfil.</p></div>
             <div className="paso"><h3>Estudias y practicas</h3><p>Accedes a tus guías por día y cierras con tu simulacro final tipo CNSC.</p></div>
           </div>
 
@@ -269,7 +269,7 @@ export default async function LandingPage() {
           <h2>Resolvemos tus dudas</h2>
           <div className="faq" style={{ marginTop: 30 }}>
             <details open><summary>¿En qué se diferencia de otros cursos?</summary><div className="ans">No te preparamos para &quot;la convocatoria&quot; en general, sino para <strong>tu cargo específico</strong>. Analizamos tu OPEC y tu manual de funciones para enfocar el estudio en lo que tu prueba realmente evalúa.</div></details>
-            <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>12 horas</strong> desde tu compra tendrás tu ruta de estudio personalizada disponible en tu perfil.</div></details>
+            <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde tu compra tendrás tu ruta de estudio personalizada disponible en tu perfil.</div></details>
             <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Dentro de la plataforma te explicamos cómo descargarlos de la página de la CNSC.</div></details>
             <details><summary>¿Cómo son los simulacros?</summary><div className="ans">Son de <strong>juicio situacional</strong>, igual que la prueba real de la CNSC: un caso y la mejor actuación, con retroalimentación por cada opción.</div></details>
             <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Con <strong>1 a 1 hora y media al día</strong> es suficiente. Cada guía está diseñada para estudiarse en <strong>60 a 90 minutos</strong> y el plan está pensado para estudiar <strong>de lunes a viernes</strong>, descansando los fines de semana. Son <strong>20 días de preparación más tu simulacro final</strong>: avanzas con disciplina y sin saturarte.</div></details>

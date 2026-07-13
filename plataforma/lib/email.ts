@@ -103,7 +103,7 @@ export async function correoConfirmacionCliente(to: string, nombre: string) {
     titulo: `¡Bienvenido${primerNombre ? `, ${primerNombre}` : ""}! 🎉`,
     cuerpo: `
       <p style="margin:0 0 14px;">Recibimos tu pago correctamente. ¡Gracias por confiar en nosotros para preparar tu ascenso!</p>
-      <p style="margin:0 0 14px;">Tu curso personalizado está <strong style="color:#0A2A5E;">en preparación</strong>. Nuestro equipo está armando tu ruta de estudio enfocada en tu cargo, y estará disponible en tu perfil en un máximo de <strong>12 horas</strong>.</p>
+      <p style="margin:0 0 14px;">Tu curso personalizado está <strong style="color:#0A2A5E;">en preparación</strong>. Nuestro equipo está armando tu ruta de estudio enfocada en tu cargo, y estará disponible en tu perfil en un máximo de <strong>24 horas</strong>.</p>
       <p style="margin:0;">Mientras tanto, ya puedes ingresar a tu perfil y ver el avance:</p>
     `,
     cta: { texto: "Ir a mi perfil →", url },
@@ -114,7 +114,7 @@ export async function correoConfirmacionCliente(to: string, nombre: string) {
 /**
  * Avisa al CLIENTE que su curso ya quedó listo.
  *  - disponibleAhora=true  → ya puede entrar a estudiar.
- *  - disponibleAhora=false → estará disponible a partir de `cuando` (las 12h).
+ *  - disponibleAhora=false → estará disponible a partir de `cuando` (las 24h).
  */
 export async function correoCursoListo(to: string, nombre: string, disponibleAhora: boolean, cuando?: string) {
   const url = `${SITE}/perfil`;

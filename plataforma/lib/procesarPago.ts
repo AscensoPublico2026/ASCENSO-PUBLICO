@@ -6,7 +6,7 @@ import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
 const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
 // IDEMPOTENTE: dada una referencia con pago aprobado, asegura que existan el
-// usuario (Auth) y su curso (estado en_preparacion, deadline +12h). La pueden
+// usuario (Auth) y su curso (estado en_preparacion, deadline +24h). La pueden
 // llamar tanto el webhook como la página /activar sin duplicar nada.
 export async function procesarReferencia(referencia: string, transactionId?: string) {
   const supabase = createAdminClient();
@@ -73,7 +73,7 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     cursoId = cursoExistente.id;
   } else {
     const ahora = new Date();
-    const deadline = new Date(ahora.getTime() + 12 * 3600 * 1000);
+    const deadline = new Date(ahora.getTime() + 24 * 3600 * 1000);
     const vence = new Date(ahora.getTime() + VIGENCIA_DIAS * 86400 * 1000);
     const { data: curso } = await supabase
       .from("cursos")
