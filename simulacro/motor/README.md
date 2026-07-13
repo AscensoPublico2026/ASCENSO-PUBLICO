@@ -27,6 +27,15 @@ Genera un simulacro HTML completo **ensamblando bloques reutilizables (bancos) +
 
 > Los bancos de nivel **Asistencial** y **Profesional** están como semilla (vacíos) listos para llenarse cuando se cree un curso de ese nivel.
 
+### 🚫 Regla de oro: los bancos son ENTIDAD-AGNÓSTICOS
+Como estos bancos se mezclan en **todos** los simulacros de **todos** los clientes, su `ctx`/`q`/`ops`/`expl` **NUNCA** deben mencionar el nombre de una entidad real (INDERVALLE, Hospital X, DIAN, etc.) ni un contexto operativo exclusivo de un solo cargo (p. ej. "almacén", "quirófano"). Usa siempre lenguaje neutral: *"tu entidad"*, *"la entidad"*, *"tu área"*, *"un compañero de otra dependencia"*. Lo específico del cliente (entidad + funciones reales del cargo) va **únicamente** en el bloque `funcionales` de la receta de ESE simulacro, que no se reutiliza en otros.
+
+Si detectas que un banco quedó con el nombre de una entidad (por ejemplo, porque se copió de una receta existente sin generalizar el texto), corrígelo ahí mismo y reconstruye **todos** los simulacros que usan ese banco (no solo el que detectó el problema), porque el bug se propaga a cualquier curso que lo reutilice:
+```bash
+python3 motor/construir_todos.py
+```
+Luego resincroniza con `bash scripts/sync-biblioteca.sh` desde la raíz del repo.
+
 ## ✅ Cómo crear el simulacro de un curso nuevo
 
 1. Copia una receta existente:
