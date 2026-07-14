@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Generador de Casos CNSC · Modo Presentador · Ascenso Público</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Source+Serif+4:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A2A5E; --navy-2:#0e2c63; --navy-3:#061d3a;
+    --gold:#E8A33D; --gold-light:#F6C56B; --gold-hi:#FFC233;
+    --cream:#FBF9F4; --cream-bg:#F4EEE1;
+    --verde:#1A7A4A; --verde-bg:rgba(26,122,74,.14);
+    --rojo:#B00020; --rojo-bg:rgba(176,0,32,.13);
+    --ui-bg:#0d1118; --ui-panel:#141a26; --ui-border:#243049; --ui-text:#e7edf6; --ui-sub:#8194b0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--ui-bg); color:var(--ui-text); font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    display:flex; min-height:100vh; overflow:hidden;
+  }
+
+  /* ============ ESCENARIO (lo que se comparte en pantalla) ============ */
+  #escenario{
+    flex:1; position:relative; display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(ellipse at 30% 20%, var(--navy-2), var(--navy) 55%, var(--navy-3) 100%);
+    padding:40px; overflow:auto;
+  }
+  #stageDecor{position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+  #stageDecor span{position:absolute; border-radius:50%; opacity:.10;}
+  #stageDecor .d1{width:520px;height:520px; right:-160px; top:-160px; border:90px solid var(--gold);}
+  #stageDecor .d2{width:420px;height:420px; left:-140px; bottom:-140px; border:70px solid var(--gold-light); opacity:.08;}
+
+  .card{
+    position:relative; width:100%; max-width:1180px; background:var(--cream);
+    border-radius:32px; box-shadow:0 30px 80px rgba(0,0,0,.5); overflow:hidden;
+    border-top:10px solid var(--gold);
+  }
+  .card-inner{padding:52px 64px 44px;}
+
+  /* marca */
+  .brandrow{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;}
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand svg{width:46px;height:46px;flex-shrink:0;}
+  .brand-name{font-weight:800; font-size:1.28rem; color:var(--navy); font-family:'Plus Jakarta Sans';}
+  .brand-handle{font-weight:600; font-size:1.02rem; color:rgba(10,42,94,.55);}
+
+  .chiprow{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;}
+  .chip{
+    display:inline-flex; align-items:center; gap:6px; font-weight:800; font-size:.86rem;
+    letter-spacing:.03em; padding:9px 18px; border-radius:999px; text-transform:uppercase;
+  }
+  .chip-kicker{background:var(--navy); color:var(--cream);}
+  .chip-tag{background:rgba(232,163,61,.16); color:#B8600A; border:2px solid var(--gold);}
+
+  .caso-box{
+    background:rgba(10,42,94,.05); border-left:5px solid var(--navy);
+    border-radius:14px; padding:22px 26px; margin-bottom:22px;
+  }
+  .caso-label{font-size:.78rem; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; opacity:.65;}
+  .caso-txt{font-family:'Source Serif 4',serif; font-weight:600; font-size:1.32rem; line-height:1.5; color:var(--navy);}
+
+  .pregunta-txt{
+    font-family:'Source Serif 4',serif; font-weight:700; font-size:1.68rem; line-height:1.42;
+    color:var(--navy); margin-bottom:26px;
+  }
+
+  .opciones{display:flex; flex-direction:column; gap:16px;}
+  .opcion{
+    display:flex; align-items:flex-start; gap:18px; padding:20px 24px; border-radius:18px;
+    background:#fff; border:2px solid rgba(10,42,94,.10); transition:all .35s ease;
+  }
+  .badge{
+    flex-shrink:0; width:48px; height:48px; border-radius:50%; background:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.15rem; color:var(--navy);
+    transition:all .35s ease;
+  }
+  .op-body{flex:1; min-width:0;}
+  .op-txt{font-weight:700; font-size:1.18rem; color:var(--navy); line-height:1.4;}
+  .op-expl{
+    margin-top:10px; font-weight:600; font-size:.98rem; line-height:1.5; color:rgba(10,42,94,.75);
+    max-height:0; opacity:0; overflow:hidden; transition:all .4s ease;
+  }
+  .op-mark{flex-shrink:0; font-size:1.5rem; font-weight:900; opacity:0; transform:scale(.5); transition:all .35s ease; width:32px; text-align:center;}
+
+  /* estado revelado */
+  .opcion.correcta.revelada{background:var(--verde-bg); border-color:var(--verde);}
+  .opcion.correcta.revelada .badge{background:var(--verde); color:#fff;}
+  .opcion.correcta.revelada .op-mark{opacity:1; transform:scale(1); color:var(--verde);}
+  .opcion.correcta.revelada .op-expl{max-height:240px; opacity:1; margin-top:10px;}
+
+  .opcion.incorrecta.revelada{background:var(--rojo-bg); border-color:var(--rojo);}
+  .opcion.incorrecta.revelada .badge{background:var(--rojo); color:#fff;}
+  .opcion.incorrecta.revelada .op-mark{opacity:1; transform:scale(1); color:var(--rojo);}
+  .opcion.incorrecta.revelada .op-expl{max-height:240px; opacity:1; margin-top:10px;}
+
+  body.no-explicaciones .op-expl{display:none !important;}
+
+  .norma-row{
+    display:none; align-items:center; gap:10px; margin-top:22px; padding-top:18px;
+    border-top:2px dashed rgba(10,42,94,.15); font-weight:700; font-size:.95rem; color:var(--navy);
+  }
+  .norma-row.show{display:flex;}
+  .norma-row .ic{color:var(--verde); font-size:1.1rem;}
+
+  .footrow{
+    display:flex; align-items:center; justify-content:space-between; margin-top:26px; padding-top:18px;
+    border-top:1px solid rgba(10,42,94,.10);
+  }
+  .foot-cta{font-weight:700; font-size:.98rem; color:rgba(10,42,94,.6);}
+  .foot-pill{
+    background:var(--navy); color:var(--gold-light); font-weight:800; font-size:.82rem;
+    padding:8px 16px; border-radius:999px; letter-spacing:.02em;
+  }
+
+  /* estado "sin nada revelado" hint sutil, solo visual, se puede ocultar */
+  .hint-tap{
+    position:absolute; bottom:18px; right:26px; font-size:.74rem; color:rgba(10,42,94,.35); font-weight:700;
+  }
+
+  /* ============ PANEL EDITOR ============ */
+  #panel{
+    width:420px; max-width:92vw; background:var(--ui-panel); border-left:1px solid var(--ui-border);
+    display:flex; flex-direction:column; height:100vh; transition:margin-right .35s ease;
+  }
+  #panel.oculto{margin-right:-440px;}
+  #toggleBtn{
+    position:fixed; top:18px; z-index:50; right:18px; background:var(--gold-hi); color:var(--navy);
+    border:none; border-radius:12px; padding:11px 16px; font-weight:800; font-size:.86rem; cursor:pointer;
+    box-shadow:0 8px 22px rgba(0,0,0,.35); display:flex; align-items:center; gap:8px;
+  }
+  #toggleBtn:hover{filter:brightness(1.05);}
+
+  .panel-head{
+    padding:16px 20px; border-bottom:1px solid var(--ui-border); display:flex; align-items:center;
+    justify-content:space-between; flex-shrink:0;
+  }
+  .panel-head h1{font-size:.92rem; color:var(--gold-hi); font-weight:800;}
+  .panel-head .sub{font-size:.72rem; color:var(--ui-sub); margin-top:2px;}
+
+  .panel-scroll{flex:1; overflow-y:auto; padding:16px 20px 100px;}
+  .panel-scroll::-webkit-scrollbar{width:8px;}
+  .panel-scroll::-webkit-scrollbar-thumb{background:#2a3550; border-radius:6px;}
+
+  label{display:block; font-size:.76rem; color:#9fb0c9; margin:14px 0 5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;}
+  input[type=text], textarea, select{
+    width:100%; background:#1c2436; border:1px solid #2d3a52; border-radius:9px;
+    color:var(--ui-text); padding:10px 11px; font-family:inherit; font-size:13.5px;
+  }
+  textarea{resize:vertical; min-height:56px; line-height:1.4;}
+  input:focus, textarea:focus, select:focus{outline:2px solid var(--gold-hi); outline-offset:0;}
+
+  .grp{border-top:1px solid #243049; margin-top:16px; padding-top:8px;}
+  .grp-t{font-size:.7rem; color:#6f81a0; font-weight:800; letter-spacing:.06em; text-transform:uppercase;}
+
+  .opcion-editor{
+    background:rgba(255,255,255,.03); border:1px solid #2d3a52; border-radius:11px; padding:12px 14px; margin-top:12px;
+  }
+  .opcion-editor-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;}
+  .opcion-editor-head b{font-size:.82rem; color:var(--gold-hi);}
+  .radio-correcta{display:flex; align-items:center; gap:6px; font-size:.76rem; color:#cdd6e6; cursor:pointer;}
+  .radio-correcta input{width:auto; accent-color:var(--verde);}
+
+  .btnbar{display:flex; gap:10px; margin-top:18px;}
+  button.action{
+    cursor:pointer; border:none; border-radius:10px; font-weight:800; font-family:inherit;
+    font-size:13.5px; padding:11px; flex:1; transition:filter .15s;
+  }
+  button.action:hover{filter:brightness(1.1);}
+  .btn-gold{background:var(--gold-hi); color:var(--navy);}
+  .btn-verde{background:var(--verde); color:#fff;}
+  .btn-rojo{background:var(--rojo); color:#fff;}
+  .btn-ghost{background:transparent; border:1px solid #2d3a52; color:var(--ui-text);}
+  .btn-full{width:100%; margin-top:10px;}
+
+  .chk{display:flex; align-items:center; gap:8px; margin-top:12px; font-size:12.5px; color:#cdd6e6;}
+  .chk input{width:auto; accent-color:var(--gold-hi);}
+
+  .hint{font-size:11px; color:var(--ui-sub); margin-top:10px; line-height:1.55;}
+  kbd{background:#1c2436; border:1px solid #2d3a52; border-radius:5px; padding:1px 6px; font-size:10.5px; font-family:monospace; color:var(--gold-light);}
+
+  /* Banco de casos */
+  .banco-list{display:flex; flex-direction:column; gap:8px; margin-top:10px; max-height:200px; overflow-y:auto;}
+  .banco-item{
+    display:flex; align-items:center; gap:8px; background:#1c2436; border:1px solid #2d3a52;
+    border-radius:9px; padding:9px 11px; cursor:pointer; font-size:12.5px;
+  }
+  .banco-item:hover{border-color:var(--gold-hi);}
+  .banco-item.activo{border-color:var(--gold-hi); background:#232d44;}
+  .banco-item span{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .banco-item .del{color:var(--rojo); font-weight:800; padding:2px 6px; flex-shrink:0;}
+  .banco-empty{font-size:12px; color:var(--ui-sub); padding:10px 0;}
+
+  .toast{
+    position:fixed; bottom:24px; left:24px; background:var(--verde); color:#fff; font-weight:700;
+    font-size:13px; padding:11px 18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.4);
+    z-index:100; opacity:0; transform:translateY(10px); transition:all .3s ease; pointer-events:none;
+  }
+  .toast.show{opacity:1; transform:translateY(0);}
+
+  @media (max-width: 900px){
+    body{flex-direction:column;}
+    #escenario{padding:20px;}
+    .card-inner{padding:30px 26px 24px;}
+    .pregunta-txt{font-size:1.3rem;}
+    #panel{width:100%; height:50vh;}
+    #panel.oculto{margin-right:0; display:none;}
+  }
+</style>
+</head>
+<body>
+
+  <button id="toggleBtn" onclick="togglePanel()">✏️ <span id="toggleTxt">Editar caso</span></button>
+
+  <!-- ============ ESCENARIO ============ -->
+  <div id="escenario">
+    <div id="stageDecor"><span class="d1"></span><span class="d2"></span></div>
+
+    <div class="card" id="card">
+      <div class="card-inner">
+        <div class="brandrow">
+          <div class="brand">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="26" cy="74" r="3.6" fill="#16C2A3" opacity="0.7"/>
+              <circle cx="34" cy="70" r="4.4" fill="#16C2A3"/>
+              <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#E8A33D" stroke-width="9" stroke-linecap="round"/>
+              <path d="M61 32 L75 30 L73 45" fill="none" stroke="#E8A33D" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <div class="brand-name">Ascenso Público</div>
+            </div>
+          </div>
+          <div class="brand-handle" id="vHandle">@ascensopublico</div>
+        </div>
+
+        <div class="chiprow">
+          <span class="chip chip-kicker" id="vKicker">EXAMEN CNSC</span>
+          <span class="chip chip-tag" id="vChip" style="display:none"></span>
+        </div>
+
+        <div class="caso-box" id="casoBox" style="display:none">
+          <div class="caso-label">📋 El caso</div>
+          <div class="caso-txt" id="vCaso"></div>
+        </div>
+
+        <div class="pregunta-txt" id="vPregunta">¿Qué debe hacer el servidor público en esta situación?</div>
+
+        <div class="opciones" id="vOpciones"></div>
+
+        <div class="norma-row" id="normaRow">
+          <span class="ic">📚</span><span id="vNorma"></span>
+        </div>
+
+        <div class="footrow">
+          <div class="foot-cta" id="vCta">¿Cuál escogerías? Piénsalo antes de ver la respuesta.</div>
+          <div class="foot-pill">Prepárate por TU cargo</div>
+        </div>
+      </div>
+      <div class="hint-tap"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL EDITOR ============ -->
+  <div id="panel">
+    <div class="panel-head">
+      <div>
+        <h1>🎬 Generador de Casos CNSC</h1>
+        <div class="sub">Modo presentador · Ascenso Público</div>
+      </div>
+    </div>
+
+    <div class="panel-scroll">
+
+      <div class="grp" style="margin-top:0;border-top:none;padding-top:0">
+        <div class="grp-t">Encabezado</div>
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1"><label>Kicker</label><input type="text" id="kicker" value="EXAMEN CNSC"></div>
+          <div style="flex:1"><label>Chip (nivel/cargo)</label><input type="text" id="chip" placeholder="NIVEL TÉCNICO"></div>
+        </div>
+        <label>@usuario</label>
+        <input type="text" id="handle" value="@ascensopublico">
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">El caso (contexto largo, opcional)</div>
+        <textarea id="caso" placeholder="Ej: Eres el técnico de almacén de una entidad. Un proveedor entrega mercancía sin la orden de compra firmada, pero insiste en que es urgente y el jefe autorizó todo verbalmente..."></textarea>
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">La pregunta</div>
+        <textarea id="pregunta">¿Qué debe hacer el servidor público en esta situación?</textarea>
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">Las 4 opciones</div>
+        <div id="opcionesEditor"></div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">Fuente / norma (opcional)</div>
+        <input type="text" id="norma" placeholder="Ej: Decreto 815 de 2018 · Art. 5">
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">Pie del caso</div>
+        <input type="text" id="cta" value="¿Cuál escogerías? Piénsalo antes de ver la respuesta.">
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">Presentación</div>
+        <div class="chk"><input type="checkbox" id="mostrarExpl" checked><label for="mostrarExpl" style="margin:0">Mostrar explicación al revelar cada opción</label></div>
+        <button class="action btn-gold btn-full" onclick="revelarTodo()">👁️ Revelar TODO (correcta + incorrectas)</button>
+        <button class="action btn-ghost btn-full" onclick="ocultarTodo()">🙈 Ocultar todo (reiniciar vista)</button>
+        <div class="hint">
+          Atajos: <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> revela esa opción ·
+          <kbd>Espacio</kbd> revela todo · <kbd>R</kbd> reinicia · <kbd>Tab</kbd> muestra/oculta este panel.
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-t">📁 Banco de casos (se guarda en este navegador)</div>
+        <div class="btnbar">
+          <button class="action btn-verde" onclick="guardarCaso()">💾 Guardar caso</button>
+          <button class="action btn-gold" onclick="nuevoCaso()">➕ Nuevo</button>
+        </div>
+        <div class="banco-list" id="bancoList"></div>
+        <div class="btnbar">
+          <button class="action btn-ghost" onclick="exportarJSON()">⬇ Exportar JSON</button>
+          <button class="action btn-ghost" onclick="document.getElementById('importFile').click()">⬆ Importar</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importarJSON(event)">
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   GENERADOR DE CASOS CNSC · MODO PRESENTADOR · Ascenso Público
+   - Panel editor a la derecha (ocultable) para armar el caso.
+   - Escenario a la izquierda: lo que compartes en pantalla.
+   - Al hacer clic / atajo de teclado, se revela cada opción con
+     su explicación (verde+check si es la correcta marcada en el
+     editor, rojo+x si no lo es).
+   ============================================================ */
+
+const LS_KEY = 'ap_banco_casos_cnsc';
+let casoActualId = null;
+
+const $ = (id) => document.getElementById(id);
+
+// ---------- estructura de datos por defecto ----------
+function casoVacio(){
+  return {
+    id: null,
+    kicker: 'EXAMEN CNSC',
+    chip: '',
+    handle: '@ascensopublico',
+    caso: '',
+    pregunta: '¿Qué debe hacer el servidor público en esta situación?',
+    opciones: [
+      { texto: 'Opción A', expl: '' },
+      { texto: 'Opción B', expl: '' },
+      { texto: 'Opción C', expl: '' },
+      { texto: 'Opción D', expl: '' },
+    ],
+    correcta: 0,
+    norma: '',
+    cta: '¿Cuál escogerías? Piénsalo antes de ver la respuesta.',
+  };
+}
+
+// caso de ejemplo real, precargado la primera vez
+const CASO_EJEMPLO = {
+  id: null,
+  kicker: 'EXAMEN CNSC',
+  chip: 'NIVEL TÉCNICO · ALMACÉN',
+  handle: '@ascensopublico',
+  caso: 'Eres el técnico operativo de almacén de una entidad pública. Un proveedor llega con una entrega de elementos de aseo, pero la orden de compra aún no tiene la firma del ordenador del gasto. El proveedor insiste en que el jefe de la dependencia ya autorizó todo "de palabra" por teléfono y necesita que le recibas la mercancía hoy mismo porque su camión debe seguir a otro municipio.',
+  pregunta: '¿Qué debe hacer el técnico de almacén en esta situación?',
+  opciones: [
+    { texto: 'Recibir la mercancía de inmediato, ya que el jefe autorizó verbalmente y así no se pierde la entrega.', expl: 'Recibir sin el soporte documental completo expone al funcionario a una responsabilidad fiscal y disciplinaria. La autorización verbal NO reemplaza el trámite formal.' },
+    { texto: 'Informar al proveedor que no puede recibir sin la orden de compra firmada, y gestionar con el ordenador del gasto la firma o una autorización escrita antes de proceder.', expl: 'Es la respuesta correcta: protege el proceso, respeta la normatividad de almacenes e inventarios y resuelve el caso sin detener indefinidamente la operación.' },
+    { texto: 'Rechazar la entrega definitivamente y decirle al proveedor que vuelva otro día sin dar ninguna alternativa.', expl: 'Es una respuesta rígida que no busca una solución dentro del marco normativo; ignora la posibilidad de regularizar el trámite rápidamente.' },
+    { texto: 'Recibir la mercancía pero no registrarla en el sistema hasta que llegue la firma, para "ganar tiempo".', expl: 'Genera un descuadre entre el inventario físico y el registrado, lo cual también es una falta grave en el manejo de almacén.' },
+  ],
+  correcta: 1,
+  norma: 'Manual de procedimientos de almacén e inventarios · Ley 42 de 1993 (responsabilidad fiscal)',
+  cta: '¿Cuál escogerías? Piénsalo antes de ver la respuesta.',
+};
+
+let caso = null;
+let revelado = [false, false, false, false]; // por opción
+
+// ---------- render del ESCENARIO ----------
+function renderEscenario(){
+  $('vHandle').textContent = caso.handle || '@ascensopublico';
+  $('vKicker').textContent = (caso.kicker || 'EXAMEN CNSC').toUpperCase();
+
+  const chipEl = $('vChip');
+  if (caso.chip && caso.chip.trim()){ chipEl.textContent = caso.chip.toUpperCase(); chipEl.style.display='inline-flex'; }
+  else { chipEl.style.display='none'; }
+
+  const casoBox = $('casoBox');
+  if (caso.caso && caso.caso.trim()){ $('vCaso').textContent = caso.caso; casoBox.style.display='block'; }
+  else { casoBox.style.display='none'; }
+
+  $('vPregunta').textContent = caso.pregunta || '';
+  $('vCta').textContent = caso.cta || '';
+
+  const opsWrap = $('vOpciones');
+  opsWrap.innerHTML = '';
+  const letras = ['A','B','C','D'];
+  caso.opciones.forEach((op, i) => {
+    const esCorrecta = i === Number(caso.correcta);
+    const div = document.createElement('div');
+    div.className = 'opcion' + (esCorrecta ? ' correcta' : ' incorrecta') + (revelado[i] ? ' revelada' : '');
+    div.dataset.idx = i;
+    div.onclick = () => toggleRevelar(i);
+    div.innerHTML = `
+      <div class="badge">${letras[i]}</div>
+      <div class="op-body">
+        <div class="op-txt">${escapeHtml(op.texto || '')}</div>
+        <div class="op-expl">${escapeHtml(op.expl || '')}</div>
+      </div>
+      <div class="op-mark">${esCorrecta ? '✓' : '✗'}</div>
+    `;
+    opsWrap.appendChild(div);
+  });
+
+  const normaRow = $('normaRow');
+  if (caso.norma && caso.norma.trim() && revelado.some(Boolean)){
+    $('vNorma').textContent = caso.norma;
+    normaRow.classList.add('show');
+  } else {
+    normaRow.classList.remove('show');
+  }
+}
+
+function escapeHtml(s){
+  const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+
+function toggleRevelar(i){
+  revelado[i] = !revelado[i];
+  renderEscenario();
+}
+function revelarTodo(){
+  revelado = revelado.map(() => true);
+  renderEscenario();
+}
+function ocultarTodo(){
+  revelado = revelado.map(() => false);
+  renderEscenario();
+}
+
+// ---------- render del EDITOR (opciones dinámicas) ----------
+function renderEditorOpciones(){
+  const wrap = $('opcionesEditor');
+  wrap.innerHTML = '';
+  const letras = ['A','B','C','D'];
+  caso.opciones.forEach((op, i) => {
+    const div = document.createElement('div');
+    div.className = 'opcion-editor';
+    div.innerHTML = `
+      <div class="opcion-editor-head">
+        <b>Opción ${letras[i]}</b>
+        <label class="radio-correcta">
+          <input type="radio" name="correcta" value="${i}" ${Number(caso.correcta)===i?'checked':''} onchange="setCorrecta(${i})">
+          Es la correcta
+        </label>
+      </div>
+      <label style="margin-top:6px">Texto de la opción</label>
+      <textarea data-op="${i}" data-field="texto" oninput="onOpcionInput(${i},'texto',this.value)">${op.texto || ''}</textarea>
+      <label>Explicación (por qué es correcta / incorrecta)</label>
+      <textarea data-op="${i}" data-field="expl" oninput="onOpcionInput(${i},'expl',this.value)">${op.expl || ''}</textarea>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+function setCorrecta(i){ caso.correcta = i; renderEscenario(); renderEditorOpciones(); }
+function onOpcionInput(i, field, val){ caso.opciones[i][field] = val; renderEscenario(); }
+
+// ---------- sincronizar campos simples del editor ----------
+function bindCamposSimples(){
+  const map = [
+    ['kicker','kicker'], ['chip','chip'], ['handle','handle'],
+    ['caso','caso'], ['pregunta','pregunta'], ['norma','norma'], ['cta','cta'],
+  ];
+  map.forEach(([id, field]) => {
+    $(id).addEventListener('input', () => { caso[field] = $(id).value; renderEscenario(); });
+  });
+  $('mostrarExpl').addEventListener('change', () => {
+    document.body.classList.toggle('no-explicaciones', !$('mostrarExpl').checked);
+  });
+}
+
+function cargarCasoEnEditor(){
+  $('kicker').value = caso.kicker || '';
+  $('chip').value = caso.chip || '';
+  $('handle').value = caso.handle || '@ascensopublico';
+  $('caso').value = caso.caso || '';
+  $('pregunta').value = caso.pregunta || '';
+  $('norma').value = caso.norma || '';
+  $('cta').value = caso.cta || '';
+  renderEditorOpciones();
+  renderEscenario();
+}
+
+// ---------- panel toggle ----------
+function togglePanel(){
+  const panel = $('panel');
+  panel.classList.toggle('oculto');
+  $('toggleTxt').textContent = panel.classList.contains('oculto') ? 'Editar caso' : 'Ocultar panel';
+}
+
+// ---------- Banco de casos (localStorage) ----------
+function leerBanco(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e){ return []; }
+}
+function guardarBanco(banco){
+  localStorage.setItem(LS_KEY, JSON.stringify(banco));
+}
+function guardarCaso(){
+  const banco = leerBanco();
+  if (!caso.id) caso.id = 'c_' + Date.now();
+  const idx = banco.findIndex(c => c.id === caso.id);
+  const copia = JSON.parse(JSON.stringify(caso));
+  if (idx >= 0) banco[idx] = copia; else banco.push(copia);
+  guardarBanco(banco);
+  casoActualId = caso.id;
+  renderBancoList();
+  mostrarToast('✅ Caso guardado');
+}
+function nuevoCaso(){
+  caso = casoVacio();
+  revelado = [false,false,false,false];
+  casoActualId = null;
+  cargarCasoEnEditor();
+  renderBancoList();
+  mostrarToast('📄 Caso nuevo listo para editar');
+}
+function cargarCasoDeBanco(id){
+  const banco = leerBanco();
+  const encontrado = banco.find(c => c.id === id);
+  if (!encontrado) return;
+  caso = JSON.parse(JSON.stringify(encontrado));
+  revelado = [false,false,false,false];
+  casoActualId = id;
+  cargarCasoEnEditor();
+  renderBancoList();
+  mostrarToast('📂 Caso cargado');
+}
+function eliminarCaso(id, ev){
+  ev.stopPropagation();
+  if (!confirm('¿Eliminar este caso del banco?')) return;
+  let banco = leerBanco();
+  banco = banco.filter(c => c.id !== id);
+  guardarBanco(banco);
+  if (casoActualId === id){ nuevoCaso(); }
+  renderBancoList();
+}
+function renderBancoList(){
+  const banco = leerBanco();
+  const wrap = $('bancoList');
+  wrap.innerHTML = '';
+  if (banco.length === 0){
+    wrap.innerHTML = '<div class="banco-empty">Aún no has guardado casos. Edita uno y pulsa "Guardar caso".</div>';
+    return;
+  }
+  banco.slice().reverse().forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'banco-item' + (c.id === casoActualId ? ' activo' : '');
+    const titulo = (c.pregunta || c.caso || 'Caso sin título').slice(0, 60);
+    div.innerHTML = `<span>${escapeHtml(titulo)}</span><span class="del" onclick="eliminarCaso('${c.id}', event)">🗑</span>`;
+    div.onclick = (e) => { if (e.target.classList.contains('del')) return; cargarCasoDeBanco(c.id); };
+    wrap.appendChild(div);
+  });
+}
+
+function exportarJSON(){
+  const banco = leerBanco();
+  const blob = new Blob([JSON.stringify(banco, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'banco-casos-cnsc-ascenso-publico.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importarJSON(ev){
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const datos = JSON.parse(reader.result);
+      if (!Array.isArray(datos)) throw new Error('Formato inválido');
+      const bancoActual = leerBanco();
+      // fusiona evitando duplicar por id
+      const ids = new Set(bancoActual.map(c => c.id));
+      datos.forEach(c => { if (!ids.has(c.id)) bancoActual.push(c); });
+      guardarBanco(bancoActual);
+      renderBancoList();
+      mostrarToast('✅ Casos importados');
+    } catch(e){
+      alert('El archivo no tiene un formato válido.');
+    }
+  };
+  reader.readAsText(file);
+  ev.target.value = '';
+}
+
+function mostrarToast(msg){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ---------- atajos de teclado ----------
+document.addEventListener('keydown', (e) => {
+  // no interceptar si el usuario está escribiendo en un input/textarea
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+    if (e.key === 'Tab') { /* deja el tab normal dentro de un input */ }
+    return;
+  }
+  if (e.key === 'Tab'){ e.preventDefault(); togglePanel(); return; }
+  if (e.key === ' '){ e.preventDefault(); revelarTodo(); return; }
+  if (e.key.toLowerCase() === 'r'){ ocultarTodo(); return; }
+  if (['1','2','3','4'].includes(e.key)){ toggleRevelar(Number(e.key) - 1); return; }
+});
+
+// ---------- boot ----------
+async function boot(){
+  try {
+    await document.fonts.load("700 60px 'Source Serif 4'");
+    await document.fonts.load("800 44px 'Plus Jakarta Sans'");
+    await document.fonts.ready;
+  } catch(e) {}
+
+  const banco = leerBanco();
+  if (banco.length === 0){
+    // primera vez: precarga el caso de ejemplo en el banco Y en pantalla
+    const ejemploConId = { ...CASO_EJEMPLO, id: 'c_ejemplo' };
+    guardarBanco([ejemploConId]);
+    caso = JSON.parse(JSON.stringify(ejemploConId));
+    casoActualId = 'c_ejemplo';
+  } else {
+    caso = JSON.parse(JSON.stringify(banco[banco.length - 1]));
+    casoActualId = caso.id;
+  }
+
+  bindCamposSimples();
+  cargarCasoEnEditor();
+  renderBancoList();
+}
+boot();
+</script>
+</body>
+</html>

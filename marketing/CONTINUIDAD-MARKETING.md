@@ -37,7 +37,19 @@
 - **Código de color por contenido:** 🟦 Navy = informativo/tips/valor/venta · ⬜ Crema = preguntas tipo CNSC.
 
 ## 3. Herramientas creadas (en `marketing/`)
-- **`plantillas/generador-flyer-video.html` ⭐ NUEVO (formato principal)** — flyers para video
+- **`plantillas/generador-casos-cnsc.html` ⭐⭐ NUEVO — Modo presentador para videos explicando casos.**
+  No es para exportar una imagen: es para **compartir la pantalla en vivo** mientras Julio graba
+  explicando una pregunta tipo CNSC. Tiene un panel editor (a la derecha, se oculta con el botón
+  "✏️ Editar caso" o la tecla `Tab`) donde se escribe: el caso/contexto, la pregunta, las 4 opciones
+  con su explicación cada una, y cuál es la correcta. Al ocultar el panel queda solo la tarjeta con
+  la identidad de marca (navy/crema/oro + logo), lista para grabar. Durante la grabación: clic (o
+  teclas `1`-`4`) revela cada opción — la correcta en **verde con ✓** y su explicación, las
+  incorrectas en **rojo con ✗** y su explicación; tecla `Espacio` revela todas de una, `R` reinicia
+  la vista para repetir la toma. Incluye **banco de casos** (guardar/cargar/eliminar, todo en el
+  navegador vía `localStorage`) + exportar/importar el banco como JSON para respaldo o pasarlo a
+  otro computador. Trae un caso de ejemplo real (almacén/INDERVALLE) precargado la primera vez.
+  Probado end-to-end (19 pruebas automáticas: edición en vivo, revelado, atajos, panel, banco).
+- **`plantillas/generador-flyer-video.html` ⭐ (formato principal para publicar)** — flyers para video
   “rostro arriba + flyer abajo”. 5 modos: Pregunta CNSC · El porqué · Dato/Convocatoria · Tips/Errores
   · Simulacro GRATIS. Resalta con `[corchetes]`, chip de nivel/cargo, guías de encuadre.
 - `plantillas/generador-tarjetas.html` — tarjetas/portadas a pantalla completa (portada del perfil, hooks).
