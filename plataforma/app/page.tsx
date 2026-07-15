@@ -6,6 +6,8 @@ import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
 import ContadorCupos from "./components/ContadorCupos";
 import ScrollReveal from "./components/ScrollReveal";
 import { waUrl, WA_MENSAJES, CORREO_CONTACTO, REDES } from "@/lib/contacto";
+import { formatOpecDate } from "@/lib/opec";
+import opecMeta from "@/data/opec-meta.json";
 import "./landing.css";
 
 export const dynamic = "force-dynamic";
@@ -13,6 +15,8 @@ export const dynamic = "force-dynamic";
 const WA_URL = waUrl(WA_MENSAJES.comprar);
 const WA_ASESORIA = waUrl(WA_MENSAJES.asesoria);
 const CUPOS_LANZAMIENTO = 200; // Total de cupos del precio de lanzamiento
+const formatNumber = (value: number) => value.toLocaleString("es-CO");
+const opecUpdatedDate = formatOpecDate(opecMeta.fechaActualizacion);
 
 export default async function LandingPage() {
   let convocatorias: any[] = [];
@@ -89,6 +93,43 @@ export default async function LandingPage() {
           <span>⚡ Tu ruta lista en <b>24 horas</b></span>
         </div>
       </div>
+
+      {/* ===== BUSCADOR OPEC ESE 2026 ===== */}
+      <section className="opec-home-promo" id="buscador-opec">
+        <div className="wrap opec-home-grid">
+          <div className="opec-home-copy">
+            <span className="opec-home-tag"><i /> Nueva herramienta gratuita</span>
+            <h2>Encuentra la vacante que <span>sí encaja contigo</span></h2>
+            <p>Explora todas las OPEC de la convocatoria Empresas Sociales del Estado 2026. Filtra por profesión, ciudad, salario y experiencia sin revisar cientos de páginas en SIMO.</p>
+            <div className="opec-home-points">
+              <span><b>{formatNumber(opecMeta.totalOpec)}</b> OPEC consolidadas</span>
+              <span><b>{formatNumber(opecMeta.totalVacantes)}</b> vacantes</span>
+              <span><b>{formatNumber(opecMeta.sinExperiencia)}</b> OPEC abiertas sin experiencia</span>
+            </div>
+            <Link href="/buscador-opec" className="btn btn-oro opec-home-cta">Buscar mi OPEC gratis <span aria-hidden="true">→</span></Link>
+            <small>Sin registro · Información actualizada al {opecUpdatedDate}</small>
+          </div>
+          <div className="opec-home-demo" aria-hidden="true">
+            <div className="opec-home-window">
+              <div className="opec-home-window-top"><i /><i /><i /><span>Buscador OPEC ESE 2026</span></div>
+              <div className="opec-home-search"><span>⌕</span> Auxiliar sin experiencia</div>
+              <div className="opec-home-filter-row"><span>Todos los departamentos</span><span>Asistencial</span><span>Sin experiencia ✓</span></div>
+              <div className="opec-home-result">
+                <div><span>Asistencial</span><b>OPEC 193509</b></div>
+                <h3>Auxiliar área salud</h3>
+                <p>E.S.E. Hospital Universitario de La Samaritana · Bogotá D.C.</p>
+                <div><strong>$1.643.220</strong><em>✓ Sin experiencia</em></div>
+              </div>
+              <div className="opec-home-result second">
+                <div><span>Asistencial</span><b>OPEC 206227</b></div>
+                <h3>Auxiliar administrativo</h3>
+                <p>E.S.E. Hospital San Rafael · Facatativá</p>
+              </div>
+            </div>
+            <div className="opec-home-float"><span>✓</span><b>Tu OPEC ideal</b><small>Lista para buscar en SIMO</small></div>
+          </div>
+        </div>
+      </section>
 
       {/* ===== SIMULACRO GRATIS (lead magnet) ===== */}
       <section className="sim-promo" id="simulacro">
