@@ -106,6 +106,13 @@ function formatExperience(months: number | null): string {
   return `${months} meses de experiencia`;
 }
 
+function formatAdditionalRequirements(job: OpecSummary): string {
+  if (!job.requisitosAdicionalesResumen.length) return "Sin requisito adicional registrado";
+  const visible = job.requisitosAdicionalesResumen.slice(0, 2).join(" + ");
+  const remaining = job.requisitosAdicionalesResumen.length - 2;
+  return remaining > 0 ? `${visible} +${remaining}` : visible;
+}
+
 function SearchIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -147,13 +154,17 @@ interface FiltersProps {
   department: string;
   municipality: string;
   level: string;
+  education: string;
   experience: string;
+  additionalRequirement: string;
   minimumSalary: string;
   disability: boolean;
   onDepartment: (value: string) => void;
   onMunicipality: (value: string) => void;
   onLevel: (value: string) => void;
+  onEducation: (value: string) => void;
   onExperience: (value: string) => void;
+  onAdditionalRequirement: (value: string) => void;
   onMinimumSalary: (value: string) => void;
   onDisability: (value: boolean) => void;
   onReset: () => void;
@@ -165,13 +176,17 @@ function Filters({
   department,
   municipality,
   level,
+  education,
   experience,
+  additionalRequirement,
   minimumSalary,
   disability,
   onDepartment,
   onMunicipality,
   onLevel,
+  onEducation,
   onExperience,
+  onAdditionalRequirement,
   onMinimumSalary,
   onDisability,
   onReset,
@@ -212,6 +227,24 @@ function Filters({
         </select>
       </label>
 
+      <label className="opec-field opec-field-highlight">
+        <span>Formación requerida</span>
+        <select value={education} onChange={(event) => onEducation(event.target.value)}>
+          <option value="">Cualquier nivel de estudios</option>
+          <option value="primaria-laboral">Primaria + formación laboral</option>
+          <option value="secundaria-aprobada">4 o 5 años de bachillerato aprobados</option>
+          <option value="bachiller-solo">Solo título de bachiller</option>
+          <option value="bachiller-curso">Bachiller + curso o certificación</option>
+          <option value="tecnico-laboral">Técnico laboral o auxiliar</option>
+          <option value="tecnico-tecnologo">Técnico profesional o tecnólogo</option>
+          <option value="universitario-sin-titulo">Estudios universitarios sin título</option>
+          <option value="profesional">Título profesional universitario</option>
+          <option value="posgrado">Título profesional + posgrado</option>
+          <option value="curso-especifico">Curso o certificación específica</option>
+        </select>
+        <small>Clasificación orientativa. Revisa siempre el requisito completo.</small>
+      </label>
+
       <label className="opec-field">
         <span>Experiencia requerida</span>
         <select value={experience} onChange={(event) => onExperience(event.target.value)}>
@@ -222,6 +255,24 @@ function Filters({
           <option value="24">Hasta 24 meses</option>
           <option value="36">Hasta 36 meses</option>
           <option value="37+">Más de 36 meses</option>
+        </select>
+      </label>
+
+      <label className="opec-field">
+        <span>Requisito adicional</span>
+        <select value={additionalRequirement} onChange={(event) => onAdditionalRequirement(event.target.value)}>
+          <option value="">Cualquier requisito adicional</option>
+          <option value="none">Sin requisito adicional registrado</option>
+          <option value="rethus">Requiere ReTHUS</option>
+          <option value="tarjeta-profesional">Tarjeta o matrícula profesional</option>
+          <option value="licencia-conduccion">Licencia de conducción</option>
+          <option value="licencia-sst">Licencia en seguridad y salud</option>
+          <option value="registro-archivistas">Registro profesional de archivistas</option>
+          <option value="soporte-vital">Certificado de soporte vital básico</option>
+          <option value="radioproteccion">Carné de radioprotección</option>
+          <option value="antecedentes-contador">Antecedentes de contador</option>
+          <option value="cedula">Cédula de ciudadanía</option>
+          <option value="otro">Otro requisito adicional</option>
         </select>
       </label>
 
@@ -278,10 +329,37 @@ function JobCard({ job, onOpen, onCopy, copied }: {
       <h3>{job.denominacion}</h3>
       <p className="opec-entity">{job.entidad}</p>
 
+      <div className="opec-requirement-snapshot">
+        <span className="opec-snapshot-title">Requisitos a simple vista</span>
+        <div>
+          <span className="opec-snapshot-icon" aria-hidden="true">🎓</span>
+          <p>
+            <small>Estudios</small>
+            <strong>{job.estudioResumen}</strong>
+            <span className="opec-study-excerpt">{job.estudioDetalleCorto}</span>
+          </p>
+        </div>
+        <div>
+          <span className="opec-snapshot-icon" aria-hidden="true">💼</span>
+          <p><small>Experiencia</small><strong>{formatExperience(job.experienciaMeses)}</strong></p>
+        </div>
+        <div className={job.requisitosAdicionales.length ? "has-extra" : ""}>
+          <span className="opec-snapshot-icon" aria-hidden="true">📋</span>
+          <p>
+            <small>Otros requisitos</small>
+            <strong
+              title={job.requisitosAdicionalesResumen.join(", ") || undefined}
+              aria-label={job.requisitosAdicionalesResumen.join(", ") || "Sin requisito adicional registrado"}
+            >
+              {formatAdditionalRequirements(job)}
+            </strong>
+          </p>
+        </div>
+      </div>
+
       <div className="opec-card-data">
         <div><span className="opec-data-icon" aria-hidden="true">⌖</span><span><small>Ubicación</small>{job.municipio}, {job.departamento}</span></div>
         <div><span className="opec-data-icon" aria-hidden="true">$</span><span><small>Asignación salarial</small>{currency.format(job.salario)}</span></div>
-        <div><span className="opec-data-icon" aria-hidden="true">◷</span><span><small>Experiencia mínima</small>{formatExperience(job.experienciaMeses)}</span></div>
         <div><span className="opec-data-icon" aria-hidden="true">◎</span><span><small>Vacantes</small>{job.vacantes} {job.vacantes === 1 ? "vacante" : "vacantes"}</span></div>
       </div>
 
@@ -399,7 +477,9 @@ export default function BuscadorOpec() {
   const [department, setDepartment] = useState("");
   const [municipality, setMunicipality] = useState("");
   const [level, setLevel] = useState("");
+  const [education, setEducation] = useState("");
   const [experience, setExperience] = useState("");
+  const [additionalRequirement, setAdditionalRequirement] = useState("");
   const [minimumSalary, setMinimumSalary] = useState("");
   const [disability, setDisability] = useState(false);
   const [sort, setSort] = useState("relevance");
@@ -451,7 +531,7 @@ export default function BuscadorOpec() {
 
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [query, modality, department, municipality, level, experience, minimumSalary, disability, sort]);
+  }, [query, modality, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability, sort]);
 
   const jobs = payload?.empleos ?? [];
   const departments = useMemo(
@@ -475,6 +555,13 @@ export default function BuscadorOpec() {
       if (department && job.departamento !== department) return false;
       if (municipality && job.municipio !== municipality) return false;
       if (level && job.nivel !== level) return false;
+      if (education && job.nivelEstudio !== education) return false;
+      if (additionalRequirement === "none" && job.requisitosAdicionales.length) return false;
+      if (
+        additionalRequirement
+        && additionalRequirement !== "none"
+        && !job.requisitosAdicionales.some((requirement) => requirement === additionalRequirement)
+      ) return false;
       if (salary && job.salario < salary) return false;
       if (disability && !job.discapacidad) return false;
       if (experience === "0" && job.experienciaMeses !== 0) return false;
@@ -509,15 +596,26 @@ export default function BuscadorOpec() {
       }
       return b.vacantes - a.vacantes || b.salario - a.salario;
     });
-  }, [jobs, query, modality, department, municipality, level, experience, minimumSalary, disability, sort]);
+  }, [jobs, query, modality, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability, sort]);
 
-  const activeFilters = [department, municipality, level, experience, minimumSalary, disability ? "disability" : ""].filter(Boolean).length;
+  const activeFilters = [
+    department,
+    municipality,
+    level,
+    education,
+    experience,
+    additionalRequirement,
+    minimumSalary,
+    disability ? "disability" : "",
+  ].filter(Boolean).length;
 
   function resetFilters() {
     setDepartment("");
     setMunicipality("");
     setLevel("");
+    setEducation("");
     setExperience("");
+    setAdditionalRequirement("");
     setMinimumSalary("");
     setDisability(false);
   }
@@ -613,6 +711,14 @@ export default function BuscadorOpec() {
           >
             <span aria-hidden="true">✓</span> Sin experiencia
           </button>
+          <button
+            type="button"
+            aria-pressed={education === "bachiller-solo"}
+            className={`opec-quick-study${education === "bachiller-solo" ? " active" : ""}`}
+            onClick={() => setEducation(education === "bachiller-solo" ? "" : "bachiller-solo")}
+          >
+            <span aria-hidden="true">🎓</span> Solo bachiller
+          </button>
         </div>
       </div>
 
@@ -640,13 +746,17 @@ export default function BuscadorOpec() {
             department={department}
             municipality={municipality}
             level={level}
+            education={education}
             experience={experience}
+            additionalRequirement={additionalRequirement}
             minimumSalary={minimumSalary}
             disability={disability}
             onDepartment={(value) => { setDepartment(value); setMunicipality(""); }}
             onMunicipality={setMunicipality}
             onLevel={setLevel}
+            onEducation={setEducation}
             onExperience={setExperience}
+            onAdditionalRequirement={setAdditionalRequirement}
             onMinimumSalary={setMinimumSalary}
             onDisability={setDisability}
             onReset={resetFilters}
