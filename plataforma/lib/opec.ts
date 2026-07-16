@@ -1,4 +1,27 @@
 export type OpecModalidad = "Abierto" | "Ascenso";
+export type OpecNivelEstudio =
+  | "primaria-laboral"
+  | "secundaria-aprobada"
+  | "bachiller-solo"
+  | "bachiller-curso"
+  | "tecnico-laboral"
+  | "tecnico-tecnologo"
+  | "universitario-sin-titulo"
+  | "profesional"
+  | "posgrado"
+  | "curso-especifico";
+
+export type OpecRequisitoAdicional =
+  | "rethus"
+  | "tarjeta-profesional"
+  | "licencia-conduccion"
+  | "licencia-sst"
+  | "registro-archivistas"
+  | "soporte-vital"
+  | "radioproteccion"
+  | "antecedentes-contador"
+  | "cedula"
+  | "otro";
 
 export interface OpecMeta {
   convocatoria: string;
@@ -31,6 +54,11 @@ export interface OpecSummary {
   discapacidad: boolean;
   sinExperiencia: boolean;
   experienciaMeses: number | null;
+  nivelEstudio: OpecNivelEstudio;
+  estudioResumen: string;
+  estudioDetalleCorto: string;
+  requisitosAdicionales: OpecRequisitoAdicional[];
+  requisitosAdicionalesResumen: string[];
   busqueda: string;
 }
 

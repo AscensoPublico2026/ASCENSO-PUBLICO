@@ -41,6 +41,19 @@ PROCESS_LABELS = {
     "CONCURSO_CERRADO_ASCENSOS_DISCAPACIDAD": "Ascenso",
 }
 
+STUDY_LABELS = {
+    "primaria-laboral": "Primaria + formación laboral",
+    "secundaria-aprobada": "4 o 5 años de bachillerato aprobados",
+    "bachiller-solo": "Solo título de bachiller",
+    "bachiller-curso": "Bachiller + curso o certificación",
+    "tecnico-laboral": "Técnico laboral o auxiliar",
+    "tecnico-tecnologo": "Técnico profesional o tecnólogo",
+    "universitario-sin-titulo": "Estudios universitarios sin título",
+    "profesional": "Título profesional universitario",
+    "posgrado": "Título profesional + posgrado",
+    "curso-especifico": "Curso o certificación específica",
+}
+
 
 def texto(value: Any) -> str:
     if value is None:
@@ -65,6 +78,128 @@ def numero_entero(value: Any) -> int:
     if value is None or value == "":
         return 0
     return int(float(value))
+
+
+def clasificar_estudio(value: Any) -> tuple[str, str]:
+    """Devuelve una categoría educativa exhaustiva y una etiqueta comprensible.
+
+    La categoría describe la formación mínima explícita del requisito, pero no
+    reemplaza la lectura del texto oficial (que puede incluir disciplinas o cursos).
+    """
+    requirement = normalizar_busqueda(value).upper()
+    has_primary = "TITULO DE PRIMARIA" in requirement
+    has_bachelor = "BACHILLERATO" in requirement or bool(
+        re.search(r"\bBACHILLER\b", requirement)
+    )
+    has_job_training = (
+        "EDUCACION PARA EL TRABAJO" in requirement
+        or "FORMACION LABORAL" in requirement
+    )
+    has_technical_professional = (
+        "TECNICA PROFESIONAL" in requirement
+        or "FORMACION TECNICA PROFESIONAL" in requirement
+    )
+    has_technology = (
+        "TITULO DE TECNOLOGICA" in requirement
+        or "TECNOLOGIA EN" in requirement
+    )
+    has_professional_degree = bool(
+        re.search(
+            r"(?:TITULO DE|PENSUM ACADEMICO DE EDUCACION SUPERIOR DE) PROFESIONAL\b",
+            requirement,
+        )
+    )
+    has_partial_university = bool(
+        re.search(
+            r"APROBACION DE .*?(?:ANOS|SEMESTRES).*?DE PROFESIONAL\b",
+            requirement,
+        )
+    )
+    has_postgraduate = any(
+        marker in requirement
+        for marker in ("POSTGRADO", "ESPECIALIZACION", "MAESTRIA", "DOCTORADO")
+    )
+    bachelor_only = bool(
+        re.fullmatch(r"(?:FORMACION BASICA )?TITULO DE BACHILLERATO", requirement)
+    )
+    has_partial_secondary = bool(
+        re.search(r"APROBACION DE .*?ANOS.*?DE BACHILLERATO\b", requirement)
+    )
+
+    if has_primary:
+        category = "primaria-laboral"
+    elif has_postgraduate:
+        category = "posgrado"
+    elif has_job_training:
+        category = "tecnico-laboral"
+    elif has_technical_professional or has_technology:
+        category = "tecnico-tecnologo"
+    elif has_professional_degree:
+        category = "profesional"
+    elif has_partial_university:
+        category = "universitario-sin-titulo"
+    elif has_partial_secondary:
+        category = "secundaria-aprobada"
+    elif bachelor_only:
+        category = "bachiller-solo"
+    elif has_bachelor:
+        category = "bachiller-curso"
+    else:
+        category = "curso-especifico"
+
+    return category, STUDY_LABELS[category]
+
+
+def resumir_requisito(value: Any, max_length: int = 170) -> str:
+    requirement = limpiar_html(value)
+    if len(requirement) <= max_length:
+        return requirement
+    shortened = requirement[: max_length - 1].rsplit(" ", 1)[0]
+    return f"{shortened}…"
+
+
+def clasificar_requisitos_adicionales(value: Any) -> tuple[list[str], list[str]]:
+    requirement = normalizar_busqueda(value).upper()
+    if not requirement:
+        return [], []
+
+    keys: list[str] = []
+    labels: list[str] = []
+    rules = (
+        ("rethus", "ReTHUS", ("RETHUS", "TALENTO HUMANO EN SALUD")),
+        (
+            "tarjeta-profesional",
+            "Tarjeta o matrícula profesional",
+            ("TARJETA O MATRICULA PROFESIONAL",),
+        ),
+        (
+            "licencia-conduccion",
+            "Licencia de conducción",
+            ("LICENCIA DE CONDUCCION",),
+        ),
+        (
+            "licencia-sst",
+            "Licencia en seguridad y salud en el trabajo",
+            ("LICENCIA VIGENTE EN SEGURIDAD Y SALUD", "LICENCIA VIGENTE EN SEGURIDAD Y"),
+        ),
+        (
+            "registro-archivistas",
+            "Registro profesional de archivistas",
+            ("REGISTRO UNICO PROFESIONAL DE ARCHIVISTAS",),
+        ),
+        ("soporte-vital", "Soporte vital básico", ("SOPORTE VITAL BASICO",)),
+        ("radioproteccion", "Carné de radioprotección", ("RADIO PROTECCION",)),
+        ("antecedentes-contador", "Antecedentes de contador", ("ANTECEDENTES DE CONTADOR",)),
+        ("cedula", "Cédula de ciudadanía", ("CEDULA DE CIUDADANIA",)),
+    )
+    for key, label, markers in rules:
+        if any(marker in requirement for marker in markers):
+            keys.append(key)
+            labels.append(label)
+
+    if not labels:
+        return ["otro"], ["Otro requisito adicional"]
+    return keys, labels
 
 
 def experiencia_meses(value: Any) -> int | None:
@@ -142,6 +277,11 @@ def main() -> None:
             raise ValueError(f"Tipo de proceso desconocido en OPEC {opec}: {process}")
 
         study = limpiar_html(row["Requisito estudio"])
+        study_level, study_summary = clasificar_estudio(study)
+        additional_requirement = limpiar_html(row["Requisito otros"])
+        additional_keys, additional_labels = clasificar_requisitos_adicionales(
+            additional_requirement
+        )
         denomination = texto(row["Denominación"])
         entity = texto(row["Entidad"])
         department = texto(row["Departamento"])
@@ -185,6 +325,11 @@ def main() -> None:
             "discapacidad": texto(row["Reserva discapacidad"]).lower() == "sí",
             "sinExperiencia": months == 0,
             "experienciaMeses": months,
+            "nivelEstudio": study_level,
+            "estudioResumen": study_summary,
+            "estudioDetalleCorto": resumir_requisito(study),
+            "requisitosAdicionales": additional_keys,
+            "requisitosAdicionalesResumen": additional_labels,
             "busqueda": search_text,
         }
         index.append(summary)
@@ -202,7 +347,7 @@ def main() -> None:
             "funciones": lista_funciones(row["Funciones"]),
             "requisitoEstudio": study,
             "requisitoExperiencia": experience,
-            "requisitoOtros": limpiar_html(row["Requisito otros"]),
+            "requisitoOtros": additional_requirement,
         }
 
     index.sort(key=lambda item: item["opec"])
