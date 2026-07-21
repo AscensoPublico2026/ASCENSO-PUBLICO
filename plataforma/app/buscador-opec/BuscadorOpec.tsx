@@ -11,6 +11,13 @@ import {
   type OpecIndexPayload,
   type OpecSummary,
 } from "@/lib/opec";
+import {
+  interpretSmartProfile,
+  matchesLexicalSearch,
+  normalizeSearch,
+  scoreSmartProfile,
+  type SmartMatch,
+} from "@/lib/opec-smart-search";
 
 const PAGE_SIZE = 12;
 const currency = new Intl.NumberFormat("es-CO", {
@@ -19,182 +26,12 @@ const currency = new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0,
 });
 
-const PROFILE_STOP_WORDS = new Set([
-  "actualmente", "ademas", "anos", "año", "años", "busco", "como", "con", "cuento",
-  "de", "del", "desde", "donde", "durante", "el", "ella", "en", "entre", "esta", "este",
-  "experiencia", "formacion", "he", "la", "las", "los", "me", "meses", "mi", "mis", "para",
-  "perfil", "por", "profesional", "que", "quiero", "sin", "soy", "tengo", "trabajado", "trabaje",
-  "trabajo", "un", "una", "y",
-]);
-
-const SYNONYM_GROUPS = [
-  ["abogado", "abogada", "derecho", "juridico", "juridica", "legal"],
-  ["administrador", "administradora", "administracion", "administrativo", "administrativa"],
-  ["contador", "contadora", "contaduria", "contable", "contabilidad"],
-  ["ingeniero", "ingeniera", "ingenieria"],
-  ["sistemas", "software", "programacion", "informatica", "tecnologia", "tic"],
-  ["enfermero", "enfermera", "enfermeria"],
-  ["medico", "medica", "medicina", "clinico", "clinica"],
-  ["psicologo", "psicologa", "psicologia"],
-  ["economista", "economia", "economico", "economica"],
-  ["archivo", "archivista", "archivistica", "documental"],
-  ["finanzas", "financiero", "financiera", "presupuesto", "tesoreria"],
-  ["talento", "humano", "recursos", "nomina", "personal"],
-  ["servicio", "ciudadano", "usuario", "atencion", "pqrs"],
-  ["salud", "sanitario", "sanitaria", "hospital", "asistencial"],
-  ["contratacion", "contratos", "contractual"],
-  ["planeacion", "planificacion", "proyectos"],
-  ["auditoria", "control", "riesgos"],
-  ["comunicador", "comunicadora", "comunicacion", "periodismo"],
-  ["trabajador", "trabajadora", "social", "sociologia"],
-  ["tecnico", "tecnica", "tecnologo", "tecnologa"],
-  ["bachiller", "bachillerato", "secundaria"],
-];
-
 function normalize(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  return normalizeSearch(value);
 }
 
 function splitValues(value: string): string[] {
   return value.split("|").map((item) => item.trim()).filter(Boolean);
-}
-
-function tokenMatches(text: string, alias: string): boolean {
-  const tokens = text.split(" ");
-  return tokens.includes(alias) || (alias.length >= 5 && tokens.some((token) => token.startsWith(alias)));
-}
-
-function aliasesFor(term: string): string[] {
-  const group = SYNONYM_GROUPS.find((items) => items.includes(term));
-  return group ?? [term];
-}
-
-function profileTerms(query: string): string[] {
-  return Array.from(new Set(
-    normalize(query)
-      .split(" ")
-      .filter((term) => term.length >= 3 && !PROFILE_STOP_WORDS.has(term) && !/^\d+$/.test(term)),
-  ));
-}
-
-function educationRankFromProfile(query: string): number | null {
-  const normalized = normalize(query);
-  if (/doctorado|maestria|especializacion|especialista|posgrado/.test(normalized)) return 9;
-  if (/abogad|administrador|contador|ingenier|medic|enfermer|psicolog|economista|arquitect|universitari|profesion/.test(normalized)) return 8;
-  if (/tecnolog/.test(normalized)) return 6;
-  if (/tecnic/.test(normalized)) return 5;
-  if (/bachiller|secundaria/.test(normalized)) return 3;
-  if (/primaria/.test(normalized)) return 1;
-  return null;
-}
-
-function educationRankFromJob(job: OpecSummary): number {
-  const ranks: Record<OpecSummary["nivelEstudio"], number> = {
-    "primaria-laboral": 1,
-    "secundaria-aprobada": 2,
-    "bachiller-solo": 3,
-    "bachiller-curso": 4,
-    "tecnico-laboral": 5,
-    "tecnico-tecnologo": 6,
-    "universitario-sin-titulo": 7,
-    profesional: 8,
-    posgrado: 9,
-    "curso-especifico": 4,
-  };
-  return ranks[job.nivelEstudio];
-}
-
-function experienceFromProfile(query: string): number | null {
-  const normalized = normalize(query);
-  const matches = Array.from(normalized.matchAll(/(\d+)\s*(anos?|mes(?:es)?)/g));
-  if (!matches.length) return /sin experiencia/.test(normalized) ? 0 : null;
-  return Math.max(...matches.map((match) => Number(match[1]) * (match[2].startsWith("ano") ? 12 : 1)));
-}
-
-interface SmartMatch {
-  score: number;
-  compatibility: number;
-  reasons: string[];
-}
-
-function scoreProfile(job: OpecSummary, query: string): SmartMatch | null {
-  const normalizedQuery = normalize(query);
-  if (!normalizedQuery) return null;
-  if (normalizedQuery === normalize(job.referencia)) {
-    return { score: 500, compatibility: 99, reasons: [`Coincide exactamente con ${job.tipoReferencia}`] };
-  }
-
-  const terms = profileTerms(query);
-  if (!terms.length) return null;
-  let score = 0;
-  let matchedTerms = 0;
-  let denominationMatches = 0;
-  let educationMatches = 0;
-  let functionMatches = 0;
-
-  for (const term of terms) {
-    const aliases = aliasesFor(term);
-    const inDenomination = aliases.some((alias) => tokenMatches(normalize(job.denominacion), alias));
-    const inEducation = aliases.some((alias) => tokenMatches(job.perfilFormacion, alias));
-    const inFunctions = aliases.some((alias) => tokenMatches(job.perfilFunciones, alias));
-    const inGeneral = aliases.some((alias) => tokenMatches(job.busqueda, alias));
-    const best = inDenomination ? 14 : inEducation ? 11 : inFunctions ? 7 : inGeneral ? 3 : 0;
-    if (best) {
-      score += best;
-      matchedTerms += 1;
-      if (inDenomination) denominationMatches += 1;
-      if (inEducation) educationMatches += 1;
-      if (inFunctions) functionMatches += 1;
-    }
-  }
-
-  const coverage = matchedTerms / terms.length;
-  if (!matchedTerms || (score < 8 && coverage < 0.2)) return null;
-  score += coverage * 22;
-
-  const reasons: string[] = [];
-  if (educationMatches) reasons.push("Formación relacionada");
-  if (denominationMatches) reasons.push("Cargo afín a tu perfil");
-  if (functionMatches) reasons.push("Funciones relacionadas");
-
-  const profileEducationRank = educationRankFromProfile(query);
-  if (profileEducationRank !== null) {
-    if (profileEducationRank >= educationRankFromJob(job)) {
-      score += 10;
-      reasons.push("Nivel de estudios compatible");
-    } else {
-      score -= 16;
-    }
-  }
-
-  const profileExperience = experienceFromProfile(query);
-  if (profileExperience !== null && job.experienciaMeses !== null) {
-    if (profileExperience >= job.experienciaMeses) {
-      score += 12;
-      reasons.push("Experiencia suficiente");
-    } else {
-      score -= Math.min(18, (job.experienciaMeses - profileExperience) / 2);
-    }
-  }
-
-  if (score <= 0) return null;
-  const compatibility = Math.max(35, Math.min(99, Math.round(38 + coverage * 34 + Math.min(score, 45) * 0.55)));
-  return { score, compatibility, reasons: Array.from(new Set(reasons)).slice(0, 3) };
-}
-
-function matchesSearch(job: OpecSummary, normalizedQuery: string): boolean {
-  const terms = normalizedQuery.split(" ").filter(Boolean);
-  if (!terms.length) return true;
-  return terms.every((term) => {
-    if (/^\d+$/.test(term)) return normalize(job.referencia).startsWith(term);
-    if (tokenMatches(job.busqueda, term)) return true;
-    return aliasesFor(term).some((alias) => tokenMatches(job.busqueda, alias));
-  });
 }
 
 const FOCUSABLE_SELECTOR = [
@@ -570,6 +407,7 @@ export default function BuscadorOpec() {
   const departments = useMemo(() => Array.from(new Set(jobsInCall.flatMap((job) => splitValues(job.departamento)).filter((item) => item !== "No especificado"))).sort((a, b) => a.localeCompare(b, "es")), [jobsInCall]);
   const municipalities = useMemo(() => Array.from(new Set(jobsInCall.filter((job) => !department || splitValues(job.departamento).includes(department)).flatMap((job) => splitValues(job.municipio)).filter((item) => item !== "No especificado"))).sort((a, b) => a.localeCompare(b, "es")), [jobsInCall, department]);
   const levels = useMemo(() => Array.from(new Set(jobsInCall.map((job) => job.nivel))).sort((a, b) => a.localeCompare(b, "es")), [jobsInCall]);
+  const smartProfile = useMemo(() => interpretSmartProfile(query, jobs), [query, jobs]);
 
   const filteredJobs = useMemo(() => {
     const normalizedQuery = normalize(query);
@@ -593,11 +431,11 @@ export default function BuscadorOpec() {
         if (job.experienciaMeses === null || job.experienciaMeses > maximum) return false;
       }
       if (experience === "37+" && (job.experienciaMeses === null || job.experienciaMeses <= 36)) return false;
-      return matchesSearch(job, normalizedQuery);
+      return matchesLexicalSearch(job, normalizedQuery);
     });
 
     const ranked = searchMode === "smart"
-      ? base.map((job) => ({ job, match: scoreProfile(job, query) })).filter((item): item is { job: OpecSummary; match: SmartMatch } => item.match !== null)
+      ? base.map((job) => ({ job, match: scoreSmartProfile(job, smartProfile) })).filter((item): item is { job: OpecSummary; match: SmartMatch } => item.match !== null)
       : base.map((job) => ({ job, match: undefined }));
 
     return ranked.sort((a, b) => {
@@ -613,7 +451,7 @@ export default function BuscadorOpec() {
       }
       return b.job.vacantes - a.job.vacantes || b.job.salario - a.job.salario;
     });
-  }, [jobs, searchMode, query, convocatoria, modality, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability, sort]);
+  }, [jobs, smartProfile, searchMode, query, convocatoria, modality, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability, sort]);
 
   const activeFilters = [convocatoria, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability ? "disability" : ""].filter(Boolean).length;
   function resetFilters() {
@@ -655,7 +493,7 @@ export default function BuscadorOpec() {
     }
   }
 
-  const smartReady = searchMode === "filters" || profileTerms(query).length > 0 || /^\s*[\d-]+\s*$/.test(query);
+  const smartReady = searchMode === "filters" || smartProfile.ready;
   return <>
     <div className="opec-mode-switch" role="tablist" aria-label="Tipo de búsqueda">
       <button type="button" role="tab" aria-selected={searchMode === "smart"} className={searchMode === "smart" ? "active" : ""} onClick={() => changeMode("smart")}><span aria-hidden="true">✦</span><strong>Búsqueda inteligente</strong><small>Describe tu formación y experiencia</small></button>
@@ -667,13 +505,18 @@ export default function BuscadorOpec() {
         <label htmlFor="opec-profile" className="opec-smart-label"><span>Cuéntanos tu perfil</span><small>Puedes escribir una frase o pegar una descripción completa.</small></label>
         <div className="opec-smart-box">
           <SearchIcon />
-          <textarea id="opec-profile" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ejemplo: Soy administradora de empresas, tengo 4 años de experiencia en talento humano, nómina y contratación…" rows={4} />
+          <textarea id="opec-profile" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ejemplo: Soy técnico en saneamiento ambiental, tengo 2 años de experiencia y quiero trabajar en Leticia…" rows={4} />
           {query && <button type="button" onClick={() => setQuery("")} aria-label="Borrar perfil"><CloseIcon /></button>}
         </div>
         <div className="opec-smart-foot">
           <label><span>Buscar en</span><select value={convocatoria} onChange={(event) => setConvocatoria(event.target.value)}><option value="">Todas las convocatorias</option>{convocatorias.map((item) => <option key={item.id} value={item.id}>{item.nombre}</option>)}</select></label>
           <p><span aria-hidden="true">i</span> La afinidad es orientativa. Siempre verifica los requisitos completos.</p>
         </div>
+        {smartProfile.criteria.length > 0 && <div className="opec-interpreted" aria-live="polite">
+          <div className="opec-interpreted-head"><span aria-hidden="true">✦</span><p><strong>Esto entendimos de tu búsqueda</strong><small>Usamos cada criterio explícito para filtrar antes de calcular la afinidad.</small></p></div>
+          <div className="opec-interpreted-chips">{smartProfile.criteria.map((criterion) => <span key={criterion}>{criterion}</span>)}</div>
+          {smartProfile.locations.length > 0 && <p className="opec-location-rule"><strong>Ubicación estricta:</strong> no mostraremos vacantes de otras ciudades o departamentos.</p>}
+        </div>}
       </> : <>
         <div className="opec-search-main">
           <div className="opec-search-box"><SearchIcon /><label htmlFor="opec-query" className="sr-only">Buscar por OPEC, código, cargo, profesión, entidad o ciudad</label><input id="opec-query" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca por OPEC, código, cargo, profesión, entidad o ciudad…" autoComplete="off" />{query && <button type="button" onClick={() => setQuery("")} aria-label="Borrar búsqueda"><CloseIcon /></button>}</div>
@@ -701,13 +544,13 @@ export default function BuscadorOpec() {
 
       <section className="opec-results" aria-live="polite" aria-busy={loading}>
         <div className="opec-results-head">
-          <div><span className="opec-result-count">{loading ? "Consultando vacantes…" : !smartReady ? "Describe tu perfil para comenzar" : `${filteredJobs.length.toLocaleString("es-CO")} ${filteredJobs.length === 1 ? "oportunidad encontrada" : "oportunidades encontradas"}`}</span>{!loading && payload && <small>{searchMode === "smart" ? "Ordenadas por afinidad con tu perfil" : `Datos actualizados al ${formatOpecDate(payload.meta.fechaActualizacion)}`}</small>}</div>
+          <div><span className="opec-result-count">{loading ? "Consultando vacantes…" : !smartReady ? "Describe tu perfil para comenzar" : `${filteredJobs.length.toLocaleString("es-CO")} ${filteredJobs.length === 1 ? "oportunidad encontrada" : "oportunidades encontradas"}`}</span>{!loading && payload && <small>{searchMode === "smart" ? (smartProfile.locations.length ? `Resultados limitados a ${smartProfile.locations.map((item) => item.label).join(" o ")}` : "Todos tus criterios se usan para filtrar y ordenar") : `Datos actualizados al ${formatOpecDate(payload.meta.fechaActualizacion)}`}</small>}</div>
           {searchMode === "filters" && <label className="opec-sort"><span>Ordenar por</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="relevance">Más relevantes</option><option value="vacancies">Más vacantes</option><option value="experience">Menor experiencia</option><option value="salary-desc">Mayor salario</option><option value="salary-asc">Menor salario</option></select></label>}
         </div>
         {loading && <div className="opec-loading-grid" role="status">{[1, 2, 3, 4].map((item) => <div className="opec-card-skeleton" key={item}><i /><i /><i /><i /></div>)}<span className="sr-only">Cargando vacantes</span></div>}
         {loadError && <div className="opec-empty"><EmptyIcon /><h3>No pudimos cargar las vacantes</h3><p>{loadError}</p><button type="button" onClick={() => window.location.reload()}>Intentar nuevamente</button></div>}
-        {!loading && !loadError && !smartReady && <div className="opec-smart-empty"><span aria-hidden="true">✦</span><h3>Escribe tu perfil en tus propias palabras</h3><p>Incluye tu formación, experiencia, áreas de conocimiento y el tipo de trabajo que has realizado.</p><div><button type="button" onClick={() => setQuery("Soy profesional en derecho con 3 años de experiencia jurídica y en contratación")}>Perfil jurídico</button><button type="button" onClick={() => setQuery("Soy bachiller con experiencia en archivo, atención al ciudadano y herramientas de oficina")}>Perfil administrativo</button><button type="button" onClick={() => setQuery("Soy ingeniero de sistemas con experiencia en desarrollo de software, bases de datos y soporte")}>Perfil de sistemas</button></div></div>}
-        {!loading && !loadError && smartReady && filteredJobs.length === 0 && <div className="opec-empty"><EmptyIcon /><h3>No encontramos coincidencias</h3><p>Prueba con otra descripción o selecciona todas las convocatorias para ampliar los resultados.</p><button type="button" onClick={() => { setQuery(""); resetFilters(); setModality(""); }}>Limpiar búsqueda</button></div>}
+        {!loading && !loadError && !smartReady && <div className="opec-smart-empty"><span aria-hidden="true">✦</span><h3>Escribe tu perfil en tus propias palabras</h3><p>Incluye el cargo o área que buscas, estudios, experiencia, habilidades y dónde quieres trabajar. Si indicas una ubicación, no mezclaremos resultados de otras ciudades.</p><div><button type="button" onClick={() => setQuery("Soy profesional en derecho con 3 años de experiencia jurídica y en contratación; quiero trabajar en Bogotá")}>Perfil jurídico en Bogotá</button><button type="button" onClick={() => setQuery("Soy bachiller con experiencia en archivo, atención al ciudadano y herramientas de oficina; busco empleo en Medellín")}>Perfil administrativo en Medellín</button><button type="button" onClick={() => setQuery("Soy ingeniero de sistemas con experiencia en desarrollo de software, bases de datos y soporte")}>Perfil de sistemas</button></div></div>}
+        {!loading && !loadError && smartReady && filteredJobs.length === 0 && <div className="opec-empty"><EmptyIcon /><h3>No hay vacantes que cumplan todos los criterios</h3><p>{smartProfile.locations.length > 0 ? `Respetamos tu ubicación en ${smartProfile.locations.map((item) => item.label).join(" o ")}, por eso no mostramos empleos de otras zonas. Prueba ajustando el cargo, la experiencia o elimina la ubicación si deseas ampliar la búsqueda.` : "No encontramos una vacante que cumpla simultáneamente el perfil, los estudios y la experiencia indicados. Prueba ajustando alguno de esos criterios."}</p><button type="button" onClick={() => { setQuery(""); resetFilters(); setModality(""); }}>Escribir otro perfil</button></div>}
         {!loading && smartReady && filteredJobs.length > 0 && <><div className="opec-grid">{filteredJobs.slice(0, visibleCount).map(({ job, match }) => <JobCard key={job.id} job={job} match={match} onOpen={openDetail} onCopy={copyReference} copied={copiedId === job.id} />)}</div>{visibleCount < filteredJobs.length && <div className="opec-load-more"><button type="button" onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}>Ver más oportunidades</button><span>Mostrando {Math.min(visibleCount, filteredJobs.length)} de {filteredJobs.length.toLocaleString("es-CO")}</span></div>}</>}
       </section>
     </div>
