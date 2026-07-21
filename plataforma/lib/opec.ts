@@ -1,4 +1,5 @@
 export type OpecModalidad = "Abierto" | "Ascenso";
+export type OpecTipoReferencia = "OPEC" | "Código";
 export type OpecNivelEstudio =
   | "primaria-laboral"
   | "secundaria-aprobada"
@@ -23,6 +24,13 @@ export type OpecRequisitoAdicional =
   | "cedula"
   | "otro";
 
+export interface OpecConvocatoriaMeta {
+  id: string;
+  nombre: string;
+  totalOpec: number;
+  totalVacantes: number;
+}
+
 export interface OpecMeta {
   convocatoria: string;
   fechaActualizacion: string;
@@ -34,11 +42,17 @@ export interface OpecMeta {
   departamentos: number;
   municipios: number;
   sinExperiencia: number;
+  totalConvocatorias: number;
+  convocatorias: OpecConvocatoriaMeta[];
   fuente: string;
 }
 
 export interface OpecSummary {
-  opec: number;
+  id: string;
+  referencia: string;
+  tipoReferencia: OpecTipoReferencia;
+  convocatoriaId: string;
+  convocatoriaNombre: string;
   denominacion: string;
   nivel: string;
   grado: string;
@@ -59,13 +73,20 @@ export interface OpecSummary {
   estudioDetalleCorto: string;
   requisitosAdicionales: OpecRequisitoAdicional[];
   requisitosAdicionalesResumen: string[];
+  perfilFormacion: string;
+  perfilExperiencia: string;
+  perfilFunciones: string;
   busqueda: string;
 }
 
-export interface OpecDetail extends Omit<OpecSummary, "busqueda"> {
+export interface OpecDetail
+  extends Omit<
+    OpecSummary,
+    "busqueda" | "perfilFormacion" | "perfilExperiencia" | "perfilFunciones"
+  > {
   nit: string;
   tipoEntidad: string;
-  convocatoria: string;
+  convocatoriaDetalle: string;
   anio: number;
   tipoProceso: string;
   dependencia: string;
@@ -75,6 +96,7 @@ export interface OpecDetail extends Omit<OpecSummary, "busqueda"> {
   requisitoEstudio: string;
   requisitoExperiencia: string;
   requisitoOtros: string;
+  urlOficial: string;
 }
 
 export interface OpecIndexPayload {
@@ -88,11 +110,11 @@ export interface OpecDetailShard {
 
 export const OPEC_DETAIL_SHARDS = 32;
 
-export function getOpecDetailUrl(opec: number): string {
-  const shard = String(opec % OPEC_DETAIL_SHARDS).padStart(2, "0");
+export function getOpecDetailUrl(id: string): string {
+  const value = Array.from(id).reduce((total, character) => total + character.charCodeAt(0), 0);
+  const shard = String(value % OPEC_DETAIL_SHARDS).padStart(2, "0");
   return `/data/opec-details/${shard}.json`;
 }
-
 
 export function formatOpecDate(isoDate: string): string {
   return new Intl.DateTimeFormat("es-CO", {
