@@ -8,20 +8,20 @@ import "../landing.css";
 import "./buscador-opec.css";
 
 export const metadata: Metadata = {
-  title: "Buscador OPEC ESE 2026 | Vacantes por salario y experiencia",
+  title: "Buscador inteligente de convocatorias 2026 | OPEC y vacantes",
   description:
-    "Encuentra tu vacante en la convocatoria Empresas Sociales del Estado 2026. Filtra OPEC por departamento, municipio, nivel, salario y experiencia.",
+    "Consulta en un solo buscador las vacantes ESE 2, EREON 2026 y Procuraduría. Filtra por convocatoria o describe tu perfil para encontrar empleos afines.",
   keywords: [
-    "buscador OPEC ESE 2026",
-    "vacantes Empresas Sociales del Estado",
-    "empleos CNSC sin experiencia",
-    "oferta pública SIMO",
+    "buscador inteligente OPEC",
+    "convocatorias empleo público 2026",
+    "vacantes Procuraduría 2026",
+    "EREON 2026",
     "convocatoria ESE 2026",
   ],
   alternates: { canonical: "/buscador-opec" },
   openGraph: {
-    title: "Buscador OPEC ESE 2026 — Ascenso Público",
-    description: `Explora ${meta.totalOpec.toLocaleString("es-CO")} OPEC y encuentra la vacante que mejor se ajusta a tu perfil.`,
+    title: "Buscador inteligente de convocatorias — Ascenso Público",
+    description: `Explora ${meta.totalOpec.toLocaleString("es-CO")} empleos consolidados y encuentra los que mejor se ajustan a tu perfil.`,
     url: "/buscador-opec",
     type: "website",
   },
@@ -34,7 +34,7 @@ export default function BuscadorOpecPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Buscador OPEC ESE 2026",
+    name: "Buscador inteligente de convocatorias 2026",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     offers: { "@type": "Offer", price: "0", priceCurrency: "COP" },
@@ -53,9 +53,9 @@ export default function BuscadorOpecPage() {
             <div className="opec-breadcrumb"><Link href="/">Inicio</Link><span>›</span><strong>Buscador OPEC</strong></div>
             <div className="opec-hero-grid">
               <div className="opec-hero-copy">
-                <span className="opec-hero-tag"><i /> Herramienta gratuita · ESE 2026</span>
-                <h1>Encuentra la OPEC que <span>sí encaja contigo</span></h1>
-                <p>Compara las vacantes de Empresas Sociales del Estado en un solo lugar. Filtra por ubicación, estudios, salario y experiencia para descubrir dónde tienes una oportunidad real.</p>
+                <span className="opec-hero-tag"><i /> Herramienta gratuita · 3 convocatorias</span>
+                <h1>Encuentra la vacante que <span>sí encaja contigo</span></h1>
+                <p>Consulta en un solo lugar las convocatorias ESE 2, EREON 2026 y Procuraduría. Elige una convocatoria y aplica filtros, o describe tu formación y experiencia para recibir coincidencias inteligentes.</p>
                 <div className="opec-hero-actions">
                   <a href="#explorar" className="btn btn-oro">Explorar vacantes <span aria-hidden="true">↓</span></a>
                   <button type="button" className="opec-hero-tip" tabIndex={-1}><span>✓</span> No necesitas registrarte</button>
@@ -78,9 +78,9 @@ export default function BuscadorOpecPage() {
             </div>
 
             <div className="opec-stats" aria-label="Resumen del consolidado">
-              <div><strong>{number(meta.totalOpec)}</strong><span>OPEC consolidadas</span></div>
-              <div><strong>{number(meta.totalVacantes)}</strong><span>Vacantes disponibles</span></div>
-              <div><strong>{number(meta.entidades)}</strong><span>Entidades E.S.E.</span></div>
+              <div><strong>{number(meta.totalOpec)}</strong><span>Empleos consolidados</span></div>
+              <div><strong>{number(meta.totalVacantes)}</strong><span>Vacantes publicadas</span></div>
+              <div><strong>{number(meta.totalConvocatorias)}</strong><span>Convocatorias integradas</span></div>
               <div><strong>{number(meta.departamentos)}</strong><span>Departamentos</span></div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function BuscadorOpecPage() {
                 <span className="eyebrow">Explorador de oportunidades</span>
                 <h2>Tu próxima oportunidad puede estar aquí</h2>
               </div>
-              <p>Escribe una profesión, cargo, ciudad, entidad o número de OPEC. Puedes combinar todos los filtros.</p>
+              <p>Usa el cuadro inteligente para describir tu perfil o cambia a búsqueda con filtros para elegir convocatoria, ubicación, estudios, salario y experiencia.</p>
             </div>
             <BuscadorOpec />
           </div>
@@ -107,9 +107,9 @@ export default function BuscadorOpecPage() {
               <p>Ascenso Público te ayuda a identificar oportunidades; la inscripción siempre se realiza en SIMO.</p>
             </div>
             <div className="opec-guide-grid">
-              <article><span>01</span><div><h3>Filtra según tu perfil</h3><p>Combina ubicación, nivel, salario, estudios y experiencia.</p></div></article>
-              <article><span>02</span><div><h3>Revisa los requisitos</h3><p>Abre la ficha y confirma que tus estudios y experiencia coincidan.</p></div></article>
-              <article><span>03</span><div><h3>Copia la OPEC y ve a SIMO</h3><p>Busca el número en la plataforma oficial y completa allí tu inscripción.</p></div></article>
+              <article><span>01</span><div><h3>Elige cómo quieres buscar</h3><p>Selecciona una convocatoria y filtros, o describe tu perfil en lenguaje natural.</p></div></article>
+              <article><span>02</span><div><h3>Compara las coincidencias</h3><p>Revisa convocatoria, OPEC o código, estudios, experiencia y nivel de afinidad.</p></div></article>
+              <article><span>03</span><div><h3>Confirma en el canal oficial</h3><p>Copia la referencia y verifica requisitos, fechas y disponibilidad antes de inscribirte.</p></div></article>
             </div>
           </div>
         </section>
@@ -120,7 +120,7 @@ export default function BuscadorOpecPage() {
               <div className="opec-disclaimer-icon" aria-hidden="true">i</div>
               <div>
                 <h2>Información importante</h2>
-                <p>Este buscador es una herramienta informativa e independiente creada por Ascenso Público. Los requisitos mostrados provienen del consolidado de empleos SIMO y fueron actualizados el <strong>{updatedDate}</strong>. Antes de pagar derechos de participación, confirma la información, fechas y disponibilidad directamente en <a href="https://simo.cnsc.gov.co/" target="_blank" rel="noopener noreferrer">SIMO</a> y en los canales oficiales de la CNSC.</p>
+                <p>Este buscador es una herramienta informativa e independiente creada por Ascenso Público. Los requisitos mostrados provienen de los consolidados de ESE 2, EREON 2026 y Procuraduría, actualizados el <strong>{updatedDate}</strong>. La afinidad inteligente es orientativa y no reemplaza la verificación de requisitos mínimos. Antes de pagar derechos de participación, confirma la información, fechas y disponibilidad en los canales oficiales de cada convocatoria y, cuando corresponda, en <a href="https://simo.cnsc.gov.co/" target="_blank" rel="noopener noreferrer">SIMO</a>.</p>
               </div>
             </div>
           </div>
