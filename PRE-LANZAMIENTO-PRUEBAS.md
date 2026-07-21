@@ -62,7 +62,7 @@ _Última actualización del plan: 17 jun 2026_
 - [ ] Enlaces del footer: Política de privacidad → `/privacidad`.
 - [ ] Enlace del footer: Términos → `/terminos`.
 - [ ] Correo del footer (mailto) → abre el cliente de correo a `ascensopublico@gmail.com`.
-- [ ] El **contador de cupos** (de 100) se muestra coherente.
+- [ ] El **contador de cupos** muestra **177/200 vendidos** y **23 restantes** tanto en la landing como en `/comprar`.
 
 ## A5. Páginas legales
 - [ ] `/privacidad` carga y se lee completa.
@@ -80,7 +80,7 @@ _Última actualización del plan: 17 jun 2026_
 
 ## B1. Formulario `/comprar` — validaciones
 - [ ] Enlace "← Volver al inicio" funciona.
-- [ ] El contador de cupos se muestra.
+- [ ] El contador muestra **177/200 vendidos** y **23 restantes**, igual que en la landing.
 - [ ] Intentar enviar **vacío** → el navegador exige los campos obligatorios (Nombres, Apellidos, Correo, Convocatoria, OPEC, Cargo, Nivel, Manual PDF, Consentimiento).
 - [ ] El desplegable "Convocatoria" lista las convocatorias activas.
 - [ ] El desplegable "Nivel" tiene Asistencial / Técnico / Profesional.

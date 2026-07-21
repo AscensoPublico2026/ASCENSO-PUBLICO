@@ -128,7 +128,7 @@ parálisis por diseño. Plan recomendado:
 - **Días 1-3:** montar plantillas + publicar 3/día. Mezcla de pilares. Aprender qué engancha.
 - **Días 4-7:** doblar la apuesta en el formato/tema que mejor rindió. Empezar series.
   Más Pilar 3 (venta) en las noches con CTA a WhatsApp/link.
-- **Días 8-12:** empujar urgencia real ("cupos de lanzamiento", 35/100). Responder en video a
+- **Días 8-12:** empujar urgencia real ("cupos de lanzamiento", 177/200 vendidos; quedan 23). Responder en video a
   toda pregunta de compra. Convertir conversaciones de WhatsApp.
 
 **Apalancamiento extra para acelerar ventas (no solo esperar el orgánico):**

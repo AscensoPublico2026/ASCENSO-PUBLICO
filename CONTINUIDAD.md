@@ -39,7 +39,7 @@ _Última actualización: 22 de junio de 2026 — **Feature "Simulacro Gratis" (l
 
 **Landing / UX:**
 - ✅ **WhatsApp** centralizado en `lib/contacto.ts` con **número oficial `573170905177`** y **redes** (`REDES`: TikTok/Instagram) enlazadas en el footer.
-- ✅ **Contador "35/100 cupos vendidos"** (piso base `NEXT_PUBLIC_CUPOS_BASE`, default 35, + ventas reales) en `ContadorCupos`.
+- ✅ **Contador "177/200 cupos vendidos"** centralizado en `plataforma/lib/cupos.ts` y compartido por la landing y `/comprar`; muestra 23 cupos restantes.
 - ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
 - ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).
 - ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **1 a 1½ h/día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
@@ -136,7 +136,7 @@ ARQUITECTURA-PLATAFORMA.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md   (CONTIN
 Migrada a Next.js. Convocatorias dinámicas desde Supabase, ScrollReveal, responsive, SEO + Open Graph + favicon + sitemap + robots. Hero, fundador (Julio César Deávila), nivel interactivo, FAQ, política de datos, WhatsApp flotante.
 
 ### Compra (`/comprar`) y pago
-Formulario con Nombres+Apellidos separados (Title Case vía `lib/format.ts`), OPEC/cargo/nivel obligatorios, contador de cupos (100), pre-llena si está logueado (multi-curso), sube manual PDF a Storage. Flujo: `/comprar` → Wompi → webhook (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías → `/activar`. Robusto ante usuarios residuales.
+Formulario con Nombres+Apellidos separados (Title Case vía `lib/format.ts`), OPEC/cargo/nivel obligatorios, contador de cupos centralizado (**177/200**), pre-llena si está logueado (multi-curso), sube manual PDF a Storage. Flujo: `/comprar` → Wompi → webhook (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías → `/activar`. Robusto ante usuarios residuales.
 
 ### Auto-carga de guías (`lib/autocargarGuias.ts`)
 Al comprar se cargan automáticamente: **INTRO-00 + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01, BON-02)**. Las **funcionales, el simulacro y "Conoce tu Entidad"** NO se auto-cargan: las asigna el admin por código (ver abajo).
@@ -166,7 +166,7 @@ Multi-curso con tarjetas hero; biblioteca por secciones (Plan / Bonus / Simulacr
 - **Fotos:** `/plataforma/public/fotos`. **Logos:** `/plataforma/public/brand`.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
 - **Contacto:** WhatsApp **573151972091** · correo **ascensopublico@gmail.com**.
-- **Precio:** $300.000 COP, pago único. **Cupos de lanzamiento:** 100.
+- **Precio:** $300.000 COP, pago único. **Cupos de lanzamiento:** 177 vendidos de 200 (23 disponibles).
 - **Niveles:** `asistencial` | `tecnico` | `profesional`. **Fundador:** Julio César Deávila.
 
 ## 7. Flujo de trabajo (IMPORTANTE)

@@ -34,7 +34,7 @@ Lo que quiero ajustar/mejorar hoy es:
 - **Sandbox:** sin acceso directo a Supabase/Wompi/Vercel; Kiro escribe código, el usuario configura los paneles externos. Si `main` local se ve desactualizado, usar `pull_repository` antes de ramificar.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
 - **Contacto/redes:** todo sale de `plataforma/lib/contacto.ts` (WhatsApp `573170905177`, `REDES`). No hardcodear.
-- **Reglas de producto:** precio $300.000 (`PRECIO_COP`, en centavos al cobrar); cupos de lanzamiento 100 (contador con piso `NEXT_PUBLIC_CUPOS_BASE`); plan 21 días (20 estudio L-V + simulacro); el simulacro se desbloquea al terminar las guías del plan (bonus no cuenta); habilitación del curso a 12h o "Habilitar ahora" (envía correo).
+- **Reglas de producto:** precio $300.000 (`PRECIO_COP`, en centavos al cobrar); cupos de lanzamiento 177/200 (centralizados en `plataforma/lib/cupos.ts`); plan 21 días (20 estudio L-V + simulacro); el simulacro se desbloquea al terminar las guías del plan (bonus no cuenta); habilitación del curso a 12h o "Habilitar ahora" (envía correo).
 - **Verificación:** no se puede compilar localmente (sin node_modules/red). Validar leyendo el código con cuidado; el usuario prueba en producción tras desplegar.
 
 ## 📂 Mapa rápido de archivos (los que más se tocan)

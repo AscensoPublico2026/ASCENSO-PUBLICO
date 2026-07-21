@@ -14,13 +14,11 @@ export const dynamic = "force-dynamic";
 
 const WA_URL = waUrl(WA_MENSAJES.comprar);
 const WA_ASESORIA = waUrl(WA_MENSAJES.asesoria);
-const CUPOS_LANZAMIENTO = 200; // Total de cupos del precio de lanzamiento
 const formatNumber = (value: number) => value.toLocaleString("es-CO");
 const opecUpdatedDate = formatOpecDate(opecMeta.fechaActualizacion);
 
 export default async function LandingPage() {
   let convocatorias: any[] = [];
-  let cursosVendidos = 0;
   try {
     const supabase = createClient();
     const { data } = await supabase
@@ -29,10 +27,6 @@ export default async function LandingPage() {
       .eq("activa", true)
       .order("orden");
     convocatorias = data || [];
-
-    // Contar cupos vendidos (pagos aprobados)
-    const { count } = await supabase.from("pagos").select("*", { count: "exact", head: true }).eq("estado", "aprobado");
-    cursosVendidos = count || 0;
   } catch {
     convocatorias = [];
   }
@@ -296,7 +290,7 @@ export default async function LandingPage() {
               <li>Acceso desde tu perfil durante la vigencia del curso</li>
             </ul>
             <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
-            <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
+            <ContadorCupos />
             <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
             <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? <a href={WA_ASESORIA} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos por WhatsApp</a> y te asesoramos sin compromiso antes de pagar.</span></div>
           </div>
