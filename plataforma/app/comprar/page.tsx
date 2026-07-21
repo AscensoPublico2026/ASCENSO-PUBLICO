@@ -6,12 +6,9 @@ import Link from "next/link";
 import ContadorCupos from "../components/ContadorCupos";
 import { createClient } from "@/lib/supabase/client";
 
-const CUPOS_LANZAMIENTO = 200;
-
 // Componente principal (ahora completamente cliente)
 export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string } }) {
   const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string }[]>([]);
-  const [cursosVendidos, setCursosVendidos] = useState(0);
   const [usuarioLogueado, setUsuarioLogueado] = useState<{ correo: string; celular: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -34,13 +31,6 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
           .eq("activa", true)
           .order("orden");
         setConvocatorias(convData || []);
-
-        // Contar cursos vendidos
-        const { count } = await supabase
-          .from("pagos")
-          .select("*", { count: "exact", head: true })
-          .eq("estado", "aprobado");
-        setCursosVendidos(count || 0);
 
         // Verificar si hay usuario logueado
         const { data: { user } } = await supabase.auth.getUser();
@@ -116,7 +106,7 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
       </p>
       <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Precio: $300.000 COP · pago único</p>
 
-      <ContadorCupos vendidos={cursosVendidos} total={CUPOS_LANZAMIENTO} />
+      <ContadorCupos />
 
       {usuarioLogueado && (
         <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginBottom: 8, fontSize: ".85rem", color: "var(--verde)" }}>

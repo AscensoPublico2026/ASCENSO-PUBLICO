@@ -70,7 +70,7 @@ El objetivo: que si mañana un video explota, el tráfico tenga a dónde llegar 
 
 ## 🔴 FASE 3 — Empujar la conversión (Días 8-12) · *cerrar ventas*
 
-- [ ] Urgencia real: comunicar **cupos de lanzamiento** (ej. quedan 35/100)
+- [ ] Urgencia real: comunicar **cupos de lanzamiento** (177/200 vendidos; quedan 23)
 - [ ] Pinear un video de venta fuerte en el perfil
 - [ ] Responder EN VIDEO a toda pregunta de compra (genera prueba social + alcance)
 - [ ] Mensajes directos (no spam) a tu red que sabes está en concurso

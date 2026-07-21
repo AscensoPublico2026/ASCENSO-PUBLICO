@@ -1,25 +1,17 @@
-/**
- * Componente que muestra el contador de cupos vendidos.
- * Se usa en la landing (sección precio) y en la página de compra.
- *
- * Props:
- * - vendidos: número de pagos aprobados REALES (cursos vendidos)
- * - total: cupos totales del lanzamiento (default: 200)
- *
- * Piso de cupos (prueba social):
- * - Para generar confianza desde el inicio, se suma un "piso" base a las ventas
- *   reales. Así el contador nunca arranca en 0 y crece con cada venta real.
- * - Se controla con la variable de entorno NEXT_PUBLIC_CUPOS_BASE (ej. 138).
- *   Si no está definida, usa 138 por defecto. Para cambiar el número: ajusta esa
- *   variable en Vercel (y redespliega) — no hay que tocar código.
- */
-const CUPOS_BASE = Math.max(0, Number(process.env.NEXT_PUBLIC_CUPOS_BASE ?? 138));
+import {
+  CUPOS_TOTALES_LANZAMIENTO,
+  CUPOS_VENDIDOS_LANZAMIENTO,
+} from "@/lib/cupos";
 
-export default function ContadorCupos({ vendidos, total = 200 }: { vendidos: number; total?: number }) {
-  // Ventas reales + piso base, sin pasarse del total.
-  const vendidosMostrados = Math.min(total, vendidos + CUPOS_BASE);
-  const restantes = Math.max(0, total - vendidosMostrados);
-  const porcentaje = Math.min(100, Math.round((vendidosMostrados / total) * 100));
+/**
+ * Contador compartido entre la landing y la página de compra.
+ * Las cifras oficiales se mantienen en lib/cupos.ts para que ambas vistas
+ * siempre muestren el mismo estado de la campaña.
+ */
+export default function ContadorCupos() {
+  const vendidos = Math.min(CUPOS_TOTALES_LANZAMIENTO, CUPOS_VENDIDOS_LANZAMIENTO);
+  const restantes = Math.max(0, CUPOS_TOTALES_LANZAMIENTO - vendidos);
+  const porcentaje = Math.min(100, Math.round((vendidos / CUPOS_TOTALES_LANZAMIENTO) * 100));
 
   return (
     <div style={{
@@ -39,17 +31,15 @@ export default function ContadorCupos({ vendidos, total = 200 }: { vendidos: num
         </span>
       </div>
 
-      {/* Conteo grande y claro: 35/100 */}
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
         <span style={{ fontSize: "1.5rem", fontWeight: 900, color: "#F6C56B", lineHeight: 1 }}>
-          {vendidosMostrados}/{total}
+          {vendidos}/{CUPOS_TOTALES_LANZAMIENTO}
         </span>
         <span style={{ fontSize: ".82rem", fontWeight: 700, color: "rgba(255,255,255,.85)" }}>
           cupos vendidos
         </span>
       </div>
 
-      {/* Barra de progreso */}
       <div style={{ height: 8, borderRadius: 4, background: "rgba(255,255,255,.2)", overflow: "hidden" }}>
         <div style={{
           height: "100%",
@@ -62,9 +52,9 @@ export default function ContadorCupos({ vendidos, total = 200 }: { vendidos: num
 
       <div style={{ marginTop: 8, fontSize: ".78rem", color: "rgba(255,255,255,.7)" }}>
         {restantes > 0 ? (
-          <>Ya hay <strong style={{ color: "#F6C56B" }}>{vendidosMostrados}</strong> aspirantes preparándose · asegura el tuyo antes de que se agoten.</>
+          <>Ya hay <strong style={{ color: "#F6C56B" }}>{vendidos}</strong> aspirantes preparándose · asegura el tuyo antes de que se agoten.</>
         ) : (
-          <>Los <strong style={{ color: "#F6C56B" }}>{total}</strong> cupos del precio de lanzamiento se han agotado. ¡Gracias por la confianza!</>
+          <>Los <strong style={{ color: "#F6C56B" }}>{CUPOS_TOTALES_LANZAMIENTO}</strong> cupos del precio de lanzamiento se han agotado. ¡Gracias por la confianza!</>
         )}
       </div>
     </div>
