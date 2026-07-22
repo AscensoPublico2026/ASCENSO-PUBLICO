@@ -203,7 +203,7 @@ export default async function LandingPage() {
           <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 18, background: "linear-gradient(135deg,#0A2A5E,#1A4A8A)", borderRadius: 16, padding: "22px 26px", color: "#fff", flexWrap: "wrap" }}>
             <div style={{ fontSize: "2.4rem", lineHeight: 1, flexShrink: 0 }}>⏱️</div>
             <div style={{ flex: 1, minWidth: 220 }}>
-              <h3 style={{ margin: "0 0 4px", color: "#fff", fontSize: "1.12rem" }}>Con 1 a 1½ hora al día, vas a tu ritmo</h3>
+              <h3 style={{ margin: "0 0 4px", color: "#fff", fontSize: "1.12rem" }}>Dedica 60 a 90 minutos al día, vas a tu ritmo</h3>
               <p style={{ margin: 0, color: "rgba(255,255,255,.85)", fontSize: ".95rem" }}>
                 Cada guía está diseñada para estudiarse en <strong style={{ color: "var(--oro-claro)" }}>60 a 90 minutos</strong>. Estudias <strong style={{ color: "var(--oro-claro)" }}>de lunes a viernes</strong> y descansas los fines de semana: son <strong style={{ color: "var(--oro-claro)" }}>20 días de preparación + tu simulacro final</strong>, un plan disciplinado que avanzas sin afán ni desgaste.
               </p>

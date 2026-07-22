@@ -42,7 +42,7 @@ _Última actualización: 22 de junio de 2026 — **Feature "Simulacro Gratis" (l
 - ✅ **Contador "35/100 cupos vendidos"** (piso base `NEXT_PUBLIC_CUPOS_BASE`, default 35, + ventas reales) en `ContadorCupos`.
 - ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
 - ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).
-- ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **1 a 1½ h/día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
+- ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **60 a 90 minutos al día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
 - ✅ Footer: enlaces a **/privacidad** y **/terminos** (antes apuntaban a `#datos`).
 
 **Admin:**

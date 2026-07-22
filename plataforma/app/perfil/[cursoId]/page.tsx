@@ -241,7 +241,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             </div>
             <p style={{ display: "flex", alignItems: "center", gap: 8, margin: "14px 0 0", fontSize: ".82rem", color: "var(--texto-suave)", background: "var(--crema)", borderRadius: 10, padding: "10px 12px" }}>
               <span style={{ fontSize: "1rem" }}>⏱️</span>
-              <span>Dedica <strong style={{ color: "var(--azul)" }}>1 a 1½ hora al día</strong>: cada guía toma <strong style={{ color: "var(--azul)" }}>60–90 minutos</strong>. Estudia de lunes a viernes y descansa los fines de semana: una guía por día hasta tu simulacro final.</span>
+              <span>Dedica <strong style={{ color: "var(--azul)" }}>60 a 90 minutos al día</strong>: una guía por sesión. Estudia de lunes a viernes y descansa los fines de semana: una guía por día hasta tu simulacro final.</span>
             </p>
           </div>
 
