@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-SAL-14 · Historia Clínica, Registro y Confidencialidad — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:        #0A2A5E;
+  --azul-medio:  #1A4A8A;
+  --azul-claro:  #2D6CC0;
+  --azul-suave:  #EAF1FB;
+  --azul-borde:  #C9DCF4;
+  --oro:         #E8A33D;
+  --oro-claro:   #F6C56B;
+  --oro-suave:   #FDF4E3;
+  --oro-borde:   #F0DCB0;
+  --crema:       #FBF9F4;
+  --blanco:      #FFFFFF;
+  --gris-bg:     #F2F0EA;
+  --gris-borde:  #E6E2D8;
+  --verde:       #1A7A4A;
+  --verde-suave: #E8F6EE;
+  --verde-borde: #BFE6CF;
+  --rojo:        #C0392B;
+  --rojo-suave:  #FCEDEB;
+  --rojo-borde:  #F2CDC8;
+  --ambar:       #B8600A;
+  --ambar-suave: #FBEFDD;
+  --ambar-borde: #EFD7B0;
+  --texto:       #2A3441;
+  --texto-suave: #5B6675;
+  --sombra:      0 4px 20px rgba(10,42,94,0.08);
+  --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
+  --radio:       16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+#readbar {
+  position: fixed; top: 0; left: 0; height: 4px; width: 0%;
+  background: linear-gradient(90deg, var(--oro), var(--oro-claro));
+  z-index: 999; transition: width 0.1s linear;
+}
+header {
+  background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
+  color: var(--blanco);
+  padding: 42px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
+}
+header::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
+}
+
+.brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
+.brand-logo {
+  width: 50px; height: 50px; border-radius: 13px;
+  background: linear-gradient(135deg, var(--oro-claro), var(--oro));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(232,163,61,0.4);
+}
+.brand-name { font-size: 1.6rem; font-weight: 800; }
+.brand-slogan { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 4px; }
+.doc-ref {
+  position: absolute; top: 16px; right: 18px; z-index: 3;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
+}
+.kicker {
+  display: inline-flex; align-items: center; gap: 11px;
+  margin: 24px 0 12px; position: relative; z-index: 2;
+  color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.kicker::before, .kicker::after {
+  content:''; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+header h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+.header-sub {
+  max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
+  color: rgba(255,255,255,0.82); font-size: 0.98rem;
+}
+.badges {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px; position: relative; z-index: 2;
+}
+.badge {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--azul);
+  display: flex; gap: 5px; padding: 11px 12px;
+  overflow-x: auto;
+  box-shadow: 0 4px 18px rgba(10,42,94,0.22);
+}
+nav button {
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
+  border: none; padding: 9px 16px; border-radius: 9px;
+  cursor: pointer; font-weight: 600; white-space: nowrap;
+  font-size: 0.85rem;
+}
+nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
+nav button.active {
+  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
+  color: var(--azul);
+  box-shadow: 0 4px 12px rgba(232,163,61,0.4);
+}
+main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
+.section { display: none; animation: fade 0.4s ease; }
+.section.visible { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ambar); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+}
+.eyebrow::before {
+  content:''; width: 26px; height: 3px;
+  background: linear-gradient(90deg,var(--oro),var(--oro-claro));
+  border-radius: 3px;
+}
+h2.sec-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
+  line-height: 1.2; margin-bottom: 20px;
+}
+.card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 22px 24px;
+  margin: 16px 0;
+  box-shadow: var(--sombra);
+}
+.card-lead {
+  border-left: 5px solid var(--oro);
+  background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%);
+}
+
+
+.lista { list-style:none; margin:6px 0 16px; }
+.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
+.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
+
+.narr { background:linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%); border-left:5px solid var(--oro); padding:18px 22px; border-radius:13px; margin:18px 0; font-style:italic; color:var(--texto); }
+.flujo { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:22px; margin:18px 0; box-shadow:var(--sombra); }
+.flujo-paso { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gris-borde); }
+.flujo-paso:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.flujo-num { width:36px; height:36px; border-radius:50%; background:var(--azul); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+.flujo-content h4 { margin:0 0 6px; color:var(--azul); font-size:1rem; }
+.flujo-content p { margin:0; font-size:.9rem; }
+
+.checkpoint { background:var(--azul-suave); border:2px solid var(--azul-borde); border-radius:14px; padding:18px 20px; margin:20px 0; }
+.checkpoint-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1.05rem; }
+.checkpoint-q { font-weight:600; margin:10px 0; color:var(--texto); }
+.checkpoint-opts { list-style:none; margin:10px 0; padding:0; }
+.checkpoint-opts li { padding:10px 14px; margin:6px 0; background:#fff; border:1.5px solid var(--gris-borde); border-radius:9px; cursor:pointer; transition:all .15s; }
+.checkpoint-opts li:hover { border-color:var(--oro); background:var(--oro-suave); }
+.checkpoint-opts li.ok { border-color:var(--verde); background:var(--verde-suave); }
+.checkpoint-opts li.no { border-color:var(--rojo); background:var(--rojo-suave); opacity:.6; }
+.checkpoint-fb { display:none; margin-top:8px; padding:10px 13px; border-radius:8px; font-size:.88rem; }
+.checkpoint-fb.show { display:block; }
+.checkpoint-fb.ok { background:var(--verde-suave); border-left:3px solid var(--verde); }
+.checkpoint-fb.no { background:var(--rojo-suave); border-left:3px solid var(--rojo); }
+
+.practica { background:var(--verde-suave); border:1px solid var(--verde-borde); border-left:5px solid var(--verde); border-radius:13px; padding:16px 20px; margin:16px 0; }
+.practica-title { font-weight:800; color:var(--verde); margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+.practica p { margin-bottom:10px; font-size:.9rem; }
+.practica p:last-child { margin-bottom:0; }
+
+.ojo { background:var(--ambar-suave); border:1px solid var(--ambar-borde); border-radius:10px; padding:11px 16px; margin:14px 0; display:flex; align-items:flex-start; gap:10px; }
+.ojo-icon { font-size:1.2rem; flex-shrink:0; }
+.ojo-text { font-size:.88rem; color:var(--texto); }
+.ojo-text strong { color:var(--ambar); }
+
+.fuentes { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:18px 22px; margin:22px 0; }
+.fuentes-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1rem; }
+.fuentes ul { list-style:none; padding:0; margin:0; }
+.fuentes ul li { margin-bottom:10px; padding-left:26px; position:relative; }
+.fuentes ul li::before { content:'🔗'; position:absolute; left:0; }
+.fuentes ul li:last-child { margin-bottom:0; }
+.fuentes a { color:var(--azul-claro); font-weight:600; text-decoration:none; border-bottom:1px dotted var(--azul-claro); }
+.fuentes a:hover { color:var(--oro); border-bottom-color:var(--oro); }
+
+.concepto { background:linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
+.concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom:2px dashed var(--oro-borde); }
+.ch-icon { font-size:1.4rem; }
+.concepto-body { padding:6px 14px 12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+.capa { padding:13px 15px; border-radius:12px; display:flex; gap:11px; align-items:flex-start; background:var(--blanco); border:1px solid var(--gris-borde); transition:transform .15s; }
+
+.capa:hover { transform:translateY(-2px); box-shadow:var(--sombra); }
+.capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+.capa-icon.def { background:var(--azul-suave); }
+.capa-icon.apl { background:var(--verde-suave); }
+.capa-icon.eje { background:var(--oro-suave); }
+.capa-icon.cnsc { background:var(--rojo-suave); }
+.capa-content { flex:1; }
+.capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
+.capa.cap-def .label { color:var(--azul); }
+.capa.cap-apl .label { color:var(--verde); }
+.capa.cap-eje .label { color:var(--ambar); }
+.capa.cap-cnsc .label { color:var(--rojo); }
+.capa-content p { margin-bottom:0; font-size:.9rem; line-height:1.55; }
+
+.box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
+.box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
+.box p:last-child { margin-bottom:0; }
+.box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
+.box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
+.box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
+.box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
+.box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
+
+.tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
+table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
+th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
+td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+tr:nth-child(even) td { background:#FAF8F2; }
+
+.caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
+.caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
+.caso-body { padding:18px 20px; }
+.caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+.caso-body .label:first-child { margin-top:0; }
+.resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
+
+.trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
+.trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
+.trampa-detail { padding:16px 18px; background:var(--blanco); }
+.trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
+.trampa-detail .t-row:last-child { margin-bottom:0; }
+.trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
+.trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
+.trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
+
+.flash-intro { text-align:center; margin-bottom:20px; color:var(--texto-suave); }
+
+.flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom:12px; }
+.flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
+.flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
+.flashcard.flipped .flashcard-inner { transform:rotateY(180deg); }
+.flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
+.flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
+.flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
+.flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
+.flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
+.flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
+.flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
+.flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
+.flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
+.flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
+.flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
+
+.glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
+.glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
+.glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
+.glo-item dd { font-size:.86rem; color:var(--texto-suave); }
+
+.quiz-intro { text-align:center; margin-bottom:18px; }
+.quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
+.quiz-formato strong { color:var(--azul); }
+.dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
+.tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
+.tag.b { background:var(--verde-suave); color:var(--verde); }
+.tag.i { background:var(--azul-suave); color:var(--azul); }
+.tag.a { background:var(--rojo-suave); color:var(--rojo); }
+
+.pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
+.pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
+.nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
+.nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
+
+.nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
+.nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
+.q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
+.q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
+.opciones { display:flex; flex-direction:column; gap:9px; }
+.opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
+.opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
+.opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
+.opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
+.opcion.correcta .letra { background:var(--verde); color:#fff; }
+.opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
+.opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
+.opcion.bloqueada { pointer-events:none; }
+.feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
+.feedback.show { display:block; }
+.feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
+.feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
+
+#resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
+#resultado.show { display:block; }
+.score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
+.btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
+.btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
+
+.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
+.resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
+.resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
+.resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
+
+.cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
+.cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
+.cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
+.cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
+
+footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
+footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
+footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
+footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
+
+
+.advance-bar { margin-top:36px; padding-top:22px; border-top:2px dashed var(--oro); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.advance-hint { color:var(--texto-suave); font-style:italic; }
+.advance-btn { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); border:none; padding:12px 26px; border-radius:11px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(232,163,61,.35); transition:all .2s; font-family:inherit; font-size:.92rem; }
+.advance-btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
+.advance-btn.final { background:linear-gradient(135deg,var(--verde),#2A9F66); color:#fff; }
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-SAL-14</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 60 60" width="32" height="32">
+        <path d="M18 42 L30 18 L35 23 L42 18" stroke="#0A2A5E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M38 16 L42 18 L40 22 Z" fill="#0A2A5E"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada al ascenso público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 14 · Funcional · Salud</div>
+  <h1>Historia Clínica, Registro y Confidencialidad en Salud</h1>
+  <p class="header-sub">Domina la historia clínica como documento legal: sus características, el registro profesional, la reserva y confidencialidad, el consentimiento informado y la historia clínica electrónica</p>
+  <div class="badges">
+    <span class="badge">📅 Día 14 de 21</span>
+    <span class="badge">⏱ 85-100 min</span>
+    <span class="badge">🎯 Prueba escrita CNSC · Nivel Profesional</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+
+
+<main>
+
+<!-- SECCIÓN 0: OBJETIVO -->
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+
+  <div class="narr">
+    <strong>Cada intervención que realizas debe quedar registrada.</strong> La historia clínica no es un trámite: es un documento legal que da continuidad al cuidado, protege al paciente y te protege a ti. Y va acompañada de un deber igual de importante: la confidencialidad. Esta guía te prepara para dominar el registro profesional, la reserva de la información y el consentimiento informado, temas que la CNSC evalúa en todos los cargos de salud del nivel profesional.
+  </div>
+
+  <div class="card card-lead">
+    <p><strong>Al finalizar esta guía dominarás:</strong></p>
+    <ul class="lista">
+      <li><strong>La historia clínica:</strong> qué es, su obligatoriedad y su marco normativo (Resolución 1995 de 1999).</li>
+      <li><strong>Las características de la historia clínica:</strong> integralidad, secuencialidad, racionalidad científica, disponibilidad y oportunidad.</li>
+      <li><strong>El registro profesional:</strong> cómo y cuándo registrar tu intervención, y por qué "lo que no se registra, no se hizo".</li>
+      <li><strong>La reserva y la confidencialidad:</strong> quiénes pueden acceder legalmente a la historia clínica y el secreto profesional.</li>
+      <li><strong>El consentimiento informado:</strong> qué es, cuándo se requiere y sus excepciones.</li>
+      <li><strong>La historia clínica electrónica interoperable (Ley 2015 de 2020) y la protección de datos (habeas data, Ley 1581 de 2012).</strong></li>
+      <li><strong>Las implicaciones legales del registro:</strong> valor probatorio, archivo y responsabilidad.</li>
+    </ul>
+  </div>
+
+  <div class="box gold">
+    <div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al terminar, sabrás <strong>cómo registrar correctamente</strong>, <strong>qué características debe cumplir la historia clínica</strong>, <strong>quién puede acceder a ella</strong> y <strong>cómo proteger la confidencialidad</strong>. Es un conocimiento transversal e imprescindible para cualquier profesional de la salud.</p>
+  </div>
+</section>
+
+<!-- SECCIÓN 1: IMPORTANCIA -->
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema aparece en la prueba CNSC?</h2>
+
+  <div class="card">
+    <p>La CNSC evalúa la <strong>historia clínica, el registro y la confidencialidad</strong> porque:</p>
+    <ul class="lista">
+      <li><strong>Es un deber legal de todo profesional de la salud:</strong> registrar correctamente y proteger la información no es opcional; está regulado y su incumplimiento acarrea responsabilidad.</li>
+      <li><strong>Garantiza la continuidad y la seguridad del cuidado:</strong> un buen registro permite que el equipo dé seguimiento y evita errores; una historia incompleta pone en riesgo al paciente.</li>
+      <li><strong>Protege derechos fundamentales:</strong> la confidencialidad y el habeas data son derechos del paciente. El profesional debe conocer sus límites y excepciones.</li>
+      <li><strong>Aparece en casos situacionales:</strong> la CNSC pregunta "¿puede el profesional entregar la historia a X?", "¿cómo debe registrar?", "¿requiere consentimiento?".</li>
+    </ul>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📊 Dato clave</div>
+    <p>La historia clínica es un <strong>documento privado, obligatorio y sometido a reserva</strong> (Resolución 1995 de 1999). Su correcto manejo es evaluado en la franja funcional de los concursos de salud porque atraviesa todo el ejercicio profesional, sin importar la disciplina.</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Si no dominas este tema</div>
+    <p>Podrías creer que cualquiera puede acceder a la historia clínica, registrar de forma incompleta o compartir información sin autorización. La CNSC diseña distractores con estos errores. <strong>Conocer las reglas de registro y reserva te asegura puntos y te protege legalmente en la práctica.</strong></p>
+  </div>
+</section>
+
+<!-- SECCIÓN 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Contenido esencial</h2>
+
+  <p><strong>Esta sección desarrolla 7 conceptos clave.</strong> Cada uno se presenta en 4 capas: <strong style="color:var(--azul);">🟦 Definición</strong> · <strong style="color:var(--verde);">🟩 Aplicación</strong> · <strong style="color:var(--ambar);">🟨 Ejemplo real</strong> · <strong style="color:var(--rojo);">🟥 Trampa CNSC</strong>.</p>
+
+  <!-- CONCEPTO 1 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">📋</span>
+      <span>1. La Historia Clínica: Qué es y Marco Normativo</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>historia clínica</strong> es un documento privado, obligatorio y sometido a reserva, en el que se registran cronológicamente las condiciones de salud del paciente, los actos médicos y demás procedimientos ejecutados por el equipo de salud (<strong>Resolución 1995 de 1999</strong>). Es <strong>obligatoria</strong> para toda atención en salud y solo puede ser conocida por terceros previa autorización del paciente o en los casos previstos por la ley.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Todo profesional del equipo de salud —incluido el terapeuta ocupacional— <strong>registra su actuación en la historia clínica</strong>: evaluación, objetivos, intervención y evolución. La historia integra los aportes de todas las disciplinas en un mismo expediente del paciente. <strong>No es un cuaderno personal: es el documento oficial de la atención.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Un paciente es atendido por medicina, enfermería, fisioterapia y terapia ocupacional. Cada profesional registra su intervención en la historia clínica única del paciente, de forma que cualquier miembro autorizado del equipo pueda conocer su estado y darle continuidad. <strong>La historia clínica unifica el cuidado.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta por la <strong>naturaleza de la historia clínica</strong> (documento privado, obligatorio, con reserva) y su marco (Resolución 1995/1999). <strong>Trampa típica:</strong> creer que la historia es un documento público de libre acceso. Es <strong>privado y reservado</strong>: su acceso está regulado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ojo">
+    <span class="ojo-icon">👁️</span>
+    <div class="ojo-text"><strong>Ojo en la prueba:</strong> La historia clínica es <strong>privada, obligatoria y sometida a reserva</strong>. Si una opción la trata como documento público de libre consulta, es incorrecta.</div>
+  </div>
+
+  <!-- CONCEPTO 2 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">✅</span>
+      <span>2. Características de la Historia Clínica</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La Resolución 1995 de 1999 define características esenciales: <strong>Integralidad</strong> (reúne todos los aspectos de la atención: asistenciales, preventivos, etc.), <strong>Secuencialidad</strong> (los registros se ordenan cronológicamente), <strong>Racionalidad científica</strong> (las anotaciones se basan en criterio técnico-científico y evidencian el razonamiento), <strong>Disponibilidad</strong> (posibilidad de acceder cuando se necesite, respetando la reserva) y <strong>Oportunidad</strong> (el registro se hace de forma simultánea o inmediata a la atención).</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>En la práctica: registrar <strong>en el momento</strong> de la atención (oportunidad), <strong>en orden</strong> (secuencialidad), con <strong>fundamento técnico</strong> (racionalidad), <strong>completo</strong> (integralidad) y de forma <strong>accesible</strong> para el equipo autorizado (disponibilidad). Un registro tardío, incompleto o desordenado incumple estas características y compromete la calidad y el valor legal del documento.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Un profesional deja para el final del turno todos sus registros y anota "atención sin novedad" sin detalle. Esto vulnera la <strong>oportunidad</strong> (registro no simultáneo), la <strong>racionalidad</strong> (sin fundamento) y la <strong>integralidad</strong> (incompleto). Ante un evento, esa historia no respalda ni al paciente ni al profesional. <strong>Registrar bien y a tiempo es calidad y protección legal.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta por las <strong>características</strong> y por identificar cuál se vulnera en un caso. <strong>Trampa:</strong> confundir <strong>oportunidad</strong> (registrar a tiempo) con <strong>disponibilidad</strong> (poder acceder al documento). <strong>Pista:</strong> si el problema es el momento del registro, es oportunidad; si es el acceso, es disponibilidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="practica">
+    <div class="practica-title">📋 En la práctica</div>
+    <p><strong>Las cinco características de la historia clínica (Resolución 1995/1999):</strong></p>
+    <div class="tabla-wrap">
+      <table>
+        <tr>
+          <th>Característica</th>
+          <th>Qué exige</th>
+          <th>Se vulnera si…</th>
+        </tr>
+        <tr>
+          <td><strong>Integralidad</strong></td>
+          <td>Reunir todos los aspectos de la atención</td>
+          <td>Se omiten datos relevantes de la atención</td>
+        </tr>
+        <tr>
+          <td><strong>Secuencialidad</strong></td>
+          <td>Registros en orden cronológico</td>
+          <td>Anotaciones desordenadas o fuera de secuencia</td>
+        </tr>
+        <tr>
+          <td><strong>Racionalidad científica</strong></td>
+          <td>Fundamento técnico-científico del registro</td>
+          <td>Anotaciones sin criterio ni evidencia</td>
+        </tr>
+        <tr>
+          <td><strong>Disponibilidad</strong></td>
+          <td>Acceso cuando se requiere (con reserva)</td>
+          <td>No se puede acceder al documento cuando se necesita</td>
+        </tr>
+        <tr>
+          <td><strong>Oportunidad</strong></td>
+          <td>Registro simultáneo o inmediato a la atención</td>
+          <td>Registro tardío o diferido sin justificación</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 1</div>
+    <p class="checkpoint-q"><strong>Un profesional realiza sus registros de toda la jornada al final del turno, horas después de atender a los pacientes. ¿Qué característica de la historia clínica se vulnera principalmente?</strong></p>
+    <ul class="checkpoint-opts" id="cp1">
+      <li data-ok="0">Disponibilidad</li>
+      <li data-ok="1">Oportunidad</li>
+      <li data-ok="0">Secuencialidad</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb1"></div>
+  </div>
+
+  <!-- CONCEPTO 3 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">✍️</span>
+      <span>3. El Registro Profesional como Acto y Prueba</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El <strong>registro</strong> es la anotación que cada profesional realiza de su actuación: valoración, objetivos, intervención, evolución y recomendaciones. Es un <strong>acto profesional</strong> y, a la vez, un <strong>medio de prueba</strong> con valor legal. Rige el principio: <strong>"lo que no se registra, se considera no realizado"</strong>. El registro debe ser claro, legible, veraz, sin espacios en blanco indebidos ni alteraciones, y firmado/identificado por quien lo realiza.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El terapeuta ocupacional registra sus notas de evolución con fundamento, describiendo lo hecho y la respuesta del usuario. <strong>No se corrige "tachando" ni se altera lo escrito;</strong> las correcciones se hacen conforme al procedimiento (nota aclaratoria, sin borrar). Un registro adecuado protege la continuidad del cuidado y respalda al profesional ante cualquier revisión.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Ante una reclamación, se revisa la historia clínica: si la intervención está bien registrada (fecha, hora, contenido, firma), respalda al profesional y a la entidad. Si no está registrada, jurídicamente <strong>se asume que no se hizo</strong>, aunque en la práctica sí haya ocurrido. <strong>El registro es la mejor defensa profesional.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta por <strong>cómo registrar correctamente</strong> y por el <strong>valor probatorio</strong>. <strong>Trampa:</strong> pensar que se puede "arreglar" la historia borrando o alterando lo escrito, o que registrar es un trámite secundario. <strong>Regla:</strong> registro veraz, oportuno, sin alteraciones; lo no registrado se considera no realizado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ojo">
+    <span class="ojo-icon">👁️</span>
+    <div class="ojo-text"><strong>Ojo en la prueba:</strong> "Lo que no se registra, no se hizo." Nunca se altera ni se borra lo escrito en la historia; las correcciones se hacen con nota aclaratoria. Registrar a tiempo y con veracidad protege al paciente y al profesional.</div>
+  </div>
+<!-- CONTINUA DESARROLLO -->
+
+
+  <!-- CONCEPTO 4 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🔒</span>
+      <span>4. Reserva y Confidencialidad de la Historia Clínica</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La historia clínica está sometida a <strong>reserva</strong>: su contenido es confidencial y solo puede ser conocido por terceros con autorización. Según la Resolución 1995 de 1999, pueden acceder legalmente: <strong>el usuario</strong> (titular de la información), <strong>el equipo de salud que lo atiende</strong>, <strong>las autoridades judiciales y de salud</strong> en los casos previstos por la ley, y <strong>las demás personas autorizadas por el usuario o por la ley</strong>. El profesional está obligado al <strong>secreto profesional</strong>.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>No se entrega la historia ni se divulga información a familiares, empleadores, aseguradoras o terceros <strong>sin autorización del usuario</strong> (salvo excepciones legales). El profesional protege la información en todo soporte (papel o electrónico) y evita comentarios sobre pacientes en lugares públicos. <strong>La confidencialidad es un derecho del paciente y un deber ético-legal del profesional.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>El empleador de un paciente llama a la entidad pidiendo el diagnóstico "para justificar una incapacidad". El profesional <strong>no entrega información clínica</strong> sin autorización del usuario; orienta sobre los canales formales (certificados que el propio paciente autorice). <strong>Divulgar sin autorización vulnera la reserva y puede acarrear responsabilidad.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Casos sobre <strong>quién puede acceder</strong> a la historia clínica. <strong>Trampa:</strong> creer que cualquier familiar o el empleador pueden acceder libremente. <strong>Regla:</strong> acceden el usuario, el equipo tratante, las autoridades en casos legales y quien el usuario o la ley autoricen; los demás, no.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 5 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">🖊️</span>
+      <span>5. Consentimiento Informado</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>El <strong>consentimiento informado</strong> es la aceptación libre y voluntaria de un procedimiento por parte del paciente, tras recibir información clara y suficiente sobre su naturaleza, beneficios, riesgos y alternativas. Es una expresión de la <strong>autonomía</strong> del paciente (Ley 23 de 1981, Ley 1751 de 2015). Debe registrarse en la historia clínica. <strong>Excepción:</strong> las urgencias vitales, donde no hay tiempo de obtenerlo y prima salvar la vida.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>Antes de intervenciones que lo requieran, el profesional <strong>informa y obtiene el consentimiento</strong>, respetando la decisión del paciente (que puede aceptar o rechazar). En menores o personas sin capacidad de decidir, actúan los representantes legales, respetando el interés superior. <strong>El consentimiento no es solo firmar un papel: es un proceso de información y decisión.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Antes de iniciar un programa de intervención, el terapeuta explica al usuario en qué consiste, qué se espera y sus alternativas, y registra su consentimiento. Si el usuario, informado, decide no participar, se respeta su decisión. <strong>Informar y respetar la decisión es parte del acto profesional.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta <strong>cuándo se requiere consentimiento y sus excepciones</strong>. <strong>Trampa:</strong> creer que el consentimiento es "solo una firma" o que puede omitirse por comodidad. También, olvidar que en <strong>urgencia vital</strong> se actúa sin consentimiento previo para salvar la vida.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 2</div>
+    <p class="checkpoint-q"><strong>El empleador de un paciente solicita a la entidad el diagnóstico clínico del trabajador. No hay autorización del paciente. ¿Qué debe hacer el profesional?</strong></p>
+    <ul class="checkpoint-opts" id="cp2">
+      <li data-ok="0">Entregar el diagnóstico porque el empleador tiene un interés legítimo</li>
+      <li data-ok="1">No divulgar la información clínica sin autorización del paciente y orientar hacia los canales formales</li>
+      <li data-ok="0">Confirmar solo si la enfermedad es grave o no</li>
+    </ul>
+    <div class="checkpoint-fb" id="cpfb2"></div>
+  </div>
+
+  <!-- CONCEPTO 6 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">💻</span>
+      <span>6. Historia Clínica Electrónica y Protección de Datos</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La <strong>Ley 2015 de 2020</strong> crea la <strong>Historia Clínica Electrónica Interoperable</strong>, que permite el intercambio seguro de la información clínica entre prestadores autorizados, mejorando la continuidad del cuidado. La información de salud es un <strong>dato personal sensible</strong>, protegido por el régimen de <strong>habeas data</strong> (<strong>Ley 1581 de 2012</strong>): el titular tiene derecho a conocer, actualizar, rectificar y a que sus datos se traten con finalidad, seguridad y confidencialidad.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>En sistemas electrónicos, el profesional <strong>usa sus propias credenciales</strong>, no comparte contraseñas, accede solo a la información necesaria para la atención (principio de finalidad) y no consulta historias de personas que no atiende. La interoperabilidad no elimina la reserva: <strong>digital o en papel, la confidencialidad y la seguridad de los datos se mantienen.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Un profesional siente curiosidad y consulta en el sistema la historia clínica de un familiar o de una persona conocida que no está bajo su cuidado. Esto <strong>vulnera la reserva y el habeas data</strong>, aunque el sistema le permita el acceso técnico. Solo se accede a lo necesario para la atención propia. <strong>El acceso técnico no autoriza el acceso indebido.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta por la <strong>HC electrónica interoperable</strong> y la <strong>protección de datos</strong>. <strong>Trampa:</strong> creer que en digital "todo se puede consultar" o compartir credenciales. <strong>Regla:</strong> acceso con credenciales propias, solo a lo necesario, manteniendo confidencialidad y seguridad (Ley 2015/2020, Ley 1581/2012).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPTO 7 -->
+  <div class="concepto">
+    <div class="concepto-head">
+      <span class="ch-icon">⚖️</span>
+      <span>7. Implicaciones Legales, Archivo y Retención</span>
+    </div>
+    <div class="concepto-body">
+      <div class="capa cap-def">
+        <div class="capa-icon def">📘</div>
+        <div class="capa-content">
+          <span class="label">Definición</span>
+          <p>La historia clínica tiene <strong>valor probatorio</strong>: es prueba de la atención prestada y del cumplimiento del deber profesional. Debe <strong>conservarse y archivarse</strong> según la normativa (la Resolución 1995 de 1999 y sus modificaciones establecen tiempos mínimos de retención y condiciones de custodia). Su alteración, pérdida o divulgación indebida genera <strong>responsabilidad disciplinaria, civil o penal</strong>. La entidad es responsable de la custodia y el usuario es el titular de la información.</p>
+        </div>
+      </div>
+      <div class="capa cap-apl">
+        <div class="capa-icon apl">🎯</div>
+        <div class="capa-content">
+          <span class="label">Aplicación</span>
+          <p>El profesional contribuye a la integridad del documento: registra veraz y oportunamente, no altera anotaciones, y respeta las normas de custodia y archivo de la entidad. <strong>Un registro completo y bien conservado es garantía de continuidad, calidad y respaldo legal</strong> para el paciente, el profesional y la institución.</p>
+        </div>
+      </div>
+      <div class="capa cap-eje">
+        <div class="capa-icon eje">🏥</div>
+        <div class="capa-content">
+          <span class="label">Ejemplo real</span>
+          <p>Durante una auditoría o un proceso judicial, la historia clínica se solicita como prueba. Si está completa, oportuna, sin alteraciones y bien archivada, respalda la actuación. Si presenta enmendaduras, vacíos o registros tardíos, se debilita su valor y puede comprometer al profesional y a la entidad. <strong>La calidad del registro se prueba cuando más se necesita.</strong></p>
+        </div>
+      </div>
+      <div class="capa cap-cnsc">
+        <div class="capa-icon cnsc">📝</div>
+        <div class="capa-content">
+          <span class="label">Cómo lo evalúa la CNSC</span>
+          <p>Pregunta por el <strong>valor probatorio, la custodia y la responsabilidad</strong>. <strong>Trampa:</strong> creer que la historia se puede destruir o modificar libremente, o que el paciente "no tiene derecho" a su información. <strong>Regla:</strong> se conserva según norma, el usuario es titular, y su manejo indebido genera responsabilidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fuentes">
+    <div class="fuentes-title">🔗 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.minsalud.gov.co/Normatividad_Nuevo/RESOLUCI%C3%93N%201995%20DE%201999.pdf" target="_blank">Resolución 1995 de 1999 — Normas para el manejo de la Historia Clínica</a> (MinSalud)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_2015_2020.html" target="_blank">Ley 2015 de 2020 — Historia Clínica Electrónica Interoperable</a> (Secretaría del Senado)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank">Ley 1581 de 2012 — Protección de datos personales (habeas data)</a> (Secretaría del Senado)</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1981.html" target="_blank">Ley 23 de 1981 — Ética médica (secreto profesional y consentimiento)</a> (Secretaría del Senado)</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Diferencias clave</h2>
+
+  <p>La CNSC diseña distractores basados en confusiones típicas. Estas tablas te ayudan a distinguir conceptos del manejo de la información clínica.</p>
+
+  <h3><span class="h3-chip">1</span> Documento privado y reservado vs. documento público</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr>
+        <th>Aspecto</th>
+        <th>Historia clínica (privada y reservada)</th>
+        <th>Documento público</th>
+      </tr>
+      <tr>
+        <td><strong>Acceso</strong></td>
+        <td>Restringido: usuario, equipo tratante, autoridades y autorizados</td>
+        <td>Libre, para cualquier persona</td>
+      </tr>
+      <tr>
+        <td><strong>Titular de la información</strong></td>
+        <td>El usuario (paciente)</td>
+        <td>No aplica / de interés general</td>
+      </tr>
+      <tr>
+        <td><strong>Deber del profesional</strong></td>
+        <td>Secreto profesional y protección de datos</td>
+        <td>No hay reserva</td>
+      </tr>
+    </table>
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Trampa típica</div>
+    <p><strong>"Cualquiera puede pedir y obtener la historia clínica."</strong> Falso: es un documento privado y reservado. Solo acceden el usuario, el equipo tratante, las autoridades en casos legales y quien esté autorizado.</p>
+  </div>
+
+  <h3><span class="h3-chip">2</span> Oportunidad vs. Disponibilidad</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr>
+        <th>Aspecto</th>
+        <th>Oportunidad</th>
+        <th>Disponibilidad</th>
+      </tr>
+      <tr>
+        <td><strong>Qué exige</strong></td>
+        <td>Registrar de forma simultánea o inmediata a la atención</td>
+        <td>Poder acceder al documento cuando se necesita</td>
+      </tr>
+      <tr>
+        <td><strong>Se vulnera si…</strong></td>
+        <td>Se registra tarde, horas o días después</td>
+        <td>La historia no está accesible cuando se requiere</td>
+      </tr>
+      <tr>
+        <td><strong>Foco</strong></td>
+        <td>El momento del registro</td>
+        <td>El acceso al documento</td>
+      </tr>
+    </table>
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Trampa típica</div>
+    <p><strong>Confundir oportunidad con disponibilidad.</strong> Si el problema es <em>cuándo</em> se registró (tarde), es oportunidad. Si el problema es que <em>no se puede acceder</em> al documento, es disponibilidad.</p>
+  </div>
+
+  <h3><span class="h3-chip">3</span> Quién puede acceder a la historia clínica</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr>
+        <th>Persona</th>
+        <th>¿Puede acceder?</th>
+        <th>Condición</th>
+      </tr>
+      <tr>
+        <td><strong>El usuario (paciente)</strong></td>
+        <td>Sí</td>
+        <td>Es el titular de la información</td>
+      </tr>
+      <tr>
+        <td><strong>Equipo de salud tratante</strong></td>
+        <td>Sí</td>
+        <td>Para la atención del paciente</td>
+      </tr>
+      <tr>
+        <td><strong>Autoridades judiciales/de salud</strong></td>
+        <td>Sí</td>
+        <td>En los casos previstos por la ley</td>
+      </tr>
+      <tr>
+        <td><strong>Familiar / empleador / tercero</strong></td>
+        <td>No, salvo autorización</td>
+        <td>Requiere autorización del usuario o de la ley</td>
+      </tr>
+    </table>
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Trampa típica</div>
+    <p><strong>"El familiar o el empleador pueden acceder libremente."</strong> No: necesitan autorización del usuario o base legal. El acceso está regulado por la reserva de la historia clínica.</p>
+  </div>
+
+  <h3><span class="h3-chip">4</span> Consentimiento informado: cuándo se requiere</h3>
+  <div class="tabla-wrap">
+    <table>
+      <tr>
+        <th>Situación</th>
+        <th>¿Se requiere consentimiento previo?</th>
+      </tr>
+      <tr>
+        <td>Intervención o procedimiento programado</td>
+        <td>Sí: informar y obtener consentimiento antes</td>
+      </tr>
+      <tr>
+        <td>Paciente que rechaza, estando informado y en capacidad</td>
+        <td>Se respeta su decisión (autonomía)</td>
+      </tr>
+      <tr>
+        <td>Urgencia vital sin tiempo de obtenerlo</td>
+        <td>No: se actúa para salvar la vida (excepción)</td>
+      </tr>
+      <tr>
+        <td>Menor o persona sin capacidad de decidir</td>
+        <td>Decide el representante legal, con interés superior</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- SECCIÓN 4: CASOS CNSC -->
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos CNSC</span>
+  <h2 class="sec-title">📂 Casos situacionales tipo CNSC</h2>
+
+  <p>Estos casos replican la estructura y dificultad de la prueba real sobre historia clínica, registro y confidencialidad.</p>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 · Solicitud de un familiar</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un familiar de un paciente adulto en capacidad de decidir solicita al profesional una copia de la historia clínica, sin autorización del paciente.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación más apropiada?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta">
+        <strong>✅ No entregar la historia clínica sin autorización del paciente, explicar que es un documento sometido a reserva y orientar sobre el procedimiento para que el titular autorice el acceso.</strong> — El paciente es el titular; el familiar requiere autorización o base legal. Entregarla sin autorización vulnera la reserva (Resolución 1995/1999).
+      </div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 · Registro tardío</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un profesional acostumbra registrar todas sus intervenciones al final del turno, varias horas después. Un compañero le dice que "da igual mientras quede escrito".</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué observación es la correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta">
+        <strong>✅ El registro debe ser oportuno (simultáneo o inmediato a la atención); registrar tarde vulnera la característica de oportunidad, aumenta el riesgo de errores y omisiones y debilita el valor de la historia clínica.</strong> — La oportunidad es una característica esencial (Resolución 1995/1999). El registro tardío compromete la calidad y el respaldo legal.
+      </div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 · Corrección de un error en la historia</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Al releer una nota, un profesional detecta que anotó un dato equivocado. Piensa en borrar o tachar completamente lo escrito para que no se note.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la conducta correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta">
+        <strong>✅ No borrar ni alterar lo escrito; realizar una nota aclaratoria o corrección conforme al procedimiento, dejando constancia de la enmienda, la fecha y la identificación de quien la hace.</strong> — La historia no se altera; las correcciones se hacen de forma transparente. Borrar o adulterar compromete la integridad del documento y genera responsabilidad.
+      </div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 4 · Acceso a historia en sistema electrónico</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un profesional siente curiosidad y quiere consultar en el sistema la historia clínica de una persona conocida que no está bajo su cuidado. El sistema le permite el acceso técnico.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué debe hacer?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta">
+        <strong>✅ Abstenerse de consultar: solo se accede a la información de los pacientes que atiende y a lo necesario para la atención. Consultar por curiosidad vulnera la reserva y el habeas data, aunque el sistema lo permita.</strong> — El acceso técnico no autoriza el acceso indebido (Ley 1581/2012, Ley 2015/2020). El principio de finalidad limita el uso de los datos.
+      </div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 5 · Consentimiento informado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Antes de iniciar un programa de intervención con un usuario adulto en capacidad de decidir, un colega sugiere "empezar de una vez y luego, si acaso, hacerle firmar un papel".</p>
+      <span class="label">Pregunta</span>
+      <p>¿Cuál es la actuación correcta?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta">
+        <strong>✅ Informar al usuario en qué consiste la intervención, sus beneficios, riesgos y alternativas, obtener su consentimiento antes de iniciar y registrarlo en la historia clínica, respetando su decisión de aceptar o rechazar.</strong> — El consentimiento informado es un proceso previo que expresa la autonomía del paciente (Ley 23/1981, Ley 1751/2015), no una firma posterior de trámite.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 5: ERRORES FRECUENTES -->
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Los 6 errores que más cuestan puntos</h2>
+
+  <p>Estos errores aparecen una y otra vez en el manejo de la información clínica. Conocerlos te ahorra puntos perdidos.</p>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 1 · Tratar la historia clínica como documento público</div>
+    <p><strong>El error:</strong> creer que cualquiera puede acceder libremente a la historia clínica.</p>
+    <p><strong>Por qué falla:</strong> es un documento privado y sometido a reserva; el acceso está regulado.</p>
+    <p><strong>Cómo corregir:</strong> recuerda quiénes acceden: <strong>usuario, equipo tratante, autoridades legales y autorizados</strong>. Los demás requieren autorización.</p>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 2 · Registrar tarde o de forma incompleta</div>
+    <p><strong>El error:</strong> diferir el registro o anotar sin detalle ni fundamento.</p>
+    <p><strong>Por qué falla:</strong> vulnera la oportunidad, la integralidad y la racionalidad; debilita la calidad y el valor legal.</p>
+    <p><strong>Cómo corregir:</strong> registra <strong>a tiempo, completo y con fundamento técnico</strong>; el registro es acto profesional y prueba.</p>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 3 · Alterar o borrar lo escrito</div>
+    <p><strong>El error:</strong> tachar, borrar o modificar anotaciones para "corregir" errores.</p>
+    <p><strong>Por qué falla:</strong> compromete la integridad del documento y genera responsabilidad.</p>
+    <p><strong>Cómo corregir:</strong> usa <strong>notas aclaratorias</strong> conforme al procedimiento, sin borrar, con fecha e identificación.</p>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 4 · Divulgar información sin autorización</div>
+    <p><strong>El error:</strong> compartir el diagnóstico o datos clínicos con familiares, empleadores o terceros sin autorización.</p>
+    <p><strong>Por qué falla:</strong> viola la reserva, el secreto profesional y el habeas data.</p>
+    <p><strong>Cómo corregir:</strong> comparte solo con quien corresponde y con <strong>autorización del usuario o base legal</strong>.</p>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 5 · Consentimiento como simple firma</div>
+    <p><strong>El error:</strong> reducir el consentimiento informado a firmar un papel, o iniciar sin informar.</p>
+    <p><strong>Por qué falla:</strong> el consentimiento es un proceso de información y decisión que expresa la autonomía del paciente.</p>
+    <p><strong>Cómo corregir:</strong> <strong>informa, resuelve dudas, obtén y registra el consentimiento antes</strong> de la intervención; respeta la decisión.</p>
+  </div>
+
+  <div class="box danger">
+    <div class="box-title">❌ Error 6 · Mal uso de credenciales y acceso electrónico</div>
+    <p><strong>El error:</strong> compartir contraseñas o consultar historias de personas que no se atienden.</p>
+    <p><strong>Por qué falla:</strong> el acceso técnico no autoriza el acceso indebido; vulnera el habeas data y la reserva.</p>
+    <p><strong>Cómo corregir:</strong> usa <strong>credenciales propias</strong>, accede solo a lo necesario para la atención y protege los datos.</p>
+  </div>
+</section>
+
+<!-- SECCIÓN 6: TIPS -->
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 6 estrategias para ganar puntos</h2>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 1 · Privada y reservada, siempre</div>
+    <p>Ante preguntas de acceso, recuerda: la historia clínica es <strong>privada y reservada</strong>. Descarta opciones que la entreguen a familiares, empleadores o terceros sin autorización.</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 2 · "Lo que no se registra, no se hizo"</div>
+    <p>Si el caso trata de una reclamación o auditoría, la respuesta correcta valora el <strong>registro oportuno, veraz y completo</strong>. El registro es tu mejor respaldo profesional.</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 3 · Oportunidad = momento; Disponibilidad = acceso</div>
+    <p>Si el problema es <strong>cuándo</strong> se registró, es oportunidad. Si es que <strong>no se puede acceder</strong> al documento, es disponibilidad. Ubica la palabra clave del enunciado.</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 4 · No se borra: se aclara</div>
+    <p>Cuando hay un error en la historia, la respuesta correcta <strong>nunca borra ni tacha</strong>: hace una nota aclaratoria con fecha e identificación. Alterar el documento es la trampa.</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 5 · Consentimiento = proceso previo</div>
+    <p>El consentimiento informado se obtiene <strong>antes</strong> de intervenir, tras informar. La excepción es la <strong>urgencia vital</strong>. Descarta "firmar después" o "empezar sin informar".</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Tip 6 · Digital no es acceso libre</div>
+    <p>En HC electrónica, se usa <strong>credencial propia</strong> y se accede solo a lo necesario. Consultar por curiosidad o compartir claves vulnera el habeas data. El acceso técnico no autoriza el uso indebido.</p>
+  </div>
+</section>
+
+<!-- SECCIÓN 7: TRAMPAS -->
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 4 trampas diseñadas por la CNSC</h2>
+
+  <p>La CNSC construye distractores con confusiones frecuentes sobre la información clínica. Aquí las más comunes.</p>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 1 · "El familiar puede pedir la historia clínica porque es de la familia"</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Lo que parece:</strong> siendo familiar, parece natural que tenga derecho a la información.</div>
+      <div class="t-row malo"><strong>Por qué es trampa:</strong> el titular de la información es el paciente; el familiar requiere autorización o base legal.</div>
+      <div class="t-row bueno"><strong>La respuesta correcta:</strong> "No se entrega sin autorización del titular; se explica la reserva y se orienta sobre el procedimiento para acceder legalmente."</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 2 · "Si hay un error, lo mejor es borrarlo para que quede limpio"</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Lo que parece:</strong> dejar la historia "sin errores" parece prolijo y correcto.</div>
+      <div class="t-row malo"><strong>Por qué es trampa:</strong> borrar o alterar compromete la integridad del documento y genera responsabilidad legal.</div>
+      <div class="t-row bueno"><strong>La respuesta correcta:</strong> "No se borra; se realiza una nota aclaratoria conforme al procedimiento, dejando constancia de la corrección, la fecha y la identificación."</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 3 · "Registrar puede esperar; primero atiendo a todos y luego escribo"</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Lo que parece:</strong> priorizar la atención sobre el papeleo suena razonable.</div>
+      <div class="t-row malo"><strong>Por qué es trampa:</strong> el registro tardío vulnera la oportunidad, favorece errores y debilita el valor legal de la historia.</div>
+      <div class="t-row bueno"><strong>La respuesta correcta:</strong> "El registro debe ser oportuno (simultáneo o inmediato a la atención), veraz y completo."</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 4 · "Como el sistema me deja ver cualquier historia, puedo consultarla"</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Lo que parece:</strong> si el sistema lo permite, parece que está autorizado.</div>
+      <div class="t-row malo"><strong>Por qué es trampa:</strong> el acceso técnico no equivale a autorización; consultar sin relación de atención vulnera el habeas data y la reserva.</div>
+      <div class="t-row bueno"><strong>La respuesta correcta:</strong> "Solo se accede a la información de los pacientes que se atienden y a lo necesario para la atención (principio de finalidad)."</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECCIÓN 8: REPASO (Flashcards) -->
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards — Repaso activo</h2>
+
+  <p class="flash-intro">Estas 10 tarjetas condensan los conceptos esenciales sobre historia clínica, registro y confidencialidad. Haz clic para voltear y ver la respuesta.</p>
+
+  <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
+
+  <div class="flashcard" id="flashcard">
+    <div class="flashcard-inner">
+      <div class="flashcard-face flashcard-front">
+        <span class="label">Pregunta</span>
+        <p class="pregunta-flash" id="flashFront"></p>
+        <small class="hint">Haz clic para ver la respuesta</small>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <span class="label">Respuesta</span>
+        <p class="respuesta-flash" id="flashBack"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-controls">
+    <button id="flashPrev">← Anterior</button>
+    <button id="flashFlip" class="primary">Voltear tarjeta</button>
+    <button id="flashNext">Siguiente →</button>
+  </div>
+</section>
+
+<!-- SECCIÓN 9: RESUMEN + GLOSARIO -->
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen y Glosario</span>
+  <h2 class="sec-title">📋 Resumen ejecutivo</h2>
+
+  <div class="resumen-grid">
+    <div class="resumen-item">
+      <h4>📋 Historia clínica</h4>
+      <p>Documento privado, obligatorio y reservado (Res. 1995/1999). Registra la atención de todo el equipo en un expediente único del paciente.</p>
+    </div>
+    <div class="resumen-item">
+      <h4>✅ Características</h4>
+      <p>Integralidad, secuencialidad, racionalidad científica, disponibilidad y oportunidad. Registro completo, ordenado, fundamentado, accesible y a tiempo.</p>
+    </div>
+    <div class="resumen-item">
+      <h4>✍️ Registro</h4>
+      <p>Acto profesional y prueba legal. "Lo que no se registra, no se hizo". No se altera ni se borra; se corrige con nota aclaratoria.</p>
+    </div>
+    <div class="resumen-item">
+      <h4>🔒 Reserva</h4>
+      <p>Acceden usuario, equipo tratante, autoridades legales y autorizados. Familiares/empleadores requieren autorización. Secreto profesional.</p>
+    </div>
+    <div class="resumen-item">
+      <h4>🖊️ Consentimiento</h4>
+      <p>Proceso previo de información y decisión (autonomía). Se registra. Excepción: urgencia vital.</p>
+    </div>
+    <div class="resumen-item">
+      <h4>💻 HC electrónica y datos</h4>
+      <p>Ley 2015/2020 (interoperable) y Ley 1581/2012 (habeas data). Credencial propia, acceso solo a lo necesario, confidencialidad.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px;">📚 Glosario</h3>
+  <div class="glosario">
+    <div class="glo-item">
+      <dt>Historia clínica</dt>
+      <dd>Documento privado, obligatorio y reservado que registra cronológicamente la atención en salud (Resolución 1995/1999).</dd>
+    </div>
+    <div class="glo-item">
+      <dt>Reserva</dt>
+      <dd>Carácter confidencial de la historia clínica: solo acceden quienes la ley y el usuario autorizan.</dd>
+    </div>
+    <div class="glo-item">
+      <dt>Secreto profesional</dt>
+      <dd>Deber de no divulgar la información conocida en el ejercicio profesional, protegido legal y éticamente.</dd>
+    </div>
+    <div class="glo-item">
+      <dt>Consentimiento informado</dt>
+      <dd>Aceptación libre y voluntaria de un procedimiento tras recibir información clara y suficiente; expresa la autonomía del paciente.</dd>
+    </div>
+    <div class="glo-item">
+      <dt>Habeas data</dt>
+      <dd>Derecho a conocer, actualizar y rectificar los datos personales y a que se traten con finalidad, seguridad y confidencialidad (Ley 1581/2012).</dd>
+    </div>
+    <div class="glo-item">
+      <dt>Interoperabilidad</dt>
+      <dd>Capacidad de intercambiar de forma segura la información clínica entre prestadores autorizados (Ley 2015/2020).</dd>
+    </div>
+  </div>
+
+  <div class="cierre">
+    <h3>🎯 Frase para recordar</h3>
+    <p><strong>"La historia clínica es privada y reservada. Lo que no se registra, no se hizo; y lo escrito no se borra, se aclara. La confidencialidad es un derecho: sin autorización, no se comparte."</strong></p>
+  </div>
+</section>
+
+<!-- SECCIÓN 10: SIMULACRO -->
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+
+  <div class="card card-lead quiz-intro">
+    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> del manejo de la información clínica y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones (A, B, C, D); solo una es la correcta.</p>
+    <div class="quiz-formato">
+      <strong>Instrucciones:</strong> lee el caso, identifica el problema y elige la actuación más apropiada según la normativa de historia clínica, registro y confidencialidad. Al hacer clic, verás retroalimentación <strong>por cada opción</strong>.
+    </div>
+    <div class="dific-tags">
+      <span class="tag b">4 básicas</span>
+      <span class="tag i">5 intermedias</span>
+      <span class="tag a">3 avanzadas</span>
+    </div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div style="text-align:center; margin:28px 0;">
+    <button id="btnCalcular" class="btn">Ver mi resultado</button>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num" id="scoreNum">0/12</div>
+    <p id="scoreMsg"></p>
+    <div id="temasReforzar"></div>
+    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">Ascenso Público</div>
+  <div class="fslogan">Tu ruta personalizada al ascenso público</div>
+  <div class="fmeta">
+    FUN-SAL-14 · Día 14 · v1.0 — julio 2026<br>
+    © Ascenso Público — Todos los derechos reservados
+  </div>
+</footer>
+
+
+<script>
+// ===== NAVEGACIÓN Y BARRA DE LECTURA =====
+const sections = document.querySelectorAll('.section');
+const navBtns = document.querySelectorAll('nav button');
+
+function showSection(i) {
+  sections.forEach(s => s.classList.remove('visible'));
+  navBtns.forEach(b => b.classList.remove('active'));
+  sections[i].classList.add('visible');
+  navBtns[i].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('readbar').style.width = scrolled + '%';
+});
+
+// ===== BOTONES "AVANZAR" =====
+const titulosCortos = [
+  'Importancia', 'Desarrollo', 'Comparaciones', 'Casos CNSC',
+  'Errores', 'Tips', 'Trampas', 'Repaso', 'Resumen', 'Simulacro', null
+];
+
+sections.forEach((sec, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'advance-bar';
+  if (i < sections.length - 1) {
+    bar.innerHTML = `
+      <span class="advance-hint">¿Listo para continuar?</span>
+      <button class="advance-btn" data-target="${i + 1}">
+        Avanzar a ${titulosCortos[i]} →
+      </button>`;
+  } else {
+    bar.innerHTML = `
+      <span class="advance-hint">🎓 Has completado todo el contenido</span>
+      <button class="advance-btn final" data-target="finalizar">
+        ✅ Finalizar Día 14
+      </button>`;
+  }
+  sec.appendChild(bar);
+});
+
+document.querySelectorAll('.advance-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.target;
+    if (t === 'finalizar') {
+      alert('🎓 ¡Felicitaciones! Completaste el Día 14.\n\nMañana avanzas con FUN-SAL-15 · Educación al Paciente/Familia y Trabajo Interdisciplinario.\n\n🚀');
+    } else {
+      showSection(parseInt(t));
+    }
+  });
+});
+
+// ===== CHECKPOINTS INTERACTIVOS =====
+function setupCheckpoint(cpId, fbId) {
+  const opts = document.querySelectorAll(`#${cpId} li`);
+  const fb = document.getElementById(fbId);
+  opts.forEach(opt => {
+    opt.addEventListener('click', function() {
+      const isOk = this.dataset.ok === '1';
+      opts.forEach(o => o.style.pointerEvents = 'none');
+      this.classList.add(isOk ? 'ok' : 'no');
+      fb.className = isOk ? 'checkpoint-fb ok show' : 'checkpoint-fb no show';
+      if (isOk) {
+        fb.innerHTML = '✅ <strong>¡Correcto!</strong> Esta es la actuación apropiada según la normativa de historia clínica, registro y confidencialidad.';
+      } else {
+        fb.innerHTML = '❌ <strong>Incorrecto.</strong> Revisa el concepto correspondiente en el Desarrollo para entender por qué esta opción no es la más apropiada.';
+      }
+    });
+  });
+}
+setupCheckpoint('cp1', 'cpfb1');
+setupCheckpoint('cp2', 'cpfb2');
+
+// ===== FLASHCARDS =====
+const flashcards = [
+  { f:'¿Qué es la historia clínica y qué norma la regula?', b:'Documento privado, obligatorio y sometido a reserva que registra cronológicamente la atención en salud. La regula la Resolución 1995 de 1999.' },
+  { f:'¿Cuáles son las características de la historia clínica?', b:'Integralidad, secuencialidad, racionalidad científica, disponibilidad y oportunidad (Resolución 1995/1999).' },
+  { f:'¿Qué diferencia hay entre oportunidad y disponibilidad?', b:'Oportunidad: registrar de forma simultánea o inmediata a la atención (el momento). Disponibilidad: poder acceder al documento cuando se necesita (el acceso).' },
+  { f:'¿Qué significa "lo que no se registra, no se hizo"?', b:'Que el registro es prueba legal del acto profesional: si una intervención no está registrada, jurídicamente se asume que no se realizó, aunque en la práctica sí haya ocurrido.' },
+  { f:'¿Cómo se corrige un error en la historia clínica?', b:'Nunca borrando ni tachando: mediante una nota aclaratoria conforme al procedimiento, con fecha e identificación de quien corrige.' },
+  { f:'¿Quiénes pueden acceder legalmente a la historia clínica?', b:'El usuario (titular), el equipo de salud tratante, las autoridades judiciales/de salud en los casos legales y quienes el usuario o la ley autoricen.' },
+  { f:'¿Se le puede entregar la historia clínica a un familiar o empleador?', b:'No, sin autorización del usuario o base legal. La historia está sometida a reserva y el paciente es el titular de la información.' },
+  { f:'¿Qué es el consentimiento informado y cuándo hay excepción?', b:'Aceptación libre y voluntaria de un procedimiento tras recibir información clara; expresa la autonomía. Excepción: la urgencia vital, donde se actúa para salvar la vida.' },
+  { f:'¿Qué protege la Ley 1581 de 2012 (habeas data)?', b:'Los datos personales, incluidos los de salud (sensibles): derecho a conocer, actualizar y rectificar, y a que se traten con finalidad, seguridad y confidencialidad.' },
+  { f:'En historia clínica electrónica, ¿puedo consultar cualquier historia porque el sistema me deja?', b:'No. Se usa credencial propia y se accede solo a lo necesario para atender a los propios pacientes. El acceso técnico no autoriza el acceso indebido.' }
+];
+
+let flashIndex = 0;
+const flashEl = document.getElementById('flashcard');
+const flashFront = document.getElementById('flashFront');
+const flashBack = document.getElementById('flashBack');
+const flashCounter = document.getElementById('flashCounter');
+
+function renderFlash() {
+  flashEl.classList.remove('flipped');
+  flashFront.textContent = flashcards[flashIndex].f;
+  flashBack.textContent = flashcards[flashIndex].b;
+  flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+}
+flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click', e => {
+  e.stopPropagation(); flashEl.classList.toggle('flipped');
+});
+document.getElementById('flashPrev').addEventListener('click', () => {
+  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlash();
+});
+document.getElementById('flashNext').addEventListener('click', () => {
+  flashIndex = (flashIndex + 1) % flashcards.length;
+  renderFlash();
+});
+renderFlash();
+</script>
+
+
+<script>
+// ===== SIMULACRO =====
+const preguntas = [
+  {
+    nivel: 'b', tema: 'Naturaleza de la historia clínica',
+    ctx: 'Un practicante te pregunta si la historia clínica es un documento público que cualquiera puede consultar.',
+    q: '¿Cuál es la respuesta correcta?',
+    ops: [
+      'Sí, es un documento público de libre acceso',
+      'No, es un documento privado, obligatorio y sometido a reserva; solo acceden el usuario, el equipo tratante, las autoridades legales y los autorizados',
+      'Es pública solo para los familiares del paciente',
+      'Depende de la entidad; cada una decide si es pública'
+    ],
+    correcta: 1,
+    expl: [
+      'No es pública: es privada y reservada (Resolución 1995/1999).',
+      '✔ Correcto. La historia clínica es un documento privado, obligatorio y reservado, con acceso regulado.',
+      'Los familiares no acceden libremente; requieren autorización del titular o base legal.',
+      'La naturaleza reservada la fija la ley, no la decide cada entidad.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Solicitud de un tercero',
+    ctx: 'El empleador de un paciente llama pidiendo el diagnóstico "para procesar una incapacidad". No hay autorización del paciente.',
+    q: '¿Qué debes hacer?',
+    ops: [
+      'Entregar el diagnóstico porque el empleador lo necesita',
+      'No divulgar la información clínica sin autorización del paciente y orientar hacia los canales formales',
+      'Decir solo si es una enfermedad grave',
+      'Enviar copia de la historia por correo al empleador'
+    ],
+    correcta: 1,
+    expl: [
+      'El interés del empleador no autoriza a levantar la reserva.',
+      '✔ Correcto. Sin autorización del titular no se divulga información clínica; se orienta por los canales formales.',
+      'Confirmar la gravedad ya es divulgar información reservada.',
+      'Enviar la historia sin autorización vulnera la reserva y el habeas data.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Corrección de errores',
+    ctx: 'Detectas que anotaste un dato equivocado en una nota de evolución ya registrada.',
+    q: '¿Cuál es la forma correcta de proceder?',
+    ops: [
+      'Borrar o tachar por completo lo escrito para que no se note',
+      'Hacer una nota aclaratoria conforme al procedimiento, sin borrar lo anterior, con fecha e identificación',
+      'Reescribir toda la hoja como si nada hubiera pasado',
+      'Dejar el error, ya no se puede hacer nada'
+    ],
+    correcta: 1,
+    expl: [
+      'Borrar o tachar compromete la integridad del documento.',
+      '✔ Correcto. Las correcciones se hacen con nota aclaratoria, sin alterar lo escrito, dejando constancia.',
+      'Reescribir la hoja es adulterar el documento.',
+      'Sí se puede y se debe corregir, de forma transparente con una nota aclaratoria.'
+    ]
+  },
+  {
+    nivel: 'b', tema: 'Oportunidad del registro',
+    ctx: 'Un profesional deja todos sus registros para el final del turno, varias horas después de atender.',
+    q: '¿Qué característica de la historia clínica se ve afectada principalmente?',
+    ops: [
+      'Disponibilidad',
+      'Oportunidad',
+      'Racionalidad científica',
+      'Ninguna, mientras quede escrito'
+    ],
+    correcta: 1,
+    expl: [
+      'La disponibilidad se refiere al acceso al documento, no al momento del registro.',
+      '✔ Correcto. La oportunidad exige registrar de forma simultánea o inmediata a la atención; el registro tardío la vulnera.',
+      'La racionalidad se refiere al fundamento técnico, no al momento.',
+      'Sí se afecta la oportunidad; el registro tardío compromete calidad y valor legal.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Consentimiento informado',
+    ctx: 'Vas a iniciar un programa de intervención con un usuario adulto en capacidad de decidir. Un colega sugiere empezar ya y "hacerle firmar algo después".',
+    q: '¿Cuál es la actuación correcta?',
+    ops: [
+      'Empezar y hacer firmar el consentimiento al final',
+      'Informar previamente al usuario sobre la intervención, beneficios, riesgos y alternativas, obtener su consentimiento antes de iniciar y registrarlo, respetando su decisión',
+      'Omitir el consentimiento porque es una intervención de terapia',
+      'Pedir que firme un familiar en lugar del usuario'
+    ],
+    correcta: 1,
+    expl: [
+      'El consentimiento es previo; firmarlo después desvirtúa su sentido.',
+      '✔ Correcto. Es un proceso previo de información y decisión que expresa la autonomía del paciente y se registra.',
+      'La intervención de terapia también requiere consentimiento informado cuando corresponde.',
+      'Si el usuario tiene capacidad de decidir, el consentimiento es suyo, no de un familiar.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Acceso electrónico y habeas data',
+    ctx: 'En el sistema de historia clínica electrónica puedes ver historias de personas que no atiendes. Sientes curiosidad por la de un conocido.',
+    q: '¿Cuál es la conducta correcta?',
+    ops: [
+      'Consultarla, ya que el sistema te lo permite',
+      'Abstenerte: solo accedes a la información de los pacientes que atiendes y a lo necesario para la atención',
+      'Consultarla y no comentar con nadie',
+      'Pedirle a un compañero que la consulte por ti'
+    ],
+    correcta: 1,
+    expl: [
+      'El acceso técnico no equivale a autorización.',
+      '✔ Correcto. El principio de finalidad y la reserva limitan el acceso a lo necesario para la atención propia (Ley 1581/2012, Ley 2015/2020).',
+      'Aunque no lo comentes, la sola consulta indebida vulnera el habeas data.',
+      'Pedir a otro que la consulte es igualmente una violación de la reserva.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Registro como prueba',
+    ctx: 'Ante una reclamación, se revisa la historia clínica de un paciente para verificar si se realizó cierta intervención que el profesional afirma haber hecho, pero que no quedó registrada.',
+    q: '¿Cómo se valora jurídicamente esta situación?',
+    ops: [
+      'Se acepta la palabra del profesional aunque no esté registrada',
+      'Jurídicamente, lo que no está registrado se considera no realizado, por lo que el registro es la prueba de la actuación',
+      'La falta de registro no tiene ninguna consecuencia',
+      'Se puede añadir el registro ahora con fecha anterior'
+    ],
+    correcta: 1,
+    expl: [
+      'La sola afirmación, sin soporte, tiene un valor probatorio débil.',
+      '✔ Correcto. Rige el principio "lo que no se registra, no se hizo"; el registro oportuno es la prueba del acto profesional.',
+      'La falta de registro sí tiene consecuencias: debilita la defensa y puede implicar responsabilidad.',
+      'Registrar con fecha anterior (antedatar) es una alteración fraudulenta del documento, prohibida.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Reserva frente a comentarios',
+    ctx: 'En la cafetería de la entidad, un compañero comenta en voz alta detalles del diagnóstico de un paciente delante de otras personas ajenas al equipo.',
+    q: '¿Cuál es la observación correcta?',
+    ops: [
+      'No hay problema, son compañeros de la entidad',
+      'Comentar información clínica de pacientes en lugares públicos o ante personas no autorizadas vulnera la confidencialidad y el secreto profesional',
+      'Solo sería un problema si estuviera escrito',
+      'Está bien si no se menciona el nombre completo'
+    ],
+    correcta: 1,
+    expl: [
+      'Ser compañeros no autoriza a divulgar información fuera del contexto de la atención.',
+      '✔ Correcto. La confidencialidad aplica en cualquier soporte y contexto; comentar en público vulnera el secreto profesional.',
+      'La confidencialidad no depende de que esté escrito; también protege lo verbal.',
+      'Aun sin nombre completo, dar datos que identifiquen al paciente vulnera la reserva.'
+    ]
+  },
+  {
+    nivel: 'i', tema: 'Titularidad de la información',
+    ctx: 'Un paciente solicita una copia de su propia historia clínica.',
+    q: '¿Cuál es la actuación correcta?',
+    ops: [
+      'Negarla porque la historia es de la entidad',
+      'Facilitar el acceso conforme al procedimiento institucional, ya que el paciente es el titular de la información de su historia clínica',
+      'Entregarla solo si un médico lo autoriza',
+      'Cobrarle una tarifa por consultar su propia información como requisito para verla'
+    ],
+    correcta: 1,
+    expl: [
+      'La entidad custodia el documento, pero el titular de la información es el paciente.',
+      '✔ Correcto. El usuario tiene derecho a acceder a su historia clínica; se facilita conforme al procedimiento institucional.',
+      'El acceso del titular a su propia información no depende de autorización de un tercero.',
+      'No puede condicionarse el derecho del titular a acceder a su información al pago de una tarifa como requisito.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Integración registro-confidencialidad-calidad',
+    ctx: 'Eres profesional en una entidad y participas en un comité de calidad. Se detectan tres problemas: registros tardíos e incompletos, un caso de divulgación de información a un tercero sin autorización, y consultas de historias por personal que no atiende a esos pacientes. El comité te pide un análisis técnico.',
+    q: '¿Cuál es el análisis más completo y apropiado?',
+    ops: [
+      'Solo hay un problema de registros tardíos; lo demás es menor',
+      'Se vulneran características de la historia clínica (oportunidad e integralidad), la reserva y el secreto profesional, y el habeas data (accesos indebidos). Recomendar: cultura de registro oportuno, protocolos de acceso con credenciales y finalidad, y capacitación en confidencialidad, conforme a la Resolución 1995/1999, la Ley 1581/2012 y la Ley 2015/2020',
+      'Es un problema exclusivamente informático que resuelve el área de sistemas',
+      'Basta con sancionar a una persona y no cambiar los procesos'
+    ],
+    correcta: 1,
+    expl: [
+      'Se vulneran varias dimensiones, no solo el registro tardío; el análisis debe ser integral.',
+      '✔ Correcto. Identifica los tres frentes (características, reserva/secreto, habeas data), cita el marco normativo y propone soluciones sistémicas. Es el nivel de respuesta esperado.',
+      'No es solo informático: involucra deberes profesionales de registro y confidencialidad.',
+      'Sancionar sin cambiar procesos no corrige las causas; se requieren medidas sistémicas y formación.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Confidencialidad y sus límites legales',
+    ctx: 'Una autoridad judicial competente requiere formalmente, dentro de un proceso legal, información contenida en la historia clínica de un paciente. El profesional duda entre la confidencialidad y el requerimiento.',
+    q: '¿Cuál es la actuación más apropiada?',
+    ops: [
+      'Negar toda información invocando siempre la confidencialidad',
+      'Atender el requerimiento por los canales institucionales, ya que la ley prevé el acceso de las autoridades judiciales en los casos legales, dejando constancia y entregando solo lo requerido conforme al debido proceso',
+      'Entregar toda la información a cualquiera que diga ser autoridad, sin verificar',
+      'Publicar la información para cumplir con la justicia'
+    ],
+    correcta: 1,
+    expl: [
+      'La confidencialidad no es absoluta: la ley prevé excepciones para autoridades en casos legales.',
+      '✔ Correcto. Se atiende el requerimiento legal por los canales institucionales, verificando su legitimidad, entregando lo pertinente y dejando constancia. Es el equilibrio entre reserva y deber legal.',
+      'Debe verificarse la legitimidad del requerimiento y canalizarse institucionalmente, no entregar a cualquiera.',
+      'Publicar la información es una divulgación indebida; se entrega solo a la autoridad requirente.'
+    ]
+  },
+  {
+    nivel: 'a', tema: 'Custodia, archivo y responsabilidad',
+    ctx: 'La entidad debe definir criterios sobre conservación y custodia de las historias clínicas y las responsabilidades asociadas. Te consultan como profesional del equipo.',
+    q: '¿Cuál es el concepto más apropiado?',
+    ops: [
+      'Las historias se pueden destruir en cualquier momento para ahorrar espacio',
+      'La historia clínica debe conservarse y custodiarse según la normativa (tiempos mínimos de retención y condiciones de custodia de la Resolución 1995/1999 y normas concordantes); su alteración, pérdida o divulgación indebida genera responsabilidad, y la entidad es responsable de la custodia mientras el usuario es el titular de la información',
+      'La responsabilidad es solo del paciente',
+      'El archivo no tiene reglas; cada quien guarda como quiera'
+    ],
+    correcta: 1,
+    expl: [
+      'No pueden destruirse libremente: existen tiempos mínimos de retención y condiciones de custodia.',
+      '✔ Correcto. Integra conservación normada, custodia por la entidad, titularidad del usuario y responsabilidad por alteración/pérdida/divulgación. Es el concepto completo.',
+      'La responsabilidad de custodia recae en la entidad y los profesionales, no en el paciente.',
+      'El archivo sí tiene reglas normativas de conservación, seguridad y acceso.'
+    ]
+  }
+];
+
+const quizDiv = document.getElementById('quiz');
+let respondidas = {};
+
+function renderQuiz() {
+  respondidas = {};
+  quizDiv.innerHTML = '';
+  const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
+  preguntas.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'pregunta';
+    let opsHtml = '';
+    p.ops.forEach((op, j) => {
+      const letra = String.fromCharCode(65 + j);
+      opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}">
+                    <span class="letra">${letra}</span><span>${op}</span>
+                  </div>`;
+    });
+    const ctxHtml = `<div class="q-contexto"><strong>Contexto:</strong> ${p.ctx}</div>`;
+    card.innerHTML = `
+      <div class="q-num">Pregunta ${idx+1}
+        <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span>
+      </div>
+      ${ctxHtml}
+      <div class="q-texto">${p.q}</div>
+      <div class="opciones">${opsHtml}</div>
+      <div class="feedback" id="fb-${idx}"></div>`;
+    quizDiv.appendChild(card);
+  });
+
+  document.querySelectorAll('.opcion').forEach(op => {
+    op.addEventListener('click', function() {
+      const qi = +this.dataset.q;
+      const oi = +this.dataset.op;
+      if (respondidas[qi] !== undefined) return;
+      respondidas[qi] = oi;
+      const p = preguntas[qi];
+      const cont = this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o, k) => {
+        o.classList.add('bloqueada');
+        if (k === p.correcta) o.classList.add('correcta');
+      });
+      const fb = document.getElementById('fb-' + qi);
+      fb.className = 'feedback show';
+
+      let feedbackHtml = '<div style="margin-bottom:14px;"><strong>Retroalimentación por opción:</strong></div>';
+      p.ops.forEach((opText, k) => {
+        const letra = String.fromCharCode(65 + k);
+        const isCorrect = k === p.correcta;
+        const color = isCorrect ? 'var(--verde)' : 'var(--rojo)';
+        feedbackHtml += `<div style="margin-bottom:10px; padding:8px 12px; background:${isCorrect ? 'var(--verde-suave)' : 'var(--rojo-suave)'}; border-left:3px solid ${color}; border-radius:6px;">
+          <strong style="color:${color};">${letra}.</strong> ${p.expl[k]}
+        </div>`;
+      });
+      fb.innerHTML = feedbackHtml;
+
+      if (oi !== p.correcta) {
+        this.classList.add('incorrecta');
+      }
+    });
+  });
+}
+
+document.getElementById('btnCalcular').addEventListener('click', () => {
+  let correctas = 0;
+  const temasFallados = [];
+  preguntas.forEach((p, i) => {
+    if (respondidas[i] === p.correcta) correctas++;
+    else if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema);
+  });
+  const res = document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent = correctas + '/12';
+
+  let msg;
+  const pct = correctas / 12;
+  if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas el manejo de la historia clínica, el registro y la confidencialidad. Listo para el siguiente día.';
+  else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados y repasa las comparaciones.';
+  else msg = '📚 Vas por buen camino. Repasa el Desarrollo, las tablas comparativas y repite el simulacro.';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  const cont = document.getElementById('temasReforzar');
+  if (temasFallados.length === 0) {
+    cont.innerHTML = '<div class="box ok" style="text-align:left;">' +
+      '<div class="box-title">🎯 ¡Sin temas pendientes!</div>' +
+      '<p>Respondiste todo correctamente. Estás preparado para avanzar.</p></div>';
+  } else {
+    let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
+    cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
+      '<div class="box-title">📌 Temas que debes reforzar</div>' +
+      '<p>Vuelve a la sección <strong>Desarrollo</strong> y repasa estos conceptos:</p>' +
+      '<ul class="lista">' + items + '</ul></div>';
+  }
+  res.classList.add('show');
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+document.getElementById('btnReiniciar').addEventListener('click', () => {
+  renderQuiz();
+  document.getElementById('resultado').classList.remove('show');
+  window.scrollTo({
+    top: document.querySelector('[data-sec="10"]').offsetTop - 80,
+    behavior: 'smooth'
+  });
+});
+
+renderQuiz();
+</script>
+</body>
+</html>
