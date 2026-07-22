@@ -65,18 +65,6 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     celular: pre.celular,
   }, { onConflict: "id" });
 
-  // Conserva la primera identidad confirmada del usuario. Compras posteriores no
-  // deben reescribirla; cada preregistro mantiene la cédula propia de esa compra.
-  if (pre.cedula_encrypted && pre.cedula_last4) {
-    const { error: identityError } = await supabase.from("identidades_usuarios").upsert({
-      usuario_id: userId,
-      cedula_encrypted: pre.cedula_encrypted,
-      cedula_last4: pre.cedula_last4,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "usuario_id", ignoreDuplicates: true });
-    if (identityError) throw new Error("No se pudo guardar la identificación del usuario: " + identityError.message);
-  }
-
   // ---- Crear el curso (solo si no existe uno para esta misma compra) ----
   let cursoId: string | null = null;
 

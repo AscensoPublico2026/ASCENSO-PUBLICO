@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { analyticsEventKey, trackServerEvent } from "@/lib/analytics-server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { generarReferencia, firmaIntegridad, urlCheckout } from "@/lib/wompi";
-import { encryptCedula, isValidCedula, normalizeCedula } from "@/lib/cedula";
 import { toTitleCase } from "@/lib/format";
 
 // Server Action: recibe el formulario de compra, normaliza los textos,
@@ -16,8 +15,6 @@ export async function crearCompra(formData: FormData) {
   const nombre = `${nombres} ${apellidos}`.trim(); // nombre completo normalizado
   const correo = String(formData.get("correo") || "").trim().toLowerCase();
   const celular = String(formData.get("celular") || "").trim();
-  const cedulaInput = String(formData.get("cedula") || "").trim();
-  const cedula = normalizeCedula(cedulaInput);
   const convocatoria_id = String(formData.get("convocatoria_id") || "").trim() || null;
   const opec = String(formData.get("opec") || "").trim();
   const cargo = toTitleCase(String(formData.get("cargo") || "").trim()); // Normalizado
@@ -29,15 +26,9 @@ export async function crearCompra(formData: FormData) {
   const password = String(formData.get("password") || "").trim();
   const confirmPassword = String(formData.get("confirmPassword") || "").trim();
 
-  if (!nombres || !apellidos || !correo || !cedula || !consentimiento) {
+  if (!nombres || !apellidos || !correo || !consentimiento) {
     throw new Error("Faltan datos obligatorios o no aceptaste el tratamiento de datos.");
   }
-
-  if (!/^[0-9.\s-]+$/.test(cedulaInput) || cedulaInput.length > 20 || !isValidCedula(cedula)) {
-    throw new Error("Ingresa un número de cédula válido, de 5 a 12 dígitos.");
-  }
-  const cedulaEncrypted = encryptCedula(cedula);
-  const cedulaLast4 = cedula.slice(-4);
 
   // Validar contraseña
   if (!password || password.length < 6) {
@@ -66,8 +57,6 @@ export async function crearCompra(formData: FormData) {
   // Guardar pre-registro con nombres normalizados Y la contraseña
   const { error: insErr } = await supabase.from("preregistros").insert({
     referencia, nombre, correo, celular,
-    cedula_encrypted: cedulaEncrypted,
-    cedula_last4: cedulaLast4,
     convocatoria_id, opec, cargo_nombre: cargo, nivel, manual_pdf_path, consentimiento,
     password, // ← contraseña elegida por el cliente ANTES del pago
   });

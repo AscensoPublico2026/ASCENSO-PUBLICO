@@ -46,7 +46,7 @@ export default async function ConfiguracionPage({ searchParams }: { searchParams
 
       {error && (
         <div style={{ background: "#FFF8E8", border: "1px solid #E8A33D", color: "#6A4A16", borderRadius: 12, padding: "12px 16px", marginBottom: 16, fontSize: ".88rem" }}>
-          La tabla de configuración aún no está disponible. Ejecuta primero <code>plataforma/supabase/migracion-configuracion-cupos-cedula.sql</code>. Mientras tanto se muestra el valor de respaldo {CUPOS_VENDIDOS_LANZAMIENTO}/{CUPOS_TOTALES_LANZAMIENTO}.
+          La tabla de configuración aún no está disponible. Ejecuta primero <code>plataforma/supabase/migracion-configuracion-cupos.sql</code>. Mientras tanto se muestra el valor de respaldo {CUPOS_VENDIDOS_LANZAMIENTO}/{CUPOS_TOTALES_LANZAMIENTO}.
         </div>
       )}
 
