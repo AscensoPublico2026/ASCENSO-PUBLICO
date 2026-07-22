@@ -63,6 +63,11 @@ export default async function AdminHome() {
           <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar convocatorias</div>
           <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Agregar, editar, activar/desactivar convocatorias.</div>
         </Link>
+        <Link href="/admin/configuracion" style={{ ...stat, display: "block", transition: "transform .15s" }}>
+          <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>⚙️</div>
+          <div style={{ fontWeight: 700, color: "var(--azul)" }}>Actualizar cupos vendidos</div>
+          <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Cambia el contador público sin modificar el código.</div>
+        </Link>
       </div>
     </div>
   );

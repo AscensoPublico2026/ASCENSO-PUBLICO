@@ -1,4 +1,5 @@
-import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
+import { maskCedula } from "@/lib/cedula";
 import { inhabilitarUsuario, eliminarUsuario, actualizarNombreUsuario } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,18 @@ export default async function AdminUsuarios() {
     .from("profiles")
     .select("id, nombre, correo, celular, rol, created_at")
     .order("created_at", { ascending: false });
+
+  const profileIds = (profiles || []).map((profile: any) => profile.id);
+  const identidadesMap: Record<string, string> = {};
+  if (profileIds.length) {
+    const { data: identidades } = await supabase
+      .from("identidades_usuarios")
+      .select("usuario_id,cedula_last4")
+      .in("usuario_id", profileIds);
+    (identidades || []).forEach((identity: any) => {
+      identidadesMap[identity.usuario_id] = identity.cedula_last4;
+    });
+  }
 
   const box: React.CSSProperties = { background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 14, padding: 22, boxShadow: "0 4px 20px rgba(10,42,94,.06)" };
 
@@ -44,6 +57,9 @@ export default async function AdminUsuarios() {
                 </div>
                 <div style={{ color: "var(--texto-suave)", fontSize: ".82rem" }}>
                   {u.correo} {u.celular ? `· ${u.celular}` : ""}
+                </div>
+                <div style={{ color: "var(--texto-suave)", fontSize: ".74rem", marginTop: 2 }}>
+                  Cédula: {maskCedula(identidadesMap[u.id])}
                 </div>
                 <div style={{ color: "var(--texto-suave)", fontSize: ".72rem", marginTop: 2 }}>
                   Registrado: {new Date(u.created_at).toLocaleDateString("es-CO")}

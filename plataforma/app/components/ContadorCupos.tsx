@@ -1,17 +1,47 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   CUPOS_TOTALES_LANZAMIENTO,
   CUPOS_VENDIDOS_LANZAMIENTO,
 } from "@/lib/cupos";
 
+interface CuposConfig {
+  vendidos: number;
+  total: number;
+}
+
 /**
  * Contador compartido entre la landing y la página de compra.
- * Las cifras oficiales se mantienen en lib/cupos.ts para que ambas vistas
- * siempre muestren el mismo estado de la campaña.
+ * Lee la configuración administrable y conserva 177/200 como respaldo seguro.
  */
 export default function ContadorCupos() {
-  const vendidos = Math.min(CUPOS_TOTALES_LANZAMIENTO, CUPOS_VENDIDOS_LANZAMIENTO);
-  const restantes = Math.max(0, CUPOS_TOTALES_LANZAMIENTO - vendidos);
-  const porcentaje = Math.min(100, Math.round((vendidos / CUPOS_TOTALES_LANZAMIENTO) * 100));
+  const [config, setConfig] = useState<CuposConfig>({
+    vendidos: CUPOS_VENDIDOS_LANZAMIENTO,
+    total: CUPOS_TOTALES_LANZAMIENTO,
+  });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/cupos", { cache: "no-store", signal: controller.signal })
+      .then((response) => response.ok ? response.json() as Promise<CuposConfig> : null)
+      .then((data) => {
+        if (
+          data && Number.isInteger(data.vendidos) && Number.isInteger(data.total) &&
+          data.vendidos >= 0 && data.total > 0 && data.vendidos <= data.total
+        ) {
+          setConfig(data);
+        }
+      })
+      .catch((error: Error) => {
+        if (error.name !== "AbortError") console.error("No se pudo actualizar el contador de cupos.");
+      });
+    return () => controller.abort();
+  }, []);
+
+  const vendidos = Math.min(config.total, config.vendidos);
+  const restantes = Math.max(0, config.total - vendidos);
+  const porcentaje = Math.min(100, Math.round((vendidos / config.total) * 100));
 
   return (
     <div style={{
@@ -33,7 +63,7 @@ export default function ContadorCupos() {
 
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
         <span style={{ fontSize: "1.5rem", fontWeight: 900, color: "#F6C56B", lineHeight: 1 }}>
-          {vendidos}/{CUPOS_TOTALES_LANZAMIENTO}
+          {vendidos}/{config.total}
         </span>
         <span style={{ fontSize: ".82rem", fontWeight: 700, color: "rgba(255,255,255,.85)" }}>
           cupos vendidos
@@ -54,7 +84,7 @@ export default function ContadorCupos() {
         {restantes > 0 ? (
           <>Ya hay <strong style={{ color: "#F6C56B" }}>{vendidos}</strong> aspirantes preparándose · asegura el tuyo antes de que se agoten.</>
         ) : (
-          <>Los <strong style={{ color: "#F6C56B" }}>{CUPOS_TOTALES_LANZAMIENTO}</strong> cupos del precio de lanzamiento se han agotado. ¡Gracias por la confianza!</>
+          <>Los <strong style={{ color: "#F6C56B" }}>{config.total}</strong> cupos del precio de lanzamiento se han agotado. ¡Gracias por la confianza!</>
         )}
       </div>
     </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
+import { decryptCedula, maskCedula } from "@/lib/cedula";
 import { toTitleCase } from "@/lib/format";
 import { eliminarPago } from "./actions";
 
@@ -27,12 +28,19 @@ export default async function AdminPagos() {
   const cursoIds = Array.from(new Set((pagos || []).map((p: any) => p.curso_id).filter(Boolean)));
 
   const profilesMap: Record<string, any> = {};
+  const identidadesMap: Record<string, any> = {};
   const cursosMap: Record<string, any> = {};
   const preMap: Record<string, any> = {};
 
   if (userIds.length) {
     const { data } = await supabase.from("profiles").select("id,nombre,correo,celular").in("id", userIds);
     (data || []).forEach((p: any) => { profilesMap[p.id] = p; });
+
+    const { data: identidades } = await supabase
+      .from("identidades_usuarios")
+      .select("usuario_id,cedula_encrypted,cedula_last4")
+      .in("usuario_id", userIds);
+    (identidades || []).forEach((identity: any) => { identidadesMap[identity.usuario_id] = identity; });
   }
   if (cursoIds.length) {
     const { data } = await supabase.from("cursos").select("id,cargo_nombre,opec,nivel").in("id", cursoIds);
@@ -40,7 +48,7 @@ export default async function AdminPagos() {
   }
   // Respaldo: datos del preregistro (sirve aunque el pago no esté enlazado a usuario/curso)
   if (refs.length) {
-    const { data } = await supabase.from("preregistros").select("referencia,nombre,correo,celular,opec,cargo_nombre,nivel").in("referencia", refs);
+    const { data } = await supabase.from("preregistros").select("referencia,nombre,correo,celular,cedula_encrypted,cedula_last4,opec,cargo_nombre,nivel").in("referencia", refs);
     (data || []).forEach((p: any) => { preMap[p.referencia] = p; });
   }
 
@@ -76,6 +84,8 @@ export default async function AdminPagos() {
                 const nombre = cli?.nombre || pre?.nombre;
                 const correo = cli?.correo || pre?.correo;
                 const celular = cli?.celular || pre?.celular;
+                const identity = pre?.cedula_encrypted ? pre : identidadesMap[p.usuario_id];
+                const cedula = decryptCedula(identity?.cedula_encrypted) || maskCedula(identity?.cedula_last4);
                 const cargo = cur?.cargo_nombre || pre?.cargo_nombre;
                 const opec = cur?.opec || pre?.opec;
                 const nivel = cur?.nivel || pre?.nivel;
@@ -87,6 +97,8 @@ export default async function AdminPagos() {
                       {huerfano && <span style={{ fontSize: ".68rem", color: "#b00", fontWeight: 700, marginLeft: 6 }}>(huérfano)</span>}
                       <br />
                       <span style={{ color: "var(--texto-suave)", fontSize: ".8rem" }}>{correo || "—"}{celular ? ` · ${celular}` : ""}</span>
+                      <br />
+                      <span style={{ color: "var(--texto-suave)", fontSize: ".75rem" }}>Cédula: {cedula}</span>
                     </td>
                     <td style={td}>
                       {cargo ? toTitleCase(cargo) : "—"}<br />

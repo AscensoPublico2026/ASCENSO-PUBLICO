@@ -135,6 +135,24 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
           </label>
         </div>
 
+        <label style={label}>Número de cédula *
+          <input
+            style={inputStyle}
+            type="text"
+            name="cedula"
+            inputMode="numeric"
+            autoComplete="off"
+            minLength={5}
+            maxLength={15}
+            pattern="[0-9. -]{5,15}"
+            required
+            placeholder="Ej: 1.234.567.890"
+            aria-describedby="cedula-help"
+          />
+          <span id="cedula-help" style={{ fontSize: ".75rem", color: "var(--texto-suave)", marginTop: 4, display: "block", fontWeight: 400 }}>
+            Se usa para identificar tu registro y se almacena cifrada.
+          </span>
+        </label>
         <label style={label}>Correo *
           <input style={inputStyle} type="email" name="correo" required placeholder="tucorreo@ejemplo.com" defaultValue={usuarioLogueado?.correo || ""} />
         </label>
