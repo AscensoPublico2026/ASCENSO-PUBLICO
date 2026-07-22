@@ -8,7 +8,7 @@ import { trackEvent } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
 
 // Componente principal (ahora completamente cliente)
-export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string } }) {
+export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string; error?: string } }) {
   const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string }[]>([]);
   const [usuarioLogueado, setUsuarioLogueado] = useState<{ correo: string; celular: string } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -108,6 +108,12 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
       <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Precio: $300.000 COP · pago único</p>
 
       <ContadorCupos />
+
+      {searchParams?.error && (
+        <div style={{ background: "#fdecec", border: "1px solid #f5b5b5", borderRadius: 12, padding: "12px 16px", marginBottom: 12, fontSize: ".88rem", color: "#b00020" }}>
+          <strong>No se pudo procesar la compra.</strong> {searchParams.error}
+        </div>
+      )}
 
       {usuarioLogueado && (
         <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginBottom: 8, fontSize: ".85rem", color: "var(--verde)" }}>
