@@ -6,7 +6,7 @@
 >
 > **Documento VIVO:** cada vez que mejoremos una guía ("quita esto / agrega esto"), se actualiza este prompt y se anota en el **Changelog** (al final). Así toda guía nueva nace con las mejoras acumuladas.
 >
-> **Versión:** 2.1 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
+> **Versión:** 2.2 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
 
 ---
 
@@ -62,6 +62,12 @@ Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero 
 - TODAS las preguntas llevan contexto (ctx).
 - Retroalimentación POR OPCIÓN: al hacer clic en una opción se revelan las explicaciones de LAS 4 opciones (debajo de cada una), indicando por qué cada una es correcta o incorrecta; no solo la elegida ni solo la correcta. Aquí SÍ puedes citar el artículo/ley para reforzar.
 - Los enunciados y contextos deben ser RICOS y realistas (varias líneas de caso), tal como los plantea la CNSC; nada de preguntas de una sola línea.
+- LONGITUD Y RIQUEZA (OBLIGATORIO — replicar el formato real de la prueba escrita CNSC):
+  * CONTEXTO (ctx): un párrafo extenso de 5 a 9 renglones (aprox. 450–900 caracteres). Debe describir un escenario verosímil y situado: rol/cargo del servidor, dependencia o servicio, personas involucradas, antecedentes, la tensión o dilema, presiones (tiempo, jerarquía, terceros, recursos) y al menos un elemento distractor plausible. Nada de 1–2 frases.
+  * ENUNCIADO (q): 2 a 4 renglones (aprox. 180–400 caracteres). No basta "¿qué debe hacer?": debe replantear la tensión del caso, recordar el criterio en juego (norma/competencia/principio) e incitar explícitamente a decidir la actuación MÁS apropiada.
+  * OPCIONES (ops): las 4 deben ser LARGAS y ELABORADAS (aprox. 120–260 caracteres cada una), cada una un curso de acción completo y autosuficiente (qué se hace, cómo y con qué matiz/justificación implícita). TODAS plausibles y del mismo nivel de detalle (que la correcta no destaque por ser la más larga o la única elaborada). Evitar opciones de 3–6 palabras.
+  * EXPLICACIÓN (expl): una por opción, 1–3 renglones, que argumente por qué es correcta o por qué falla (puede citar norma/artículo).
+- CALIBRACIÓN: antes de aprobar una pregunta, verifica que ctx, q y las 4 ops cumplen las longitudes anteriores; si alguna quedó "telegráfica", reescríbela. Las CHECKPOINTS intercaladas pueden ser algo más breves, pero el SIMULACRO final debe replicar la extensión real de la CNSC.
 - Al final: puntaje + lista de "Temas a reforzar" (según preguntas falladas). Cada pregunta tiene un campo "tema".
 - Distractores basados en errores reales: extralimitación de funciones, omisión de responsabilidades, incumplimiento de procedimiento, afectación al servicio al ciudadano, interpretación parcial, desconocimiento del alcance del cargo.
 - Respuestas correctas distribuidas SIN patrón visible.
@@ -103,6 +109,7 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 
 | Fecha | Versión | Cambio |
 |---|---|---|
+| 2026-07-12 | 2.2 | **Longitud y riqueza tipo CNSC en el simulacro** (feedback del cliente sobre las guías de terapias): se hace OBLIGATORIO que el simulacro replique la extensión real de la prueba escrita CNSC → contexto extenso (5–9 renglones, 450–900 caract.), enunciado que replantea la tensión (2–4 renglones) y **las 4 opciones de respuesta LARGAS y elaboradas** (120–260 caract. c/u), todas del mismo nivel de detalle. Se añade paso de CALIBRACIÓN por longitud antes de aprobar cada pregunta. Antes las preguntas quedaban "telegráficas". |
 | 2026-06-16 | 2.1 | Mejoras al simulacro y al Desarrollo (a partir de feedback en FUN-ALM-01): (1) al hacer clic en una opción se muestran las explicaciones de LAS 4 opciones (por qué cada una es correcta o incorrecta), debajo de cada opción; (2) los contextos y enunciados del simulacro se hacen más largos y difíciles (escenarios con presión, conflicto de intereses, distractores plausibles); (3) el Desarrollo debe incluir un bloque ".fuentes" con enlaces a las fuentes oficiales/normas para profundizar. |
 | 2026-06-16 | 2.0 | **Variante Funcional v2** para todas las guías FUN-*: hilo narrativo (.narr), diagramas de proceso (.flujo), checkpoints intercalados "Aplica lo aprendido" (.checkpoint), tarjetas "En la práctica" (.practica) y micro-tips "Ojo en la prueba" (.ojo). Se añade la **regla de reutilización** (guías funcionales entidad-agnósticas) y la **codificación** FUN-[FAMILIA]-Nº + ENT-[SIGLA]-Nº. Se refuerza: feedback por CADA opción y contextos ricos en el simulacro. Primera guía con este estándar: FUN-ALM-01. |
 | 2026-06-13 | 1.0 | Versión inicial del prompt, consolidando todas las decisiones tomadas: identidad 60-30-10, 11 secciones, conceptos en 4 capas + sub-bloques desplegables, flashcards, glosario, botón "Avanzar", y **simulacro de juicio situacional** (12 preguntas, 4 opciones A-D, 4-5-3, retroalimentación por opción + temas a reforzar). Reemplaza la regla antigua de 3 opciones del estándar AP-QA-001. |
