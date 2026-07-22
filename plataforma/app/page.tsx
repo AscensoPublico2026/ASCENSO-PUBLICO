@@ -45,8 +45,8 @@ export default async function LandingPage() {
             <p className="sub">El único curso de la CNSC que estudia el <strong>manual de funciones de tu cargo específico</strong> —no solo tu nivel— y te prepara exactamente para lo que van a evaluarte en la prueba escrita.</p>
             <p className="vp">Deja de estudiar a ciegas. Sabe <strong>exactamente qué estudiar</strong> para ganar tu ascenso.</p>
             <div className="hero-cta">
-              <Link href="/comprar" className="btn btn-oro">Quiero mi curso personalizado</Link>
-              <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa">💬 Asesoría por WhatsApp</a>
+              <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="hero_buy">Quiero mi curso personalizado</Link>
+              <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa" data-analytics-event="whatsapp_clicked" data-analytics-placement="hero_advice">💬 Asesoría por WhatsApp</a>
               <a href="#como" className="btn btn-ghost">Ver cómo funciona</a>
             </div>
             <a href="#convocatorias" className="btn btn-ghost btn-conv-movil">📋 Ver convocatorias disponibles</a>
@@ -100,7 +100,7 @@ export default async function LandingPage() {
               <span><b>{formatNumber(opecMeta.totalVacantes)}</b> vacantes</span>
               <span><b>{formatNumber(opecMeta.sinExperiencia)}</b> OPEC abiertas sin experiencia</span>
             </div>
-            <Link href="/buscador-opec" className="btn btn-oro opec-home-cta">Buscar mi OPEC gratis <span aria-hidden="true">→</span></Link>
+            <Link href="/buscador-opec" className="btn btn-oro opec-home-cta" data-analytics-event="cta_click" data-analytics-placement="landing_search">Buscar mi OPEC gratis <span aria-hidden="true">→</span></Link>
             <small>Sin registro · Información actualizada al {opecUpdatedDate}</small>
           </div>
           <div className="opec-home-demo" aria-hidden="true">
@@ -134,19 +134,19 @@ export default async function LandingPage() {
             <p className="sim-promo-lead">Mide tu nivel en los temas que la CNSC evalúa en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> con lo que ya dominas y lo que debes reforzar. Elige tu nivel:</p>
           </div>
           <div className="sim-promo-grid">
-            <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card">
+            <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="asistencial">
               <span className="sim-promo-emoji">🧰</span>
               <h3>Nivel Asistencial</h3>
               <p>Estado, atención al ciudadano y competencias del nivel.</p>
               <span className="sim-promo-go">Empezar simulacro →</span>
             </a>
-            <a href="/simulacro-gratis/tecnico.html" className="sim-promo-card">
+            <a href="/simulacro-gratis/tecnico.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="tecnico">
               <span className="sim-promo-emoji">🛠️</span>
               <h3>Nivel Técnico</h3>
               <p>Marco institucional, procesos y competencias técnicas.</p>
               <span className="sim-promo-go">Empezar simulacro →</span>
             </a>
-            <a href="/simulacro-gratis/profesional.html" className="sim-promo-card">
+            <a href="/simulacro-gratis/profesional.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="profesional">
               <span className="sim-promo-emoji">🎓</span>
               <h3>Nivel Profesional</h3>
               <p>Función pública, gestión y competencias del nivel.</p>
@@ -154,7 +154,7 @@ export default async function LandingPage() {
             </a>
           </div>
           <div className="sim-promo-foot">
-            <Link href="/simulacro" className="btn btn-azul">Ver los simulacros gratis →</Link>
+            <Link href="/simulacro" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="landing_all_simulacros">Ver los simulacros gratis →</Link>
             <span className="sim-promo-mini">20 preguntas · sin costo · sin necesidad de registrarte</span>
           </div>
         </div>
@@ -289,7 +289,7 @@ export default async function LandingPage() {
               <li>Guía de estrategia CNSC</li>
               <li>Acceso desde tu perfil durante la vigencia del curso</li>
             </ul>
-            <Link href="/comprar" className="btn btn-oro" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
+            <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="pricing_buy" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
             <ContadorCupos />
             <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
             <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? <a href={WA_ASESORIA} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos por WhatsApp</a> y te asesoramos sin compromiso antes de pagar.</span></div>
@@ -319,7 +319,7 @@ export default async function LandingPage() {
         <div className="wrap">
           <h2>¿List@ para preparar tu ascenso?</h2>
           <p>Asegura tu cupo del precio de lanzamiento y empieza a estudiar con dirección.</p>
-          <Link href="/comprar" className="btn btn-azul" style={{ padding: "15px 34px", fontSize: "1rem" }}>Quiero mi curso personalizado</Link>
+          <Link href="/comprar" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="final_buy" style={{ padding: "15px 34px", fontSize: "1rem" }}>Quiero mi curso personalizado</Link>
         </div>
       </section>
 
@@ -367,7 +367,7 @@ export default async function LandingPage() {
       </footer>
 
       {/* ===== WhatsApp flotante ===== */}
-      <a className="wa-float" href={WA_URL} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+      <a className="wa-float" href={WA_URL} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" data-analytics-event="whatsapp_clicked" data-analytics-placement="floating_button">
         <svg width={24} height={24} viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
         <span>WhatsApp</span>
       </a>

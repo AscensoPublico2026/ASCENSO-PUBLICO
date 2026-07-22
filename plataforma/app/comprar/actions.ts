@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { analyticsEventKey, trackServerEvent } from "@/lib/analytics-server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { generarReferencia, firmaIntegridad, urlCheckout } from "@/lib/wompi";
 import { toTitleCase } from "@/lib/format";
@@ -63,7 +64,17 @@ export async function crearCompra(formData: FormData) {
 
   // Pago pendiente + firma + redirección a Wompi
   const monto = Number(process.env.PRECIO_COP || "300000") * 100; // a centavos
-  await supabase.from("pagos").insert({ referencia, monto, estado: "pendiente" });
+  const { error: pagoError } = await supabase
+    .from("pagos")
+    .insert({ referencia, monto, estado: "pendiente" });
+  if (pagoError) throw new Error("No se pudo iniciar el pago: " + pagoError.message);
+
+  await trackServerEvent("checkout_started", {
+    level: nivel,
+    convocatoria_id: convocatoria_id || "",
+    value: monto / 100,
+    currency: "COP",
+  }, { eventKey: analyticsEventKey("checkout", referencia) });
 
   const signature = firmaIntegridad(referencia, monto, "COP");
   const url = urlCheckout({ reference: referencia, amountInCents: monto, signature });

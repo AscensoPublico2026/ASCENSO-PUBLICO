@@ -5,9 +5,19 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 22 de junio de 2026 — **Feature "Simulacro Gratis" (lead magnet) construida en rama `feature/simulacro-gratis` + LIMPIEZA del repositorio.** Ver "## CAMBIOS RECIENTES" abajo. **Próximo paso: verificar las preguntas borrador del simulacro gratis, aplicar la migración SQL, mergear; y seguir con contenido + marketing en TikTok para vender.**_
+_Última actualización: 15 de julio de 2026 — **Analítica propia + panel de indicadores implementados en rama `feat/analitica-indicadores`.** Antes de publicar: aplicar `plataforma/supabase/migracion-analytics.sql`; GA4 y Clarity son opcionales y requieren agregar sus IDs en Vercel._
 
 ---
+
+## 🆕 CAMBIOS RECIENTES (sesión 15 jul 2026 — analítica)
+
+**Analítica gratuita e indicadores — rama `feat/analitica-indicadores`:**
+- ✅ **Analítica propia, anónima y sin costo adicional:** registra páginas, CTAs, WhatsApp, uso del buscador, OPEC consultadas, simulacros y embudo de compra en `analytics_events`. No guarda IP, user-agent, correo, teléfono ni el texto escrito en el buscador.
+- ✅ **Panel privado `/admin/analitica`:** rangos de 7/30/90 días, sesiones aproximadas, páginas vistas, buscador inteligente/filtros, búsquedas sin resultado, simulacros iniciados/terminados, puntaje promedio, leads, checkouts, compras y clics en WhatsApp.
+- ✅ **Embudo confiable:** `checkout_started` se registra en servidor después de crear el pago pendiente y `purchase_completed` al procesar el pago aprobado; ambos son idempotentes.
+- ✅ **Simulacros instrumentados desde el molde:** `simulacro/motor/base-simulacro-gratis.html` mide inicio, hitos 1/5/10/15/20, presentación, resultado y reinicio. Los tres HTML públicos se regeneraron.
+- ✅ **GA4 + Microsoft Clarity opcionales y con consentimiento:** solo cargan si el visitante acepta y si existen `NEXT_PUBLIC_GA_MEASUREMENT_ID` / `NEXT_PUBLIC_CLARITY_PROJECT_ID`. La analítica propia funciona sin esas cuentas.
+- ⚠️ **PENDIENTE DE CONFIGURACIÓN EXTERNA:** ejecutar una vez `plataforma/supabase/migracion-analytics.sql` en Supabase. Después del merge, agregar los IDs de GA4/Clarity en Vercel si se desean mapas de calor y reportes externos, y redesplegar. Los indicadores empiezan a acumular datos desde la publicación; no son retroactivos.
 
 ## 🆕 CAMBIOS RECIENTES (sesión 22 jun 2026)
 
@@ -183,6 +193,8 @@ Multi-curso con tarjetas hero; biblioteca por secciones (Plan / Bonus / Simulacr
 `NEXT_PUBLIC_WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`,
 `RESEND_API_KEY`, **`ADMIN_EMAIL`** (⚠️ revisar: debe ser `ascensopublico@gmail.com`), `NEXT_PUBLIC_SITE_URL` (=https://ascensopublico.com),
 `NEXT_PUBLIC_WOMPI_REDIRECT_URL` (=https://ascensopublico.com/activar), `PRECIO_COP` (=300000).
+
+**Analítica externa opcional:** `NEXT_PUBLIC_GA_MEASUREMENT_ID` (formato `G-...`) y `NEXT_PUBLIC_CLARITY_PROJECT_ID`. Si no se configuran, el panel propio `/admin/analitica` sigue funcionando después de aplicar `migracion-analytics.sql`.
 
 ## 9. IDEAS, PROPUESTAS Y DECISIONES (contexto conceptual — leer antes de continuar)
 

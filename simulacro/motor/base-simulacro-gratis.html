@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{TITLE}}</title>
 <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<script src="/analytics.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Crimson+Pro:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -236,7 +237,7 @@ footer .meta{font-size:0.8125rem;opacity:0.7;margin-top:12px;}
 <p class="result-msg" id="scoreMsg"></p>
 <div id="temasReforzar" class="topics-list"></div>
 <div class="action-bar">
-<a href="/comprar" class="btn btn-primary">🎯 Quiero prepararme por mi cargo →</a>
+<a href="/comprar" class="btn btn-primary" data-analytics-event="cta_click" data-analytics-placement="simulacro_result_buy" data-analytics-level="{{NIVEL}}">🎯 Quiero prepararme por mi cargo →</a>
 </div>
 <div id="revision" class="revision"></div>
 <button id="btnReiniciar" class="btn btn-secondary">🔄 Presentar de Nuevo</button>
@@ -254,6 +255,11 @@ const NIVEL_ID="{{NIVEL}}";
 const preguntas={{PREGUNTAS}};
 
 let respuestas={};
+const hitosRegistrados=new Set();
+let resultadoRegistrado=false;
+function registrarEvento(nombre,propiedades){
+if(window.ascensoAnalytics)window.ascensoAnalytics.track(nombre,Object.assign({level:NIVEL_ID},propiedades||{}));
+}
 function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
 const levelMap={basic:'Básica',intermediate:'Intermedia',advanced:'Avanzada'};
 
@@ -262,12 +268,19 @@ const total=preguntas.length;
 const hechas=Object.keys(respuestas).length;
 const prog=document.getElementById('progreso');
 if(prog)prog.textContent=hechas+' de '+total+' respondidas';
+const hitos=[1,5,10,15,20];
+if(hitos.includes(hechas)&&!hitosRegistrados.has(hechas)){
+hitosRegistrados.add(hechas);
+registrarEvento('simulacro_progress',{milestone:hechas,answered:hechas,total:total});
+}
 const btn=document.getElementById('btnPresentar');
 if(btn)btn.disabled=false;
 }
 
 function renderQuiz(){
 respuestas={};
+hitosRegistrados.clear();
+resultadoRegistrado=false;
 const quiz=document.getElementById('quiz');
 quiz.innerHTML='';
 preguntas.forEach((p,idx)=>{
@@ -335,6 +348,7 @@ if(hechas<total){
 const faltan=total-hechas;
 if(!confirm('Te falta'+(faltan>1?'n '+faltan+' preguntas':' 1 pregunta')+' por responder. ¿Deseas presentar el examen de todos modos?'))return;
 }
+registrarEvento('simulacro_submitted',{answered:hechas,total:total});
 document.getElementById('quizArea').style.display='none';
 const gate=document.getElementById('leadGate');
 gate.classList.add('show');
@@ -379,6 +393,10 @@ mostrarResultados(r);
 });
 
 function mostrarResultados(r){
+if(!resultadoRegistrado){
+resultadoRegistrado=true;
+registrarEvento('simulacro_completed',{answered:Object.keys(respuestas).length,total:r.total,percentage:r.porcentaje});
+}
 document.getElementById('scoreNum').textContent=r.correctas+'/'+r.total;
 const pctEl=document.getElementById('scorePct');
 if(pctEl)pctEl.textContent=r.porcentaje+'% de aciertos';
@@ -448,12 +466,24 @@ window.scrollTo({top:0,behavior:'smooth'});
 }
 
 document.getElementById('btnReiniciar').addEventListener('click',()=>{
+registrarEvento('simulacro_restarted');
 renderQuiz();
+registrarEvento('simulacro_started',{total:preguntas.length});
 document.getElementById('resultado').classList.remove('show');
 document.getElementById('quizArea').style.display='block';
 window.scrollTo({top:0,behavior:'smooth'});
 });
+let inicioRegistrado=false;
+function registrarInicio(){
+let permiso=null;
+try{permiso=localStorage.getItem('ascenso_analytics_consent_v1');}catch(e){}
+if(inicioRegistrado||!['accepted','anonymous','necessary'].includes(permiso))return;
+inicioRegistrado=true;
+registrarEvento('simulacro_started',{total:preguntas.length});
+}
 renderQuiz();
+window.addEventListener('load',registrarInicio);
+window.addEventListener('ascenso:analytics-consent',registrarInicio);
 </script>
 </body>
 </html>

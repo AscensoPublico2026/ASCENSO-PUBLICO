@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { analyticsEventKey, trackServerEvent } from "@/lib/analytics-server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
 import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
@@ -17,6 +18,12 @@ export async function procesarReferencia(referencia: string, transactionId?: str
   // ¿Ya estaba procesado? (pago con usuario y curso asignados)
   const { data: pago } = await supabase.from("pagos").select("*").eq("referencia", referencia).single();
   if (pago?.usuario_id && pago?.curso_id) {
+    await trackServerEvent("purchase_completed", {
+      level: pre.nivel || "",
+      convocatoria_id: pre.convocatoria_id || "",
+      value: Number(pago.monto || 0) / 100,
+      currency: "COP",
+    }, { eventKey: analyticsEventKey("purchase", referencia) });
     return { userId: pago.usuario_id, cursoId: pago.curso_id, email: pre.correo, yaProcesado: true };
   }
 
@@ -111,6 +118,15 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     .eq("referencia", referencia);
 
   await supabase.from("preregistros").update({ procesado: true }).eq("referencia", referencia);
+
+  await trackServerEvent("purchase_completed", {
+    level: pre.nivel || "",
+    convocatoria_id: pre.convocatoria_id || "",
+    value: Number(pago?.monto || 0) / 100,
+    currency: "COP",
+  }, {
+    eventKey: analyticsEventKey("purchase", referencia),
+  });
 
   // ---- Correos (no bloquean el flujo si fallan) ----
   try {
