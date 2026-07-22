@@ -5,9 +5,18 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 15 de julio de 2026 — **Analítica propia + panel de indicadores implementados en rama `feat/analitica-indicadores`.** Antes de publicar: aplicar `plataforma/supabase/migracion-analytics.sql`; GA4 y Clarity son opcionales y requieren agregar sus IDs en Vercel._
+_Última actualización: 15 de julio de 2026 — **Cupos administrables + captura cifrada de cédula implementados en rama `feat/admin-cupos-cedula`.** Antes de publicar: aplicar `plataforma/supabase/migracion-configuracion-cupos-cedula.sql`, configurar `DOCUMENT_ENCRYPTION_KEY` en Vercel y redesplegar._
 
 ---
+
+## 🆕 CAMBIOS RECIENTES (sesión 15 jul 2026 — cupos y cédula)
+
+**Gestión de cupos y registro seguro de identificación — rama `feat/admin-cupos-cedula`:**
+- ✅ **Cupos editables desde `/admin/configuracion`:** el administrador define vendidos y total sin cambiar código. Landing y `/comprar` consultan el mismo valor persistido mediante `/api/cupos`; `177/200` queda únicamente como respaldo cuando la configuración no está disponible.
+- ✅ **Cédula obligatoria en `/comprar`:** admite entre 5 y 12 dígitos y separadores visuales. La normalización, validación y el cifrado se realizan exclusivamente en el servidor.
+- ✅ **Protección de datos:** la cédula se almacena con AES-256-GCM en `preregistros` y, tras aprobar el pago, en la tabla privada `identidades_usuarios`. Se guardan por separado los últimos cuatro dígitos para vistas enmascaradas. No se envía a Auth metadata, analítica, correos ni logs.
+- ✅ **Acceso administrativo limitado:** pagos y detalle de curso pueden descifrar el dato en Server Components protegidos; la lista general de usuarios solo muestra `•••• 1234`.
+- ⚠️ **PENDIENTE DE CONFIGURACIÓN EXTERNA:** ejecutar una vez `plataforma/supabase/migracion-configuracion-cupos-cedula.sql`; generar una clave con `openssl rand -hex 32`, guardarla como `DOCUMENT_ENCRYPTION_KEY` en Vercel y redesplegar. La clave debe conservarse estable: cambiarla sin migrar los datos impediría descifrar las cédulas existentes.
 
 ## 🆕 CAMBIOS RECIENTES (sesión 15 jul 2026 — analítica)
 
@@ -49,7 +58,7 @@ _Última actualización: 15 de julio de 2026 — **Analítica propia + panel de 
 
 **Landing / UX:**
 - ✅ **WhatsApp** centralizado en `lib/contacto.ts` con **número oficial `573170905177`** y **redes** (`REDES`: TikTok/Instagram) enlazadas en el footer.
-- ✅ **Contador "177/200 cupos vendidos"** centralizado en `plataforma/lib/cupos.ts` y compartido por la landing y `/comprar`; muestra 23 cupos restantes.
+- ✅ **Contador de cupos compartido:** landing y `/comprar` usan `ContadorCupos`; desde la rama `feat/admin-cupos-cedula`, la fuente oficial es `configuracion_cupos`, editable en `/admin/configuracion`, y `plataforma/lib/cupos.ts` conserva `177/200` solo como fallback.
 - ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
 - ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).
 - ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **1 a 1½ h/día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
@@ -146,7 +155,7 @@ ARQUITECTURA-PLATAFORMA.md · ESTANDAR-TECNICO.md · PLANTILLA-GUIA.md   (CONTIN
 Migrada a Next.js. Convocatorias dinámicas desde Supabase, ScrollReveal, responsive, SEO + Open Graph + favicon + sitemap + robots. Hero, fundador (Julio César Deávila), nivel interactivo, FAQ, política de datos, WhatsApp flotante.
 
 ### Compra (`/comprar`) y pago
-Formulario con Nombres+Apellidos separados (Title Case vía `lib/format.ts`), OPEC/cargo/nivel obligatorios, contador de cupos centralizado (**177/200**), pre-llena si está logueado (multi-curso), sube manual PDF a Storage. Flujo: `/comprar` → Wompi → webhook (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías → `/activar`. Robusto ante usuarios residuales.
+Formulario con Nombres+Apellidos separados (Title Case vía `lib/format.ts`), cédula obligatoria cifrada, OPEC/cargo/nivel obligatorios, contador de cupos administrable (con respaldo **177/200**), pre-llena si está logueado (multi-curso), sube manual PDF a Storage. Flujo: `/comprar` → Wompi → webhook (`/api/webhooks/wompi`) → `procesarReferencia()` crea usuario + curso + auto-carga guías → `/activar`. Robusto ante usuarios residuales.
 
 ### Auto-carga de guías (`lib/autocargarGuias.ts`)
 Al comprar se cargan automáticamente: **INTRO-00 + Generales (GEN-01/02/03) + las del Nivel** (ASI/TEC/PRO según `curso.nivel`) **+ Bonus (BON-01, BON-02)**. Las **funcionales, el simulacro y "Conoce tu Entidad"** NO se auto-cargan: las asigna el admin por código (ver abajo).
@@ -171,12 +180,12 @@ Multi-curso con tarjetas hero; biblioteca por secciones (Plan / Bonus / Simulacr
 
 
 ## 6. Datos / convenciones (NO cambiar sin avisar)
-- **Tablas Supabase:** `profiles`, `convocatorias`, `preregistros`, `cursos`, `guias_curso`, `pagos`. Enum `tipo_guia`: `general | nivel | funcional | bonus | simulacro`.
+- **Tablas Supabase:** `profiles`, `convocatorias`, `preregistros`, `identidades_usuarios`, `configuracion_cupos`, `cursos`, `guias_curso`, `pagos` y `analytics_events`. Enum `tipo_guia`: `general | nivel | funcional | bonus | simulacro`.
 - **Guías:** las 31 publicadas viven en `/guias` (repo), se copian a `plataforma/public/seed-guias/` y se suben al bucket privado `guias`. `biblioteca/biblioteca.json` es la fuente de verdad (copia en `plataforma/lib/biblioteca.json`).
 - **Fotos:** `/plataforma/public/fotos`. **Logos:** `/plataforma/public/brand`.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
 - **Contacto:** WhatsApp **573151972091** · correo **ascensopublico@gmail.com**.
-- **Precio:** $300.000 COP, pago único. **Cupos de lanzamiento:** 177 vendidos de 200 (23 disponibles).
+- **Precio:** $300.000 COP, pago único. **Cupos de lanzamiento:** se administran en `/admin/configuracion`; 177 vendidos de 200 es el respaldo si Supabase no está disponible.
 - **Niveles:** `asistencial` | `tecnico` | `profesional`. **Fundador:** Julio César Deávila.
 
 ## 7. Flujo de trabajo (IMPORTANTE)
@@ -192,7 +201,8 @@ Multi-curso con tarjetas hero; biblioteca por secciones (Plan / Bonus / Simulacr
 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
 `NEXT_PUBLIC_WOMPI_PUBLIC_KEY`, `WOMPI_PRIVATE_KEY`, `WOMPI_INTEGRITY_SECRET`, `WOMPI_EVENTS_SECRET`,
 `RESEND_API_KEY`, **`ADMIN_EMAIL`** (⚠️ revisar: debe ser `ascensopublico@gmail.com`), `NEXT_PUBLIC_SITE_URL` (=https://ascensopublico.com),
-`NEXT_PUBLIC_WOMPI_REDIRECT_URL` (=https://ascensopublico.com/activar), `PRECIO_COP` (=300000).
+`NEXT_PUBLIC_WOMPI_REDIRECT_URL` (=https://ascensopublico.com/activar), `PRECIO_COP` (=300000),
+`DOCUMENT_ENCRYPTION_KEY` (32 bytes en hexadecimal o Base64; generar con `openssl rand -hex 32`; no rotar sin migrar las cédulas existentes).
 
 **Analítica externa opcional:** `NEXT_PUBLIC_GA_MEASUREMENT_ID` (formato `G-...`) y `NEXT_PUBLIC_CLARITY_PROJECT_ID`. Si no se configuran, el panel propio `/admin/analitica` sigue funcionando después de aplicar `migracion-analytics.sql`.
 

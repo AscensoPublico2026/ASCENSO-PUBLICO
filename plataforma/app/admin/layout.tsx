@@ -40,6 +40,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <NavItem href="/admin/cursos" icon="🎓" label="Cursos / Clientes" />
           <NavItem href="/admin/convocatorias" icon="📋" label="Convocatorias" />
           <NavItem href="/admin/usuarios" icon="👥" label="Usuarios" />
+          <NavItem href="/admin/configuracion" icon="⚙️" label="Configuración" />
         </nav>
 
         <div style={{ marginTop: "auto", padding: "20px" }}>
