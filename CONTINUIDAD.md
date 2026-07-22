@@ -60,7 +60,7 @@ _Última actualización: 15 de julio de 2026 — **Cupos administrables conserva
 - ✅ **Contador de cupos compartido:** landing y `/comprar` usan `ContadorCupos`; la fuente oficial es `configuracion_cupos`, editable en `/admin/configuracion`, y `plataforma/lib/cupos.ts` conserva `177/200` solo como fallback.
 - ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
 - ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).
-- ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **1 a 1½ h/día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
+- ✅ **Compromiso de tiempo de estudio** comunicado en landing (recuadro en "Cómo funciona" + FAQ) y en el curso (tarjeta "Tu ruta de estudio"): **60 a 90 minutos al día, guías de 60–90 min, lunes a viernes, 20 días + simulacro** (NO decir "3 semanas").
 - ✅ Footer: enlaces a **/privacidad** y **/terminos** (antes apuntaban a `#datos`).
 
 **Admin:**
