@@ -23,15 +23,6 @@ create table if not exists public.profiles (
   created_at timestamptz not null default now()
 );
 
--- ---------- identificación privada (solo servidor/admin) ----------
-create table if not exists public.identidades_usuarios (
-  usuario_id uuid primary key references auth.users(id) on delete cascade,
-  cedula_encrypted text not null,    -- AES-256-GCM; nunca guardar texto plano
-  cedula_last4 varchar(4) not null,
-  updated_at timestamptz not null default now(),
-  constraint identidades_cedula_last4_formato check (cedula_last4 ~ '^[0-9]{4}$')
-);
-
 -- ---------- convocatorias (gestionadas desde el panel admin) ----------
 create table if not exists public.convocatorias (
   id uuid primary key default gen_random_uuid(),
@@ -55,10 +46,6 @@ create table if not exists public.preregistros (
   nombre text,
   correo text,
   celular text,
-  cedula_encrypted text,            -- AES-256-GCM; nunca guardar la cédula en texto plano
-  cedula_last4 varchar(4),
-  constraint preregistros_cedula_last4_formato check (cedula_last4 is null or cedula_last4 ~ '^[0-9]{4}$'),
-  constraint preregistros_cedula_campos_pareados check ((cedula_encrypted is null) = (cedula_last4 is null)),
   convocatoria_id uuid references public.convocatorias(id),
   opec text,
   cargo_nombre text,
@@ -150,7 +137,6 @@ create trigger on_auth_user_created
 -- RLS (seguridad por fila)
 -- ============================================================
 alter table public.profiles enable row level security;
-alter table public.identidades_usuarios enable row level security;
 alter table public.convocatorias enable row level security;
 alter table public.preregistros enable row level security;
 alter table public.cursos enable row level security;
@@ -163,10 +149,6 @@ drop policy if exists "perfil propio select" on public.profiles;
 create policy "perfil propio select" on public.profiles for select using (id = auth.uid() or public.is_admin());
 drop policy if exists "perfil propio update" on public.profiles;
 create policy "perfil propio update" on public.profiles for update using (id = auth.uid() or public.is_admin());
-
--- identificación: nunca se expone al estudiante; solo admin o service role
-drop policy if exists "identidades admin" on public.identidades_usuarios;
-create policy "identidades admin" on public.identidades_usuarios for all using (public.is_admin()) with check (public.is_admin());
 
 -- convocatorias: lectura pública (landing); escritura solo admin
 drop policy if exists "convocatorias lectura" on public.convocatorias;

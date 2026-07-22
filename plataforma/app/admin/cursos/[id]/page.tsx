@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { decryptCedula, maskCedula } from "@/lib/cedula";
 import { toTitleCase } from "@/lib/format";
 import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
@@ -20,13 +19,6 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
     .eq("id", params.id)
     .single();
   if (!curso) notFound();
-
-  const { data: identidad } = await supabase
-    .from("identidades_usuarios")
-    .select("cedula_encrypted,cedula_last4")
-    .eq("usuario_id", curso.usuario_id)
-    .maybeSingle();
-  const cedulaCliente = decryptCedula(identidad?.cedula_encrypted) || maskCedula(identidad?.cedula_last4);
 
   const admin = createAdminClient();
   let manualUrl: string | null = null;
@@ -143,7 +135,6 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>NOMBRE</span><br/><strong>{curso.profiles?.nombre || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>CORREO</span><br/><strong>{curso.profiles?.correo || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>CELULAR</span><br/><strong>{curso.profiles?.celular || "-"}</strong></div>
-          <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>CÉDULA</span><br/><strong>{cedulaCliente}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>OPEC</span><br/><strong>{curso.opec || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>ENTIDAD</span><br/><strong>{curso.convocatorias?.entidad || curso.convocatorias?.nombre || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>NIVEL</span><br/><strong>{curso.nivel || "-"}</strong></div>
