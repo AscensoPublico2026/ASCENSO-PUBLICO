@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { trackEvent } from "@/lib/analytics";
 import {
   formatOpecDate,
   getOpecDetailUrl,
@@ -335,8 +336,8 @@ function DetailModal({ job, detail, loading, error, copied, onClose, onCopy }: {
         </div>
         <div className="opec-modal-actions">
           <button type="button" className={`opec-copy-button${copied ? " copied" : ""}`} onClick={() => onCopy(job)}><CopyIcon /> {copied ? `${job.tipoReferencia} copiado` : `Copiar ${job.tipoReferencia} ${job.referencia}`}</button>
-          {detail?.urlOficial && <a href={detail.urlOficial} target="_blank" rel="noopener noreferrer" className="opec-simo-button">Ir al sitio oficial <span aria-hidden="true">↗</span></a>}
-          <Link href="/comprar" className="opec-course-link">Prepararme para este cargo</Link>
+          {detail?.urlOficial && <a href={detail.urlOficial} target="_blank" rel="noopener noreferrer" className="opec-simo-button" onClick={() => trackEvent("opec_official_clicked", { empleo_id: job.id, referencia: job.referencia, convocatoria_id: job.convocatoriaId, employment_level: job.nivel })}>Ir al sitio oficial <span aria-hidden="true">↗</span></a>}
+          <Link href="/comprar" className="opec-course-link" data-analytics-event="cta_click" data-analytics-placement="opec_detail_buy">Prepararme para este cargo</Link>
         </div>
         <p className="opec-modal-note">Confirma los requisitos, fechas y disponibilidad en el canal oficial antes de inscribirte.</p>
       </section>
@@ -372,6 +373,7 @@ export default function BuscadorOpec() {
   const detailRequest = useRef<{ id: string; controller: AbortController } | null>(null);
   const filtersRef = useRef<HTMLElement>(null);
   const filterCloseRef = useRef<HTMLButtonElement>(null);
+  const lastTrackedSearch = useRef("");
 
   const closeDetail = useCallback(() => {
     detailRequest.current?.controller.abort();
@@ -454,21 +456,79 @@ export default function BuscadorOpec() {
   }, [jobs, smartProfile, searchMode, query, convocatoria, modality, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability, sort]);
 
   const activeFilters = [convocatoria, department, municipality, level, education, experience, additionalRequirement, minimumSalary, disability ? "disability" : ""].filter(Boolean).length;
+
+  useEffect(() => {
+    if (loading || loadError) return;
+    const hasInteraction = searchMode === "smart"
+      ? smartProfile.ready
+      : Boolean(query.trim() || activeFilters || modality);
+    if (!hasInteraction) return;
+
+    const signature = [
+      searchMode, normalize(query), convocatoria, modality, department, municipality, level,
+      education, experience, additionalRequirement, minimumSalary, disability,
+      filteredJobs.length,
+    ].join("|");
+    if (signature === lastTrackedSearch.current) return;
+
+    const timer = window.setTimeout(() => {
+      lastTrackedSearch.current = signature;
+      const queryLength = query.trim().length;
+      const properties = {
+        mode: searchMode,
+        criteria_count: searchMode === "smart"
+          ? smartProfile.criteria.length
+          : activeFilters + (modality ? 1 : 0) + (queryLength ? 1 : 0),
+        has_location: searchMode === "smart"
+          ? smartProfile.locations.length > 0
+          : Boolean(department || municipality),
+        query_length_bucket: queryLength < 20 ? "short" : queryLength < 80 ? "medium" : "long",
+        result_count: filteredJobs.length,
+        convocatoria_id: convocatoria || "all",
+        employment_level: level || "all",
+      };
+      trackEvent("search_used", properties);
+      if (filteredJobs.length === 0) trackEvent("search_zero_results", properties);
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    activeFilters, additionalRequirement, convocatoria, department, disability, education,
+    experience, filteredJobs.length, level, loadError, loading, minimumSalary, modality,
+    municipality, query, searchMode, smartProfile.criteria.length, smartProfile.locations.length,
+    smartProfile.ready,
+  ]);
+
   function resetFilters() {
     setConvocatoria(""); setDepartment(""); setMunicipality(""); setLevel(""); setEducation("");
     setExperience(""); setAdditionalRequirement(""); setMinimumSalary(""); setDisability(false);
   }
   function changeMode(mode: "smart" | "filters") {
+    trackEvent("search_mode_changed", { mode });
     setSearchMode(mode); setQuery(""); setFiltersOpen(false); setSort("relevance");
   }
   async function copyReference(job: OpecSummary) {
     try {
       await navigator.clipboard.writeText(job.referencia);
+      trackEvent("opec_reference_copied", {
+        mode: searchMode,
+        empleo_id: job.id,
+        referencia: job.referencia,
+        convocatoria_id: job.convocatoriaId,
+        employment_level: job.nivel,
+      });
       setCopiedId(job.id);
       window.setTimeout(() => setCopiedId((current) => current === job.id ? null : current), 1800);
     } catch { setCopiedId(null); }
   }
   async function openDetail(job: OpecSummary) {
+    trackEvent("opec_detail_viewed", {
+      mode: searchMode,
+      empleo_id: job.id,
+      referencia: job.referencia,
+      convocatoria_id: job.convocatoriaId,
+      employment_level: job.nivel,
+    });
     detailRequest.current?.controller.abort();
     detailRequest.current = null;
     setSelected(job); setDetailError("");

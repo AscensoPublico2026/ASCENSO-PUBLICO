@@ -9,7 +9,9 @@ export default function Privacidad() {
         Público informa cómo trata los datos personales de sus usuarios.
       </p>
       <h2 style={{ fontSize: "1.1rem", margin: "18px 0 8px" }}>Datos que recolectamos</h2>
-      <p style={{ color: "var(--texto-suave)" }}>Nombre, correo, celular, número de OPEC, cargo, nivel y el manual de funciones (PDF) que nos compartes.</p>
+      <p style={{ color: "var(--texto-suave)" }}>Nombre, correo, celular, número de OPEC, cargo, nivel y el manual de funciones (PDF) que nos compartes. Para mejorar la plataforma también registramos métricas técnicas anónimas como páginas visitadas, botones utilizados, búsquedas realizadas sin guardar el texto escrito, simulacros iniciados o terminados y etapas del proceso de compra.</p>
+      <h2 style={{ fontSize: "1.1rem", margin: "18px 0 8px" }}>Analítica y preferencias</h2>
+      <p style={{ color: "var(--texto-suave)" }}>La medición propia utiliza, únicamente si la autorizas, un identificador aleatorio temporal de sesión y no almacena direcciones IP, identificadores de cuenta, correos, teléfonos ni el contenido que escribes en el buscador. Puedes permitir solo esta medición anónima, rechazar toda la analítica o autorizar también Google Analytics y Microsoft Clarity. Clarity no se carga en las rutas de compra, acceso, activación, perfil ni administración.</p>
       <h2 style={{ fontSize: "1.1rem", margin: "18px 0 8px" }}>Finalidad</h2>
       <p style={{ color: "var(--texto-suave)" }}>Usamos tus datos únicamente para crear y entregar tu curso personalizado y para comunicarnos contigo sobre tu preparación. No los compartimos con terceros ajenos a la prestación del servicio ni con la CNSC.</p>
       <h2 style={{ fontSize: "1.1rem", margin: "18px 0 8px" }}>Tus derechos</h2>

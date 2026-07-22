@@ -36,6 +36,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
         <nav style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <NavItem href="/admin" icon="📊" label="Dashboard" />
+          <NavItem href="/admin/analitica" icon="📈" label="Analítica" />
           <NavItem href="/admin/cursos" icon="🎓" label="Cursos / Clientes" />
           <NavItem href="/admin/convocatorias" icon="📋" label="Convocatorias" />
           <NavItem href="/admin/usuarios" icon="👥" label="Usuarios" />

@@ -4,6 +4,7 @@ import { crearCompra } from "./actions";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import ContadorCupos from "../components/ContadorCupos";
+import { trackEvent } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
 
 // Componente principal (ahora completamente cliente)
@@ -114,7 +115,16 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
         </div>
       )}
 
-      <form action={crearCompra}>
+      <form
+        action={crearCompra}
+        onSubmit={(event) => {
+          const data = new FormData(event.currentTarget);
+          trackEvent("checkout_form_submitted", {
+            level: String(data.get("nivel") || ""),
+            convocatoria_id: String(data.get("convocatoria_id") || ""),
+          });
+        }}
+      >
         {/* Nombres y Apellidos separados - OBLIGATORIOS */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
           <label style={label}>Nombres *

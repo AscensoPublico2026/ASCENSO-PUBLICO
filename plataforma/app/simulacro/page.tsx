@@ -38,7 +38,7 @@ export default function SimulacroIndex() {
           <span className="sim-brand-logo">↗</span>
           <span>Ascenso Público</span>
         </Link>
-        <Link href="/comprar" className="btn btn-oro sim-top-cta">Quiero mi curso</Link>
+        <Link href="/comprar" className="btn btn-oro sim-top-cta" data-analytics-event="cta_click" data-analytics-placement="simulacro_index_buy">Quiero mi curso</Link>
       </header>
 
       <section className="sim-hero">
@@ -61,7 +61,13 @@ export default function SimulacroIndex() {
               <h3>Nivel {n.nombre}</h3>
               <p>{n.desc}</p>
               <div className="sim-nivel-meta">20 preguntas · ~30 min</div>
-              <a href={`/simulacro-gratis/${n.id}.html`} className="btn btn-azul sim-nivel-btn">
+              <a
+                href={`/simulacro-gratis/${n.id}.html`}
+                className="btn btn-azul sim-nivel-btn"
+                data-analytics-event="cta_click"
+                data-analytics-placement="simulacro_index_start"
+                data-analytics-level={n.id}
+              >
                 Empezar simulacro →
               </a>
             </div>
