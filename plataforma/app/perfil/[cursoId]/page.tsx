@@ -192,6 +192,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             Estamos armando tu ruta personalizada. Estará lista en máximo:
           </p>
           {curso.preparacion_deadline && <Contador deadline={curso.preparacion_deadline} />}
+
+          {/* Ficha de datos del curso */}
+          <DatosCurso curso={curso} convNombre={convNombre} cargoNombre={cargoNombre} />
         </div>
       )}
 
@@ -218,6 +221,8 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
                 Tu ruta de estudio ya fue preparada. Estará disponible en:
               </p>
               <Contador deadline={curso.preparacion_deadline} />
+              {/* Ficha de datos del curso */}
+              <DatosCurso curso={curso} convNombre={convNombre} cargoNombre={cargoNombre} />
             </div>
           );
         }
@@ -308,6 +313,50 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
         </a>
       )}
     </main>
+  );
+}
+
+// ---------- Ficha de datos del curso (visible mientras espera las 24h) ----------
+function DatosCurso({ curso, convNombre, cargoNombre }: { curso: any; convNombre: string; cargoNombre: string }) {
+  const filas: { icon: string; label: string; value: string }[] = [];
+
+  if (curso.numero_inscripcion) filas.push({ icon: "🏷️", label: "N.° de inscripción", value: curso.numero_inscripcion });
+  if (curso.opec) filas.push({ icon: "🔢", label: "N.° OPEC", value: curso.opec });
+  if (cargoNombre) filas.push({ icon: "💼", label: "Cargo", value: cargoNombre });
+  if (convNombre) filas.push({ icon: "📋", label: "Convocatoria", value: convNombre });
+  if (curso.nivel) filas.push({ icon: "🎯", label: "Nivel", value: curso.nivel.charAt(0).toUpperCase() + curso.nivel.slice(1) });
+  if (curso.fecha_vencimiento) filas.push({ icon: "📅", label: "Acceso válido hasta", value: new Date(curso.fecha_vencimiento).toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric" }) });
+
+  if (filas.length === 0) return null;
+
+  return (
+    <div style={{
+      marginTop: 18,
+      background: "rgba(255,255,255,.7)",
+      border: "1px solid #F0DCB0",
+      borderRadius: 12,
+      overflow: "hidden",
+    }}>
+      <div style={{ padding: "10px 16px", borderBottom: "1px solid #F0DCB0" }}>
+        <span style={{ fontSize: ".72rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".06em", color: "#B8600A" }}>
+          📄 Datos de tu inscripción
+        </span>
+      </div>
+      {filas.map((f, i) => (
+        <div key={f.label} style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          padding: "10px 16px",
+          borderBottom: i < filas.length - 1 ? "1px solid #FEF3C7" : "none",
+          background: i % 2 === 0 ? "transparent" : "rgba(254,243,199,.35)",
+        }}>
+          <span style={{ fontSize: "1rem", flexShrink: 0 }}>{f.icon}</span>
+          <span style={{ fontSize: ".8rem", color: "#92400E", minWidth: 160, flexShrink: 0 }}>{f.label}</span>
+          <span style={{ fontSize: ".88rem", fontWeight: 700, color: "#0A2A5E" }}>{f.value}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
