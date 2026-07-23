@@ -3,353 +3,326 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUN-SAL-07 · Control de Conteos y Registros Intraoperatorios — Ascenso Público</title>
+<title>FUN-SAL-07 · Control, Conteos y Registros Intraoperatorios — Ascenso Público</title>
 <link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --azul:        #0A2A5E;
-  --azul-medio:  #1A4A8A;
-  --azul-claro:  #2D6CC0;
-  --azul-suave:  #EAF1FB;
-  --azul-borde:  #C9DCF4;
-  --oro:         #E8A33D;
-  --oro-claro:   #F6C56B;
-  --oro-suave:   #FDF4E3;
-  --oro-borde:   #F0DCB0;
-  --crema:       #FBF9F4;
-  --blanco:      #FFFFFF;
-  --gris-bg:     #F2F0EA;
-  --gris-borde:  #E6E2D8;
-  --verde:       #1A7A4A;
-  --verde-suave: #E8F6EE;
-  --verde-borde: #BFE6CF;
-  --rojo:        #C0392B;
-  --rojo-suave:  #FCEDEB;
-  --rojo-borde:  #F2CDC8;
-  --ambar:       #B8600A;
-  --ambar-suave: #FBEFDD;
-  --ambar-borde: #EFD7B0;
-  --texto:       #2A3441;
-  --texto-suave: #5B6675;
-  --sombra:      0 4px 20px rgba(10,42,94,0.08);
-  --sombra-lg:   0 10px 36px rgba(10,42,94,0.16);
-  --radio:       16px;
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--crema);
-  color: var(--texto);
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-}
-#readbar {
-  position: fixed; top: 0; left: 0; height: 4px; width: 0%;
-  background: linear-gradient(90deg, var(--oro), var(--oro-claro));
-  z-index: 999; transition: width 0.1s linear;
-}
-header {
-  background: linear-gradient(140deg, #08234F 0%, var(--azul) 45%, var(--azul-medio) 100%);
-  color: var(--blanco);
-  padding: 42px 20px 36px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-header::before {
-  content:''; position:absolute; top:-60px; right:-60px;
-  width: 220px; height: 220px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,163,61,0.22), transparent 70%);
-}
-header::after {
-  content:''; position:absolute; bottom:0; left:0; right:0; height:5px;
-  background: linear-gradient(90deg, var(--oro) 0%, var(--oro-claro) 50%, var(--oro) 100%);
-}
-.brand { display: inline-flex; align-items: center; gap: 13px; position: relative; z-index: 2; }
-.brand-logo {
-  width: 50px; height: 50px; border-radius: 13px;
-  background: linear-gradient(135deg, var(--oro-claro), var(--oro));
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 6px 18px rgba(232,163,61,0.4);
-}
-.brand-name { font-size: 1.6rem; font-weight: 800; }
-.brand-slogan { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-top: 4px; }
-.doc-ref {
-  position: absolute; top: 16px; right: 18px; z-index: 3;
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
-  color: rgba(255,255,255,0.55);
-  border: 1px solid rgba(255,255,255,0.22);
-  padding: 4px 11px; border-radius: 7px; text-transform: uppercase;
-}
-.kicker {
-  display: inline-flex; align-items: center; gap: 11px;
-  margin: 24px 0 12px; position: relative; z-index: 2;
-  color: var(--oro-claro); font-weight: 700; font-size: 0.78rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-}
-.kicker::before, .kicker::after {
-  content:''; width: 26px; height: 2px; border-radius: 2px;
-  background: linear-gradient(90deg, transparent, var(--oro), transparent);
-}
-header h1 {
-  font-family: 'Source Serif 4', serif;
-  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
-  font-weight: 700; line-height: 1.16; max-width: 740px; margin: 0 auto;
-  position: relative; z-index: 2;
-}
-.header-sub {
-  max-width: 600px; margin: 18px auto 0; position: relative; z-index: 2;
-  color: rgba(255,255,255,0.82); font-size: 0.98rem;
-}
-.badges {
-  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
-  margin-top: 20px; position: relative; z-index: 2;
-}
-.badge {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 7px 16px; border-radius: 20px;
-  font-size: 0.8rem; font-weight: 600;
-  border: 1px solid rgba(255,255,255,0.25);
-}
-nav {
-  position: sticky; top: 0; z-index: 50;
-  background: var(--azul);
-  display: flex; gap: 5px; padding: 11px 12px;
-  overflow-x: auto;
-  box-shadow: 0 4px 18px rgba(10,42,94,0.22);
-}
-nav button {
-  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.78);
-  border: none; padding: 9px 16px; border-radius: 9px;
-  cursor: pointer; font-weight: 600; white-space: nowrap;
-  font-size: 0.85rem;
-}
-nav button:hover { background: rgba(255,255,255,0.16); color: #fff; }
-nav button.active {
-  background: linear-gradient(135deg, var(--oro), var(--oro-claro));
-  color: var(--azul);
-  box-shadow: 0 4px 12px rgba(232,163,61,0.4);
-}
-main { max-width: 880px; margin: 0 auto; padding: 36px 18px 80px; }
-.section { display: none; animation: fade 0.4s ease; }
-.section.visible { display: block; }
-@keyframes fade { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform:none;} }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  color: var(--ambar); font-weight: 700; font-size: 0.78rem;
-  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
-}
-.eyebrow::before {
-  content:''; width: 26px; height: 3px;
-  background: linear-gradient(90deg,var(--oro),var(--oro-claro));
-  border-radius: 3px;
-}
-h2.sec-title {
-  font-family: 'Source Serif 4', serif;
-  font-size: clamp(1.55rem, 3.6vw, 2.1rem); color: var(--azul);
-  line-height: 1.2; margin-bottom: 20px;
-}
-.card {
-  background: var(--blanco);
-  border: 1px solid var(--gris-borde);
-  border-radius: var(--radio);
-  padding: 22px 24px;
-  margin: 16px 0;
-  box-shadow: var(--sombra);
-}
-.card-lead {
-  border-left: 5px solid var(--oro);
-  background: linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%);
-}
-.lista { list-style:none; margin:6px 0 16px; }
-.lista li { position:relative; padding-left:30px; margin-bottom:11px; }
-.lista li::before { content:'✓'; position:absolute; left:0; top:1px; width:20px; height:20px; background:var(--verde-suave); color:var(--verde); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.72rem; }
-.narr { background:linear-gradient(100deg, var(--oro-suave), var(--blanco) 60%); border-left:5px solid var(--oro); padding:18px 22px; border-radius:13px; margin:18px 0; font-style:italic; color:var(--texto); }
-.flujo { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:22px; margin:18px 0; box-shadow:var(--sombra); }
-.flujo-paso { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px dashed var(--gris-borde); }
-.flujo-paso:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
-.flujo-num { width:36px; height:36px; border-radius:50%; background:var(--azul); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
-.flujo-content h4 { margin:0 0 6px; color:var(--azul); font-size:1rem; }
-.flujo-content p { margin:0; font-size:.9rem; }
-.checkpoint { background:var(--azul-suave); border:2px solid var(--azul-borde); border-radius:14px; padding:18px 20px; margin:20px 0; }
-.checkpoint-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1.05rem; }
-.checkpoint-q { font-weight:600; margin:10px 0; color:var(--texto); }
-.checkpoint-opts { list-style:none; margin:10px 0; padding:0; }
-.checkpoint-opts li { padding:10px 14px; margin:6px 0; background:#fff; border:1.5px solid var(--gris-borde); border-radius:9px; cursor:pointer; transition:all .15s; }
-.checkpoint-opts li:hover { border-color:var(--oro); background:var(--oro-suave); }
-.checkpoint-opts li.ok { border-color:var(--verde); background:var(--verde-suave); }
-.checkpoint-opts li.no { border-color:var(--rojo); background:var(--rojo-suave); opacity:.6; }
-.checkpoint-fb { display:none; margin-top:8px; padding:10px 13px; border-radius:8px; font-size:.88rem; }
-.checkpoint-fb.show { display:block; }
-.checkpoint-fb.ok { background:var(--verde-suave); border-left:3px solid var(--verde); }
-.checkpoint-fb.no { background:var(--rojo-suave); border-left:3px solid var(--rojo); }
-.practica { background:var(--verde-suave); border:1px solid var(--verde-borde); border-left:5px solid var(--verde); border-radius:13px; padding:16px 20px; margin:16px 0; }
-.practica-title { font-weight:800; color:var(--verde); margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
-.practica p { margin-bottom:10px; font-size:.9rem; }
-.practica p:last-child { margin-bottom:0; }
-.ojo { background:var(--ambar-suave); border:1px solid var(--ambar-borde); border-radius:10px; padding:11px 16px; margin:14px 0; display:flex; align-items:flex-start; gap:10px; }
-.ojo-icon { font-size:1.2rem; flex-shrink:0; }
-.ojo-text { font-size:.88rem; color:var(--texto); }
-.ojo-text strong { color:var(--ambar); }
-.fuentes { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:18px 22px; margin:22px 0; }
-.fuentes-title { font-weight:800; color:var(--azul); margin-bottom:12px; display:flex; align-items:center; gap:9px; font-size:1rem; }
-.fuentes ul { list-style:none; padding:0; margin:0; }
-.fuentes ul li { margin-bottom:10px; padding-left:26px; position:relative; }
-.fuentes ul li::before { content:'🔗'; position:absolute; left:0; }
-.fuentes ul li:last-child { margin-bottom:0; }
-.fuentes a { color:var(--azul-claro); font-weight:600; text-decoration:none; border-bottom:1px dotted var(--azul-claro); }
-.fuentes a:hover { color:var(--oro); border-bottom-color:var(--oro); }
-.concepto { background:linear-gradient(180deg, var(--oro-suave) 0%, var(--blanco) 90px); border:1px solid var(--oro-borde); border-radius:16px; margin:18px 0; overflow:hidden; box-shadow:var(--sombra); }
-.concepto-head { padding:14px 20px 10px; font-weight:800; font-size:1.05rem; color:var(--azul); display:flex; align-items:center; gap:10px; border-bottom:2px dashed var(--oro-borde); }
-.ch-icon { font-size:1.4rem; }
-.concepto-body { padding:6px 14px 12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
-.capa { padding:13px 15px; border-radius:12px; display:flex; gap:11px; align-items:flex-start; background:var(--blanco); border:1px solid var(--gris-borde); transition:transform .15s; }
-.capa:hover { transform:translateY(-2px); box-shadow:var(--sombra); }
-.capa-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
-.capa-icon.def { background:var(--azul-suave); }
-.capa-icon.apl { background:var(--verde-suave); }
-.capa-icon.eje { background:var(--oro-suave); }
-.capa-icon.cnsc { background:var(--rojo-suave); }
-.capa-content { flex:1; }
-.capa-content .label { display:block; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px; }
-.capa.cap-def .label { color:var(--azul); }
-.capa.cap-apl .label { color:var(--verde); }
-.capa.cap-eje .label { color:var(--ambar); }
-.capa.cap-cnsc .label { color:var(--rojo); }
-.capa-content p { margin-bottom:0; font-size:.9rem; line-height:1.55; }
-.box { border-radius:13px; padding:18px 20px; margin:16px 0; border:1px solid; }
-.box-title { font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:7px; font-size:.98rem; }
-.box p:last-child { margin-bottom:0; }
-.box.info { background:var(--azul-suave); border-color:var(--azul-borde); } .box.info .box-title { color:var(--azul); }
-.box.ok { background:var(--verde-suave); border-color:var(--verde-borde); } .box.ok .box-title { color:var(--verde); }
-.box.warn { background:var(--ambar-suave); border-color:var(--ambar-borde); } .box.warn .box-title { color:var(--ambar); }
-.box.danger { background:var(--rojo-suave); border-color:var(--rojo-borde); } .box.danger .box-title { color:var(--rojo); }
-.box.gold { background:var(--oro-suave); border-color:var(--oro-borde); } .box.gold .box-title { color:var(--ambar); }
-.tabla-wrap { overflow-x:auto; margin:16px 0; border-radius:13px; box-shadow:var(--sombra); border:1px solid var(--gris-borde); }
-table { width:100%; border-collapse:collapse; background:var(--blanco); min-width:480px; }
-th { background:var(--azul); color:#fff; padding:14px 16px; text-align:left; font-size:.86rem; font-weight:700; }
-td { padding:12px 16px; border-bottom:1px solid var(--gris-borde); font-size:.9rem; vertical-align:top; }
-tr:last-child td { border-bottom:none; }
-tr:nth-child(even) td { background:#FAF8F2; }
-.caso { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; overflow:hidden; margin:16px 0; box-shadow:var(--sombra); }
-.caso-head { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; padding:13px 18px; font-weight:700; font-size:.94rem; display:flex; align-items:center; gap:8px; }
-.caso-body { padding:18px 20px; }
-.caso-body .label { font-weight:800; color:var(--ambar); display:block; margin-top:14px; margin-bottom:3px; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
-.caso-body .label:first-child { margin-top:0; }
-.resp-correcta { background:var(--verde-suave); border-left:4px solid var(--verde); padding:11px 15px; border-radius:9px; margin-top:8px; }
-.trampa { border:1px solid var(--gris-borde); border-radius:14px; margin:14px 0; overflow:hidden; box-shadow:var(--sombra); }
-.trampa-q { background:linear-gradient(100deg,var(--ambar-suave),var(--blanco)); padding:15px 18px; font-weight:600; border-left:5px solid var(--oro); }
-.trampa-detail { padding:16px 18px; background:var(--blanco); }
-.trampa-detail .t-row { margin-bottom:10px; padding-left:28px; position:relative; }
-.trampa-detail .t-row:last-child { margin-bottom:0; }
-.trampa-detail .t-row.parece::before { content:'⚠️'; position:absolute; left:0; }
-.trampa-detail .t-row.malo::before { content:'❌'; position:absolute; left:0; }
-.trampa-detail .t-row.bueno::before { content:'✅'; position:absolute; left:0; }
-.flash-intro { text-align:center; margin-bottom:20px; color:var(--texto-suave); }
-.flash-counter { display:inline-block; background:var(--azul-suave); color:var(--azul); padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:700; margin-bottom:12px; }
-.flashcard { perspective:1000px; max-width:560px; margin:0 auto 20px; }
-.flashcard-inner { position:relative; width:100%; min-height:200px; transition:transform .6s; transform-style:preserve-3d; cursor:pointer; }
-.flashcard.flipped .flashcard-inner { transform:rotateY(180deg); }
-.flashcard-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:var(--sombra-lg); }
-.flashcard-front { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; }
-.flashcard-front .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-claro); font-weight:700; margin-bottom:14px; }
-.flashcard-front .pregunta-flash { font-family:'Source Serif 4',serif; font-size:1.3rem; font-weight:700; line-height:1.35; }
-.flashcard-front .hint { margin-top:18px; color:rgba(255,255,255,.65); font-size:.78rem; }
-.flashcard-back { background:#fff; color:var(--texto); transform:rotateY(180deg); border:2px solid var(--oro); }
-.flashcard-back .label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ambar); font-weight:700; margin-bottom:12px; }
-.flashcard-back .respuesta-flash { font-size:1rem; line-height:1.55; }
-.flashcard-controls { display:flex; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
-.flashcard-controls button { background:#fff; border:1.5px solid var(--gris-borde); color:var(--azul); padding:10px 22px; border-radius:11px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.86rem; transition:all .2s; }
-.flashcard-controls button:hover { border-color:var(--oro); background:var(--oro-suave); }
-.flashcard-controls button.primary { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); border:none; color:var(--azul); }
-.glosario { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:14px 0; }
-.glo-item { background:#fff; border:1px solid var(--gris-borde); border-left:4px solid var(--azul-claro); border-radius:11px; padding:14px 16px; box-shadow:var(--sombra); }
-.glo-item dt { font-weight:800; color:var(--azul); margin-bottom:5px; font-size:.95rem; }
-.glo-item dd { font-size:.86rem; color:var(--texto-suave); }
-.quiz-intro { text-align:center; margin-bottom:18px; }
-.quiz-formato { background:var(--azul-suave); border:1px solid var(--azul-borde); border-radius:13px; padding:15px 18px; margin:0 auto 22px; max-width:640px; text-align:left; font-size:.86rem; }
-.quiz-formato strong { color:var(--azul); }
-.dific-tags { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-top:14px; }
-.tag { font-size:.75rem; font-weight:700; padding:5px 14px; border-radius:20px; }
-.tag.b { background:var(--verde-suave); color:var(--verde); }
-.tag.i { background:var(--azul-suave); color:var(--azul); }
-.tag.a { background:var(--rojo-suave); color:var(--rojo); }
-.pregunta { background:var(--blanco); border:1px solid var(--gris-borde); border-radius:14px; padding:21px 22px; margin-bottom:16px; box-shadow:var(--sombra); }
-.pregunta .q-num { display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--azul); margin-bottom:5px; }
-.nivel-pill { font-size:.66rem; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:.05em; }
-.nivel-pill.b { background:var(--verde-suave); color:var(--verde); }
-.nivel-pill.i { background:var(--azul-suave); color:var(--azul); }
-.nivel-pill.a { background:var(--rojo-suave); color:var(--rojo); }
-.q-contexto { background:var(--gris-bg); border-radius:10px; padding:12px 15px; margin:9px 0 12px; font-size:.9rem; color:var(--texto-suave); border-left:3px solid var(--azul-claro); }
-.q-texto { font-weight:600; margin:9px 0 15px; color:var(--texto); }
-.opciones { display:flex; flex-direction:column; gap:9px; }
-.opcion { display:flex; align-items:flex-start; gap:12px; border:1.5px solid var(--gris-borde); border-radius:11px; padding:13px 15px; cursor:pointer; transition:all .18s; background:#fff; }
-.opcion:hover { border-color:var(--oro); background:var(--oro-suave); }
-.opcion .letra { width:27px; height:27px; border-radius:50%; background:var(--gris-bg); color:var(--texto-suave); font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; }
-.opcion.correcta { border-color:var(--verde); background:var(--verde-suave); }
-.opcion.correcta .letra { background:var(--verde); color:#fff; }
-.opcion.incorrecta { border-color:var(--rojo); background:var(--rojo-suave); }
-.opcion.incorrecta .letra { background:var(--rojo); color:#fff; }
-.opcion.bloqueada { pointer-events:none; }
-.feedback { margin-top:12px; padding:12px 15px; border-radius:10px; font-size:.88rem; display:none; }
-.feedback.show { display:block; }
-.feedback.ok { background:var(--verde-suave); border-left:4px solid var(--verde); }
-.feedback.no { background:var(--rojo-suave); border-left:4px solid var(--rojo); }
-#resultado { display:none; text-align:center; background:var(--blanco); border:2px solid var(--oro); border-radius:18px; padding:32px; margin-top:24px; box-shadow:var(--sombra-lg); }
-#resultado.show { display:block; }
-.score-num { font-size:3.2rem; font-weight:800; color:var(--azul); font-family:'Source Serif 4',serif; }
-.btn { background:linear-gradient(135deg,var(--azul),var(--azul-medio)); color:#fff; border:none; padding:13px 30px; border-radius:11px; font-family:inherit; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; margin-top:16px; }
-.btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
-.btn.gold { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); }
-.resumen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:14px; margin:16px 0; }
-.resumen-item { background:var(--blanco); border:1px solid var(--gris-borde); border-top:4px solid var(--oro); border-radius:13px; padding:17px 19px; box-shadow:var(--sombra); }
-.resumen-item h4 { color:var(--azul); font-size:.98rem; margin-bottom:6px; }
-.resumen-item p { font-size:.86rem; margin:0; color:var(--texto-suave); }
-.cierre { background:linear-gradient(140deg,var(--azul),var(--azul-medio)); color:#fff; border-radius:18px; padding:36px 28px; text-align:center; box-shadow:var(--sombra-lg); position:relative; overflow:hidden; }
-.cierre::before { content:''; position:absolute; top:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%); }
-.cierre h3 { color:#fff; font-size:1.45rem; margin:0 0 10px; justify-content:center; }
-.cierre p { color:rgba(255,255,255,.9); position:relative; z-index:2; }
-footer { background:var(--azul); color:rgba(255,255,255,.8); text-align:center; padding:28px 20px; }
-footer .fbrand { font-weight:800; color:#fff; font-size:1.05rem; }
-footer .fslogan { font-size:.78rem; margin-top:3px; color:var(--oro-claro); }
-footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); line-height:1.7; }
-.advance-bar { margin-top:36px; padding-top:22px; border-top:2px dashed var(--oro); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.advance-hint { color:var(--texto-suave); font-style:italic; }
-.advance-btn { background:linear-gradient(135deg,var(--oro),var(--oro-claro)); color:var(--azul); border:none; padding:12px 26px; border-radius:11px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(232,163,61,.35); transition:all .2s; font-family:inherit; font-size:.92rem; }
-.advance-btn:hover { transform:translateY(-2px); box-shadow:var(--sombra-lg); }
-.advance-btn.final { background:linear-gradient(135deg,var(--verde),#2A9F66); color:#fff; }
-.h3-chip { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; background:var(--oro); color:var(--azul); font-weight:800; font-size:.82rem; margin-right:8px; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+/* ===== DESARROLLO v3 · estilo editorial (visual nuevo y mejorado) ===== */
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+/* ===== Bloque CÁLCULO · fórmulas y procesos matemáticos paso a paso ===== */
+.calculo{background:linear-gradient(180deg,#fff,var(--azul-suave));border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.calculo-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.calculo-intro{padding:14px 18px 0;font-size:.93rem;color:var(--texto);}
+.calculo-intro p{margin-bottom:0;}
+.calc-datos{margin:12px 18px 0;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:11px;padding:11px 15px;font-size:.88rem;}
+.calc-datos .cd-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-bottom:5px;}
+.calc-datos ul{list-style:none;margin:0;}
+.calc-datos li{position:relative;padding-left:18px;margin-bottom:4px;}
+.calc-datos li::before{content:'•';position:absolute;left:2px;color:var(--oro);font-weight:800;}
+.calc-pasos{display:flex;flex-direction:column;gap:11px;padding:14px 18px;}
+.calc-paso{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--gris-borde);border-left:4px solid var(--oro);border-radius:11px;padding:12px 15px;}
+.calc-n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.calc-body{flex:1;min-width:0;}
+.calc-label{font-weight:700;color:var(--azul);font-size:.92rem;margin-bottom:6px;}
+.calc-formula{font-family:'Source Serif 4',serif;font-size:1.02rem;font-weight:600;background:var(--gris-bg);border-radius:8px;padding:9px 13px;margin:5px 0;overflow-x:auto;color:var(--texto);}
+.calc-formula b,.calc-formula strong{color:var(--ambar);}
+.calc-res-paso{font-size:.95rem;color:var(--verde);font-weight:700;margin-top:5px;}
+.calc-res-paso::before{content:'➜ ';color:var(--verde);}
+.calc-total{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 18px 16px;padding:15px 18px;background:var(--verde-suave);border:1.5px solid var(--verde-borde);border-radius:12px;}
+.calc-total .ct-label{font-weight:700;color:var(--verde);font-size:.93rem;}
+.calc-total .ct-valor{font-family:'Source Serif 4',serif;font-size:1.55rem;font-weight:800;color:var(--verde);}
+.calc-nota{font-size:.85rem;color:var(--texto-suave);padding:0 18px 16px;font-style:italic;}
+/* ===== Bloque NORMATIVA · marco legal con artículos citados ===== */
+.normativa{background:#fff;border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.normativa-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.norma-intro{padding:13px 18px 0;margin:0;font-size:.92rem;color:var(--texto);}
+.norma-list{padding:14px 18px;display:flex;flex-direction:column;gap:10px;}
+.norma-item{display:flex;gap:14px;align-items:flex-start;background:var(--azul-suave);border:1px solid var(--azul-borde);border-left:4px solid var(--oro);border-radius:0 11px 11px 0;padding:11px 15px;}
+.norma-ref{flex-shrink:0;font-weight:800;color:var(--azul);font-size:.8rem;line-height:1.4;min-width:150px;}
+.norma-txt{font-size:.9rem;flex:1;min-width:0;}
+.norma-txt p{margin-bottom:0;}
+@media(max-width:640px){.norma-item{flex-direction:column;gap:4px;}.norma-ref{min-width:0;font-size:.84rem;}}
+/* ===== Caja DESTACADA · regla de oro / alerta clave dentro del desarrollo ===== */
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+
+/* ===== Mejora dinámica v3.1: aparición de bloques + botón volver-arriba ===== */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
 </style>
 </head>
 <body>
-
 <div id="readbar"></div>
 
 <header>
   <span class="doc-ref">FUN-SAL-07</span>
   <div class="brand">
     <div class="brand-logo">
-      <svg viewBox="0 0 60 60" width="32" height="32">
-        <path d="M18 42 L30 18 L35 23 L42 18" stroke="#0A2A5E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M38 16 L42 18 L40 22 Z" fill="#0A2A5E"/>
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <div>
       <div class="brand-name">Ascenso Público</div>
-      <div class="brand-slogan">Tu ruta personalizada al ascenso público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
     </div>
   </div>
-  <div class="kicker">Día 15 · Funcional · Salud</div>
-  <h1>Control de Conteos y Registros Intraoperatorios</h1>
-  <p class="header-sub">Domina el conteo de gasas e instrumental y el registro de eventos: la última línea de defensa contra un error irreversible</p>
-  <div class="badges">
-    <span class="badge">📅 Día 15 de 21</span>
-    <span class="badge">⏱ 90-105 min</span>
-    <span class="badge">🎯 Prueba escrita CNSC</span>
-  </div>
+  <div class="kicker">Día 7 · Funcional · Salud · Instrumentación Quirúrgica</div>
+  <h1>Control, Conteos y Registros Intraoperatorios</h1>
+  <p class="header-sub">Actuar sin dudar ante una discrepancia de conteo y documentar cada procedimiento con rigor legal: la última barrera antes de cerrar al paciente.</p>
+  <div class="badges"><span class="badge">📅 Día 7</span><span class="badge">⏱ 85-100 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🔁 Familia SAL</span></div>
 </header>
 
 <nav>
@@ -362,705 +335,295 @@ footer .fmeta { margin-top:14px; font-size:.72rem; color:rgba(255,255,255,.55); 
   <button data-sec="6">💡 Tips</button>
   <button data-sec="7">🎭 Trampas</button>
   <button data-sec="8">🧠 Repaso</button>
-  <button data-sec="9">📋 Resumen</button>
+  <button data-sec="9">📝 Resumen</button>
   <button data-sec="10">🎓 Simulacro</button>
 </nav>
 
 <main>
-
-
-<!-- SECCIÓN 0: OBJETIVO -->
 <section class="section visible" data-sec="0">
   <span class="eyebrow">Sección 1 · Objetivo</span>
   <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
-
-  <div class="narr">
-    <strong>Imagina que la cirugía terminó bien</strong>, el sangrado está controlado y el cirujano está listo para cerrar. Pero antes de dar ese último paso, hay una pregunta que decide todo: ¿coinciden las gasas y el instrumental que salieron con los que entraron? Si la respuesta es "no lo sé" o "casi", el riesgo de dejar algo olvidado dentro del paciente es real y grave. Esta guía te prepara para responder con seguridad a las preguntas CNSC sobre conteo de gasas e instrumental, manejo de discrepancias, registro de tiempos quirúrgicos, formatos y custodia de muestras.
+  <div class="narr"><span class="narr-tag">📍 Ponte en situación</span>
+    <p>El conteo final de gasas no cuadra: 19 de 20. El cirujano ya quiere cerrar. Este es uno de los momentos más críticos de toda la cirugía: una discrepancia sin resolver puede significar un objeto olvidado dentro del paciente, con consecuencias graves. El control, el conteo y el registro <strong>no son trámites</strong>: son la última barrera de seguridad.</p>
+    <p>Hoy aprenderás los momentos del conteo, qué hacer ante una discrepancia y cómo documentar con rigor legal.</p>
   </div>
-
-  <div class="card card-lead">
-    <p><strong>Al finalizar esta guía dominarás:</strong></p>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
     <ul class="lista">
-      <li><strong>El conteo de gasas, compresas e instrumental</strong> en los momentos clave: antes, durante y después de la cirugía.</li>
-      <li><strong>El protocolo ante discrepancias</strong> en el conteo.</li>
-      <li><strong>El registro de tiempos quirúrgicos y eventos intraoperatorios</strong> relevantes.</li>
-      <li><strong>El llenado correcto de formatos y soportes documentales</strong> del procedimiento.</li>
-      <li><strong>La custodia de muestras</strong> destinadas a patología.</li>
-      <li><strong>La responsabilidad legal del instrumentador</strong> en estos registros.</li>
+      <li>Los <strong>3 momentos del conteo quirúrgico</strong>.</li>
+      <li>El <strong>protocolo ante discrepancias</strong> en el conteo.</li>
+      <li>El <strong>registro de tiempos quirúrgicos</strong> y eventos intraoperatorios.</li>
+      <li>Los <strong>formatos y soportes documentales</strong> legales.</li>
+      <li>La <strong>custodia y etiquetado de muestras</strong> para patología.</li>
+      <li>La <strong>responsabilidad legal</strong> del instrumentador en los registros.</li>
     </ul>
   </div>
-
-  <div class="box gold">
-    <div class="box-title">💎 La promesa de esta guía</div>
-    <p>Al terminar, sabrás <strong>cuándo y cómo contar</strong>, <strong>qué hacer si el conteo no coincide</strong> y <strong>qué registrar sin omisiones</strong>. Todo lo que la CNSC pregunta sobre esta responsabilidad crítica del instrumentador está aquí, sin relleno.</p>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás <strong>actuar sin dudar</strong> ante una discrepancia de conteo y documentar cada procedimiento con el rigor que exige la ley. Es la última línea de defensa antes de cerrar al paciente.</p>
   </div>
 </section>
 
-
-<!-- SECCIÓN 1: IMPORTANCIA -->
 <section class="section" data-sec="1">
   <span class="eyebrow">Sección 2 · Importancia</span>
-  <h2 class="sec-title">⭐ ¿Por qué este tema aparece en la prueba CNSC?</h2>
-
-  <div class="card">
-    <p>La CNSC evalúa tu <strong>conocimiento sobre control de conteos y registros</strong> porque:</p>
-    <ul class="lista">
-      <li><strong>Previene un evento adverso catastrófico:</strong> dejar una gasa o instrumento dentro del paciente es un error grave, evitable y con consecuencias legales serias.</li>
-      <li><strong>Es responsabilidad explícita del cargo:</strong> el manual de funciones exige "realizar el control del instrumental, material y accesorios durante y después del acto quirúrgico" y "llevar los controles y registros exigidos".</li>
-      <li><strong>Tiene implicaciones legales directas:</strong> los registros son el soporte documental ante cualquier reclamación o auditoría posterior.</li>
-      <li><strong>Aparece en casos situacionales:</strong> la CNSC pregunta "¿qué debe hacer el instrumentador si el conteo no coincide?".</li>
-    </ul>
-  </div>
-
-  <div class="box info">
-    <div class="box-title">📊 Dato clave</div>
-    <p>Los objetos quirúrgicos retenidos son considerados por la literatura de seguridad del paciente como <strong>"eventos centinela"</strong>: errores graves, evitables y que exigen investigación institucional obligatoria cuando ocurren.</p>
-  </div>
-
-  <div class="box warn">
-    <div class="box-title">⚠️ Si no dominas este tema</div>
-    <p>Podrías no saber en qué momentos exactos se debe contar, o qué hacer ante una discrepancia bajo presión de tiempo. <strong>Este es un tema donde el protocolo estricto no admite atajos, sin importar la urgencia percibida.</strong></p>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>La CNSC evalúa este tema porque un error en el conteo o el registro tiene <strong>consecuencias graves e irreversibles</strong>: un objeto retenido, una muestra mal identificada, un documento incompleto que se vuelve en contra del equipo. Las preguntas plantean discrepancias o vacíos documentales y exigen la respuesta que <strong>nunca cede ante la presión de tiempo</strong>.</p>
+  <div class="box info"><div class="box-title">ℹ️ Dato clave</div>
+    <p>Idea central del día: <strong>nunca se cierra</strong> con una discrepancia sin resolver, y <strong>nunca se deja</strong> un campo del formato en blanco sin explicación. Ambas reglas protegen al paciente y al profesional.</p>
   </div>
 </section>
 
-
-<!-- SECCIÓN 2: DESARROLLO -->
 <section class="section" data-sec="2">
   <span class="eyebrow">Sección 3 · Desarrollo</span>
-  <h2 class="sec-title">📖 Contenido esencial</h2>
+  <h2 class="sec-title">📖 Control, conteos y registros intraoperatorios</h2>
+  <p>Recorreremos seis temas con profundidad de curso profesional y ejemplos de tu ejercicio <strong>como instrumentador en un quirófano público</strong>: los momentos del conteo, el protocolo ante discrepancias, el registro de tiempos y eventos, los formatos documentales, la custodia de muestras y la responsabilidad legal.</p>
 
-  <p><strong>Esta sección desarrolla 6 conceptos clave.</strong> Cada uno se presenta en 4 capas: <strong style="color:var(--azul);">🟦 Definición</strong> · <strong style="color:var(--verde);">🟩 Aplicación</strong> · <strong style="color:var(--ambar);">🟨 Ejemplo real</strong> · <strong style="color:var(--rojo);">🟥 Trampa CNSC</strong>.</p>
-
-  <!-- CONCEPTO 1 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">🔢</span>
-      <span>1. Momentos del Conteo Quirúrgico</span>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">🔢</span><h3>1. Momentos del conteo quirúrgico</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>El conteo de gasas, compresas e instrumental se realiza en <strong>tres momentos obligatorios</strong>: conteo <strong>inicial</strong> (antes de iniciar, cifra base), conteo(s) <strong>durante</strong> el procedimiento (especialmente antes de cerrar una cavidad), y conteo <strong>final</strong> (antes de que el paciente salga de sala).</p>
     </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>El conteo de gasas, compresas e instrumental se realiza en <strong>tres momentos obligatorios</strong>: (1) <strong>conteo inicial</strong>, antes de iniciar la cirugía, estableciendo la cifra base; (2) <strong>conteo(s) durante el procedimiento</strong>, especialmente antes del cierre de una cavidad; (3) <strong>conteo final</strong>, antes de que el paciente salga de sala, verificando que todo coincida con el conteo inicial.</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>El conteo se realiza en voz alta, entre el instrumentador y el circulante, verificando cada uno de forma independiente y registrando la cifra. Si se agrega material adicional durante la cirugía (más gasas, más instrumental), se suma al conteo activo de inmediato, no al final.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Antes de iniciar una laparotomía, el instrumentador y el circulante cuentan juntos en voz alta 20 gasas, registrando la cifra en el formato correspondiente. Si durante la cirugía se abre un paquete adicional de 10 gasas, se suma de inmediato: el nuevo total activo es 30.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Pregunta <strong>en qué momentos se debe contar</strong> o qué pasa si se omite un conteo intermedio. <strong>Trampa típica:</strong> pensar que basta con contar solo al inicio y al final, omitiendo el conteo antes de cerrar una cavidad, que es crítico para detectar objetos retenidos antes de que sea demasiado tarde.</p>
-        </div>
-      </div>
+    <div class="acordeon">
+      <details class="acc" open><summary>1. Conteo inicial</summary><div class="acc-body"><p>Instrumentador y circulante cuentan juntos, <strong>en voz alta</strong>, todas las gasas, compresas e instrumental, registrando la cifra base.</p></div></details>
+      <details class="acc"><summary>2. Conteo intermedio (antes de cerrar cavidad)</summary><div class="acc-body"><p>Se recuenta todo el material antes del cierre de cualquier cavidad corporal: es el momento crítico para detectar faltantes <strong>antes de que queden ocultos</strong>.</p></div></details>
+      <details class="acc"><summary>3. Conteo final</summary><div class="acc-body"><p>Se verifica que el total coincida con el inicial <strong>más</strong> cualquier material añadido durante el procedimiento.</p></div></details>
     </div>
+    <div class="b-texto">
+      <p>Si se agrega material durante la cirugía (más gasas, más instrumental), se <strong>suma al conteo activo de inmediato</strong>, no se deja para el final.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Antes de una laparotomía, instrumentador y circulante cuentan juntos 20 gasas y registran la cifra. Al abrir un paquete adicional de 10 gasas durante la cirugía, lo suman de inmediato: el nuevo total activo es <strong>30</strong>.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div><p>Trampa típica: contar solo al inicio y al final, omitiendo el conteo <strong>antes de cerrar la cavidad</strong>, que es crítico para detectar faltantes a tiempo.</p></div></div>
   </div>
 
-  <div class="flujo">
-    <p style="font-weight:800; color:var(--azul); margin-bottom:14px;">🔢 Diagrama de proceso: Los 3 momentos del conteo quirúrgico</p>
-    <div class="flujo-paso">
-      <div class="flujo-num">1</div>
-      <div class="flujo-content">
-        <h4>Conteo inicial</h4>
-        <p>Antes de iniciar la cirugía: instrumentador y circulante cuentan juntos y en voz alta todas las gasas, compresas e instrumental, registrando la cifra base.</p>
-      </div>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">⚠️</span><h3>2. Protocolo ante discrepancias en el conteo</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Una <strong>discrepancia</strong> ocurre cuando el conteo final no coincide con el inicial más el material añadido. El protocolo exige: (1) <strong>informar de inmediato</strong> al cirujano, (2) <strong>recuento exhaustivo</strong> del campo, la mesa, el piso y los recipientes de residuos, (3) si no se localiza, <strong>estudio de imagen (radiografía) antes de cerrar</strong> completamente.</p>
     </div>
-    <div class="flujo-paso">
-      <div class="flujo-num">2</div>
-      <div class="flujo-content">
-        <h4>Conteo intermedio (antes de cerrar cavidad)</h4>
-        <p>Se recuenta todo el material antes de proceder al cierre de cualquier cavidad corporal, momento crítico para detectar faltantes antes de que queden ocultos.</p>
-      </div>
+    <div class="b-texto">
+      <p>La regla es absoluta: <strong>nunca se cierra la cavidad</strong> ni se termina el procedimiento con una discrepancia sin resolver. La presión de tiempo, la fatiga o la confianza en que "seguramente se cayó al piso" <strong>nunca</strong> justifican omitir la verificación completa, incluida la radiografía si es necesaria.</p>
     </div>
-    <div class="flujo-paso">
-      <div class="flujo-num">3</div>
-      <div class="flujo-content">
-        <h4>Conteo final</h4>
-        <p>Antes de que el paciente salga de sala: se verifica que el total coincida con el conteo inicial más cualquier material añadido durante el procedimiento.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONCEPTO 2 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">⚠️</span>
-      <span>2. Protocolo ante Discrepancias en el Conteo</span>
-    </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>Una <strong>discrepancia</strong> ocurre cuando el conteo final no coincide con el conteo inicial más el material añadido. El protocolo exige: (1) informar de inmediato al cirujano, (2) realizar un recuento exhaustivo del campo, la mesa, el piso y los recipientes de residuos, (3) si no se localiza, recurrir a estudios de imagen (radiografía) ANTES de cerrar completamente, para descartar que el objeto quedó dentro del paciente.</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>NUNCA se cierra la cavidad ni se termina el procedimiento con una discrepancia sin resolver. La presión de tiempo, la fatiga o la confianza en que "seguramente se cayó al piso" NUNCA justifican omitir la verificación completa, incluida la radiografía si es necesaria.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Al finalizar una cirugía abdominal, el conteo de gasas indica 19 recuperadas de 20 registradas al inicio. El equipo detiene el cierre, recuenta exhaustivamente el campo y, al no encontrarla, el cirujano ordena una radiografía intraoperatoria que confirma la presencia de la gasa faltante dentro de la cavidad, permitiendo su extracción antes de cerrar.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Plantea una discrepancia y pregunta <strong>qué debe hacer el equipo</strong>. <strong>Trampa típica:</strong> cerrar la cirugía y "revisar después" o asumir sin verificación que el objeto "se perdió en la basura".</p>
-        </div>
-      </div>
-    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Al finalizar una cirugía abdominal, el conteo indica 19 gasas recuperadas de 20 registradas. El equipo <strong>detiene el cierre</strong>, recuenta exhaustivamente y, al no encontrarla, el cirujano ordena una <strong>radiografía intraoperatoria</strong> que confirma la gasa dentro de la cavidad, permitiendo su extracción antes de cerrar.</p></div></div>
+    <div class="destacado azul"><span class="dst-ic">🧭</span><div class="dst-body"><span class="dst-title">Ninguna discrepancia queda sin resolver</span><p>Ni la prisa ni la confianza en una explicación no verificada ("se cayó al piso") justifican cerrar. La discrepancia se <strong>resuelve o se confirma con imagen</strong>, siempre.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div><p>Trampa: cerrar y "revisar después", o asumir sin verificación que el objeto "se perdió en la basura".</p></div></div>
   </div>
 
   <div class="checkpoint">
-    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 1</div>
-    <p class="checkpoint-q"><strong>El conteo final de gasas no coincide con el inicial. El equipo ya recontó exhaustivamente sin encontrar la gasa faltante. ¿Qué debe hacer antes de cerrar completamente?</strong></p>
-    <ul class="checkpoint-opts" id="cp1">
-      <li data-ok="0">Cerrar y anotar la discrepancia en el informe para revisarla después</li>
-      <li data-ok="1">Solicitar un estudio de imagen (radiografía) antes de completar el cierre</li>
-      <li data-ok="0">Asumir que la gasa se descartó por error en la basura y continuar</li>
-    </ul>
-    <div class="checkpoint-fb" id="cpfb1"></div>
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">El conteo final de gasas no coincide con el inicial. El equipo ya recontó exhaustivamente sin encontrar la gasa faltante. ¿Qué debe hacer antes de cerrar completamente?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="Cerrar sin resolver la discrepancia arriesga dejar un objeto dentro del paciente.">Cerrar y anotar la discrepancia en el informe para revisarla después.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto: ante discrepancia no resuelta por recuento, se solicita imagen antes de cerrar completamente.">Solicitar un estudio de imagen (radiografía) antes de completar el cierre.</button>
+      <button class="cp-opt" data-ok="0" data-exp="Asumir sin verificación es exactamente lo que el protocolo prohíbe.">Asumir que la gasa se descartó por error en la basura y continuar.</button>
+    </div>
+    <div class="cp-fb"></div>
   </div>
 
-
-  <!-- CONCEPTO 3 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">⏱️</span>
-      <span>3. Registro de Tiempos Quirúrgicos y Eventos Intraoperatorios</span>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">⏱️</span><h3>3. Registro de tiempos quirúrgicos y eventos intraoperatorios</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>El registro de tiempos quirúrgicos documenta hitos clave: hora de <strong>inicio de incisión</strong>, hora de <strong>finalización</strong>, tiempos de isquemia (si aplica), y cualquier <strong>evento intraoperatorio</strong> relevante (sangrado mayor al esperado, hallazgo inesperado, complicación, cambio de plan quirúrgico).</p>
     </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>El registro de tiempos quirúrgicos documenta hitos clave del procedimiento: hora de inicio de la incisión, hora de finalización, tiempos de isquemia (si aplica), y cualquier <strong>evento intraoperatorio relevante</strong> (sangrado mayor al esperado, hallazgo inesperado, complicación, cambio de plan quirúrgico).</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>El instrumentador o circulante registra estos datos en tiempo real, no de memoria al finalizar. Cualquier evento significativo (sangrado, hallazgo, cambio de instrumental por falla) debe registrarse con la hora exacta y una descripción objetiva de lo ocurrido.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Durante una cirugía, se registra la hora exacta de inicio de incisión (08:15), un evento de sangrado mayor al esperado a las 08:45 con la acción tomada, y la hora de cierre final (10:20), documentando así la trazabilidad completa del procedimiento.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Plantea un evento intraoperatorio y pregunta <strong>si debe registrarse y cómo</strong>. <strong>Trampa típica:</strong> pensar que solo se registran los tiempos "principales" (inicio y fin), omitiendo eventos intermedios relevantes para la trazabilidad clínica y legal.</p>
-        </div>
-      </div>
+    <div class="b-texto">
+      <p>El registro se hace <strong>en tiempo real</strong>, no de memoria al finalizar. Cualquier evento significativo debe registrarse con la <strong>hora exacta</strong> y una descripción objetiva de lo ocurrido.</p>
     </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Se registra la hora exacta de inicio (08:15), un evento de sangrado mayor al esperado a las 08:45 con la acción tomada, y la hora de cierre final (10:20), documentando la <strong>trazabilidad completa</strong> del procedimiento.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div><p>Trampa: pensar que solo se registran los tiempos "principales" (inicio y fin), omitiendo eventos intermedios relevantes para la trazabilidad clínica y legal.</p></div></div>
   </div>
 
-  <!-- CONCEPTO 4 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">📄</span>
-      <span>4. Formatos y Soportes Documentales</span>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">📄</span><h3>4. Formatos y soportes documentales</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Los formatos quirúrgicos (hoja de conteo, registro de enfermería quirúrgica, nota operatoria) son <strong>documentos legales</strong> que forman parte de la historia clínica. Deben llenarse de forma <strong>clara, completa, sin espacios ambiguos</strong>, y firmados por los responsables.</p>
     </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>Los formatos quirúrgicos (hoja de conteo, registro de enfermería quirúrgica, nota operatoria) son <strong>documentos legales</strong> que forman parte de la historia clínica del paciente. Deben llenarse de forma clara, completa, sin espacios en blanco ambiguos, y firmados por los responsables correspondientes.</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>Nunca se deja un campo en blanco sin justificación; si algo no aplica, se anota explícitamente "no aplica" en lugar de dejarlo vacío, para evitar ambigüedades interpretativas posteriores. Los registros se completan en el momento del evento, no de memoria horas después.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Al finalizar una cirugía, el instrumentador completa el formato de conteo con las cifras exactas registradas en cada momento, firma el documento y lo adjunta a la historia clínica del paciente como soporte legal del procedimiento.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Pregunta <strong>qué hacer ante un campo del formato que no aplica al caso</strong>. <strong>Trampa típica:</strong> dejar espacios en blanco sin ninguna anotación, lo cual genera ambigüedad legal sobre si el dato se omitió por descuido o realmente no aplicaba.</p>
-        </div>
-      </div>
+    <div class="b-texto">
+      <p>Nunca se deja un campo en blanco sin justificación: si algo no aplica, se anota explícitamente <strong>"No aplica" o "N/A"</strong>, para evitar ambigüedades interpretativas posteriores. Los registros se completan en el momento del evento.</p>
     </div>
-  </div>
-
-  <div class="practica">
-    <div class="practica-title">📋 En la práctica</div>
-    <p><strong>Regla de llenado de formatos:</strong> completa cada campo en el momento del evento; si un campo no aplica, anota explícitamente "No aplica" o "N/A"; nunca dejes espacios en blanco sin explicación, ya que un documento legal ambiguo puede interpretarse en contra del equipo de salud.</p>
-  </div>
-
-  <!-- CONCEPTO 5 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">🧪</span>
-      <span>5. Custodia y Etiquetado de Muestras para Patología</span>
-    </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>Las muestras extraídas durante la cirugía (biopsias, tejidos, órganos) que se envían a patología requieren <strong>identificación inequívoca</strong>: nombre completo del paciente, número de historia clínica, tipo de muestra, sitio anatómico de origen y fecha, además de la custodia adecuada (formol u otro medio de conservación según el tipo de muestra).</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>Si se extraen múltiples muestras del mismo paciente (por ejemplo, biopsias de distintos sitios), cada una se etiqueta individualmente especificando su origen exacto, evitando que se mezclen o confundan entre sí. Un error de identificación puede llevar a un diagnóstico erróneo con consecuencias graves.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Durante una cirugía se extraen dos biopsias de sitios diferentes del colon. El instrumentador etiqueta cada frasco por separado, especificando claramente "biopsia sitio A" y "biopsia sitio B" con los datos completos del paciente, antes de enviarlas a patología.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Plantea un caso con múltiples muestras y pregunta <strong>cómo deben identificarse</strong>. <strong>Trampa típica:</strong> enviar varias muestras del mismo paciente en un solo recipiente sin diferenciación de origen, lo que impide un diagnóstico preciso por sitio anatómico.</p>
-        </div>
-      </div>
-    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Al finalizar la cirugía, el instrumentador completa el formato de conteo con las cifras exactas de cada momento, firma el documento y lo adjunta a la historia clínica como <strong>soporte legal</strong>.</p></div></div>
+    <div class="destacado oro"><span class="dst-ic">💎</span><div class="dst-body"><span class="dst-title">Un espacio en blanco puede interpretarse en tu contra</span><p>Un documento legal ambiguo puede leerse como que el dato se omitió por descuido, no porque "no aplicaba". Escribir "N/A" te protege a ti y al equipo.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div><p>Trampa: dejar espacios en blanco sin ninguna anotación.</p></div></div>
   </div>
 
   <div class="checkpoint">
-    <div class="checkpoint-title">✅ Aplica lo aprendido — Checkpoint 2</div>
-    <p class="checkpoint-q"><strong>Durante una cirugía se extraen dos biopsias de sitios anatómicos distintos del mismo paciente. ¿Cómo deben etiquetarse?</strong></p>
-    <ul class="checkpoint-opts" id="cp2">
-      <li data-ok="0">Juntas en un solo frasco, ya que son del mismo paciente</li>
-      <li data-ok="1">Cada una en un frasco separado, identificando claramente el sitio anatómico de origen</li>
-      <li data-ok="0">No es necesario etiquetarlas si se envían inmediatamente a patología</li>
-    </ul>
-    <div class="checkpoint-fb" id="cpfb2"></div>
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">Un campo del formato de registro no aplica al caso concreto que se está documentando. ¿Qué debe hacer el instrumentador?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="Un espacio vacío es ambiguo: puede leerse como descuido, no como 'no aplica'.">Dejarlo en blanco, ya que no corresponde a este caso.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto: anotar explícitamente 'No aplica' o 'N/A' evita la ambigüedad legal.">Anotar explícitamente "No aplica" o "N/A" en ese campo.</button>
+      <button class="cp-opt" data-ok="0" data-exp="Inventar un dato falso para llenar el campo es una alteración del registro.">Escribir cualquier dato aproximado para no dejarlo vacío.</button>
+    </div>
+    <div class="cp-fb"></div>
   </div>
 
-  <!-- CONCEPTO 6 -->
-  <div class="concepto">
-    <div class="concepto-head">
-      <span class="ch-icon">⚖️</span>
-      <span>6. Responsabilidad Legal del Instrumentador en los Registros</span>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">🧪</span><h3>5. Custodia y etiquetado de muestras para patología</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Las muestras extraídas (biopsias, tejidos, órganos) que van a patología requieren <strong>identificación inequívoca</strong>: nombre completo del paciente, número de historia clínica, tipo de muestra, sitio anatómico de origen y fecha, además de la custodia adecuada (formol u otro medio según el tipo).</p>
     </div>
-    <div class="concepto-body">
-      <div class="capa cap-def">
-        <div class="capa-icon def">📘</div>
-        <div class="capa-content">
-          <span class="label">Definición</span>
-          <p>Los registros de conteo y documentación quirúrgica son <strong>prueba legal</strong> en caso de reclamaciones, auditorías o procesos disciplinarios. El instrumentador que firma un registro asume responsabilidad sobre la veracidad de lo documentado, conforme a la Ley 1164 de 2007 (Talento Humano en Salud) y el régimen disciplinario aplicable.</p>
-        </div>
-      </div>
-      <div class="capa cap-apl">
-        <div class="capa-icon apl">🎯</div>
-        <div class="capa-content">
-          <span class="label">Aplicación</span>
-          <p>Nunca se firma un registro con datos que no se verificaron personalmente. Si el instrumentador no participó directamente en un conteo específico, no debe certificarlo con su firma como si lo hubiera hecho. La honestidad y precisión del registro protege tanto al paciente como al profesional.</p>
-        </div>
-      </div>
-      <div class="capa cap-eje">
-        <div class="capa-icon eje">🏥</div>
-        <div class="capa-content">
-          <span class="label">Ejemplo real</span>
-          <p>Un instrumentador que llega a relevar a un compañero a mitad de cirugía no firma el conteo inicial que no presenció; en su lugar, se asegura de recibir la información verificada del conteo activo y realiza su propio conteo de verificación al momento del relevo.</p>
-        </div>
-      </div>
-      <div class="capa cap-cnsc">
-        <div class="capa-icon cnsc">📝</div>
-        <div class="capa-content">
-          <span class="label">Cómo lo evalúa la CNSC</span>
-          <p>Plantea un escenario de relevo de personal y pregunta <strong>qué debe hacer el instrumentador que llega</strong>. <strong>Trampa típica:</strong> firmar o certificar conteos que no se verificaron personalmente, asumiendo la palabra del compañero sin verificación propia.</p>
-        </div>
-      </div>
+    <div class="b-texto">
+      <p>Si se extraen <strong>múltiples muestras</strong> del mismo paciente, cada una se etiqueta <strong>individualmente</strong>, especificando su origen exacto, para evitar que se mezclen o confundan entre sí. Un error de identificación puede llevar a un <strong>diagnóstico erróneo</strong> con consecuencias graves.</p>
     </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Durante una cirugía se extraen dos biopsias de sitios distintos del colon. El instrumentador etiqueta cada frasco por separado ("biopsia sitio A" y "biopsia sitio B") con los datos completos del paciente, antes de enviarlas a patología.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><div><p>Trampa: enviar varias muestras del mismo paciente en un solo recipiente sin diferenciación de origen, lo que impide un diagnóstico preciso por sitio anatómico.</p></div></div>
   </div>
 
-  <div class="fuentes">
-    <div class="fuentes-title">🔗 Fuentes oficiales para profundizar</div>
-    <ul>
-      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1164_2007.html" target="_blank">Ley 1164 de 2007 — Talento Humano en Salud</a> (Secretaría del Senado)</li>
-      <li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/DE/DIJ/resolucion-3100-de-2019.pdf" target="_blank">Resolución 3100 de 2019 — Estándares de habilitación de servicios de salud</a> (MinSalud)</li>
-      <li><a href="https://www.who.int/teams/integrated-health-services/patient-safety/research/safe-surgery" target="_blank">OMS — Cirugía segura</a> (Organización Mundial de la Salud)</li>
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">⚖️</span><h3>6. Responsabilidad legal del instrumentador en los registros</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Los registros de conteo y documentación quirúrgica son <strong>prueba legal</strong> en reclamaciones, auditorías o procesos disciplinarios. El instrumentador que <strong>firma</strong> un registro asume responsabilidad sobre la veracidad de lo documentado, conforme a la Ley 1164 de 2007 (Talento Humano en Salud) y el régimen disciplinario aplicable.</p>
+    </div>
+    <div class="b-texto">
+      <p>Firmar un registro no es un trámite: es asumir que lo escrito <strong>es verdadero y completo</strong>. Como servidor público, un registro falso o incompleto puede generar responsabilidad <strong>disciplinaria, civil y hasta penal</strong> (si constituye falsedad), además de la ética.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏥 Ejemplo como servidor público</div><div class="ejemplo-body"><p>Un compañero te pide que firmes el conteo de una cirugía en la que no participaste, "para agilizar el papeleo". Negarte protege tanto al paciente como tu responsabilidad legal: solo se firma lo que uno mismo verificó.</p></div></div>
+    <div class="destacado oro"><span class="dst-ic">💎</span><div class="dst-body"><span class="dst-title">Firmar es asumir responsabilidad</span><p>Nunca se firma un registro de algo que no se verificó personalmente. La firma certifica veracidad, no cortesía entre compañeros.</p></div></div>
+  </div>
+
+  <div class="fuentes"><div class="box-title">📚 Profundiza en las fuentes oficiales</div>
+    <p>Para profundizar (se abre en pestaña nueva):</p>
+    <ul class="lista">
+      <li><strong>Resolución 1995 de 1999 (Historia Clínica)</strong> — MinSalud: <a href="https://www.minsalud.gov.co" target="_blank" rel="noopener">consultar</a></li>
+      <li><strong>Ley 1164 de 2007 (Talento Humano en Salud)</strong> — MinSalud: <a href="https://www.minsalud.gov.co" target="_blank" rel="noopener">consultar</a></li>
     </ul>
   </div>
 </section>
 
-
-<!-- SECCIÓN 3: COMPARACIONES -->
 <section class="section" data-sec="3">
   <span class="eyebrow">Sección 4 · Comparaciones</span>
-  <h2 class="sec-title">⚖️ Diferencias clave</h2>
-
-  <p>La CNSC diseña distractores basados en confusiones típicas. Estas tablas te ayudan a distinguir conceptos que suenan similares pero son distintos.</p>
-
-  <h3><span class="h3-chip">1</span> Los 3 Momentos del Conteo</h3>
-  <div class="tabla-wrap">
-    <table>
-      <tr><th>Momento</th><th>Cuándo</th><th>Objetivo</th></tr>
-      <tr><td><strong>Inicial</strong></td><td>Antes de iniciar la cirugía</td><td>Establecer la cifra base</td></tr>
-      <tr><td><strong>Intermedio</strong></td><td>Antes de cerrar cualquier cavidad</td><td>Detectar faltantes antes de que queden ocultos</td></tr>
-      <tr><td><strong>Final</strong></td><td>Antes de que el paciente salga de sala</td><td>Verificar coincidencia total con lo registrado</td></tr>
-    </table>
-  </div>
-  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Basta con contar al inicio y al final."</strong> Falso. El conteo intermedio antes de cerrar cavidad es crítico y no debe omitirse.</p></div>
-
-  <h3><span class="h3-chip">2</span> IAAS vs. Objeto Quirúrgico Retenido (revisión conceptual)</h3>
-  <div class="tabla-wrap">
-    <table>
-      <tr><th>Aspecto</th><th>Objeto quirúrgico retenido</th><th>Otros eventos adversos</th></tr>
-      <tr><td><strong>Causa directa</strong></td><td>Fallo en el conteo o verificación</td><td>Diversas (infección, error de medicación, etc.)</td></tr>
-      <tr><td><strong>Prevención principal</strong></td><td>Conteo riguroso en los 3 momentos + radiografía si hay discrepancia</td><td>Varía según el tipo de evento</td></tr>
-      <tr><td><strong>Clasificación</strong></td><td>Evento centinela (grave y evitable)</td><td>Puede o no ser centinela según gravedad</td></tr>
-    </table>
-  </div>
-  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Todos los eventos adversos se manejan igual."</strong> Falso. Un objeto retenido exige protocolo específico de conteo y verificación con imagen, distinto de otros tipos de eventos.</p></div>
-
-  <h3><span class="h3-chip">3</span> Registro Completo vs. Espacio en Blanco</h3>
-  <div class="tabla-wrap">
-    <table>
-      <tr><th>Aspecto</th><th>Campo con "No aplica"</th><th>Campo en blanco sin anotación</th></tr>
-      <tr><td><strong>Interpretación legal</strong></td><td>Claro: se revisó y no correspondía</td><td>Ambiguo: ¿se olvidó o no aplicaba?</td></tr>
-      <tr><td><strong>Riesgo</strong></td><td>Ninguno</td><td>Genera vulnerabilidad legal para el equipo</td></tr>
-    </table>
-  </div>
-  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Dejar un campo vacío es igual de válido que anotar 'No aplica'."</strong> Falso. Un espacio en blanco genera ambigüedad interpretativa que puede usarse en contra del equipo en una auditoría o reclamación.</p></div>
-
-  <h3><span class="h3-chip">4</span> Certificar lo Verificado vs. Certificar por Confianza</h3>
-  <div class="tabla-wrap">
-    <table>
-      <tr><th>Aspecto</th><th>Certificar lo verificado personalmente</th><th>Certificar por confianza en un compañero</th></tr>
-      <tr><td><strong>Responsabilidad legal</strong></td><td>Asumida correctamente, con base real</td><td>Riesgo de responsabilidad sin verificación propia</td></tr>
-      <tr><td><strong>Práctica correcta</strong></td><td>Firmar solo lo que se verificó directamente</td><td>No es una práctica válida, aunque sea frecuente</td></tr>
-    </table>
-  </div>
-  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p><strong>"Si mi compañero me dice que el conteo está bien, puedo firmarlo sin verificar."</strong> Falso. La firma implica responsabilidad personal sobre la veracidad de lo verificado.</p></div>
+  <h2 class="sec-title">⚖️ No los confundas</h2>
+  <p>Distinciones que la CNSC usa como distractores.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Conteo intermedio</th><th>Conteo final</th></tr>
+    <tr><td>Antes de cerrar la cavidad.</td><td>Antes de que el paciente salga de sala.</td></tr>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Omitir el intermedio: es crítico para detectar faltantes antes de que queden ocultos.</p></div>
+  <div class="tabla-wrap"><table>
+    <tr><th>Dejar en blanco</th><th>Anotar "N/A"</th></tr>
+    <tr><td>Genera ambigüedad legal.</td><td>Deja constancia explícita de que no aplicaba.</td></tr>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Creer que un espacio vacío "se entiende": puede leerse como descuido.</p></div>
+  <div class="tabla-wrap"><table>
+    <tr><th>Discrepancia leve</th><th>Discrepancia sin resolver</th></tr>
+    <tr><td>Se recuenta y se explica.</td><td>Nunca se cierra sin resolverla o confirmar con imagen.</td></tr>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Cerrar "para no atrasarse", confiando en que el objeto se perdió sin más.</p></div>
 </section>
 
-
-<!-- SECCIÓN 4: CASOS CNSC -->
 <section class="section" data-sec="4">
-  <span class="eyebrow">Sección 5 · Casos CNSC</span>
-  <h2 class="sec-title">📂 Casos situacionales tipo CNSC</h2>
-
-  <div class="caso">
-    <div class="caso-head">📂 Caso 1 · Discrepancia bajo presión de tiempo</div>
-    <div class="caso-body">
-      <span class="label">Situación</span>
-      <p>Al finalizar una cirugía con retraso en la programación del día, el conteo final de instrumental no coincide con el inicial. El equipo tiene presión para liberar la sala para el siguiente paciente.</p>
-      <span class="label">Pregunta</span>
-      <p>¿Cuál es la actuación correcta?</p>
-      <span class="label">Respuesta</span>
-      <div class="resp-correcta"><strong>✅ Detener el cierre, investigar la discrepancia exhaustivamente y, si no se resuelve, solicitar radiografía antes de completar el cierre, sin importar la presión de tiempo del siguiente procedimiento.</strong> — La seguridad del paciente actual siempre prevalece sobre la presión de la programación quirúrgica.</div>
-    </div>
-  </div>
-
-  <div class="caso">
-    <div class="caso-head">📂 Caso 2 · Material adicional durante la cirugía</div>
-    <div class="caso-body">
-      <span class="label">Situación</span>
-      <p>Durante una cirugía con sangrado mayor al esperado, se abren dos paquetes adicionales de gasas que no estaban en el conteo inicial.</p>
-      <span class="label">Pregunta</span>
-      <p>¿Qué debe hacer el instrumentador respecto al conteo?</p>
-      <span class="label">Respuesta</span>
-      <div class="resp-correcta"><strong>✅ Sumar de inmediato el nuevo material al conteo activo, registrando la cifra actualizada, sin esperar hasta el final de la cirugía para hacerlo.</strong> — Todo material añadido debe incorporarse al conteo en el momento en que se usa, para mantener la trazabilidad exacta durante todo el procedimiento.</div>
-    </div>
-  </div>
-
-  <div class="caso">
-    <div class="caso-head">📂 Caso 3 · Formato con campo no aplicable</div>
-    <div class="caso-body">
-      <span class="label">Situación</span>
-      <p>Al completar el formato de registro quirúrgico, el instrumentador encuentra un campo sobre "tiempo de isquemia" que no aplica al tipo de cirugía realizada.</p>
-      <span class="label">Pregunta</span>
-      <p>¿Qué debe hacer con ese campo?</p>
-      <span class="label">Respuesta</span>
-      <div class="resp-correcta"><strong>✅ Anotar explícitamente "No aplica" en el campo, en lugar de dejarlo en blanco.</strong> — Dejar espacios en blanco sin justificación genera ambigüedad legal sobre si el dato se omitió por descuido o realmente no correspondía al caso.</div>
-    </div>
-  </div>
-
-  <div class="caso">
-    <div class="caso-head">📂 Caso 4 · Etiquetado de múltiples muestras</div>
-    <div class="caso-body">
-      <span class="label">Situación</span>
-      <p>Durante una cirugía se extraen tres biopsias de sitios anatómicos diferentes del mismo paciente para estudio de patología.</p>
-      <span class="label">Pregunta</span>
-      <p>¿Cómo deben identificarse y enviarse?</p>
-      <span class="label">Respuesta</span>
-      <div class="resp-correcta"><strong>✅ Cada muestra en un recipiente individual, etiquetado claramente con los datos del paciente y el sitio anatómico específico de origen de cada una.</strong> — Mezclar muestras de sitios distintos en un solo recipiente impide un diagnóstico preciso por ubicación anatómica y puede generar errores diagnósticos graves.</div>
-    </div>
-  </div>
-
-  <div class="caso">
-    <div class="caso-head">📂 Caso 5 · Relevo de personal a mitad de cirugía</div>
-    <div class="caso-body">
-      <span class="label">Situación</span>
-      <p>Un instrumentador llega a relevar a un compañero a mitad de una cirugía larga. El compañero le informa verbalmente que "el conteo está en orden" y se retira.</p>
-      <span class="label">Pregunta</span>
-      <p>¿Cuál es la actuación correcta del instrumentador que llega?</p>
-      <span class="label">Respuesta</span>
-      <div class="resp-correcta"><strong>✅ Realizar su propio conteo de verificación en el momento del relevo, sin certificar únicamente con base en la palabra del compañero saliente.</strong> — La responsabilidad de un registro firmado exige verificación personal directa; confiar únicamente en la palabra de otro sin verificación propia expone a un riesgo de responsabilidad sin fundamento real.</div>
-    </div>
-  </div>
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2>
+  <p>Cinco situaciones de la práctica, resueltas.</p>
+  <div class="caso"><div class="caso-head">📂 Caso 1 · Material añadido</div><div class="caso-body"><span class="label">Situación</span><p>Durante la cirugía se abre un paquete adicional de gasas.</p><span class="label">Pregunta</span><p>¿Cuándo se cuenta?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ De inmediato,</strong> sumándolo al conteo activo, no al final.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 2 · Discrepancia confirmada</div><div class="caso-body"><span class="label">Situación</span><p>Falta una gasa tras el recuento exhaustivo.</p><span class="label">Pregunta</span><p>¿Qué se hace?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Solicitar radiografía intraoperatoria</strong> antes de cerrar completamente, para descartar que quedó dentro del paciente.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 3 · Evento intermedio</div><div class="caso-body"><span class="label">Situación</span><p>Ocurre un sangrado mayor al esperado a mitad de la cirugía.</p><span class="label">Pregunta</span><p>¿Se registra?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Sí, con hora exacta y descripción objetiva.</strong> No solo se registran inicio y fin.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 4 · Campo sin aplicar</div><div class="caso-body"><span class="label">Situación</span><p>Un campo del formato no corresponde al caso.</p><span class="label">Pregunta</span><p>¿Se deja vacío?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ No.</strong> Se anota "N/A" para evitar ambigüedad legal.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 5 · Firma de registro</div><div class="caso-body"><span class="label">Situación</span><p>Un compañero pide que firmes un conteo en el que no participaste.</p><span class="label">Pregunta</span><p>¿Qué haces?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Negarte.</strong> Solo se firma lo que uno mismo verificó personalmente.</div></div></div>
 </section>
 
-<!-- SECCIÓN 5: ERRORES FRECUENTES -->
 <section class="section" data-sec="5">
   <span class="eyebrow">Sección 6 · Errores frecuentes</span>
-  <h2 class="sec-title">⚠️ Los 6 errores que más cuestan puntos</h2>
-
-  <div class="box danger"><div class="box-title">❌ Error 1 · Omitir el conteo intermedio antes de cerrar cavidad</div><p><strong>El error:</strong> contar solo al inicio y al final, sin recuento antes del cierre.</p><p><strong>Por qué falla:</strong> este es el momento crítico para detectar un objeto retenido antes de que quede oculto por el cierre.</p><p><strong>Cómo corregir:</strong> realiza siempre el conteo intermedio antes de cerrar cualquier cavidad corporal.</p></div>
-
-  <div class="box danger"><div class="box-title">❌ Error 2 · Cerrar con una discrepancia sin resolver</div><p><strong>El error:</strong> proceder al cierre "anotando la discrepancia para revisarla después".</p><p><strong>Por qué falla:</strong> arriesga dejar un objeto dentro del paciente, un error grave y evitable.</p><p><strong>Cómo corregir:</strong> nunca cierres hasta resolver completamente la discrepancia, incluyendo radiografía si es necesario.</p></div>
-
-  <div class="box danger"><div class="box-title">❌ Error 3 · No sumar material añadido al conteo activo</div><p><strong>El error:</strong> esperar hasta el final para sumar material adicional usado durante la cirugía.</p><p><strong>Por qué falla:</strong> genera un margen de error en el conteo final que puede llevar a confusiones sobre discrepancias reales.</p><p><strong>Cómo corregir:</strong> suma cualquier material adicional al conteo activo en el momento en que se usa.</p></div>
-
-  <div class="box danger"><div class="box-title">❌ Error 4 · Dejar campos en blanco en los formatos</div><p><strong>El error:</strong> omitir anotación cuando un campo no aplica al caso.</p><p><strong>Por qué falla:</strong> genera ambigüedad legal interpretativa sobre si el dato se olvidó o realmente no aplicaba.</p><p><strong>Cómo corregir:</strong> anota siempre "No aplica" o "N/A" explícitamente en lugar de dejar el campo vacío.</p></div>
-
-  <div class="box danger"><div class="box-title">❌ Error 5 · Mezclar muestras de sitios distintos en un solo recipiente</div><p><strong>El error:</strong> enviar múltiples muestras del mismo paciente sin diferenciación de origen anatómico.</p><p><strong>Por qué falla:</strong> impide un diagnóstico preciso por sitio y puede generar errores diagnósticos graves.</p><p><strong>Cómo corregir:</strong> etiqueta individualmente cada muestra con su sitio anatómico específico de origen.</p></div>
-
-  <div class="box danger"><div class="box-title">❌ Error 6 · Certificar registros sin verificación personal</div><p><strong>El error:</strong> firmar un conteo o registro basándose únicamente en la palabra de un compañero, sin verificación propia.</p><p><strong>Por qué falla:</strong> la firma implica responsabilidad legal personal sobre la veracidad de lo documentado.</p><p><strong>Cómo corregir:</strong> verifica personalmente cualquier dato antes de firmarlo o certificarlo como propio.</p></div>
+  <h2 class="sec-title">⚠️ Errores que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Error 1 — Omitir el conteo antes de cerrar la cavidad</div><p><strong>Por qué falla:</strong> es el momento crítico para detectar faltantes. <strong>Corrige:</strong> siempre contar antes de cerrar.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — Cerrar con una discrepancia sin resolver</div><p><strong>Por qué falla:</strong> riesgo de objeto retenido. <strong>Corrige:</strong> recuento exhaustivo + imagen si es necesario.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Registrar de memoria al final</div><p><strong>Por qué falla:</strong> pierde precisión y trazabilidad. <strong>Corrige:</strong> registrar en tiempo real.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — Dejar campos en blanco</div><p><strong>Por qué falla:</strong> ambigüedad legal. <strong>Corrige:</strong> anotar "N/A" siempre.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — Mezclar muestras sin diferenciar origen</div><p><strong>Por qué falla:</strong> puede causar diagnóstico erróneo. <strong>Corrige:</strong> etiquetar cada muestra individualmente.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 6 — Firmar algo que no se verificó</div><p><strong>Por qué falla:</strong> asume responsabilidad sobre datos ajenos. <strong>Corrige:</strong> firmar solo lo verificado personalmente.</p></div>
 </section>
 
-<!-- SECCIÓN 6: TIPS -->
 <section class="section" data-sec="6">
   <span class="eyebrow">Sección 7 · Tips</span>
-  <h2 class="sec-title">💡 6 estrategias para ganar puntos</h2>
-
-  <div class="box ok"><div class="box-title">✅ Tip 1 · Los 3 momentos del conteo: Inicial-Intermedio-Final</div><p>Memoriza que el conteo intermedio (antes de cerrar cavidad) es tan crítico como el inicial y el final; no es opcional ni secundario.</p></div>
-  <div class="box ok"><div class="box-title">✅ Tip 2 · Ante discrepancia: nunca cerrar sin resolver</div><p>Si el caso describe una discrepancia de conteo, la respuesta correcta SIEMPRE implica detener, recontar y, si es necesario, radiografía, nunca "continuar y revisar después".</p></div>
-  <div class="box ok"><div class="box-title">✅ Tip 3 · Material añadido = suma inmediata</div><p>Cualquier material adicional usado durante la cirugía se suma al conteo en el momento, no al final del procedimiento.</p></div>
-  <div class="box ok"><div class="box-title">✅ Tip 4 · Campo no aplicable = anotar "No aplica"</div><p>Nunca dejes un espacio en blanco sin justificación en un formato quirúrgico; siempre anota explícitamente si un campo no corresponde.</p></div>
-  <div class="box ok"><div class="box-title">✅ Tip 5 · Una muestra, un recipiente, una etiqueta</div><p>Ante múltiples muestras de sitios distintos, la respuesta correcta siempre implica etiquetado individual diferenciado, nunca mezclarlas.</p></div>
-  <div class="box ok"><div class="box-title">✅ Tip 6 · Firma = verificación personal</div><p>Nunca certifiques con tu firma un dato que no verificaste directamente, incluso si un compañero te asegura que está correcto.</p></div>
+  <h2 class="sec-title">💡 Trucos para dominar el tema</h2>
+  <div class="box ok"><div class="box-title">✅ Tip 1 — Los 3 momentos</div><p>Inicial, intermedio (antes de cerrar) y final.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 — Discrepancia</div><p>Informar → recontar → imagen si no se localiza. Nunca cerrar sin resolver.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 — Registro</div><p>En tiempo real, con hora exacta de cada evento.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 — Formatos</div><p>Nunca en blanco; anota "N/A".</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 — Muestras</div><p>Cada una con su etiqueta e identificación completa.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 — Firma</div><p>Solo se firma lo verificado personalmente.</p></div>
 </section>
 
-<!-- SECCIÓN 7: TRAMPAS -->
 <section class="section" data-sec="7">
   <span class="eyebrow">Sección 8 · Trampas</span>
-  <h2 class="sec-title">🎭 4 trampas diseñadas por la CNSC</h2>
-
-  <div class="trampa"><div class="trampa-q">🎭 Trampa 1 · "Basta con contar al inicio y al final de la cirugía"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> dos puntos de control (inicio y fin) parecen suficientes para garantizar la exactitud.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> el conteo intermedio antes de cerrar cavidad es el momento crítico para detectar faltantes antes de que queden ocultos por el cierre.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "El conteo se realiza en tres momentos: inicial, antes de cerrar cualquier cavidad, y final."</div></div></div>
-
-  <div class="trampa"><div class="trampa-q">🎭 Trampa 2 · "Si la discrepancia es de solo un elemento, se puede cerrar y anotar para revisión posterior"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> una discrepancia mínima parece manejable con una simple anotación.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> incluso un solo elemento faltante puede estar dentro del paciente; el protocolo no distingue por cantidad, exige resolución completa siempre.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Cualquier discrepancia, sin importar la cantidad, debe resolverse completamente antes de cerrar, incluyendo radiografía si es necesario."</div></div></div>
-
-  <div class="trampa"><div class="trampa-q">🎭 Trampa 3 · "Un campo del formato que no aplica se puede dejar en blanco sin problema"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> si el campo no corresponde al caso, parece lógico simplemente no llenarlo.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> un espacio en blanco genera ambigüedad legal interpretativa; se necesita anotación explícita de que se revisó y no aplicaba.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se anota explícitamente 'No aplica' en lugar de dejar el campo vacío sin justificación."</div></div></div>
-
-  <div class="trampa"><div class="trampa-q">🎭 Trampa 4 · "Se puede certificar un conteo confiando en la palabra de un compañero"</div><div class="trampa-detail"><div class="t-row parece"><strong>Lo que parece:</strong> confiar en un compañero de confianza parece razonable y ahorra tiempo.</div><div class="t-row malo"><strong>Por qué es trampa:</strong> la firma implica responsabilidad legal personal sobre la veracidad de lo verificado, que no puede delegarse por confianza sin verificación propia.</div><div class="t-row bueno"><strong>La respuesta correcta:</strong> "Se verifica personalmente cualquier dato antes de firmarlo, incluso en un relevo de personal a mitad de cirugía."</div></div></div>
+  <h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2>
+  <div class="trampa"><div class="trampa-q">«Basta con contar al inicio y al final.»</div><div class="trampa-detail"><div class="t-row parece">Dos momentos parecen suficientes.</div><div class="t-row malo">Es trampa: omite el conteo antes de cerrar, crítico para detectar faltantes.</div><div class="t-row bueno">Correcto: son tres momentos obligatorios.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Si no se encuentra la gasa, seguro se perdió en la basura.»</div><div class="trampa-detail"><div class="t-row parece">Parece la explicación más probable.</div><div class="t-row malo">Es trampa: asumir sin verificar es justo lo prohibido.</div><div class="t-row bueno">Correcto: recuento exhaustivo + radiografía antes de cerrar.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Un campo que no aplica se puede dejar vacío.»</div><div class="trampa-detail"><div class="t-row parece">"No aplica" parece obvio sin escribirlo.</div><div class="t-row malo">Es trampa: genera ambigüedad legal.</div><div class="t-row bueno">Correcto: anotar explícitamente "N/A".</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Firmar el registro de un compañero para ayudarlo con el papeleo.»</div><div class="trampa-detail"><div class="t-row parece">Parece un gesto de colaboración.</div><div class="t-row malo">Es trampa: firmar algo no verificado asume responsabilidad indebida.</div><div class="t-row bueno">Correcto: solo se firma lo que uno mismo verificó.</div></div></div>
 </section>
 
-
-<!-- SECCIÓN 8: REPASO (Flashcards) -->
 <section class="section" data-sec="8">
   <span class="eyebrow">Sección 9 · Repaso</span>
-  <h2 class="sec-title">🧠 Flashcards — Repaso activo</h2>
-  <p class="flash-intro">Estas 10 tarjetas condensan los conceptos esenciales. Haz clic para voltear y ver la respuesta.</p>
-  <div class="flash-counter" id="flashCounter">Tarjeta 1 de 10</div>
-  <div class="flashcard" id="flashcard">
-    <div class="flashcard-inner">
-      <div class="flashcard-face flashcard-front">
-        <span class="label">Pregunta</span>
-        <p class="pregunta-flash" id="flashFront"></p>
-        <small class="hint">Haz clic para ver la respuesta</small>
-      </div>
-      <div class="flashcard-face flashcard-back">
-        <span class="label">Respuesta</span>
-        <p class="respuesta-flash" id="flashBack"></p>
-      </div>
-    </div>
-  </div>
-  <div class="flashcard-controls">
-    <button id="flashPrev">← Anterior</button>
-    <button id="flashFlip" class="primary">Voltear tarjeta</button>
-    <button id="flashNext">Siguiente →</button>
-  </div>
+  <h2 class="sec-title">🧠 Repasa con flashcards</h2>
+  <p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p>
+  <div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div>
 </section>
 
-<!-- SECCIÓN 9: RESUMEN + GLOSARIO -->
 <section class="section" data-sec="9">
-  <span class="eyebrow">Sección 10 · Resumen y Glosario</span>
-  <h2 class="sec-title">📋 Resumen ejecutivo</h2>
-  <div class="resumen-grid">
-    <div class="resumen-item"><h4>🔢 3 momentos</h4><p>Inicial, intermedio (antes de cerrar cavidad) y final. El intermedio es crítico y no debe omitirse.</p></div>
-    <div class="resumen-item"><h4>⚠️ Discrepancias</h4><p>Nunca cerrar sin resolver; recontar exhaustivamente y usar radiografía si es necesario.</p></div>
-    <div class="resumen-item"><h4>⏱️ Registro de eventos</h4><p>Tiempos quirúrgicos y eventos relevantes se documentan en tiempo real, con hora exacta.</p></div>
-    <div class="resumen-item"><h4>📄 Formatos</h4><p>Nunca dejar campos en blanco; anotar "No aplica" cuando corresponda.</p></div>
-    <div class="resumen-item"><h4>🧪 Muestras</h4><p>Cada muestra en recipiente individual, etiquetada con sitio anatómico específico de origen.</p></div>
-    <div class="resumen-item"><h4>⚖️ Responsabilidad legal</h4><p>Firmar solo lo verificado personalmente, nunca por confianza sin verificación propia.</p></div>
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen y glosario</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Conteo</h4><p>Inicial, intermedio (antes de cerrar) y final. Nunca omitir el intermedio.</p></div>
+    <div class="resumen-item"><h4>Discrepancia</h4><p>Informar, recontar exhaustivamente, imagen si es necesario. Nunca cerrar sin resolver.</p></div>
+    <div class="resumen-item"><h4>Registro de tiempos</h4><p>En tiempo real; todo evento relevante con hora exacta.</p></div>
+    <div class="resumen-item"><h4>Formatos</h4><p>Documentos legales; nunca campos en blanco sin "N/A".</p></div>
+    <div class="resumen-item"><h4>Muestras</h4><p>Identificación inequívoca; cada muestra con su etiqueta.</p></div>
+    <div class="resumen-item"><h4>Responsabilidad</h4><p>La firma certifica veracidad; solo se firma lo verificado.</p></div>
   </div>
-
-  <h3 style="margin-top:32px;">📚 Glosario</h3>
-  <div class="glosario">
-    <div class="glo-item"><dt>Conteo intermedio</dt><dd>Recuento de gasas e instrumental antes de cerrar cualquier cavidad corporal durante la cirugía.</dd></div>
-    <div class="glo-item"><dt>Objeto quirúrgico retenido</dt><dd>Elemento (gasa, instrumento) que queda olvidado dentro del paciente; considerado evento centinela.</dd></div>
-    <div class="glo-item"><dt>Evento centinela</dt><dd>Error grave, evitable, que exige investigación institucional obligatoria cuando ocurre.</dd></div>
-    <div class="glo-item"><dt>Nota operatoria</dt><dd>Documento legal que registra el procedimiento quirúrgico realizado, hallazgos y eventos.</dd></div>
-    <div class="glo-item"><dt>Custodia de muestras</dt><dd>Manejo, identificación y conservación adecuada de tejidos u órganos extraídos para estudio de patología.</dd></div>
-    <div class="glo-item"><dt>Trazabilidad</dt><dd>Capacidad de reconstruir con exactitud la secuencia de eventos de un procedimiento a través de sus registros.</dd></div>
-  </div>
-
-  <div class="cierre">
-    <h3>🎯 Frase para recordar</h3>
-    <p><strong>"Cuenta en los 3 momentos, nunca cierres con duda, etiqueta cada muestra por separado, y firma solo lo que verificaste tú mismo."</strong></p>
-  </div>
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3>
+  <dl class="glosario">
+    <dt>Conteo intermedio</dt><dd>Recuento antes del cierre de una cavidad corporal.</dd>
+    <dt>Discrepancia</dt><dd>El conteo final no coincide con el inicial más lo añadido.</dd>
+    <dt>Nota operatoria</dt><dd>Documento legal que describe el procedimiento quirúrgico realizado.</dd>
+    <dt>Trazabilidad</dt><dd>Registro que permite reconstruir cronológicamente todo lo ocurrido.</dd>
+  </dl>
+  <div class="box gold"><div class="box-title">💎 Para recordar</div><p>El conteo y el registro son la <strong>última barrera de seguridad</strong> antes de cerrar al paciente. Ninguna discrepancia queda sin resolver, ningún campo queda en blanco, y solo se firma lo que se verificó personalmente.</p></div>
 </section>
 
-<!-- SECCIÓN 10: SIMULACRO -->
 <section class="section" data-sec="10">
   <span class="eyebrow">Sección 11 · Simulacro</span>
   <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
-
-  <div class="card card-lead quiz-intro">
-    <p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un <strong>caso/contexto</strong> real y un enunciado tipo "¿qué es lo más apropiado que debe hacer?", con 4 opciones; solo una es correcta.</p>
-    <div class="quiz-formato"><strong>Instrucciones:</strong> lee el caso, identifica el problema y elige la actuación más apropiada. Al hacer clic verás retroalimentación por cada opción.</div>
-    <div class="dific-tags">
-      <span class="tag b">4 básicas</span>
-      <span class="tag i">5 intermedias</span>
-      <span class="tag a">3 avanzadas</span>
-    </div>
-  </div>
-
+  <div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta. Las opciones se barajan en cada intento.</p><div class="dific-tags"><span class="tag b">Básicas</span><span class="tag i">Intermedias</span><span class="tag a">Avanzadas</span></div></div>
   <div id="quiz"></div>
-
-  <div style="text-align:center; margin:28px 0;">
-    <button id="btnCalcular" class="btn">Ver mi resultado</button>
-  </div>
-
-  <div id="resultado">
-    <div class="score-num" id="scoreNum">0/12</div>
-    <p id="scoreMsg"></p>
-    <div id="temasReforzar"></div>
-    <button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button>
-  </div>
+  <div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div>
 </section>
-
 </main>
 
 <footer>
-  <div class="fbrand">Ascenso Público</div>
-  <div class="fslogan">Tu ruta personalizada al ascenso público</div>
-  <div class="fmeta">
-    FUN-SAL-07 · Día 15 · v1.0 — julio 2026<br>
-    © Ascenso Público — Todos los derechos reservados
-  </div>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-SAL-07 · Control, Conteos y Registros Intraoperatorios · Ascenso Público</div>
 </footer>
 
-
 <script>
-// ===== NAVEGACIÓN Y BARRA DE LECTURA =====
-const sections = document.querySelectorAll('.section');
-const navBtns = document.querySelectorAll('nav button');
-
-function showSection(i) {
-  sections.forEach(s => s.classList.remove('visible'));
-  navBtns.forEach(b => b.classList.remove('active'));
-  sections[i].classList.add('visible');
-  navBtns[i].classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-navBtns.forEach((btn, i) => btn.addEventListener('click', () => showSection(i)));
-
-window.addEventListener('scroll', () => {
-  const h = document.documentElement;
-  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
-  document.getElementById('readbar').style.width = scrolled + '%';
-});
-
-// ===== BOTONES "AVANZAR" =====
-const titulosCortos = [
-  'Importancia', 'Desarrollo', 'Comparaciones', 'Casos CNSC',
-  'Errores', 'Tips', 'Trampas', 'Repaso', 'Resumen', 'Simulacro', null
-];
-
-sections.forEach((sec, i) => {
-  const bar = document.createElement('div');
-  bar.className = 'advance-bar';
-  if (i < sections.length - 1) {
-    bar.innerHTML = `
-      <span class="advance-hint">¿Listo para continuar?</span>
-      <button class="advance-btn" data-target="${i + 1}">
-        Avanzar a ${titulosCortos[i]} →
-      </button>`;
-  } else {
-    bar.innerHTML = `
-      <span class="advance-hint">🎓 Has completado todo el contenido</span>
-      <button class="advance-btn final" data-target="finalizar">
-        ✅ Finalizar Día 15
-      </button>`;
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 7", "alerta": "¡Felicitaciones! Terminaste FUN-SAL-07.\n\nSigue con FUN-SAL-08 · Gestión de Equipos, Material e Insumos Quirúrgicos."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
   }
   sec.appendChild(bar);
 });
-
-document.querySelectorAll('.advance-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const t = btn.dataset.target;
-    if (t === 'finalizar') {
-      alert('🎓 ¡Felicitaciones! Completaste el Día 15.\n\nMañana avanzas con FUN-SAL-08 · Gestión de Equipos, Material e Insumos Quirúrgicos.\n\n🚀');
-    } else {
-      showSection(parseInt(t));
-    }
-  });
-});
-
-// ===== CHECKPOINTS INTERACTIVOS =====
-function setupCheckpoint(cpId, fbId) {
-  const opts = document.querySelectorAll(`#${cpId} li`);
-  const fb = document.getElementById(fbId);
-  opts.forEach(opt => {
-    opt.addEventListener('click', function() {
-      const isOk = this.dataset.ok === '1';
-      opts.forEach(o => o.style.pointerEvents = 'none');
-      this.classList.add(isOk ? 'ok' : 'no');
-      fb.className = isOk ? 'checkpoint-fb ok show' : 'checkpoint-fb no show';
-      if (isOk) {
-        fb.innerHTML = '✅ <strong>¡Correcto!</strong> Esta es la actuación apropiada según el protocolo de conteo y registro quirúrgico.';
-      } else {
-        fb.innerHTML = '❌ <strong>Incorrecto.</strong> Revisa el concepto correspondiente en el Desarrollo para entender por qué esta opción no es la más apropiada.';
-      }
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
     });
   });
-}
-setupCheckpoint('cp1', 'cpfb1');
-setupCheckpoint('cp2', 'cpfb2');
-
-// ===== FLASHCARDS =====
-const flashcards = [
+});
+const flashcards=[
   { f:'¿En qué momentos se realiza el conteo quirúrgico?', b:'Inicial (antes de la cirugía), intermedio (antes de cerrar cualquier cavidad) y final (antes de que el paciente salga de sala).' },
   { f:'¿Qué se hace si el conteo final no coincide con el inicial?', b:'Detener el cierre, recontar exhaustivamente, e informar. Si no se resuelve, se solicita radiografía antes de completar el cierre.' },
   { f:'¿Cuándo se suma al conteo el material adicional usado durante la cirugía?', b:'De inmediato, en el momento en que se usa, no al final del procedimiento.' },
@@ -1072,37 +635,18 @@ const flashcards = [
   { f:'¿Puede cerrarse una cirugía con una discrepancia de conteo pendiente de "revisar después"?', b:'No. Nunca se cierra con una discrepancia sin resolver completamente, sin importar la presión de tiempo.' },
   { f:'¿Qué norma regula la responsabilidad del talento humano en salud sobre sus registros?', b:'La Ley 1164 de 2007 (Talento Humano en Salud) y el régimen disciplinario aplicable a los registros firmados.' }
 ];
-
-let flashIndex = 0;
-const flashEl = document.getElementById('flashcard');
-const flashFront = document.getElementById('flashFront');
-const flashBack = document.getElementById('flashBack');
-const flashCounter = document.getElementById('flashCounter');
-
-function renderFlash() {
-  flashEl.classList.remove('flipped');
-  flashFront.textContent = flashcards[flashIndex].f;
-  flashBack.textContent = flashcards[flashIndex].b;
-  flashCounter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
-}
-flashEl.addEventListener('click', () => flashEl.classList.toggle('flipped'));
-document.getElementById('flashFlip').addEventListener('click', e => {
-  e.stopPropagation(); flashEl.classList.toggle('flipped');
-});
-document.getElementById('flashPrev').addEventListener('click', () => {
-  flashIndex = (flashIndex - 1 + flashcards.length) % flashcards.length;
-  renderFlash();
-});
-document.getElementById('flashNext').addEventListener('click', () => {
-  flashIndex = (flashIndex + 1) % flashcards.length;
-  renderFlash();
-});
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
 renderFlash();
-
-
-
-// ===== SIMULACRO =====
-const preguntas = [
+const preguntas=[
   {
     nivel: 'b', tema: 'Momentos del conteo quirúrgico',
     ctx: 'Eres instrumentador en una laparotomía. El cirujano está a punto de iniciar el cierre de la cavidad abdominal después de resolver la patología quirúrgica.',
@@ -1326,112 +870,82 @@ const preguntas = [
     ]
   }
 ];
-
-const quizDiv = document.getElementById('quiz');
-let respondidas = {};
-
-function renderQuiz() {
-  respondidas = {};
-  quizDiv.innerHTML = '';
-  const nivelLabel = { b:'Básica', i:'Intermedia', a:'Avanzada' };
-  preguntas.forEach((p, idx) => {
-    const card = document.createElement('div');
-    card.className = 'pregunta';
-    let opsHtml = '';
-    p.ops.forEach((op, j) => {
-      const letra = String.fromCharCode(65 + j);
-      opsHtml += `<div class="opcion" data-q="${idx}" data-op="${j}">
-                    <span class="letra">${letra}</span><span>${op}</span>
-                  </div>`;
-    });
-    const ctxHtml = `<div class="q-contexto"><strong>Contexto:</strong> ${p.ctx}</div>`;
-    card.innerHTML = `
-      <div class="q-num">Pregunta ${idx+1}
-        <span class="nivel-pill ${p.nivel}">${nivelLabel[p.nivel]}</span>
-      </div>
-      ${ctxHtml}
-      <div class="q-texto">${p.q}</div>
-      <div class="opciones">${opsHtml}</div>
-      <div class="feedback" id="fb-${idx}"></div>`;
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+// Baraja una copia de un arreglo (Fisher-Yates). Se usa para que las
+// opciones A/B/C/D salgan en orden ALEATORIO en cada carga: el estudiante
+// entrena criterio, no la posición de la respuesta (estándar tipo CNSC).
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]); // posición visible (0..3) -> índice original de la opción
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
     quizDiv.appendChild(card);
   });
-
-  document.querySelectorAll('.opcion').forEach(op => {
-    op.addEventListener('click', function() {
-      const qi = +this.dataset.q;
-      const oi = +this.dataset.op;
-      if (respondidas[qi] !== undefined) return;
-      respondidas[qi] = oi;
-      const p = preguntas[qi];
-      const cont = this.parentElement;
-      cont.querySelectorAll('.opcion').forEach((o, k) => {
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido; // guardamos el ÍNDICE ORIGINAL elegido (el scoring sigue igual)
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
         o.classList.add('bloqueada');
-        if (k === p.correcta) o.classList.add('correcta');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
       });
-      const fb = document.getElementById('fb-' + qi);
-      fb.className = 'feedback show';
-
-      let feedbackHtml = '<div style="margin-bottom:14px;"><strong>Retroalimentación por opción:</strong></div>';
-      p.ops.forEach((opText, k) => {
-        const letra = String.fromCharCode(65 + k);
-        const isCorrect = k === p.correcta;
-        const color = isCorrect ? 'var(--verde)' : 'var(--rojo)';
-        feedbackHtml += `<div style="margin-bottom:10px; padding:8px 12px; background:${isCorrect ? 'var(--verde-suave)' : 'var(--rojo-suave)'}; border-left:3px solid ${color}; border-radius:6px;">
-          <strong style="color:${color};">${letra}.</strong> ${p.expl[k]}
-        </div>`;
-      });
-      fb.innerHTML = feedbackHtml;
-
-      if (oi !== p.correcta) {
-        this.classList.add('incorrecta');
-      }
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
     });
   });
 }
-
-document.getElementById('btnCalcular').addEventListener('click', () => {
-  let correctas = 0;
-  const temasFallados = [];
-  preguntas.forEach((p, i) => {
-    if (respondidas[i] === p.correcta) correctas++;
-    else if (temasFallados.indexOf(p.tema) === -1) temasFallados.push(p.tema);
-  });
-  const res = document.getElementById('resultado');
-  document.getElementById('scoreNum').textContent = correctas + '/12';
-
-  let msg;
-  const pct = correctas / 12;
-  if (pct >= 0.83) msg = '🏆 ¡Excelente! Dominas el control de conteos y registros intraoperatorios. Listo para el siguiente día.';
-  else if (pct >= 0.58) msg = '👍 Buen trabajo. Refuerza los temas marcados y repasa las comparaciones.';
-  else msg = '📚 Vas por buen camino. Repasa el Desarrollo, las tablas comparativas y repite el simulacro.';
-  document.getElementById('scoreMsg').textContent = msg;
-
-  const cont = document.getElementById('temasReforzar');
-  if (temasFallados.length === 0) {
-    cont.innerHTML = '<div class="box ok" style="text-align:left;">' +
-      '<div class="box-title">🎯 ¡Sin temas pendientes!</div>' +
-      '<p>Respondiste todo correctamente. Estás preparado para avanzar.</p></div>';
-  } else {
-    let items = temasFallados.map(t => '<li>' + t + '</li>').join('');
-    cont.innerHTML = '<div class="box warn" style="text-align:left;">' +
-      '<div class="box-title">📌 Temas que debes reforzar</div>' +
-      '<p>Vuelve a la sección <strong>Desarrollo</strong> y repasa estos conceptos:</p>' +
-      '<ul class="lista">' + items + '</ul></div>';
-  }
-  res.classList.add('show');
-  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
 });
-
-document.getElementById('btnReiniciar').addEventListener('click', () => {
-  renderQuiz();
-  document.getElementById('resultado').classList.remove('show');
-  window.scrollTo({
-    top: document.querySelector('[data-sec="10"]').offsetTop - 80,
-    behavior: 'smooth'
-  });
-});
-
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
 renderQuiz();
 </script>
+
+<script>
+/* Mejora dinámica v3.1: los bloques principales de cada sección aparecen con
+   una animación escalonada al entrar a la sección, y un botón flotante permite
+   volver arriba. IIFE independiente, no toca la lógica existente. */
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .normativa, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
 </body>
 </html>
