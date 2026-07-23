@@ -48,6 +48,11 @@ export default async function AdminHome() {
 
       <h2 style={{ fontSize: "1.1rem", marginBottom: 14 }}>Acciones rápidas</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+        <Link href="/admin/crear-cliente" style={{ ...stat, display: "block", transition: "transform .15s", borderLeft: "4px solid #E8A33D" }}>
+          <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>➕</div>
+          <div style={{ fontWeight: 700, color: "var(--azul)" }}>Crear cliente manual</div>
+          <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Para pagos por transferencia o consignación. Sin pasarela.</div>
+        </Link>
         <Link href="/admin/cursos" style={{ ...stat, display: "block", transition: "transform .15s" }}>
           <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>🎓</div>
           <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar cursos</div>
