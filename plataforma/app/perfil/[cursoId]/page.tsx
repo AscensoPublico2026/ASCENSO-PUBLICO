@@ -286,6 +286,11 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
         );
       })()}
 
+      {/* Vencimiento */}
+        <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginTop: 24, textAlign: "center" }}>
+        </p>
+      )}
+
       {/* Botón flotante de WhatsApp: dudas / asistencia sobre el curso */}
       {!esPreview && (
         <a
