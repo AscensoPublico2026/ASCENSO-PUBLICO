@@ -174,3 +174,17 @@ export async function copiarPlanOPEC(cursoId: string) {
   await copiarPlanDesdeOPEC(supabase, cursoId, curso?.opec ?? null);
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
+
+/**
+ * Guarda el número de inscripción CNSC del candidato.
+ * El admin lo agrega cuando el cliente se lo informa por WhatsApp.
+ * Queda visible en la ficha del perfil del estudiante.
+ */
+export async function actualizarNumeroInscripcion(cursoId: string, formData: FormData) {
+  await requireAdmin();
+  const numero_inscripcion = String(formData.get("numero_inscripcion") || "").trim() || null;
+  const supabase = createAdminClient();
+  await supabase.from("cursos").update({ numero_inscripcion }).eq("id", cursoId);
+  revalidatePath(`/admin/cursos/${cursoId}`);
+  revalidatePath(`/perfil/${cursoId}`);
+}
