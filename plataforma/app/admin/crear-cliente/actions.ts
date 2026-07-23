@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
@@ -11,6 +10,7 @@ export type CrearClienteResult = {
   error?: string;
   userId?: string;
   cursoId?: string;
+  correo?: string;
 };
 
 /**
@@ -28,7 +28,9 @@ export async function crearClienteManual(
   const nombre = String(formData.get("nombre") || "").trim();
   const correo = String(formData.get("correo") || "").trim().toLowerCase();
   const celular = String(formData.get("celular") || "").trim();
-  const password = String(formData.get("password") || "").trim();
+  // Contraseña genérica fija para todos los clientes creados manualmente.
+  // El estudiante la cambia en su primera sesión si lo desea.
+  const password = "nuevoestudiante2026";
   const convocatoria_id = String(formData.get("convocatoria_id") || "").trim() || null;
   const opec = String(formData.get("opec") || "").trim() || null;
   const cargo_nombre = String(formData.get("cargo_nombre") || "").trim() || null;
@@ -37,7 +39,6 @@ export async function crearClienteManual(
   // --- Validaciones básicas ---
   if (!nombre) return { ok: false, error: "El nombre es obligatorio." };
   if (!correo) return { ok: false, error: "El correo es obligatorio." };
-  if (!password || password.length < 6) return { ok: false, error: "La contraseña debe tener al menos 6 caracteres." };
   if (!nivel) return { ok: false, error: "El nivel es obligatorio (asistencial, técnico o profesional)." };
 
   const supabase = createAdminClient();
@@ -163,7 +164,7 @@ export async function crearClienteManual(
     revalidatePath("/admin/usuarios");
     revalidatePath("/admin/pagos");
 
-    return { ok: true, userId, cursoId };
+    return { ok: true, userId, cursoId, correo };
   } catch (e: any) {
     return { ok: false, error: "Error inesperado: " + e.message };
   }

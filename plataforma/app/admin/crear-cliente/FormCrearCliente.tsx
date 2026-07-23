@@ -78,7 +78,7 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
             Cliente creado exitosamente
           </h2>
           <p style={{ color: "var(--texto-suave)", fontSize: ".9rem", marginBottom: 20 }}>
-            El usuario ya puede iniciar sesión con su correo y contraseña.
+            El usuario ya puede iniciar sesión con su correo y la contraseña genérica.
           </p>
           <div style={{
             background: "var(--crema, #FBF9F4)",
@@ -89,8 +89,14 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
             fontSize: ".85rem",
             marginBottom: 20,
           }}>
-            <div><strong>ID Usuario:</strong> {state.userId}</div>
-            <div><strong>ID Curso:</strong> {state.cursoId}</div>
+            <div style={{ marginBottom: 6 }}><strong>Correo:</strong> {state.correo}</div>
+            <div style={{ marginBottom: 6 }}>
+              <strong>Contraseña:</strong>{" "}
+              <code style={{ background: "#DBEAFE", color: "#1E40AF", padding: "2px 8px", borderRadius: 5, fontFamily: "monospace", fontWeight: 700 }}>
+                nuevoestudiante2026
+              </code>
+            </div>
+            <div style={{ marginBottom: 4 }}><strong>ID Curso:</strong> {state.cursoId}</div>
           </div>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a
@@ -185,6 +191,30 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
               placeholder="300 123 4567"
               style={inputStyle}
             />
+          </div>
+        </div>
+
+        {/* Aviso contraseña genérica */}
+        <div style={{
+          background: "#EFF6FF",
+          border: "1px solid #BFDBFE",
+          borderRadius: 10,
+          padding: "12px 16px",
+          marginBottom: 18,
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 10,
+        }}>
+          <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>🔑</span>
+          <div style={{ fontSize: ".84rem", color: "#1E40AF" }}>
+            <strong>Contraseña de acceso:</strong>{" "}
+            <code style={{ background: "#DBEAFE", padding: "2px 7px", borderRadius: 5, fontFamily: "monospace", fontWeight: 700, fontSize: ".9rem" }}>
+              nuevoestudiante2026
+            </code>
+            <br />
+            <span style={{ color: "#3B82F6", marginTop: 2, display: "block" }}>
+              Comparte este correo y contraseña con tu cliente por WhatsApp. El puede cambiarla desde su perfil cuando quiera.
+            </span>
           </div>
         </div>
 
