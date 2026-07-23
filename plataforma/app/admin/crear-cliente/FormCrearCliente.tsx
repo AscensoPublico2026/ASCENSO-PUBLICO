@@ -218,6 +218,22 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
           </div>
         </div>
 
+        <div style={fieldGroup}>
+          <label htmlFor="password" style={labelStyle}>Contraseña de acceso *</label>
+          <input
+            id="password"
+            name="password"
+            type="text"
+            required
+            minLength={6}
+            placeholder="Mínimo 6 caracteres"
+            style={inputStyle}
+          />
+          <span style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginTop: 4, display: "block" }}>
+            El cliente usará esta contraseña para ingresar. Puedes compartírsela por WhatsApp.
+          </span>
+        </div>
+
         {/* Sección: Datos del curso */}
         <h2 style={{ fontSize: "1.05rem", color: "var(--azul)", marginTop: 28, marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--gris-borde)" }}>
           🎓 Datos del curso
