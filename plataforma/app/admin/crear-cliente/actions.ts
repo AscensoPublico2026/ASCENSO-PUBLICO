@@ -103,10 +103,6 @@ export async function crearClienteManual(
     }
 
     // --- 4. Crear el curso ---
-    const VIGENCIA_DIAS = 90;
-    const ahora = new Date();
-    const deadline = new Date(ahora.getTime() + 24 * 3600 * 1000); // +24h
-    const vence = new Date(ahora.getTime() + VIGENCIA_DIAS * 86400 * 1000);
 
     const { data: curso, error: cursoErr } = await supabase
       .from("cursos")
@@ -118,9 +114,7 @@ export async function crearClienteManual(
         nivel,
         estado: "en_preparacion",
         fecha_compra: ahora.toISOString(),
-        preparacion_deadline: deadline.toISOString(),
-        fecha_vencimiento: vence.toISOString(),
-      })
+        
       .select("id")
       .single();
 

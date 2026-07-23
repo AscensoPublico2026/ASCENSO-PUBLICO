@@ -287,9 +287,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
       })()}
 
       {/* Vencimiento */}
-      {curso.fecha_vencimiento && (
         <p style={{ color: "var(--texto-suave)", fontSize: ".8rem", marginTop: 24, textAlign: "center" }}>
-          Acceso válido hasta {new Date(curso.fecha_vencimiento).toLocaleDateString("es-CO")}.
         </p>
       )}
 
@@ -324,7 +322,7 @@ function DatosCurso({ curso, convNombre, cargoNombre }: { curso: any; convNombre
   if (cargoNombre) filas.push({ icon: "💼", label: "Cargo", value: cargoNombre });
   if (convNombre) filas.push({ icon: "📋", label: "Convocatoria", value: convNombre });
   if (curso.nivel) filas.push({ icon: "🎯", label: "Nivel", value: curso.nivel.charAt(0).toUpperCase() + curso.nivel.slice(1) });
-  if (curso.fecha_vencimiento) filas.push({ icon: "📅", label: "Acceso válido hasta", value: new Date(curso.fecha_vencimiento).toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric" }) });
+
 
   if (filas.length === 0) return null;
 
