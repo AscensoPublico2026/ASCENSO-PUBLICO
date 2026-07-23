@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, actualizarNumeroInscripcion } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 import BarraTiempoAdmin from "../BarraTiempoAdmin";
 import BarraProgresoAdmin from "../BarraProgresoAdmin";
@@ -139,6 +139,16 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>ENTIDAD</span><br/><strong>{curso.convocatorias?.entidad || curso.convocatorias?.nombre || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>NIVEL</span><br/><strong>{curso.nivel || "-"}</strong></div>
           <div><span style={{ fontSize: ".75rem", color: "var(--texto-suave)" }}>ESTADO</span><br/><strong>{curso.estado}</strong></div>
+        </div>
+
+        {/* N.° de inscripción CNSC — editable */}
+        <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--gris-borde)" }}>
+          <p style={{ fontSize: ".75rem", color: "var(--texto-suave)", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".04em" }}>N.° de inscripción CNSC</p>
+          <form action={actualizarNumeroInscripcion.bind(null, curso.id)} style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <input style={{ ...input, flex: 1, maxWidth: 280 }} type="text" name="numero_inscripcion" defaultValue={curso.numero_inscripcion || ""} placeholder="Ej: 20250001234" />
+            <button className="btn btn-azul" style={{ padding: "10px 16px", fontSize: ".82rem", whiteSpace: "nowrap" }}>Guardar</button>
+          </form>
+          <p style={{ fontSize: ".73rem", color: "var(--texto-suave)", marginTop: 5 }}>El cliente te lo informa después de inscribirse en la CNSC. Aparece en su perfil.</p>
         </div>
         {manualUrl && (
           <a href={manualUrl} target="_blank" rel="noopener" style={{ display: "inline-block", marginTop: 14, color: "var(--azul)", fontWeight: 700 }}>

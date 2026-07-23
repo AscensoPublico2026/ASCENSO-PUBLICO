@@ -62,6 +62,7 @@ create table if not exists public.cursos (
   usuario_id uuid references public.profiles(id) on delete cascade,
   convocatoria_id uuid references public.convocatorias(id),
   opec text,
+  numero_inscripcion text,             -- número de inscripción CNSC del candidato (lo agrega el admin)
   cargo_nombre text,
   nivel text,
   manual_pdf_path text,
@@ -207,3 +208,10 @@ create policy "storage guias admin" on storage.objects
 -- (Opcional) Convertirte en admin: tras registrarte, ejecuta:
 --   update public.profiles set rol = 'admin' where correo = 'ascensopublico@gmail.com';
 -- ============================================================
+
+
+-- ============================================================
+-- Migración incremental — ejecutar en Supabase SQL Editor
+-- si la base de datos ya existe (no es nueva instalación):
+-- ============================================================
+-- alter table public.cursos add column if not exists numero_inscripcion text;
