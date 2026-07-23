@@ -4,7 +4,6 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { correoConfirmacionCliente, correoAvisoAdmin } from "@/lib/email";
 import { cargarGuiasAutomaticas } from "@/lib/autocargarGuias";
 
-const VIGENCIA_DIAS = 90; // acceso al curso (ARQUITECTURA §17: 60–90 días)
 
 // IDEMPOTENTE: dada una referencia con pago aprobado, asegura que existan el
 // usuario (Auth) y su curso (estado en_preparacion, deadline +24h). La pueden
@@ -81,7 +80,6 @@ export async function procesarReferencia(referencia: string, transactionId?: str
   } else {
     const ahora = new Date();
     const deadline = new Date(ahora.getTime() + 24 * 3600 * 1000);
-    const vence = new Date(ahora.getTime() + VIGENCIA_DIAS * 86400 * 1000);
     const { data: curso } = await supabase
       .from("cursos")
       .insert({
@@ -94,7 +92,6 @@ export async function procesarReferencia(referencia: string, transactionId?: str
         estado: "en_preparacion",
         fecha_compra: ahora.toISOString(),
         preparacion_deadline: deadline.toISOString(),
-        fecha_vencimiento: vence.toISOString(),
       })
       .select("id")
       .single();

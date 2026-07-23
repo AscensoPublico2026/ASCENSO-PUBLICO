@@ -72,7 +72,6 @@ export async function GET(req: NextRequest) {
       // 7. Crear curso
       const ahora = new Date();
       const deadline = new Date(ahora.getTime() + 12 * 3600 * 1000);
-      const vence = new Date(ahora.getTime() + 90 * 86400 * 1000);
       const { data: curso, error: cursoErr } = await supabase
         .from("cursos")
         .insert({
@@ -85,7 +84,6 @@ export async function GET(req: NextRequest) {
           estado: "en_preparacion",
           fecha_compra: ahora.toISOString(),
           preparacion_deadline: deadline.toISOString(),
-          fecha_vencimiento: vence.toISOString(),
         })
         .select("id")
         .single();

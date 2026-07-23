@@ -284,11 +284,6 @@ function CursoCard({ curso, progresoPct, expanded }: { curso: any; progresoPct?:
           </div>
 
           {/* Vencimiento */}
-          {curso.fecha_vencimiento && (
-            <p style={{ color: "rgba(255,255,255,.5)", fontSize: ".72rem", marginTop: 8 }}>
-              Acceso hasta {new Date(curso.fecha_vencimiento).toLocaleDateString("es-CO")}
-            </p>
-          )}
         </div>
       </div>
     </Link>
