@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BON-03 · Razonamiento Analítico — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+/* ===== DESARROLLO v3 · estilo editorial (visual nuevo y mejorado) ===== */
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+/* ===== Bloque CÁLCULO · fórmulas y procesos matemáticos paso a paso ===== */
+.calculo{background:linear-gradient(180deg,#fff,var(--azul-suave));border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.calculo-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.calculo-intro{padding:14px 18px 0;font-size:.93rem;color:var(--texto);}
+.calculo-intro p{margin-bottom:0;}
+.calc-datos{margin:12px 18px 0;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:11px;padding:11px 15px;font-size:.88rem;}
+.calc-datos .cd-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-bottom:5px;}
+.calc-datos ul{list-style:none;margin:0;}
+.calc-datos li{position:relative;padding-left:18px;margin-bottom:4px;}
+.calc-datos li::before{content:'•';position:absolute;left:2px;color:var(--oro);font-weight:800;}
+.calc-pasos{display:flex;flex-direction:column;gap:11px;padding:14px 18px;}
+.calc-paso{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--gris-borde);border-left:4px solid var(--oro);border-radius:11px;padding:12px 15px;}
+.calc-n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.calc-body{flex:1;min-width:0;}
+.calc-label{font-weight:700;color:var(--azul);font-size:.92rem;margin-bottom:6px;}
+.calc-formula{font-family:'Source Serif 4',serif;font-size:1.02rem;font-weight:600;background:var(--gris-bg);border-radius:8px;padding:9px 13px;margin:5px 0;overflow-x:auto;color:var(--texto);}
+.calc-formula b,.calc-formula strong{color:var(--ambar);}
+.calc-res-paso{font-size:.95rem;color:var(--verde);font-weight:700;margin-top:5px;}
+.calc-res-paso::before{content:'➜ ';color:var(--verde);}
+.calc-total{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 18px 16px;padding:15px 18px;background:var(--verde-suave);border:1.5px solid var(--verde-borde);border-radius:12px;}
+.calc-total .ct-label{font-weight:700;color:var(--verde);font-size:.93rem;}
+.calc-total .ct-valor{font-family:'Source Serif 4',serif;font-size:1.55rem;font-weight:800;color:var(--verde);}
+.calc-nota{font-size:.85rem;color:var(--texto-suave);padding:0 18px 16px;font-style:italic;}
+/* ===== Bloque NORMATIVA · marco legal con artículos citados ===== */
+.normativa{background:#fff;border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.normativa-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.norma-intro{padding:13px 18px 0;margin:0;font-size:.92rem;color:var(--texto);}
+.norma-list{padding:14px 18px;display:flex;flex-direction:column;gap:10px;}
+.norma-item{display:flex;gap:14px;align-items:flex-start;background:var(--azul-suave);border:1px solid var(--azul-borde);border-left:4px solid var(--oro);border-radius:0 11px 11px 0;padding:11px 15px;}
+.norma-ref{flex-shrink:0;font-weight:800;color:var(--azul);font-size:.8rem;line-height:1.4;min-width:150px;}
+.norma-txt{font-size:.9rem;flex:1;min-width:0;}
+.norma-txt p{margin-bottom:0;}
+@media(max-width:640px){.norma-item{flex-direction:column;gap:4px;}.norma-ref{min-width:0;font-size:.84rem;}}
+/* ===== Caja DESTACADA · regla de oro / alerta clave dentro del desarrollo ===== */
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+
+/* ==== dinamismo v3 (reveal + back-to-top) ==== */
+.section{opacity:1;}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.on{opacity:1;transform:none;}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 18px rgba(10,42,94,.35);opacity:0;pointer-events:none;transition:opacity .3s;z-index:900;}
+#toTop.show{opacity:1;pointer-events:auto;}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">BON-03 · Bonus · Razonamiento Analítico</span>
+  <div class="brand">
+    <div class="brand-logo"><svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true"><circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/><circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/><path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/><path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">BONUS · RAZONAMIENTO ANALÍTICO</div>
+  <h1>Razonamiento Analítico</h1>
+  <p class="header-sub">Técnicas y ejercicios resueltos para dominar series, analogías, lógica, interpretación de textos y gráficas: la franja de puntos más recuperable.</p>
+  <div class="badges"><span class="badge">🧠 Aptitud / Razonamiento</span><span class="badge">⏱️ 60–90 min</span><span class="badge">📝 Prueba escrita CNSC</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0"><span class="eyebrow">Sección 1 · Objetivo</span>
+<h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+<p>El <strong>razonamiento analítico</strong> mide tu capacidad de pensar con lógica: hallar patrones, deducir conclusiones, interpretar textos y gráficas y resolver problemas. No se memoriza: se <strong>entrena</strong>. Esta guía bonus te da las técnicas y muchos ejemplos resueltos para ganar puntos seguros.</p>
+<div class="card">
+  <p><strong>Al finalizar esta guía dominarás:</strong></p>
+  <ul>
+    <li>Las <strong>series</strong> numéricas y alfabéticas: cómo detectar el patrón.</li>
+    <li>Las <strong>analogías</strong> y relaciones entre conceptos.</li>
+    <li>El <strong>razonamiento lógico-deductivo</strong> (premisas y conclusiones).</li>
+    <li>La <strong>interpretación de textos</strong>: idea principal, inferencia y propósito.</li>
+    <li>La <strong>lectura de gráficas y tablas</strong> y la <strong>resolución de problemas</strong>.</li>
+    <li>El <strong>ordenamiento lógico</strong> por condiciones.</li>
+  </ul>
+</div>
+<div class="box gold">
+  <div class="box-title">💎 La promesa de esta guía</div>
+  <p>Al terminar tendrás un método para cada tipo de pregunta de razonamiento y habrás practicado con ejemplos resueltos. Es la franja de puntos más recuperable con entrenamiento.</p>
+</div></section>
+<section class="section" data-sec="1"><span class="eyebrow">Sección 2 · Importancia</span>
+<h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+<p>La CNSC incluye <strong>«Razonamiento Analítico»</strong> entre los indicadores a evaluar. A diferencia del contenido temático, aquí no hay que memorizar leyes: se trata de <strong>habilidad</strong>, y la habilidad mejora con práctica y técnica.</p>
+<div class="box info">
+  <div class="box-title">📊 Por qué la entidad te pregunta esto</div>
+  <p>Un profesional analiza información, detecta patrones y toma decisiones lógicas todos los días. El razonamiento analítico predice tu capacidad de resolver problemas nuevos con la información disponible.</p>
+</div>
+<div class="box warn">
+  <div class="box-title">⚠️ Si no dominas este tema</div>
+  <p>Podrías perder puntos fáciles por falta de método: caer en distractores «trampa», confundir correlación con causa, o leer una gráfica al revés. La técnica lo evita.</p>
+</div></section>
+<section class="section" data-sec="2"><span class="eyebrow">Sección 3 · Desarrollo</span>
+<h2 class="sec-title">📖 Técnicas por tipo de pregunta</h2>
+<p>Siete bloques con la técnica, un ejemplo resuelto y el enfoque de prueba.</p>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">1</span><h3>Series numéricas</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Busca la <strong>relación entre términos consecutivos</strong>: suma/resta constante, multiplicación/división, patrón alternado o combinación (p. ej. +2, ×2). Calcula las diferencias; si no son constantes, mira las diferencias de las diferencias o patrones alternos.</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> 3, 6, 12, 24, ? → cada término se multiplica por 2. Respuesta: <strong>48</strong>. Otro: 2, 5, 10, 17, ? → las diferencias son 3, 5, 7 (impares); la siguiente es 9 → 17+9 = <strong>26</strong>.</div>
+  <div class="box gold"><div class="box-title">🎯 En la prueba</div><p>Primero prueba suma/resta; si crece rápido, prueba multiplicación; si es irregular, analiza las diferencias.</p></div>
+</div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">2</span><h3>Series alfabéticas</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Convierte las letras a su <strong>posición</strong> en el alfabeto (A=1, B=2...) y trata la serie como numérica. Cuidado con la ñ (en algunas pruebas se omite; asume alfabeto de 26 salvo indicación).</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> A, C, E, G, ? → posiciones 1, 3, 5, 7 (de dos en dos); la siguiente es 9 = <strong>I</strong>.</div>
+  <div class="box info"><div class="box-title">💡 Idea clave</div><p>Letra → número → patrón → número → letra. Así toda serie alfabética se vuelve numérica.</p></div>
+</div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">3</span><h3>Analogías</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Identifica la <strong>relación</strong> del primer par y aplícala al segundo: parte-todo, causa-efecto, género-especie, función, oposición, grado. Formula la relación en una frase: «X es a Y como…».</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> Médico es a hospital como profesor es a ___ → relación «profesional : lugar donde trabaja». Respuesta: <strong>colegio/escuela</strong>.</div>
+  <div class="box gold"><div class="box-title">🎯 En la prueba</div><p>Verbaliza la relación exacta; si dudas entre dos opciones, elige la que conserve la <strong>misma</strong> relación, no solo el tema.</p></div>
+</div>
+
+<div class="checkpoint"><div class="cp-icon">✅</div><div><strong>Checkpoint 1.</strong> Completa: 4, 9, 16, 25, ? <em>(Respuesta: 36 — son cuadrados perfectos: 2², 3², 4², 5², 6².)</em></div></div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">4</span><h3>Razonamiento lógico-deductivo</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> De unas <strong>premisas</strong> se sigue una <strong>conclusión</strong> necesaria. Distingue lo que <strong>se deduce con certeza</strong> de lo que solo es «posible». Cuidado con generalizar: «algunos» no es «todos».</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> «Todos los servidores públicos deben declarar bienes. Ana es servidora pública.» → Conclusión válida: <strong>Ana debe declarar bienes</strong>. No válido: «solo Ana debe declarar».</div>
+  <div class="acordeon"><details><summary>Trampa lógica común</summary><p>De «Todos los A son B» NO se sigue «Todos los B son A». Ejemplo: «todos los perros son animales» no implica «todos los animales son perros». Cuidado con invertir la premisa.</p></details></div>
+  <div class="box info"><div class="box-title">💡 Idea clave</div><p>Solo es válida la conclusión que se sigue necesariamente de las premisas dadas, sin agregar supuestos.</p></div>
+</div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">5</span><h3>Interpretación de textos</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Identifica la <strong>idea principal</strong> (de qué trata), el <strong>propósito</strong> (para qué se escribió) y las <strong>inferencias</strong> (lo que se deduce sin estar dicho literalmente). No confundas lo que el texto dice con tu opinión.</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> Si un texto explica los pasos de un trámite, su propósito es <strong>informar/instruir</strong>, no persuadir ni entretener. La idea principal es el trámite, no un detalle secundario.</div>
+  <div class="box gold"><div class="box-title">🎯 En la prueba</div><p>Responde solo con lo que está en el texto; descarta opciones «verdaderas en la vida real» pero no sustentadas por el texto.</p></div>
+</div>
+
+<div class="checkpoint"><div class="cp-icon">✅</div><div><strong>Checkpoint 2.</strong> Si «ningún funcionario del área asistió» y «Pedro es funcionario del área», ¿asistió Pedro? <em>(Respuesta: no; se deduce con certeza que Pedro no asistió.)</em></div></div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">6</span><h3>Gráficas, tablas y datos</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Lee primero <strong>título, ejes y unidades</strong>. Distingue <strong>valor absoluto</strong> de <strong>porcentaje</strong> y <strong>tendencia</strong> (sube/baja) de <strong>magnitud</strong>. Cuidado: una correlación no implica causa.</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> Si una gráfica muestra que los casos «crecieron 20%» pero la base era pequeña, el aumento absoluto puede ser bajo. No confundas porcentaje con cantidad.</div>
+  <div class="box info"><div class="box-title">💡 Idea clave</div><p>Ejes y unidades primero; luego, ¿piden absoluto o porcentaje? ¿tendencia o valor puntual?</p></div>
+</div>
+
+<div class="modulo">
+  <div class="modulo-head"><span class="modulo-n">7</span><h3>Ordenamiento lógico por condiciones</h3></div>
+  <div class="def-panel"><strong>Técnica.</strong> Ante enunciados tipo «A está antes que B», «C no es primero», dibuja un <strong>esquema</strong> (línea, tabla) y ubica primero las condiciones <strong>más restrictivas</strong>. Descarta opciones que violen alguna condición.</div>
+  <div class="ejemplo"><strong>Ejemplo resuelto:</strong> «En una fila, Ana va antes que Beto; Carlos va último.» Si hay tres puestos: Carlos = 3º; Ana antes que Beto → Ana 1º, Beto 2º. Orden: <strong>Ana, Beto, Carlos</strong>.</div>
+  <div class="box gold"><div class="box-title">🎯 En la prueba</div><p>Empieza por lo fijo/más restrictivo, dibuja el esquema y elimina opciones que rompan una regla.</p></div>
+</div>
+</section>
+<section class="section" data-sec="3"><span class="eyebrow">Sección 4 · No los confundas</span>
+<h2 class="sec-title">⚖️ Distinciones clave</h2>
+<div class="tabla-wrap"><table>
+  <thead><tr><th>Concepto</th><th>Ojo con...</th></tr></thead>
+  <tbody>
+    <tr><td>Correlación vs causa</td><td>Que dos cosas suban juntas no significa que una cause la otra.</td></tr>
+    <tr><td>Porcentaje vs cantidad</td><td>Un % alto sobre base pequeña puede ser poca cantidad.</td></tr>
+    <tr><td>«Algunos» vs «todos»</td><td>«Algunos» no autoriza conclusiones sobre «todos».</td></tr>
+    <tr><td>Deducción vs opinión</td><td>Responde con lo que se sigue del texto, no con tu criterio externo.</td></tr>
+  </tbody>
+</table></div>
+<div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Invertir una premisa: de «todos los A son B» concluir «todos los B son A». Es inválido.</p></div></section>
+<section class="section" data-sec="4"><span class="eyebrow">Sección 5 · Ejercicios resueltos</span>
+<h2 class="sec-title">📂 Ejercicios tipo prueba resueltos</h2>
+<div class="caso"><div class="caso-head">📂 Ejercicio 1 · Serie</div><div class="caso-body">
+  <p><strong>Serie:</strong> 1, 4, 9, 16, ? </p>
+  <p><strong>Solución:</strong> son cuadrados (1², 2², 3², 4²); el siguiente es 5² = <strong>25</strong>.</p>
+</div></div>
+<div class="caso"><div class="caso-head">📂 Ejercicio 2 · Analogía</div><div class="caso-body">
+  <p><strong>Enunciado:</strong> Pluma es a escribir como tijera es a ___.</p>
+  <p><strong>Solución:</strong> relación «instrumento : acción» → <strong>cortar</strong>.</p>
+</div></div>
+<div class="caso"><div class="caso-head">📂 Ejercicio 3 · Lógica</div><div class="caso-body">
+  <p><strong>Premisas:</strong> «Todos los expedientes revisados tienen sello. Este expediente no tiene sello.»</p>
+  <p><strong>Solución:</strong> se deduce que <strong>este expediente no fue revisado</strong> (contrapositiva válida).</p>
+</div></div>
+<div class="caso"><div class="caso-head">📂 Ejercicio 4 · Gráfica</div><div class="caso-body">
+  <p><strong>Enunciado:</strong> Una barra sube de 50 a 60 casos y otra de 10 a 15.</p>
+  <p><strong>Solución:</strong> la primera creció más en <strong>cantidad</strong> (+10), pero la segunda creció más en <strong>porcentaje</strong> (+50% vs +20%). Distingue qué preguntan.</p>
+</div></div>
+<div class="caso"><div class="caso-head">📂 Ejercicio 5 · Ordenamiento</div><div class="caso-body">
+  <p><strong>Enunciado:</strong> «M va después de N; O va primero.» Tres puestos.</p>
+  <p><strong>Solución:</strong> O=1º; N antes que M → N=2º, M=3º. Orden: <strong>O, N, M</strong>.</p>
+</div></div></section>
+<section class="section" data-sec="5"><span class="eyebrow">Sección 6 · Errores frecuentes</span>
+<h2 class="sec-title">⚠️ Los 5 errores que más cuestan puntos</h2>
+<div class="card"><p><strong>❌ Error 1 · Invertir premisas.</strong> «Todos los A son B» no implica «todos los B son A».</p></div>
+<div class="card"><p><strong>❌ Error 2 · Confundir % con cantidad.</strong> Revisa la base antes de comparar.</p></div>
+<div class="card"><p><strong>❌ Error 3 · Responder con opinión externa.</strong> En interpretación, ciñe la respuesta al texto.</p></div>
+<div class="card"><p><strong>❌ Error 4 · No leer ejes ni unidades.</strong> Muchas trampas de gráficas nacen ahí.</p></div>
+<div class="card"><p><strong>❌ Error 5 · Generalizar desde «algunos».</strong> No concluyas sobre «todos» con premisas parciales.</p></div></section>
+<section class="section" data-sec="6"><span class="eyebrow">Sección 7 · Trucos</span>
+<h2 class="sec-title">💡 Estrategias para ganar puntos</h2>
+<div class="card"><p><strong>✅ Series:</strong> calcula diferencias; si crecen rápido, prueba multiplicación o cuadrados.</p></div>
+<div class="card"><p><strong>✅ Analogías:</strong> verbaliza la relación exacta antes de mirar opciones.</p></div>
+<div class="card"><p><strong>✅ Lógica:</strong> usa la contrapositiva y desconfía de invertir premisas.</p></div>
+<div class="card"><p><strong>✅ Ordenamiento:</strong> dibuja el esquema y empieza por lo más restrictivo.</p></div></section>
+<section class="section" data-sec="7"><span class="eyebrow">Sección 8 · Trampas</span>
+<h2 class="sec-title">🎭 Las trampas más comunes</h2>
+<div class="trampa"><div class="trampa-q">🎭 «Si dos datos suben juntos, uno causa el otro.»</div><div class="trampa-detail"><p>Falso. Correlación no es causalidad.</p></div></div>
+<div class="trampa"><div class="trampa-q">🎭 «El mayor porcentaje siempre es la mayor cantidad.»</div><div class="trampa-detail"><p>Falso. Depende de la base sobre la que se calcula.</p></div></div>
+<div class="trampa"><div class="trampa-q">🎭 «Lo que sé de la vida real vale aunque el texto no lo diga.»</div><div class="trampa-detail"><p>Falso. En interpretación, responde solo con lo sustentado por el texto.</p></div></div>
+<div class="trampa"><div class="trampa-q">🎭 «De ‘algunos’ puedo concluir ‘todos’.»</div><div class="trampa-detail"><p>Falso. Una premisa parcial no autoriza una conclusión universal.</p></div></div></section>
+<section class="section" data-sec="8"><span class="eyebrow">Sección 9 · Repaso</span><h2 class="sec-title">🧠 Repasa con flashcards</h2><p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p><div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div></section>
+<section class="section" data-sec="9"><span class="eyebrow">Sección 10 · Resumen y glosario</span>
+<h2 class="sec-title">📋 Resumen ejecutivo</h2>
+<div class="resumen-grid">
+  <div class="resumen-item"><h4>🔢 Series</h4><p>Analiza diferencias; prueba suma, producto o cuadrados.</p></div>
+  <div class="resumen-item"><h4>🔤 Alfabéticas</h4><p>Letra → número → patrón → letra.</p></div>
+  <div class="resumen-item"><h4>🔗 Analogías</h4><p>Verbaliza la relación exacta y consérvala.</p></div>
+  <div class="resumen-item"><h4>🧠 Lógica</h4><p>Deduce lo necesario; usa la contrapositiva; no inviertas premisas.</p></div>
+  <div class="resumen-item"><h4>📖 Textos</h4><p>Idea principal, propósito e inferencia; ciñe al texto.</p></div>
+  <div class="resumen-item"><h4>📊 Gráficas</h4><p>Ejes y unidades; % vs cantidad; correlación ≠ causa.</p></div>
+</div>
+<h3 class="sec-title" style="font-size:1.1rem;margin-top:22px;">📚 Glosario</h3>
+<div class="glo-item"><strong>Serie:</strong> secuencia que sigue un patrón; hay que hallar la regla.</div>
+<div class="glo-item"><strong>Analogía:</strong> relación entre pares de conceptos que se replica.</div>
+<div class="glo-item"><strong>Deducción:</strong> conclusión que se sigue necesariamente de las premisas.</div>
+<div class="glo-item"><strong>Inferencia:</strong> lo que se deduce de un texto sin estar dicho literalmente.</div>
+<div class="glo-item"><strong>Contrapositiva:</strong> de «si A entonces B» se sigue «si no B, entonces no A».</div>
+<div class="box gold"><div class="box-title">🎯 Frase para recordar</div><p>«Halla el patrón, verbaliza la relación, deduce sin inventar y lee siempre los ejes: el razonamiento se entrena.»</p></div></section>
+<section class="section" data-sec="10"><span class="eyebrow">Sección 11 · Simulacro</span><h2 class="sec-title">🎓 Simulacro tipo CNSC</h2><div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta.</p><div class="dific-tags"><span class="tag b">4 básicas</span><span class="tag i">5 intermedias</span><span class="tag a">3 avanzadas</span></div></div><div id="quiz"></div><div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div><div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div></section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">BON-03 · Razonamiento Analítico (material bonus) · Ascenso Público<br>© Ascenso Público. Material de preparación para concursos de mérito CNSC. No afiliado a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "🎉 ¡Completaste el bonus BON-03!", "alerta": "Entrenaste tu razonamiento analítico. Practica con el simulacro final para consolidar."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[{"f": "¿Cómo se aborda una serie numérica?", "b": "Analizando la relación entre términos: diferencias constantes, multiplicación, cuadrados o patrones alternos."}, {"f": "¿Cómo se resuelve una serie alfabética?", "b": "Convirtiendo las letras a su posición numérica (A=1, B=2...), hallando el patrón y volviendo a letra."}, {"f": "¿Qué hay que identificar en una analogía?", "b": "La relación exacta del primer par (parte-todo, causa-efecto, función...) y replicarla en el segundo."}, {"f": "¿Qué error lógico es invertir una premisa?", "b": "De 'todos los A son B' concluir 'todos los B son A'; es inválido."}, {"f": "¿Qué es la contrapositiva?", "b": "De 'si A entonces B' se sigue 'si no B, entonces no A' (equivalente y válida)."}, {"f": "¿Correlación implica causalidad?", "b": "No; que dos datos varíen juntos no significa que uno cause el otro."}, {"f": "¿Un porcentaje alto siempre es mayor cantidad?", "b": "No; depende de la base sobre la que se calcula."}, {"f": "En interpretación de textos, ¿con qué se responde?", "b": "Solo con lo que sustenta el texto (idea principal, propósito, inferencia), no con opinión externa."}, {"f": "¿Cómo abordar un ordenamiento por condiciones?", "b": "Dibujando un esquema y ubicando primero las condiciones más restrictivas o fijas."}, {"f": "¿Qué se lee primero en una gráfica?", "b": "El título, los ejes y las unidades, antes de interpretar valores."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "basica", "tema": "Series numéricas", "ctx": "Observa el patrón de la secuencia y determina el término que falta.", "q": "¿Qué número continúa la serie 2, 4, 8, 16, ?", "ops": ["32", "24", "20", "18"], "correcta": 0, "expl": ["Correcta: cada término se multiplica por 2, así que 16×2 = 32.", "Incorrecta: 24 no resulta de multiplicar por 2.", "Incorrecta: 20 rompe el patrón de duplicación.", "Incorrecta: 18 no sigue la regla."]}, {"nivel": "basica", "tema": "Series de cuadrados", "ctx": "La secuencia sigue un patrón matemático conocido.", "q": "¿Qué número continúa la serie 1, 4, 9, 16, ?", "ops": ["25", "20", "24", "30"], "correcta": 0, "expl": ["Correcta: son cuadrados (1²,2²,3²,4²); sigue 5² = 25.", "Incorrecta: 20 no es un cuadrado en la secuencia.", "Incorrecta: 24 no es cuadrado perfecto.", "Incorrecta: 30 no corresponde."]}, {"nivel": "basica", "tema": "Series alfabéticas", "ctx": "Convierte las letras a su posición en el alfabeto para hallar el patrón.", "q": "¿Qué letra continúa la serie A, C, E, G, ?", "ops": ["I", "H", "J", "F"], "correcta": 0, "expl": ["Correcta: posiciones 1,3,5,7 (de dos en dos); sigue 9 = I.", "Incorrecta: H es la posición 8, rompe el patrón.", "Incorrecta: J es 10.", "Incorrecta: F es 6."]}, {"nivel": "basica", "tema": "Analogías", "ctx": "Identifica la relación del primer par y complétala.", "q": "Médico es a hospital como profesor es a ___", "ops": ["Colegio", "Libro", "Hospital", "Bata"], "correcta": 0, "expl": ["Correcta: relación 'profesional : lugar donde trabaja'.", "Incorrecta: el libro es un instrumento, no el lugar.", "Incorrecta: el hospital es el lugar del médico, no del profesor.", "Incorrecta: la bata es un objeto, no un lugar."]}, {"nivel": "intermedia", "tema": "Lógica deductiva", "ctx": "Premisas: 'Todos los expedientes revisados tienen sello. Este expediente no tiene sello.'", "q": "¿Qué se deduce con certeza?", "ops": ["Este expediente no fue revisado.", "Este expediente fue revisado sin sello.", "Todos los expedientes tienen sello.", "Algunos expedientes revisados no tienen sello."], "correcta": 0, "expl": ["Correcta: es la contrapositiva válida (sin sello → no revisado).", "Incorrecta: contradice la premisa.", "Incorrecta: no se afirma eso.", "Incorrecta: contradice 'todos los revisados tienen sello'."]}, {"nivel": "intermedia", "tema": "Interpretación de textos", "ctx": "Un texto describe, paso a paso, cómo radicar una solicitud ante una entidad.", "q": "¿Cuál es el propósito principal del texto?", "ops": ["Informar o instruir sobre un procedimiento.", "Persuadir de no radicar la solicitud.", "Entretener con una historia.", "Criticar a la entidad."], "correcta": 0, "expl": ["Correcta: describir pasos tiene propósito informativo/instructivo.", "Incorrecta: no busca persuadir.", "Incorrecta: no es narrativo de entretenimiento.", "Incorrecta: no emite crítica."]}, {"nivel": "intermedia", "tema": "Porcentaje vs cantidad", "ctx": "Un indicador pasó de 10 a 15 casos en la zona A y de 50 a 60 en la zona B.", "q": "¿Qué afirmación es correcta?", "ops": ["La zona A creció más en porcentaje (+50%) y la zona B más en cantidad (+10).", "La zona B creció más en porcentaje y en cantidad.", "Ambas crecieron igual en porcentaje.", "La zona A creció más en cantidad."], "correcta": 0, "expl": ["Correcta: A +50% (5/10) y B +10 casos absolutos.", "Incorrecta: B creció 20%, menos que A en porcentaje.", "Incorrecta: los porcentajes difieren (50% vs 20%).", "Incorrecta: en cantidad creció más B (+10 vs +5)."]}, {"nivel": "intermedia", "tema": "Ordenamiento", "ctx": "En una fila de tres puestos: 'Ana va antes que Beto' y 'Carlos va de último'.", "q": "¿Cuál es el orden correcto?", "ops": ["Ana, Beto, Carlos.", "Beto, Ana, Carlos.", "Carlos, Ana, Beto.", "Ana, Carlos, Beto."], "correcta": 0, "expl": ["Correcta: Carlos 3º; Ana antes que Beto → Ana 1º, Beto 2º.", "Incorrecta: viola 'Ana antes que Beto'.", "Incorrecta: Carlos debe ir último.", "Incorrecta: Carlos debe ir último, no en el medio."]}, {"nivel": "avanzada", "tema": "Lógica: cuantificadores", "ctx": "Premisa: 'Algunos profesionales del área son abogados.'", "q": "¿Qué se puede concluir con certeza?", "ops": ["Que al menos un profesional del área es abogado.", "Que todos los profesionales del área son abogados.", "Que ningún profesional del área es abogado.", "Que todos los abogados son del área."], "correcta": 0, "expl": ["Correcta: 'algunos' garantiza al menos uno.", "Incorrecta: 'algunos' no implica 'todos'.", "Incorrecta: contradice la premisa.", "Incorrecta: invierte indebidamente la relación."]}, {"nivel": "avanzada", "tema": "Series combinadas", "ctx": "La secuencia alterna dos operaciones.", "q": "¿Qué número continúa la serie 3, 6, 5, 10, 9, 18, ?", "ops": ["17", "20", "36", "19"], "correcta": 0, "expl": ["Correcta: el patrón alterna ×2 y −1: 3×2=6, 6−1=5, 5×2=10, 10−1=9, 9×2=18, 18−1=17.", "Incorrecta: 20 no sigue la alternancia.", "Incorrecta: 36 duplicaría de nuevo en vez de restar 1.", "Incorrecta: 19 no corresponde al patrón."]}, {"nivel": "avanzada", "tema": "Correlación y causa", "ctx": "En una región, al aumentar el número de funcionarios de restitución también aumentó el número de sentencias.", "q": "¿Qué conclusión es la más prudente?", "ops": ["Existe una asociación entre ambas variables, pero no puede afirmarse una relación de causa sin más análisis.", "Más funcionarios causan necesariamente más sentencias.", "Las sentencias causan la contratación de funcionarios.", "No hay ninguna relación entre las variables."], "correcta": 0, "expl": ["Correcta: hay correlación, pero correlación no implica causalidad.", "Incorrecta: afirmar causa directa es un salto no justificado.", "Incorrecta: invierte la causa sin sustento.", "Incorrecta: sí hay asociación observada."]}, {"nivel": "avanzada", "tema": "Inferencia textual", "ctx": "Un texto afirma: 'Aunque el trámite es gratuito, muchas víctimas creen que deben pagar intermediarios.'", "q": "¿Qué se infiere correctamente?", "ops": ["Existe desinformación entre las víctimas sobre la gratuidad del trámite.", "El trámite tiene un costo oculto obligatorio.", "Las víctimas deben pagar intermediarios.", "El texto recomienda pagar intermediarios."], "correcta": 0, "expl": ["Correcta: se infiere desinformación (creen que deben pagar, pero es gratuito).", "Incorrecta: el texto dice que es gratuito.", "Incorrecta: contradice la afirmación del texto.", "Incorrecta: el texto no recomienda pagar."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+// Baraja una copia de un arreglo (Fisher-Yates). Se usa para que las
+// opciones A/B/C/D salgan en orden ALEATORIO en cada carga: el estudiante
+// entrena criterio, no la posición de la respuesta (estándar tipo CNSC).
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]); // posición visible (0..3) -> índice original de la opción
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido; // guardamos el ÍNDICE ORIGINAL elegido (el scoring sigue igual)
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+
+/* ==== dinamismo v3 ==== */
+(function(){
+var tb=document.createElement('button');tb.id='toTop';tb.innerHTML='\u2191';tb.setAttribute('aria-label','Volver arriba');document.body.appendChild(tb);
+tb.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+window.addEventListener('scroll',function(){if(window.scrollY>400)tb.classList.add('show');else tb.classList.remove('show');});
+function markReveal(){var sec=document.querySelector('.section.visible');if(!sec)return;var els=sec.querySelectorAll('.modulo,.card,.caso,.trampa,.box,.concepto,.resumen-item,.pregunta,.tabla-wrap,.normativa,.calculo,.flujo,.checkpoint,.practica,.acordeon,.def-panel');els.forEach(function(e){if(!e.classList.contains('reveal')){e.classList.add('reveal');}});var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target);}});},{threshold:0.08});els.forEach(function(e){io.observe(e);});}
+var _os=window.showSec;
+document.addEventListener('click',function(){setTimeout(markReveal,60);},true);
+setTimeout(markReveal,120);
+})();
+</script>
+</body>
+</html>
