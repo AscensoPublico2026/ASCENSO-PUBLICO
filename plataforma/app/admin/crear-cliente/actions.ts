@@ -114,7 +114,7 @@ export async function crearClienteManual(
         nivel,
         estado: "en_preparacion",
         fecha_compra: ahora.toISOString(),
-        
+      })
       .select("id")
       .single();
 
