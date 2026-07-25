@@ -1,0 +1,46 @@
+name: Monitor CNSC
+
+on:
+  schedule:
+    # Corre cada hora de 6am a 10pm (hora Colombia, UTC-5 = UTC 11 a 03)
+    - cron: '0 11-23,0-3 * * *'
+  workflow_dispatch: # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  check-cnsc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: monitor-cnsc/requirements.txt
+
+      - name: Instalar dependencias
+        run: pip install -r monitor-cnsc/requirements.txt
+
+      - name: Restaurar estado previo
+        uses: actions/cache@v4
+        with:
+          path: monitor-cnsc/data/state.json
+          key: cnsc-state-${{ github.run_id }}
+          restore-keys: cnsc-state-
+
+      - name: Ejecutar monitor
+        env:
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        working-directory: monitor-cnsc
+        run: python main.py
+
+      - name: Guardar estado actualizado
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: monitor-cnsc/data/state.json
+          key: cnsc-state-${{ github.run_id }}
