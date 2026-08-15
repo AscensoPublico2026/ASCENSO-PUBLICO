@@ -2,24 +2,39 @@
  * Auto-carga de guías al confirmar pago.
  * 
  * Regla de asignación (basada en biblioteca/biblioteca.json):
- * - Introducción (INTRO-00): Día 1 → siempre
+ * - Introducción (INTRO-00 o INTRO-00-PGN según convocatoria): Día 1 → siempre
  * - Generales (GEN-01, GEN-02, GEN-03): Días 2-4 → siempre
  * - Por Nivel (ASI/TEC/PRO según curso.nivel): Días 5-8 → según nivel
  * - Bonus (BON-01, BON-02): sin día fijo → siempre (sección bonus)
  * - Funcionales (Días 9-20): NO se auto-cargan (admin las sube personalizadas)
  * - Simulacro Final (Día 21): NO se auto-carga (admin la sube personalizada)
- * - INTRO-01 "Conoce tu Entidad": NO se auto-carga (bajo-demanda, admin la crea)
+ * - INTRO-01 "Conoce tu Entidad": NO se auto-carga (bajo-demanda, admin la asigna)
  */
 
 import { SupabaseClient } from "@supabase/supabase-js";
 
+// --- Convocatorias con régimen especial (NO son CNSC) ---
+// Estas convocatorias usan INTRO-00-PGN en vez de INTRO-00.
+// Agregar aquí futuros concursos de régimen especial (Contraloría, Defensoría, etc.)
+const CONVOCATORIAS_PGN = ["procuraduria-2026"];
+
+/** Determina si una convocatoria es de la PGN (régimen especial). */
+function esPGN(convocatoriaId: string | null | undefined): boolean {
+  if (!convocatoriaId) return false;
+  const norm = convocatoriaId.toLowerCase().trim();
+  return CONVOCATORIAS_PGN.includes(norm) || norm.includes("procuraduria");
+}
+
 // Definición de las guías que se auto-cargan según el nivel
-const GUIAS_SIEMPRE = [
-  { codigo: "INTRO-00", dia: 1, titulo: "Presentación del Curso y la CNSC", tipo: "general", orden: 1 },
+const GUIAS_GENERALES = [
   { codigo: "GEN-01", dia: 2, titulo: "Estado y Función Pública", tipo: "general", orden: 2 },
   { codigo: "GEN-02", dia: 3, titulo: "Relación Estado-Ciudadano", tipo: "general", orden: 3 },
   { codigo: "GEN-03", dia: 4, titulo: "Marco Institucional", tipo: "general", orden: 4 },
 ];
+
+// Intro varía según el tipo de concurso
+const INTRO_CNSC = { codigo: "INTRO-00", dia: 1, titulo: "Presentación del Curso y la CNSC", tipo: "general", orden: 1 };
+const INTRO_PGN = { codigo: "INTRO-00-PGN", dia: 1, titulo: "Presentación del Curso y el Concurso de la Procuraduría", tipo: "general", orden: 1 };
 
 const GUIAS_POR_NIVEL: Record<string, Array<{ codigo: string; dia: number; titulo: string; tipo: string; orden: number }>> = {
   asistencial: [
@@ -50,6 +65,7 @@ const GUIAS_BONUS = [
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
   "INTRO-00": "guias/INTRO-00-presentacion-curso.html",
+  "INTRO-00-PGN": "guias/INTRO-00-PGN-presentacion-curso-pgn.html",
   "GEN-01": "guias/GEN-01-estado-funcion-publica.html",
   "GEN-02": "guias/GEN-02-relacion-estado-ciudadano.html",
   "GEN-03": "guias/GEN-03-marco-institucional.html",
@@ -76,18 +92,24 @@ const ARCHIVOS: Record<string, string> = {
  * @param supabase - Cliente con service role (admin)
  * @param cursoId - ID del curso recién creado
  * @param nivel - Nivel del cargo (asistencial | tecnico | profesional)
+ * @param convocatoriaId - ID de la convocatoria (opcional; si es PGN, carga INTRO-00-PGN)
  */
 export async function cargarGuiasAutomaticas(
   supabase: SupabaseClient,
   cursoId: string,
-  nivel: string
+  nivel: string,
+  convocatoriaId?: string | null
 ): Promise<void> {
-  // Normalizar nivel
-  const nivelNorm = (nivel || "").toLowerCase().trim();
+  // Normalizar nivel (quitar tildes para que "técnico" → "tecnico")
+  const nivelNorm = (nivel || "").toLowerCase().trim()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // Elegir la guía de introducción según tipo de concurso
+  const intro = esPGN(convocatoriaId) ? INTRO_PGN : INTRO_CNSC;
 
   // Construir la lista de guías a insertar
   const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
-  const todasLasGuias = [...GUIAS_SIEMPRE, ...guiasNivel, ...GUIAS_BONUS];
+  const todasLasGuias = [intro, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
 
   // Preparar los registros para guias_curso
   const registros = todasLasGuias.map((g) => ({

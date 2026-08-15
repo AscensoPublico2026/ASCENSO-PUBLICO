@@ -97,7 +97,7 @@ export async function GET(req: NextRequest) {
       // 8. Auto-cargar guías
       try {
         const { cargarGuiasAutomaticas } = await import("@/lib/autocargarGuias");
-        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
+        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel, pre.convocatoria_id);
         log.guias = "Auto-cargadas OK";
       } catch (e: any) {
         log.guias = "ERROR: " + e.message;

@@ -101,7 +101,7 @@ export async function procesarReferencia(referencia: string, transactionId?: str
     // Auto-cargar guías (Intro + Generales + Nivel + Bonus) al crear el curso
     if (cursoId && pre.nivel) {
       try {
-        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel);
+        await cargarGuiasAutomaticas(supabase, cursoId, pre.nivel, pre.convocatoria_id);
       } catch (err) {
         console.error("[procesarReferencia] Error en auto-carga de guías:", err);
       }
