@@ -141,7 +141,7 @@ export async function crearClienteManual(
     // Si no había plan previo, cargar las guías base según nivel
     if (!copiadoPlan && nivel) {
       try {
-        await cargarGuiasAutomaticas(supabase, cursoId, nivel);
+        await cargarGuiasAutomaticas(supabase, cursoId, nivel, convocatoria_id);
       } catch (err: any) {
         console.error("[crearClienteManual] Error en auto-carga de guías:", err);
       }
