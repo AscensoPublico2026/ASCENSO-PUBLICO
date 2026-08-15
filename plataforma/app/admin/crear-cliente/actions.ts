@@ -103,6 +103,10 @@ export async function crearClienteManual(
     }
 
     // --- 4. Crear el curso ---
+    // Mismo criterio que el flujo de compra (lib/procesarPago.ts):
+    // el curso queda "en_preparacion" y el cliente lo ve cuando se cumplen las 24h.
+    const ahora = new Date();
+    const deadline = new Date(ahora.getTime() + 24 * 3600 * 1000);
 
     const { data: curso, error: cursoErr } = await supabase
       .from("cursos")
@@ -114,6 +118,7 @@ export async function crearClienteManual(
         nivel,
         estado: "en_preparacion",
         fecha_compra: ahora.toISOString(),
+        preparacion_deadline: deadline.toISOString(),
       })
       .select("id")
       .single();
