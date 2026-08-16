@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-DIS-03 · Registro de Sanciones, Inhabilidades y Antecedentes (SIRI) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#0A2A5E;--azul-medio:#1A4A8A;--azul-claro:#2D6CC0;--azul-suave:#EAF1FB;--azul-borde:#C9DCF4;--oro:#E8A33D;--oro-claro:#F6C56B;--oro-suave:#FDF4E3;--oro-borde:#F0DCB0;--crema:#FBF9F4;--blanco:#FFFFFF;--gris-bg:#F2F0EA;--gris-borde:#E6E2D8;--verde:#1A7A4A;--verde-suave:#E8F6EE;--verde-borde:#BFE6CF;--rojo:#C0392B;--rojo-suave:#FCEDEB;--rojo-borde:#F2CDC8;--ambar:#B8600A;--ambar-suave:#FBEFDD;--ambar-borde:#EFD7B0;--texto:#2A3441;--texto-suave:#5B6675;--sombra:0 4px 20px rgba(10,42,94,0.08);--sombra-lg:0 10px 36px rgba(10,42,94,0.16);--radio:16px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden}header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%)}header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro),var(--oro-claro) 50%,var(--oro))}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2}.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,.4);flex-shrink:0}.brand-name{font-size:1.6rem;font-weight:800;letter-spacing:.01em;line-height:1}.brand-slogan{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.78);margin-top:4px}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:.68rem;font-weight:700;letter-spacing:.16em;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.22);padding:4px 11px;border-radius:7px;text-transform:uppercase}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent)}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:740px;margin:0 auto;position:relative;z-index:2}.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,.82);font-size:.98rem;font-weight:400;line-height:1.6}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;scrollbar-width:thin;box-shadow:0 4px 18px rgba(10,42,94,.22)}nav::-webkit-scrollbar{height:5px}nav::-webkit-scrollbar-thumb{background:var(--oro);border-radius:10px}nav button{background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:.84rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}nav button:hover{background:rgba(255,255,255,.16);color:#fff}nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,.4)}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px}.section{display:none;animation:fade .4s ease}.section.visible{display:block}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px}h3{font-size:1.2rem;color:var(--azul);margin:28px 0 11px;font-weight:700;display:flex;align-items:center;gap:9px}h3 .h3-chip{width:30px;height:30px;border-radius:9px;flex-shrink:0;background:var(--azul-suave);color:var(--azul-claro);display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800}h4{font-size:1.05rem;color:var(--azul-medio);margin:20px 0 8px;font-weight:700}p{margin-bottom:14px;color:var(--texto)}strong{color:var(--azul);font-weight:700}mark{background:none;border-bottom:2px solid var(--oro);color:inherit;font-weight:600;padding-bottom:1px}
+.card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--radio);padding:26px;margin-bottom:20px;box-shadow:var(--sombra)}.card-lead{border:none;border-left:6px solid var(--oro);background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 75%)}
+ul.lista{list-style:none;margin:6px 0 16px}ul.lista li{position:relative;padding-left:30px;margin-bottom:11px}ul.lista li::before{content:'✓';position:absolute;left:0;top:1px;width:20px;height:20px;background:var(--verde-suave);color:var(--verde);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.72rem}
+ol.lista-num{margin:6px 0 16px;list-style:none;counter-reset:paso}ol.lista-num li{position:relative;padding-left:38px;margin-bottom:12px;counter-increment:paso}ol.lista-num li::before{content:counter(paso);position:absolute;left:0;top:0;width:26px;height:26px;background:var(--azul);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid}.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.98rem}.box p:last-child{margin-bottom:0}.box.info{background:var(--azul-suave);border-color:var(--azul-borde)}.box.info .box-title{color:var(--azul)}.box.ok{background:var(--verde-suave);border-color:var(--verde-borde)}.box.ok .box-title{color:var(--verde)}.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde)}.box.warn .box-title{color:var(--ambar)}.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde)}.box.danger .box-title{color:var(--rojo)}.box.gold{background:var(--oro-suave);border-color:var(--oro-borde)}.box.gold .box-title{color:var(--ambar)}
+.tabla-wrap{overflow-x:auto;margin:16px 0;border-radius:13px;box-shadow:var(--sombra);border:1px solid var(--gris-borde)}table{width:100%;border-collapse:collapse;background:var(--blanco);min-width:480px}th{background:var(--azul);color:#fff;padding:14px 16px;text-align:left;font-size:.86rem;font-weight:700}td{padding:12px 16px;border-bottom:1px solid var(--gris-borde);font-size:.9rem;vertical-align:top}tr:last-child td{border-bottom:none}tr:nth-child(even) td{background:#FAF8F2}
+details.acc{border:1px solid var(--gris-borde);border-radius:12px;margin:12px 0;overflow:hidden;box-shadow:var(--sombra)}details.acc summary{background:var(--gris-bg);padding:14px 18px;cursor:pointer;font-weight:700;font-size:.94rem;color:var(--azul);list-style:none;display:flex;align-items:center;gap:8px}details.acc summary::before{content:'▶';font-size:.7rem;transition:transform .2s}details.acc[open] summary::before{transform:rotate(90deg)}details.acc summary::after{content:'👆 Toca para desplegar';margin-left:auto;font-size:.72rem;font-weight:500;color:var(--texto-suave);opacity:.7}details.acc[open] summary::after{content:''}details.acc .acc-body{padding:16px 18px;background:var(--blanco)}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra)}.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;font-size:.94rem;display:flex;align-items:center;gap:8px}.caso-body{padding:18px 20px}.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em}.caso-body .label:first-child{margin-top:0}.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px}
+.trampa{border:1px solid var(--gris-borde);border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:var(--sombra)}.trampa-q{background:linear-gradient(100deg,var(--ambar-suave),var(--blanco));padding:15px 18px;font-weight:600;border-left:5px solid var(--oro)}.trampa-detail{padding:16px 18px;background:var(--blanco)}.trampa-detail .t-row{margin-bottom:10px;padding-left:28px;position:relative}.trampa-detail .t-row:last-child{margin-bottom:0}.trampa-detail .t-row.parece::before{content:'⚠️';position:absolute;left:0}.trampa-detail .t-row.malo::before{content:'❌';position:absolute;left:0}.trampa-detail .t-row.bueno::before{content:'✅';position:absolute;left:0}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra)}.pregunta .q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px}.q-texto{font-weight:600;margin:9px 0 15px;color:var(--texto)}.opciones{display:flex;flex-direction:column;gap:9px}.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff}.opcion:hover{border-color:var(--oro);background:var(--oro-suave)}.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}.opcion.correcta{border-color:var(--verde);background:var(--verde-suave)}.opcion.correcta .letra{background:var(--verde);color:#fff}.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave)}.opcion.incorrecta .letra{background:var(--rojo);color:#fff}.opcion.bloqueada{pointer-events:none}.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:.88rem;display:none}.feedback.show{display:block}.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde)}.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo)}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg)}#resultado.show{display:block}.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;margin-top:16px}.btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg)}.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul)}
+.btn-continuar{display:block;margin:28px auto 0;background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:14px 32px;border-radius:12px;font-family:inherit;font-weight:700;font-size:.94rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,163,61,.3)}.btn-continuar:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg)}
+.resumen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:14px;margin:16px 0}.resumen-item{background:var(--blanco);border:1px solid var(--gris-borde);border-top:4px solid var(--oro);border-radius:13px;padding:17px 19px;box-shadow:var(--sombra)}.resumen-item h4{color:var(--azul);font-size:.98rem;margin-bottom:6px}.resumen-item p{font-size:.86rem;margin:0;color:var(--texto-suave)}
+.cierre{background:linear-gradient(140deg,var(--azul),var(--azul-medio));color:#fff;border-radius:18px;padding:36px 28px;text-align:center;box-shadow:var(--sombra-lg);position:relative;overflow:hidden}.cierre::before{content:'';position:absolute;top:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%)}.cierre h3{color:#fff;font-size:1.45rem;margin:0 0 10px;justify-content:center}.cierre p{color:rgba(255,255,255,.9);position:relative;z-index:2}
+footer{background:var(--azul);color:rgba(255,255,255,.8);text-align:center;padding:28px 20px}footer .fbrand{font-weight:800;color:#fff;font-size:1.05rem}footer .fslogan{font-size:.78rem;margin-top:3px;color:var(--oro-claro)}footer .fmeta{margin-top:14px;font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.7}
+.nav-footer{display:flex;justify-content:space-between;gap:12px;margin-top:30px}.nav-footer button{flex:1;background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:14px;border-radius:12px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.88rem;transition:all .2s}.nav-footer button:hover:not(:disabled){border-color:var(--oro);background:var(--oro-suave)}.nav-footer button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:560px){.card{padding:21px 17px}header{padding:34px 16px 30px}}
+</style>
+</head>
+
+
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-DIS-03</span>
+  <div class="brand"><div class="brand-logo"><svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público"><circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/><circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/><path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/><path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="text-align:left"><div class="brand-name">Ascenso Público</div><div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div></div></div>
+  <div class="kicker">Día 16 · Funcional</div>
+  <h1>Registro de Sanciones, Inhabilidades y Antecedentes (SIRI)</h1>
+  <p class="header-sub">Domina el Sistema de Información de Registro de Sanciones y Causas de Inhabilidad de la Procuraduría: qué se registra, quién lo registra, cuándo se registra y qué efectos tiene. Como Sustanciador, gestionarás información que alimenta este sistema nacional.</p>
+</header>
+
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">📋 Resumen</button>
+  <button data-sec="9">🧪 Simulacro</button>
+</nav>
+
+<main>
+
+<!-- SEC 0 -->
+<section class="section visible" data-sec="0">
+  <div class="eyebrow">Objetivo de la guía</div>
+  <h2 class="sec-title">¿Qué vas a lograr con esta guía?</h2>
+  <div class="card card-lead">
+    <p style="margin-bottom:0">Al finalizar esta guía dominarás el <strong>SIRI</strong> (Sistema de Información de Registro de Sanciones y Causas de Inhabilidad): qué información contiene, cómo se alimenta, quiénes están obligados a reportar, cuándo se registra una sanción, cómo se expide el <mark>certificado de antecedentes</mark>, y qué efectos jurídicos tiene una anotación vigente. Además, conocerás el régimen de <mark>inhabilidades e incompatibilidades</mark> derivadas de sanciones y cómo se controla su cumplimiento.</p>
+  </div>
+  <h3><span class="h3-chip">★</span> Aprenderás a:</h3>
+  <ul class="lista">
+    <li>Explicar qué es el SIRI, su base normativa y su finalidad (<a href="https://www.procuraduria.gov.co/SIRI/Pages/SIRI-introduccion.aspx" target="_blank">Portal SIRI oficial</a>).</li>
+    <li>Identificar los cuatro subsistemas del SIRI: disciplinario, penal, fiscal y pérdida de investidura.</li>
+    <li>Conocer qué sanciones e inhabilidades se registran y quién está obligado a reportar.</li>
+    <li>Determinar cuándo se registra la sanción (ejecutoria del fallo) y cuándo se retira la anotación.</li>
+    <li>Entender el certificado de antecedentes: qué contiene, cómo se expide y para qué sirve.</li>
+    <li>Conocer el régimen de inhabilidades derivadas de sanciones disciplinarias (destitución, suspensión).</li>
+    <li>Comprender tu rol como Sustanciador en la alimentación del SIRI y el control de inhabilidades.</li>
+  </ul>
+  <div class="box info">
+    <div class="box-title">📌 Fuentes normativas</div>
+    <p><strong>Resolución 143 de 2002</strong> (creación del SIRI), mod. por <strong>Resolución 296 de 2004</strong> y normativa posterior. <strong>Ley 1952/2019</strong> arts. 44-46 (inhabilidades por sanción). <strong>Ley 190/1995</strong> art. 1 (declaración de bienes). Consulta: <a href="https://www.procuraduria.gov.co/SIRI/Pages/SIRI-preguntas-frecuentes.aspx" target="_blank">SIRI — Preguntas frecuentes</a> · <a href="https://www.procuraduria.gov.co/pages/certificado-antecedentes.aspx" target="_blank">Certificado de antecedentes</a>.</p>
+  </div>
+  <button class="btn-continuar" onclick="showSection(1)">Continuar →</button>
+</section>
+
+<!-- SEC 1 -->
+<section class="section" data-sec="1">
+  <div class="eyebrow">Importancia del tema</div>
+  <h2 class="sec-title">¿Por qué el SIRI importa para tu cargo?</h2>
+  <p>El SIRI es el sistema que hace <strong>efectivas las sanciones disciplinarias en la vida real</strong>. Sin el SIRI, una persona destituida e inhabilitada podría simplemente presentarse a otro cargo público sin que nadie se entere de su sanción. El SIRI garantiza que las inhabilidades se cumplan: cuando una entidad consulta los antecedentes de un aspirante, el sistema muestra si tiene sanciones vigentes que le impiden acceder al cargo.</p>
+  <p>Como Sustanciador de la PGN, tu relación con el SIRI es directa en dos sentidos: (1) cuando un fallo queda ejecutoriado, la información de la sanción debe <mark>registrarse oportunamente</mark> en el sistema, y (2) cuando recibes una queja contra alguien, puedes <mark>consultar sus antecedentes</mark> en el SIRI para verificar si tiene sanciones previas (lo que es un agravante). Entender cómo funciona el sistema es parte de tu competencia técnica.</p>
+  <div class="box ok">
+    <div class="box-title">✅ Lo que esta guía cambia en ti</div>
+    <p>Pasas de saber que "existe un certificado de antecedentes" a <strong>dominar todo el ciclo</strong>: cómo se genera la información (fallo ejecutoriado), quién la registra (dependencia que falló), qué contiene el registro, cuánto dura la anotación, cuándo se retira y qué pasa si no se registra a tiempo.</p>
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Dato clave — Oportunidad del registro</div>
+    <p>La obligación de registrar la sanción en el SIRI es de la <strong>dependencia que profirió el fallo ejecutoriado</strong>, dentro de los <strong>5 días hábiles</strong> siguientes a la ejecutoria. Un registro tardío puede permitir que una persona inhabilitada acceda a un cargo público antes de que su sanción aparezca en el sistema — generando responsabilidad para el funcionario que omitió el registro oportuno.</p>
+  </div>
+  <button class="btn-continuar" onclick="showSection(2)">Continuar →</button>
+</section>
+
+<!-- SEC 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <div class="eyebrow">Desarrollo temático</div>
+  <h2 class="sec-title">El SIRI: Sistema Nacional de Registro de Sanciones</h2>
+
+  <h3><span class="h3-chip">1</span> ¿Qué es el SIRI?</h3>
+  <h4>Definición y finalidad</h4>
+  <p>El <strong>SIRI</strong> (Sistema de Información de Registro de Sanciones y Causas de Inhabilidad) es la plataforma administrada por la Procuraduría General de la Nación que <mark>centraliza el registro y control de todas las sanciones e inhabilidades</mark> que afectan a personas naturales y jurídicas en Colombia. Fue creado mediante la <strong>Resolución 143 de 2002</strong> del Procurador General y ha sido modificado y fortalecido desde entonces.</p>
+  <p>Su finalidad es doble: por un lado, <strong>garantizar la publicidad</strong> de las sanciones impuestas (para que las entidades públicas puedan verificar los antecedentes antes de vincular a una persona); por otro, <strong>controlar el cumplimiento</strong> de las inhabilidades (impedir que alguien inhabilitado ejerza función pública durante el período de la sanción).</p>
+  <p>El SIRI es la fuente de información que alimenta el <strong>certificado de antecedentes</strong> que cualquier ciudadano puede consultar en la página de la Procuraduría (<a href="https://www.procuraduria.gov.co/pages/certificado-antecedentes.aspx" target="_blank">certificado-antecedentes</a>). Cuando una persona consulta sus antecedentes y aparece "sin anotaciones vigentes", significa que no tiene sanciones activas en el SIRI. Cuando aparece una anotación, hay una sanción vigente que genera inhabilidad.</p>
+
+  <details class="acc">
+    <summary>📜 Los cuatro subsistemas del SIRI</summary>
+    <div class="acc-body">
+      <p>El SIRI se compone de cuatro subsistemas de registro, cada uno alimentado por una fuente diferente de sanciones:</p>
+      <div class="tabla-wrap"><table><thead><tr><th>Subsistema</th><th>¿Qué registra?</th><th>¿Quién reporta?</th></tr></thead><tbody>
+        <tr><td><strong>Disciplinario</strong></td><td>Sanciones disciplinarias (destitución, suspensión, multa, amonestación)</td><td>PGN, oficinas de control interno, personerías</td></tr>
+        <tr><td><strong>Penal</strong></td><td>Condenas penales con pena accesoria de inhabilidad para ejercer función pública</td><td>Jueces penales (a través de la Rama Judicial)</td></tr>
+        <tr><td><strong>Fiscal</strong></td><td>Declaraciones de responsabilidad fiscal (daño al patrimonio público)</td><td>Contraloría General y contralorias territoriales</td></tr>
+        <tr><td><strong>Pérdida de investidura</strong></td><td>Sentencias de pérdida de investidura de congresistas, concejales, diputados</td><td>Consejo de Estado y tribunales administrativos</td></tr>
+      </tbody></table></div>
+      <p>Para tu función como Sustanciador, el subsistema relevante es el <strong>disciplinario</strong>: es el que alimenta tu dependencia cuando un fallo queda ejecutoriado.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta dice "¿qué sistema centraliza el registro de todas las sanciones que generan inhabilidad para ejercer función pública en Colombia?", la respuesta es el <strong>SIRI</strong> (administrado por la PGN). No es el SIGEP (de Función Pública, para hojas de vida), ni el SIMO (de concursos de méritos), ni el SECOP (de contratación).</p>
+  </div>
+
+  <h3><span class="h3-chip">2</span> ¿Qué se registra en el SIRI? (Subsistema disciplinario)</h3>
+  <h4>Contenido del registro por sanción disciplinaria</h4>
+  <p>Cuando un fallo disciplinario sancionatorio queda <mark>ejecutoriado</mark> (en firme — sin recurso pendiente), la dependencia que lo profirió debe registrar en el SIRI la siguiente información:</p>
+  <ul class="lista">
+    <li><strong>Datos del sancionado:</strong> nombre completo, número de identificación, cargo que ocupaba al momento de la falta.</li>
+    <li><strong>Entidad:</strong> donde prestaba servicios el sancionado al momento de cometer la falta.</li>
+    <li><strong>Tipo de sanción:</strong> destitución + inhabilidad, suspensión + inhabilidad, multa, amonestación.</li>
+    <li><strong>Duración de la inhabilidad:</strong> en años y meses (ej.: inhabilidad general de 12 años).</li>
+    <li><strong>Fecha de ejecutoria del fallo:</strong> desde cuándo es exigible la sanción.</li>
+    <li><strong>Fecha de inicio y fin de la inhabilidad:</strong> cómputo exacto de cuándo empieza y cuándo termina la restricción.</li>
+    <li><strong>Calificación de la falta:</strong> gravísima, grave o leve; dolosa o culposa.</li>
+    <li><strong>Número del expediente y dependencia que profirió el fallo.</strong></li>
+  </ul>
+  <p>Esta información permanece en el SIRI <strong>mientras la inhabilidad esté vigente</strong>. Cuando se cumple el período completo de la inhabilidad, la anotación se <mark>retira automáticamente</mark> del certificado de antecedentes visible al público (aunque permanece en los registros internos para efectos estadísticos e históricos).</p>
+
+  <details class="acc">
+    <summary>📋 ¿La amonestación se registra en el SIRI?</summary>
+    <div class="acc-body">
+      <p><strong>Sí</strong>, pero con un efecto diferente. La amonestación escrita se registra en la hoja de vida del servidor y en el SIRI, pero <strong>no genera inhabilidad</strong> para ejercer función pública. Esto significa que aparece como antecedente pero no impide al sancionado acceder a otros cargos públicos. La anotación se mantiene registrada pero no genera restricción funcional. Las sanciones que SÍ generan inhabilidad son: destitución (10-20 años), suspensión (por el mismo período de la suspensión) y en algunos casos la multa (cuando se acompaña de inhabilidad especial).</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta frecuente: "¿Cuándo debe registrarse la sanción en el SIRI?" → <strong>Dentro de los 5 días hábiles siguientes a la ejecutoria del fallo</strong>. No antes (porque antes podría haber recurso pendiente y no está en firme) ni mucho después (porque un registro tardío permite que el sancionado actúe como si no tuviera antecedentes).</p>
+  </div>
+
+  <h3><span class="h3-chip">3</span> Inhabilidades derivadas de sanciones disciplinarias</h3>
+  <h4>Los efectos reales de la sanción en la vida del servidor</h4>
+  <p>La <strong>inhabilidad</strong> es la restricción legal que impide a una persona <mark>ejercer cargos públicos o celebrar contratos con el Estado</mark> durante un período determinado. Es el efecto más tangible y duradero de una sanción disciplinaria, porque se extiende mucho más allá de la destitución o suspensión misma.</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Sanción</th><th>Tipo de inhabilidad</th><th>Duración</th><th>Efectos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Destitución</strong></td><td>Inhabilidad general</td><td>10 a 20 años</td><td>No puede ejercer NINGÚN cargo público ni celebrar contratos con el Estado durante ese período</td></tr>
+        <tr><td><strong>Suspensión</strong></td><td>Inhabilidad especial</td><td>Igual al período de suspensión (1-12 meses)</td><td>No puede ejercer el cargo ni funciones similares durante la suspensión</td></tr>
+        <tr><td><strong>Multa</strong></td><td>Puede ir acompañada de inhabilidad especial</td><td>Variable según el fallo</td><td>Restricción funcional si el fallo la incluye expresamente</td></tr>
+        <tr><td><strong>Amonestación</strong></td><td>Sin inhabilidad</td><td>—</td><td>Solo registro en hoja de vida. No impide ejercer cargos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La inhabilidad empieza a contarse desde la <strong>ejecutoria del fallo</strong> (no desde la fecha de la falta ni desde la notificación). Si la persona estaba ejerciendo el cargo al momento de la ejecutoria, la entidad la <strong>desvincula inmediatamente</strong> y la inhabilidad corre desde ese momento. Si ya no estaba en el cargo (renuncia previa), la inhabilidad corre igual desde la ejecutoria.</p>
+
+  <details class="acc">
+    <summary>⚖️ ¿Puede una persona inhabilitada trabajar en el sector privado?</summary>
+    <div class="acc-body">
+      <p><strong>Sí.</strong> La inhabilidad general restringe el ejercicio de <strong>función pública y contratación con el Estado</strong>, no el trabajo en el sector privado. Una persona destituida e inhabilitada por 15 años puede trabajar en una empresa privada sin restricción (salvo que la empresa tenga contratos con el Estado y la persona sea su representante legal). La inhabilidad no es una "muerte civil" — es una restricción específica frente al sector público.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta plantea: "Una persona fue destituida e inhabilitada por 15 años hace 10 años. Quiere presentarse a un concurso de méritos. ¿Puede?" → <strong>NO</strong>, le faltan 5 años de inhabilidad. La restricción es verificable en el certificado de antecedentes del SIRI. Si la respuesta dice "sí porque ya pasó mucho tiempo", es un distractor.</p>
+  </div>
+
+  <h3><span class="h3-chip">4</span> El certificado de antecedentes</h3>
+  <h4>El documento público que consulta todo el mundo</h4>
+  <p>El <strong>certificado de antecedentes</strong> es el documento público expedido por la Procuraduría (a través del SIRI) que informa si una persona tiene o no anotaciones vigentes por sanciones disciplinarias, penales, fiscales o de pérdida de investidura. Es el instrumento mediante el cual cualquier entidad o ciudadano puede verificar los antecedentes de una persona.</p>
+  <p>Características del certificado:</p>
+  <ul class="lista">
+    <li><strong>Es gratuito</strong> y se consulta en línea: <a href="https://www.procuraduria.gov.co/pages/certificado-antecedentes.aspx" target="_blank">procuraduria.gov.co/pages/certificado-antecedentes</a>.</li>
+    <li><strong>Se expide en tiempo real</strong> con la información actualizada al momento de la consulta.</li>
+    <li><strong>Puede ser consultado por cualquier persona</strong> (con el número de identificación del consultado).</li>
+    <li><strong>Tiene vigencia limitada:</strong> generalmente las entidades requieren que no tenga más de 30 días de expedido.</li>
+    <li><strong>Muestra solo anotaciones VIGENTES:</strong> cuando la inhabilidad se cumple, la anotación desaparece del certificado público.</li>
+  </ul>
+
+  <details class="acc">
+    <summary>🔑 ¿Quién verifica los antecedentes antes de posesionar?</summary>
+    <div class="acc-body">
+      <p>Toda entidad pública está <strong>obligada</strong> a verificar los antecedentes disciplinarios (SIRI) de cualquier persona antes de vincularla al servicio público (nombramiento, posesión, contrato). Si una entidad posesiona a alguien con inhabilidad vigente sin verificar, incurre en falta disciplinaria (celebración indebida de acto administrativo). La verificación es responsabilidad del área de Talento Humano, pero el conocimiento de esta obligación es relevante para el Sustanciador que tramita procesos contra funcionarios posesionados irregularmente.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta tipo: "Una entidad posesiona a un funcionario sin verificar sus antecedentes en el SIRI. Después se descubre que tenía inhabilidad vigente. ¿Qué consecuencias hay?" → La posesión es <strong>irregular</strong>, el acto administrativo de nombramiento puede ser anulado, y los funcionarios de Talento Humano que omitieron la verificación pueden ser investigados disciplinariamente por incumplimiento de deberes.</p>
+  </div>
+
+  <h3><span class="h3-chip">5</span> Rol del Sustanciador en el SIRI</h3>
+  <h4>Tu responsabilidad en el registro y consulta</h4>
+  <p>Como Sustanciador, tu relación con el SIRI se materializa en estas funciones específicas:</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Función</th><th>¿Qué haces?</th><th>¿Cuándo?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Registro de sanción</strong></td><td>Preparar la información del fallo ejecutoriado para su ingreso al SIRI (datos del sancionado, tipo de sanción, duración, fechas)</td><td>Dentro de los 5 días hábiles siguientes a la ejecutoria</td></tr>
+        <tr><td><strong>Consulta de antecedentes</strong></td><td>Verificar en el SIRI si un investigado tiene sanciones previas (es agravante según art. 49 CGD)</td><td>Al evaluar el expediente para calificar la falta o graduar la sanción</td></tr>
+        <tr><td><strong>Control de inhabilidad</strong></td><td>Verificar que la inhabilidad se está cumpliendo (que el sancionado no esté ejerciendo cargo público en el período prohibido)</td><td>Cuando se recibe queja por ejercicio ilegal de cargo durante inhabilidad</td></tr>
+        <tr><td><strong>Retiro de anotación</strong></td><td>Solicitar o gestionar el retiro de la anotación cuando se cumple el período de inhabilidad o cuando un fallo es revocado</td><td>Al cumplirse el término o al ejecutoriarse la revocatoria</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="acc">
+    <summary>⚠️ ¿Qué pasa si no se registra la sanción a tiempo?</summary>
+    <div class="acc-body">
+      <p>Si la sanción no se registra oportunamente en el SIRI (dentro de los 5 días hábiles post-ejecutoria), pueden ocurrir situaciones graves:</p>
+      <ul class="lista">
+        <li>El sancionado puede consultar su certificado y ver "sin anotaciones" → se presenta a otro cargo → lo posesionan → ejerce ilegalmente.</li>
+        <li>La entidad que lo posesionó no cometió falta porque verificó y el sistema no mostraba nada (la falta es de quien no registró).</li>
+        <li>El funcionario responsable del registro tardío puede ser investigado por incumplimiento de deberes (falta grave por negligencia).</li>
+      </ul>
+      <p>Por eso la oportunidad del registro es <strong>crítica</strong> — no es un trámite administrativo menor.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta plantea: "El fallo sancionatorio quedó ejecutoriado hace 15 días pero no se ha registrado en el SIRI. ¿Quién es responsable?", la respuesta es <strong>la dependencia que profirió el fallo</strong> (y dentro de ella, el funcionario encargado del registro — que puede ser el Sustanciador si se le asignó esa función). No es responsabilidad del sancionado ni de la nueva entidad que lo vincule sin saber.</p>
+  </div>
+
+  <h3><span class="h3-chip">6</span> Ejecución de la sanción: del fallo al cumplimiento</h3>
+  <h4>Qué pasa después de que el fallo queda en firme</h4>
+  <p>Cuando un fallo sancionatorio queda ejecutoriado, se activa un conjunto de <mark>actuaciones de ejecución</mark> que el Sustanciador debe impulsar o apoyar:</p>
+  <ol class="lista-num">
+    <li><strong>Comunicar a la entidad empleadora:</strong> si el sancionado está activo en otra entidad, se le comunica el fallo para que proceda a la desvinculación (destitución) o separación temporal (suspensión).</li>
+    <li><strong>Registrar en el SIRI:</strong> ingresar la información de la sanción al sistema dentro de los 5 días hábiles.</li>
+    <li><strong>Comunicar al sancionado:</strong> informarle que el fallo quedó ejecutoriado y que la sanción empieza a ejecutarse.</li>
+    <li><strong>Remitir al cobro (multa):</strong> si la sanción es multa, remitir a la oficina de cobro coactivo para que gestione el pago.</li>
+    <li><strong>Archivar el expediente:</strong> una vez ejecutada la sanción y registrada, el expediente se archiva definitivamente.</li>
+  </ol>
+
+  <details class="acc">
+    <summary>💼 ¿Qué es el cobro coactivo de la multa?</summary>
+    <div class="acc-body">
+      <p>Cuando la sanción es multa y el sancionado no paga voluntariamente, la PGN tiene la facultad de <strong>cobro coactivo</strong>: puede embargar bienes, cuentas bancarias y salarios del sancionado para hacer efectivo el pago. El proceso de cobro lo adelanta la oficina de cobro coactivo de la PGN (no el Sustanciador), pero el Sustanciador remite la información del fallo con el monto y la identificación del sancionado para que se inicie el trámite.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta frecuente: "Un servidor fue sancionado con multa de 60 días de salario pero no paga. ¿Qué procede?" → <strong>Cobro coactivo</strong> (embargo de bienes/cuentas). La multa disciplinaria NO prescribe por no pagarla voluntariamente — la PGN puede cobrarla forzosamente. Si una opción dice "si no paga en 30 días se archiva", es distractor.</p>
+  </div>
+
+  <h3><span class="h3-chip">7</span> Rehabilitación y retiro de antecedentes</h3>
+  <h4>Cuándo "limpia" el certificado</h4>
+  <p>La anotación en el SIRI NO es perpetua: tiene una <mark>duración igual al período de inhabilidad impuesta</mark>. Cuando se cumple ese período, la persona queda "rehabilitada" — es decir, recupera su capacidad para ejercer cargos públicos y celebrar contratos con el Estado. El retiro opera así:</p>
+  <ul class="lista">
+    <li><strong>Automático por cumplimiento del término:</strong> al cumplirse los años/meses de inhabilidad, el sistema debería retirar la anotación del certificado público. En la práctica, puede requerir gestión administrativa.</li>
+    <li><strong>Por revocatoria del fallo:</strong> si la segunda instancia o un juez administrativo revoca el fallo sancionatorio, la anotación se retira inmediatamente sin importar el término.</li>
+    <li><strong>Por nulidad declarada judicialmente:</strong> si un juez contencioso declara nulo el acto sancionatorio, se retira la anotación y se restablecen los derechos.</li>
+  </ul>
+
+  <details class="acc">
+    <summary>🔄 ¿Puede una persona solicitar el retiro anticipado de la anotación?</summary>
+    <div class="acc-body">
+      <p><strong>No mediante simple solicitud.</strong> La anotación se retira cuando se cumple el término o cuando hay decisión judicial/administrativa que ordene retirarla. No existe un mecanismo de "perdón" o "indulto" disciplinario que permita retirar anticipadamente una anotación vigente. La única vía es impugnar el fallo ante la jurisdicción contenciosa administrativa (acción de nulidad y restablecimiento del derecho) y obtener sentencia favorable.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta dice "un sancionado solicita a la PGN que retire su anotación del SIRI porque ya lleva 5 años inhabilitado y 'ha demostrado buena conducta'", la respuesta es <strong>NO procede</strong>. El retiro solo opera por cumplimiento del término completo de la inhabilidad o por decisión judicial. No hay retiro anticipado por buena conducta ni por solicitud directa.</p>
+  </div>
+
+  <h3><span class="h3-chip">8</span> Antecedentes como agravante en nuevo proceso</h3>
+  <h4>El pasado disciplinario SÍ pesa</h4>
+  <p>Cuando un servidor público que ya fue sancionado previamente comete una nueva falta disciplinaria, sus <mark>antecedentes son un agravante</mark> para la graduación de la nueva sanción (art. 49 CGD). Esto significa que si un investigado tiene sanciones anteriores registradas en el SIRI, la nueva sanción puede ser más severa que si fuera la primera vez.</p>
+  <p>El Sustanciador debe <strong>consultar los antecedentes del investigado</strong> en el SIRI como parte de la evaluación del expediente, específicamente en dos momentos:</p>
+  <ol class="lista-num">
+    <li><strong>Al proyectar el pliego de cargos:</strong> para incluir los antecedentes como circunstancia relevante.</li>
+    <li><strong>Al proyectar la propuesta de fallo:</strong> para sugerir la graduación de la sanción considerando la reincidencia como agravante.</li>
+  </ol>
+  <p>Ejemplo: si un servidor tiene un antecedente de suspensión por falta grave y comete una nueva falta grave similar, la sanción para la segunda falta puede ubicarse en el rango superior de la escala (más meses de suspensión) precisamente porque ya fue sancionado antes por conducta similar. La reincidencia evidencia que la primera sanción no logró su finalidad correctiva.</p>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta plantea un investigado con antecedente de sanción previa por falta similar, y pregunta cómo afecta la graduación de la nueva sanción, la respuesta es que los antecedentes son <strong>circunstancia agravante</strong> (art. 49 CGD). La sanción nueva se ubica en el rango superior de la escala. Si una opción dice "los antecedentes no se pueden considerar porque sería doble juzgamiento", es distractor: considerar un antecedente como agravante NO es juzgar dos veces — es graduar proporcionalmente.</p>
+  </div>
+
+  <button class="btn-continuar" onclick="showSection(3)">Continuar →</button>
+</section>
+
+<!-- SEC 3 -->
+<section class="section" data-sec="3">
+  <div class="eyebrow">Comparaciones clave</div>
+  <h2 class="sec-title">Diferencias que generan errores</h2>
+  <h3><span class="h3-chip">A</span> SIRI vs. SIGEP vs. SECOP</h3>
+  <div class="tabla-wrap"><table><thead><tr><th>Sistema</th><th>Administrador</th><th>¿Qué contiene?</th></tr></thead><tbody><tr><td><strong>SIRI</strong></td><td>PGN</td><td>Sanciones e inhabilidades (disciplinarias, penales, fiscales, pérdida investidura)</td></tr><tr><td><strong>SIGEP</strong></td><td>Función Pública</td><td>Hojas de vida, declaración de bienes y rentas de servidores públicos</td></tr><tr><td><strong>SECOP</strong></td><td>Colombia Compra Eficiente</td><td>Contratos estatales (procesos, adjudicaciones, ejecución)</td></tr></tbody></table></div>
+  <h3><span class="h3-chip">B</span> Inhabilidad general vs. especial</h3>
+  <div class="tabla-wrap"><table><thead><tr><th>Criterio</th><th>Inhabilidad general</th><th>Inhabilidad especial</th></tr></thead><tbody><tr><td>Se impone con</td><td>Destitución (falta gravísima + dolo)</td><td>Suspensión (falta grave)</td></tr><tr><td>Duración</td><td>10 a 20 años</td><td>Igual al período de suspensión (1-12 meses)</td></tr><tr><td>Alcance</td><td>NINGÚN cargo público ni contrato estatal</td><td>El cargo o funciones similares</td></tr></tbody></table></div>
+  <h3><span class="h3-chip">C</span> Registro en SIRI vs. Comunicación a la entidad</h3>
+  <div class="tabla-wrap"><table><thead><tr><th>Criterio</th><th>Registro en SIRI</th><th>Comunicación a la entidad empleadora</th></tr></thead><tbody><tr><td>¿Qué es?</td><td>Ingreso de la sanción al sistema nacional de antecedentes</td><td>Informar a la entidad donde trabaja el sancionado para que lo desvincule</td></tr><tr><td>¿Para qué?</td><td>Publicidad y control de inhabilidad a futuro</td><td>Ejecución inmediata de la sanción (destitución/suspensión)</td></tr><tr><td>Plazo</td><td>5 días hábiles post-ejecutoria</td><td>Inmediato tras la ejecutoria</td></tr></tbody></table></div>
+  <button class="btn-continuar" onclick="showSection(4)">Continuar →</button>
+</section>
+
+<!-- SEC 4 -->
+<section class="section" data-sec="4">
+  <div class="eyebrow">Casos aplicados</div>
+  <h2 class="sec-title">Aprende razonando casos reales</h2>
+  <div class="caso"><div class="caso-head">📂 Caso 1 — Registro tardío</div><div class="caso-body"><span class="label">Situación</span>Un fallo de destitución + inhabilidad de 12 años contra un secretario de educación quedó ejecutoriado el 5 de mayo. El Sustanciador encargado del registro en el SIRI se fue de vacaciones el 6 de mayo sin haber hecho el ingreso. Cuando regresa 15 días después, descubre que el sancionado fue nombrado en otra alcaldía el 12 de mayo (porque su certificado aún decía "sin anotaciones").<span class="label">Pregunta</span>¿Quién es responsable de esta situación?<span class="label">Análisis</span>El registro debió hacerse dentro de los 5 días hábiles post-ejecutoria (antes del 12 de mayo). La omisión es del Sustanciador (o de quien debió cubrir su función durante las vacaciones). La nueva alcaldía verificó antecedentes y el sistema no mostraba nada — no incurrió en falta. La responsabilidad es de la dependencia que no registró a tiempo.<div class="resp-correcta"><strong>Respuesta:</strong> La responsabilidad es de la dependencia que profirió el fallo (y del Sustanciador o funcionario encargado del registro que no cumplió el plazo de 5 días). La nueva entidad no incurrió en falta porque verificó correctamente en el sistema disponible.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 2 — Consulta de antecedentes como agravante</div><div class="caso-body"><span class="label">Situación</span>Un Sustanciador proyecta el pliego de cargos contra un servidor por falta grave culposa. Al consultar el SIRI, descubre que este servidor fue sancionado hace 3 años con multa por una falta similar (incumplimiento reiterado de términos).<span class="label">Pregunta</span>¿Cómo afecta este hallazgo la proyección de cargos y la eventual sanción?<span class="label">Análisis</span>Los antecedentes disciplinarios previos son circunstancia agravante (art. 49 CGD). Deben mencionarse en el pliego y considerarse en la graduación de la sanción. No cambian la calificación de la falta (sigue siendo grave culposa) pero sí agravan la dosimetría: la multa o suspensión puede ubicarse en la franja superior del rango.<div class="resp-correcta"><strong>Respuesta:</strong> Los antecedentes se incluyen en el pliego como circunstancia relevante y se consideran como agravante para la graduación de la sanción. No cambian la calificación de la falta pero sí incrementan la severidad dentro del rango.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 3 — Rehabilitación</div><div class="caso-body"><span class="label">Situación</span>Una funcionaria fue destituida e inhabilitada por 10 años el 1 de enero de 2017. En enero de 2027, consulta su certificado de antecedentes y aún aparece la anotación. Reclama que ya cumplió los 10 años.<span class="label">Pregunta</span>¿Tiene razón? ¿Qué debe hacerse?<span class="label">Análisis</span>Si la inhabilidad fue de 10 años desde la ejecutoria (1 enero 2017), efectivamente se cumplió el 1 de enero de 2027. La anotación debe retirarse del certificado público. Si el sistema no lo retiró automáticamente, la funcionaria puede solicitar a la PGN que gestione el retiro administrativo, verificando que efectivamente se cumplió el término completo sin que haya habido suspensión del mismo.<div class="resp-correcta"><strong>Respuesta:</strong> Sí tiene razón. Cumplidos los 10 años, la anotación debe retirarse del certificado público. Si el sistema no lo hizo automáticamente, procede solicitud administrativa de retiro con verificación del término cumplido.</div></div></div>
+  <button class="btn-continuar" onclick="showSection(5)">Continuar →</button>
+</section>
+
+<!-- SEC 5 -->
+<section class="section" data-sec="5">
+  <div class="eyebrow">Errores frecuentes</div>
+  <h2 class="sec-title">Lo que NO debes hacer</h2>
+  <div class="box danger"><div class="box-title">❌ Error 1 — No registrar oportunamente en el SIRI</div><p>El registro debe hacerse dentro de los 5 días hábiles post-ejecutoria. El retraso permite que el sancionado ejerza cargos mientras su inhabilidad no aparece en el sistema.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — Creer que la amonestación genera inhabilidad</div><p>La amonestación se registra pero NO genera inhabilidad. El sancionado con amonestación puede seguir ejerciendo cargos públicos sin restricción.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Ejecutar la sanción ANTES de la ejecutoria</div><p>Hasta que el fallo no quede en firme (sin recurso pendiente), no se puede registrar en SIRI ni comunicar a la entidad para desvinculación. Ejecutar antes es ilegal.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — No consultar antecedentes del investigado</div><p>Los antecedentes son agravante. Omitir la consulta al SIRI al evaluar un expediente puede llevar a una graduación de sanción inadecuada (por defecto).</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — Confundir SIRI con SIGEP o SECOP</div><p>SIRI = sanciones e inhabilidades (PGN). SIGEP = hojas de vida (Función Pública). SECOP = contratos (Colombia Compra). No se mezclan.</p></div>
+  <button class="btn-continuar" onclick="showSection(6)">Continuar →</button>
+</section>
+
+<!-- SEC 6 -->
+<section class="section" data-sec="6">
+  <div class="eyebrow">Tips Ascenso Público</div>
+  <h2 class="sec-title">Recomendaciones para la prueba</h2>
+  <div class="box ok"><div class="box-title">💡 Tip 1 — El SIRI se alimenta DESPUÉS de la ejecutoria</div><p>No antes. Mientras haya recurso pendiente, no hay registro. Si la pregunta dice "registrar en SIRI inmediatamente después del fallo de primera instancia", es incorrecto si aún cabe apelación.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 2 — Destitución = inhabilidad GENERAL (10-20 años)</div><p>Memoriza: destitución siempre va acompañada de inhabilidad general. Suspensión = inhabilidad especial (mismo período). Multa = puede o no tener inhabilidad. Amonestación = nunca inhabilidad.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 3 — Los antecedentes agravan, no duplican</div><p>Considerar un antecedente como agravante NO es doble juzgamiento. Es graduar proporcionalmente la nueva sanción. Si una opción dice "no se pueden considerar antecedentes", es distractor.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 4 — El certificado solo muestra anotaciones VIGENTES</div><p>Si la inhabilidad ya se cumplió, el certificado dice "sin anotaciones". No es que "desapareció": es que ya no está vigente.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 5 — 5 días hábiles para registrar</div><p>Plazo para ingresar la sanción al SIRI. Si la pregunta dice "30 días" o "inmediato", verifique: el estándar normativo son 5 días hábiles post-ejecutoria.</p></div>
+  <button class="btn-continuar" onclick="showSection(7)">Continuar →</button>
+</section>
+
+<!-- SEC 7 -->
+<section class="section" data-sec="7">
+  <div class="eyebrow">Preguntas trampa</div>
+  <h2 class="sec-title">Aprende a detectar distractores</h2>
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 1: "La anotación en el SIRI es perpetua: una vez sancionado, el antecedente aparece para siempre."</div><div class="trampa-detail"><div class="t-row parece"><strong>Parece correcta porque:</strong> suena a que el SIRI es un registro permanente.</div><div class="t-row malo"><strong>Por qué es incorrecta:</strong> la anotación PÚBLICA se retira al cumplirse el período de inhabilidad. El registro interno se mantiene pero no aparece en el certificado de antecedentes.</div><div class="t-row bueno"><strong>Respuesta correcta:</strong> La anotación en el certificado público tiene duración limitada (igual a la inhabilidad). Cumplido el período, se retira y la persona queda "sin anotaciones vigentes".</div></div></div>
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 2: "Si una persona fue sancionada con multa, queda inhabilitada para ejercer cargos públicos por el tiempo de la multa."</div><div class="trampa-detail"><div class="t-row parece"><strong>Parece correcta porque:</strong> la multa es una sanción y debería generar restricción.</div><div class="t-row malo"><strong>Por qué es incorrecta:</strong> la multa por sí sola NO siempre genera inhabilidad. Depende de si el fallo la impuso acompañada de inhabilidad especial o no. La multa simple se paga y no impide ejercer cargos.</div><div class="t-row bueno"><strong>Respuesta correcta:</strong> La multa puede ir o no acompañada de inhabilidad especial según lo determine el fallo. No es automático que toda multa genere inhabilidad.</div></div></div>
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 3: "Si la entidad consultó los antecedentes y el SIRI no mostraba la sanción (por registro tardío), la posesión del inhabilitado es válida."</div><div class="trampa-detail"><div class="t-row parece"><strong>Parece correcta porque:</strong> la entidad verificó y el sistema le dijo que no había anotaciones.</div><div class="t-row malo"><strong>Por qué es incorrecta:</strong> la posesión de una persona inhabilitada es NULA independientemente de si el sistema mostraba o no la anotación. La inhabilidad existe desde la ejecutoria del fallo, no desde el registro en el SIRI. La entidad podría no ser responsable, pero la posesión sigue siendo irregular.</div><div class="t-row bueno"><strong>Respuesta correcta:</strong> La posesión es irregular/nula porque la inhabilidad existía (por ejecutoria del fallo) aunque no se viera en el SIRI. El error de registro no crea derechos para el inhabilitado.</div></div></div>
+  <div class="trampa"><div class="trampa-q">🎭 Trampa 4: "Considerar los antecedentes disciplinarios como agravante para la nueva sanción constituye doble juzgamiento."</div><div class="trampa-detail"><div class="t-row parece"><strong>Parece correcta porque:</strong> se está "castigando de nuevo" por algo que ya fue sancionado.</div><div class="t-row malo"><strong>Por qué es incorrecta:</strong> considerar antecedentes como agravante NO es juzgar de nuevo por la falta anterior. Es GRADUAR la nueva sanción proporcionalmente, considerando que la primera no logró su finalidad correctiva. Son hechos distintos.</div><div class="t-row bueno"><strong>Respuesta correcta:</strong> Los antecedentes como agravante son una herramienta de graduación de la nueva sanción, no un nuevo juzgamiento por la falta antigua. Art. 49 CGD lo autoriza expresamente.</div></div></div>
+  <button class="btn-continuar" onclick="showSection(8)">Continuar →</button>
+</section>
+
+<!-- SEC 8 -->
+<section class="section" data-sec="8">
+  <div class="eyebrow">Resumen ejecutivo</div>
+  <h2 class="sec-title">Repaso rápido</h2>
+  <div class="resumen-grid">
+    <div class="resumen-item"><h4>💻 SIRI</h4><p>Sistema de Registro de Sanciones e Inhabilidades, administrado por la PGN. Cuatro subsistemas: disciplinario, penal, fiscal, pérdida de investidura.</p></div>
+    <div class="resumen-item"><h4>⏱️ Registro</h4><p>5 días hábiles post-ejecutoria del fallo. Responsabilidad de la dependencia que falló.</p></div>
+    <div class="resumen-item"><h4>📄 Certificado</h4><p>Gratuito, en línea, tiempo real. Solo muestra anotaciones VIGENTES.</p></div>
+    <div class="resumen-item"><h4>🚫 Inhabilidad general</h4><p>Destitución: 10-20 años sin poder ejercer ningún cargo público ni contratar con el Estado.</p></div>
+    <div class="resumen-item"><h4>⚖️ Rehabilitación</h4><p>Al cumplirse el período, se retira la anotación. No hay retiro anticipado por solicitud.</p></div>
+    <div class="resumen-item"><h4>📊 Agravante</h4><p>Antecedentes previos en SIRI son agravante para graduar la nueva sanción (art. 49 CGD). No es doble juzgamiento.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">⚡ Frase para recordar</div><p>"El SIRI es la memoria del Estado: registra quién fue sancionado, por cuánto tiempo no puede ejercer función pública, y protege a la sociedad de que alguien inhabilitado vuelva a un cargo sin haber cumplido su sanción."</p></div>
+  <button class="btn-continuar" onclick="showSection(9)">Continuar →</button>
+</section>
+
+<!-- SEC 9: SIMULACRO (10 preguntas) -->
+<section class="section" data-sec="9">
+  <div class="eyebrow">Simulacro de práctica</div>
+  <h2 class="sec-title">Pon a prueba lo aprendido</h2>
+  <p>Responde estas 10 preguntas sobre el SIRI, inhabilidades y antecedentes.</p>
+
+  <div class="pregunta" data-correct="2"><div class="q-num">Pregunta 1</div><p class="q-texto">Un fallo disciplinario de destitución + inhabilidad de 15 años quedó ejecutoriado el lunes 2 de junio. ¿Cuál es el plazo máximo para registrar la sanción en el SIRI?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>El mismo día de la ejecutoria, porque el registro debe ser inmediato para evitar que el sancionado acceda a otro cargo antes de que aparezca en el sistema.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>30 días calendario después de la ejecutoria, que es el plazo estándar para actuaciones administrativas según la Ley 1437 de 2011 (CPACA).</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Dentro de los 5 días hábiles siguientes a la ejecutoria (a más tardar el lunes 9 de junio, sin contar festivos), plazo fijado por la reglamentación del SIRI.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>No tiene plazo fijo: se registra cuando la oficina de sistemas de la PGN procese el lote de fallos ejecutoriados del mes, generalmente al cierre de cada período.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 2</div><p class="q-texto">Un servidor fue sancionado con amonestación escrita por falta leve. ¿Cuál es el efecto de esta sanción respecto de su capacidad para ejercer cargos públicos?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Ninguna restricción: la amonestación se registra en la hoja de vida y en el SIRI pero NO genera inhabilidad. El servidor puede seguir ejerciendo cargos sin limitación.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Queda inhabilitado por 6 meses para ejercer el mismo cargo donde cometió la falta, como medida preventiva mínima por la sanción impuesta.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>No puede aspirar a ascensos durante 1 año después de la ejecutoria del fallo, aunque puede continuar en su cargo actual sin restricción.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>El certificado de antecedentes mostrará la anotación permanentemente, lo que en la práctica funciona como una inhabilidad fáctica frente a otras entidades.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="1"><div class="q-num">Pregunta 3</div><p class="q-texto">Una funcionaria fue destituida e inhabilitada por 12 años en 2015. En 2027, al cumplirse los 12 años, consulta su certificado de antecedentes y aún aparece la anotación. ¿Cuál es la explicación más probable y qué puede hacer?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>La inhabilidad se extendió automáticamente porque durante los 12 años cometió otra falta (que no le fue notificada), lo que reinició el conteo desde cero.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>El sistema no retiró automáticamente la anotación (error administrativo). Puede solicitar a la PGN la actualización/retiro, acreditando que se cumplió el período completo de inhabilidad.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>La inhabilidad por destitución es perpetua y nunca se retira del certificado. La funcionaria deberá vivir con esa anotación el resto de su vida.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Debe interponer acción de tutela contra la PGN por violación a su derecho al trabajo, ya que el plazo de inhabilidad ya se cumplió y la retención de la anotación es arbitraria.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="3"><div class="q-num">Pregunta 4</div><p class="q-texto">Un Sustanciador está evaluando un expediente para proyectar el pliego de cargos. Al consultar el SIRI, descubre que el investigado fue sancionado con suspensión de 3 meses hace 2 años por una falta similar. ¿Cómo debe usar esta información?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>No puede usarla porque la suspensión anterior ya se cumplió y usar antecedentes cumplidos como agravante constituiría doble juzgamiento prohibido por la Constitución.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Debe cambiar la calificación de la falta actual de grave a gravísima, porque la reincidencia automáticamente eleva la clasificación de la conducta en un grado.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Solo puede mencionarla como dato informativo en los antecedentes del pliego, sin que tenga ningún efecto en la graduación de la nueva sanción.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Incluirla en el pliego como circunstancia agravante (art. 49 CGD) que se considerará al momento de graduar la sanción. No cambia la calificación de la falta pero sí puede incrementar la severidad.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="1"><div class="q-num">Pregunta 5</div><p class="q-texto">¿Cuál de los siguientes sistemas NO forma parte del SIRI?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>El subsistema de registro de sanciones penales con pena accesoria de inhabilidad para ejercer función pública, alimentado por los jueces penales.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>El subsistema de registro de contratos estatales celebrados por entidades públicas en todo el territorio nacional (SECOP).</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>El subsistema de registro de declaraciones de responsabilidad fiscal por daño al patrimonio público, alimentado por las contralorías.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>El subsistema de registro de sentencias de pérdida de investidura de congresistas, diputados y concejales.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 6</div><p class="q-texto">Una alcaldía va a posesionar a un nuevo secretario de gobierno. ¿Cuál es la obligación de la entidad respecto de los antecedentes del aspirante?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Verificar el certificado de antecedentes en el SIRI antes de la posesión. Si tiene inhabilidad vigente, no puede posesionarlo. La verificación es obligatoria.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Solicitar al aspirante que presente su certificado de antecedentes, pero no está obligada a verificarlo directamente. La responsabilidad de no tener inhabilidad es del aspirante.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Solo debe verificar si el aspirante tiene antecedentes penales (no disciplinarios), ya que los antecedentes disciplinarios no generan inhabilidad para cargos de libre nombramiento.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>No tiene obligación de verificar antecedentes porque la responsabilidad del SIRI es exclusiva de la PGN y las entidades no tienen acceso al sistema.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="2"><div class="q-num">Pregunta 7</div><p class="q-texto">Un fallo disciplinario sancionatorio de primera instancia fue apelado por el investigado. El recurso está pendiente de resolución por la segunda instancia. ¿Se puede registrar la sanción en el SIRI?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Sí, porque el fallo de primera instancia ya es un acto administrativo que crea derechos y obligaciones desde su expedición, independientemente de los recursos.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Sí, pero con anotación de "en trámite de recurso" para que las entidades sepan que hay una sanción posible aunque no definitiva.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>No, porque el fallo no está ejecutoriado (hay apelación pendiente). Solo se registra en el SIRI cuando el fallo quede EN FIRME, sin recurso pendiente.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>No, pero la dependencia debe registrar provisionalmente una "alerta" en el SIRI para que otras entidades consulten que hay un proceso en curso con posible sanción.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="3"><div class="q-num">Pregunta 8</div><p class="q-texto">Un servidor fue sancionado con multa de 90 días de salario SIN inhabilidad especial. ¿Puede seguir ejerciendo su cargo público?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>No, porque toda sanción disciplinaria genera automáticamente una inhabilidad proporcional para ejercer función pública, así el fallo no la mencione expresamente.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>No, porque la multa superior a 30 días de salario genera inhabilidad automática por el doble del tiempo de la multa según el CGD.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Sí, pero debe cambiar de cargo o de entidad como medida administrativa para evitar conflictos con los compañeros que conocieron su proceso.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Sí, puede seguir en su cargo. La multa sin inhabilidad especial es solo una sanción pecuniaria: se paga y no genera restricción funcional para ejercer empleo público.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 9</div><p class="q-texto">La segunda instancia REVOCA un fallo sancionatorio que ya había sido registrado en el SIRI (porque se registró antes de que se resolviera la apelación — un error). ¿Qué debe hacerse con el registro?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Retirar inmediatamente la anotación del SIRI, ya que la revocatoria deja sin efecto la sanción. El registro nunca debió existir porque el fallo no estaba en firme al momento del ingreso.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Mantener el registro con una nota aclaratoria que diga "revocado en segunda instancia" para efectos de trazabilidad histórica del sistema.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Convertir la anotación de "sanción vigente" a "antecedente histórico" para que no genere inhabilidad pero quede constancia de que hubo un proceso.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Esperar a que la revocatoria quede ejecutoriada (3 días sin recurso de reposición) antes de retirar la anotación, para tener certeza jurídica del retiro.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="2"><div class="q-num">Pregunta 10</div><p class="q-texto">Un ciudadano destituido e inhabilitado por 15 años solicita a la PGN que retire su anotación del SIRI después de 7 años, argumentando "buena conducta" y que ha pagado la multa asociada puntualmente. ¿Procede el retiro anticipado?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Sí, porque la demostración de buena conducta durante más de la mitad del período de inhabilidad activa el beneficio de rehabilitación anticipada previsto en el CGD.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Sí, si presenta un certificado de buena conducta expedido por la policía y una carta de una entidad que certifique que ha desempeñado funciones sin irregularidades.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>No procede. El retiro solo opera por cumplimiento total del término (15 años), por revocatoria del fallo o por sentencia judicial de nulidad. No existe rehabilitación anticipada por buena conducta en el régimen disciplinario.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>No procede por solicitud directa, pero el ciudadano puede pedir al Procurador General un "indulto disciplinario" por vía de gracia, similar al indulto presidencial en materia penal.</span></div></div><div class="feedback"></div></div>
+
+  <div id="resultado"><p style="color:var(--texto-suave);margin-bottom:8px">Tu resultado</p><div class="score-num"><span id="aciertos">0</span>/10</div><p id="msg-resultado"></p><button class="btn gold" onclick="reiniciar()">🔄 Reintentar</button></div>
+  <div class="nav-footer"><button id="btnPrev">← Sección anterior</button><button id="btnNext">Siguiente sección →</button></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">FUN-DIS-03 · Registro de Sanciones, Inhabilidades y Antecedentes (SIRI) · Día 16 · Estándar AP-QA-001 v1.1<br>© Ascenso Público. Material de preparación para el concurso de méritos de la Procuraduría General de la Nación.</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button'),sections=document.querySelectorAll('.section');let current=0;const total=sections.length;
+function showSection(i){current=i;sections.forEach(s=>s.classList.remove('visible'));navBtns.forEach(b=>b.classList.remove('active'));sections[i].classList.add('visible');navBtns[i].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updateFooterBtns()}
+navBtns.forEach((btn,i)=>btn.addEventListener('click',()=>showSection(i)));
+const btnPrev=document.getElementById('btnPrev'),btnNext=document.getElementById('btnNext');
+function updateFooterBtns(){if(btnPrev)btnPrev.disabled=current===0;if(btnNext)btnNext.disabled=current===total-1}
+if(btnPrev)btnPrev.addEventListener('click',()=>{if(current>0)showSection(current-1)});
+if(btnNext)btnNext.addEventListener('click',()=>{if(current<total-1)showSection(current+1)});
+window.addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('readbar').style.width=s+'%'});
+updateFooterBtns();
+const preguntas=document.querySelectorAll('.pregunta');
+const feedbacks={
+0:{ok:'¡Correcto! 5 días hábiles post-ejecutoria es el plazo reglamentario para registrar en el SIRI. No es inmediato (el mismo día) ni 30 días.',no:'Incorrecto. El plazo estándar para registrar la sanción en el SIRI es de 5 días hábiles después de que el fallo quede ejecutoriado.'},
+1:{ok:'¡Correcto! La amonestación se registra pero NO genera inhabilidad. El servidor puede seguir ejerciendo cargos públicos sin restricción funcional.',no:'Incorrecto. La amonestación no genera inhabilidad. Se registra en el SIRI pero no impide ejercer función pública.'},
+2:{ok:'¡Correcto! Probablemente es un error del sistema que no retiró automáticamente. La funcionaria puede solicitar la actualización administrativa acreditando que cumplió los 12 años.',no:'Incorrecto. La inhabilidad tiene duración definida (12 años). Cumplido el período, la anotación debe retirarse. Si no se retiró, es un error administrativo subsanable.'},
+3:{ok:'¡Correcto! Los antecedentes se incluyen como agravante en el pliego (art. 49 CGD). No cambian la calificación de la falta pero sí pueden incrementar la severidad de la sanción dentro del rango.',no:'Incorrecto. Los antecedentes previos son circunstancia agravante legal (art. 49 CGD). Se mencionan en el pliego y se consideran para graduar la sanción. No es doble juzgamiento ni cambia la calificación.'},
+4:{ok:'¡Correcto! El SECOP es el sistema de contratación pública (Colombia Compra Eficiente). No forma parte del SIRI. Los 4 subsistemas del SIRI son: disciplinario, penal, fiscal y pérdida de investidura.',no:'Incorrecto. El SECOP no es parte del SIRI. El SIRI tiene 4 subsistemas: disciplinario, penal, fiscal y pérdida de investidura. El SECOP es el sistema de contratación (diferente función).'},
+5:{ok:'¡Correcto! La entidad está OBLIGADA a verificar antecedentes antes de posesionar. Si hay inhabilidad vigente, no puede vincular. Es responsabilidad institucional, no solo del aspirante.',no:'Incorrecto. La verificación de antecedentes es obligación de la entidad antes de posesionar. El certificado es público y gratuito. No verificar es incumplimiento de deberes.'},
+6:{ok:'¡Correcto! Solo se registra cuando el fallo queda EJECUTORIADO (en firme, sin recurso pendiente). Si hay apelación, el fallo no está en firme y no se puede registrar.',no:'Incorrecto. El registro en SIRI solo procede después de la ejecutoria (fallo en firme). Mientras haya recurso de apelación pendiente, no hay ejecutoria y no se puede registrar.'},
+7:{ok:'¡Correcto! La multa sin inhabilidad especial es solo pecuniaria: se paga y no restringe el ejercicio del cargo. El servidor puede continuar normalmente en su empleo.',no:'Incorrecto. La multa SIN inhabilidad especial no genera restricción funcional. Es solo una sanción económica. El servidor puede seguir ejerciendo su cargo público.'},
+8:{ok:'¡Correcto! La revocatoria deja sin efecto la sanción. La anotación debe retirarse inmediatamente. Además, el registro fue un error porque el fallo no estaba ejecutoriado al momento del ingreso.',no:'Incorrecto. Si la segunda instancia revoca, la sanción deja de existir. La anotación debe retirarse inmediatamente del SIRI. No se mantiene con "nota" ni se convierte en "histórico visible".'},
+9:{ok:'¡Correcto! No existe rehabilitación anticipada por buena conducta en el régimen disciplinario. El retiro solo opera por: cumplimiento total del término, revocatoria del fallo, o nulidad judicial. No hay indulto disciplinario.',no:'Incorrecto. No existe beneficio de retiro anticipado por buena conducta ni indulto disciplinario. La anotación se retira solo al cumplirse el período completo (15 años), por revocatoria o por sentencia judicial de nulidad.'}
+};
+let respondidas=0,aciertos=0;
+preguntas.forEach((preg,idx)=>{const correcta=parseInt(preg.dataset.correct);const opciones=preg.querySelectorAll('.opcion');const fb=preg.querySelector('.feedback');opciones.forEach((op,oi)=>{op.addEventListener('click',()=>{if(op.classList.contains('bloqueada'))return;opciones.forEach(o=>o.classList.add('bloqueada'));if(oi===correcta){op.classList.add('correcta');fb.className='feedback show ok';fb.textContent=feedbacks[idx].ok;aciertos++}else{op.classList.add('incorrecta');opciones[correcta].classList.add('correcta');fb.className='feedback show no';fb.textContent=feedbacks[idx].no}respondidas++;if(respondidas===preguntas.length){document.getElementById('aciertos').textContent=aciertos;const r=document.getElementById('resultado');r.classList.add('show');document.getElementById('msg-resultado').textContent=aciertos>=8?'¡Excelente! Dominas el SIRI y el régimen de inhabilidades.':aciertos>=6?'Bien, pero repasa los módulos donde fallaste.':'Necesitas repasar. Vuelve al desarrollo y estudia el ciclo del SIRI.'}})})});
+function reiniciar(){respondidas=0;aciertos=0;document.getElementById('resultado').classList.remove('show');preguntas.forEach(p=>{p.querySelectorAll('.opcion').forEach(o=>{o.classList.remove('correcta','incorrecta','bloqueada')});p.querySelector('.feedback').className='feedback'})}
+</script>
+</body>
+</html>
