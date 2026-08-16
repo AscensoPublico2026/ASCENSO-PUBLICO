@@ -12,17 +12,17 @@ export const dynamic = "force-dynamic";
 type ModuloDef = { key: string; icon: string; titulo: string; desc: string; intro: string };
 const MODULOS: ModuloDef[] = [
   { key: "introduccion", icon: "🚀", titulo: "Introducción", desc: "Empieza aquí: cómo funciona tu curso y tu entidad.",
-    intro: "Aquí arranca tu preparación. Conocerás cómo funciona la CNSC, cómo aprovechar al máximo el curso y la entidad a la que aspiras, para llegar con contexto al resto del plan." },
+    intro: "Aquí arranca tu preparación. Conocerás cómo funciona el concurso, cómo aprovechar al máximo el curso y la entidad a la que aspiras, para llegar con contexto al resto del plan." },
   { key: "generales", icon: "🏛️", titulo: "Conocimientos Generales", desc: "El Estado, la función pública y el marco institucional.",
-    intro: "En estas guías encontrarás los fundamentos del Estado colombiano: qué es el Estado y la función pública, la relación entre el Estado y el ciudadano, y el marco institucional. Son la base común que la CNSC evalúa en cualquier cargo." },
+    intro: "En estas guías encontrarás los fundamentos del Estado colombiano: qué es el Estado y la función pública, la relación entre el Estado y el ciudadano, y el marco institucional. Son la base común que se evalúa en cualquier concurso de méritos." },
   { key: "nivel", icon: "🎯", titulo: "Competencias por Nivel", desc: "Competencias comportamentales propias de tu nivel.",
-    intro: "Aquí estudiarás las competencias comportamentales propias de tu nivel: cómo se espera que actúes, te relaciones y cumplas en tu cargo. La CNSC las evalúa con casos de juicio situacional." },
+    intro: "Aquí estudiarás las competencias comportamentales propias de tu nivel: cómo se espera que actúes, te relaciones y cumplas en tu cargo. Se evalúan con casos de juicio situacional." },
   { key: "funcional", icon: "🧩", titulo: "Funciones del Cargo", desc: "El conocimiento técnico específico de tu empleo.",
     intro: "El corazón de tu preparación: el conocimiento técnico específico de tu empleo. Dominarás las funciones reales del cargo, sus procedimientos y la normatividad que las rige." },
   { key: "bonus", icon: "🎁", titulo: "Material Bonus", desc: "Contenido extra para reforzar. Opcional, pero recomendado.",
     intro: "Material extra para potenciar tu preparación: estrategia para presentar la prueba y manejo de herramientas ofimáticas. Es opcional, pero te da una ventaja real el día del examen." },
   { key: "simulacro", icon: "📝", titulo: "Simulacro Final", desc: "Pon a prueba todo lo que aprendiste, como en la prueba real.",
-    intro: "La prueba final: integra todo tu plan en preguntas tipo CNSC (juicio situacional). Mide tu nivel real, te muestra las respuestas correctas y te dice qué temas reforzar antes del examen." },
+    intro: "La prueba final: integra todo tu plan en preguntas de juicio situacional. Mide tu nivel real, te muestra las respuestas correctas y te dice qué temas reforzar antes del examen." },
 ];
 
 function moduloKey(g: any): string {
