@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-SUS-02 · Notificaciones, Comunicaciones y Citaciones — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#0A2A5E;--azul-medio:#1A4A8A;--azul-claro:#2D6CC0;--azul-suave:#EAF1FB;--azul-borde:#C9DCF4;--oro:#E8A33D;--oro-claro:#F6C56B;--oro-suave:#FDF4E3;--oro-borde:#F0DCB0;--crema:#FBF9F4;--blanco:#FFFFFF;--gris-bg:#F2F0EA;--gris-borde:#E6E2D8;--verde:#1A7A4A;--verde-suave:#E8F6EE;--verde-borde:#BFE6CF;--rojo:#C0392B;--rojo-suave:#FCEDEB;--rojo-borde:#F2CDC8;--ambar:#B8600A;--ambar-suave:#FBEFDD;--ambar-borde:#EFD7B0;--texto:#2A3441;--texto-suave:#5B6675;--sombra:0 4px 20px rgba(10,42,94,0.08);--sombra-lg:0 10px 36px rgba(10,42,94,0.16);--radio:16px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden}header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%)}header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro),var(--oro-claro) 50%,var(--oro))}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2}.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,.4);flex-shrink:0}.brand-name{font-size:1.6rem;font-weight:800;letter-spacing:.01em;line-height:1}.brand-slogan{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.78);margin-top:4px}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:.68rem;font-weight:700;letter-spacing:.16em;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.22);padding:4px 11px;border-radius:7px;text-transform:uppercase}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent)}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:740px;margin:0 auto;position:relative;z-index:2}.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,.82);font-size:.98rem;font-weight:400;line-height:1.6}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;scrollbar-width:thin;box-shadow:0 4px 18px rgba(10,42,94,.22)}nav::-webkit-scrollbar{height:5px}nav::-webkit-scrollbar-thumb{background:var(--oro);border-radius:10px}nav button{background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:.84rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}nav button:hover{background:rgba(255,255,255,.16);color:#fff}nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,.4)}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px}.section{display:none;animation:fade .4s ease}.section.visible{display:block}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px}h3{font-size:1.2rem;color:var(--azul);margin:28px 0 11px;font-weight:700;display:flex;align-items:center;gap:9px}h3 .h3-chip{width:30px;height:30px;border-radius:9px;flex-shrink:0;background:var(--azul-suave);color:var(--azul-claro);display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800}h4{font-size:1.05rem;color:var(--azul-medio);margin:20px 0 8px;font-weight:700}p{margin-bottom:14px;color:var(--texto)}strong{color:var(--azul);font-weight:700}mark{background:none;border-bottom:2px solid var(--oro);color:inherit;font-weight:600;padding-bottom:1px}
+.card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--radio);padding:26px;margin-bottom:20px;box-shadow:var(--sombra)}.card-lead{border:none;border-left:6px solid var(--oro);background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 75%)}
+ul.lista{list-style:none;margin:6px 0 16px}ul.lista li{position:relative;padding-left:30px;margin-bottom:11px}ul.lista li::before{content:'✓';position:absolute;left:0;top:1px;width:20px;height:20px;background:var(--verde-suave);color:var(--verde);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.72rem}
+ol.lista-num{margin:6px 0 16px;list-style:none;counter-reset:paso}ol.lista-num li{position:relative;padding-left:38px;margin-bottom:12px;counter-increment:paso}ol.lista-num li::before{content:counter(paso);position:absolute;left:0;top:0;width:26px;height:26px;background:var(--azul);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid}.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.98rem}.box p:last-child{margin-bottom:0}.box.info{background:var(--azul-suave);border-color:var(--azul-borde)}.box.info .box-title{color:var(--azul)}.box.ok{background:var(--verde-suave);border-color:var(--verde-borde)}.box.ok .box-title{color:var(--verde)}.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde)}.box.warn .box-title{color:var(--ambar)}.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde)}.box.danger .box-title{color:var(--rojo)}.box.gold{background:var(--oro-suave);border-color:var(--oro-borde)}.box.gold .box-title{color:var(--ambar)}
+.tabla-wrap{overflow-x:auto;margin:16px 0;border-radius:13px;box-shadow:var(--sombra);border:1px solid var(--gris-borde)}table{width:100%;border-collapse:collapse;background:var(--blanco);min-width:480px}th{background:var(--azul);color:#fff;padding:14px 16px;text-align:left;font-size:.86rem;font-weight:700}td{padding:12px 16px;border-bottom:1px solid var(--gris-borde);font-size:.9rem;vertical-align:top}tr:last-child td{border-bottom:none}tr:nth-child(even) td{background:#FAF8F2}
+details.acc{border:1px solid var(--gris-borde);border-radius:12px;margin:12px 0;overflow:hidden;box-shadow:var(--sombra)}details.acc summary{background:var(--gris-bg);padding:14px 18px;cursor:pointer;font-weight:700;font-size:.94rem;color:var(--azul);list-style:none;display:flex;align-items:center;gap:8px}details.acc summary::before{content:'▶';font-size:.7rem;transition:transform .2s}details.acc[open] summary::before{transform:rotate(90deg)}details.acc summary::after{content:'👆 Toca para desplegar';margin-left:auto;font-size:.72rem;font-weight:500;color:var(--texto-suave);opacity:.7}details.acc[open] summary::after{content:''}details.acc .acc-body{padding:16px 18px;background:var(--blanco)}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra)}.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;font-size:.94rem;display:flex;align-items:center;gap:8px}.caso-body{padding:18px 20px}.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em}.caso-body .label:first-child{margin-top:0}.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px}
+.trampa{border:1px solid var(--gris-borde);border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:var(--sombra)}.trampa-q{background:linear-gradient(100deg,var(--ambar-suave),var(--blanco));padding:15px 18px;font-weight:600;border-left:5px solid var(--oro)}.trampa-detail{padding:16px 18px;background:var(--blanco)}.trampa-detail .t-row{margin-bottom:10px;padding-left:28px;position:relative}.trampa-detail .t-row:last-child{margin-bottom:0}.trampa-detail .t-row.parece::before{content:'⚠️';position:absolute;left:0}.trampa-detail .t-row.malo::before{content:'❌';position:absolute;left:0}.trampa-detail .t-row.bueno::before{content:'✅';position:absolute;left:0}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra)}.pregunta .q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px}.q-texto{font-weight:600;margin:9px 0 15px;color:var(--texto)}.opciones{display:flex;flex-direction:column;gap:9px}.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff}.opcion:hover{border-color:var(--oro);background:var(--oro-suave)}.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}.opcion.correcta{border-color:var(--verde);background:var(--verde-suave)}.opcion.correcta .letra{background:var(--verde);color:#fff}.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave)}.opcion.incorrecta .letra{background:var(--rojo);color:#fff}.opcion.bloqueada{pointer-events:none}.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:.88rem;display:none}.feedback.show{display:block}.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde)}.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo)}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg)}#resultado.show{display:block}.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;margin-top:16px}.btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg)}.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul)}
+.btn-continuar{display:block;margin:28px auto 0;background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:14px 32px;border-radius:12px;font-family:inherit;font-weight:700;font-size:.94rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,163,61,.3)}.btn-continuar:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg)}
+.resumen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:14px;margin:16px 0}.resumen-item{background:var(--blanco);border:1px solid var(--gris-borde);border-top:4px solid var(--oro);border-radius:13px;padding:17px 19px;box-shadow:var(--sombra)}.resumen-item h4{color:var(--azul);font-size:.98rem;margin-bottom:6px}.resumen-item p{font-size:.86rem;margin:0;color:var(--texto-suave)}
+.cierre{background:linear-gradient(140deg,var(--azul),var(--azul-medio));color:#fff;border-radius:18px;padding:36px 28px;text-align:center;box-shadow:var(--sombra-lg);position:relative;overflow:hidden}.cierre::before{content:'';position:absolute;top:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%)}.cierre h3{color:#fff;font-size:1.45rem;margin:0 0 10px;justify-content:center}.cierre p{color:rgba(255,255,255,.9);position:relative;z-index:2}
+footer{background:var(--azul);color:rgba(255,255,255,.8);text-align:center;padding:28px 20px}footer .fbrand{font-weight:800;color:#fff;font-size:1.05rem}footer .fslogan{font-size:.78rem;margin-top:3px;color:var(--oro-claro)}footer .fmeta{margin-top:14px;font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.7}
+.nav-footer{display:flex;justify-content:space-between;gap:12px;margin-top:30px}.nav-footer button{flex:1;background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:14px;border-radius:12px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.88rem;transition:all .2s}.nav-footer button:hover:not(:disabled){border-color:var(--oro);background:var(--oro-suave)}.nav-footer button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:560px){.card{padding:21px 17px}header{padding:34px 16px 30px}}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-SUS-02</span>
+  <div class="brand"><div class="brand-logo"><svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público"><circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/><circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/><path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/><path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="text-align:left"><div class="brand-name">Ascenso Público</div><div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div></div></div>
+  <div class="kicker">Día 12 · Funcional</div>
+  <h1>Notificaciones, Comunicaciones y Citaciones</h1>
+  <p class="header-sub">Domina las formas de notificación del proceso disciplinario, los requisitos de validez de cada una, y las consecuencias de una notificación mal practicada. Una de las funciones que más ejecuta el Sustanciador a diario.</p>
+</header>
+
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">📋 Resumen</button>
+  <button data-sec="9">🧪 Simulacro</button>
+</nav>
+
+<main>
+
+<!-- SEC 0 -->
+<section class="section visible" data-sec="0">
+  <div class="eyebrow">Objetivo de la guía</div>
+  <h2 class="sec-title">¿Qué vas a lograr con esta guía?</h2>
+  <div class="card card-lead">
+    <p style="margin-bottom:0">Al finalizar esta guía dominarás las <strong>cinco formas de notificación</strong> del proceso disciplinario (personal, por estado electrónico, en estrados, por edicto y por conducta concluyente), sabrás cuándo usar cada una, qué requisitos de validez exige la ley, y cómo practicar correctamente una <mark>citación</mark> y una <mark>comunicación</mark>. Este es uno de los temas más preguntados en la prueba porque una notificación mal hecha puede generar <strong>nulidad de todo lo actuado</strong>.</p>
+  </div>
+  <h3><span class="h3-chip">★</span> Aprenderás a:</h3>
+  <ul class="lista">
+    <li>Identificar las 5 formas de notificación según la <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1952_2019.html" target="_blank">Ley 1952/2019</a> (mod. Ley 2094/2021).</li>
+    <li>Determinar qué providencias se notifican personalmente y cuáles por estado.</li>
+    <li>Conocer los requisitos de validez de la notificación personal (contenido del acta, entrega de copia, firma).</li>
+    <li>Practicar correctamente la citación al investigado cuando no se logra la notificación personal.</li>
+    <li>Diferenciar entre notificación, comunicación y citación.</li>
+    <li>Entender las consecuencias de una notificación defectuosa (nulidad, indefensión, prescripción).</li>
+    <li>Resolver preguntas situacionales sobre vicios de notificación y sus efectos procesales.</li>
+  </ul>
+  <div class="box info">
+    <div class="box-title">📌 Fuentes normativas</div>
+    <p><strong>Ley 1952/2019</strong> (CGD), Título XII — Notificaciones (arts. 240-253, mod. Ley 2094/2021). Consulta: <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1952_2019_pr006.html" target="_blank">Secretaría Senado, parte 6</a> · <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=90324" target="_blank">Función Pública</a>.</p>
+  </div>
+  <button class="btn-continuar" onclick="showSection(1)">Continuar →</button>
+</section>
+
+<!-- SEC 1 -->
+<section class="section" data-sec="1">
+  <div class="eyebrow">Importancia del tema</div>
+  <h2 class="sec-title">¿Por qué las notificaciones son críticas?</h2>
+  <p>La notificación es el acto mediante el cual se pone en conocimiento del interesado (investigado, quejoso, apoderado) una decisión procesal. Sin notificación válida, la providencia <strong>no produce efectos jurídicos</strong>: no empiezan a correr términos para recursos, el investigado no puede ejercer su defensa, y cualquier actuación posterior puede ser anulada por violación al <mark>debido proceso</mark>.</p>
+  <p>Para un Sustanciador, practicar notificaciones es una función <strong>cotidiana y de alta responsabilidad</strong>. Un error formal (no entregar copia, no indicar recursos, notificar por el medio equivocado) puede generar: nulidad del auto notificado, reapertura de términos, prescripción de la acción disciplinaria y hasta responsabilidad disciplinaria del propio Sustanciador por negligencia.</p>
+  <div class="box ok">
+    <div class="box-title">✅ Lo que esta guía cambia en ti</div>
+    <p>Pasas de saber que "hay que notificar" a <strong>dominar el régimen completo de notificaciones</strong>: qué forma usar según el auto, qué requisitos cumplir, qué hacer cuando el investigado no se deja notificar, y cómo dejar constancia de todo para blindar el expediente.</p>
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Dato clave — Reforma Ley 2094/2021</div>
+    <p>La Ley 2094 de 2021 introdujo la <strong>notificación por estado electrónico</strong> como forma principal de notificación de autos de sustanciación, modernizando el proceso. Antes todo era estado físico (cartelera). Ahora se publica en medios electrónicos institucionales. Este cambio es objeto de preguntas frecuentes.</p>
+  </div>
+  <button class="btn-continuar" onclick="showSection(2)">Continuar →</button>
+</section>
+
+<!-- SEC 2: DESARROLLO -->
+<section class="section" data-sec="2">
+  <div class="eyebrow">Desarrollo temático</div>
+  <h2 class="sec-title">Régimen de Notificaciones del Proceso Disciplinario</h2>
+
+  <h3><span class="h3-chip">1</span> Las cinco formas de notificación</h3>
+  <h4>Panorama general</h4>
+  <p>El Código General Disciplinario (Ley 1952/2019, modificada por Ley 2094/2021) establece <mark>cinco formas de notificación</mark> de las decisiones disciplinarias. Cada una tiene un ámbito de aplicación específico, unos requisitos de validez y unas consecuencias distintas. Es fundamental saber cuál corresponde a cada tipo de providencia porque usar la forma incorrecta invalida la notificación.</p>
+  <p>El sistema de notificaciones del proceso disciplinario se diseñó con un equilibrio entre dos principios en tensión: por un lado, la <strong>celeridad procesal</strong> (que el proceso no se paralice por formalidades excesivas) y por otro, el <strong>debido proceso</strong> (que el investigado conozca efectivamente las decisiones que lo afectan y pueda ejercer su defensa). Por eso las providencias de menor impacto (sustanciación) se notifican de forma más ágil (estado electrónico), mientras que las de mayor impacto (interlocutorios y sentencias) exigen la forma más garantista (personal).</p>
+  <p>Este equilibrio es la <mark>lógica interna</mark> de todo el régimen de notificaciones. Si la entiendes, puedes resolver cualquier pregunta sobre notificaciones simplemente preguntándote: "¿esta decisión afecta derechos del investigado? Si sí → personal. Si no → estado."</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Forma de notificación</th><th>¿Cuándo se usa?</th><th>Término para quedar en firme</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Personal</strong></td><td>Autos interlocutorios y sentencias (que afectan derechos)</td><td>Al día siguiente de la notificación</td></tr>
+        <tr><td>2</td><td><strong>Por estado electrónico</strong></td><td>Autos de sustanciación (trámite)</td><td>Al día siguiente de la fijación del estado</td></tr>
+        <tr><td>3</td><td><strong>En estrados</strong></td><td>Decisiones proferidas en audiencia (juicio oral)</td><td>En el mismo acto de la audiencia</td></tr>
+        <tr><td>4</td><td><strong>Por edicto</strong></td><td>Cuando no se logra la personal (subsidiaria)</td><td>Al día siguiente de la desfijación del edicto</td></tr>
+        <tr><td>5</td><td><strong>Por conducta concluyente</strong></td><td>Cuando el interesado actúa como si conociera la decisión</td><td>Desde que se realiza la actuación que denota conocimiento</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La regla general es simple: <strong>las decisiones que afectan derechos (interlocutorios y sentencias) se notifican personalmente</strong>; las de mero trámite (sustanciación) se notifican por estado electrónico. Si la notificación personal no se logra (porque el investigado no se ubica o no comparece), se pasa subsidiariamente al edicto. La notificación en estrados es exclusiva del procedimiento verbal (audiencias). Y la conducta concluyente opera cuando el investigado, sin haber sido formalmente notificado, actúa ante el proceso demostrando que conoce la decisión (por ejemplo, interpone recurso contra un auto que no le fue notificado).</p>
+
+  <details class="acc">
+    <summary>📜 Base normativa: arts. 240-253 del CGD</summary>
+    <div class="acc-body">
+      <p>El Título XII de la Ley 1952/2019 (artículos 240 a 253, varios modificados por la Ley 2094/2021) regula íntegramente el régimen de notificaciones del proceso disciplinario. Los artículos clave son:</p>
+      <ul class="lista">
+        <li><strong>Art. 240:</strong> Providencias que se notifican personalmente.</li>
+        <li><strong>Art. 241:</strong> Citaciones para notificación personal.</li>
+        <li><strong>Art. 243:</strong> Notificación por estado (electrónico tras Ley 2094).</li>
+        <li><strong>Art. 244:</strong> Notificación en estrados (audiencias).</li>
+        <li><strong>Art. 246:</strong> Notificación por edicto (subsidiaria).</li>
+        <li><strong>Art. 247:</strong> Notificación por conducta concluyente.</li>
+      </ul>
+      <p>Fuente: <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1952_2019_pr006.html" target="_blank">Ley 1952/2019, parte 6 — Secretaría Senado</a>.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta frecuente: "¿Cómo se notifica el auto de formulación de cargos?" → <strong>Personalmente</strong> (es auto interlocutorio que afecta derechos de defensa). Si una opción dice "por estado porque ya se notificó personalmente la apertura de investigación", es un distractor: CADA auto interlocutorio se notifica personalmente, no solo el primero.</p>
+  </div>
+
+  <h3><span class="h3-chip">2</span> Notificación personal</h3>
+  <h4>La forma principal para decisiones de fondo</h4>
+  <p>La <strong>notificación personal</strong> es la forma más garantista: implica poner en conocimiento del interesado la decisión directamente, asegurando que realmente la conozca. Se usa para todos los <mark>autos interlocutorios y sentencias</mark> porque estas providencias afectan derechos y generan cargas procesales (términos para recursos, obligaciones de hacer, etc.).</p>
+  <p>La notificación personal se puede practicar de varias maneras según las circunstancias:</p>
+  <ul class="lista">
+    <li><strong>En el despacho:</strong> el investigado o su apoderado acude a la dependencia, se le lee o entrega copia de la providencia, se le informa de los recursos y firma el acta.</li>
+    <li><strong>En dirección registrada:</strong> un funcionario (citador o Sustanciador comisionado) se desplaza al domicilio o lugar de trabajo del investigado para entregarle la providencia.</li>
+    <li><strong>Por medios electrónicos:</strong> la Ley 2094/2021 permite la notificación personal a la dirección electrónica registrada por el investigado, con acuse de recibo.</li>
+  </ul>
+
+  <h4>Requisitos de validez de la notificación personal</h4>
+  <p>Para que la notificación personal sea válida y surta efectos, debe cumplir <mark>todos</mark> estos requisitos:</p>
+  <ol class="lista-num">
+    <li><strong>Entregar copia íntegra</strong> de la providencia al notificado (no un resumen, no un extracto — la copia completa).</li>
+    <li><strong>Informar los recursos</strong> que proceden contra la decisión y el término para interponerlos.</li>
+    <li><strong>Dejar constancia escrita</strong> (acta) con: fecha de notificación, nombre del notificado, firma del notificado, firma del funcionario que practica la diligencia.</li>
+    <li><strong>Registrar en el SIM</strong> la fecha efectiva de notificación (a partir de la cual corren los términos).</li>
+  </ol>
+
+  <details class="acc">
+    <summary>💼 Ejemplo: Notificación personal en el despacho</summary>
+    <div class="acc-body">
+      <p>El investigado (un secretario municipal) acude a la Procuraduría Provincial citado para notificación del auto de apertura de investigación. El Sustanciador:</p>
+      <ol class="lista-num">
+        <li>Verifica la identidad del compareciente (cédula).</li>
+        <li>Le entrega copia completa del auto de apertura de investigación.</li>
+        <li>Le informa verbalmente y por escrito que contra el auto procede recurso de reposición y en subsidio apelación, en el término de 10 días siguientes a la notificación.</li>
+        <li>Elabora el acta de notificación personal: fecha, hora, nombre del notificado, nombre del Sustanciador, providencia notificada, recursos informados.</li>
+        <li>Ambos firman el acta. Si el investigado se niega a firmar, el Sustanciador deja constancia con un testigo.</li>
+        <li>Registra la notificación en el SIM con la fecha de hoy.</li>
+      </ol>
+      <p>A partir del día siguiente empiezan a correr los 10 días para interponer recursos.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta plantea una notificación personal donde no se le informó al investigado qué recursos proceden, la respuesta correcta es que la notificación tiene un <strong>vicio que puede generar nulidad</strong> o, como mínimo, que los términos para recurrir no empiezan a correr hasta que se subsane. Informar los recursos es requisito de validez, no un formalismo opcional.</p>
+  </div>
+
+  <h3><span class="h3-chip">3</span> Notificación por estado electrónico</h3>
+  <h4>Para autos de sustanciación (trámite)</h4>
+  <p>La <strong>notificación por estado electrónico</strong> es la forma de notificación para los autos de sustanciación (los que solo impulsan el proceso sin decidir de fondo). Tras la reforma de la Ley 2094/2021, se pasó del estado físico (cartelera en el despacho) al <mark>estado electrónico</mark> (publicación en medios institucionales).</p>
+  <p>Características del estado electrónico:</p>
+  <ul class="lista">
+    <li>Se publica en la <strong>página web institucional</strong> o en el sistema de información de la PGN por un día.</li>
+    <li>Contiene: número de expediente, nombre del investigado (o iniciales si hay reserva), número del auto, fecha del auto y una breve síntesis de lo decidido.</li>
+    <li>La notificación se entiende surtida al <strong>día siguiente de la fijación</strong> del estado.</li>
+    <li>No requiere entrega de copia ni firma del notificado (es unilateral).</li>
+    <li>El Sustanciador debe <strong>dejar constancia</strong> de la fijación del estado: fecha de publicación, medio utilizado, contenido publicado.</li>
+  </ul>
+
+  <details class="acc">
+    <summary>🖥️ ¿Qué pasa si el sistema electrónico falla el día de la fijación?</summary>
+    <div class="acc-body">
+      <p>Si el medio electrónico no está disponible, se puede fijar el estado en la <strong>cartelera física</strong> del despacho como mecanismo subsidiario. Se deja constancia de la indisponibilidad del medio electrónico y se fija por el día completo en formato físico. La notificación se entiende surtida al día siguiente de la fijación física. Esto es análogo a lo que viste en FUN-MP-01 sobre las fallas del SIM: la actuación procesal no se detiene por problemas tecnológicos.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta clave: "¿Se notifican los autos de sustanciación de forma personal?" → <strong>NO</strong>. Se notifican por estado electrónico. Si una opción dice "todo auto debe notificarse personalmente para garantizar el debido proceso", es un distractor. Solo los interlocutorios y sentencias requieren notificación personal.</p>
+  </div>
+
+  <h3><span class="h3-chip">4</span> Notificación en estrados y por conducta concluyente</h3>
+  <h4>Formas especiales</h4>
+  <p>La <strong>notificación en estrados</strong> se practica cuando la decisión se profiere en el curso de una <mark>audiencia</mark> (procedimiento verbal). Al dictarse la providencia en presencia de las partes, se entiende notificada en ese mismo acto. Los recursos se interponen verbalmente en la misma audiencia o en el término que señale el juez disciplinario.</p>
+  <p>La <strong>notificación por conducta concluyente</strong> opera cuando el interesado, sin haber sido formalmente notificado, demuestra con sus actos que <em>conoce</em> la decisión. Ejemplo clásico: el investigado interpone recurso de reposición contra un auto que nunca le fue notificado personalmente. Al recurrir, está demostrando que lo conoce — y la notificación se entiende surtida desde que realizó esa actuación. Esta forma sana los defectos de notificación sin necesidad de repetir el trámite.</p>
+
+  <details class="acc">
+    <summary>⚖️ ¿Cuándo opera la conducta concluyente en la práctica?</summary>
+    <div class="acc-body">
+      <p>Casos típicos de conducta concluyente:</p>
+      <ul class="lista">
+        <li>El investigado interpone recurso contra un auto no notificado formalmente → se notificó por conducta concluyente.</li>
+        <li>El apoderado retira copia del expediente y luego alega que no conocía la decisión → conducta concluyente desvirtúa su argumento.</li>
+        <li>El investigado se refiere expresamente a la providencia en un memorial → demuestra conocimiento.</li>
+      </ul>
+      <p>Lo importante: la conducta concluyente NO la "declara" el Sustanciador por su cuenta. Se deja constancia en el expediente y se informa al superior para que la providencia de reconocimiento de la notificación sea respaldada por un auto de sustanciación que así lo declare.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta plantea un investigado que interpone recurso contra un auto que nunca le fue notificado, la respuesta NO es "declarar inadmisible el recurso por falta de notificación". La respuesta correcta es reconocer la <strong>notificación por conducta concluyente</strong> y tramitar el recurso normalmente, pues el investigado demostró conocimiento de la decisión.</p>
+  </div>
+
+  <h3><span class="h3-chip">5</span> Notificación por edicto (subsidiaria)</h3>
+  <h4>Cuando no se logra la personal</h4>
+  <p>La <strong>notificación por edicto</strong> es el mecanismo subsidiario que se utiliza cuando <mark>no se logra la notificación personal</mark> del investigado: no se ubica en la dirección registrada, no comparece al despacho a pesar de la citación, o no se conoce su paradero. Es la última alternativa antes de que el proceso se paralice por imposibilidad de notificar.</p>
+  <p>El procedimiento del edicto es riguroso y sigue estos pasos:</p>
+  <ol class="lista-num">
+    <li><strong>Agotar la citación:</strong> enviar citación a la última dirección conocida (física y electrónica). Si no comparece en 5 días hábiles, se agota la vía personal.</li>
+    <li><strong>Fijar el edicto:</strong> se fija en un lugar visible del despacho y/o en medio electrónico institucional por un término de <strong>10 días</strong>.</li>
+    <li><strong>Contenido del edicto:</strong> número del expediente, nombre del investigado, providencia que se notifica, fecha del auto, recursos que proceden.</li>
+    <li><strong>Desfijación:</strong> al cumplirse los 10 días, se desfija y se deja constancia con fecha y hora.</li>
+    <li><strong>Efecto:</strong> la notificación se entiende surtida al <strong>día siguiente de la desfijación</strong>. A partir de ahí corren los términos para recursos.</li>
+  </ol>
+
+  <details class="acc">
+    <summary>⚠️ ¿Qué pasa si no se agotó la citación antes del edicto?</summary>
+    <div class="acc-body">
+      <p>Si se fija el edicto <strong>sin haber agotado previamente la citación</strong> (sin haber intentado la notificación personal enviando la citación a la dirección conocida), la notificación por edicto es <strong>nula</strong>. El edicto es subsidiario: solo procede cuando la personal fracasó. Si se omitió el paso previo, todo lo actuado con base en esa "notificación" puede anularse por violación al debido proceso. Esta es una pregunta clásica de la prueba.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta frecuente: "El Sustanciador no logra ubicar al investigado en la dirección. ¿Puede fijar edicto inmediatamente?" → <strong>NO</strong>. Primero debe enviar la citación formal (al domicilio y/o correo electrónico registrado). Solo si pasan los días sin comparecencia, se procede al edicto. Edicto sin citación previa = nulidad.</p>
+  </div>
+
+  <h3><span class="h3-chip">6</span> La citación: puerta de entrada a la notificación personal</h3>
+  <h4>¿Qué es y cómo se practica?</h4>
+  <p>La <strong>citación</strong> es el acto mediante el cual se convoca al investigado (o a su apoderado) para que comparezca al despacho a recibir la notificación personal de una providencia. No es la notificación en sí — es el <mark>medio para lograr la notificación personal</mark>. Si el citado comparece, se practica la notificación personal. Si no comparece dentro del término, se procede al edicto.</p>
+  <p>Requisitos de la citación:</p>
+  <ul class="lista">
+    <li><strong>Contenido mínimo:</strong> identificación de la dependencia, número del expediente, nombre del citado, providencia que se va a notificar (sin revelar el contenido de fondo), plazo para comparecer.</li>
+    <li><strong>Dirección:</strong> se envía a la <strong>última dirección conocida</strong> del investigado (registrada en el expediente o en la queja).</li>
+    <li><strong>Medios:</strong> correo físico certificado, correo electrónico (si hay dirección electrónica registrada), o ambos.</li>
+    <li><strong>Constancia:</strong> el Sustanciador deja constancia de la fecha de envío, el medio utilizado y la dirección a la que se envió.</li>
+    <li><strong>Término para comparecer:</strong> generalmente 5 días hábiles desde el recibo de la citación.</li>
+  </ul>
+
+  <details class="acc">
+    <summary>📬 ¿Y si la citación es devuelta por "dirección inexistente"?</summary>
+    <div class="acc-body">
+      <p>Si la citación es devuelta porque la dirección no existe o el destinatario no reside allí, el Sustanciador debe:</p>
+      <ol class="lista-num">
+        <li>Dejar constancia de la devolución en el expediente (con la evidencia del correo devuelto).</li>
+        <li>Verificar si existe otra dirección en bases de datos institucionales (Registraduría, SISBEN, última entidad empleadora).</li>
+        <li>Si encuentra nueva dirección, enviar nueva citación.</li>
+        <li>Si no encuentra otra dirección, dejar constancia de agotamiento de la citación y proceder al edicto.</li>
+      </ol>
+      <p>La clave es demostrar que se hizo un <strong>esfuerzo razonable</strong> por ubicar al investigado antes de recurrir al edicto. Si un juez revisa después, debe ver que el despacho intentó genuinamente la notificación personal.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>La pregunta sobre citaciones suele plantear si basta enviarla por UN solo medio o si se requieren varios. La respuesta depende de lo que esté registrado en el expediente: si hay dirección física Y electrónica, se envía por AMBOS medios para maximizar la posibilidad de contacto. Si solo hay una dirección, basta con esa. Lo inadmisible es no enviar citación alguna y pasar directamente al edicto.</p>
+  </div>
+
+  <h3><span class="h3-chip">7</span> Comunicaciones vs. Notificaciones</h3>
+  <h4>No son lo mismo</h4>
+  <p>Es fundamental distinguir entre <strong>notificación</strong> y <strong>comunicación</strong> en el proceso disciplinario. Aunque ambas "informan" algo a alguien, tienen naturaleza y efectos jurídicos muy diferentes. Esta distinción es una de las más preguntadas en la prueba porque muchos aspirantes la confunden y terminan "notificando" a quien solo debe "comunicársele", o viceversa.</p>
+  <p>La <strong>notificación</strong> es un acto procesal formal que hace exigible una providencia frente a las partes del proceso: el investigado y su apoderado. Sin notificación válida, la decisión existe pero no puede hacerse cumplir (no corren términos, no se puede ejecutar la sanción, no se cierra la etapa). La <strong>comunicación</strong>, en cambio, es una simple información que se transmite a terceros interesados (quejoso, entidad del investigado, otras autoridades) sin generar cargas procesales ni derechos recursivos.</p>
+  <p>En la práctica diaria del Sustanciador, esto se traduce en documentos distintos: la notificación requiere acta formal, entrega de copia, información de recursos y registro en el SIM. La comunicación se hace por oficio simple informando la decisión sin requisitos especiales.</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Criterio</th><th>Notificación</th><th>Comunicación</th></tr></thead>
+      <tbody>
+        <tr><td><strong>¿Qué informa?</strong></td><td>Una providencia (auto o sentencia) a las PARTES del proceso</td><td>Una decisión, hecho o situación a TERCEROS o al quejoso</td></tr>
+        <tr><td><strong>Efecto jurídico</strong></td><td>Hace exigible la providencia y da inicio a términos procesales</td><td>Informa; no genera términos para recursos procesales</td></tr>
+        <tr><td><strong>Forma</strong></td><td>Personal, estado, estrados, edicto, conducta concluyente</td><td>Oficio, correo electrónico o cualquier medio idóneo</td></tr>
+        <tr><td><strong>¿A quién?</strong></td><td>Al investigado, su apoderado, al Ministerio Público (si no es PGN quien adelanta)</td><td>Al quejoso, a la entidad del investigado, a otras autoridades</td></tr>
+        <tr><td><strong>Ejemplo</strong></td><td>Notificar personalmente el auto de apertura al investigado</td><td>Comunicar al quejoso que se archivó la queja</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Un error frecuente del Sustanciador novato es "notificar" al quejoso como si fuera parte procesal. El quejoso NO es parte del proceso disciplinario (salvo excepciones). A él se le <strong>comunica</strong> la decisión (por oficio), pero no se le "notifica" en sentido procesal ni tiene derecho a interponer recursos contra las decisiones disciplinarias.</p>
+
+  <details class="acc">
+    <summary>🔑 ¿El quejoso puede recurrir la decisión de archivo?</summary>
+    <div class="acc-body">
+      <p>La Ley 2094/2021 amplió los derechos del quejoso. En el procedimiento verbal, el quejoso puede ser reconocido como <strong>interviniente especial</strong> con derecho a aportar pruebas e impugnar ciertas decisiones (como el archivo). Sin embargo, esto opera solo cuando ha sido reconocido expresamente como interviniente mediante auto. Si no ha sido reconocido, se le comunica la decisión pero no puede recurrir. La distinción es sutil y frecuente en la prueba.</p>
+    </div>
+  </details>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Si la pregunta dice "al quejoso se le debe notificar personalmente el auto de apertura de investigación", la respuesta es <strong>FALSA</strong>. Al quejoso se le COMUNICA (oficio informándole que se abrió investigación). La notificación personal es para el INVESTIGADO. Confundir comunicación con notificación es un error clásico que la prueba explota.</p>
+  </div>
+
+  <h3><span class="h3-chip">8</span> Consecuencias de una notificación defectuosa</h3>
+  <h4>Lo que pasa cuando sale mal</h4>
+  <p>Una notificación practicada sin cumplir los requisitos legales genera consecuencias procesales graves que pueden afectar irreversiblemente el expediente. Como Sustanciador, debes conocerlas para <mark>prevenir errores</mark> en tu práctica diaria. La responsabilidad de practicar correctamente las notificaciones es del funcionario que las ejecuta — en muchos casos, tú. Un vicio de notificación detectado meses después puede obligar a retrotraer el proceso hasta ese punto, perdiendo todo el avance logrado y poniendo en riesgo la prescripción de la acción disciplinaria.</p>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Vicio</th><th>Consecuencia</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>No notificar en absoluto</td><td><strong>Nulidad</strong> de todo lo actuado después del auto no notificado</td><td>Se profirió fallo sin haber notificado los cargos</td></tr>
+        <tr><td>Notificar por medio equivocado</td><td>Notificación <strong>ineficaz</strong>; términos no empiezan a correr</td><td>Notificar por estado un auto interlocutorio (que requiere personal)</td></tr>
+        <tr><td>No informar recursos</td><td>Los <strong>términos para recurrir no corren</strong> hasta que se informe</td><td>Se notificó el auto pero no se dijo qué recursos proceden</td></tr>
+        <tr><td>No entregar copia de la providencia</td><td>Notificación <strong>incompleta</strong>; puede alegarse indefensión</td><td>Se le informó verbalmente pero no se le dio copia del auto</td></tr>
+        <tr><td>Edicto sin agotar citación previa</td><td><strong>Nulidad</strong> de la notificación por edicto y todo lo posterior</td><td>Se fijó edicto sin haber enviado citación a la dirección conocida</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La nulidad por indebida notificación puede ser declarada de oficio por el operador disciplinario (al advertir el error) o a solicitud del investigado. Si se declara, <strong>se retrotrae el proceso hasta el momento de la notificación defectuosa</strong> y se repite correctamente. Esto genera pérdida de tiempo procesal, riesgo de prescripción y posible responsabilidad disciplinaria del funcionario que cometió el error.</p>
+
+  <div class="box gold">
+    <div class="box-title">🎯 En la prueba</div>
+    <p>Pregunta tipo: "Se notificó por edicto al investigado sin haber enviado citación previa. El investigado alega nulidad. ¿Procede?" → <strong>SÍ procede</strong>. La notificación por edicto es subsidiaria y solo puede usarse después de agotar la citación. El vicio genera nulidad de la notificación y de las actuaciones que dependan de ella.</p>
+  </div>
+
+  <button class="btn-continuar" onclick="showSection(3)">Continuar →</button>
+</section>
+
+<!-- SEC 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+  <div class="eyebrow">Comparaciones clave</div>
+  <h2 class="sec-title">Diferencias que generan errores</h2>
+
+  <h3><span class="h3-chip">A</span> Notificación personal vs. Por estado electrónico</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Criterio</th><th>Personal</th><th>Por estado electrónico</th></tr></thead>
+      <tbody>
+        <tr><td>¿Para qué providencias?</td><td>Autos interlocutorios y sentencias</td><td>Autos de sustanciación (trámite)</td></tr>
+        <tr><td>¿Requiere firma del notificado?</td><td>Sí (o constancia de negativa)</td><td>No — es unilateral</td></tr>
+        <tr><td>¿Se entrega copia?</td><td>Sí, copia íntegra obligatoria</td><td>No — el estado contiene síntesis</td></tr>
+        <tr><td>¿Se informan recursos?</td><td>Sí, obligatorio</td><td>No (en sustanciación los recursos son muy limitados)</td></tr>
+        <tr><td>¿Cuándo surte efectos?</td><td>Al día siguiente de practicada</td><td>Al día siguiente de la fijación del estado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="h3-chip">B</span> Notificación vs. Citación vs. Comunicación</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th>¿Qué es?</th><th>¿A quién?</th><th>Efecto</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Notificación</strong></td><td>Poner en conocimiento una providencia</td><td>Partes procesales (investigado, apoderado)</td><td>Hace exigible la decisión; inicia términos</td></tr>
+        <tr><td><strong>Citación</strong></td><td>Convocar a comparecer para recibir notificación</td><td>Investigado o su apoderado</td><td>Paso previo obligatorio a la notificación personal</td></tr>
+        <tr><td><strong>Comunicación</strong></td><td>Informar una decisión o hecho</td><td>Terceros (quejoso, entidad, otras autoridades)</td><td>Solo informa; no genera cargas procesales</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="h3-chip">C</span> Edicto vs. Aviso</h3>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Criterio</th><th>Edicto (disciplinario)</th><th>Aviso (CPACA — administrativo)</th></tr></thead>
+      <tbody>
+        <tr><td>Norma</td><td>Ley 1952/2019 art. 246</td><td>Ley 1437/2011 (CPACA)</td></tr>
+        <tr><td>Término</td><td>10 días de fijación</td><td>Variable según la norma</td></tr>
+        <tr><td>Procedencia</td><td>Cuando fracasa la notificación personal (subsidiario)</td><td>Cuando no se logra la notificación en los plazos legales</td></tr>
+        <tr><td>Contexto</td><td>Solo en proceso disciplinario</td><td>En actuaciones administrativas generales</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-continuar" onclick="showSection(4)">Continuar →</button>
+</section>
+
+<!-- SEC 4: CASOS -->
+<section class="section" data-sec="4">
+  <div class="eyebrow">Casos aplicados</div>
+  <h2 class="sec-title">Aprende razonando casos reales</h2>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 1 — Notificación incompleta</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      Un Sustanciador practica la notificación personal del auto de formulación de cargos. Le entrega copia del auto al investigado y le hace firmar el acta. Sin embargo, olvida informarle qué recursos proceden contra la decisión. El investigado firma y se retira.
+      <span class="label">Pregunta</span>
+      ¿Fue válida la notificación?
+      <span class="label">Análisis</span>
+      No. Informar los recursos procedentes es requisito de validez de la notificación personal. Al omitirlo, los términos para recurrir NO empiezan a correr hasta que se subsane el defecto (se informe al investigado de los recursos). El acta está incompleta.
+      <div class="resp-correcta"><strong>Respuesta correcta:</strong> La notificación es defectuosa. Los términos no corren hasta que se informe correctamente de los recursos. El Sustanciador debe subsanar: citar nuevamente al investigado para completar la información o enviarle comunicación informando los recursos.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 2 — Edicto prematuro</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      Un Sustanciador de la Procuraduría Provincial envía citación al investigado a su dirección registrada. Al tercer día, sin esperar a que se cumplan los 5 días hábiles del término para comparecer, fija edicto porque "seguro no va a venir".
+      <span class="label">Pregunta</span>
+      ¿Es válido el edicto?
+      <span class="label">Análisis</span>
+      No. El edicto solo procede cuando se ha AGOTADO el término de la citación (5 días hábiles). Fijar edicto antes de que venza ese término es prematuro: no se agotó la vía personal. El investigado aún tenía 2 días para comparecer.
+      <div class="resp-correcta"><strong>Respuesta correcta:</strong> El edicto es nulo por prematuro. Debe esperar a que venzan los 5 días de la citación. Si el investigado no comparece AL VENCER el término, ahí sí se fija el edicto.</div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📂 Caso 3 — Conducta concluyente</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      Por un error administrativo, el auto de cierre de investigación no fue notificado personalmente al investigado. Sin embargo, 3 días después, el apoderado del investigado presenta un memorial solicitando "ampliación del plazo probatorio antes del fallo", haciendo referencia expresa al auto de cierre.
+      <span class="label">Pregunta</span>
+      ¿Se entiende notificado el auto de cierre?
+      <span class="label">Análisis</span>
+      Sí. El apoderado demostró con su actuación que conoce el auto de cierre (lo menciona expresamente y actúa en consecuencia). Opera la notificación por conducta concluyente desde la fecha del memorial.
+      <div class="resp-correcta"><strong>Respuesta correcta:</strong> Sí, por conducta concluyente. El memorial demuestra conocimiento de la decisión. La notificación se entiende surtida desde la fecha de presentación del memorial.</div>
+    </div>
+  </div>
+
+  <button class="btn-continuar" onclick="showSection(5)">Continuar →</button>
+</section>
+
+<!-- SEC 5: ERRORES -->
+<section class="section" data-sec="5">
+  <div class="eyebrow">Errores frecuentes</div>
+  <h2 class="sec-title">Lo que NO debes hacer</h2>
+  <div class="box danger"><div class="box-title">❌ Error 1 — Fijar edicto sin agotar citación</div><p>El edicto es subsidiario: solo procede cuando fracasa la notificación personal (citación enviada + término vencido sin comparecencia). Edicto sin citación previa = nulidad.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — No informar recursos al notificar personalmente</div><p>Omitir qué recursos proceden y en qué término invalida la notificación. Los plazos no corren hasta que se informe correctamente.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Notificar por estado un auto interlocutorio</div><p>Los interlocutorios SIEMPRE se notifican personalmente. Usar estado electrónico para un interlocutorio genera nulidad por indebida notificación.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — "Notificar" al quejoso como si fuera parte</div><p>Al quejoso se le COMUNICA (oficio). No es parte procesal (salvo que sea reconocido como interviniente especial). No se le "notifica" en sentido procesal.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — No dejar constancia de la diligencia</div><p>Toda notificación (o intento fallido) debe quedar documentado en el expediente: fecha, medio, resultado. Sin constancia = como si no se hubiera intentado.</p></div>
+
+  <button class="btn-continuar" onclick="showSection(6)">Continuar →</button>
+</section>
+
+<!-- SEC 6: TIPS -->
+<section class="section" data-sec="6">
+  <div class="eyebrow">Tips Ascenso Público</div>
+  <h2 class="sec-title">Recomendaciones para la prueba</h2>
+  <div class="box ok"><div class="box-title">💡 Tip 1 — Identifica primero el tipo de auto</div><p>Si la pregunta es sobre cómo notificar, lo primero es clasificar la providencia: ¿es sustanciación o interlocutorio? Sustanciación = estado. Interlocutorio/sentencia = personal.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 2 — El edicto siempre va DESPUÉS de la citación</div><p>Citación (intento de personal) → fracasa → ENTONCES edicto. Si la pregunta salta la citación y va directo al edicto, es un error.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 3 — Conducta concluyente "sana" defectos</div><p>Si el investigado demuestra conocimiento de la decisión (actúa sobre ella), la notificación se entiende surtida sin importar si hubo defecto formal. Esto es favorable al proceso.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 4 — Comunicación ≠ Notificación</div><p>Si la pregunta menciona al "quejoso" o a "terceros", la respuesta NUNCA es "notificar personalmente". A terceros se les COMUNICA. La notificación es solo para las partes.</p></div>
+  <div class="box ok"><div class="box-title">💡 Tip 5 — Los términos empiezan al DÍA SIGUIENTE</div><p>Sea personal, por estado o por edicto: los términos para recurrir empiezan a correr al DÍA SIGUIENTE de surtida la notificación, no el mismo día.</p></div>
+
+  <button class="btn-continuar" onclick="showSection(7)">Continuar →</button>
+</section>
+
+<!-- SEC 7: TRAMPAS -->
+<section class="section" data-sec="7">
+  <div class="eyebrow">Preguntas trampa</div>
+  <h2 class="sec-title">Aprende a detectar distractores</h2>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 1: "Si el investigado se niega a firmar el acta de notificación, la notificación es nula."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Parece correcta porque:</strong> sin firma no hay constancia del investigado.</div>
+      <div class="t-row malo"><strong>Por qué es incorrecta:</strong> la negativa a firmar NO invalida la notificación. El Sustanciador deja constancia de la negativa con un testigo y la notificación se entiende surtida igual.</div>
+      <div class="t-row bueno"><strong>Respuesta correcta:</strong> Si el notificado se niega a firmar, se deja constancia con testigo. La notificación es válida desde la fecha de la diligencia.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 2: "Todos los autos del proceso disciplinario deben notificarse personalmente para garantizar el debido proceso."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Parece correcta porque:</strong> la notificación personal es la más garantista.</div>
+      <div class="t-row malo"><strong>Por qué es incorrecta:</strong> solo los autos interlocutorios y sentencias requieren notificación personal. Los de sustanciación se notifican por estado electrónico. Notificar TODO personalmente paralizaría el proceso.</div>
+      <div class="t-row bueno"><strong>Respuesta correcta:</strong> Autos de sustanciación = estado electrónico. Autos interlocutorios y sentencias = personal. Cada tipo tiene su forma específica.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 3: "El quejoso tiene derecho a ser notificado personalmente de todas las decisiones del proceso."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Parece correcta porque:</strong> el quejoso inició la acción y tiene interés.</div>
+      <div class="t-row malo"><strong>Por qué es incorrecta:</strong> el quejoso NO es parte procesal (salvo interviniente especial reconocido). Se le COMUNICA la decisión (oficio), no se le "notifica" en sentido procesal.</div>
+      <div class="t-row bueno"><strong>Respuesta correcta:</strong> Al quejoso se le comunica por oficio. La notificación procesal es para el investigado y su apoderado.</div>
+    </div>
+  </div>
+
+  <div class="trampa">
+    <div class="trampa-q">🎭 Trampa 4: "La notificación por edicto puede usarse desde el primer momento si la dependencia tiene muchos expedientes y no tiene capacidad para buscar al investigado."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece"><strong>Parece correcta porque:</strong> suena a una solución eficiente ante la carga procesal.</div>
+      <div class="t-row malo"><strong>Por qué es incorrecta:</strong> el edicto es SUBSIDIARIO. No puede usarse por conveniencia o eficiencia. Primero debe agotarse la citación (intento real de ubicar al investigado). La carga procesal no justifica omitir garantías.</div>
+      <div class="t-row bueno"><strong>Respuesta correcta:</strong> El edicto solo procede después de agotar la citación sin éxito. La carga procesal no es excusa para saltarse el debido proceso.</div>
+    </div>
+  </div>
+
+  <button class="btn-continuar" onclick="showSection(8)">Continuar →</button>
+</section>
+
+<!-- SEC 8: RESUMEN -->
+<section class="section" data-sec="8">
+  <div class="eyebrow">Resumen ejecutivo</div>
+  <h2 class="sec-title">Repaso rápido</h2>
+  <div class="resumen-grid">
+    <div class="resumen-item"><h4>📋 5 formas de notificación</h4><p>Personal, estado electrónico, en estrados, edicto, conducta concluyente.</p></div>
+    <div class="resumen-item"><h4>🔑 Regla de oro</h4><p>Interlocutorio/sentencia = personal. Sustanciación = estado electrónico. No se mezclan.</p></div>
+    <div class="resumen-item"><h4>📬 Citación</h4><p>Paso PREVIO obligatorio a la personal. Sin citación agotada, el edicto es nulo.</p></div>
+    <div class="resumen-item"><h4>📄 Edicto</h4><p>Subsidiario: solo cuando fracasa la personal. 10 días de fijación. Efectos al día siguiente de desfijación.</p></div>
+    <div class="resumen-item"><h4>💬 Comunicación ≠ Notificación</h4><p>A terceros/quejosos se les comunica (oficio). A partes se les notifica (forma procesal).</p></div>
+    <div class="resumen-item"><h4>⚠️ Consecuencia del error</h4><p>Notificación defectuosa = nulidad + riesgo de prescripción + responsabilidad del funcionario.</p></div>
+  </div>
+  <div class="box gold">
+    <div class="box-title">⚡ Frase para recordar</div>
+    <p>"Sin notificación válida, la providencia existe pero no surte efectos. El auto más brillante del mundo es letra muerta si no se notifica correctamente."</p>
+  </div>
+  <button class="btn-continuar" onclick="showSection(9)">Continuar →</button>
+</section>
+
+<!-- SEC 9: SIMULACRO -->
+<section class="section" data-sec="9">
+  <div class="eyebrow">Simulacro de práctica</div>
+  <h2 class="sec-title">Pon a prueba lo aprendido</h2>
+  <p>Responde estas 10 preguntas de juicio situacional sobre notificaciones disciplinarias.</p>
+
+  <div class="pregunta" data-correct="1"><div class="q-num">Pregunta 1</div><p class="q-texto">El Procurador Regional profiere auto de apertura de investigación disciplinaria contra un funcionario de la alcaldía municipal. El Sustanciador debe notificarlo. ¿Cuál es la forma correcta de notificación?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Por estado electrónico, publicando una síntesis del auto en la página institucional de la PGN por un día hábil.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Personalmente al investigado, citándolo al despacho o acudiendo a su dirección registrada, entregándole copia del auto e informando recursos procedentes.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Mediante edicto fijado por 10 días en la cartelera del despacho, ya que es la forma más garantista de notificación.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Enviando correo electrónico al investigado con copia adjunta del auto, sin necesidad de acta ni constancia adicional.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 2</div><p class="q-texto">Un Sustanciador envió citación al investigado a su dirección registrada hace 8 días hábiles. El investigado no compareció ni respondió. ¿Cuál es el paso siguiente?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Dejar constancia de agotamiento de la citación sin comparecencia y proceder a fijar edicto por el término legal de 10 días.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Enviar una segunda citación a la misma dirección con plazo adicional de 5 días, ya que una sola citación no agota la vía personal.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Declarar al investigado como persona ausente y nombrarle curador ad litem para que continúe el proceso en su representación.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Archivar temporalmente el expediente hasta que se logre ubicar al investigado, suspendiendo los términos procesales por imposibilidad de notificar.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="2"><div class="q-num">Pregunta 3</div><p class="q-texto">Un ciudadano que presentó una queja disciplinaria hace 4 meses se acerca al despacho preguntando qué pasó con su denuncia. El expediente se archivó definitivamente hace 2 semanas. ¿Qué debe hacer el Sustanciador?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Notificar personalmente al quejoso el auto de archivo, entregándole copia e informándole los recursos que puede interponer contra la decisión.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Informarle que como no es parte procesal, no tiene derecho a conocer el resultado del proceso disciplinario por reserva del expediente.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Comunicarle mediante oficio la decisión de archivo (sin revelar detalles reservados del expediente), indicando la fecha y número del auto.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Entregarle copia completa del auto de archivo y de todo el expediente para que pueda decidir si acude a otra instancia a impugnar la decisión.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="3"><div class="q-num">Pregunta 4</div><p class="q-texto">Durante una audiencia de juzgamiento (procedimiento verbal), el Procurador Delegado profiere el fallo absolutorio oralmente. El apoderado del investigado está presente. ¿Cómo se entiende notificado el fallo?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Debe practicarse notificación personal posterior con entrega de copia escrita del fallo, ya que la decisión oral no tiene plenos efectos hasta que se formalice por escrito.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Por estado electrónico al día siguiente, publicando la síntesis del fallo en los medios institucionales de la PGN para conocimiento de las partes.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>El fallo oral no tiene validez jurídica en el proceso disciplinario; debe proferirse siempre por escrito mediante sentencia formal firmada por el titular.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>En estrados: al proferirse la decisión en presencia del apoderado durante la audiencia, se entiende notificada en ese mismo acto. Los recursos se interponen en la propia audiencia.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="1"><div class="q-num">Pregunta 5</div><p class="q-texto">El Sustanciador practica notificación personal del auto de formulación de cargos. Entrega copia, informa recursos, pero el investigado se niega a firmar el acta diciendo "no estoy de acuerdo con los cargos". ¿Qué efecto tiene esta negativa?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>La notificación es nula porque sin la firma del notificado no hay constancia de que efectivamente recibió y entendió la decisión.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>La notificación es válida. El Sustanciador deja constancia de la negativa a firmar con la presencia de un testigo y anota la hora y circunstancias en el acta.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Debe suspenderse la diligencia y reprogramar para otro día, dando tiempo al investigado para aceptar la notificación voluntariamente con su abogado presente.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>La negativa equivale a desacato y debe reportarse al Procurador para que inicie un incidente de obstrucción procesal contra el investigado.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 6</div><p class="q-texto">Un auto de sustanciación que ordena correr traslado para alegatos fue proferido el lunes 10 de junio. El estado electrónico se fijó el martes 11 de junio. ¿A partir de cuándo empiezan a correr los términos del traslado para el investigado?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>A partir del miércoles 12 de junio (día siguiente a la fijación del estado), que es cuando la notificación por estado se entiende surtida.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>A partir del mismo martes 11 de junio (día de la fijación), ya que la publicación electrónica surte efectos inmediatos desde su publicación.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>A partir del lunes 10 de junio (fecha del auto), porque la providencia existe desde que se profiere independientemente de la notificación.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>A partir del jueves 13 de junio (dos días después de la fijación), para dar un día de gracia al investigado que no consulta los estados todos los días.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="2"><div class="q-num">Pregunta 7</div><p class="q-texto">Un Sustanciador debe notificar personalmente la sentencia disciplinaria al investigado. Envía citación a la dirección registrada y al correo electrónico. Pasan 5 días sin comparecencia. Antes de fijar edicto, revisa el sistema y encuentra que el investigado tiene una NUEVA dirección registrada en otra base de datos institucional. ¿Qué debe hacer?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Fijar edicto inmediatamente porque ya agotó la citación a la dirección conocida y el término venció sin comparecencia.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Archivar el expediente por imposibilidad de notificar, ya que si el investigado cambió de dirección sin informar, perdió su derecho a ser notificado.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Enviar nueva citación a la dirección adicional encontrada antes de fijar edicto, ya que existe otra dirección conocida donde podría ubicarse al investigado.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Dejar constancia de la nueva dirección pero no enviar citación adicional, porque la ley solo exige un intento a la "última dirección conocida" registrada en el expediente.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="3"><div class="q-num">Pregunta 8</div><p class="q-texto">El Sustanciador advierte que un auto de cierre de investigación (interlocutorio) fue "notificado" por estado electrónico en vez de personalmente. Han pasado 15 días desde la fijación del estado. El investigado no ha actuado ni interpuesto recursos. ¿Cuál es la situación procesal?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>La notificación es válida porque el investigado no reclamó dentro de los 15 días, lo que indica su aceptación tácita de la forma de notificación utilizada.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>El auto quedó en firme automáticamente porque pasaron los términos sin recurso, independientemente de la forma de notificación utilizada.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>El auto es válido pero la notificación fue correcta en este caso especial, ya que la Ley 2094/2021 permite notificar interlocutorios por estado cuando el investigado tiene apoderado activo.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>La notificación es ineficaz porque un auto interlocutorio debe notificarse personalmente. Los términos para recurrir nunca empezaron a correr y el auto no está en firme. Debe practicarse la notificación personal correcta.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="1"><div class="q-num">Pregunta 9</div><p class="q-texto">Un investigado interpone recurso de reposición contra el auto de formulación de cargos. Sin embargo, al revisar el expediente, el Sustanciador advierte que la notificación personal del auto de cargos no está documentada (no hay acta). ¿Cómo se resuelve esta situación?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Se rechaza el recurso porque sin constancia de notificación no se puede verificar si fue interpuesto dentro del término legal, lo que genera incertidumbre procesal.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Se reconoce la notificación por conducta concluyente: al interponer el recurso, el investigado demostró que conocía el auto. Se tramita el recurso normalmente contando el término desde la fecha del memorial.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>Se declara la nulidad de todo lo actuado desde el auto de cargos porque la ausencia de acta de notificación invalida la diligencia y todo lo posterior.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Se requiere al Sustanciador que elabore el acta de notificación de manera retroactiva con la fecha aproximada en que recuerda haber realizado la diligencia.</span></div></div><div class="feedback"></div></div>
+
+  <div class="pregunta" data-correct="0"><div class="q-num">Pregunta 10</div><p class="q-texto">En el proceso disciplinario contra un contralor municipal, la Procuraduría Regional decreta pruebas mediante auto interlocutorio. El Sustanciador debe notificarlo. Sin embargo, el contralor tiene apoderado de confianza registrado en el expediente. ¿A quién se notifica?</p><div class="opciones"><div class="opcion" data-idx="0"><span class="letra">A</span><span>Al apoderado del investigado, ya que cuando hay representante judicial registrado, las notificaciones se surten con él y no directamente con el investigado.</span></div><div class="opcion" data-idx="1"><span class="letra">B</span><span>Directamente al investigado (contralor), ya que el derecho de defensa es personalísimo y la notificación solo surte efectos cuando la recibe el titular del derecho afectado.</span></div><div class="opcion" data-idx="2"><span class="letra">C</span><span>A ambos: al investigado Y a su apoderado simultáneamente, ya que la ley exige doble notificación cuando hay representación judicial para mayor garantía.</span></div><div class="opcion" data-idx="3"><span class="letra">D</span><span>Al contralor como funcionario público en su despacho oficial, ya que cuando el investigado es servidor activo, la notificación se practica en la sede de su entidad.</span></div></div><div class="feedback"></div></div>
+
+  <div id="resultado">
+    <p style="color:var(--texto-suave);margin-bottom:8px">Tu resultado</p>
+    <div class="score-num"><span id="aciertos">0</span>/10</div>
+    <p id="msg-resultado"></p>
+    <button class="btn gold" onclick="reiniciar()">🔄 Reintentar</button>
+  </div>
+
+  <div class="nav-footer">
+    <button id="btnPrev">← Sección anterior</button>
+    <button id="btnNext">Siguiente sección →</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">FUN-SUS-02 · Notificaciones, Comunicaciones y Citaciones · Día 12 · Estándar AP-QA-001 v1.1<br>© Ascenso Público. Material de preparación para el concurso de méritos de la Procuraduría General de la Nación.</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button'),sections=document.querySelectorAll('.section');let current=0;const total=sections.length;
+function showSection(i){current=i;sections.forEach(s=>s.classList.remove('visible'));navBtns.forEach(b=>b.classList.remove('active'));sections[i].classList.add('visible');navBtns[i].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updateFooterBtns()}
+navBtns.forEach((btn,i)=>btn.addEventListener('click',()=>showSection(i)));
+const btnPrev=document.getElementById('btnPrev'),btnNext=document.getElementById('btnNext');
+function updateFooterBtns(){if(btnPrev)btnPrev.disabled=current===0;if(btnNext)btnNext.disabled=current===total-1}
+if(btnPrev)btnPrev.addEventListener('click',()=>{if(current>0)showSection(current-1)});
+if(btnNext)btnNext.addEventListener('click',()=>{if(current<total-1)showSection(current+1)});
+window.addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('readbar').style.width=s+'%'});
+updateFooterBtns();
+
+const preguntas=document.querySelectorAll('.pregunta');
+const feedbacks={
+0:{ok:'¡Correcto! El auto de apertura es interlocutorio (afecta derechos). Se notifica personalmente: citación + comparecencia + copia + recursos + acta.',no:'Incorrecto. El auto de apertura de investigación es interlocutorio y debe notificarse personalmente al investigado, no por estado ni por edicto (sin agotar citación).'},
+1:{ok:'¡Correcto! Agotada la citación sin comparecencia (5+ días), se procede al edicto (10 días de fijación). Es el paso subsidiario cuando fracasa la personal.',no:'Incorrecto. Después de 5+ días sin comparecencia del citado, se agota la vía personal y procede el edicto. No se requiere segunda citación ni se archiva por este motivo.'},
+2:{ok:'¡Correcto! Al quejoso se le COMUNICA (oficio) la decisión. No se le notifica procesalmente porque no es parte. Se le informa la decisión sin revelar detalles reservados.',no:'Incorrecto. El quejoso no es parte procesal: se le comunica la decisión por oficio. No se le notifica personalmente ni se le entrega copia completa del expediente.'},
+3:{ok:'¡Correcto! En procedimiento verbal, las decisiones proferidas en audiencia se notifican EN ESTRADOS (en el mismo acto). Los recursos se interponen en la propia audiencia.',no:'Incorrecto. En audiencia (procedimiento verbal), la notificación es en estrados: al proferirse la decisión en presencia de las partes, se entiende notificada en ese acto.'},
+4:{ok:'¡Correcto! La negativa a firmar no invalida la notificación. Se deja constancia con testigo y la diligencia surte plenos efectos desde esa fecha.',no:'Incorrecto. La negativa a firmar no anula la notificación. El Sustanciador deja constancia con testigo. El desacuerdo con la decisión se expresa mediante recursos, no negándose a firmar.'},
+5:{ok:'¡Correcto! La notificación por estado se entiende surtida al DÍA SIGUIENTE de la fijación. Si se fijó el martes 11, los términos corren desde el miércoles 12.',no:'Incorrecto. Los términos empiezan al día siguiente de la fijación del estado, no el mismo día ni dos días después. Es una regla fija del CGD.'},
+6:{ok:'¡Correcto! Si se descubre una nueva dirección ANTES de fijar edicto, debe intentarse la citación a esa dirección. El edicto solo procede cuando se agotaron TODAS las direcciones conocidas.',no:'Incorrecto. Si existe otra dirección conocida, debe agotarse la citación a ella antes de fijar edicto. El esfuerzo razonable de ubicación incluye verificar todas las direcciones disponibles.'},
+7:{ok:'¡Correcto! Un auto interlocutorio notificado por estado es una notificación INEFICAZ. Los términos nunca empezaron a correr. Debe practicarse la notificación personal correcta.',no:'Incorrecto. Los interlocutorios SIEMPRE requieren notificación personal. Usar estado electrónico para un interlocutorio genera ineficacia: los términos no corren y el auto no queda en firme.'},
+8:{ok:'¡Correcto! El recurso demuestra que el investigado conoce la decisión → conducta concluyente. Se tramita el recurso normalmente. No se rechaza ni se anula (sería desproporcionado).',no:'Incorrecto. Cuando el investigado actúa demostrando conocimiento del auto (interpone recurso), opera la conducta concluyente. Se tramita el recurso; no se anula ni se elaboran actas retroactivas.'},
+9:{ok:'¡Correcto! Cuando hay apoderado registrado, las notificaciones procesales se surten con él. El apoderado representa al investigado para efectos procesales, incluyendo la recepción de notificaciones.',no:'Incorrecto. Cuando hay apoderado de confianza registrado, la notificación se surte con él. No se requiere doble notificación ni se practica directamente con el investigado.'}
+};
+let respondidas=0,aciertos=0;
+preguntas.forEach((preg,idx)=>{const correcta=parseInt(preg.dataset.correct);const opciones=preg.querySelectorAll('.opcion');const fb=preg.querySelector('.feedback');opciones.forEach((op,oi)=>{op.addEventListener('click',()=>{if(op.classList.contains('bloqueada'))return;opciones.forEach(o=>o.classList.add('bloqueada'));if(oi===correcta){op.classList.add('correcta');fb.className='feedback show ok';fb.textContent=feedbacks[idx].ok;aciertos++}else{op.classList.add('incorrecta');opciones[correcta].classList.add('correcta');fb.className='feedback show no';fb.textContent=feedbacks[idx].no}respondidas++;if(respondidas===preguntas.length){document.getElementById('aciertos').textContent=aciertos;const r=document.getElementById('resultado');r.classList.add('show');document.getElementById('msg-resultado').textContent=aciertos>=8?'¡Excelente! Dominas el régimen de notificaciones.':aciertos>=6?'Bien, pero repasa los módulos donde fallaste.':'Necesitas repasar. Vuelve al desarrollo y relee las formas de notificación.'}})})});
+function reiniciar(){respondidas=0;aciertos=0;document.getElementById('resultado').classList.remove('show');preguntas.forEach(p=>{p.querySelectorAll('.opcion').forEach(o=>{o.classList.remove('correcta','incorrecta','bloqueada')});p.querySelector('.feedback').className='feedback'})}
+</script>
+</body>
+</html>
