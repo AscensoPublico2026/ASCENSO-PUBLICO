@@ -6,7 +6,7 @@
 >
 > **Documento VIVO:** cada vez que mejoremos una guía ("quita esto / agrega esto"), se actualiza este prompt y se anota en el **Changelog** (al final). Así toda guía nueva nace con las mejoras acumuladas.
 >
-> **Versión:** 2.2 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
+> **Versión:** 2.3 · **Base técnica:** `ESTANDAR-TECNICO.md` + `PLANTILLA-GUIA.md`.
 
 ---
 
@@ -42,10 +42,13 @@ Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero 
 == ESTRUCTURA OBLIGATORIA (11 secciones navegables con pestañas) ==
 0. 🎯 Objetivo — qué dominará y para qué le sirve a su cargo (lista + box dorado de promesa).
 1. ⭐ Importancia — por qué el tema cae en la prueba; qué pasa si no lo domina (box info "dato clave").
-2. 📖 Desarrollo — 6 a 8 conceptos, cada uno en 4 CAPAS:
-   🟦 Definición (qué es) · 🟩 Aplicación (cómo opera) · 🟨 Ejemplo real (entidad/caso concreto) · 🟥 Cómo lo evalúa la CNSC (trampa típica).
-   Si un concepto tiene 3+ sub-componentes evaluables (que la CNSC pregunta por separado), añade SUB-BLOQUES desplegables: qué lo conforma, funciones, tabla comparativa, ⚠️ trampa CNSC y 🎯 mini-pregunta tipo CNSC.
-   Reglas de longitud por capa: 2–4 párrafos cortos, con norma/artículo/entidad real verificable. Nunca "es importante" sin sustancia.
+2. 📖 Desarrollo — 7 a 8 MÓDULOS temáticos (la sección MÁS IMPORTANTE de la guía; es lo que el cliente exige que quede completo). OBLIGATORIO E INNEGOCIABLE (estándar reforzado por el cliente, agosto 2026):
+   - EXTENSIÓN: mínimo 3.300 palabras, ideal ~4.000–5.000. Nunca un Desarrollo de párrafos corridos y "conceptual"; el estudiante debe terminar dominando el tema del día y sentir que "valió la inversión".
+   - CADA MÓDULO debe contener, sin excepción: (a) teoría desarrollada con subtítulos internos y frases clave resaltadas con <mark> (subrayado dorado, NO fondo); (b) AL MENOS UNA tabla/esquema comparativo (clasificaciones, distinciones, "sí puede/no puede", criterios); (c) AL MENOS UN EJEMPLO desarrollado y ambientado en el rol real del servidor/cargo (bloque ".practica" "En la práctica"); (d) cuando el tema sea un PROCESO o SECUENCIA (etapas, trámite, ciclo), un DIAGRAMA DE FLUJO visual (".flujo" con ".flujo-paso" numerados y flechas), no solo texto.
+   - RECURSOS DINÁMICOS intercalados (para no fatigar y verificar comprensión): micro-tips "Ojo en la prueba" (".ojo"), acordeones desplegables (details.acc) con contenido real, y 1–2 CHECKPOINTS interactivos por guía (".checkpoint" con opciones que al hacer clic marcan correcta/incorrecta y muestran feedback; requiere el handler JS de checkpoint).
+   - CIERRE de cada Desarrollo: un box "Idea clave", un box de TIPS y un box dorado "⚡ Frase para recordar", además del bloque ".fuentes" (ver abajo) con enlaces DIRECTOS y verificados a las normas.
+   - Estructura conceptual sugerida por módulo (4 capas): 🟦 Definición · 🟩 Aplicación · 🟨 Ejemplo real · 🟥 Cómo lo evalúa la prueba (trampa típica). Si un concepto tiene 3+ sub-componentes evaluables, añade SUB-BLOQUES desplegables con tabla comparativa, ⚠️ trampa y 🎯 mini-pregunta.
+   - Regla anti-relleno: cada afirmación con norma/artículo/entidad real verificable. Nunca "es importante" sin sustancia. Benchmark de profundidad aprobado por el cliente: las 12 guías funcionales del curso Procurador Judicial II (PGN), p. ej. FUN-INT-03 (Desarrollo ~5.079 palabras, 5 tablas, 1 diagrama de flujo, 3 ejemplos, checkpoints, tips y frase).
 3. ⚖️ Comparaciones — 2 a 4 tablas que diferencian conceptos que se confunden + trampa típica.
 4. 📂 Casos CNSC — 5 casos (situación → análisis → respuesta correcta + explicación).
 5. ⚠️ Errores frecuentes — 6 (qué es + por qué falla + cómo corregir).
@@ -78,6 +81,16 @@ Las guías funcionales mantienen las 11 secciones y la identidad de marca, pero 
 - Flashcards que voltean al hacer clic.
 - Simulacro: al elegir una opción, bloquea, marca correcta/incorrecta y muestra retroalimentación; botón "Ver mi resultado" calcula puntaje y temas a reforzar; botón "Reiniciar".
 - Botón "Avanzar" al final de cada sección; en la última, "Finalizar Día N" (verde).
+- CHECKPOINTS del Desarrollo: al hacer clic en una opción, marca ok/no y muestra el feedback (.cp-fb). Handler estándar (añadir al <script>):
+  document.querySelectorAll('.checkpoint').forEach(cp=>{const ops=cp.querySelectorAll('.cp-op');const fb=cp.querySelector('.cp-fb');ops.forEach(op=>{op.addEventListener('click',()=>{if(cp.dataset.done)return;cp.dataset.done='1';ops.forEach(o=>{if(o.dataset.ok==='1')o.classList.add('ok');});op.classList.add(op.dataset.ok==='1'?'ok':'no');if(fb)fb.classList.add('show');});});});
+
+== VALIDACIÓN OBLIGATORIA ANTES DE ENTREGAR (checklist, feedback del cliente) ==
+- BOTONES: todos funcionales (pestañas, "Avanzar", "Finalizar Día N", checkpoints, simulacro). Verificar el JS con `node --check` (sin errores de sintaxis) y que todo botón tenga su handler.
+- ENLACES: todos deben ABRIR la norma/fuente real (target="_blank" rel="noopener") y estar VERIFICADOS; nunca enlaces inventados ni rotos. Cada guía debe permitir al estudiante consultar en las fuentes oficiales que le damos para estudiar más.
+- HTML BALANCEADO: etiquetas abiertas = cerradas (section/div/details/table/script/main).
+- SIN FUGAS: 0 menciones de otro cargo, nivel, entidad o aspirante distinto al de la guía (revisar nombres propios, códigos de otro OPEC, "CNSC" cuando el concurso NO es CNSC, etc.).
+- DÍA correcto y coherente en kicker/badge/footer/JS (ver `.kiro/steering/numeracion-dias-guias.md`).
+- DESARROLLO: cumple el mínimo de palabras y tiene tabla + ejemplo + (flujo si hay proceso) en cada módulo. Si algún módulo quedó "conceptual" (solo párrafos), NO está terminado.
 
 == DATOS DE ENTRADA (completa esto) ==
 - Código de la guía: [ej. TEC-ESP-01]
@@ -109,6 +122,7 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 
 | Fecha | Versión | Cambio |
 |---|---|---|
+| 2026-08-24 | 2.3 | **Desarrollo COMPLETO y profesional en TODA guía, sin importar nivel ni cargo** (feedback del cliente en el curso Procurador Judicial II — PGN). Se hace OBLIGATORIO que la sección Desarrollo (7–8 módulos, mín. 3.300 e ideal 4.000–5.000 palabras) tenga en CADA módulo: tabla/esquema comparativo, ejemplo desarrollado ".practica" ambientado en el rol, y diagrama de flujo ".flujo" cuando el tema sea un proceso; más micro-tips ".ojo", checkpoints interactivos, box "Idea clave", box de tips y "⚡ Frase para recordar", y bloque ".fuentes" con enlaces DIRECTOS y verificados a las normas. Prohibido el Desarrollo "conceptual" de párrafos corridos. Se añade el **handler JS de checkpoints** y una **VALIDACIÓN OBLIGATORIA antes de entregar** (botones funcionales + node --check, enlaces que abren la norma real, HTML balanceado, 0 fugas de otro cargo/curso, día coherente). Benchmark: 12 guías funcionales PGN (Desarrollo 4.2k–5.1k palabras, ~2–5 tablas y flujo por guía). |
 | 2026-07-12 | 2.2 | **Longitud y riqueza tipo CNSC en el simulacro** (feedback del cliente sobre las guías de terapias): se hace OBLIGATORIO que el simulacro replique la extensión real de la prueba escrita CNSC → contexto extenso (5–9 renglones, 450–900 caract.), enunciado que replantea la tensión (2–4 renglones) y **las 4 opciones de respuesta LARGAS y elaboradas** (120–260 caract. c/u), todas del mismo nivel de detalle. Se añade paso de CALIBRACIÓN por longitud antes de aprobar cada pregunta. Antes las preguntas quedaban "telegráficas". |
 | 2026-06-16 | 2.1 | Mejoras al simulacro y al Desarrollo (a partir de feedback en FUN-ALM-01): (1) al hacer clic en una opción se muestran las explicaciones de LAS 4 opciones (por qué cada una es correcta o incorrecta), debajo de cada opción; (2) los contextos y enunciados del simulacro se hacen más largos y difíciles (escenarios con presión, conflicto de intereses, distractores plausibles); (3) el Desarrollo debe incluir un bloque ".fuentes" con enlaces a las fuentes oficiales/normas para profundizar. |
 | 2026-06-16 | 2.0 | **Variante Funcional v2** para todas las guías FUN-*: hilo narrativo (.narr), diagramas de proceso (.flujo), checkpoints intercalados "Aplica lo aprendido" (.checkpoint), tarjetas "En la práctica" (.practica) y micro-tips "Ojo en la prueba" (.ojo). Se añade la **regla de reutilización** (guías funcionales entidad-agnósticas) y la **codificación** FUN-[FAMILIA]-Nº + ENT-[SIGLA]-Nº. Se refuerza: feedback por CADA opción y contextos ricos en el simulacro. Primera guía con este estándar: FUN-ALM-01. |

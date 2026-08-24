@@ -1080,3 +1080,80 @@ Antes de dar por terminada una guía, validar:
 ---
 
 *Fin del estándar técnico. Para usar como checklist al construir nuevas guías ver `PLANTILLA-GUIA.md`.*
+
+
+---
+
+## 🧩 Recursos didácticos del Desarrollo (v2.3 — OBLIGATORIOS)
+
+> Estándar reforzado (ago-2026): TODA guía —de cualquier nivel/cargo— debe tener en el Desarrollo tablas, ejemplos, diagramas de flujo, tips y enlaces a fuentes. Copiar estas clases al `<style>` de cada guía. La paleta usa las variables ya definidas arriba (`--azul`, `--oro`, `--verde`, `--ambar`, etc.).
+
+```css
+/* Diagrama de flujo de procesos (etapas, trámites, ciclos) */
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:120px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h5{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin:0 0 4px;font-weight:700;}
+.flujo-paso p{font-size:.75rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:640px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+
+/* Tarjeta "En la práctica" (ejemplo desarrollado y ambientado en el rol) */
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+
+/* Micro-tip "Ojo en la prueba" */
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+
+/* Checkpoint interactivo "Aplica lo aprendido" (mini-pregunta dentro del Desarrollo) */
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.checkpoint .cp-tag{font-weight:800;color:var(--ambar);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.checkpoint .cp-op{background:var(--blanco);border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;margin:7px 0;cursor:pointer;font-size:.9rem;transition:all .18s;}
+.checkpoint .cp-op:hover{border-color:var(--oro);}
+.checkpoint .cp-op.ok{border-color:var(--verde);background:var(--verde-suave);}
+.checkpoint .cp-op.no{border-color:var(--rojo);background:var(--rojo-suave);}
+.checkpoint .cp-fb{display:none;margin-top:10px;padding:11px 14px;border-radius:9px;font-size:.86rem;background:var(--azul-suave);border-left:4px solid var(--azul-claro);}
+.checkpoint .cp-fb.show{display:block;}
+
+/* Bloque de fuentes oficiales para profundizar (enlaces directos a la norma) */
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+```
+
+**Handler JS de los checkpoints** (añadir al `<script>`, junto a la navegación):
+
+```js
+document.querySelectorAll('.checkpoint').forEach(cp=>{const ops=cp.querySelectorAll('.cp-op');const fb=cp.querySelector('.cp-fb');ops.forEach(op=>{op.addEventListener('click',()=>{if(cp.dataset.done)return;cp.dataset.done='1';ops.forEach(o=>{if(o.dataset.ok==='1')o.classList.add('ok');});op.classList.add(op.dataset.ok==='1'?'ok':'no');if(fb)fb.classList.add('show');});});});
+```
+
+**Ejemplo de uso de un checkpoint** (marcar la correcta con `data-ok="1"`):
+
+```html
+<div class="checkpoint">
+  <div class="cp-tag">✋ Aplica lo aprendido</div>
+  <p style="margin-bottom:10px">[Enunciado situacional breve]</p>
+  <div class="cp-op" data-ok="0">A) [distractor plausible]</div>
+  <div class="cp-op" data-ok="1">B) [respuesta correcta]</div>
+  <div class="cp-op" data-ok="0">C) [distractor plausible]</div>
+  <div class="cp-fb"><strong>Correcta: B.</strong> [explicación con norma/criterio]</div>
+</div>
+```
+
+**Ejemplo de diagrama de flujo:**
+
+```html
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><h5>Etapa 1</h5><p>Breve descripción.</p></div>
+  <div class="flujo-paso"><span class="fp-n">2</span><h5>Etapa 2</h5><p>Breve descripción.</p></div>
+  <div class="flujo-paso"><span class="fp-n">3</span><h5>Etapa 3</h5><p>Breve descripción.</p></div>
+</div>
+```
+
+**Regla de oro del Desarrollo:** cada uno de los 7-8 módulos debe llevar, como mínimo, **una tabla o un ejemplo `.practica`**, y un **diagrama `.flujo`** cuando el tema sea un proceso. El bloque `.fuentes` con enlaces verificados a la norma va al cierre del Desarrollo. Si un módulo quedó como puro texto corrido, NO está terminado.
