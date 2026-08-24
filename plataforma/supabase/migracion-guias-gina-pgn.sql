@@ -52,8 +52,8 @@ BEGIN
   SELECT v_curso_id, dia, titulo, tipo::tipo_guia, orden, archivo_path
   FROM (VALUES
     -- Día 1: Presentación + Conoce tu Entidad (PGN)
-    (1,  'Presentación del Curso y el Concurso de la Procuraduría',                         'general',    1,  'guias/INTRO-00-PGN-presentacion-curso-pgn.html'),
-    (1,  'Conoce tu Entidad: Procuraduría General de la Nación',                            'general',    2,  'guias/ENT-PGN-01-conoce-entidad-pgn.html'),
+    (1,  'Presentación del Curso y el Concurso de la Procuraduría',                         'general',    1,  'guias/INTRO-00-PGN-PRO-presentacion-curso.html'),
+    (1,  'Conoce tu Entidad: Procuraduría General de la Nación',                            'general',    2,  'guias/ENT-PGN-PRO-01-conoce-entidad-pgn.html'),
     -- Días 2-4: Generales (versión PGN)
     (2,  'Estado y Función Pública',                                                        'general',    3,  'guias/GEN-01-PGN-estado-funcion-publica.html'),
     (3,  'Relación Estado-Ciudadano',                                                       'general',    4,  'guias/GEN-02-PGN-relacion-estado-ciudadano.html'),
@@ -64,8 +64,8 @@ BEGIN
     (7,  'Investigación (B), Pensamiento Conceptual (A) y Analítico (B) (Nivel Profesional)', 'nivel',    8,  'guias/PGN-PRO-COM-03-investigacion-pensamiento-conceptual-analitico.html'),
     (8,  'Alcance del Cargo Profesional y Evaluación por Niveles A/B/C (Nivel Profesional)', 'nivel',     9,  'guias/PGN-PRO-COM-04-alcance-cargo-profesional-evaluacion-niveles.html'),
     -- Días 9-10: Ministerio Público (funcionales reutilizables)
-    (9,  'El Ministerio Público: Estructura y Funciones de la PGN',                         'funcional',  10, 'guias/FUN-MP-01-ministerio-publico-estructura-pgn.html'),
-    (10, 'Función de Intervención del Ministerio Público',                                  'funcional',  11, 'guias/FUN-MP-02-funcion-intervencion-ministerio-publico.html'),
+    (9,  'El Ministerio Público: Estructura y Funciones de la PGN',                         'funcional',  10, 'guias/FUN-MP-01-PRO-ministerio-publico-estructura-pgn.html'),
+    (10, 'Función de Intervención del Ministerio Público',                                  'funcional',  11, 'guias/FUN-MP-02-PRO-funcion-intervencion-ministerio-publico.html'),
     -- Días 11-14: Bloque de Intervención Judicial
     (11, 'Intervención Judicial: Técnica, Conceptos y Argumentación Jurídica',              'funcional',  12, 'guias/FUN-INT-01-intervencion-judicial-tecnica-conceptos-argumentacion.html'),
     (12, 'Intervención en lo Constitucional: Tutela, Acciones Constitucionales y Populares','funcional',  13, 'guias/FUN-INT-02-intervencion-constitucional-tutela-acciones.html'),
@@ -77,8 +77,8 @@ BEGIN
     (17, 'Derechos Humanos, DIH y Justicia Transicional (Ley 1448/2011)',                   'funcional',  18, 'guias/FUN-DDHH-01-derechos-humanos-dih-justicia-transicional.html'),
     (18, 'Derecho Probatorio, Valoración de la Prueba y Trámite Procesal',                  'funcional',  19, 'guias/FUN-PROB-01-derecho-probatorio-valoracion-prueba.html'),
     -- Días 19-20: Cierre funcional (reutilizables)
-    (19, 'Gestión Pública y Normatividad Administrativa',                                   'funcional',  20, 'guias/FUN-JUR-01-gestion-publica-normatividad-administrativa.html'),
-    (20, 'Documentos de Oficina, Informes y Sistemas de Información',                       'funcional',  21, 'guias/FUN-OFI-02-documentos-oficina-informes-sistemas.html'),
+    (19, 'Gestión Pública y Normatividad Administrativa',                                   'funcional',  20, 'guias/FUN-JUR-PRO-01-gestion-publica-normatividad-administrativa.html'),
+    (20, 'Documentos de Oficina, Informes y Sistemas de Información',                       'funcional',  21, 'guias/FUN-OFI-PRO-01-documentos-oficina-informes-sistemas.html'),
     -- Día 21: Simulacro Integral Final (50 preguntas, Nivel Profesional)
     (21, 'Simulacro Integral Final — Procurador Judicial II (50 preguntas)',                'simulacro',  22, 'simulacro/SIM-PGN-002.html')
   ) AS t(dia, titulo, tipo, orden, archivo_path)
