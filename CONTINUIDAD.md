@@ -5,9 +5,31 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 15 de julio de 2026 — **Cupos administrables conservados y campo de identificación adicional retirado para restaurar el flujo de compra.** La configuración del contador permanece en `/admin/configuracion` y la compra no requiere secretos nuevos._
+_Última actualización: 24 de agosto de 2026 — **Curso Procurador Judicial II (PGN, aspirante Gina) TERMINADO y estándar de guías elevado a v2.3.** Arranca el curso DIAN Gestor I (OPEC 198368, aspirante Andrés Guillermo Díaz Zamora). El cliente/fundador es Julio César._
 
 ---
+
+## 🆕 CAMBIOS RECIENTES (sesión 24 ago 2026 — curso PGN terminado + estándar v2.3 + inicia DIAN)
+
+**Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. Los "aspirantes" (Gina, Andrés…) son los ESTUDIANTES de cada curso, no el cliente.
+
+**Curso Procurador Judicial II — PGN (aspirante Gina Alexandra Rojas) — TERMINADO ✅**
+- Cargo Procurador Judicial II (3PJ-EC, Nivel Profesional, Convocatoria 89-2026, Res. 212/2026). Plan de 21 días (20 guías + SIM-PGN-002 de 50 preguntas).
+- Se limpiaron FUGAS de contenido cruzado del curso técnico previo (Sustanciador 4SU-08 / aspirante "Sandra") y de la URT: se crearon versiones -PRO (INTRO-00-PGN-PRO, ENT-PGN-PRO-01, FUN-MP-01-PRO, FUN-MP-02-PRO, FUN-OFI-PRO-01, FUN-JUR-PRO-01) y se corrigió GEN-01-PGN in situ.
+- Se corrigieron los DÍAS mostrados (FUN-MP-02 17→10, FUN-JUR 9→19) y duplicados en el curso cargado (SQL `fix-curso-gina-limpiar-duplicados.sql`).
+- Se POTENCIARON a fondo las 12 guías funcionales: Desarrollo 4.2k–5.1k palabras con tablas, diagramas de flujo, ejemplos "En la práctica", checkpoints interactivos, tips, "Frase para recordar" y bloque de fuentes con enlaces reales.
+
+**Estándar de guías elevado a v2.3 (aplica a TODA guía futura, cualquier nivel/cargo):**
+- `prompts/generador-guias.md` v2.3 y `ESTANDAR-TECNICO.md` (con CSS de `.flujo/.practica/.ojo/.checkpoint/.fuentes` + handler JS de checkpoints) documentan el estándar: Desarrollo de 7–8 módulos (mín. 3.300, ideal 4.000–5.000 palabras) con tabla/ejemplo/flujo por módulo, y VALIDACIÓN obligatoria antes de entregar (botones + node --check, enlaces que abren la norma real, HTML balanceado, 0 fugas, día coherente).
+- Recordatorio de despliegue: las guías se sirven del BUCKET de Supabase; al mejorar una guía existente hay que re-subir el bucket (`/api/admin/seed-guias` como admin) para que el estudiante vea los cambios.
+
+**Curso DIAN — Gestor I (aspirante Andrés Guillermo Díaz Zamora) — INICIANDO 🔜**
+- Estudiante: Andrés Guillermo Díaz Zamora · andizam20@hotmail.com.
+- Cargo **Gestor I, Cód. 301, Grado 01, Nivel Profesional**, DIAN, **OPEC 198368**. Proceso: Fiscalización y Liquidación. **Concurso organizado por la CNSC** (a diferencia del PGN, aquí SÍ se menciona la CNSC como organizadora).
+- Plan de 21 días (20 guías + simulacro final el Día 21), mismo formato que PGN.
+- Manual definitivo recibido (ficha FT-TAH-1824, AT-FL-3008). Temario funcional: generalidades sistema tributario/aduanero/cambiario, determinación y control tributario, proceso de fiscalización y liquidación, fiscalización aduanera, régimen cambiario, fiscalización internacional, evasión/elusión/contrabando + Ley de transparencia, LA/FT, CPACA (Ley 1437/2011), MIPG, gestión documental/PQRSF/servicio al ciudadano, herramientas informáticas e informes. Comportamentales: ético (4), comunicación efectiva (2), trabajo en equipo (3), adaptabilidad (2), orientación al logro, orientación al usuario/ciudadano.
+- Reutilizables CNSC ya en el repo: INTRO-00, GEN-01/02/03, PRO-COM-01/02, PRO-ESP-01/02, BON-01/02/03. Nuevas por crear: ENT-DIAN-01 + comportamentales DIAN-PRO-COM-01..04 + funcionales FUN-DIAN-01..09 + SIM-DIAN-001.
+- Plan día por día aprobado por Julio César (ver más abajo / en el prompt de arranque de la sesión DIAN).
 
 ## 🆕 CAMBIOS RECIENTES (sesión 15 jul 2026 — restauración de compra)
 
