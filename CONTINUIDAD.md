@@ -5,7 +5,53 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 26 de agosto de 2026 — **Curso DIAN Gestor I: 10 guías creadas (Días 1, 5-12). Nuevo estándar MÁXIMO: funcionales de 10.000+ palabras con hilo narrativo, ejercicios y múltiples ejemplos.** Pendientes: Días 13-21._
+_Última actualización: 28 de agosto de 2026 — **Curso DIAN Gestor I: 15 guías creadas (Días 1, 5-17). Estándar MÁXIMO 10.000+ palabras.** Pendientes: Días 18-21._
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 28 ago 2026 — curso DIAN Gestor I: guías Días 13-17 creadas)
+
+**Resumen:** Se crearon 5 guías funcionales nuevas con el estándar máximo de 10.000+ palabras en Desarrollo:
+
+| Día | Código | Guía | Palabras | Estado |
+|-----|--------|------|----------|--------|
+| 13 | FUN-DIAN-05 | Régimen Cambiario (operaciones de competencia DIAN) | 10.725 | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 14 | FUN-DIAN-06 | Fiscalización Internacional (precios de transferencia) | 10.070 | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 15 | FUN-DIAN-07 | Evasión, elusión y contrabando + Ley de transparencia | ~10.000 | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 16 | FUN-DIAN-08 | Lavado de activos y financiación del terrorismo (LA/FT) y ROS | ~9.800 | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 17 | FUN-JUR-01 | CPACA (Ley 1437/2011) — archivo: FUN-JUR-01-cpaca-procedimiento-administrativo.html | 10.049 | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+
+**Rama pendiente de merge:** `feat/fun-dian-05-regimen-cambiario` (contiene FUN-DIAN-05 + 06 + 07 + 08 + FUN-JUR-01).
+Link para mergear: https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/pull/new/feat/fun-dian-05-regimen-cambiario
+
+**Notas técnicas:**
+- La guía existente FUN-MIPG-01-modelo-integrado-planeacion-gestion.html tiene estructura "microlearning" (23 secciones cortas) NO compatible con el estándar actual de 10.000+ palabras. Debe crearse una NUEVA versión con nombre `FUN-MIPG-01-mipg-gestion-publica.html` siguiendo la estructura estándar (11 secciones + 10 módulos en Desarrollo). Ya existe el archivo con el CSS base (315 líneas).
+- Bug recurrente en JS del simulacro: al escribir preguntas, NUNCA usar `ops3:` como key. Siempre debe ser la tercera string dentro del array `ops:['op1','op2','op3','op4']`.
+- El `<title>` del CSS base dice "FUN-DIAN-04" (herencia del molde) — debe corregirse al crear cada guía nueva (se ha corregido en las guías creadas).
+
+**Estado actualizado del curso completo:**
+
+| Día | Código | Guía | Palabras | Estado |
+|-----|--------|------|----------|--------|
+| 1 | ENT-DIAN-01 | Conoce tu Entidad DIAN | ~4.305 | ✅ Mergeada |
+| 2-4 | GEN-01/02/03 | Estado, Ciudadano, Marco Institucional | — | ✅ Ya existían |
+| 5 | DIAN-PRO-COM-01 | Comportamiento Ético y Adaptabilidad | ~4.350 | ✅ Mergeada |
+| 6 | DIAN-PRO-COM-02 | Comunicación Efectiva y Trabajo en Equipo | ~4.041 | ✅ Mergeada |
+| 7 | DIAN-PRO-COM-03 | Orientación al Logro y al Usuario/Ciudadano | ~3.957 | ✅ Mergeada |
+| 8 | DIAN-PRO-COM-04 | Alcance del Cargo (Gestor I) y Evaluación | ~4.032 | ✅ Mergeada |
+| 9 | FUN-DIAN-01 | Generalidades Sistema Tributario/Aduanero/Cambiario | ~5.562 | ✅ Mergeada |
+| 10 | FUN-DIAN-02 | Determinación y Control Tributario | ~6.883 | ✅ Mergeada |
+| 11 | FUN-DIAN-03 | Proceso de Fiscalización y Liquidación | 10.373 | ✅ Mergeada |
+| 12 | FUN-DIAN-04 | Fiscalización Aduanera | 10.001 | ✅ Mergeada |
+| 13 | FUN-DIAN-05 | Régimen Cambiario | 10.725 | ✅ En rama (pendiente merge) |
+| 14 | FUN-DIAN-06 | Fiscalización Internacional / Precios de Transferencia | 10.070 | ✅ En rama (pendiente merge) |
+| 15 | FUN-DIAN-07 | Evasión, Elusión y Contrabando + Ley de Transparencia | ~10.000 | ✅ En rama (pendiente merge) |
+| 16 | FUN-DIAN-08 | Lavado de Activos y LA/FT (ROS) | ~9.800 | ✅ En rama (pendiente merge) |
+| 17 | FUN-JUR-01 | CPACA (Ley 1437/2011) | 10.049 | ✅ En rama (pendiente merge) |
+| 18 | FUN-MIPG-01 | MIPG (Modelo Integrado de Planeación y Gestión) | — | 🔜 Pendiente (CSS base listo) |
+| 19 | FUN-DOC-01 | Gestión documental + PQRSF + servicio al ciudadano | — | 🔜 Pendiente |
+| 20 | FUN-DIAN-09 | Herramientas informáticas + informes estadísticos | — | 🔜 Pendiente |
+| 21 | SIM-DIAN-001 | Simulacro Integral Final (50 preguntas, formato CNSC) | — | 🔜 Pendiente |
 
 ---
 
