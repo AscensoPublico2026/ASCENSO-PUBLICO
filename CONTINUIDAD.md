@@ -5,7 +5,59 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 24 de agosto de 2026 — **Curso Procurador Judicial II (PGN, aspirante Gina) TERMINADO y estándar de guías elevado a v2.3.** Arranca el curso DIAN Gestor I (OPEC 198368, aspirante Andrés Guillermo Díaz Zamora). El cliente/fundador es Julio César._
+_Última actualización: 26 de agosto de 2026 — **Curso DIAN Gestor I: 10 guías creadas (Días 1, 5-12). Nuevo estándar MÁXIMO: funcionales de 10.000+ palabras con hilo narrativo, ejercicios y múltiples ejemplos.** Pendientes: Días 13-21._
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 26 ago 2026 — curso DIAN Gestor I: 10 guías + nuevo estándar máximo)
+
+**Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. El estudiante del curso DIAN es **Andrés Guillermo Díaz Zamora** (andizam20@hotmail.com). Cargo: Gestor I, Código 301, Grado 01, Nivel Profesional, DIAN, OPEC 198368. Proceso: Fiscalización y Liquidación. Concurso organizado por la **CNSC**.
+
+**Curso DIAN — Gestor I (OPEC 198368) — EN CONSTRUCCIÓN 🔨**
+Plan de 21 días (20 guías + simulacro). Estado actual:
+
+| Día | Código | Guía | Palabras | Estado |
+|-----|--------|------|----------|--------|
+| 1 | ENT-DIAN-01 | Conoce tu Entidad DIAN (premium, general/reutilizable) | ~4.305 | ✅ Mergeada |
+| 2-4 | GEN-01/02/03 | Estado, Ciudadano, Marco Institucional (reutilizables CNSC) | — | ✅ Ya existían |
+| 5 | DIAN-PRO-COM-01 | Comportamiento Ético y Adaptabilidad | ~4.350 | ✅ Mergeada |
+| 6 | DIAN-PRO-COM-02 | Comunicación Efectiva y Trabajo en Equipo | ~4.041 | ✅ Mergeada |
+| 7 | DIAN-PRO-COM-03 | Orientación al Logro y al Usuario/Ciudadano | ~3.957 | ✅ Mergeada |
+| 8 | DIAN-PRO-COM-04 | Alcance del Cargo (Gestor I) y Evaluación | ~4.032 | ✅ Mergeada |
+| 9 | FUN-DIAN-01 | Generalidades Sistema Tributario/Aduanero/Cambiario | ~5.562 | ✅ Mergeada |
+| 10 | FUN-DIAN-02 | Determinación y Control Tributario | ~6.883 | ✅ Mergeada |
+| 11 | FUN-DIAN-03 | Proceso de Fiscalización y Liquidación | **~10.373** | ✅ En rama `feat/fun-dian-03-nivel-maximo` |
+| 12 | FUN-DIAN-04 | Fiscalización Aduanera | **~10.001** | ✅ En rama `feat/fun-dian-03-nivel-maximo` |
+| 13 | FUN-DIAN-05 | Régimen Cambiario (operaciones de competencia DIAN) | — | 🔜 Pendiente |
+| 14 | FUN-DIAN-06 | Fiscalización Internacional (precios de transferencia) | — | 🔜 Pendiente |
+| 15 | FUN-DIAN-07 | Evasión, elusión y contrabando + Ley de transparencia | — | 🔜 Pendiente |
+| 16 | FUN-DIAN-08 | Lavado de activos y financiación del terrorismo (LA/FT) y ROS | — | 🔜 Pendiente |
+| 17 | FUN-JUR-01 | CPACA (Ley 1437/2011) — reutilizable/adaptable | — | 🔜 Pendiente |
+| 18 | FUN-MIPG-01 | MIPG — reutilizable | — | 🔜 Pendiente |
+| 19 | FUN-DOC-01 | Gestión documental + PQRSF + servicio al ciudadano | — | 🔜 Pendiente |
+| 20 | FUN-DIAN-09 | Herramientas informáticas + informes estadísticos | — | 🔜 Pendiente |
+| 21 | SIM-DIAN-001 | Simulacro Integral Final (50 preguntas, formato CNSC) | — | 🔜 Pendiente |
+
+**Rama pendiente de merge:** `feat/fun-dian-03-nivel-maximo` (contiene FUN-DIAN-03 + FUN-DIAN-04).
+Link para mergear: https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/pull/new/feat/fun-dian-03-nivel-maximo
+
+**Estándares elevados en esta sesión:**
+
+1. **Estándar ENT (Conoce tu Entidad) — PREMIUM:** ~4.000-4.500 palabras, 15 secciones navegables (Bienvenida, Identidad, Misión/Visión/Valores, Historia, Qué hace, Lo que administra, Conceptos clave, Herramientas, Organización, Cifras, Servicios, Transparencia, Marco legal, Para tu prueba, Fuentes oficiales). General y reutilizable para cualquier cargo de la misma entidad. Benchmark: ENT-DIAN-01. Documentado en `.kiro/steering/estandar-conoce-tu-entidad.md`.
+
+2. **Estándar FUNCIONAL NIVEL MÁXIMO (10K+):** MÍNIMO 10.000 palabras en Desarrollo. 10 módulos profundos (600-1.200 palabras c/u). Incluye OBLIGATORIAMENTE: hilo narrativo (un caso que se desarrolla a lo largo de toda la guía), 15+ ejemplos prácticos, 4+ checkpoints interactivos, ejercicios con solución en acordeón, flujos de proceso, tablas comparativas, acordeones con contenido complementario, bloque de fuentes oficiales, y simulacro de 12 preguntas robustas (contexto 6-10 renglones, opciones 150-280 caracteres). Benchmarks: FUN-DIAN-03 (10.373 palabras) y FUN-DIAN-04 (10.001 palabras). Aplica a TODAS las funcionales de ahora en adelante.
+
+3. **Simulacro por guía — 12 preguntas:** Formato CNSC juicio situacional. 4 básicas + 5 intermedias + 3 avanzadas. Contexto extenso (450-1000 caracteres), enunciado que replantea la tensión (180-420 caracteres), 4 opciones LARGAS y elaboradas (150-280 caracteres c/u), todas plausibles y del mismo nivel de detalle. Feedback por CADA opción (explica por qué es correcta o incorrecta). Opciones BARAJADAS en cada intento. Nunca preguntas telegráficas.
+
+4. **Modelo de IA usado:** AUTO (selección dinámica de modelo). Confirmado por Julio César como adecuado para esta tarea.
+
+5. **Mejoras pedagógicas incorporadas (basadas en mejores prácticas de Harvard/Cornell/Berkeley/edX):** Active Learning (ejercicios dentro del Desarrollo, no solo al final), Scaffolding (de lo simple a lo complejo por capas), Case-based learning (casos integrados DENTRO de cada módulo), Spaced retrieval (flashcards + checkpoints espaciados), Storytelling (hilo narrativo que conecta los módulos), Evaluación formativa continua (checkpoints por módulo, no solo simulacro final).
+
+**Decisiones técnicas de esta sesión:**
+- Las comportamentales DIAN (Días 5-8) se crearon adaptando los moldes genéricos (PRO-COM-01/02, PRO-ESP-01/02) con ambientación DIAN (ejemplos de fiscalización, reserva tributaria, contribuyentes, MUISCA). Código `DIAN-PRO-COM-01..04`. No reutilizables.
+- Las funcionales DIAN (Días 9-12) son 100% nuevas desde cero. Código `FUN-DIAN-01..04`. No reutilizables.
+- El CSS/JS base se toma de las guías existentes (ya validado) y se reutiliza; solo se reescribe el `<main>` y los arrays JS (flashcards + preguntas).
+- Pendiente que Julio César confirme: número/nombre exacto de la convocatoria CNSC + Resolución (se usa redacción genérica mientras tanto).
 
 ---
 
