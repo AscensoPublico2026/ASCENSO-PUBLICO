@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-DIAN-02 · Determinación y Control Tributario — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.ch-icon{font-size:1.4rem;}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.capa{display:flex;gap:12px;padding:14px 16px;background:var(--gris-bg);border-radius:12px;border:1px solid var(--gris-borde);transition:transform .18s;}
+.capa:hover{transform:translateY(-2px);}
+.capa-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;}
+.capa-icon.def{background:var(--azul-suave);}
+.capa-icon.apl{background:var(--verde-suave);}
+.capa-icon.eje{background:var(--oro-suave);}
+.capa-icon.cnsc{background:var(--rojo-suave);}
+.capa-content .label{display:block;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.capa.cap-def .label{color:var(--azul-claro);}
+.capa.cap-apl .label{color:var(--verde);}
+.capa.cap-eje .label{color:var(--ambar);}
+.capa.cap-cnsc .label{color:var(--rojo);}
+.capa-content p{font-size:0.9rem;margin:0;}
+.full{grid-column:1/-1;}
+.sub-bloques{display:flex;flex-direction:column;gap:10px;margin-top:14px;grid-column:1/-1;}
+.sb{border:1.5px solid var(--gris-borde);border-radius:12px;background:var(--blanco);overflow:hidden;}
+.sb summary{padding:13px 18px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;list-style:none;user-select:none;}
+.sb summary::-webkit-details-marker{display:none;}
+.sb summary::after{content:'▾';margin-left:auto;transition:transform .2s;}
+.sb[open] summary::after{transform:rotate(180deg);}
+.sb-violeta summary{background:#F5F0FB;color:#5B3F8C;border-left:5px solid #8B6BC9;}
+.sb-oro summary{background:var(--oro-suave);color:var(--ambar);border-left:5px solid var(--oro);}
+.sb-verde summary{background:var(--verde-suave);color:var(--verde);border-left:5px solid var(--verde);}
+.sb-azul summary{background:var(--azul-suave);color:var(--azul);border-left:5px solid var(--azul-claro);}
+.sb-body{padding:16px 20px;}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+/* ===== DESARROLLO v3 · estilo editorial (visual nuevo y mejorado) ===== */
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+/* ===== Bloque CÁLCULO · fórmulas y procesos matemáticos paso a paso ===== */
+.calculo{background:linear-gradient(180deg,#fff,var(--azul-suave));border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.calculo-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.calculo-intro{padding:14px 18px 0;font-size:.93rem;color:var(--texto);}
+.calculo-intro p{margin-bottom:0;}
+.calc-datos{margin:12px 18px 0;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:11px;padding:11px 15px;font-size:.88rem;}
+.calc-datos .cd-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-bottom:5px;}
+.calc-datos ul{list-style:none;margin:0;}
+.calc-datos li{position:relative;padding-left:18px;margin-bottom:4px;}
+.calc-datos li::before{content:'•';position:absolute;left:2px;color:var(--oro);font-weight:800;}
+.calc-pasos{display:flex;flex-direction:column;gap:11px;padding:14px 18px;}
+.calc-paso{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--gris-borde);border-left:4px solid var(--oro);border-radius:11px;padding:12px 15px;}
+.calc-n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.calc-body{flex:1;min-width:0;}
+.calc-label{font-weight:700;color:var(--azul);font-size:.92rem;margin-bottom:6px;}
+.calc-formula{font-family:'Source Serif 4',serif;font-size:1.02rem;font-weight:600;background:var(--gris-bg);border-radius:8px;padding:9px 13px;margin:5px 0;overflow-x:auto;color:var(--texto);}
+.calc-formula b,.calc-formula strong{color:var(--ambar);}
+.calc-res-paso{font-size:.95rem;color:var(--verde);font-weight:700;margin-top:5px;}
+.calc-res-paso::before{content:'➜ ';color:var(--verde);}
+.calc-total{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 18px 16px;padding:15px 18px;background:var(--verde-suave);border:1.5px solid var(--verde-borde);border-radius:12px;}
+.calc-total .ct-label{font-weight:700;color:var(--verde);font-size:.93rem;}
+.calc-total .ct-valor{font-family:'Source Serif 4',serif;font-size:1.55rem;font-weight:800;color:var(--verde);}
+.calc-nota{font-size:.85rem;color:var(--texto-suave);padding:0 18px 16px;font-style:italic;}
+/* ===== Bloque NORMATIVA · marco legal con artículos citados ===== */
+.normativa{background:#fff;border:1px solid var(--azul-borde);border-radius:14px;overflow:hidden;margin:18px 0;box-shadow:var(--sombra);}
+.normativa-head{background:linear-gradient(100deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;padding:12px 18px;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+.norma-intro{padding:13px 18px 0;margin:0;font-size:.92rem;color:var(--texto);}
+.norma-list{padding:14px 18px;display:flex;flex-direction:column;gap:10px;}
+.norma-item{display:flex;gap:14px;align-items:flex-start;background:var(--azul-suave);border:1px solid var(--azul-borde);border-left:4px solid var(--oro);border-radius:0 11px 11px 0;padding:11px 15px;}
+.norma-ref{flex-shrink:0;font-weight:800;color:var(--azul);font-size:.8rem;line-height:1.4;min-width:150px;}
+.norma-txt{font-size:.9rem;flex:1;min-width:0;}
+.norma-txt p{margin-bottom:0;}
+@media(max-width:640px){.norma-item{flex-direction:column;gap:4px;}.norma-ref{min-width:0;font-size:.84rem;}}
+/* ===== Caja DESTACADA · regla de oro / alerta clave dentro del desarrollo ===== */
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+
+/* ===== Mejora dinámica v3.1: aparición de bloques + botón volver-arriba ===== */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+
+/* ===== NUEVO MODELO: subrayado dorado + mapa mental + iconos ===== */
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-DIAN-02</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 10 · Funcional DIAN</div>
+  <h1>Determinación y Control Tributario</h1>
+  <p class="header-sub">El proceso con el que la DIAN verifica, corrige y determina las obligaciones tributarias: fiscalización, requerimiento especial, liquidación oficial, recurso y debido proceso.</p>
+  <div class="badges"><span class="badge">📅 Día 10 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 Ponte en situación</span>
+    <p>Llegas a tu puesto en la división de fiscalización y tu jefe te asigna un expediente: un contribuyente presentó su declaración de renta con un saldo a favor de $120 millones, pero los cruces de información exógena muestran ingresos no declarados por $800 millones. ¿Qué sigue? ¿Puedes modificar esa declaración? ¿Qué actos debes proferir? ¿En qué orden? ¿Cuánto tiempo tienes? ¿Qué pasa si te equivocas en el procedimiento?</p>
+    <p>De eso trata esta guía: el <mark>proceso de determinación y control tributario</mark> — el corazón del trabajo de fiscalización de la DIAN y posiblemente el tema más evaluado en la prueba de conocimientos funcionales.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué significa <strong>determinar</strong> la obligación tributaria y por qué existe este proceso.</li>
+      <li>Las <strong>facultades de fiscalización</strong> de la DIAN (Art. 684 E.T.) y sus límites.</li>
+      <li>La diferencia entre <strong>liquidación privada</strong> (la del contribuyente) y <strong>liquidación oficial</strong> (la de la DIAN).</li>
+      <li>El <strong>requerimiento especial</strong> (Art. 703 E.T.): qué es, para qué sirve y cuándo se profiere.</li>
+      <li>La <strong>liquidación oficial de revisión</strong> (Art. 710 E.T.): cuándo se profiere y qué debe contener.</li>
+      <li>La <strong>liquidación de aforo</strong> (Art. 715 E.T.): para los que no declararon.</li>
+      <li>Los <strong>términos legales</strong> y la firmeza de las declaraciones.</li>
+      <li>El <strong>recurso de reconsideración</strong> (Art. 720 E.T.) y la vía judicial.</li>
+      <li>El <strong>flujo completo</strong> del proceso de determinación, paso a paso.</li>
+      <li>Las <strong>sanciones</strong> más frecuentes del procedimiento tributario.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día tendrás el dominio completo del <mark>proceso de determinación tributaria</mark>: sabrás qué acto viene después de cada paso, cuáles son los términos, qué pasa si se vencen y cómo responder en la prueba cuando te pongan a decidir la actuación correcta como gestor de fiscalización.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>El proceso de <strong>determinación y control tributario</strong> es el núcleo funcional del cargo al que aspiras. Si eres Gestor de Fiscalización y Liquidación, este es <mark>tu pan de cada día</mark>: proyectar requerimientos, sustentarlos, notificarlos y, si el contribuyente no corrige, proyectar las liquidaciones oficiales. La prueba te va a poner en esas situaciones y te va a preguntar <strong>qué acto profieres, en qué término y con qué sustento</strong>.</p>
+  <p>Además, este tema conecta directamente con el <strong>debido proceso</strong> (Art. 29 C.P.): si la DIAN no sigue el procedimiento al pie de la letra, sus actos pueden ser anulados. Por eso no basta con "encontrar la evasión": hay que determinarla <mark>conforme al procedimiento</mark>. Eso es exactamente lo que evalúa la CNSC.</p>
+  <p>Históricamente, las preguntas sobre procedimiento tributario (requerimiento, términos, firmeza, recursos) son de las más frecuentes en concursos DIAN. Dominar este tema te da una ventaja enorme.</p>
+  <div class="box info"><div class="box-title">ℹ️ Dato clave</div>
+    <p>El marco legal central es el <strong>Libro V del Estatuto Tributario</strong> (Título IV: Determinación del impuesto). Los artículos clave son: <strong>684</strong> (facultades), <strong>703-704</strong> (requerimiento especial), <strong>705</strong> (término), <strong>710-712</strong> (liquidación de revisión), <strong>715-718</strong> (aforo), <strong>720</strong> (recurso de reconsideración). Si dominas estos artículos, dominas el proceso.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Determinación y control tributario</h2>
+  <p>Esta sección desarrolla con profundidad profesional todo el <mark>proceso de determinación tributaria</mark>: desde las facultades de la DIAN para investigar, hasta el recurso de reconsideración del contribuyente. Cada módulo trae la norma con su artículo, teoría desarrollada, tablas, flujos, ejemplos como servidor de la DIAN, y un recuadro «En la prueba». Esto es lo que harás todos los días como gestor de fiscalización.</p>
+
+  <div class="mmap-t">🧠 Mapa mental · El proceso de determinación tributaria</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🔍</span><h5>Investigación</h5><p>Cruces, inspecciones, requerimientos de información</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📋</span><h5>Requerimiento Especial</h5><p>Art. 703 E.T. — propuesta de modificación</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📝</span><h5>Respuesta</h5><p>3 meses para el contribuyente</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Liquidación Oficial</h5><p>Art. 710 E.T. — acto definitivo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔄</span><h5>Recurso</h5><p>Art. 720 E.T. — reconsideración</p></div>
+  </div>
+
+  <!-- MÓDULO 1 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>¿Qué es la determinación tributaria y por qué existe?</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>La <mark>determinación tributaria</mark> es el procedimiento mediante el cual la administración (la DIAN) establece oficialmente el monto correcto de la obligación tributaria de un contribuyente, cuando la liquidación privada (la declaración que él presentó) contiene <strong>inexactitudes, omisiones o errores</strong>, o cuando no presentó declaración estando obligado.</p>
+    </div>
+    <div class="b-texto">
+      <p>En Colombia, el sistema tributario opera bajo el principio de <mark>autodeterminación (o autodeclaración)</mark>: es el contribuyente quien calcula y declara su propio impuesto (liquidación privada). La DIAN no le dice cuánto debe; él lo determina. Pero eso no significa que el Estado confía ciegamente: la DIAN tiene la <strong>facultad de verificar</strong> si esa autodeterminación fue correcta.</p>
+      <p>Cuando la DIAN detecta que la declaración no refleja la realidad (ingresos no reportados, deducciones improcedentes, tarifa incorrecta, costos ficticios), inicia un proceso para <mark>corregir la obligación</mark>. Ese proceso es la determinación tributaria. Su resultado es un <strong>acto administrativo motivado</strong> — la "liquidación oficial" — que modifica o sustituye la del contribuyente.</p>
+      <p>La determinación puede ser de tres tipos: (a) <mark>Liquidación de revisión</mark> (modifica una declaración ya presentada, Art. 710 E.T.); (b) <mark>Liquidación de corrección</mark> (corrige errores aritméticos o de imputación, Art. 697 E.T.); (c) <mark>Liquidación de aforo</mark> (determina la obligación cuando el contribuyente NO declaró estando obligado, Art. 715 E.T.).</p>
+      <p>El proceso tiene una garantía constitucional esencial: el <mark>debido proceso</mark> (Art. 29 C.P.). Antes de proferir una liquidación oficial, la DIAN <strong>debe</strong> darle al contribuyente la oportunidad de conocer lo que se le propone (el requerimiento especial) y de <strong>defenderse</strong> (responder). Si la DIAN se salta ese paso, el acto es nulo. Esto te lo van a preguntar.</p>
+      <p>La determinación está regulada en el <strong>Título IV del Libro V</strong> del Estatuto Tributario (Arts. 702 y siguientes). Es la parte del E.T. que como gestor de fiscalización más vas a aplicar.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Tipo de liquidación oficial</th><th>Cuándo se profiere</th><th>Artículo E.T.</th></tr></thead>
+      <tbody>
+        <tr><td>Liquidación de revisión</td><td>Cuando la declaración presentada tiene inexactitudes</td><td>Arts. 710-712</td></tr>
+        <tr><td>Liquidación de corrección</td><td>Cuando hay errores aritméticos o de imputación</td><td>Art. 697</td></tr>
+        <tr><td>Liquidación de aforo</td><td>Cuando el obligado NO presentó declaración</td><td>Arts. 715-718</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Un contribuyente persona jurídica declaró renta con ingresos de $2.000 millones, pero la información exógena (reportada por bancos, clientes y proveedores) muestra ingresos reales de $3.500 millones. La diferencia de $1.500 millones no declarados configura una <mark>inexactitud</mark>. Tu trabajo como gestor es verificar esa diferencia, documentarla y, si se confirma, proyectar el <strong>requerimiento especial</strong> proponiendo la modificación. No puedes simplemente "corregir" la declaración por tu cuenta: debes seguir todo el procedimiento de determinación.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Trampa: creer que la DIAN puede "modificar directamente" la declaración del contribuyente sin darle la oportunidad de responder. SIEMPRE hay que proferir el requerimiento especial primero (salvo en la liquidación de corrección aritmética, que tiene su propio trámite). Otra trampa: confundir liquidación de revisión con liquidación de aforo — la revisión modifica una declaración existente; el aforo la crea cuando no existe.</p></div>
+  </div>
+
+  <!-- MÓDULO 2 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Las facultades de fiscalización e investigación (Art. 684 E.T.)</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Las <mark>facultades de fiscalización</mark> son los poderes legales que la DIAN tiene para <strong>investigar, verificar y obtener información</strong> sobre el cumplimiento de las obligaciones tributarias. Están consagradas en el Art. 684 del E.T. y son amplias, pero NO ilimitadas: siempre están sujetas al debido proceso y a la legalidad.</p>
+    </div>
+    <div class="b-texto">
+      <p>Antes de poder determinar (modificar o crear una liquidación oficial), la DIAN necesita <strong>investigar</strong>. Para eso el Estatuto Tributario le otorga un conjunto de herramientas poderosas. Las más relevantes (Art. 684 y concordantes) son:</p>
+      <p><mark>1. Requerimiento ordinario de información</mark> (Art. 684 num. 1): pedir al contribuyente o a terceros documentos, libros contables, información sobre operaciones, etc. Es el instrumento más usado: cruce de información.</p>
+      <p><mark>2. Inspección tributaria</mark> (Art. 779): diligencia en la que un funcionario verifica en las instalaciones del contribuyente la exactitud de las declaraciones, los libros y los soportes. Se autoriza por auto.</p>
+      <p><mark>3. Inspección contable</mark> (Art. 782): verificación directa de la contabilidad del contribuyente en sus propias oficinas.</p>
+      <p><mark>4. Cruce con información de terceros</mark>: la DIAN recibe reportes de bancos, cámaras de comercio, notarías, otras entidades y la información exógena (medios magnéticos). Con esos datos cruza lo declarado vs. lo reportado por terceros.</p>
+      <p><mark>5. Visitas de verificación</mark>: pueden incluir la revisión de inventarios, la constatación de la realidad de las operaciones o la verificación del cumplimiento de obligaciones formales (ej.: facturación electrónica).</p>
+      <p>Estas facultades tienen <strong>límites legales estrictos</strong>: (a) deben ejercerse dentro de los <mark>términos de firmeza</mark> de la declaración (si el término ya venció, la declaración está en firme y no se puede tocar); (b) deben respetar la <mark>reserva tributaria</mark> (la información obtenida solo puede usarse para fines tributarios); (c) deben respetar los <mark>derechos del contribuyente</mark> (no se puede hostigar ni actuar sin motivación); (d) las inspecciones requieren <mark>auto previo</mark> que las autorice.</p>
+      <p>Es fundamental para la prueba distinguir entre <strong>requerimiento ordinario</strong> (para pedir información, Art. 684) y <strong>requerimiento especial</strong> (para proponer la modificación de la declaración, Art. 703). Son actos completamente diferentes: el ordinario es investigativo; el especial es el inicio del proceso de determinación.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Facultad</th><th>Para qué sirve</th><th>Límite</th></tr></thead>
+      <tbody>
+        <tr><td>Requerimiento ordinario (Art. 684)</td><td>Pedir información y documentos</td><td>Dentro de los términos; motivado</td></tr>
+        <tr><td>Inspección tributaria (Art. 779)</td><td>Verificar en las instalaciones del contribuyente</td><td>Autorizada por auto; con acta</td></tr>
+        <tr><td>Inspección contable (Art. 782)</td><td>Verificar los libros contables</td><td>En las oficinas del contribuyente; autorizada</td></tr>
+        <tr><td>Cruce de información exógena</td><td>Comparar lo declarado con reportes de terceros</td><td>Información con reserva; solo para fines tributarios</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Te asignan un programa de fiscalización para verificar ingresos no declarados. El primer paso es <strong>requerir información</strong> (Art. 684): envías un requerimiento ordinario al contribuyente pidiendo los estados financieros, los extractos bancarios y las facturas de venta del periodo. Simultáneamente, la DIAN cruza la información exógena que reportaron los bancos y los clientes del contribuyente. Con esos datos, construyes el "caso" antes de decidir si hay mérito para proferir un <mark>requerimiento especial</mark>. No puedes pasar directamente a la liquidación oficial sin antes haber investigado y notificado el requerimiento especial.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> "Requerimiento ordinario" ≠ "Requerimiento especial". El ordinario PIDE información. El especial PROPONE la modificación de la declaración. Son actos distintos con efectos jurídicos distintos.</div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Si la pregunta dice "la DIAN quiere verificar si los ingresos son correctos", la respuesta es usar las <strong>facultades de investigación</strong> (requerimiento ordinario, cruces). Si dice "la DIAN quiere modificar la declaración", la respuesta es el <strong>requerimiento especial</strong> (Art. 703). Confundir los dos es la trampa más frecuente en este tema.</p></div>
+  </div>
+
+  <!-- MÓDULO 3 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>El Requerimiento Especial (Art. 703-704 E.T.)</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>El <mark>requerimiento especial</mark> es el acto administrativo previo y obligatorio mediante el cual la DIAN le comunica al contribuyente <strong>todos los puntos que se propone modificar</strong> de su declaración, con la <strong>explicación de las razones</strong> y las pruebas en que se sustenta. Es la "propuesta de corrección" que la DIAN hace antes de expedir la liquidación oficial. Sin requerimiento especial, NO puede haber liquidación de revisión.</p>
+    </div>
+    <div class="b-texto">
+      <p>Este es probablemente el acto administrativo que más vas a proyectar como gestor de fiscalización. El Consejo de Estado ha dicho reiteradamente que el requerimiento especial es un <mark>acto preparatorio de la liquidación oficial</mark>: no decide nada definitivo, pero es <strong>condición necesaria</strong> para que la liquidación sea válida.</p>
+      <p>El Art. 703 exige que el requerimiento contenga: (a) <strong>todos los puntos que la DIAN propone modificar</strong>; (b) las <strong>razones y fundamentos jurídicos</strong> de cada modificación propuesta; (c) la <strong>cuantificación</strong> del mayor impuesto o menor saldo a favor; (d) las <strong>pruebas</strong> en que se sustenta. Si la liquidación oficial modifica un punto que <strong>no estaba en el requerimiento</strong>, es nula (Art. 711 E.T.).</p>
+      <p>El Art. 704 establece que se profiere <strong>por una sola vez</strong>: la DIAN no puede "corregir" el requerimiento ni enviar otro sobre los mismos puntos. Si se omitió un punto, no puede incluirse después en la liquidación.</p>
+      <p><mark>Término para notificar el requerimiento especial (Art. 705 E.T.):</mark> la DIAN tiene <strong>3 años</strong> contados desde la fecha de vencimiento del plazo para declarar, o desde la presentación de la declaración (si fue extemporánea), para notificar el requerimiento. Si no lo notifica dentro de ese plazo, la declaración queda <mark>en firme</mark> (Art. 714) y ya no puede tocarse. Este término es improrrogable; si se vence, el contribuyente "ganó".</p>
+      <p>Una vez notificado el requerimiento especial, el contribuyente tiene <mark>3 meses</mark> para responder (Art. 707 E.T.). En su respuesta puede: (a) aceptar total o parcialmente (en cuyo caso se reduce la sanción, Art. 709); (b) rechazar con argumentos y pruebas; (c) no responder (en cuyo caso la DIAN puede proferir la liquidación directamente).</p>
+      <p>Nota importante: el requerimiento especial <mark>no es un acto definitivo</mark>. Es una propuesta. El contribuyente puede controvertirlo. Si la DIAN queda convencida con la respuesta, puede abstenerse de proferir la liquidación. Por eso se dice que es una <strong>garantía del debido proceso</strong>: le da al contribuyente la oportunidad de conocer y contradecir antes de que se le imponga algo.</p>
+    </div>
+    <div class="flujo">
+      <div class="flujo-paso"><span class="fp-n">1</span><h4>Investigación</h4><p>Cruces, requerimientos ordinarios, inspecciones</p></div>
+      <div class="flujo-paso"><span class="fp-n">2</span><h4>Requerimiento Especial</h4><p>Art. 703 — propuesta motivada de modificación</p></div>
+      <div class="flujo-paso"><span class="fp-n">3</span><h4>Notificación</h4><p>Al contribuyente (dentro de 3 años, Art. 705)</p></div>
+      <div class="flujo-paso"><span class="fp-n">4</span><h4>Respuesta</h4><p>3 meses para aceptar, rechazar o guardar silencio</p></div>
+      <div class="flujo-paso"><span class="fp-n">5</span><h4>Decisión DIAN</h4><p>Proferir la liquidación oficial o abstenerse</p></div>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Tras investigar durante meses, encuentras que un contribuyente omitió ingresos por $800 millones. Tu trabajo es proyectar el <strong>requerimiento especial</strong> con: (1) identificación del punto a modificar (ingresos brutos, renglón X de la declaración); (2) el valor propuesto ($800M adicionales); (3) las pruebas (extractos bancarios, información exógena, facturas de clientes); (4) el mayor impuesto resultante; (5) la sanción por inexactitud propuesta (Art. 647 E.T. — 100% del mayor impuesto determinado). Luego se notifica al contribuyente. Si te falta un punto o una prueba, la liquidación posterior puede ser demandada con éxito.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Preguntas frecuentes: "¿Cuánto tiempo tiene la DIAN para notificar el requerimiento?" (3 años). "¿Puede la liquidación incluir puntos nuevos no señalados en el requerimiento?" (NO, Art. 711). "¿El requerimiento es definitivo?" (NO, es una propuesta). "¿Se puede enviar otro requerimiento sobre los mismos puntos?" (NO, es por una sola vez, Art. 704).</p></div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">La DIAN notificó el requerimiento especial a un contribuyente el 15 de marzo. ¿Hasta cuándo tiene el contribuyente para responder?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="30 días es el plazo para interponer el recurso de reconsideración contra la liquidación oficial, no para responder el requerimiento.">30 días calendario después de la notificación.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto: el contribuyente tiene 3 MESES para responder al requerimiento especial (Art. 707 E.T.), es decir, hasta el 15 de junio.">3 meses después de la notificación (hasta el 15 de junio).</button>
+      <button class="cp-opt" data-ok="0" data-exp="1 año es un plazo que no corresponde a ningún término del procedimiento de determinación para responder un requerimiento.">1 año calendario después de la notificación.</button>
+    </div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 4 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>La Liquidación Oficial de Revisión (Arts. 710-712 E.T.)</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>La <mark>liquidación oficial de revisión</mark> es el acto administrativo definitivo mediante el cual la DIAN <strong>modifica la declaración del contribuyente</strong>, fijando oficialmente los valores correctos del impuesto (base gravable, tarifa, impuesto a cargo, sanciones). Es el acto que "corrige" lo que el contribuyente declaró mal. Solo puede proferirse <strong>después del requerimiento especial</strong> y sobre los mismos puntos allí señalados.</p>
+    </div>
+    <div class="b-texto">
+      <p>La liquidación de revisión es el acto <mark>más importante</mark> del proceso de determinación: es donde la DIAN "dice la última palabra" (sujeta a recurso, claro). Sus características esenciales son:</p>
+      <p><strong>1. Presupuesto obligatorio:</strong> solo puede proferirse si se agotó el requerimiento especial previo (Art. 703). Sin requerimiento, la liquidación es nula.</p>
+      <p><strong>2. Congruencia:</strong> solo puede referirse a los <mark>mismos puntos propuestos en el requerimiento especial</mark> (Art. 711 E.T.). Si la DIAN incluye un punto nuevo que no estaba en el requerimiento, el contribuyente puede pedir la nulidad ante la jurisdicción contencioso-administrativa. Esta regla se llama <mark>principio de correspondencia</mark>.</p>
+      <p><strong>3. Término para proferirla (Art. 710 E.T.):</strong> la DIAN tiene <mark>6 meses</mark> contados desde la fecha de vencimiento del término para responder el requerimiento especial (o desde la fecha de la respuesta, lo que ocurra primero) para notificar la liquidación de revisión. Si se vence ese término, la DIAN pierde competencia temporal y la declaración queda en firme sobre los puntos propuestos.</p>
+      <p><strong>4. Contenido obligatorio (Art. 712 E.T.):</strong> debe incluir la fecha, los períodos gravables, los puntos modificados con su cuantificación, las pruebas, las razones jurídicas, las sanciones y la liquidación de los nuevos valores (impuesto, sanción, saldo a pagar).</p>
+      <p><strong>5. Motivación:</strong> la liquidación debe estar <mark>motivada</mark>. Esto significa que debe explicar <strong>por qué</strong> los argumentos del contribuyente en su respuesta no fueron suficientes para desvirtuar la propuesta del requerimiento. Una liquidación sin motivación es nula.</p>
+      <p><strong>6. Efecto:</strong> la liquidación de revisión <mark>sustituye</mark> la declaración privada en los puntos que modifica. El contribuyente queda debiendo el mayor impuesto + la sanción allí liquidada. Pero puede impugnarla (recurso de reconsideración, Art. 720).</p>
+      <p>Distinción clave con la <strong>liquidación de corrección</strong> (Art. 697): la corrección se profiere cuando hay errores <strong>aritméticos</strong> evidentes en la declaración (sumas mal hechas, casillas mal diligenciadas). No requiere requerimiento especial; se profiere directamente con un "auto de corrección aritmética". Es un procedimiento diferente y más simple.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Aspecto</th><th>Liquidación de revisión</th><th>Liquidación de corrección aritmética</th></tr></thead>
+      <tbody>
+        <tr><td>Para qué</td><td>Modificar la declaración por inexactitudes de fondo</td><td>Corregir errores aritméticos evidentes</td></tr>
+        <tr><td>Requiere requerimiento previo</td><td>SÍ (requerimiento especial, Art. 703)</td><td>NO (auto de corrección directo)</td></tr>
+        <tr><td>Término para proferir</td><td>6 meses post-respuesta al requerimiento</td><td>2 años desde la presentación de la declaración</td></tr>
+        <tr><td>Efecto</td><td>Sustituye la declaración en los puntos modificados</td><td>Corrige el error y ajusta el saldo</td></tr>
+        <tr><td>Recurso del contribuyente</td><td>Recurso de reconsideración (2 meses)</td><td>Recurso de reconsideración (2 meses)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Notificaste el requerimiento especial el 15 de marzo. El contribuyente respondió el 10 de junio (dentro de los 3 meses). Evaluaste su respuesta y concluyiste que los argumentos no desvirtúan la propuesta. Ahora tienes hasta el <mark>10 de diciembre</mark> (6 meses desde la respuesta) para notificar la liquidación de revisión. En ella incluyes: los mismos puntos del requerimiento, la valoración de la respuesta (por qué no convenció), las pruebas definitivas y la liquidación del mayor impuesto + sanción. Si el 11 de diciembre aún no la has notificado, <strong>perdiste competencia</strong> y la declaración del contribuyente queda en firme sobre esos puntos.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> El término de 6 meses para la liquidación de revisión se cuenta desde la RESPUESTA del contribuyente (o desde el vencimiento del plazo para responder si no respondió). Muchos confunden este término con el de 3 años del requerimiento.</div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Preguntas frecuentes: "¿Cuánto tiempo tiene la DIAN para proferir la liquidación de revisión?" (6 meses). "¿Puede incluir puntos nuevos no señalados en el requerimiento?" (NO — nulidad). "¿Qué pasa si vence el término sin notificar?" (pierde competencia; firmeza). "¿La liquidación debe motivar por qué no acepta la respuesta?" (SÍ, siempre).</p></div>
+  </div>
+
+
+  <!-- MÓDULO 5 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>La Liquidación de Aforo (Arts. 715-718 E.T.)</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>La <mark>liquidación de aforo</mark> es el acto administrativo mediante el cual la DIAN determina la obligación tributaria de un contribuyente que, estando obligado a declarar, <strong>NO lo hizo</strong>. Es decir: no presentó la declaración. La DIAN "crea" la liquidación que el contribuyente omitió.</p>
+    </div>
+    <div class="b-texto">
+      <p>A diferencia de la liquidación de revisión (que modifica una declaración existente), el aforo se profiere cuando <mark>no hay declaración</mark>. El contribuyente tenía la obligación de declarar y simplemente no lo hizo. En ese caso, la DIAN tiene la facultad de determinar oficialmente la obligación.</p>
+      <p><strong>Procedimiento previo:</strong> antes de proferir la liquidación de aforo, la DIAN debe haber agotado un <mark>emplazamiento para declarar</mark> (Art. 715 E.T.): un acto que le notifica al contribuyente que tiene un plazo de <strong>1 mes</strong> para presentar su declaración. Si el contribuyente declara dentro de ese mes (con las sanciones de extemporaneidad), se evita el aforo. Si no declara, la DIAN procede con el aforo.</p>
+      <p><strong>Término:</strong> la liquidación de aforo debe proferirse dentro de los <mark>5 años</mark> siguientes al vencimiento del plazo para declarar (Art. 717 E.T.). Es un término más largo que el de revisión (3 años para el requerimiento) porque el incumplimiento es más grave (ni siquiera declaró).</p>
+      <p><strong>Sanción:</strong> la no declaración genera una <mark>sanción por no declarar</mark> (Art. 643 E.T.) que es significativamente alta (equivale a un porcentaje del impuesto determinado o de los ingresos, según el caso). Es una de las sanciones más gravosas del sistema porque el incumplimiento es total.</p>
+      <p>El aforo también admite recurso de reconsideración (Art. 720) y, posteriormente, acción ante la jurisdicción contencioso-administrativa.</p>
+    </div>
+    <div class="flujo">
+      <div class="flujo-paso"><span class="fp-n">1</span><h4>Detección</h4><p>La DIAN identifica que un obligado no declaró</p></div>
+      <div class="flujo-paso"><span class="fp-n">2</span><h4>Emplazamiento</h4><p>Art. 715 — 1 mes para que declare</p></div>
+      <div class="flujo-paso"><span class="fp-n">3</span><h4>¿Declaró?</h4><p>Si declara → se evita el aforo (pero con sanción de extemporaneidad)</p></div>
+      <div class="flujo-paso"><span class="fp-n">4</span><h4>Aforo</h4><p>Si no declara → la DIAN profiere la liquidación de aforo</p></div>
+      <div class="flujo-paso"><span class="fp-n">5</span><h4>Recurso</h4><p>El contribuyente puede interponer recurso de reconsideración</p></div>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Un profesional independiente obtuvo ingresos por $500 millones en 2023 y estaba obligado a declarar renta, pero nunca lo hizo. La DIAN detecta la omisión por los reportes de información exógena. Primer paso: proferir el <mark>emplazamiento para declarar</mark> dándole 1 mes. Si el contribuyente no declara, proyectas la <strong>liquidación de aforo</strong> determinando el impuesto con base en la información disponible + la <mark>sanción por no declarar</mark> (Art. 643). Siempre documenta que se agotó el emplazamiento previo.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Trampa: proferir el aforo sin agotar el emplazamiento previo — eso vicia el acto. Otra trampa: confundir la sanción "por no declarar" (Art. 643, muy alta) con la sanción "por extemporaneidad" (Art. 641-642, más baja). Si declara tarde pero antes del aforo, paga extemporaneidad; si no declara nunca, paga la sanción del aforo.</p></div>
+  </div>
+
+  <!-- MÓDULO 6 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Los términos y la firmeza de las declaraciones</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>La <mark>firmeza</mark> es el momento a partir del cual una declaración tributaria ya no puede ser modificada por la DIAN: quedó definitiva. Si la DIAN no actúa dentro de los <strong>términos legales</strong>, pierde la oportunidad de cuestionar lo declarado por el contribuyente.</p>
+    </div>
+    <div class="b-texto">
+      <p>Los términos son <mark>una de las reglas más importantes</mark> (y más evaluadas) del procedimiento tributario. Si se vencen, la DIAN pierde <strong>competencia temporal</strong>: así tenga la prueba más clara de evasión, si el término pasó, no puede hacer nada. Por eso como gestor debes tener claro cuándo vence cada término.</p>
+      <p>Regla general de firmeza (Art. 714 E.T.): la declaración tributaria queda en firme si dentro de los <mark>3 años</mark> siguientes al vencimiento del plazo para declarar (o a la presentación si fue extemporánea), la DIAN no ha notificado el requerimiento especial. Es decir: 3 años para actuar; si no actúa, el contribuyente "ganó".</p>
+      <p><strong>Excepciones al término de 3 años:</strong> (a) Declaraciones con saldo a favor + solicitud de devolución: <mark>3 años desde la solicitud de devolución</mark> (Art. 705 inc. 2); (b) Declaraciones en las que se aplican ciertos beneficios: pueden tener términos especiales; (c) Declaraciones con pérdidas fiscales: firmeza de <mark>5 años</mark> para el periodo en que se generó la pérdida (Art. 147).</p>
+      <p><strong>Término para la liquidación de revisión:</strong> 6 meses después de la respuesta al requerimiento especial (o del vencimiento del plazo para responder). Si vence sin notificar la liquidación, la propuesta del requerimiento "cae" y la declaración se mantiene.</p>
+      <p><strong>Término para la liquidación de aforo:</strong> 5 años desde el vencimiento del plazo para declarar (Art. 717).</p>
+      <p>La firmeza es una <mark>garantía de seguridad jurídica</mark> para el contribuyente: no puede vivir en incertidumbre eterna sobre si la DIAN le va a cuestionar algo de hace 10 años. Pasado el término, hay paz. Pero para la DIAN, es una presión: hay que actuar <strong>a tiempo</strong> o se pierde la oportunidad de corregir la evasión.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Acto</th><th>Término</th><th>Se cuenta desde</th><th>Consecuencia si vence</th></tr></thead>
+      <tbody>
+        <tr><td>Requerimiento especial</td><td>3 años</td><td>Vencimiento del plazo para declarar (o presentación si fue extemporánea)</td><td>Firmeza de la declaración</td></tr>
+        <tr><td>Liquidación de revisión</td><td>6 meses</td><td>Respuesta al requerimiento (o vencimiento del plazo para responder)</td><td>Pierde competencia; propuesta del requerimiento se cae</td></tr>
+        <tr><td>Liquidación de aforo</td><td>5 años</td><td>Vencimiento del plazo para declarar</td><td>Pierde la facultad de aforar</td></tr>
+        <tr><td>Recurso de reconsideración</td><td>2 meses</td><td>Notificación de la liquidación oficial</td><td>El acto queda en firme (ejecutoriado)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Un contribuyente presentó su declaración de renta del año gravable 2022 el 10 de agosto de 2023 (dentro del plazo legal que vencía el 15 de agosto). El término de <mark>3 años para notificar el requerimiento especial</mark> vence el <strong>15 de agosto de 2026</strong>. Si al 16 de agosto de 2026 la DIAN no ha notificado el requerimiento, esa declaración queda <mark>en firme</mark> y no podrá modificarse jamás, sin importar lo que se descubra después. Como gestor, debes controlar los vencimientos de tus expedientes para no perder la oportunidad.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Pregunta clásica: "¿Cuánto tiempo tiene la DIAN para…?" — si es para el requerimiento, 3 años; si es para la liquidación de revisión, 6 meses; si es para el aforo, 5 años; si es para el recurso del contribuyente, 2 meses. Confundir estos términos es el error más frecuente. Mnemotecnia: <strong>3-3-6</strong> (3 años para requerir, 3 meses para responder, 6 meses para liquidar).</p></div>
+  </div>
+
+  <div class="checkpoint">
+    <div class="cp-tag">✋ Aplica lo aprendido</div>
+    <p class="cp-q">La DIAN notificó un requerimiento especial, pero el contribuyente NO respondió dentro de los 3 meses. ¿Qué puede hacer la DIAN?</p>
+    <div class="cp-opts">
+      <button class="cp-opt" data-ok="0" data-exp="No necesita el consentimiento del contribuyente: si no respondió, la DIAN puede proferir la liquidación oficial dentro de los 6 meses siguientes al vencimiento del plazo para responder.">Esperar indefinidamente hasta que el contribuyente responda.</button>
+      <button class="cp-opt" data-ok="1" data-exp="Correcto: si el contribuyente no responde dentro de los 3 meses, la DIAN puede proferir la liquidación oficial de revisión dentro de los 6 meses siguientes al vencimiento de ese plazo.">Proferir la liquidación oficial de revisión dentro de los 6 meses siguientes al vencimiento del plazo para responder.</button>
+      <button class="cp-opt" data-ok="0" data-exp="No puede volver a proferir un requerimiento especial sobre los mismos puntos (Art. 704: es por una sola vez).">Proferir un nuevo requerimiento especial para darle otra oportunidad.</button>
+    </div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 7 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>El recurso de reconsideración (Art. 720 E.T.)</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>El <mark>recurso de reconsideración</mark> es el medio de impugnación que tiene el contribuyente para pedir a la DIAN que <strong>reconsidere</strong> una liquidación oficial o una resolución sancionatoria. Es la forma de agotar la "vía gubernativa" (ahora llamada vía administrativa) antes de acudir a los jueces.</p>
+    </div>
+    <div class="b-texto">
+      <p>Cuando la DIAN profiere una liquidación oficial (de revisión o de aforo) o una resolución sancionatoria, el contribuyente tiene derecho a impugnarla. El primer recurso es el <strong>de reconsideración</strong>, que se interpone ante la misma DIAN (Art. 720 E.T.). Lo resuelve una dependencia diferente a la que profirió el acto (generalmente la División de Gestión Jurídica de la Seccional o, para ciertos montos, el nivel central).</p>
+      <p><strong>Plazo para interponerlo:</strong> <mark>2 meses</mark> contados desde la fecha de notificación de la liquidación oficial o la resolución sancionatoria. Si no lo interpone en ese plazo, el acto queda en firme (ejecutoriado) y se pasa al cobro.</p>
+      <p><strong>Contenido:</strong> el recurso debe identificar el acto que se impugna, expresar los motivos de inconformidad y aportar o solicitar las pruebas que considere pertinentes. El contribuyente puede presentar argumentos nuevos que no haya presentado en la respuesta al requerimiento.</p>
+      <p><strong>Plazo para resolver (Art. 732 E.T.):</strong> la DIAN tiene <mark>1 año</mark> para resolver el recurso de reconsideración. Si no lo resuelve en ese plazo, opera el <mark>silencio administrativo positivo</mark>: se entiende resuelto a favor del contribuyente (se revoca el acto impugnado). Esto es una garantía poderosa para el contribuyente.</p>
+      <p><strong>Decisión:</strong> la DIAN puede (a) confirmar el acto (mantenerlo), (b) modificarlo (cambiar algún valor) o (c) revocarlo (dejarlo sin efecto). Si confirma o modifica, el contribuyente puede acudir a la <mark>jurisdicción contencioso-administrativa</mark> (demanda de nulidad y restablecimiento del derecho, Ley 1437/2011 — CPACA).</p>
+      <p>Nota: si el contribuyente NO interpone el recurso, también puede acudir directamente a la vía judicial (Art. 720 parágrafo), pero el plazo de la demanda es más corto (4 meses en vez de los habituales). Lo normal es agotar el recurso antes de demandar.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Aspecto</th><th>Recurso de reconsideración</th></tr></thead>
+      <tbody>
+        <tr><td>Contra qué procede</td><td>Liquidaciones oficiales y resoluciones sancionatorias</td></tr>
+        <tr><td>Plazo para interponerlo</td><td>2 meses desde la notificación</td></tr>
+        <tr><td>Ante quién se interpone</td><td>Ante la DIAN (dependencia diferente a la que profirió el acto)</td></tr>
+        <tr><td>Plazo para resolver</td><td>1 año</td></tr>
+        <tr><td>Si no se resuelve</td><td>Silencio administrativo positivo (se revoca el acto)</td></tr>
+        <tr><td>Decisión</td><td>Confirmar, modificar o revocar</td></tr>
+        <tr><td>Después del recurso</td><td>Vía judicial (demanda contencioso-administrativa, CPACA)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>La DIAN profirió una liquidación de revisión con un mayor impuesto de $200 millones + sanción de $200 millones. El contribuyente no está de acuerdo: dentro de los <mark>2 meses</mark> siguientes a la notificación, interpone el recurso de reconsideración. El expediente pasa a la División Jurídica para su estudio. Si en <strong>1 año</strong> la DIAN no resuelve, opera el silencio positivo y el acto se entiende revocado. Por eso los expedientes deben resolverse a tiempo — no hacerlo tiene consecuencias graves para la entidad.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>"¿Qué pasa si la DIAN no resuelve el recurso en 1 año?" → Silencio administrativo positivo (se revoca a favor del contribuyente). "¿Cuánto tiempo tiene el contribuyente para interponer el recurso?" → 2 meses. Confundir estos dos plazos es la trampa más común de este tema.</p></div>
+  </div>
+
+  <!-- MÓDULO 8 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Las sanciones más frecuentes del procedimiento tributario</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>Las <mark>sanciones tributarias</mark> son consecuencias patrimoniales (multas) que la DIAN impone a los contribuyentes por el incumplimiento de sus obligaciones sustanciales o formales. Están reguladas en el <strong>Título III del Libro V</strong> del Estatuto Tributario.</p>
+    </div>
+    <div class="b-texto">
+      <p>Como gestor de fiscalización, las sanciones son parte integral de tu trabajo: casi toda liquidación oficial incluye una sanción. Las más relevantes para el proceso de determinación son:</p>
+      <p><mark>1. Sanción por inexactitud (Art. 647 E.T.):</mark> se impone cuando la declaración contiene datos falsos, incompletos, equivocados o desfigurados que generan un menor impuesto o un mayor saldo a favor. Equivale al <strong>100% de la diferencia</strong> entre el impuesto determinado y el declarado (antes de la Ley 2277/2022 era del 200% del mayor impuesto; ahora es del 100%). Es la sanción que acompaña a la liquidación de revisión.</p>
+      <p><mark>2. Sanción por no declarar (Art. 643 E.T.):</mark> se impone cuando el obligado no presenta la declaración. Es más gravosa que la de inexactitud porque el incumplimiento es total. Equivale a un porcentaje de los ingresos brutos (20%) o del patrimonio bruto (20%), según lo que resulte mayor, con un mínimo equivalente al impuesto de renta teórico. Acompaña a la liquidación de aforo.</p>
+      <p><mark>3. Sanción por extemporaneidad (Arts. 641-642 E.T.):</mark> se genera automáticamente cuando el contribuyente presenta su declaración después del plazo. Es menos grave porque al menos declaró (5% del impuesto por cada mes de retraso, con topes).</p>
+      <p><mark>4. Sanción por no facturar (Art. 652 E.T.):</mark> por no expedir factura electrónica de venta o expedirla sin requisitos.</p>
+      <p><mark>5. Sanción por no informar (Art. 651 E.T.):</mark> por no presentar la información exógena o presentarla con errores.</p>
+      <p><strong>Reducción de sanciones:</strong> el E.T. permite <mark>reducir las sanciones</mark> si el contribuyente acepta parcial o totalmente los hechos propuestos en el requerimiento especial (Art. 709) o en la liquidación oficial (antes de interponer recurso). Esta es una herramienta de eficiencia del sistema: premia la aceptación y evita largos litigios.</p>
+      <p>Principio de <mark>favorabilidad sancionatoria</mark>: cuando una reforma reduce la sanción, el contribuyente puede pedir que se le aplique la norma más favorable, incluso si el hecho ocurrió antes de la reforma (principio consagrado en el Art. 282 de la Ley 1819/2016 y reiterado por jurisprudencia).</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Sanción</th><th>Causa</th><th>Cuantía aproximada</th><th>Art. E.T.</th></tr></thead>
+      <tbody>
+        <tr><td>Inexactitud</td><td>Declaración con datos incorrectos</td><td>100% de la diferencia de impuesto</td><td>647</td></tr>
+        <tr><td>No declarar</td><td>Omitir la declaración estando obligado</td><td>20% de ingresos o patrimonio (la mayor)</td><td>643</td></tr>
+        <tr><td>Extemporaneidad</td><td>Declarar después del plazo</td><td>5% del impuesto por mes de retraso</td><td>641-642</td></tr>
+        <tr><td>No facturar</td><td>No expedir factura electrónica</td><td>1% de operaciones sin factura (con topes)</td><td>652</td></tr>
+        <tr><td>No informar</td><td>No reportar información exógena</td><td>Hasta 15.000 UVT (con gradualidad)</td><td>651</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo como servidor de la DIAN</div><div class="ejemplo-body"><p>Proyectas una liquidación de revisión que determina un mayor impuesto de $150 millones (diferencia entre lo que el contribuyente declaró y lo que realmente debía). La <strong>sanción por inexactitud</strong> es del 100% = $150 millones adicionales. Total que debe: $300 millones (impuesto + sanción). Pero el contribuyente, al recibir el requerimiento especial, puede aceptar los hechos: en ese caso, la sanción se <mark>reduce</mark> conforme al Art. 709. Es tu deber informarle esa posibilidad en el requerimiento.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Trampa: confundir "inexactitud" (100% de la diferencia) con "no declarar" (20% de ingresos). Otra trampa: creer que la sanción por extemporaneidad elimina la de no declarar. Si presentas la declaración antes del emplazamiento, pagas extemporaneidad; si la presentas después del emplazamiento pero antes del aforo, también (reducida); si nunca declaras, pagas la de no declarar (mucho más alta).</p></div>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"<strong>3-3-6</strong>: 3 años para notificar el requerimiento especial, 3 meses para que el contribuyente responda, 6 meses para proferir la liquidación de revisión. Si un término vence, la DIAN pierde competencia. El debido proceso siempre manda."</p></div></div>
+
+  <div class="fuentes">
+    <div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Consulta directamente las normas que sustentan este tema:</p>
+    <ul class="lista">
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/estatuto_tributario.html" target="_blank" rel="noopener">Estatuto Tributario</a> — Libro V, Títulos III (sanciones) y IV (determinación): Arts. 641-652, 684, 697, 702-720.</li>
+      <li><a href="https://estatuto.co/703" target="_blank" rel="noopener">Art. 703 E.T. — Requerimiento Especial</a> (consulta directa).</li>
+      <li><a href="https://estatuto.co/710" target="_blank" rel="noopener">Art. 710 E.T. — Liquidación de Revisión</a> (consulta directa).</li>
+      <li><a href="https://estatuto.co/705" target="_blank" rel="noopener">Art. 705 E.T. — Término para notificar requerimiento</a>.</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1437_2011.html" target="_blank" rel="noopener">Ley 1437 de 2011 (CPACA)</a> — Procedimiento administrativo y contencioso-administrativo (vía judicial).</li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">Constitución Política</a> — Art. 29 (debido proceso) y Art. 338 (legalidad tributaria).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ No los confundas</h2>
+  <p>Distinciones que la CNSC convierte en distractores en este tema.</p>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Requerimiento Ordinario</th><th>Requerimiento Especial</th></tr></thead>
+    <tbody>
+      <tr><td>Pide información y documentos (investigación)</td><td>Propone la MODIFICACIÓN de la declaración</td></tr>
+      <tr><td>No inicia el proceso de determinación</td><td>Es el acto que INICIA la determinación</td></tr>
+      <tr><td>Se puede enviar varias veces</td><td>Solo se puede proferir UNA VEZ (Art. 704)</td></tr>
+      <tr><td>Art. 684 (facultades)</td><td>Art. 703-704 (determinación)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Confundir "requerimiento ordinario" con "requerimiento especial". El ordinario INVESTIGA; el especial PROPONE LA MODIFICACIÓN. Son actos con naturaleza jurídica y efectos completamente diferentes.</p></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Liquidación de revisión</th><th>Liquidación de aforo</th></tr></thead>
+    <tbody>
+      <tr><td>Modifica una declaración YA presentada</td><td>Crea la declaración que el contribuyente NUNCA presentó</td></tr>
+      <tr><td>Presupuesto: requerimiento especial previo</td><td>Presupuesto: emplazamiento para declarar previo</td></tr>
+      <tr><td>Término: 6 meses post-respuesta</td><td>Término: 5 años desde el vencimiento del plazo para declarar</td></tr>
+      <tr><td>Sanción: inexactitud (100%)</td><td>Sanción: no declarar (20% de ingresos, mucho más alta)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Aplicar el término de la revisión (3 años + 6 meses) al aforo, o viceversa. El aforo tiene 5 años porque el incumplimiento es mayor.</p></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Sanción por inexactitud</th><th>Sanción por no declarar</th></tr></thead>
+    <tbody>
+      <tr><td>Declaró pero con datos incorrectos</td><td>NO declaró estando obligado</td></tr>
+      <tr><td>100% de la diferencia de impuesto</td><td>20% de ingresos o patrimonio (la mayor)</td></tr>
+      <tr><td>Acompaña a la liquidación de revisión</td><td>Acompaña a la liquidación de aforo</td></tr>
+      <tr><td>Se puede reducir aceptando en requerimiento</td><td>Se puede reducir declarando antes del emplazamiento/aforo</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>"Si no debe impuesto, no tiene sanción por no declarar". FALSO: si estaba obligado a declarar y no lo hizo, la sanción existe aunque el impuesto sea cero (se calcula sobre ingresos o patrimonio).</p></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2>
+  <p>Situaciones reales del proceso de determinación tributaria, resueltas con criterio.</p>
+  <div class="caso"><div class="caso-head">📂 Caso 1 · Término vencido</div><div class="caso-body"><span class="label">Situación</span><p>Tu jefe te pide proferir un requerimiento especial sobre una declaración de renta del AG 2021 cuyo plazo para declarar venció el 10 de agosto de 2022. Hoy es 15 de septiembre de 2025.</p><span class="label">Pregunta</span><p>¿Puedes proferir el requerimiento?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ NO.</strong> El término de 3 años venció el 10 de agosto de 2025. Hoy (septiembre 2025) ya pasó. La declaración está <mark>en firme</mark>. Debes informar a tu jefe que la DIAN perdió competencia temporal y no puede actuar sobre esa declaración.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 2 · Punto nuevo en la liquidación</div><div class="caso-body"><span class="label">Situación</span><p>El requerimiento especial propuso modificar los ingresos brutos. En la respuesta, detectas que también hay un costo improcedente que no se mencionó en el requerimiento.</p><span class="label">Pregunta</span><p>¿Puedes incluir ese costo en la liquidación de revisión?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ NO.</strong> La liquidación solo puede referirse a los <mark>mismos puntos del requerimiento especial</mark> (Art. 711). Incluir un punto nuevo vicia el acto de nulidad. Si quieres cuestionar ese costo, necesitarías un procedimiento diferente (si aún tienes término).</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 3 · Contribuyente no responde</div><div class="caso-body"><span class="label">Situación</span><p>Notificaste el requerimiento especial el 1 de marzo. Pasaron 3 meses (hasta el 1 de junio) y el contribuyente no respondió.</p><span class="label">Pregunta</span><p>¿Qué sigue?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Proferir la liquidación de revisión</strong> dentro de los 6 meses siguientes al vencimiento del plazo para responder (hasta el 1 de diciembre). La no respuesta no impide la actuación: la DIAN puede liquidar con base en las pruebas que tiene.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 4 · Silencio administrativo</div><div class="caso-body"><span class="label">Situación</span><p>El contribuyente interpuso recurso de reconsideración contra la liquidación. Pasó 1 año y la DIAN no resolvió.</p><span class="label">Pregunta</span><p>¿Qué efecto tiene?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Silencio administrativo positivo:</strong> se entiende que el acto fue <mark>revocado</mark> a favor del contribuyente. La liquidación oficial pierde efecto. Es un riesgo enorme para la DIAN: los expedientes deben resolverse a tiempo.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 5 · Emplazamiento para declarar</div><div class="caso-body"><span class="label">Situación</span><p>Detectas que un contribuyente no declaró renta. Quieres proferir la liquidación de aforo directamente.</p><span class="label">Pregunta</span><p>¿Puedes hacerlo sin más trámite?</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ NO.</strong> Antes del aforo, debes proferir el <mark>emplazamiento para declarar</mark> (Art. 715), dándole 1 mes al contribuyente. Solo si no declara en ese mes puedes proceder con el aforo. Saltarse el emplazamiento vicia el acto.</div></div></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Error 1 — Proferir la liquidación sin requerimiento especial previo</div><p><strong>Por qué falla:</strong> viola el debido proceso; el acto es nulo. <strong>Corrige:</strong> SIEMPRE requerimiento especial primero (excepto en corrección aritmética).</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — Incluir puntos nuevos en la liquidación que no estaban en el requerimiento</div><p><strong>Por qué falla:</strong> viola el principio de correspondencia (Art. 711). <strong>Corrige:</strong> la liquidación solo puede referirse a lo propuesto en el requerimiento.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Confundir el término de 3 años con el de 6 meses</div><p><strong>Por qué falla:</strong> vencer un término = perder competencia. <strong>Corrige:</strong> 3 años para el requerimiento; 6 meses para la liquidación (después de la respuesta).</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — Proferir aforo sin emplazamiento previo</div><p><strong>Por qué falla:</strong> el emplazamiento para declarar es requisito obligatorio antes del aforo. <strong>Corrige:</strong> siempre agotar el emplazamiento (1 mes para que declare).</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — Confundir requerimiento ordinario con requerimiento especial</div><p><strong>Por qué falla:</strong> tienen naturaleza, objeto y efectos distintos. <strong>Corrige:</strong> ordinario = pide info; especial = propone modificación.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 6 — No resolver el recurso de reconsideración a tiempo</div><p><strong>Por qué falla:</strong> genera silencio administrativo positivo (se revoca el acto). <strong>Corrige:</strong> resolver dentro del año; no dejar expedientes "dormidos".</p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Trucos para dominar el tema</h2>
+  <div class="box ok"><div class="box-title">✅ Tip 1 — Mnemotecnia 3-3-6</div><p><strong>3</strong> años para notificar el requerimiento especial, <strong>3</strong> meses para que el contribuyente responda, <strong>6</strong> meses para proferir la liquidación de revisión. Estos tres números resuelven la mayoría de preguntas de términos.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 — Ordinario investiga, Especial propone</div><p>Si te preguntan "pedir información" → requerimiento <strong>ordinario</strong>. Si te preguntan "proponer la modificación" → requerimiento <strong>especial</strong>.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 — Firmeza = paz para el contribuyente, presión para la DIAN</div><p>Si el término vence sin actuar, la declaración queda en firme y ya no se toca. Por eso controlar vencimientos es crítico.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 — Revisión modifica, Aforo crea</div><p>Liquidación de <strong>revisión</strong> = hay declaración pero está mal. Liquidación de <strong>aforo</strong> = NO hay declaración.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 — Silencio positivo en recurso = revocatoria</div><p>Si la DIAN no resuelve el recurso en 1 año, el acto se entiende revocado a favor del contribuyente. Siempre resolver a tiempo.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 — Inexactitud ≠ No declarar</div><p>Inexactitud (100% de la diferencia) cuando declaró mal. No declarar (20% de ingresos/patrimonio, mucho más alta) cuando no declaró. No confundirlas.</p></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2>
+  <div class="trampa"><div class="trampa-q">«La DIAN puede modificar la declaración directamente sin requerimiento especial cuando la evidencia es clara.»</div><div class="trampa-detail"><div class="t-row parece">"Si la prueba es evidente, ¿para qué un requerimiento?"</div><div class="t-row malo">Es trampa: el requerimiento especial es OBLIGATORIO antes de la liquidación de revisión, sin importar qué tan clara sea la prueba. El debido proceso no admite atajos.</div><div class="t-row bueno">Correcto: SIEMPRE requerimiento especial primero (Art. 703). El contribuyente tiene derecho a conocer y contradecir.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«El término de 3 años para notificar el requerimiento se cuenta desde la fecha en que la DIAN detectó la inconsistencia.»</div><div class="trampa-detail"><div class="t-row parece">"Tiene sentido: el término empieza cuando descubres el problema".</div><div class="t-row malo">Es trampa: el término se cuenta desde el VENCIMIENTO DEL PLAZO PARA DECLARAR (o desde la presentación, si fue extemporánea), no desde que la DIAN detecta algo.</div><div class="t-row bueno">Correcto: el reloj empieza a correr desde el plazo legal de la declaración, no desde que la DIAN actúa (Art. 705).</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Si el contribuyente no responde al requerimiento especial, la DIAN no puede proferir la liquidación.»</div><div class="trampa-detail"><div class="t-row parece">"Si no responde, no hay debate y no se puede actuar".</div><div class="t-row malo">Es trampa: la no respuesta no impide la actuación. Vencido el plazo de 3 meses, la DIAN puede proferir la liquidación dentro de los 6 meses siguientes.</div><div class="t-row bueno">Correcto: el silencio del contribuyente no paraliza el proceso; la DIAN actúa con las pruebas que tiene.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«La sanción por no declarar se calcula igual que la de inexactitud (100% de la diferencia de impuesto).»</div><div class="trampa-detail"><div class="t-row parece">"Todas las sanciones se calculan sobre la diferencia de impuesto".</div><div class="t-row malo">Es trampa: la de no declarar se calcula sobre los INGRESOS o el PATRIMONIO (20%, la mayor), no sobre la diferencia de impuesto. Es mucho más alta precisamente porque el incumplimiento es total.</div><div class="t-row bueno">Correcto: inexactitud = 100% de la diferencia de impuesto; no declarar = 20% de ingresos/patrimonio.</div></div></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Repasa con flashcards</h2>
+  <p>Toca la tarjeta para ver la respuesta. Repásalas hasta responderlas sin dudar.</p>
+  <div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 10</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen y glosario</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Determinación</h4><p>Proceso con el que la DIAN fija oficialmente la obligación tributaria correcta cuando la del contribuyente tiene errores.</p></div>
+    <div class="resumen-item"><h4>Requerimiento Especial</h4><p>Acto previo obligatorio (Art. 703): propone la modificación. Sin él, no hay liquidación válida.</p></div>
+    <div class="resumen-item"><h4>Liquidación de Revisión</h4><p>Acto definitivo (Art. 710): modifica la declaración. Solo sobre los mismos puntos del requerimiento.</p></div>
+    <div class="resumen-item"><h4>Liquidación de Aforo</h4><p>Determina la obligación cuando el contribuyente NO declaró (Art. 715). Requiere emplazamiento previo.</p></div>
+    <div class="resumen-item"><h4>Términos (3-3-6)</h4><p>3 años para requerir, 3 meses para responder, 6 meses para liquidar. Si vencen, firmeza.</p></div>
+    <div class="resumen-item"><h4>Recurso de Reconsideración</h4><p>2 meses para interponerlo; 1 año para resolverlo (si no: silencio positivo).</p></div>
+  </div>
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3>
+  <dl class="glosario">
+    <dt>Determinación tributaria</dt><dd>Procedimiento por el cual la DIAN establece oficialmente la obligación correcta del contribuyente.</dd>
+    <dt>Requerimiento especial</dt><dd>Acto previo obligatorio que propone todos los puntos a modificar de la declaración (Art. 703 E.T.).</dd>
+    <dt>Liquidación oficial</dt><dd>Acto definitivo de la DIAN que fija la obligación correcta (revisión, aforo o corrección).</dd>
+    <dt>Firmeza</dt><dd>Momento en que la declaración ya no puede ser modificada porque venció el término legal.</dd>
+    <dt>Silencio administrativo positivo</dt><dd>Si la DIAN no resuelve el recurso en 1 año, el acto se entiende revocado a favor del contribuyente.</dd>
+    <dt>Sanción por inexactitud</dt><dd>100% de la diferencia entre el impuesto declarado y el determinado por la DIAN (Art. 647 E.T.).</dd>
+    <dt>Principio de correspondencia</dt><dd>La liquidación de revisión solo puede referirse a los mismos puntos del requerimiento especial (Art. 711).</dd>
+  </dl>
+  <div class="box gold"><div class="box-title">💎 Para recordar</div><p>El proceso de determinación tributaria es el <strong>corazón del trabajo de fiscalización</strong>. Domina los actos (requerimiento → liquidación → recurso), los términos (3-3-6) y el principio: <mark>sin debido proceso, todo se anula</mark>.</p></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+  <div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta presenta un caso real del proceso de determinación tributaria y te pide la actuación más apropiada, con 4 opciones (A, B, C, D); solo una es correcta. Al elegir, te explicamos por qué cada opción es correcta o incorrecta. Las opciones se barajan en cada intento.</p><div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div></div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-DIAN-02 · Determinación y Control Tributario · Día 10 · Ascenso Público<br>© Ascenso Público. Material de preparación para el concurso de méritos de la CNSC. No afiliado a la DIAN ni a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton": "✅ Finalizar Día 9", "alerta": "¡Felicitaciones! Terminaste el Día 10 · Determinación y Control Tributario, Aduanero y Cambiario.\n\nSigue con el Día 10 · FUN-DIAN-02 · Determinación y Control Tributario."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(b.dataset.ok==='1')b.classList.add('cp-ok');});
+      if(btn.dataset.ok!=='1')btn.classList.add('cp-no');
+      fb.innerHTML=(btn.dataset.ok==='1'?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>Revisa:</strong> ')+btn.dataset.exp;
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[
+    { f:'¿Qué es la determinación tributaria?', b:'El procedimiento con el que la DIAN establece oficialmente la obligación correcta cuando la declaración del contribuyente tiene inexactitudes o cuando no declaró.' },
+    { f:'¿Qué es el requerimiento especial (Art. 703)?', b:'El acto previo y obligatorio con el que la DIAN propone TODOS los puntos que quiere modificar de la declaración, con razones y pruebas. Sin él, la liquidación es nula.' },
+    { f:'¿Cuánto tiempo tiene la DIAN para notificar el requerimiento especial?', b:'3 AÑOS desde el vencimiento del plazo para declarar (o desde la presentación si fue extemporánea). Art. 705 E.T.' },
+    { f:'¿Cuánto tiempo tiene el contribuyente para responder el requerimiento especial?', b:'3 MESES desde la notificación (Art. 707 E.T.).' },
+    { f:'¿Cuánto tiempo tiene la DIAN para proferir la liquidación de revisión?', b:'6 MESES desde la respuesta del contribuyente (o desde el vencimiento del plazo para responder). Art. 710 E.T.' },
+    { f:'¿Puede la liquidación de revisión incluir puntos que NO estaban en el requerimiento?', b:'NO. Solo puede referirse a los mismos puntos (principio de correspondencia, Art. 711). Si incluye puntos nuevos, es nula.' },
+    { f:'¿Qué es la liquidación de aforo?', b:'El acto con el que la DIAN determina la obligación cuando el contribuyente NO declaró estando obligado (Art. 715). Requiere emplazamiento previo.' },
+    { f:'¿Qué es el recurso de reconsideración?', b:'El recurso que el contribuyente interpone contra liquidaciones oficiales o sanciones. Plazo: 2 meses. La DIAN tiene 1 año para resolverlo; si no lo hace, opera silencio positivo (se revoca).' },
+    { f:'¿Qué es la firmeza de la declaración?', b:'El momento en que la declaración ya NO puede ser modificada porque venció el término legal sin que la DIAN actuara.' },
+    { f:'Mnemotecnia: 3-3-6, ¿qué significa?', b:'3 años para notificar el requerimiento, 3 meses para responder, 6 meses para proferir la liquidación de revisión.' }
+  ];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+    { nivel:'b', tema:'Requerimiento especial', ctx:'Eres gestor de fiscalización en una Dirección Seccional de la DIAN. Tras varios meses de investigación, concluyes que un contribuyente persona jurídica omitió ingresos por $600 millones en su declaración de renta. Tu jefe te pide que proyectes el acto administrativo para proponer la modificación de la declaración. El equipo está presionado por el volumen de expedientes y un compañero sugiere "ir directo a la liquidación oficial para ahorrar tiempo, ya que la prueba es contundente".', q:'Conforme al procedimiento tributario del Estatuto Tributario, ¿cuál es la actuación correcta?', ops:['Proferir directamente la liquidación oficial de revisión, dado que la prueba es contundente y así se ahorra tiempo en el proceso.','Proyectar primero el REQUERIMIENTO ESPECIAL (Art. 703 E.T.) con todos los puntos propuestos, las razones, las pruebas y la cuantificación; notificarlo al contribuyente y darle 3 meses para responder antes de proferir la liquidación.','Enviar un requerimiento ordinario pidiendo más información antes de decidir si actúa o no, sin proponer ninguna modificación aún.','Proferir un emplazamiento para declarar, dado que el contribuyente omitió ingresos y eso equivale a no haber declarado.'], correcta:1, expl:['Proferir la liquidación sin requerimiento especial previo viola el debido proceso y el acto sería nulo, sin importar qué tan clara sea la prueba.','✔ El requerimiento especial (Art. 703) es el acto PREVIO OBLIGATORIO: propone la modificación, da las razones y las pruebas, y le permite al contribuyente responder. Sin él, no puede haber liquidación de revisión válida.','El requerimiento ordinario pide información (investigación); aquí ya se tiene la prueba y se necesita PROPONER la modificación → eso es el requerimiento especial.','El emplazamiento para declarar procede cuando el contribuyente NO declaró; aquí sí declaró (pero con errores). Se necesita requerimiento especial, no emplazamiento.'] },
+    { nivel:'b', tema:'Términos de firmeza', ctx:'Un contribuyente presentó su declaración de renta del año gravable 2022 el 8 de agosto de 2023, dentro del plazo legal que vencía el 10 de agosto de 2023. Tu división quiere iniciar un programa de fiscalización sobre esa declaración. La fecha de hoy es 12 de agosto de 2026.', q:'¿La DIAN todavía tiene competencia para notificar el requerimiento especial sobre esa declaración?', ops:['Sí, porque han pasado menos de 5 años desde la presentación de la declaración.','No, porque el término de 3 años para notificar el requerimiento venció el 10 de agosto de 2026 (3 años desde el vencimiento del plazo para declarar) y hoy es 12 de agosto; la declaración quedó en FIRME.','Sí, porque el término se cuenta desde que la DIAN detecta la inconsistencia, no desde la fecha de la declaración.','Sí, siempre y cuando la DIAN profiera primero un auto de apertura de investigación que suspenda el término.'], correcta:1, expl:['5 años es el término para la liquidación de aforo, no para el requerimiento especial (que es de 3 años).','✔ El término de 3 años (Art. 705) se cuenta desde el vencimiento del plazo para declarar (10/ago/2023); venció el 10/ago/2026. Como hoy es 12/ago/2026, la declaración está en FIRME y la DIAN perdió competencia.','El término NO se cuenta desde que la DIAN detecta algo; se cuenta desde el vencimiento del plazo legal para declarar, sin importar cuándo actúe la DIAN.','No existe la figura de "auto que suspende el término de firmeza"; los términos del E.T. son perentorios e improrrogables.'] },
+    { nivel:'b', tema:'Liquidación de revisión vs. aforo', ctx:'Al revisar tus expedientes encuentras dos casos distintos: (A) un contribuyente que presentó declaración de IVA pero registró ventas gravadas por $200M cuando la información exógena muestra $500M; (B) un contribuyente que estaba obligado a declarar renta y simplemente nunca presentó la declaración.', q:'¿Qué tipo de liquidación oficial corresponde a CADA caso?', ops:['Ambos casos requieren liquidación de aforo, porque en los dos hay un incumplimiento del contribuyente.','El caso A requiere liquidación de REVISIÓN (modificar la declaración existente); el caso B requiere liquidación de AFORO (determinar la obligación porque no hay declaración).','Ambos requieren liquidación de revisión, porque en los dos hay un valor diferente al correcto.','El caso A requiere un requerimiento ordinario y el caso B una liquidación de corrección aritmética.'], correcta:1, expl:['El aforo solo procede cuando NO hay declaración. En el caso A sí hay declaración (pero con errores), así que corresponde revisión.','✔ Revisión = hay declaración pero con errores (caso A). Aforo = no hay declaración (caso B). Son procedimientos distintos con términos y presupuestos diferentes.','La liquidación de revisión modifica una declaración existente; no puede "crear" una que no existe. El caso B requiere aforo.','El requerimiento ordinario pide información (no modifica). La corrección aritmética solo aplica a errores de cálculo, no a omisión de ingresos ni a no declarar.'] },
+    { nivel:'b', tema:'Sanciones', ctx:'Un contribuyente persona natural estaba obligado a presentar su declaración de renta del AG 2023. El plazo venció en agosto de 2024 y nunca la presentó. Seis meses después, la DIAN le notifica un emplazamiento para declarar dándole un mes de plazo. El contribuyente presenta la declaración dentro de ese mes.', q:'¿Qué sanción aplica en este caso?', ops:['Sanción por NO DECLARAR (Art. 643, 20% de ingresos), porque la DIAN ya tuvo que emplazarlo.','Sanción por EXTEMPORANEIDAD (Art. 641-642, 5% del impuesto por mes de retraso), porque al final sí presentó la declaración dentro del plazo del emplazamiento.','No aplica sanción porque declaró dentro del plazo que le dio la DIAN.','Sanción por inexactitud (100% de la diferencia), porque su declaración es extemporánea.'], correcta:1, expl:['La sanción por no declarar (Art. 643) se impone cuando la DIAN profiere la liquidación de AFORO; aquí el contribuyente SÍ declaró (dentro del plazo del emplazamiento), así que no se llega al aforo.','✔ Si el contribuyente declara después del plazo legal pero dentro del emplazamiento, paga sanción por EXTEMPORANEIDAD (que es menor que la de no declarar). Declarar antes del aforo lo protege de la sanción más gravosa.','Siempre hay sanción por presentar después del plazo legal; el emplazamiento no elimina la extemporaneidad.','La inexactitud aplica cuando la declaración tiene datos incorrectos, no por el hecho de ser extemporánea.'] },
+    { nivel:'i', tema:'Principio de correspondencia', ctx:'Proferiste un requerimiento especial contra un contribuyente proponiendo modificar únicamente los INGRESOS BRUTOS (renglón 39) de su declaración de renta. El contribuyente respondió y en tu análisis de la respuesta detectas que, además de los ingresos, hay un COSTO que también es improcedente por $200 millones. Estás a punto de proyectar la liquidación de revisión.', q:'¿Puedes incluir la glosa del costo improcedente en la liquidación de revisión?', ops:['Sí, porque la liquidación es el acto definitivo y puede incluir cualquier hallazgo que la DIAN tenga al momento de proferirla.','No, porque la liquidación de revisión SOLO puede referirse a los puntos propuestos en el requerimiento especial (principio de correspondencia, Art. 711). El costo no estaba en el requerimiento; incluirlo vicia de nulidad el acto.','Sí, siempre y cuando se le notifique al contribuyente la adición antes de proferir la liquidación.','Sí, pero solo si el monto del costo improcedente es menor que el de los ingresos ya propuestos en el requerimiento.'], correcta:1, expl:['La liquidación NO puede ir más allá de lo propuesto en el requerimiento; es una garantía del debido proceso.','✔ Art. 711 E.T.: la liquidación de revisión solo puede referirse a los MISMOS PUNTOS del requerimiento especial. Incluir el costo (no propuesto) vicia el acto de nulidad. Si la DIAN quiere cuestionar ese costo, necesitaría otro procedimiento (si aún tiene término).','No existe la figura de "adición al requerimiento" o notificación previa a la liquidación que permita agregar puntos nuevos.','El monto no es el criterio: la regla es que SOLO los puntos del requerimiento pueden estar en la liquidación, sin importar el valor.'] },
+    { nivel:'i', tema:'Término de la liquidación de revisión', ctx:'Notificaste el requerimiento especial el 1 de febrero. El contribuyente respondió el 20 de abril (dentro de los 3 meses). Evaluaste la respuesta y concluyiste que los argumentos no desvirtúan tu propuesta. Hoy es 25 de octubre y aún no has proyectado la liquidación de revisión. Tu jefe te pregunta el estado del caso.', q:'¿Cuál es la situación del expediente y qué debes hacer?', ops:['Tienes tiempo hasta el 20 de octubre del año siguiente (6 meses desde la respuesta + 6 meses adicionales), así que no hay prisa.','El término de 6 meses para proferir la liquidación empezó a correr el 20 de abril (fecha de la respuesta) y vence el 20 de OCTUBRE. Como hoy es 25 de octubre, ya venciste el término y la DIAN PERDIÓ COMPETENCIA sobre esos puntos; la declaración quedó en firme.','Puedes proferir la liquidación en cualquier momento porque el requerimiento ya fue notificado y respondido; no hay un término adicional.','El término de 6 meses se cuenta desde la fecha del requerimiento (1 de febrero), no desde la respuesta; por tanto vencería el 1 de agosto, y ya perdiste competencia desde entonces.'], correcta:1, expl:['No existe un plazo de 6 + 6 meses. El término es de 6 meses contados desde la respuesta (o desde el vencimiento del plazo para responder).','✔ El Art. 710 da 6 meses desde la respuesta (20/abr → vence 20/oct). Como hoy es 25/oct, el término venció y la DIAN perdió competencia. La propuesta del requerimiento "cae" y la declaración se mantiene. Esto es exactamente lo que NO debe pasar como gestor.','Sí hay un término adicional después del requerimiento: 6 meses para la liquidación (Art. 710). Si vence, se pierde la oportunidad.','El término de 6 meses se cuenta desde la RESPUESTA del contribuyente (o desde el vencimiento del plazo para responder), no desde el requerimiento.'] },
+    { nivel:'i', tema:'Recurso de reconsideración', ctx:'La DIAN profirió una liquidación de revisión contra un contribuyente con un mayor impuesto de $300 millones + sanción por inexactitud de $300 millones (total $600M). El contribuyente interpuso recurso de reconsideración dentro de los 2 meses. Han pasado 13 meses desde que se interpuso el recurso y la DIAN aún no lo ha resuelto.', q:'¿Cuál es el efecto jurídico de no haber resuelto el recurso dentro del año?', ops:['No pasa nada: la DIAN puede resolverlo cuando tenga tiempo, porque no hay consecuencia por la demora.','Opera el SILENCIO ADMINISTRATIVO POSITIVO: se entiende que la liquidación fue REVOCADA a favor del contribuyente. Los $600 millones ya no son exigibles. La DIAN perdió el caso por no resolver a tiempo.','La liquidación se confirma automáticamente si la DIAN no resuelve, porque el silencio es "negativo" en materia tributaria.','El recurso se entiende desistido por parte del contribuyente si la DIAN no lo resuelve.'], correcta:1, expl:['La ley SÍ establece una consecuencia grave por la demora: el silencio administrativo positivo.','✔ Art. 734 E.T.: si la DIAN no resuelve el recurso de reconsideración dentro del año, opera el silencio administrativo POSITIVO → el acto se entiende fallado a favor del contribuyente (revocado). Es una de las consecuencias más graves de la negligencia administrativa.','En el recurso de reconsideración tributario el silencio es POSITIVO, no negativo (a diferencia de otras áreas del derecho administrativo).','El recurso no se puede "desistir por silencio de la administración"; la consecuencia la sufre la DIAN, no el contribuyente.'] },
+    { nivel:'i', tema:'Emplazamiento y aforo', ctx:'Detectas que una sociedad comercial con ingresos de $2.000 millones en 2023 no presentó declaración de renta. Quieres determinar la obligación oficialmente. Tu compañero te dice "profiere el aforo directamente, tenemos toda la prueba de los ingresos".', q:'¿Puedes proferir la liquidación de aforo directamente sin más trámite?', ops:['Sí, porque la prueba de los ingresos es suficiente y el contribuyente ya incumplió al no declarar.','No: antes del aforo debes proferir el EMPLAZAMIENTO PARA DECLARAR (Art. 715), que le da al contribuyente 1 MES para que presente la declaración. Solo si no declara en ese plazo, procedes con el aforo.','Sí, pero solo si los ingresos superan cierto umbral de relevancia fiscal.','No, porque primero debes proferir un requerimiento especial, igual que en la liquidación de revisión.'], correcta:1, expl:['Sin importar qué tan clara sea la prueba, el emplazamiento previo es un requisito procedimental obligatorio. Omitirlo vicia el aforo.','✔ Antes del aforo, la DIAN debe agotar el emplazamiento para declarar (Art. 715): le da 1 mes al contribuyente para que declare (con sanción de extemporaneidad). Solo si no lo hace, procede el aforo. Es una garantía del debido proceso.','No existe un umbral de relevancia que exima del emplazamiento; es un requisito para TODOS los aforos.','El requerimiento especial procede para modificar declaraciones EXISTENTES. Cuando no hay declaración, el camino es el emplazamiento + aforo, no el requerimiento especial.'] },
+    { nivel:'i', tema:'Facultades de investigación', ctx:'Estás investigando a un contribuyente que sospechosamente tiene un patrimonio muy superior a lo que reportan sus declaraciones. Necesitas verificar sus cuentas bancarias, las operaciones reportadas por sus clientes y revisar su contabilidad en su oficina. Un compañero te dice que "puedes ir directamente a su empresa y revisar todo sin avisar, porque las facultades de la DIAN son amplias".', q:'¿Es correcta esa apreciación? ¿Puedes presentarte sin más a revisar la contabilidad?', ops:['Sí, las facultades del Art. 684 son tan amplias que la DIAN puede presentarse sin aviso en cualquier momento.','No: la inspección contable y la inspección tributaria requieren un AUTO PREVIO que las autorice. Las facultades son amplias pero NO ilimitadas: deben ejercerse con motivación, auto previo cuando corresponda y dentro de los términos de firmeza.','Sí, pero solo si el contribuyente tiene un patrimonio superior a 10.000 UVT.','No, porque esas visitas solo las puede hacer la policía fiscal, no los gestores de la DIAN.'], correcta:1, expl:['Las facultades son amplias pero reguladas: las inspecciones requieren auto de autorización y se deben ejercer dentro de los términos legales. No son "ilimitadas".','✔ La inspección tributaria (Art. 779) y la inspección contable (Art. 782) requieren AUTO PREVIO. Las facultades son amplias pero deben respetar el debido proceso, los términos de firmeza y la reserva de la información.','No existe un umbral de patrimonio que determine si se puede o no hacer una inspección; el requisito es el auto previo.','Los gestores de fiscalización SÍ pueden adelantar inspecciones; no es exclusivo de "policía fiscal" (que además no existe como tal en la DIAN).'] },
+    { nivel:'a', tema:'Integración del proceso completo', ctx:'Llevas un caso completo de determinación: notificaste el requerimiento especial por ingresos no declarados de $800M + sanción por inexactitud propuesta. El contribuyente respondió argumentando que esos ingresos corresponden a préstamos (no a ventas). Evaluaste la respuesta y concluyeste que no tiene soporte: los "préstamos" no tienen contratos, los movimientos bancarios no coinciden y la información exógena confirma que son ventas. Vas a proyectar la liquidación de revisión.', q:'¿Qué debe contener la liquidación de revisión para que sea válida y soportada?', ops:['Solo el mayor impuesto determinado y la sanción calculada; no es necesario explicar por qué se rechazó la respuesta del contribuyente.','La liquidación debe incluir: (a) los mismos puntos del requerimiento; (b) la MOTIVACIÓN de por qué los argumentos de la respuesta no desvirtuaron la propuesta; (c) la valoración de las pruebas; (d) la cuantificación del mayor impuesto y la sanción; (e) la notificación dentro de los 6 meses. Si falta motivación, el acto puede ser anulado por la jurisdicción.','El mayor impuesto, la sanción y una copia del requerimiento especial como único sustento.','Solo necesitas indicar que el contribuyente no aportó pruebas suficientes; la motivación detallada solo se exige si el contribuyente tiene abogado.'], correcta:1, expl:['Una liquidación sin motivación (sin explicar por qué se rechazan los argumentos del contribuyente) es vulnerable a demanda de nulidad por falta de motivación del acto.','✔ La liquidación de revisión debe ser un acto MOTIVADO: explicar punto por punto por qué la respuesta del contribuyente no convenció, valorar las pruebas de ambas partes, cuantificar y notificar dentro del término. La motivación es una garantía del debido proceso.','Una copia del requerimiento no sustituye la motivación de la liquidación; son actos con contenido propio.','La motivación es obligatoria SIEMPRE, independientemente de si el contribuyente tiene abogado o no; es un requisito del acto administrativo.'] },
+    { nivel:'a', tema:'Firmeza y pérdida de competencia', ctx:'Tu división tiene un expediente de alto impacto: un contribuyente con ingresos omitidos por $3.000 millones. El caso se abrió hace años pero, por falta de personal y priorización, el requerimiento especial nunca se notificó. El jefe te pide revisarlo urgentemente. Al calcular los términos, descubres que el plazo de 3 años para notificar el requerimiento venció hace 15 días.', q:'¿Qué implicaciones tiene este hallazgo y cuál es la actuación correcta?', ops:['Notificar el requerimiento de todas formas y argumentar que la demora fue por fuerza mayor (falta de personal).','Reconocer que la declaración está EN FIRME: la DIAN perdió la competencia temporal para modificarla. Documentar la situación, informar al jefe y cerrar el expediente con la anotación correspondiente. No se puede actuar sobre una declaración firme.','Proferir directamente una liquidación de aforo, ya que el término del aforo (5 años) aún no ha vencido.','Solicitar al Director Seccional que expida un auto prorrogando el término del requerimiento especial.'], correcta:1, expl:['La "fuerza mayor" por falta de personal no es causal legal para reabrir términos perentorios del E.T. El término venció y punto.','✔ Si el término de 3 años para el requerimiento venció, la declaración está en FIRME (Art. 714). La DIAN ya no tiene competencia para actuar sobre ella, sin importar el monto ni la evidencia. Lo correcto es documentar la situación y cerrar. Es un riesgo que se debe gestionar (no dejar expedientes "dormidos").','El aforo procede cuando NO hay declaración; aquí SÍ hay declaración (presentada). No se puede aforar una declaración existente.','Los términos del E.T. son perentorios: no existe la figura de "prórroga por auto del Director". No hay forma legal de extenderlos.'] },
+    { nivel:'a', tema:'Sanción por inexactitud y reducción', ctx:'Proferiste un requerimiento especial por $500 millones de ingresos no declarados, proponiendo un mayor impuesto de $175 millones y una sanción por inexactitud del 100% ($175 millones). El contribuyente responde aceptando la totalidad de los hechos propuestos y solicita la reducción de la sanción conforme al Art. 709 del E.T. Sin embargo, tu compañero opina que "si aceptó, simplemente se profiere la liquidación con la sanción completa porque ya admitió que evadió".', q:'¿Cuál es la actuación correcta conforme al E.T. cuando el contribuyente acepta los hechos del requerimiento y pide la reducción?', ops:['Proferir la liquidación con la sanción completa (100%), porque aceptar los hechos no da derecho automático a reducción.','Aplicar la REDUCCIÓN de la sanción conforme al Art. 709 E.T.: si el contribuyente acepta total o parcialmente los hechos del requerimiento y paga o acuerda el pago dentro del plazo para responder, tiene derecho a la reducción de la sanción. Negar esa reducción sin fundamento vulnera la norma.','No proferir la liquidación: si el contribuyente aceptó, el caso se cierra sin acto administrativo alguno.','Reducir la sanción solo si el contribuyente paga en una sola cuota y en efectivo, no en cuotas.'], correcta:1, expl:['El Art. 709 establece expresamente el derecho a la reducción cuando se aceptan los hechos del requerimiento; negarlo sería contrario a la ley.','✔ El Art. 709 E.T. prevé la reducción de la sanción cuando el contribuyente acepta los hechos propuestos en el requerimiento especial y cumple las condiciones (pagar o acordar pago). Es un mecanismo legal que la DIAN debe aplicar cuando se cumplen los requisitos. Es eficiente para el sistema y un derecho del contribuyente.','Aunque haya aceptación, la DIAN debe proferir la liquidación oficial (con la sanción reducida) para que el acto quede formalizado.','La norma no exige pago en una sola cuota ni en efectivo como condición para la reducción; basta con pagar o acordar el pago dentro del plazo.'] }
+  ];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+// Baraja una copia de un arreglo (Fisher-Yates). Se usa para que las
+// opciones A/B/C/D salgan en orden ALEATORIO en cada carga: el estudiante
+// entrena criterio, no la posición de la respuesta (estándar tipo CNSC).
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]); // posición visible (0..3) -> índice original de la opción
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido; // guardamos el ÍNDICE ORIGINAL elegido (el scoring sigue igual)
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+
+<script>
+/* Mejora dinámica v3.1: los bloques principales de cada sección aparecen con
+   una animación escalonada al entrar a la sección, y un botón flotante permite
+   volver arriba. IIFE independiente, no toca la lógica existente. */
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .normativa, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+</body>
+</html>
