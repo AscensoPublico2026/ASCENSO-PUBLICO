@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-DIAN-09 · Herramientas Informáticas e Informes de Gestión — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-DIAN-09</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 20 · Funcional DIAN</div>
+  <h1>Herramientas Informáticas e Informes de Gestión</h1>
+  <p class="header-sub">Domina las 7 dimensiones del MIPG, el ciclo PHVA institucional, las políticas de gestión y desempeño, y cómo aplica cada dimensión al trabajo diario de un servidor público de nivel profesional en la DIAN.</p>
+  <div class="badges"><span class="badge">📅 Día 20 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Es martes a las 8am. Tu jefe de división te convoca y dice: "Tenemos reunión con el Director Seccional el viernes. Necesito que prepares un informe con los siguientes datos de nuestra división: (1) cuántos casos de fiscalización cerramos este trimestre; (2) cuánto recaudamos por gestión de fiscalización; (3) cuántos actos fueron anulados y por qué; (4) cuáles son los sectores económicos con mayor brecha tributaria en nuestra seccional; (5) un comparativo con el mismo trimestre del año anterior. Ah, y también necesito que me expliques cómo funciona el nuevo módulo de cruces automatizados que implementó la Subdirección de Fiscalización — porque el Director va a preguntar cómo lo estamos usando". ¿Sabes de dónde sacar cada dato? ¿Qué sistemas consultar? ¿Cómo construir un informe de gestión que sea útil para la toma de decisiones? ¿Cómo funciona el módulo de cruces?</p>
+    <p>Hoy vas a dominar <strong>las herramientas tecnológicas de la DIAN</strong> (MUISCA, facturación electrónica, firma digital, RUT, información exógena, cruces automatizados) y la construcción de <strong>informes estadísticos y de gestión</strong> que alimentan la toma de decisiones institucionales.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>El <strong>MUISCA</strong> (Modelo Único de Ingresos, Servicio y Control Automatizado): qué es, módulos, rol del gestor.</li>
+      <li>La <strong>facturación electrónica</strong> como herramienta de control tributario.</li>
+      <li>La <strong>firma digital y electrónica</strong> en los actos administrativos de la DIAN.</li>
+      <li>El <strong>RUT</strong> como registro central y su importancia en la fiscalización.</li>
+      <li>La <strong>información exógena</strong>: qué es, quién la reporta, cómo se usa para cruces.</li>
+      <li>Los <strong>cruces de información</strong> automatizados y la selección de contribuyentes.</li>
+      <li>Los <strong>informes estadísticos</strong> de gestión fiscal: estructura, indicadores clave.</li>
+      <li>Los <strong>indicadores de productividad</strong> de la división de fiscalización.</li>
+      <li>Cómo construir un <strong>informe para la Alta Dirección</strong> con datos accionables.</li>
+      <li>La <strong>analítica de datos</strong> y la inteligencia artificial en fiscalización.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día serás capaz de navegar con solvencia las herramientas tecnológicas de la DIAN, extraer datos para construir informes de gestión y responder cualquier pregunta de la prueba sobre sistemas de información tributaria — todo con la perspectiva práctica de un <mark>Gestor I que usa estas herramientas diariamente</mark>.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>La DIAN es una de las entidades públicas más <mark>tecnificadas</mark> de Colombia. Su operación depende casi totalmente de sistemas de información: MUISCA gestiona toda la tributación, la facturación electrónica captura transacciones en tiempo real, los cruces de información identifican evasores automáticamente, y los actos administrativos se firman y notifican digitalmente. Un Gestor I que no domine estas herramientas sería como un cirujano que no sabe usar el bisturí.</p>
+  <p>Para la <strong>prueba CNSC</strong>, este tema es relevante porque:</p>
+  <ul class="lista">
+    <li>La CNSC evalúa si el aspirante conoce las <strong>herramientas del cargo</strong> — no solo la teoría jurídica.</li>
+    <li>Las preguntas situacionales frecuentemente dicen: "Al consultar el MUISCA, el gestor encuentra que..." — debes saber qué tipo de información hay en el sistema.</li>
+    <li>Los <strong>informes de gestión</strong> conectan con el MIPG (Dimensión 4: Evaluación de Resultados) que estudiaste el Día 18.</li>
+    <li>La <strong>facturación electrónica</strong> es la herramienta de control más poderosa que tiene la DIAN actualmente — y la prueba lo sabe.</li>
+  </ul>
+  <p>Además, los concursos recientes incluyen preguntas sobre <strong>Gobierno Digital</strong> (política del MIPG, Dimensión 3): cómo la tecnología mejora la gestión pública. Si dominas las herramientas tecnológicas de la DIAN, puedes responder tanto las preguntas "funcionales" (sobre fiscalización) como las "transversales" (sobre gobierno digital).</p>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con guías anteriores</div>
+    <p>El Día 18 (MIPG) aprendiste sobre Gobierno Digital como política de la Dimensión 3. El Día 19 (Gestión Documental) viste el expediente electrónico y la radicación digital. Hoy profundizas en las <strong>herramientas específicas de la DIAN</strong> y en cómo se construyen los informes que alimentan la evaluación de resultados (Dimensión 4).</p>
+  </div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Herramientas Informáticas de la DIAN e Informes Estadísticos de Gestión Tributaria</h2>
+  <p>Esta sección desarrolla en profundidad las herramientas tecnológicas de la DIAN y la construcción de informes de gestión, con teoría completa, ejemplos prácticos aplicados al cargo de Gestor I, ejercicios y checkpoints. El hilo conductor es el encargo de tu jefe: preparar el informe trimestral para el Director Seccional y explicar el módulo de cruces automatizados.</p>
+
+  <div class="mmap-t">🧠 Ecosistema tecnológico de la DIAN</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">💻</span><h5>MUISCA</h5><p>Sistema central: declaraciones, pagos, RUT</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧾</span><h5>Factura Electrónica</h5><p>Transacciones en tiempo real</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📊</span><h5>Exógena + Cruces</h5><p>Detección automática de brechas</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📈</span><h5>Informes de Gestión</h5><p>Indicadores para decisiones</p></div>
+  </div>
+
+  <!-- MÓDULO 1 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>MUISCA: el corazón tecnológico de la DIAN</h3></div>
+    <div class="def-panel"><span class="def-label">Definición</span>
+      <p>El <mark>MUISCA</mark> (Modelo Único de Ingresos, Servicio y Control Automatizado) es la plataforma tecnológica integral de la DIAN que soporta todos los procesos misionales: tributación, aduanas, cambiario y servicio al ciudadano. Es el sistema donde se presentan declaraciones, se pagan impuestos, se registra el RUT, se notifican actos y se gestionan los expedientes de fiscalización.</p>
+    </div>
+    <div class="b-texto">
+      <p>El MUISCA fue desarrollado internamente por la DIAN y puesto en producción en 2005. Es uno de los sistemas de información tributaria más grandes y completos de Latinoamérica. Contiene la información de <strong>más de 20 millones de registros del RUT</strong>, procesa millones de declaraciones tributarias al año, y gestiona los expedientes de miles de investigaciones de fiscalización simultáneamente.</p>
+      <p>Los <strong>módulos principales</strong> del MUISCA que usarás como Gestor de Fiscalización son:</p>
+      <p>• <strong>Módulo de Obligaciones Tributarias:</strong> aquí puedes consultar las declaraciones presentadas por un contribuyente (renta, IVA, retención, ICA), verificar si están al día, comparar períodos y detectar inconsistencias. Es tu punto de partida para cualquier investigación.<br>
+      • <strong>Módulo de Recaudo y Pagos:</strong> muestra los pagos efectuados por cada contribuyente: cuánto pagó, cuándo, por qué concepto, y si tiene saldos pendientes o a favor.<br>
+      • <strong>Módulo de RUT:</strong> el Registro Único Tributario contiene la información de identificación, ubicación, actividad económica, responsabilidades tributarias y dirección de notificación de cada contribuyente. Es la <mark>base de datos maestra</mark> de la DIAN.<br>
+      • <strong>Módulo de Fiscalización:</strong> donde se gestionan los expedientes electrónicos de cada caso (apertura, asignación, requerimientos, respuestas, actos, cierre). Aquí viven los casos que llevas.<br>
+      • <strong>Módulo de Información Exógena:</strong> contiene los reportes de terceros (bancos, empresas, notarías, registradurías) que permiten cruzar la información declarada con la información reportada.<br>
+      • <strong>Módulo de Facturación Electrónica:</strong> recibe en tiempo real las facturas electrónicas emitidas y recibidas por cada contribuyente — una revolución en el control tributario.</p>
+      <p>Como Gestor I, tu perfil de acceso al MUISCA te permitirá: consultar información de los contribuyentes que tengas asignados (y SOLO de ellos — restricción de primera línea de defensa), generar reportes de cruce, proyectar actos en el sistema, y registrar el avance de tu gestión. <mark>No tienes acceso libre a toda la base de datos</mark>: los permisos están segmentados por caso asignado para proteger la reserva tributaria.</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>Módulo MUISCA</th><th>Qué información contiene</th><th>Uso en fiscalización</th></tr></thead>
+      <tbody>
+        <tr><td>Obligaciones Tributarias</td><td>Declaraciones presentadas (renta, IVA, retención)</td><td>Verificar cumplimiento formal y detectar omisiones</td></tr>
+        <tr><td>Recaudo y Pagos</td><td>Pagos realizados, saldos a favor/en contra</td><td>Verificar pago de obligaciones liquidadas</td></tr>
+        <tr><td>RUT</td><td>Identificación, dirección, actividad, responsabilidades</td><td>Ubicar al contribuyente, verificar dirección para notificar</td></tr>
+        <tr><td>Información Exógena</td><td>Reportes de bancos, clientes, proveedores</td><td>Cruzar con declaraciones: detectar ingresos omitidos</td></tr>
+        <tr><td>Facturación Electrónica</td><td>Facturas emitidas/recibidas en tiempo real</td><td>Verificar ventas reales vs. ingresos declarados</td></tr>
+        <tr><td>Fiscalización</td><td>Expedientes, actos, estados de caso</td><td>Gestionar los expedientes asignados</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 1 · Consulta inicial de un caso</div><div class="ejemplo-body"><p>Te asignan un caso nuevo: la empresa ABC (NIT 900.123.456-7). Lo primero que haces en MUISCA: (1) consultar el RUT (actividad económica, dirección, correo); (2) consultar obligaciones tributarias (¿presentó renta 2023? ¿IVA bimestral? ¿retención mensual?); (3) consultar información exógena (¿qué reportaron sus bancos, clientes y proveedores?); (4) consultar facturación electrónica (¿cuántas facturas emitió en 2023? ¿El valor total es consistente con los ingresos declarados?). En 30 minutos tienes un <mark>panorama completo</mark> del comportamiento tributario del contribuyente — sin haber enviado ni un solo requerimiento.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 2 · Seguridad y perfiles de acceso</div><div class="ejemplo-body"><p>Un compañero te pide que le consultes en MUISCA la información de un contribuyente que NO está en tu carga de trabajo (es un caso de él pero no tiene acceso temporal porque está en comisión). ¿Lo haces? <mark>NO</mark>. Cada gestor solo tiene acceso a los expedientes que le están formalmente asignados. Consultar expedientes ajenos sin justificación es una violación de seguridad que queda registrada en los logs de auditoría del sistema. La DIAN monitorea accesos inusuales y puede generar investigación disciplinaria. Tu compañero debe solicitar la reasignación temporal a su coordinador.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>La CNSC puede presentar un escenario donde un servidor accede a información en MUISCA "por curiosidad" o "para ayudar a un familiar". La respuesta correcta siempre es: <mark>solo se consulta la información de los casos formalmente asignados</mark>. Cualquier acceso no autorizado viola la reserva tributaria y genera responsabilidad disciplinaria y penal.</p></div>
+    <details class="acc"><summary>📖 Historia del MUISCA y evolución tecnológica</summary><div class="acc-body">
+      <p>Antes de MUISCA (pre-2005), la DIAN operaba con sistemas fragmentados: uno para renta, otro para IVA, otro para aduanas, otro para el RUT. La información no se cruzaba automáticamente y la fiscalización dependía de revisiones manuales. El MUISCA integró TODOS los procesos en una sola plataforma, permitiendo por primera vez cruces automáticos de información. Desde entonces, la DIAN ha evolucionado: en 2016 implementó la facturación electrónica masiva, en 2020 los actos administrativos con firma digital, y actualmente trabaja en modelos de inteligencia artificial para la selección de contribuyentes a fiscalizar. Cada actualización tecnológica aumenta la capacidad de control — y la CNSC lo evalúa.</p>
+    </div></details>
+
+    <div class="checkpoint" id="cp1">
+      <div class="cp-tag">✅ Checkpoint 1</div>
+      <p class="cp-q">¿Qué módulo del MUISCA consultas PRIMERO cuando te asignan un caso nuevo de fiscalización?</p>
+      <div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">El módulo de Recaudo (para ver si tiene deudas).</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">El módulo de RUT (para identificar al contribuyente, su actividad y dirección de notificación).</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">El módulo de Facturación Electrónica (para ver sus ventas).</button>
+      </div>
+      <div class="cp-fb" id="cpfb1">✔ El RUT es siempre el punto de partida: identifica quién es el contribuyente, qué actividad tiene, cuál es su dirección de notificación y qué responsabilidades tributarias tiene asignadas. Sin esta información base, no puedes interpretar correctamente los demás datos.</div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 2 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Facturación electrónica: la revolución del control tributario</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>La <mark>facturación electrónica</mark> es un sistema mediante el cual los contribuyentes emiten sus facturas de venta a través de medios electrónicos, las cuales son validadas en tiempo real por la DIAN antes de ser entregadas al comprador. Esto permite a la administración tributaria conocer las transacciones comerciales de los contribuyentes <strong>en el momento en que ocurren</strong>, no meses después cuando presentan la declaración.</p>
+    </div>
+    <div class="b-texto">
+      <p>La facturación electrónica fue implementada masivamente en Colombia a partir de 2019 (Resolución 000042 de 2020 y sucesivas). Hoy, la gran mayoría de los contribuyentes obligados a facturar lo hacen electrónicamente. Esto ha sido una <mark>revolución</mark> para la fiscalización porque:</p>
+      <p>• <strong>Antes:</strong> La DIAN se enteraba de las ventas de un contribuyente cuando este presentaba su declaración de IVA (bimestral) o de renta (anual) — meses o incluso un año después de las transacciones. Si el contribuyente omitía ingresos, la DIAN lo detectaba recién cuando cruzaba la información exógena (reportada por terceros una vez al año).<br>
+      • <strong>Ahora:</strong> La DIAN conoce CADA factura emitida en tiempo real. Si un contribuyente vende $100 millones en enero, la DIAN lo sabe en enero — no cuando presente la declaración en marzo. Esto permite <mark>cruces inmediatos</mark>: si la declaración de enero dice $60 millones de ventas pero las facturas muestran $100 millones, la brecha es detectable al instante.</p>
+      <p>El <strong>proceso técnico</strong> funciona así: (1) El contribuyente genera la factura en su software contable; (2) La envía a la DIAN para validación (a través de un proveedor tecnológico autorizado); (3) La DIAN la valida en segundos (verifica estructura, firma, consecutivo, NIT válido); (4) Si es válida, devuelve un código CUFE (Código Único de Factura Electrónica); (5) El contribuyente entrega la factura validada al comprador; (6) La factura queda registrada en la base de datos de la DIAN para cruces.</p>
+      <p>Para un <strong>Gestor de Fiscalización</strong>, la facturación electrónica significa que tienes una <mark>mina de oro de información</mark>: puedes consultar todas las facturas emitidas y recibidas por tu contribuyente investigado, sumarlas por período, compararlas con las declaraciones presentadas, y detectar inconsistencias con precisión matemática. Antes, esta tarea requería visitas de inspección y solicitud de libros contables; ahora se hace desde tu escritorio en minutos.</p>
+      <p>Los <strong>documentos electrónicos equivalentes</strong> que también reportan a la DIAN incluyen: notas crédito (devoluciones), notas débito (ajustes), documentos soporte de adquisiciones a no obligados a facturar, y tiquetes de máquinas POS (para algunos contribuyentes). Todo entra a la base de datos y se puede cruzar.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 3 · Detección de ingresos omitidos con facturación electrónica</div><div class="ejemplo-body"><p>La empresa ABC declaró ingresos por $800 millones en el bimestre de enero-febrero 2024. Al consultar la facturación electrónica en MUISCA, descubres que emitió facturas por $1.200 millones en ese mismo bimestre (la suma de todas las facturas validadas con CUFE). Hay una <mark>brecha de $400 millones</mark>. ¿Puede haber explicación legítima? Sí: notas crédito (devoluciones) que reducen el ingreso neto. Verificas las notas crédito emitidas: solo hay $50 millones. La brecha real es de $350 millones sin explicación. Ese es el hallazgo que sustenta un requerimiento.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 4 · Contribuyente que no factura electrónicamente</div><div class="ejemplo-body"><p>Al investigar un restaurante, descubres que no tiene facturas electrónicas en el sistema a pesar de que está obligado a facturar (ingresos superiores al umbral). Hay dos posibilidades: (1) está facturando por un proveedor tecnológico que no ha reportado (raro); (2) <mark>no está facturando en absoluto</mark> (vende sin factura → ingreso no reportado = evasión). Esto configura un incumplimiento de la obligación formal de facturar (sanción) Y posible omisión de ingresos (sanción por inexactitud). La facturación electrónica te permite detectar tanto el incumplimiento formal como el sustancial.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> El CUFE (Código Único de Factura Electrónica) es el identificador universal de cada factura validada. Si una factura tiene CUFE, fue validada por la DIAN y es auténtica. Si no tiene CUFE, no es factura electrónica válida y no puede usarse como soporte de costos/deducciones. La CNSC puede preguntar sobre la validez de facturas sin CUFE.</div>
+  </div>
+
+  <!-- MÓDULO 3 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Información exógena y cruces automatizados de información</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>La <mark>información exógena</mark> es la información que terceros (bancos, empresas, notarías, registradurías, cámaras de comercio, bolsas de valores) están obligados a reportar anualmente a la DIAN sobre las operaciones económicas de los contribuyentes. Los <mark>cruces de información</mark> son el proceso de comparar lo que el contribuyente declaró con lo que los terceros reportaron — para detectar inconsistencias.</p>
+    </div>
+    <div class="b-texto">
+      <p>El fundamento legal de la información exógena es el <strong>Art. 631 del E.T.</strong>, que faculta al Director General de la DIAN para solicitar información a terceros mediante resolución anual. La resolución define: qué entidades deben reportar, qué tipo de información, con qué formato, en qué plazos y a partir de qué umbrales (montos mínimos para reportar).</p>
+      <p>Los <strong>principales reportantes</strong> de información exógena son: (1) <mark>Entidades financieras</mark> — reportan: saldos en cuentas, CDTs, inversiones, préstamos otorgados, pagos recibidos. Esto permite conocer el patrimonio real del contribuyente y sus movimientos financieros; (2) <mark>Empresas</mark> — reportan: pagos a proveedores, ingresos recibidos de clientes, retenciones practicadas. Esto permite reconstruir los ingresos y costos reales; (3) <mark>Notarías</mark> — reportan escrituras públicas: compraventas de inmuebles, constitución de sociedades, poderes. Esto revela el patrimonio y las operaciones no declaradas; (4) <mark>Registraduría</mark> — cédulas y estado civil; (5) <mark>Cámaras de Comercio</mark> — registro mercantil, información de representantes legales, estados financieros registrados; (6) <mark>Bolsa de Valores</mark> — compraventa de acciones, dividendos pagados.</p>
+      <p>El <strong>cruce de información</strong> es el proceso automatizado mediante el cual el MUISCA compara los datos declarados por el contribuyente con los datos reportados por los terceros. Cuando hay una diferencia significativa (que supera un umbral definido en el programa de fiscalización), el sistema genera una <mark>alerta de inconsistencia</mark> que alimenta los programas de selección de contribuyentes a investigar.</p>
+      <p>Los <strong>tipos de cruce más comunes</strong> son: (1) Cruce de ingresos: lo que el contribuyente declaró como ingresos vs. lo que sus clientes y bancos reportaron que le pagaron; (2) Cruce de consignaciones: movimientos bancarios vs. ingresos declarados (presunción de ingresos del Art. 755 E.T.); (3) Cruce de patrimonio: bienes declarados vs. bienes registrados en notarías y registraduría; (4) Cruce de costos: deducciones declaradas vs. pagos reportados por proveedores; (5) Cruce de retenciones: retenciones declaradas por agentes de retención vs. retenciones incluidas por contribuyentes en su declaración.</p>
+      <p>La <strong>selección de contribuyentes</strong> a fiscalizar se basa cada vez más en estos cruces automatizados. La Subdirección de Fiscalización define "programas" con criterios técnicos: "seleccionar todos los contribuyentes del sector restaurantes con brecha de ingresos superior al 30% según facturación electrónica". El sistema identifica los contribuyentes que cumplen el criterio y los prioriza por monto de brecha. Los de mayor brecha se asignan a gestores para investigación intensiva.</p>
+    </div>
+    <div class="flujo">
+      <div class="flujo-paso"><span class="fp-n">1</span><h4>Terceros reportan</h4><p>Bancos, empresas, notarías → exógena anual</p></div>
+      <div class="flujo-paso"><span class="fp-n">2</span><h4>MUISCA recibe</h4><p>Carga masiva de información</p></div>
+      <div class="flujo-paso"><span class="fp-n">3</span><h4>Cruce automatizado</h4><p>Declarado vs. reportado</p></div>
+      <div class="flujo-paso"><span class="fp-n">4</span><h4>Alertas de brecha</h4><p>Inconsistencias detectadas</p></div>
+      <div class="flujo-paso"><span class="fp-n">5</span><h4>Programa de fiscalización</h4><p>Selección y priorización</p></div>
+      <div class="flujo-paso"><span class="fp-n">6</span><h4>Asignación al gestor</h4><p>Caso para investigación</p></div>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 5 · Cruce que origina tu caso</div><div class="ejemplo-body"><p>El programa de fiscalización "Ingresos Omitidos 2023" identificó que la empresa que te asignaron tiene: clientes que reportaron haberle pagado $2.800M, bancos que reportan consignaciones por $3.100M, pero la empresa solo declaró ingresos por $1.400M. La brecha es de $1.400M-$1.700M (dependiendo de si tomas exógena o bancaria). <mark>Ese cruce automatizado fue lo que originó la selección del caso</mark>. Tu trabajo como gestor es verificar si la brecha es real, solicitar explicaciones al contribuyente, y si no las tiene, iniciar el proceso de determinación.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 6 · Falsos positivos en cruces</div><div class="ejemplo-body"><p>No todo cruce con brecha significa evasión. Hay <mark>falsos positivos</mark>: (1) Un tercero reportó mal (informó $500M en vez de $50M — error de digitación); (2) Las consignaciones incluyen préstamos entre familiares que no son ingresos; (3) Un cliente reportó un pago que corresponde al período siguiente (diferencia temporal). Por eso el cruce es solo un INDICIO que justifica investigar — no es prueba de evasión por sí solo. El gestor debe <mark>confirmar la brecha</mark> con requerimientos de información antes de proponer una adición de ingresos.</p></div></div>
+    <div class="practica"><div class="practica-head">💼 En la práctica · Ejercicio</div><div class="practica-body">
+      <p><strong>Situación:</strong> El cruce muestra que los bancos reportan consignaciones por $5.000M para un contribuyente que declaró ingresos por $3.000M. ¿Puedes proferir directamente un requerimiento especial por los $2.000M de diferencia?</p>
+      <p><strong>Respuesta:</strong> NO puedes ir directo al requerimiento especial. Primero debes: (1) enviar requerimiento ORDINARIO pidiendo al contribuyente que explique las consignaciones; (2) solicitar extractos a los bancos para confirmar; (3) verificar si hay explicaciones legítimas (préstamos documentados, depósitos en garantía, etc.); (4) solo si después de la investigación la brecha se confirma, proferir el requerimiento especial con sustento probatorio. <mark>El cruce es el indicio que abre la investigación, no la prueba que cierra el caso.</mark></p>
+    </div></div>
+
+    <div class="checkpoint" id="cp2">
+      <div class="cp-tag">✅ Checkpoint 2</div>
+      <p class="cp-q">Un cruce de información muestra que un contribuyente tiene consignaciones bancarias superiores a sus ingresos declarados. ¿Qué acción procede PRIMERO?</p>
+      <div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="0">Proferir requerimiento especial de inmediato proponiendo la adición de ingresos.</button>
+        <button class="cp-opt" data-cp="2" data-ans="1">Enviar requerimiento ordinario de información pidiendo al contribuyente que explique las consignaciones (fase de investigación).</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Cerrar el caso porque los cruces tienen muchos falsos positivos.</button>
+      </div>
+      <div class="cp-fb" id="cpfb2">✔ El cruce es un indicio que abre la investigación, no la prueba definitiva. Se debe investigar (requerimiento ordinario, verificación con bancos) antes de proponer en el requerimiento especial. Ir directo al especial sin investigar genera actos débiles que serán anulados.</div>
+    </div>
+  </div>
+
+
+
+  <!-- MÓDULO 4 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Firma digital y electrónica en actos administrativos DIAN</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>La <mark>firma digital</mark> es un mecanismo criptográfico basado en infraestructura de clave pública (PKI) que garantiza la autenticidad, integridad y no repudio de un documento electrónico. En la DIAN, los actos administrativos (requerimientos, liquidaciones oficiales, resoluciones sancionatorias) se firman digitalmente por los funcionarios competentes, lo que les otorga la misma validez jurídica que la firma manuscrita, conforme a la <strong>Ley 527 de 1999</strong> y su reglamentación.</p>
+    </div>
+    <div class="b-texto">
+      <p>La <strong>Ley 527 de 1999</strong> (Ley de Comercio Electrónico) estableció en Colombia la equivalencia funcional entre documentos escritos y mensajes de datos, y entre firma manuscrita y firma digital. Sus principios fundamentales son: (1) <mark>equivalencia funcional</mark> — un mensaje de datos tiene la misma eficacia jurídica que un documento escrito; (2) <mark>neutralidad tecnológica</mark> — la ley no privilegia una tecnología específica; (3) <mark>autonomía de la voluntad</mark> — las partes pueden acordar el uso de medios electrónicos.</p>
+      <p>En el contexto de la DIAN, la firma digital se implementa mediante <strong>certificados digitales</strong> emitidos por entidades de certificación acreditadas por la Superintendencia de Industria y Comercio (SIC). Cuando un funcionario de la DIAN firma un requerimiento especial digitalmente, el sistema: (1) aplica una función hash al documento (genera una huella digital única); (2) cifra esa huella con la clave privada del funcionario; (3) asocia el certificado digital que identifica al firmante. El destinatario (o cualquier persona) puede verificar: (a) que el documento no fue alterado después de firmado (integridad); (b) que fue firmado por quien dice (autenticidad); (c) que el firmante no puede negar que lo firmó (no repudio).</p>
+      <p>La <strong>firma electrónica</strong> es un concepto más amplio que la firma digital: cualquier método electrónico que sirva para identificar a una persona respecto de un mensaje de datos (puede ser un código PIN, un biométrico, una contraseña). La firma digital es un TIPO de firma electrónica — la más segura — basada en criptografía asimétrica. El <strong>Decreto 2364 de 2012</strong> reglamentó la firma electrónica en Colombia y estableció que es válida siempre que las partes la acepten y sea fiable para el propósito.</p>
+      <p>Para el <strong>Gestor I en la DIAN</strong>, esto significa que: (1) los actos que proyectas se firman digitalmente por el funcionario competente (jefe de división o director seccional, según el caso); (2) la notificación puede ser electrónica (a la dirección de correo electrónico inscrita en el RUT — Art. 566-1 E.T.); (3) los documentos que recibes de los contribuyentes pueden venir firmados electrónicamente y tienen validez; (4) el expediente electrónico en MUISCA contiene todos los documentos con sus firmas digitales intactas, lo que garantiza la cadena de custodia probatoria.</p>
+      <p>Los <strong>requisitos de validez</strong> de la firma digital según el Art. 28 de la Ley 527/1999 son: (a) es única a la persona que la usa; (b) es susceptible de ser verificada; (c) está bajo el control exclusivo del iniciador; (d) está ligada a la información del mensaje de forma que si los datos se cambian, la firma se invalida; (e) está conforme con reglamentación del gobierno. Un certificado digital que cumple estos requisitos se presume auténtico (inversión de la carga de la prueba: quien quiera negar la firma debe probarlo).</p>
+      <p>La DIAN emite sus propios certificados para actos masivos (como la expedición de liquidaciones oficiales) a través de la <strong>Entidad de Certificación Digital de la DIAN</strong>, autorizada por la SIC. Para actos individuales de funcionarios, se usan certificados personales emitidos por entidades acreditadas (como Certicámara). El MUISCA tiene integrado un módulo de <mark>firma digital masiva</mark> que permite firmar múltiples actos simultáneamente — por ejemplo, cuando se profieren cientos de requerimientos en un programa de fiscalización masiva.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 7 · Firma digital de un requerimiento especial</div><div class="ejemplo-body"><p>Proyectaste un requerimiento especial para la empresa ABC. El documento queda como borrador en MUISCA. Tu jefe de división lo revisa, lo aprueba y lo <mark>firma digitalmente</mark> con su certificado personal. Al firmarlo, el sistema genera un sello de tiempo (timestamp) que registra la fecha y hora exacta de la firma. El requerimiento ya es un acto administrativo válido y se puede notificar. Si el contribuyente lo impugna alegando que "es falso", basta con verificar la firma digital para demostrar autenticidad. La huella digital del documento demuestra que no fue modificado después de firmado.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 8 · Notificación electrónica con acuse de recibo</div><div class="ejemplo-body"><p>El requerimiento especial firmado se notifica al contribuyente por <mark>correo electrónico</mark> a la dirección inscrita en el RUT (Art. 566-1 E.T.). El sistema MUISCA envía el correo y registra: fecha de envío, dirección destino, y acuse de recibo (si el servidor del destinatario confirma la entrega). El contribuyente se entiende notificado al tercer día hábil siguiente al envío del correo. Si el correo rebota, se procede a la notificación por aviso. La firma digital del documento adjunto garantiza que lo que recibió el contribuyente es idéntico a lo que proyectó y firmó el funcionario.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> No confundas <strong>firma digital</strong> (criptográfica, basada en certificados PKI, la más segura) con <strong>firma electrónica</strong> (concepto amplio: puede ser un PIN, una contraseña, un biométrico). La CNSC puede preguntar cuál es la diferencia. La firma digital es un TIPO de firma electrónica — la de mayor seguridad jurídica. Ambas son válidas pero la digital tiene presunción de autenticidad (Art. 28, Ley 527/1999).</div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Si la pregunta dice: "¿Qué garantiza la firma digital de un acto administrativo?", la respuesta correcta incluye: <mark>autenticidad</mark> (identifica al firmante), <mark>integridad</mark> (el documento no fue alterado) y <mark>no repudio</mark> (el firmante no puede negar que firmó). Si una opción solo menciona una de las tres, es incompleta.</p></div>
+  </div>
+
+  <!-- MÓDULO 5 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>RUT como registro central de la gestión tributaria</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>El <mark>RUT</mark> (Registro Único Tributario) es la base de datos maestra de la DIAN que identifica, ubica y clasifica a todos los sujetos de obligaciones administradas por la entidad. Es el <strong>único mecanismo de identificación</strong> de los contribuyentes ante la DIAN (Art. 555-2 E.T.) y constituye la base sobre la cual se construye toda la gestión tributaria: declaraciones, pagos, notificaciones, cruces y fiscalización.</p>
+    </div>
+    <div class="b-texto">
+      <p>El RUT contiene información organizada en <strong>casillas temáticas</strong> que abarcan: (1) <mark>Identificación</mark> — NIT, razón social o nombre, tipo de documento, fecha de expedición; (2) <mark>Ubicación</mark> — dirección fiscal, municipio, departamento, teléfono, correo electrónico; (3) <mark>Actividad económica</mark> — código CIIU de la actividad principal y secundarias; (4) <mark>Responsabilidades tributarias</mark> — cuáles impuestos debe declarar (renta, IVA, retención, ICA, etc.); (5) <mark>Calidades y representación</mark> — si es agente de retención, autorretenedor, gran contribuyente, responsable de IVA; (6) <mark>Establecimientos de comercio</mark> — sucursales y agencias.</p>
+      <p>Para la <strong>fiscalización</strong>, el RUT es fundamental por varias razones:</p>
+      <p>• <strong>Dirección de notificación:</strong> los actos administrativos se notifican a la dirección registrada en el RUT (Art. 563 E.T.). Si el contribuyente no actualiza su RUT y la DIAN notifica a la dirección que aparece allí, la notificación es <mark>válida</mark> aunque el contribuyente ya no esté en ese lugar. Por eso, como gestor, siempre verificas primero la dirección del RUT antes de notificar.</p>
+      <p>• <strong>Actividad económica:</strong> el código CIIU registrado te dice qué sector es — y esto importa para seleccionar indicadores de referencia (márgenes de utilidad del sector, promedios de ingresos) contra los cuales comparar la declaración del contribuyente.</p>
+      <p>• <strong>Responsabilidades:</strong> si el RUT dice que es responsable de IVA pero no presenta declaraciones de IVA, hay una omisión formal que ya es sancionable sin necesidad de investigar el fondo.</p>
+      <p>• <strong>Correo electrónico:</strong> desde la Ley 2277 de 2022, la notificación electrónica al correo registrado en el RUT es el mecanismo principal de notificación (Art. 566-1 E.T.). Si el contribuyente no actualiza su correo y la DIAN notifica al registrado, la notificación surte efectos legales.</p>
+      <p>La <strong>actualización del RUT</strong> es obligación del contribuyente. Si cambia de dirección, de actividad, de representante legal, o si adquiere nuevas responsabilidades, tiene un mes para actualizar (Art. 658-3 E.T. establece sanciones por información desactualizada). Esto es relevante en fiscalización porque un contribuyente con RUT desactualizado puede estar intentando evadir notificaciones — pero la ley protege a la DIAN: la notificación a la <mark>última dirección registrada</mark> es válida aunque el contribuyente se haya mudado.</p>
+      <p>El RUT también sirve como <strong>herramienta de inteligencia</strong>: al consultar el RUT de las personas vinculadas a una empresa (representante legal, socios, revisor fiscal), puedes mapear la red de relaciones económicas e identificar si hay empresas vinculadas que podrían estar siendo utilizadas para triangular operaciones o evadir impuestos.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 9 · RUT y notificación válida</div><div class="ejemplo-body"><p>Vas a notificar un requerimiento especial a la empresa XYZ. Consultas el RUT: la dirección registrada es Calle 80 #45-20, Bogotá. Envías la citación. La empresa alega que "ya no está ahí, se mudó hace 6 meses". ¿La notificación es válida? <mark>SÍ</mark> — porque el Art. 563 E.T. establece que la dirección para notificaciones es la que consta en el RUT. Si el contribuyente no la actualizó, el problema es de él, no de la DIAN. Esto evita que contribuyentes se escondan cambiando de dirección sin informar.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 10 · Mapeo de vínculos desde el RUT</div><div class="ejemplo-body"><p>Investigas a la empresa ABC por posible facturación ficticia. Al consultar el RUT del representante legal, descubres que es representante legal de OTRAS 12 empresas — todas creadas en el último año, todas con la misma dirección, todas con actividad "comercio al por mayor no especificado". Ese patrón de <mark>empresas fachada</mark> es un indicio fuerte de red de facturación ficticia. El RUT te permitió descubrir la red sin necesidad de requerimientos ni visitas — solo con consulta en sistema.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> El RUT NO es opcional: todo contribuyente debe inscribirse ANTES de iniciar actividades (Art. 555-2 E.T.). Si alguien ejerce actividad económica sin RUT, está incumpliendo la obligación formal y puede ser sancionado (además de que probablemente está evadiendo). Si la pregunta dice "un comerciante que no tiene RUT", la respuesta incluye sanción por no inscripción.</div>
+  </div>
+
+  <!-- MÓDULO 6 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Informes estadísticos de gestión fiscal: estructura y KPIs</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>Los <mark>informes de gestión fiscal</mark> son documentos estructurados que consolidan indicadores cuantitativos y cualitativos sobre el desempeño de las áreas de fiscalización de la DIAN. Sirven para medir eficacia, eficiencia y efectividad del proceso de determinación tributaria, y alimentan la toma de decisiones de la Alta Dirección sobre asignación de recursos, priorización de programas y rendición de cuentas.</p>
+    </div>
+    <div class="b-texto">
+      <p>Un informe de gestión fiscal bien construido responde a las siguientes preguntas: ¿Cuánto recaudamos por gestión? ¿Cuántos casos abrimos y cerramos? ¿En cuánto tiempo promedio? ¿Cuántos actos fueron anulados y por qué? ¿Qué sectores económicos presentan mayor brecha? ¿Cómo nos comparamos con el período anterior?</p>
+      <p>La <strong>estructura estándar</strong> de un informe de gestión fiscal incluye:</p>
+      <p>• <strong>Resumen ejecutivo:</strong> una página con los 5-7 indicadores principales en formato dashboard (cifras grandes con flechas de tendencia). El Director Seccional probablemente solo lea esto — por eso debe ser impecable.</p>
+      <p>• <strong>Contexto:</strong> descripción del período, del universo de contribuyentes de la seccional, de los programas de fiscalización asignados y de los recursos disponibles (gestores, supervisores, jefes de división).</p>
+      <p>• <strong>Indicadores de resultado:</strong> recaudo por gestión de fiscalización, número de actos proferidos, valor determinado (diferencia entre lo declarado y lo liquidado por la DIAN), porcentaje de cumplimiento de la meta asignada por la Dirección General.</p>
+      <p>• <strong>Indicadores de proceso:</strong> tiempo promedio de trámite (desde apertura del caso hasta acto definitivo), tasa de cierre (casos cerrados / casos abiertos), carga por gestor (promedio de casos activos por funcionario), tasa de prescripción (casos perdidos por vencimiento de términos).</p>
+      <p>• <strong>Indicadores de calidad:</strong> tasa de anulación (actos anulados por la jurisdicción contenciosa o por recurso / total de actos proferidos), causas de anulación (falta de motivación, violación de debido proceso, vencimiento de términos), tasa de revocación directa.</p>
+      <p>• <strong>Análisis sectorial:</strong> brechas identificadas por sector económico (construcción, comercio, servicios, minería, etc.), segmentos con mayor potencial de recuperación.</p>
+      <p>• <strong>Recomendaciones:</strong> acciones propuestas para el siguiente período (más gestores en el sector X, programa especial para el tema Y, necesidad de capacitación en Z).</p>
+      <p>Los <mark>KPIs</mark> (Key Performance Indicators) más importantes en fiscalización DIAN son:</p>
+    </div>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>KPI</th><th>Fórmula</th><th>Meta típica</th><th>Por qué importa</th></tr></thead>
+      <tbody>
+        <tr><td>Recaudo por gestión</td><td>$ recaudado por actos de fiscalización</td><td>Según asignación anual</td><td>Mide la efectividad en recuperar impuestos evadidos</td></tr>
+        <tr><td>Tasa de cierre</td><td>Casos cerrados / Casos abiertos × 100</td><td>>80%</td><td>Mide eficiencia en gestión de carga</td></tr>
+        <tr><td>Tiempo promedio de trámite</td><td>Σ días de trámite / N° de casos</td><td><12 meses</td><td>Mide agilidad del proceso</td></tr>
+        <tr><td>Tasa de anulación</td><td>Actos anulados / Total de actos × 100</td><td><10%</td><td>Mide calidad jurídica de los actos</td></tr>
+        <tr><td>Valor determinado</td><td>Impuesto liquidado − Impuesto declarado</td><td>Según programa</td><td>Mide la diferencia entre lo que el contribuyente declaró y lo que la DIAN encontró</td></tr>
+        <tr><td>Tasa de prescripción</td><td>Casos prescritos / Total de casos × 100</td><td>0% (ideal)</td><td>Un caso prescrito = impunidad fiscal. Inaceptable.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 11 · Construyendo el informe trimestral para tu jefe</div><div class="ejemplo-body"><p>Tu jefe te pidió el informe para el Director. Así lo armas: (1) Consultas el módulo de gestión de expedientes en MUISCA para extraer: casos abiertos, cerrados, en trámite, y sus tiempos; (2) Consultas el módulo de recaudo: cuánto se pagó como resultado de actos de la división; (3) Cruzas con la base de actos proferidos: cuántos requerimientos, cuántas liquidaciones, cuántos recursos resueltos; (4) Verificas si algún acto fue anulado en el período (revisas las sentencias del Tribunal y del Consejo de Estado); (5) Calculas los KPIs; (6) Comparas con el mismo trimestre del año anterior; (7) Identificas los sectores con mayor brecha. Todo esto son datos <mark>objetivos</mark> extraídos de los sistemas — no opiniones.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 12 · Informe que revela un problema</div><div class="ejemplo-body"><p>Al consolidar el informe, descubres que la <mark>tasa de anulación</mark> de la división subió del 8% al 22% este trimestre. Investigas las causas: 4 de los 6 actos anulados fueron por "vencimiento de términos" (se profirió la liquidación oficial después de los 6 meses del Art. 710 E.T.). Eso no es un problema jurídico de fondo — es un problema de <mark>gestión del tiempo</mark>. El informe debe reflejar no solo el dato sino el diagnóstico y la recomendación: "La principal causa de anulación este trimestre fue el vencimiento de términos. Se recomienda implementar un sistema de alertas tempranas en MUISCA que notifique al gestor y al jefe cuando un caso está a 30 días de prescribir."</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> Un informe de gestión NO es una opinión personal ni una narrativa subjetiva. Es un documento basado en <mark>datos verificables</mark> extraídos de los sistemas de información. Si la prueba te pide "¿Qué elemento es esencial en un informe de gestión?", la respuesta siempre incluye: indicadores cuantitativos, fuente de datos verificable, comparación con períodos anteriores o metas, y recomendaciones basadas en evidencia.</div>
+  </div>
+
+  <!-- MÓDULO 7 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Indicadores de productividad del proceso de fiscalización</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>Los <mark>indicadores de productividad</mark> miden la relación entre los resultados obtenidos por la división de fiscalización y los recursos empleados para obtenerlos. Se expresan como ratios que permiten comparar el desempeño entre seccionales, entre divisiones, entre gestores individuales y entre períodos, facilitando la identificación de buenas prácticas y de cuellos de botella.</p>
+    </div>
+    <div class="b-texto">
+      <p>Los indicadores de productividad en la DIAN se organizan en tres niveles: (1) <mark>Nivel macro</mark> — desempeño de toda la Dirección de Fiscalización a nivel nacional; (2) <mark>Nivel meso</mark> — desempeño de cada Dirección Seccional; (3) <mark>Nivel micro</mark> — desempeño de cada gestor individual. Cada nivel tiene indicadores adaptados a su alcance de gestión.</p>
+      <p>Los principales indicadores que un Gestor I debe conocer son:</p>
+      <p>• <strong>Casos cerrados por gestor/mes:</strong> cuántos expedientes cierra en promedio un gestor cada mes. Esto no es solo "cantidad" — un cierre prematuro sin sustento técnico es tan malo como un caso estancado. La calidad del cierre importa tanto como la velocidad.</p>
+      <p>• <strong>Recaudo per cápita:</strong> total recaudado por gestión de fiscalización dividido entre el número de gestores de la división. Permite comparar la productividad entre seccionales de diferentes tamaños.</p>
+      <p>• <strong>Ratio de firmeza:</strong> porcentaje de declaraciones que alcanzan la firmeza (vence el término de fiscalización) sin haber sido revisadas. Una alta ratio de firmeza puede indicar que no se están aprovechando los cruces para seleccionar contribuyentes antes de que venzan los términos.</p>
+      <p>• <strong>Tiempo promedio de trámite:</strong> días calendario desde la apertura del expediente hasta la proferencia del acto definitivo (liquidación o archivo). Un tiempo excesivamente largo indica cuellos de botella (revisiones de calidad lentas, respuestas tardías de contribuyentes, falta de coordinación con otras áreas).</p>
+      <p>• <strong>Tasa de éxito en vía gubernativa:</strong> porcentaje de actos que sobreviven al recurso de reconsideración (es decir, que la DIAN confirma). Si la tasa es baja, significa que los actos tienen problemas de calidad que se evidencian al resolver los recursos.</p>
+      <p>• <strong>Tasa de éxito en vía jurisdiccional:</strong> porcentaje de actos que sobreviven la demanda ante el Tribunal Administrativo y el Consejo de Estado. Es el indicador más exigente de calidad porque los jueces son independientes de la DIAN.</p>
+      <p>Estos indicadores se alimentan automáticamente del MUISCA y se consolidan en <strong>tableros de control</strong> (dashboards) que la Alta Dirección consulta para tomar decisiones. El Plan Estratégico Institucional define las metas anuales de cada indicador y las seccionales rinden cuentas trimestralmente.</p>
+    </div>
+    <div class="flujo">
+      <div class="flujo-paso"><span class="fp-n">1</span><h4>Apertura</h4><p>Caso asignado al gestor</p></div>
+      <div class="flujo-paso"><span class="fp-n">2</span><h4>Investigación</h4><p>Requerimientos, cruces, pruebas</p></div>
+      <div class="flujo-paso"><span class="fp-n">3</span><h4>Propuesta</h4><p>Requerimiento especial</p></div>
+      <div class="flujo-paso"><span class="fp-n">4</span><h4>Respuesta</h4><p>Contribuyente contesta</p></div>
+      <div class="flujo-paso"><span class="fp-n">5</span><h4>Acto definitivo</h4><p>Liquidación o archivo</p></div>
+      <div class="flujo-paso"><span class="fp-n">6</span><h4>Recurso</h4><p>Reconsideración (si hay)</p></div>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 13 · Indicadores que revelan un problema de gestión</div><div class="ejemplo-body"><p>Al revisar el dashboard de la División de Fiscalización de Grandes Contribuyentes, observas que el gestor A cierra 4 casos/mes con recaudo de $800M y tasa de anulación de 5%, mientras que el gestor B cierra 8 casos/mes con recaudo de $200M y tasa de anulación de 30%. ¿Cuál es más productivo? No es el que cierra más — es el que genera <mark>resultados sostenibles</mark>. El gestor B cierra rápido pero mal (muchos se anulan), mientras que A cierra menos pero con calidad. El indicador integrado debe considerar: recaudo × (1 − tasa de anulación). La productividad real incluye la calidad.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 14 · Alerta de prescripción inminente</div><div class="ejemplo-body"><p>El tablero de control muestra que hay 15 casos en la seccional que <mark>prescriben en los próximos 60 días</mark> y aún no tienen requerimiento especial proferido. Esto es una emergencia de gestión: si prescriben, el contribuyente queda libre y la DIAN pierde la posibilidad de cobrar. El jefe de división debe reasignar recursos, concentrar a los gestores disponibles en esos 15 casos, y suspender la apertura de nuevos casos hasta resolver la urgencia. Este tipo de alertas solo es posible gracias a los indicadores automatizados del MUISCA.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Si te preguntan "¿Cuál es el peor escenario para la gestión de fiscalización?", la respuesta es: un caso que <mark>prescribe sin actuación</mark>. La prescripción significa que la DIAN perdió toda posibilidad de modificar la declaración — el contribuyente ganó por inacción de la administración. Siempre que veas "vencimiento de términos" o "prescripción" en las opciones, eso representa la falla más grave de gestión.</p></div>
+
+    <div class="checkpoint" id="cp3">
+      <div class="cp-tag">✅ Checkpoint 3</div>
+      <p class="cp-q">¿Qué indicador refleja la PEOR falla de gestión en una división de fiscalización?</p>
+      <div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="0">Tasa de cierre inferior al 80% (no se cierran suficientes casos).</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Tiempo promedio de trámite superior a 12 meses (lentitud).</button>
+        <button class="cp-opt" data-cp="3" data-ans="1">Tasa de prescripción superior a 0% (se perdieron casos por vencimiento de términos sin actuar).</button>
+      </div>
+      <div class="cp-fb" id="cpfb3">✔ La prescripción es la falla más grave porque significa que la DIAN perdió DEFINITIVAMENTE la posibilidad de modificar una declaración con irregularidades. La lentitud o la baja tasa de cierre son preocupantes pero corregibles; un caso prescrito es irrecuperable.</div>
+    </div>
+  </div>
+
+  <!-- MÓDULO 8 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Analítica de datos e inteligencia artificial en fiscalización</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>La <mark>analítica de datos</mark> aplicada a la fiscalización es el uso de técnicas estadísticas, minería de datos y aprendizaje automático (machine learning) para identificar patrones de evasión, priorizar contribuyentes a investigar y predecir el resultado probable de una acción de fiscalización. Representa la evolución del "cruce simple" (comparar dos columnas) hacia modelos predictivos que consideran decenas de variables simultáneamente.</p>
+    </div>
+    <div class="b-texto">
+      <p>La DIAN ha evolucionado en su uso de datos a lo largo de tres etapas: (1) <mark>Etapa descriptiva</mark> (2005-2015): cruces simples de información exógena — "¿cuánto declaró vs. cuánto le reportaron?"; (2) <mark>Etapa analítica</mark> (2015-2022): modelos estadísticos que consideran múltiples variables para seleccionar contribuyentes (scoring de riesgo); (3) <mark>Etapa predictiva/IA</mark> (2022-presente): algoritmos de machine learning que aprenden de los resultados históricos de fiscalización para predecir qué contribuyentes tienen mayor probabilidad de tener irregularidades significativas.</p>
+      <p>Los <strong>modelos de selección</strong> actuales de la DIAN consideran variables como: (a) brecha entre ingresos declarados y reportados por terceros; (b) comportamiento histórico del contribuyente (¿ha sido sancionado antes? ¿ha corregido declaraciones?); (c) sector económico (algunos sectores tienen mayor propensión a la informalidad); (d) tamaño relativo del contribuyente dentro de su sector; (e) patrones de gasto inconsistentes con ingresos declarados; (f) cambios súbitos en patrimonio sin explicación en ingresos; (g) vinculación con empresas sancionadas o canceladas.</p>
+      <p>El <strong>machine learning</strong> permite algo que los cruces simples no: aprender de la experiencia. Si históricamente los contribuyentes con ciertas características (sector X + brecha > 30% + antigüedad < 3 años + sin revisor fiscal) han resultado con irregularidades reales en el 85% de los casos, el modelo aprende ese patrón y prioriza contribuyentes similares. Esto aumenta la <mark>tasa de éxito</mark> de la fiscalización: se investigan los que más probablemente tienen problemas reales, no se desperdician recursos en falsos positivos.</p>
+      <p>La <strong>inteligencia artificial</strong> en la DIAN también se aplica para: (a) detección de redes de facturación ficticia (análisis de grafos que identifican patrones circulares de facturación entre empresas vinculadas); (b) detección de empresas fachada (anomalías en RUT: muchas empresas con el mismo representante, misma dirección, creadas simultáneamente); (c) predicción de prescripción (identificar qué casos están en riesgo de vencer para priorizarlos); (d) asistentes automatizados para los gestores (que sugieren qué requerimientos hacer primero basándose en el historial del contribuyente).</p>
+      <p>Es importante entender que la IA NO reemplaza al gestor humano: la decisión de abrir un caso, proferir un requerimiento o liquidar un impuesto sigue siendo del funcionario competente. La IA es una <mark>herramienta de priorización</mark> que le dice al funcionario "estos son los contribuyentes con mayor probabilidad de irregularidad, invierte tu tiempo aquí primero". El juicio profesional, el debido proceso y la motivación jurídica siguen siendo responsabilidad humana.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 15 · Modelo de scoring para selección de contribuyentes</div><div class="ejemplo-body"><p>La Subdirección de Fiscalización implementa un modelo que asigna un <mark>puntaje de riesgo</mark> (0-100) a cada contribuyente. El modelo considera 45 variables y fue entrenado con los resultados de 50.000 casos de fiscalización de los últimos 5 años. A tu seccional le asignan los contribuyentes con score > 80 (alto riesgo). Cuando abres un caso nuevo, MUISCA te muestra: "Score de riesgo: 87. Variables principales: brecha de ingresos 42%, sector construcción, antigüedad 2 años, sin revisor fiscal, consignaciones inexplicadas 3x vs. ingresos". Eso te guía sobre DÓNDE buscar primero — no te dice la respuesta, pero te ahorra semanas de investigación exploratoria.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 16 · Detección de red de facturación ficticia con análisis de grafos</div><div class="ejemplo-body"><p>El sistema de IA detecta un patrón: 8 empresas creadas en el último año, todas con el mismo representante legal, que se facturan mutuamente en círculo (A→B→C→D→E→F→G→H→A). Ninguna tiene empleados ni activos reales. Las facturas generan un IVA descontable ficticio que reduce el impuesto a pagar de empresas externas que les compran "servicios". La IA identificó el patrón de <mark>facturación circular</mark> que un análisis manual habría tomado meses en descubrir. El gestor recibe el caso con el mapeo completo de la red y puede concentrarse en la prueba documental.</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> La CNSC NO te va a preguntar sobre algoritmos de machine learning. Pero SÍ puede preguntar: "¿Cómo se seleccionan los contribuyentes a fiscalizar?" La respuesta moderna es: <mark>modelos de riesgo basados en datos</mark> (no selección aleatoria ni discrecional). Si una opción dice "el funcionario elige a quién investigar según su criterio personal", esa es la incorrecta.</div>
+  </div>
+
+  <!-- MÓDULO 9 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Gobierno Digital en la DIAN (MIPG Dimensión 3)</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>El <mark>Gobierno Digital</mark> es la política del MIPG (Modelo Integrado de Planeación y Gestión) que promueve el uso de tecnologías de la información para mejorar la gestión pública, la transparencia y la relación con los ciudadanos. En la DIAN, esta política se materializa en la transformación digital de todos los procesos: desde la presentación de declaraciones en línea hasta la notificación electrónica y la fiscalización basada en datos.</p>
+    </div>
+    <div class="b-texto">
+      <p>La <strong>Dimensión 3 del MIPG</strong> (Gestión con Valores para Resultados) incluye la política de Gobierno Digital, reglamentada por el <strong>Decreto 1008 de 2018</strong> y sus modificaciones. Sus componentes principales son:</p>
+      <p>• <mark>TIC para el Estado</mark> (antes "TIC para la Gestión"): uso de tecnología para mejorar la eficiencia interna. En la DIAN: MUISCA, expediente electrónico, firma digital, tableros de control, automatización de cruces.</p>
+      <p>• <mark>TIC para la Sociedad</mark> (antes "TIC para Servicios"): uso de tecnología para mejorar la relación con los ciudadanos. En la DIAN: portal transaccional (www.dian.gov.co), presentación de declaraciones en línea, RUT virtual, chatbot de atención, consulta de estado de trámites.</p>
+      <p>• <mark>Seguridad y privacidad de la información</mark>: protección de los datos tributarios (reserva tributaria — Art. 583 E.T.), gestión de riesgos de seguridad, planes de continuidad del negocio tecnológico.</p>
+      <p>• <mark>Datos abiertos y transparencia</mark>: publicación de datos estadísticos agregados (sin violar la reserva tributaria individual) que permiten el control social y la investigación académica.</p>
+      <p>La DIAN es considerada una de las entidades <strong>más avanzadas en Gobierno Digital</strong> en Colombia porque: (1) El 100% de las declaraciones tributarias se presentan electrónicamente (no hay declaraciones en papel desde 2020); (2) La facturación electrónica captura transacciones en tiempo real; (3) Los actos administrativos se firman y notifican digitalmente; (4) Los expedientes son 100% electrónicos; (5) La selección de contribuyentes usa modelos de inteligencia artificial; (6) El RUT es completamente virtual (se inscribe y actualiza en línea).</p>
+      <p>El <strong>Marco de Transformación Digital</strong> de la DIAN (Plan Estratégico de TI) define una hoja de ruta que incluye: (a) migración de MUISCA a una plataforma moderna en la nube (proyecto en curso); (b) integración con otros sistemas del Estado (SIIF, SIGEP, RUES, Registraduría); (c) uso de blockchain para trazabilidad de documentos aduaneros; (d) interoperabilidad internacional con otras administraciones tributarias (intercambio automático de información — CRS/FATCA); (e) servicio al contribuyente basado en IA (chatbot avanzado, asistente virtual para declaraciones).</p>
+      <p>Para el <strong>Gestor I</strong>, el Gobierno Digital se traduce en herramientas concretas que facilitan su trabajo diario: no necesita ir a archivos físicos, no necesita esperar semanas por respuestas en papel, puede consultar todo desde su computador, firmar digitalmente sus proyectos de actos, y monitorear sus indicadores en tiempo real. La contrapartida es la <mark>responsabilidad de seguridad</mark>: debe proteger sus credenciales, no compartir su certificado digital, reportar incidentes de seguridad, y cumplir la política de uso aceptable de los sistemas.</p>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 17 · Gobierno Digital en el día a día del gestor</div><div class="ejemplo-body"><p>Tu día de trabajo como Gestor I 100% digital: (1) Llegas, ingresas a MUISCA con tu usuario y contraseña + token de autenticación de dos factores; (2) Revisas tu bandeja de casos: el sistema te muestra alertas (un contribuyente respondió un requerimiento, otro caso está a 45 días de prescribir); (3) Consultas información exógena y facturación electrónica <mark>sin salir del sistema</mark>; (4) Proyectas un requerimiento especial en el módulo de actos; (5) Tu jefe lo revisa y lo firma digitalmente; (6) El sistema lo envía por correo electrónico al contribuyente automáticamente; (7) Al final del día, el dashboard muestra tus indicadores actualizados. Todo ocurrió sin un solo papel.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 18 · Seguridad de la información y reserva tributaria</div><div class="ejemplo-body"><p>Un periodista te contacta pidiendo la declaración de renta de un político. ¿Puedes dársela? <mark>JAMÁS</mark>. La información tributaria individual está protegida por la <strong>reserva tributaria</strong> (Art. 583 E.T.): solo puede ser conocida por el contribuyente, sus apoderados, y los funcionarios de la DIAN competentes. Violentar la reserva es delito (revelación de secreto — Art. 418 Código Penal). El Gobierno Digital facilita el acceso a la información PARA LOS FUNCIONARIOS AUTORIZADOS — no para el público. La tecnología facilita, pero la ley limita.</p></div></div>
+    <div class="prueba"><div class="prueba-head">🎯 En la prueba</div><p>Si te preguntan sobre Gobierno Digital en la DIAN, busca la opción que combina: (1) tecnología que mejora la eficiencia del Estado + (2) mejora el servicio al ciudadano + (3) se hace con seguridad y protección de datos. Si una opción solo menciona tecnología sin mencionar seguridad/privacidad, es incompleta. Si una opción menciona "publicar toda la información tributaria para transparencia", es incorrecta (viola la reserva tributaria).</p></div>
+  </div>
+
+  <!-- MÓDULO 10 -->
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Construyendo el informe para el Director: integración de herramientas</h3></div>
+    <div class="def-panel"><span class="def-label">Concepto clave</span>
+      <p>El <mark>informe integrado para la Alta Dirección</mark> es el producto final que cierra el ciclo de las herramientas informáticas: recoge datos de todos los sistemas (MUISCA, facturación electrónica, exógena, cruces, expedientes) y los convierte en información accionable para la toma de decisiones estratégicas. Es donde el trabajo técnico del gestor se traduce en valor institucional.</p>
+    </div>
+    <div class="b-texto">
+      <p>Retomemos el encargo de tu jefe al inicio de esta guía: preparar un informe trimestral para el Director Seccional. Ya sabes de DÓNDE sacar cada dato (módulos 1-9). Ahora veamos CÓMO integrarlos en un documento que sea útil para quien toma decisiones.</p>
+      <p>Los <strong>principios de un buen informe para Alta Dirección</strong> son:</p>
+      <p>• <strong>Pirámide invertida:</strong> lo más importante primero. El Director no tiene 30 minutos para leer — tiene 5. El resumen ejecutivo debe darle los 5-7 datos clave en una página. Si quiere profundizar, avanza a las secciones detalladas.</p>
+      <p>• <strong>Datos + Contexto + Recomendación:</strong> no basta con decir "cerramos 120 casos". Hay que decir: "Cerramos 120 casos (15% más que el trimestre anterior), pero la tasa de anulación subió del 8% al 14%. La principal causa es vencimiento de términos en 6 casos. <mark>Recomendación:</mark> implementar alertas tempranas de prescripción."</p>
+      <p>• <strong>Visualización:</strong> tablas comparativas, gráficos de tendencia, semáforos (verde/amarillo/rojo) para indicadores vs. meta. La Alta Dirección consume mejor la información visual que los párrafos largos de texto.</p>
+      <p>• <strong>Honestidad:</strong> un buen informe NO oculta los problemas. Si la tasa de anulación subió, se reporta con el diagnóstico y la propuesta de solución. Ocultar datos negativos es una falta ética y genera pérdida de confianza.</p>
+      <p>• <strong>Trazabilidad:</strong> cada dato debe tener su fuente identificable. "Recaudo: $15.200M (fuente: módulo de recaudo MUISCA, corte 31/03/2025)". Si el Director pregunta "¿de dónde sale ese número?", debes poder responder con exactitud.</p>
+      <p>La <strong>estructura recomendada</strong> del informe para el Director es:</p>
+    </div>
+    <div class="acordeon">
+      <details class="acc"><summary>1. Resumen ejecutivo (máx. 1 página)</summary><div class="acc-body"><p>Dashboard con 6-8 indicadores clave: recaudo por gestión (vs. meta), casos cerrados (vs. programados), tasa de anulación, tiempo promedio de trámite, casos en riesgo de prescripción, sectores con mayor brecha. Formato: cifra grande + flecha de tendencia + comparación con período anterior. Color: verde si cumple meta, amarillo si está cerca, rojo si está lejos.</p></div></details>
+      <details class="acc"><summary>2. Contexto del período</summary><div class="acc-body"><p>Universo de contribuyentes de la seccional, número de gestores disponibles (incluyendo vacancias, comisiones, incapacidades), programas de fiscalización asignados por la Dirección General, eventos relevantes del período (como una sentencia de unificación que cambió un criterio jurídico).</p></div></details>
+      <details class="acc"><summary>3. Resultados de gestión (detalle)</summary><div class="acc-body"><p>Desglose por programa de fiscalización: cuántos casos abrió cada programa, cuántos cerró, con qué resultado (liquidación, archivo, acuerdo). Desglose por sector económico. Desglose por tipo de acto (requerimientos ordinarios, especiales, liquidaciones, resoluciones sancionatorias). Comparativo con el mismo período del año anterior.</p></div></details>
+      <details class="acc"><summary>4. Calidad de la gestión</summary><div class="acc-body"><p>Tasa de éxito en recurso de reconsideración, tasa de éxito en vía jurisdiccional, análisis de actos anulados (causas, lecciones aprendidas), identificación de riesgos jurídicos recurrentes. Propuestas de capacitación o ajuste de criterios.</p></div></details>
+      <details class="acc"><summary>5. Uso de herramientas tecnológicas</summary><div class="acc-body"><p>Porcentaje de casos donde se usó facturación electrónica como prueba, número de cruces de información exógena realizados, casos originados por el modelo de scoring de IA, eficacia del módulo de alertas de prescripción. Esto es lo que conecta las herramientas informáticas con los resultados.</p></div></details>
+      <details class="acc"><summary>6. Recomendaciones y plan de acción</summary><div class="acc-body"><p>Acciones concretas propuestas para el siguiente período: reasignación de recursos, solicitud de nuevos gestores, programa de capacitación, ajuste de metas, solicitud de mejoras tecnológicas al área de TI. Cada recomendación vinculada al diagnóstico del punto anterior.</p></div></details>
+    </div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 19 · El informe completo que presentas el viernes</div><div class="ejemplo-body"><p>Llega el viernes. Tu informe de 8 páginas incluye: (1) Dashboard ejecutivo en una página — recaudo trimestral $15.200M (meta $14.000M → <mark>verde</mark>), 120 casos cerrados (meta 100 → verde), tasa de anulación 14% (meta <10% → <mark>rojo</mark>), tiempo promedio 11 meses (meta <12 → amarillo); (2) Contexto: 18 gestores activos (2 en vacancia); (3) Detalle por programa; (4) Análisis de las 6 anulaciones (4 por términos, 2 por motivación insuficiente); (5) Uso de herramientas: 85% de los casos usaron facturación electrónica, 100% usaron exógena, 35 casos fueron originados por el modelo de IA; (6) Recomendación principal: implementar alertas de prescripción a 30/60/90 días. El Director queda satisfecho porque tiene datos para reportar arriba y un plan para mejorar.</p></div></div>
+    <div class="ejemplo"><div class="ejemplo-head">🏛️ Ejemplo 20 · Explicando el módulo de cruces al Director</div><div class="ejemplo-body"><p>El Director pregunta: "¿Cómo funciona el nuevo módulo de cruces automatizados?" Tu respuesta integra todo lo aprendido: "Director, el módulo toma la información que los terceros (bancos, clientes, proveedores) reportan anualmente a la DIAN, y la compara automáticamente con lo que cada contribuyente declaró. Cuando la diferencia supera un umbral (definido por la Subdirección de Fiscalización), genera una <mark>alerta de inconsistencia</mark>. Esas alertas alimentan el modelo de scoring de IA que asigna un puntaje de riesgo a cada contribuyente. Los de mayor puntaje se convierten en nuestros casos. Este trimestre, 35 de nuestros 120 casos cerrados fueron originados por el modelo — con una tasa de éxito del 78% (confirmación de irregularidad). Eso es 15 puntos porcentuales mejor que los casos de selección tradicional."</p></div></div>
+    <div class="ojo"><b>👁️ Ojo en la prueba:</b> Si la pregunta te presenta un escenario donde debes "preparar un informe para la Alta Dirección", la respuesta correcta siempre incluye: datos cuantitativos verificables + comparación con metas o períodos anteriores + análisis de causas + recomendaciones. Si una opción dice solo "describir lo que hizo la división narrativamente", es insuficiente — falta la parte cuantitativa y las recomendaciones basadas en evidencia.</div>
+
+    <div class="checkpoint" id="cp4">
+      <div class="cp-tag">✅ Checkpoint 4</div>
+      <p class="cp-q">En un informe de gestión para el Director Seccional, ¿cuál es el principio fundamental de presentación?</p>
+      <div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="0">Incluir toda la narrativa detallada de cada caso para que el Director entienda las complejidades jurídicas.</button>
+        <button class="cp-opt" data-cp="4" data-ans="1">Pirámide invertida: lo más importante primero (resumen ejecutivo con KPIs clave), detalles después para quien quiera profundizar.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Presentar solo los resultados positivos para mantener una buena imagen de la división.</button>
+      </div>
+      <div class="cp-fb" id="cpfb4">✔ La pirámide invertida respeta el tiempo del Director (que tiene 5 minutos, no 30) y permite que quien necesite profundizar lo haga en las secciones de detalle. Además, ocultar problemas es una falta ética que destruye la confianza — los informes deben ser honestos.</div>
+    </div>
+  </div>
+
+  <!-- Cierre de la sección Desarrollo -->
+  <div class="destacado oro">
+    <span class="dst-ic">💎</span>
+    <div class="dst-body">
+      <span class="dst-title">Frase para recordar</span>
+      <p>"Las herramientas informáticas de la DIAN son el <mark>sistema nervioso</mark> de la fiscalización: MUISCA gestiona, la facturación electrónica captura, la exógena cruza, la firma digital autentica, el RUT identifica, la IA prioriza, y los informes de gestión traducen todo en <mark>decisiones inteligentes</mark>. El gestor que domina estas herramientas multiplica su impacto."</p>
+    </div>
+  </div>
+
+  <div class="fuentes">
+    <div class="box-title">📚 Fuentes y normativa</div>
+    <ul class="lista">
+      <li><a href="https://www.dian.gov.co/normatividad/Paginas/default.aspx" target="_blank">DIAN — Normatividad y resoluciones sobre facturación electrónica e información exógena</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank">Función Pública — MIPG: Dimensión 3 Gestión con Valores para Resultados (Gobierno Digital)</a></li>
+      <li><a href="https://www.secretariasenado.gov.co/senado/basedoc/ley_0527_1999.html" target="_blank">Secretaría del Senado — Ley 527 de 1999 (Comercio Electrónico y Firma Digital)</a></li>
+      <li><a href="https://www.dian.gov.co/impuestos/factura-electronica/Paginas/default.aspx" target="_blank">DIAN — Portal de Facturación Electrónica</a></li>
+      <li><a href="https://www.secretariasenado.gov.co/senado/basedoc/estatuto_tributario.html" target="_blank">Secretaría del Senado — Estatuto Tributario (Arts. 555-2, 563, 566-1, 583, 631, 703, 710)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/web/mipg/gobierno-digital" target="_blank">Función Pública — Política de Gobierno Digital</a></li>
+    </ul>
+  </div>
+
+  <div class="box ok"><div class="box-title">✅ Tips finales del Desarrollo</div>
+    <p>• MUISCA es el sistema central — pero está compuesto de MÓDULOS especializados (RUT, obligaciones, exógena, facturación, expedientes).<br>
+    • La facturación electrónica permite cruces en TIEMPO REAL (no hay que esperar la exógena anual).<br>
+    • La firma digital garantiza: autenticidad + integridad + no repudio (las tres).<br>
+    • El RUT es la base: dirección de notificación, actividad, responsabilidades.<br>
+    • Los informes de gestión son datos + contexto + análisis + recomendaciones (no narrativa subjetiva).<br>
+    • La IA prioriza pero NO decide — el gestor humano sigue siendo responsable.<br>
+    • La peor falla de gestión es la prescripción (pérdida definitiva del caso).</p>
+  </div>
+
+  <div class="box gold"><div class="box-title">💎 Cierre del Desarrollo</div>
+    <p>"Dominar las herramientas informáticas de la DIAN no es opcional para un Gestor I — es la <mark>base de tu productividad</mark>. El servidor que conoce los sistemas extrae en minutos lo que otro tarda días. Y el que sabe construir informes de gestión traduce su trabajo técnico en <mark>valor estratégico</mark> para la institución."</p>
+  </div>
+</section>
+
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Comparaciones clave para la prueba</h2>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Firma digital</th><th>Firma electrónica</th></tr></thead>
+    <tbody>
+      <tr><td>Basada en criptografía asimétrica (PKI)</td><td>Cualquier método electrónico de identificación</td></tr>
+      <tr><td>Requiere certificado de entidad acreditada por la SIC</td><td>Puede ser PIN, contraseña, biométrico, etc.</td></tr>
+      <tr><td>Presunción de autenticidad (Art. 28 Ley 527/1999)</td><td>Válida si las partes la aceptan (Decreto 2364/2012)</td></tr>
+      <tr><td>Garantiza: autenticidad + integridad + no repudio</td><td>Solo identifica — no necesariamente garantiza integridad</td></tr>
+      <tr><td>Usada por la DIAN para actos administrativos</td><td>Usada por contribuyentes para trámites en línea</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Tratar "firma digital" y "firma electrónica" como sinónimos. La firma digital es un TIPO de firma electrónica (la más segura), no un sinónimo. Toda firma digital es firma electrónica, pero no toda firma electrónica es firma digital.</p></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Información exógena</th><th>Facturación electrónica</th></tr></thead>
+    <tbody>
+      <tr><td>Reportada UNA VEZ AL AÑO por terceros</td><td>Validada en TIEMPO REAL (cada factura)</td></tr>
+      <tr><td>Agregada (totales anuales por cliente/proveedor)</td><td>Transaccional (cada operación individual)</td></tr>
+      <tr><td>Viene de: bancos, empresas, notarías, cámaras</td><td>Viene del propio contribuyente (obligado a facturar)</td></tr>
+      <tr><td>Disponible a partir de abril-mayo del año siguiente</td><td>Disponible en el momento de la transacción</td></tr>
+      <tr><td>Permite cruces anuales históricos</td><td>Permite cruces inmediatos bimestrales/mensuales</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Creer que la facturación electrónica reemplazó a la información exógena. NO: son complementarias. La exógena trae información que la facturación no cubre (consignaciones bancarias, patrimonio, inversiones bursátiles). La facturación aporta inmediatez que la exógena no tiene.</p></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Cruce de información</th><th>Modelo de scoring (IA)</th></tr></thead>
+    <tbody>
+      <tr><td>Compara dos variables: declarado vs. reportado</td><td>Considera decenas de variables simultáneamente</td></tr>
+      <tr><td>Binario: hay brecha o no hay brecha</td><td>Probabilístico: asigna un puntaje de riesgo (0-100)</td></tr>
+      <tr><td>Genera alertas individuales por inconsistencia</td><td>Prioriza contribuyentes por probabilidad de irregularidad</td></tr>
+      <tr><td>Primera generación de la selección automatizada</td><td>Tercera generación: aprendizaje de resultados históricos</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><div class="box-title">⚠️ Trampa típica</div><p>Pensar que el modelo de IA/scoring "decidió abrir el caso" y por eso no hay discrecionalidad. La IA PRIORIZA pero la decisión de abrir un caso la toma un funcionario competente con criterio técnico. La selección nunca es 100% automática — siempre hay supervisión humana.</p></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>Informe de gestión</th><th>Acto administrativo</th></tr></thead>
+    <tbody>
+      <tr><td>Documento interno de análisis y recomendación</td><td>Documento con efectos jurídicos externos</td></tr>
+      <tr><td>Destinatario: Alta Dirección (jefes, directores)</td><td>Destinatario: contribuyente (modifica su obligación)</td></tr>
+      <tr><td>No requiere firma digital formal (aunque puede tenerla)</td><td>Requiere firma del funcionario competente</td></tr>
+      <tr><td>Contiene indicadores, tendencias, recomendaciones</td><td>Contiene motivación jurídica, hechos, decisión</td></tr>
+      <tr><td>No es impugnable (no crea ni modifica derechos)</td><td>Es impugnable mediante recursos (reconsideración, demanda)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo CNSC resueltos</h2>
+  <div class="caso"><div class="caso-head">📂 Caso 1 · Acceso indebido a MUISCA</div><div class="caso-body"><span class="label">Situación</span><p>Tu compañero de división te pide que le consultes en MUISCA la información tributaria de un contribuyente que NO está asignado a ti (es un caso de él pero no tiene acceso temporal). Argumenta que es urgente porque tiene una audiencia mañana y su jefe está en comisión y no puede asignarle el acceso.</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ NO consultas.</strong> El acceso a información tributaria está limitado a los casos formalmente asignados a cada gestor. Consultar un expediente ajeno viola la reserva tributaria, queda registrado en los logs de auditoría, y puede generar responsabilidad disciplinaria y penal (revelación de secreto). La solución es que tu compañero solicite la asignación temporal al siguiente en la cadena de mando (coordinador o subdirector).</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 2 · Factura sin CUFE como soporte de costos</div><div class="caso-body"><span class="label">Situación</span><p>Al revisar los soportes de costos declarados por un contribuyente, encuentras 3 facturas por $450 millones que no tienen CUFE (Código Único de Factura Electrónica). El contribuyente alega que "las recibió así del proveedor" y que "no es su culpa que el proveedor no facture electrónicamente".</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Se rechazan como soporte de costos.</strong> Desde la implementación de la facturación electrónica obligatoria, una factura sin CUFE no es una factura electrónica válida. Sin factura válida, el costo no tiene soporte probatorio aceptable (Art. 771-2 E.T. — requisitos de la factura como soporte de costos). El contribuyente tiene la responsabilidad de exigir facturas válidas a sus proveedores. Los $450M se rechazan como deducción → mayor impuesto a pagar.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 3 · Notificación a dirección desactualizada del RUT</div><div class="caso-body"><span class="label">Situación</span><p>Envías un requerimiento especial a la dirección registrada en el RUT del contribuyente. La empresa de correos devuelve el envío con la nota "dirección no existe / inmueble demolido". Posteriormente el contribuyente alega que "nunca recibió la notificación" y que por lo tanto el requerimiento es nulo.</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ La notificación sigue siendo válida.</strong> El Art. 563 E.T. establece que la dirección para efectos tributarios es la que conste en el RUT. Si el contribuyente no la actualizó, la notificación a la última dirección registrada surte efectos legales. Cuando el correo físico falla, se procede a la notificación por aviso (publicación en la página web de la DIAN — Art. 568 E.T.), que también es válida. La responsabilidad de mantener el RUT actualizado es del contribuyente.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 4 · Informe de gestión con datos negativos</div><div class="caso-body"><span class="label">Situación</span><p>Al preparar el informe trimestral descubres que la tasa de prescripción de la división fue del 4% (6 casos prescritos). Tu jefe te dice: "No pongas eso en el informe — nos va a quedar mal con el Director. Solo reporta los indicadores positivos."</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Se incluye el dato completo.</strong> Un informe de gestión debe ser honesto y completo. Ocultar datos negativos es una falta ética y puede constituir falta disciplinaria (omisión en el cumplimiento de deberes). Lo correcto es: reportar la prescripción del 4%, diagnosticar la causa (falta de alertas tempranas, sobrecarga de gestores), y proponer acciones correctivas. El Director necesita información veraz para tomar decisiones — no una versión maquillada de la realidad.</div></div></div>
+  <div class="caso"><div class="caso-head">📂 Caso 5 · Detección de red con análisis de RUT</div><div class="caso-body"><span class="label">Situación</span><p>Al consultar el RUT del representante legal de la empresa investigada, descubres que es representante de otras 15 empresas, todas creadas en los últimos 8 meses, todas con la misma dirección, todas con actividad "servicios de consultoría" y ninguna tiene más de 2 empleados reportados. Tu contribuyente investigado tiene facturas de 6 de esas 15 empresas como soporte de costos.</p><span class="label">Respuesta</span><div class="resp-correcta"><strong>✅ Indicio fuerte de facturación ficticia.</strong> El patrón es clásico: empresas fachada (múltiples sociedades recientes, mismo representante, misma dirección, sin estructura real) que emiten facturas para que otras empresas las usen como soporte de costos/deducciones ficticias. Se debe: (1) verificar si esas empresas tienen operaciones reales; (2) solicitar información a la Subdirección de Fiscalización para confirmar si ya fueron identificadas como empresas de facturación ficticia; (3) si se confirma, rechazar los costos soportados en esas facturas y proponer sanción por inexactitud.</div></div></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Error 1 — Consultar información en MUISCA sin asignación formal</div><p>Cada consulta queda en logs de auditoría. Acceder a expedientes no asignados = violación de reserva tributaria. <strong>Corrige:</strong> solo consultas TUS casos asignados.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 2 — Asumir que un cruce = prueba de evasión</div><p>El cruce es un INDICIO, no una prueba. Hay falsos positivos (errores de terceros, préstamos, temporalidad). <strong>Corrige:</strong> el cruce abre la investigación, no la cierra.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 3 — Confundir firma digital con firma electrónica</div><p>La firma digital (PKI, certificado) es un TIPO de firma electrónica. No son sinónimos. <strong>Corrige:</strong> firma digital = subconjunto más seguro de firma electrónica.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 4 — Presentar informes solo narrativos sin indicadores</div><p>Un informe sin datos cuantitativos no permite medir ni comparar. <strong>Corrige:</strong> siempre incluye KPIs con fuente, meta y tendencia.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 5 — Creer que la IA "decide" abrir casos</div><p>La IA prioriza y sugiere, pero la decisión la toma un funcionario competente. <strong>Corrige:</strong> la IA es herramienta de apoyo, no decisor autónomo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 6 — Ignorar la prescripción por estar "ocupado con otros casos"</div><p>Un caso prescrito es irrecuperable — es la peor falla de gestión. <strong>Corrige:</strong> la prescripción siempre tiene prioridad sobre cualquier otro caso nuevo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Error 7 — Notificar sin verificar primero la dirección del RUT</div><p>Si la dirección cambió y no notificas correctamente, puedes perder el acto por nulidad. <strong>Corrige:</strong> siempre verifica el RUT ANTES de notificar; si el correo rebota, procede con notificación por aviso.</p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Trucos para dominar el tema</h2>
+  <div class="box ok"><div class="box-title">✅ Tip 1 — MUISCA = Módulos especializados</div><p>No es un solo sistema monolítico. Tiene módulos: RUT, Obligaciones, Recaudo, Exógena, Facturación, Fiscalización. Si la pregunta dice "en qué módulo del MUISCA...", piensa en la función específica.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 2 — Facturación = Tiempo real; Exógena = Anual</div><p>Si la pregunta habla de información "inmediata" o "en el momento de la transacción" = facturación electrónica. Si habla de "reporte anual de terceros" = información exógena.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 3 — Firma digital: A-I-NR</div><p>Memoriza: Autenticidad + Integridad + No Repudio. Si una opción no menciona las tres, es incompleta. Si menciona "confidencialidad", cuidado — la firma NO cifra el contenido (eso es la encriptación).</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 4 — RUT = Dirección válida para notificar</div><p>Art. 563 E.T.: la dirección del RUT es la que vale. Si el contribuyente no la actualiza, es su problema. Ojo: la pregunta puede plantear un contribuyente que "se mudó" — la notificación a la dirección del RUT sigue siendo válida.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 5 — Informe = Datos + Contexto + Recomendación</div><p>Si la pregunta te pide "elemento esencial de un informe de gestión", busca la opción que tenga datos cuantitativos, comparación con metas/períodos, y propuesta de acción. No solo narrativa.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 6 — Prescripción = Peor falla</div><p>Cualquier otra falla (lentitud, baja tasa de cierre, anulaciones) es corregible. La prescripción es IRREVERSIBLE. Si aparece como opción de "peor escenario", es la correcta.</p></div>
+  <div class="box ok"><div class="box-title">✅ Tip 7 — CUFE = Factura válida</div><p>Sin CUFE, no es factura electrónica válida. Sin factura válida, no hay soporte de costos. Si la pregunta menciona "factura sin CUFE", la consecuencia es rechazo del costo/deducción.</p></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Las trampas favoritas de la CNSC</h2>
+  <div class="trampa"><div class="trampa-q">«El cruce de información exógena demuestra que el contribuyente evadió impuestos.»</div><div class="trampa-detail"><div class="t-row parece">"Si el cruce muestra una brecha, ya se comprobó la evasión".</div><div class="t-row malo">Es trampa: el cruce es un INDICIO que justifica investigar, no una prueba definitiva. Hay falsos positivos (errores de terceros, préstamos, diferencias temporales). Sin investigación adicional, no se puede afirmar evasión.</div><div class="t-row bueno">Correcto: el cruce ABRE la investigación. La prueba de evasión se construye durante el proceso de fiscalización (requerimientos, verificaciones, análisis).</div></div></div>
+  <div class="trampa"><div class="trampa-q">«La firma electrónica tiene la misma seguridad jurídica que la firma digital.»</div><div class="trampa-detail"><div class="t-row parece">"Ambas son válidas legalmente, entonces tienen la misma seguridad".</div><div class="t-row malo">Es trampa: ambas son VÁLIDAS, pero la firma digital tiene una seguridad SUPERIOR porque garantiza autenticidad + integridad + no repudio con presunción legal de autenticidad (Art. 28 Ley 527). La firma electrónica simple solo identifica, no garantiza integridad.</div><div class="t-row bueno">Correcto: la firma digital tiene mayor valor probatorio porque invierte la carga de la prueba (quien la niega debe probar la falsedad). La firma electrónica simple no tiene esa presunción.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Si el contribuyente cambió de dirección y no recibió la notificación, el acto es nulo.»</div><div class="trampa-detail"><div class="t-row parece">"Si no se enteró, no hay notificación válida".</div><div class="t-row malo">Es trampa: el Art. 563 E.T. establece que la dirección para notificaciones es la del RUT. La responsabilidad de actualizar es del contribuyente. Notificar a la dirección registrada ES válido aunque el contribuyente ya no esté allí.</div><div class="t-row bueno">Correcto: la notificación a la dirección del RUT surte efectos legales. Si el contribuyente se mudó sin actualizar, el problema es suyo — no puede alegar nulidad.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«El modelo de IA selecciona automáticamente a los contribuyentes a fiscalizar sin intervención humana.»</div><div class="trampa-detail"><div class="t-row parece">"Si la IA lo elige, se abre el caso automáticamente".</div><div class="t-row malo">Es trampa: la IA PRIORIZA y SUGIERE, pero la decisión de abrir un caso la toma un funcionario competente que valida técnicamente la selección. Siempre hay supervisión humana en la decisión final.</div><div class="t-row bueno">Correcto: la selección requiere validación humana. El funcionario verifica que la alerta del modelo tenga sustento técnico antes de abrir formalmente el caso.</div></div></div>
+  <div class="trampa"><div class="trampa-q">«Un informe de gestión que solo muestre indicadores positivos es un buen informe.»</div><div class="trampa-detail"><div class="t-row parece">"Presentar solo lo bueno da buena imagen y motiva al equipo".</div><div class="t-row malo">Es trampa: un informe que oculta problemas no permite tomar decisiones correctivas. La honestidad es un principio ético y funcional del informe de gestión. Ocultar datos negativos puede constituir falta disciplinaria.</div><div class="t-row bueno">Correcto: el informe debe ser completo y honesto — datos positivos Y negativos + diagnóstico de causas + recomendaciones de mejora.</div></div></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Repasa con flashcards</h2>
+  <p>Toca la tarjeta para ver la respuesta. Repásalas hasta dominarlas.</p>
+  <div class="flashcard-wrap"><div id="flashcard" class="flashcard"><div class="flash-face flash-front"><span class="flash-tag">Pregunta</span><p id="flashFront"></p><small class="flash-hint">Toca para ver la respuesta</small></div><div class="flash-face flash-back"><span class="flash-tag">Respuesta</span><p id="flashBack"></p></div></div><div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter">Tarjeta 1 de 12</span><button id="flashFlip">Voltear</button><button id="flashNext">Siguiente →</button></div></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen y glosario</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>MUISCA</h4><p>Plataforma integral de la DIAN: declaraciones, pagos, RUT, exógena, facturación electrónica, expedientes de fiscalización. Acceso restringido por caso asignado.</p></div>
+    <div class="resumen-item"><h4>Facturación electrónica</h4><p>Facturas validadas en tiempo real por la DIAN (CUFE). Permite cruces inmediatos de ventas vs. ingresos declarados.</p></div>
+    <div class="resumen-item"><h4>Información exógena</h4><p>Reporte anual de terceros (bancos, empresas, notarías). Base para cruces de ingresos, patrimonio y costos.</p></div>
+    <div class="resumen-item"><h4>Firma digital</h4><p>Criptográfica (PKI). Garantiza: autenticidad + integridad + no repudio. Ley 527/1999. Presunción de autenticidad.</p></div>
+    <div class="resumen-item"><h4>RUT</h4><p>Registro central. Dirección para notificar (Art. 563 E.T.). Actividad económica, responsabilidades, vínculos societarios.</p></div>
+    <div class="resumen-item"><h4>Informes de gestión</h4><p>Datos + contexto + análisis + recomendaciones. Pirámide invertida. KPIs: recaudo, cierre, anulación, prescripción.</p></div>
+    <div class="resumen-item"><h4>Indicadores de productividad</h4><p>Miden relación resultados/recursos. La prescripción (0% ideal) es la peor falla. La calidad importa tanto como la cantidad.</p></div>
+    <div class="resumen-item"><h4>Analítica e IA</h4><p>Modelos de scoring para priorizar. Aprenden de resultados históricos. La IA sugiere, el funcionario decide.</p></div>
+  </div>
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:24px 0 8px;">Glosario</h3>
+  <dl class="glosario">
+    <dt>MUISCA</dt><dd>Modelo Único de Ingresos, Servicio y Control Automatizado — plataforma tecnológica integral de la DIAN.</dd>
+    <dt>CUFE</dt><dd>Código Único de Factura Electrónica — identificador que certifica que una factura fue validada por la DIAN.</dd>
+    <dt>Información exógena</dt><dd>Información que terceros reportan a la DIAN sobre operaciones de contribuyentes (Art. 631 E.T.).</dd>
+    <dt>Cruce de información</dt><dd>Comparación entre lo declarado por el contribuyente y lo reportado por terceros para detectar inconsistencias.</dd>
+    <dt>Firma digital</dt><dd>Mecanismo criptográfico basado en PKI que garantiza autenticidad, integridad y no repudio (Ley 527/1999).</dd>
+    <dt>RUT</dt><dd>Registro Único Tributario — base de datos maestra de identificación de contribuyentes (Art. 555-2 E.T.).</dd>
+    <dt>Reserva tributaria</dt><dd>Protección legal de la información tributaria individual (Art. 583 E.T.). Solo acceden funcionarios autorizados.</dd>
+    <dt>Scoring de riesgo</dt><dd>Puntaje probabilístico que el modelo de IA asigna a cada contribuyente según su probabilidad de irregularidad.</dd>
+    <dt>KPI</dt><dd>Key Performance Indicator — indicador clave de desempeño usado en informes de gestión.</dd>
+    <dt>Prescripción</dt><dd>Pérdida definitiva de la facultad de la DIAN para modificar una declaración por vencimiento de términos.</dd>
+    <dt>Gobierno Digital</dt><dd>Política del MIPG (Dimensión 3) que promueve el uso de TIC para mejorar la gestión pública y el servicio al ciudadano.</dd>
+  </dl>
+  <div class="box gold"><div class="box-title">💎 Para recordar</div><p>"El ecosistema tecnológico de la DIAN tiene una lógica: <strong>MUISCA gestiona, la facturación captura, la exógena cruza, la firma autentica, el RUT ubica, la IA prioriza</strong> — y los informes de gestión traducen todo en <mark>decisiones inteligentes</mark>. El gestor que domina este ecosistema multiplica por diez su impacto."</p></div>
+</section>
+
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro tipo CNSC</h2>
+  <div class="card card-lead quiz-intro"><p><strong>Formato CNSC — juicio situacional:</strong> cada pregunta te pone en una situación real del manejo de herramientas informáticas e informes de gestión en la DIAN y te pide la actuación más apropiada. Al elegir, te explicamos por qué cada opción es correcta o incorrecta. Las opciones se barajan en cada intento.</p><div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div></div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin:28px 0;"><button id="btnCalcular" class="btn">Ver mi resultado</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/12</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button id="btnReiniciar" class="btn gold">🔄 Repetir simulacro</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-DIAN-09 · Herramientas Informáticas e Informes de Gestión · Día 20 · Ascenso Público<br>© Ascenso Público. Material de preparación para el concurso de méritos de la CNSC. No afiliado a la DIAN ni a la CNSC.</div>
+</footer>
+
+<script>
+const FINALIZAR_MSG={"boton":"✅ Finalizar Día 20","alerta":"¡Felicitaciones! Terminaste el Día 20 · Herramientas Informáticas e Informes de Gestión.\n\nSigue con el Día 21 para cerrar tu preparación."};
+const readbar=document.getElementById('readbar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const secciones=[...document.querySelectorAll('.section')];
+const navBtns=[...document.querySelectorAll('nav button')];
+function showSec(n){secciones.forEach(s=>s.classList.toggle('visible',+s.dataset.sec===n));navBtns.forEach(b=>b.classList.toggle('active',+b.dataset.sec===n));window.scrollTo({top:0,behavior:'smooth'});}
+navBtns.forEach(b=>b.addEventListener('click',()=>showSec(+b.dataset.sec)));
+const titulos=['Importancia','Desarrollo','Comparaciones','Casos','Errores','Tips','Trampas','Repaso','Resumen','Simulacro'];
+secciones.forEach((sec,i)=>{
+  const bar=document.createElement('div');bar.className='advance-bar';
+  if(i<secciones.length-1){
+    bar.innerHTML='<span class="advance-hint">Siguiente: '+titulos[i]+'</span>';
+    const btn=document.createElement('button');btn.className='advance-btn';btn.textContent='Avanzar →';btn.addEventListener('click',()=>showSec(i+1));bar.appendChild(btn);
+  }else{
+    const btn=document.createElement('button');btn.className='advance-btn final';btn.textContent=FINALIZAR_MSG.boton;btn.addEventListener('click',()=>alert(FINALIZAR_MSG.alerta));bar.appendChild(btn);
+  }
+  sec.appendChild(bar);
+});
+document.querySelectorAll('.checkpoint').forEach(cp=>{
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      cp.querySelectorAll('.cp-opt').forEach(b=>{b.classList.add('cp-lock');if(+b.dataset.ans===1)b.classList.add('cp-ok');});
+      if(+btn.dataset.ans!==1)btn.classList.add('cp-no');
+      fb.classList.add('show');
+    });
+  });
+});
+const flashcards=[
+  {f:'¿Qué es el MUISCA?',b:'Modelo Único de Ingresos, Servicio y Control Automatizado — la plataforma tecnológica integral de la DIAN que soporta todos los procesos misionales (tributación, aduanas, cambiario).'},
+  {f:'¿Qué garantiza la firma digital?',b:'Tres cosas: AUTENTICIDAD (identifica al firmante), INTEGRIDAD (el documento no fue alterado), y NO REPUDIO (el firmante no puede negar que firmó). Basada en PKI con certificado digital.'},
+  {f:'¿Qué es el CUFE?',b:'Código Único de Factura Electrónica. Identifica de manera única cada factura validada por la DIAN. Sin CUFE, la factura no es electrónica válida y no sirve como soporte de costos.'},
+  {f:'¿Cuál es la diferencia entre información exógena y facturación electrónica?',b:'La exógena es ANUAL (reportada una vez al año por terceros). La facturación electrónica es en TIEMPO REAL (cada factura se valida al instante). Son complementarias, no sustitutivas.'},
+  {f:'¿Qué dirección vale para notificar actos administrativos?',b:'La dirección registrada en el RUT (Art. 563 E.T.). Si el contribuyente no la actualiza y la DIAN notifica allí, la notificación es VÁLIDA aunque el contribuyente ya no esté en ese lugar.'},
+  {f:'¿Qué es un cruce de información?',b:'La comparación automática entre lo que el contribuyente DECLARÓ y lo que TERCEROS reportaron (exógena). Si hay diferencia significativa, genera una alerta de inconsistencia que abre investigación.'},
+  {f:'¿Qué ley regula la firma digital en Colombia?',b:'La LEY 527 DE 1999 (Comercio Electrónico). Establece la equivalencia funcional entre documentos escritos y mensajes de datos, y entre firma manuscrita y firma digital.'},
+  {f:'¿Cuál es la peor falla de gestión en fiscalización?',b:'La PRESCRIPCIÓN: que un caso venza sin actuación. Es la única falla IRREVERSIBLE — la DIAN pierde definitivamente la facultad de modificar esa declaración.'},
+  {f:'¿La IA decide abrir casos de fiscalización?',b:'NO. La IA PRIORIZA y SUGIERE contribuyentes de mayor riesgo, pero la DECISIÓN de abrir un caso la toma siempre un FUNCIONARIO HUMANO competente que valida técnicamente la selección.'},
+  {f:'¿Qué debe tener un informe de gestión para la Alta Dirección?',b:'Datos cuantitativos verificables + comparación con metas/períodos anteriores + diagnóstico de causas + recomendaciones basadas en evidencia. Formato: pirámide invertida (lo más importante primero).'},
+  {f:'¿Qué es la reserva tributaria?',b:'La protección legal (Art. 583 E.T.) de la información tributaria individual. Solo pueden acceder: el contribuyente, sus apoderados, y los funcionarios de la DIAN autorizados. Violarla es delito penal.'},
+  {f:'¿Qué es Gobierno Digital en el MIPG?',b:'Es la política de la Dimensión 3 del MIPG que promueve usar TIC para mejorar la gestión pública interna (TIC para el Estado) y la relación con los ciudadanos (TIC para la Sociedad), con seguridad de la información.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+
+const preguntas=[
+  {nivel:'b',tema:'Seguridad y acceso en MUISCA',ctx:'Eres un Gestor I de Fiscalización recién posesionado en la Dirección Seccional de Impuestos de Bogotá. Tu compañero de cubículo te pide un favor: "Necesito que me consultes en MUISCA la información de un contribuyente que estoy investigando. No me han dado el acceso todavía porque el acto de asignación está en trámite. Es urgente porque el término vence la próxima semana." Él te proporciona el NIT del contribuyente.',q:'¿Cuál es la actuación correcta ante esta solicitud?',ops:['Acceder a MUISCA y consultar la información porque es un favor entre compañeros y el caso es urgente — después el acto de asignación se formaliza y todo queda bien.','NO consultar la información: el acceso al MUISCA está restringido a los expedientes que están FORMALMENTE asignados a cada gestor. Consultar un caso sin asignación viola la reserva tributaria (Art. 583 E.T.), queda registrado en logs de auditoría, y genera responsabilidad disciplinaria y penal. Tu compañero debe solicitar la asignación urgente al coordinador o subdirector.','Consultar solo la información básica del RUT (nombre, dirección) pero no las declaraciones ni la exógena, porque el RUT es "información pública".','Pedir autorización verbal al jefe de división por teléfono y consultar con esa autorización oral, sin esperar el acto formal.'],correcta:1,expl:['Acceder sin asignación formal es violación de reserva tributaria, sin importar la urgencia ni la buena intención. La urgencia no exime del control de acceso.','✔ El control de acceso al MUISCA es estricto: cada consulta queda en logs y solo se permite acceder a expedientes formalmente asignados. La reserva tributaria protege la información de TODOS los contribuyentes. La solución es la gestión administrativa urgente (asignación rápida), no la violación del protocolo.','TODA la información tributaria tiene reserva — incluyendo el RUT con datos de actividad y responsabilidades. No hay "parte pública" que un funcionario pueda consultar libremente para casos no asignados.','La autorización de acceso debe ser FORMAL (acto administrativo de asignación), no oral. Una autorización verbal no deja trazabilidad ni cubre la responsabilidad del gestor ante una auditoría.']},
+  {nivel:'b',tema:'Facturación electrónica y CUFE',ctx:'Estás revisando los costos y deducciones declarados por un contribuyente en su declaración de renta. Al verificar las facturas que soportan gastos operacionales por $380 millones, descubres que 4 facturas por un total de $120 millones NO tienen CUFE (Código Único de Factura Electrónica). El contribuyente argumenta: "Mi proveedor me envió esas facturas así; yo las pagué y recibí el servicio realmente. No es mi culpa que él no facture electrónicamente."',q:'¿Cuál es el tratamiento correcto de esas facturas sin CUFE?',ops:['Aceptarlas porque el contribuyente demuestra que pagó y recibió el servicio — lo importante es la realidad económica, no la forma del documento.','RECHAZAR las 4 facturas como soporte válido de costos: desde la obligatoriedad de la facturación electrónica, una factura sin CUFE no cumple los requisitos del Art. 771-2 del E.T. para soportar costos y deducciones. El contribuyente tiene la responsabilidad de exigir facturas electrónicas válidas a sus proveedores. Los $120M se desconocen como deducción, generando mayor impuesto a pagar.','Aceptar la mitad ($60M) como medida de proporcionalidad y rechazar la otra mitad como sanción.','Aplazar la decisión hasta verificar si el proveedor estaba o no obligado a facturar electrónicamente en ese período.'],correcta:1,expl:['Aunque la realidad económica importa, la ley tributaria exige requisitos FORMALES para los soportes de costos (Art. 771-2 E.T.). Sin factura válida, el costo no es deducible — así se haya pagado realmente.','✔ La factura electrónica con CUFE es requisito para soportar costos y deducciones. Sin CUFE, el documento no es factura electrónica válida. El contribuyente debe exigir facturas completas a sus proveedores; si no lo hace, asume la consecuencia fiscal (rechazo del costo).','No existe la figura de "aceptar proporcionalmente" facturas inválidas. El documento cumple los requisitos o no los cumple — no hay punto medio.','Si el proveedor estaba obligado y no facturó electrónicamente, eso refuerza el rechazo. Pero incluso si no estuviera obligado, debe expedir otro documento soporte válido. La verificación al proveedor no cambia que el contribuyente no tiene soporte.']},
+  {nivel:'b',tema:'RUT y notificaciones',ctx:'Necesitas notificar un requerimiento especial al contribuyente Juan Martínez (persona natural con actividad comercial). Consultas el RUT y la dirección registrada es Calle 45 #12-30, Cali. Envías la notificación por correo electrónico a la dirección inscrita en el RUT y por correo físico a esa dirección. El correo electrónico no rebotó. El contribuyente no responde en el término de 3 meses y tú proferes la liquidación oficial de revisión. Luego, el contribuyente interpone recurso de reconsideración alegando: "Yo me mudé hace un año a Medellín. Nunca me enteré del requerimiento. La notificación es nula."',q:'¿Tiene razón el contribuyente? ¿La notificación es nula?',ops:['Sí, la notificación es nula porque se hizo a una dirección donde ya no vive — no tuvo conocimiento real del acto y se violó el debido proceso.','NO tiene razón: la notificación es VÁLIDA. El Art. 563 E.T. establece que la dirección para notificaciones es la registrada en el RUT. El contribuyente tiene la obligación de actualizar su RUT cuando cambia de dirección (Art. 658-3 E.T.). Si no lo hizo, la notificación a la dirección registrada surte plenos efectos legales. Además, se envió al correo electrónico inscrito en el RUT sin rebote — la notificación electrónica también es válida.','Depende: si demuestra que se mudó por motivos de fuerza mayor (desplazamiento, emergencia), la notificación podría ser nula.','La notificación es válida pero la DIAN debe demostrar que el contribuyente recibió efectivamente el correo y leyó el documento adjunto.'],correcta:1,expl:['La ley NO requiere que el contribuyente "reciba efectivamente" el acto: basta con que se haya enviado correctamente a la dirección del RUT. La responsabilidad de actualizar es del contribuyente.','✔ El régimen de notificaciones tributarias es claro: la dirección del RUT es la que vale (Art. 563). Si el contribuyente no actualiza, las notificaciones allí surten efectos legales. La DIAN no tiene obligación de buscar al contribuyente ni de verificar si sigue en esa dirección.','No existe una excepción de "fuerza mayor" para la obligación de actualizar el RUT. El contribuyente tiene un mes para actualizar en cualquier caso.','La notificación electrónica al correo del RUT surte efectos al tercer día hábil del envío (Art. 566-1 E.T.). No se requiere demostrar que fue "leída" — basta con que fue enviada sin rebote.']},
+  {nivel:'b',tema:'Informes de gestión básicos',ctx:'Tu jefe de división te asigna preparar un informe trimestral de gestión para el Director Seccional. Es tu primer informe. Al reunir los datos, obtienes: 95 casos cerrados (meta: 80), recaudo $12.500M (meta: $10.000M), tiempo promedio 14 meses (meta: <12 meses), y 3 actos anulados por vencimiento de términos (tasa de anulación 9%, meta: <10%). Un compañero más experimentado te aconseja: "Pon solo los dos primeros indicadores que están en verde. Los otros los dejas por fuera para que el informe se vea bien."',q:'¿Cómo debes proceder?',ops:['Seguir el consejo del compañero: presentar solo lo positivo motiva al equipo y da buena imagen ante el Director.','INCLUIR TODOS los indicadores — tanto los positivos como los negativos. Un informe de gestión honesto y completo incluye: (a) los logros (casos y recaudo por encima de la meta); (b) las oportunidades de mejora (tiempo promedio alto y anulaciones por términos); (c) el diagnóstico de causas (por qué se vencieron los términos); (d) recomendaciones de acción (alertas de prescripción, redistribución de carga). Ocultar datos negativos es una falta ética y no permite tomar decisiones correctivas.','Presentar todos los datos pero "suavizar" los negativos diciendo que están "cerca de la meta" y que "se espera mejorar el próximo trimestre" sin proponer acciones concretas.','Incluir todos los datos pero culpar explícitamente a los gestores responsables de los casos anulados, con nombres y apellidos.'],correcta:1,expl:['Ocultar información negativa es una falta ética y potencialmente disciplinaria. El Director necesita el panorama completo para tomar decisiones informadas.','✔ El informe de gestión debe ser COMPLETO y HONESTO: datos positivos Y negativos + diagnóstico + recomendaciones. La honestidad institucional es un valor del servicio público. Además, si se ocultan los problemas, no se pueden resolver — seguirán deteriorándose.','Suavizar sin proponer acciones concretas equivale a no informar adecuadamente. El informe debe ser factual y propositivo, no evasivo.','Un informe institucional no personaliza culpas — analiza causas sistémicas (falta de alertas, sobrecarga) y propone soluciones estructurales. Señalar personas por nombre es inapropiado.']},
+  {nivel:'i',tema:'Cruces de información y procedimiento',ctx:'El programa de fiscalización de tu seccional detectó mediante cruces automatizados que la empresa Comercializadora del Valle SAS tiene una brecha de ingresos significativa: sus clientes reportaron haberle pagado $4.200 millones en 2023, los bancos reportan consignaciones por $4.800 millones, pero la empresa solo declaró ingresos brutos por $2.100 millones en su declaración de renta. La brecha es de aproximadamente $2.100-$2.700 millones. Te asignan el caso.',q:'¿Cuál es la PRIMERA acción que debes realizar con esta información de cruces?',ops:['Proferir directamente un requerimiento especial proponiendo la adición de $2.700 millones de ingresos, porque la brecha es evidente y el cruce es prueba suficiente.','Iniciar la fase de INVESTIGACIÓN: enviar un requerimiento ordinario de información al contribuyente solicitando que explique la diferencia entre lo reportado por terceros/bancos y lo declarado. Simultáneamente, solicitar confirmación a los bancos sobre las consignaciones y verificar si hay notas crédito, devoluciones u otras explicaciones legítimas que reduzcan la brecha.','Cerrar el caso y archivarlo porque los cruces tienen demasiados falsos positivos y probablemente hay una explicación.','Trasladar inmediatamente el caso a la Fiscalía por presunta evasión, dado que la brecha supera los $2.000 millones.'],correcta:1,expl:['El cruce es un INDICIO, no una prueba. Proferir un requerimiento especial sin investigar primero produce actos débiles que serán anulados por falta de sustento probatorio.','✔ El cruce abre la investigación pero NO la cierra. Se debe: (1) requerir al contribuyente que explique; (2) confirmar con las fuentes (bancos); (3) verificar si hay explicaciones legítimas (préstamos, devoluciones, temporalidad). Solo después de confirmar la brecha se profiere el requerimiento especial con sustento. Debido proceso exige investigar antes de proponer.','No se archiva un caso con brecha significativa sin investigar. La decisión de archivar requiere haber agotado las verificaciones y determinar que la brecha tiene explicación legítima.','El traslado a la Fiscalía requiere primero confirmar la irregularidad administrativamente. No se denuncia con base en un cruce sin verificar — se debe tener certeza razonable de la evasión.']},
+  {nivel:'i',tema:'Firma digital y validez de actos',ctx:'Eres gestor en la División de Fiscalización. Proyectaste un requerimiento especial contra la empresa Constructora Nacional SAS. Tu jefe de división lo revisó, lo aprobó y lo firmó digitalmente con su certificado personal en MUISCA. El requerimiento fue notificado electrónicamente al correo inscrito en el RUT del contribuyente. Dentro del término, el contribuyente responde alegando: "El requerimiento es NULO porque no tiene firma manuscrita del funcionario — solo tiene un código digital que no puedo verificar. Exijo que me envíen el documento original con firma autógrafa."',q:'¿Es procedente la objeción del contribuyente sobre la firma digital?',ops:['Sí, tiene razón: los actos administrativos tributarios requieren firma manuscrita original para tener validez jurídica plena.','NO es procedente: la firma digital tiene la MISMA validez jurídica que la firma manuscrita según la Ley 527 de 1999 (Art. 28). El acto firmado digitalmente es auténtico (identifica al firmante), íntegro (no fue alterado) y con no repudio (el firmante no puede negar la firma). El contribuyente puede verificar la firma con el certificado digital asociado. No se requiere duplicar con firma manuscrita.','Parcialmente tiene razón: se debe enviar una copia con firma manuscrita además de la versión digital, para darle "doble seguridad" al acto.','La objeción no es sobre la firma sino sobre la notificación: debió notificarse por correo certificado físico, no electrónico.'],correcta:1,expl:['Desde la Ley 527 de 1999, la firma digital tiene equivalencia funcional con la firma manuscrita. No hay requisito adicional de firma autógrafa cuando existe firma digital válida.','✔ La Ley 527/1999 establece la equivalencia funcional: un documento firmado digitalmente tiene la misma validez que uno firmado manuscritamente. El Art. 28 otorga presunción de autenticidad a la firma digital. La DIAN usa firma digital en todos sus actos desde la implementación de MUISCA. No se requiere duplicar con firma manuscrita.','No existe la figura de "doble firma" (digital + manuscrita). La firma digital es autosuficiente. Enviar además una copia manuscrita sería redundante e innecesario legalmente.','La notificación electrónica al correo del RUT es válida (Art. 566-1 E.T.). No se requiere correo certificado físico cuando existe dirección electrónica registrada.']},
+  {nivel:'i',tema:'Gobierno Digital y MIPG',ctx:'En una reunión de planeación, el Director Seccional pregunta: "¿Cómo estamos implementando la Política de Gobierno Digital del MIPG en nuestra seccional? Necesito datos concretos para el informe al MinTIC." Tú eres el gestor encargado de consolidar esta información. Debes identificar qué actividades de la seccional son manifestaciones concretas de Gobierno Digital.',q:'¿Cuáles de las siguientes actividades constituyen implementación de la Política de Gobierno Digital (MIPG Dimensión 3)?',ops:['Solo las actividades del área de Tecnología (soporte técnico, mantenimiento de servidores, compra de equipos). Gobierno Digital es responsabilidad exclusiva de TI.','TODAS estas actividades: (a) TIC para el Estado: uso de MUISCA para gestión de expedientes, firma digital de actos, tableros de control automatizados, cruces con IA; (b) TIC para la Sociedad: atención al contribuyente por portal web, presentación de declaraciones en línea, RUT virtual; (c) Seguridad: protección de la reserva tributaria digital, autenticación de dos factores, logs de auditoría. Gobierno Digital es TRANSVERSAL — no solo de TI.','Solo las actividades que tienen contacto con el ciudadano (portal web, atención virtual). Lo interno (MUISCA, firma digital) no es Gobierno Digital porque no lo ve el ciudadano.','Solo aquellas actividades que tienen aprobación expresa del MinTIC. Si no tiene "sello" del MinTIC, no cuenta como Gobierno Digital.'],correcta:1,expl:['Gobierno Digital no es responsabilidad exclusiva de TI — es una política TRANSVERSAL que aplica a TODAS las áreas de la entidad. Cada área implementa TIC en sus procesos.','✔ Gobierno Digital tiene dos componentes: TIC para el Estado (uso interno de tecnología: MUISCA, firma digital, IA) y TIC para la Sociedad (servicio al ciudadano: portal, RUT virtual, atención en línea). Además, la seguridad de la información es un eje transversal. Es responsabilidad de TODA la entidad, no solo de TI.','Las actividades internas (expediente electrónico, firma digital, IA para selección) son TIC PARA EL ESTADO — un componente explícito de la Política de Gobierno Digital. No se limita a lo que ve el ciudadano.','No se requiere "sello" del MinTIC para que una actividad cuente como implementación de Gobierno Digital. Cada entidad implementa la política autónomamente conforme al Decreto 1008 de 2018.']},
+  {nivel:'i',tema:'Indicadores de productividad',ctx:'El Director Seccional te pide que evalúes el desempeño comparativo de dos gestores de la División de Fiscalización en el último trimestre. Los datos son: Gestor A — cerró 12 casos, recaudo total $2.400M, tasa de anulación 5% (1 acto anulado de 20 proferidos), tiempo promedio 8 meses. Gestor B — cerró 25 casos, recaudo total $1.800M, tasa de anulación 28% (7 actos anulados de 25 proferidos), tiempo promedio 4 meses.',q:'¿Cuál gestor tiene mejor desempeño INTEGRAL y por qué?',ops:['El Gestor B porque cerró más del doble de casos (25 vs. 12) y en la mitad del tiempo. La cantidad y velocidad son lo más importante.','El Gestor A tiene mejor desempeño INTEGRAL: aunque cerró menos casos, su recaudo es mayor ($2.400M vs. $1.800M), su tasa de anulación es muy baja (5% vs. 28%) lo que indica calidad sostenible, y su tiempo es razonable (8 meses, dentro de la meta de 12). El Gestor B cierra rápido pero con baja calidad — el 28% de anulación significa que casi 1 de cada 3 actos es nulo, lo que implica trabajo perdido y contribuyentes que escapan.','Ambos son iguales porque uno compensa cantidad con calidad y el otro al revés.','No se pueden comparar porque tienen cargas de trabajo diferentes.'],correcta:1,expl:['La cantidad sin calidad es trabajo perdido. El Gestor B cierra 25 casos pero 7 se anulan — es como si solo cerrara 18 efectivamente, con menos recaudo.','✔ La productividad INTEGRAL considera: recaudo efectivo, calidad (baja anulación), y tiempo razonable. El Gestor A genera más recaudo sostenible (porque sus actos se mantienen) en un tiempo aceptable. El Gestor B sacrifica calidad por velocidad — un acto anulado no recauda nada y el contribuyente queda libre.','No son iguales: el recaudo NETO del Gestor A (descontando anulaciones) es muy superior. La calidad no es compensable con cantidad cuando la tasa de anulación es tan alta.','Sí se pueden comparar con los indicadores presentados — para eso existen los KPIs normalizados (por gestor, por período).']},
+  {nivel:'i',tema:'Analítica e inteligencia artificial',ctx:'La Subdirección de Fiscalización implementó un nuevo modelo de machine learning para seleccionar contribuyentes a investigar. El modelo asigna un "score de riesgo" de 0 a 100 basado en 45 variables (brecha de ingresos, sector, antigüedad, historial, patrimonio inexplicado, etc.). Tu seccional recibe la lista de contribuyentes con score superior a 75. Un nuevo compañero te pregunta: "Si la inteligencia artificial dice que este contribuyente tiene score 92, ¿eso significa que ya está probado que evade y podemos ir directo al requerimiento especial?"',q:'¿Cuál es la respuesta correcta sobre el alcance del modelo de IA?',ops:['Sí, un score de 92 es prácticamente una certeza — se puede proferir el requerimiento especial con base en el score del modelo.','NO: el score de riesgo indica PROBABILIDAD alta de irregularidad, no certeza. Es una herramienta de PRIORIZACIÓN que te dice "invierte tu tiempo aquí primero porque es más probable que encuentres algo". Pero aún necesitas: (a) investigar (requerimientos ordinarios, verificación de información); (b) construir la prueba; (c) darle al contribuyente la oportunidad de explicar. La IA no reemplaza el debido proceso ni la investigación probatoria.','El score no sirve para nada porque la IA comete muchos errores. Es mejor ignorarlo y seleccionar contribuyentes al azar.','El score es útil pero solo como prueba complementaria dentro del expediente — se puede citar el puntaje de la IA en la motivación del requerimiento especial como evidencia.'],correcta:1,expl:['Un score alto indica probabilidad, no certeza probada. Proferir un requerimiento especial "porque la IA dijo 92" sería nulo por falta de motivación jurídica y probatoria.','✔ La IA es una herramienta de PRIORIZACIÓN, no de decisión ni de prueba. El score guía hacia dónde investigar, pero no exime de: construir el expediente con pruebas, respetar el debido proceso, motivar jurídicamente los actos. La decisión sigue siendo humana y el sustento probatorio sigue siendo necesario.','Los modelos de machine learning tienen tasas de acierto significativas (la DIAN reporta mejoras en la selección). Ignorarlos sería desperdiciar una herramienta valiosa.','El score de IA NO es admisible como "prueba" en el expediente tributario. La motivación del acto debe basarse en hechos verificables (declaraciones, exógena, facturas), no en puntajes de un algoritmo.']},
+  {nivel:'a',tema:'Integración de herramientas para detección de fraude',ctx:'Como Gestor I, te asignan investigar a la empresa Servicios Integrales ABC SAS (NIT 901.234.567-8). Al consultar las herramientas disponibles, encuentras: (1) RUT: representante legal es el mismo de otras 9 empresas creadas en los últimos 12 meses, todas con la misma dirección; (2) Facturación electrónica: ABC emitió $6.500M en facturas en 2023 pero solo a 3 clientes; (3) Exógena: los bancos reportan que ABC recibió consignaciones por $6.200M pero realizó retiros en efectivo por $5.800M (95%); (4) MUISCA-Obligaciones: ABC declaró renta con ingresos de $6.500M pero costos de $6.300M (utilidad mínima del 3%); (5) No tiene empleados reportados en PILA ni activos significativos.',q:'¿Qué hipótesis sustenta el conjunto de indicios encontrados con las herramientas?',ops:['Es una empresa legítima con márgenes bajos y una estructura eficiente sin empleados propios (todo lo terceriza).','El patrón indica una probable EMPRESA DE FACTURACIÓN FICTICIA: (a) mismo representante de 10 empresas recientes = red; (b) facturación concentrada en 3 clientes = venta de facturas a esos 3; (c) retiros en efectivo del 95% = devolución del dinero a los clientes menos una comisión; (d) utilidad mínima = costos ficticios para cerrar contablemente; (e) sin empleados ni activos = no hay operación real. Se debe: verificar si los 3 clientes usan esas facturas como soporte de costos, cruzar con las otras 9 empresas del mismo representante, y documentar el patrón para proponer rechazo de costos ficticios en los clientes + sanción a ABC.','Es simplemente una empresa de servicios con alta rotación de efectivo — no hay nada irregular porque todo está declarado y las facturas tienen CUFE.','No se puede concluir nada con estos indicios porque cada uno tiene una explicación posible individualmente.'],correcta:1,expl:['Una empresa "legítima" que factura $6.500M sin un solo empleado, retira el 95% en efectivo y tiene 9 empresas hermanas del mismo dueño en la misma dirección no encaja con una operación real.','✔ El análisis INTEGRADO de todas las herramientas revela el patrón de facturación ficticia: las señales aisladas podrían tener explicaciones individuales, pero JUNTAS configuran un cuadro incontrovertible. La integración de RUT + facturación + exógena + declaraciones + PILA es lo que permite al gestor ver la red completa — no un solo dato aislado.','Que las facturas tengan CUFE solo significa que son formalmente válidas ante la DIAN — no que la operación económica detrás sea real. Una factura ficticia puede tener CUFE si fue emitida por una empresa registrada.','Cuando 5 indicios convergen en la misma dirección, la probabilidad de que TODOS tengan explicación legítima simultáneamente es ínfima. El análisis conjunto es precisamente la función del gestor.']},
+  {nivel:'a',tema:'Informe de gestión con propuesta estratégica',ctx:'Al consolidar el informe semestral de la División de Fiscalización, descubres las siguientes tendencias: (1) La tasa de prescripción subió del 2% al 7% (35 casos prescritos); (2) El 80% de los casos prescritos corresponden al programa de "personas naturales con patrimonio alto" — casos complejos que requieren más tiempo; (3) El tiempo promedio de trámite del programa es de 28 meses (cuando el término de fiscalización es de 36 meses total); (4) La carga promedio de ese programa es 18 casos/gestor (vs. 12 en otros programas); (5) Solo hay 4 gestores asignados al programa.',q:'¿Cuál es la recomendación estratégica correcta para incluir en el informe al Director?',ops:['Recomendar cerrar el programa de personas naturales con patrimonio alto porque tiene mala tasa de prescripción y solo genera problemas.','Proponer una solución ESTRUCTURAL basada en el diagnóstico: (a) la causa raíz es la desproporción entre la complejidad de los casos (requieren 28 meses en promedio) y la capacidad instalada (4 gestores con 18 casos cada uno); (b) recomendar: asignar 2 gestores adicionales al programa para reducir la carga a 12 casos/gestor; implementar alertas de prescripción a 90/60/30 días; priorizar los casos según proximidad al vencimiento del término; (c) si no es posible aumentar gestores, redistribuir la carga archivando los casos con menor brecha y concentrando recursos en los de mayor impacto fiscal.','Proponer que los gestores trabajen horas extra y los fines de semana para resolver la sobrecarga. El problema es de esfuerzo individual, no de recursos.','Solo reportar el dato de prescripción sin diagnóstico ni recomendación — que el Director decida qué hacer.'],correcta:1,expl:['Cerrar el programa sería desperdiciar casos con alto potencial de recaudo. El problema no es el programa sino la capacidad instalada.','✔ Un buen informe de gestión no solo reporta el problema (7% de prescripción) — DIAGNOSTICA la causa raíz (desproporción carga/capacidad) y PROPONE soluciones viables con alternativas. La recomendación está basada en datos (28 meses, 18 casos/gestor, 4 gestores) y ofrece al Director opciones para decidir.','La solución no es sobrecargar a los gestores (genera errores, rotación, más anulaciones). Es una solución de recursos y priorización, no de esfuerzo individual.','Un informe sin recomendaciones es un informe incompleto. La función del informe es facilitar la toma de decisiones — no simplemente presentar datos y dejar el análisis al Director.']},
+  {nivel:'a',tema:'Reserva tributaria y seguridad de la información',ctx:'Un congresista de la República te envía un oficio formal (con membrete del Senado) solicitando la información tributaria completa (declaraciones de renta, patrimonio, información exógena) de un empresario que es su opositor político. Argumenta que como congresista tiene "función de control político" y cita el Art. 258 de la Ley 5ª de 1992 sobre citaciones para informar. Tu jefe está de vacaciones. El congresista insiste y dice que va a denunciar a la DIAN por obstrucción si no le entregan la información.',q:'¿Cuál es la actuación correcta?',ops:['Entregar la información porque un congresista tiene poder constitucional de pedir información a cualquier entidad del Estado y la DIAN no puede negarla.','NO entregar la información: la reserva tributaria (Art. 583 E.T.) protege la información tributaria INDIVIDUAL de TODOS los contribuyentes, sin importar quién la solicite. Los congresistas pueden pedir información AGREGADA o estadística a la DIAN (recaudo total, número de contribuyentes por sector), pero NO información individualizada protegida por reserva. La función de control político no deroga la reserva tributaria. Se debe responder formalmente explicando la restricción legal y ofreciendo información agregada que no viole la reserva.','Entregar solo la declaración de renta (porque es "menos sensible") pero no la exógena ni el patrimonio detallado.','Esperar a que tu jefe vuelva de vacaciones para que él decida — no es tu responsabilidad.'],correcta:1,expl:['La función de control político de los congresistas tiene límites constitucionales. La reserva tributaria (Art. 583 E.T.) es uno de ellos. El Consejo de Estado ha confirmado que los congresistas NO pueden acceder a información tributaria individual.','✔ La reserva tributaria es una protección LEGAL que solo tiene excepciones taxativas (autoridades judiciales en procesos penales, contralorías, UGPP en ciertos casos). Un congresista NO es excepción. Entregar la información sería DELITO (revelación de secreto). La amenaza de denuncia por obstrucción no tiene sustento jurídico. Se responde con un oficio explicando la norma.','TODA la información tributaria individual tiene reserva — no hay distinción entre "más" o "menos" sensible. Entregar cualquier documento tributario individual viola igualmente la reserva.','Esperar a que vuelva el jefe no es procedente: la solicitud tiene un término para responder. Además, la norma es clara — no se requiere consultar al jefe para saber que la reserva tributaria no se levanta por solicitud de un congresista.']
+  }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Básica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q,di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='✔ <strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='✘ <strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='✅ <strong>¡Correcto!</strong> Elegiste la opción '+letraCorrecta+'. Abajo tienes la explicación de cada una de las 4 opciones.';}
+      else{fb.className='feedback no show';fb.innerHTML='❌ <strong>Incorrecto.</strong> La respuesta correcta es la opción '+letraCorrecta+'. Revisa abajo por qué cada opción es correcta o incorrecta.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='🏆 ¡Excelente! Dominas el tema. Listo para el siguiente día.';
+  else if(pct>=0.58)msg='👍 Buen trabajo. Refuerza los temas marcados y repite el simulacro.';
+  else msg='📚 Vas por buen camino. Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok" style="text-align:left;"><div class="box-title">🎯 ¡Sin temas pendientes!</div><p>Respondiste todo correctamente. ¡Felicitaciones!</p></div>';}
+  else{const items=temasFallados.map(t=>'<li>'+t+'</li>').join('');cont.innerHTML='<div class="box warn" style="text-align:left;"><div class="box-title">📌 Temas que debes reforzar</div><p>Vuelve a la sección <strong>Desarrollo</strong> y repásalos:</p><ul class="lista">'+items+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .normativa, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+</body>
+</html>
