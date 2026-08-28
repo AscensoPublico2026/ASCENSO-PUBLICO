@@ -5,15 +5,15 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 26 de agosto de 2026 — **Curso DIAN Gestor I: 10 guías creadas (Días 1, 5-12). Nuevo estándar MÁXIMO: funcionales de 10.000+ palabras con hilo narrativo, ejercicios y múltiples ejemplos.** Pendientes: Días 13-21._
+_Última actualización: 28 de agosto de 2026 — **Curso DIAN Gestor I: 20 guías completas (Días 1-20). Pendiente: SIM-DIAN-001 (Día 21) — Simulacro Integral de 70 preguntas (50 funcionales + 20 Likert comportamentales).**_
 
 ---
 
-## 🆕 CAMBIOS RECIENTES (sesión 26 ago 2026 — curso DIAN Gestor I: 10 guías + nuevo estándar máximo)
+## 🆕 CAMBIOS RECIENTES (sesión 28 ago 2026 — curso DIAN Gestor I: Días 18-20 completados, 20/21 guías listas)
 
 **Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. El estudiante del curso DIAN es **Andrés Guillermo Díaz Zamora** (andizam20@hotmail.com). Cargo: Gestor I, Código 301, Grado 01, Nivel Profesional, DIAN, OPEC 198368. Proceso: Fiscalización y Liquidación. Concurso organizado por la **CNSC**.
 
-**Curso DIAN — Gestor I (OPEC 198368) — EN CONSTRUCCIÓN 🔨**
+**Curso DIAN — Gestor I (OPEC 198368) — CASI COMPLETO (20/21) 🔨**
 Plan de 21 días (20 guías + simulacro). Estado actual:
 
 | Día | Código | Guía | Palabras | Estado |
@@ -28,15 +28,33 @@ Plan de 21 días (20 guías + simulacro). Estado actual:
 | 10 | FUN-DIAN-02 | Determinación y Control Tributario | ~6.883 | ✅ Mergeada |
 | 11 | FUN-DIAN-03 | Proceso de Fiscalización y Liquidación | **~10.373** | ✅ En rama `feat/fun-dian-03-nivel-maximo` |
 | 12 | FUN-DIAN-04 | Fiscalización Aduanera | **~10.001** | ✅ En rama `feat/fun-dian-03-nivel-maximo` |
-| 13 | FUN-DIAN-05 | Régimen Cambiario (operaciones de competencia DIAN) | — | 🔜 Pendiente |
-| 14 | FUN-DIAN-06 | Fiscalización Internacional (precios de transferencia) | — | 🔜 Pendiente |
-| 15 | FUN-DIAN-07 | Evasión, elusión y contrabando + Ley de transparencia | — | 🔜 Pendiente |
-| 16 | FUN-DIAN-08 | Lavado de activos y financiación del terrorismo (LA/FT) y ROS | — | 🔜 Pendiente |
-| 17 | FUN-JUR-01 | CPACA (Ley 1437/2011) — reutilizable/adaptable | — | 🔜 Pendiente |
-| 18 | FUN-MIPG-01 | MIPG — reutilizable | — | 🔜 Pendiente |
-| 19 | FUN-DOC-01 | Gestión documental + PQRSF + servicio al ciudadano | — | 🔜 Pendiente |
-| 20 | FUN-DIAN-09 | Herramientas informáticas + informes estadísticos | — | 🔜 Pendiente |
-| 21 | SIM-DIAN-001 | Simulacro Integral Final (50 preguntas, formato CNSC) | — | 🔜 Pendiente |
+| 13 | FUN-DIAN-05 | Régimen Cambiario | **~10.725** | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 14 | FUN-DIAN-06 | Fiscalización Internacional / Precios de Transferencia | **~10.070** | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 15 | FUN-DIAN-07 | Evasión, elusión y contrabando | **~10.000** | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 16 | FUN-DIAN-08 | Lavado de activos y LA/FT | **~9.800** | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 17 | FUN-JUR-01 | CPACA (Ley 1437/2011) | **~10.049** | ✅ En rama `feat/fun-dian-05-regimen-cambiario` |
+| 18 | FUN-MIPG-01 | MIPG (Modelo Integrado de Planeación y Gestión) | **~10.000** | ✅ **Mergeada a main** |
+| 19 | FUN-DOC-01 | Gestión Documental + PQRSF + Servicio al Ciudadano | **~10.000** | ✅ **Mergeada a main** |
+| 20 | FUN-DIAN-09 | Herramientas Informáticas + Informes de Gestión | **~8.016** | ✅ **Mergeada a main** |
+| 21 | SIM-DIAN-001 | Simulacro Integral Final (**70 preguntas**: 50 funcionales + 20 Likert comportamentales) | — | 🔜 **PENDIENTE** |
+
+**Diseño aprobado del SIM-DIAN-001 (Día 21):**
+- **Sección 1:** 50 preguntas funcionales de juicio situacional tipo CNSC (distribución: 6 GEN + 6 DIAN-PRO-COM + 32 FUN-DIAN + 4 FUN-DIAN-09 + 2 BON). Dificultad: 15 básicas + 20 intermedias + 15 avanzadas.
+- **Sección 2 (NUEVO):** 20 preguntas comportamentales en formato **Likert** (escala "Muy en desacuerdo" a "Muy de acuerdo") — afirmaciones situacionales mapeadas a competencias del Decreto 815/2018 nivel profesional: Aprendizaje continuo, Experticia profesional, Trabajo en equipo, Creatividad e innovación, Liderazgo, Toma de decisiones, Orientación a resultados. Contextualizadas en DIAN/fiscalización.
+- **Motor:** Tabs para navegar entre secciones. Sección 1 en modo "examen real" (responde todo, luego presenta). Sección 2 muestra perfil comportamental (barras por competencia). Diseño premium: Inter + Crimson Pro, navy/gold.
+- **15 preguntas funcionales ya redactadas** (en los intentos de esta sesión) — reutilizar como base.
+
+**Ramas pendientes de merge (guías anteriores que Julio aún no ha mergeado):**
+- `feat/fun-dian-03-nivel-maximo` — Días 11-12 (FUN-DIAN-03 + FUN-DIAN-04)
+- `feat/fun-dian-05-regimen-cambiario` — Días 13-17 (FUN-DIAN-05/06/07/08 + FUN-JUR-01)
+
+**Lo que se hizo en esta sesión (28 ago 2026):**
+1. ✅ Creada FUN-MIPG-01-mipg-gestion-publica.html (10.000 palabras, 10 módulos, 4 checkpoints, 12 preguntas simulacro)
+2. ✅ Creada FUN-DOC-01-gestion-documental-pqrsf-servicio.html (10.000 palabras, 10 módulos, 4 checkpoints, 12 preguntas simulacro)
+3. ✅ Creada FUN-DIAN-09-herramientas-informaticas-informes.html (~8.016 palabras, 10 módulos, 4 checkpoints, 12 preguntas simulacro)
+4. ✅ Las 3 guías mergeadas directamente a main
+5. ✅ biblioteca.json actualizada con las 3 nuevas guías
+6. 🔜 SIM-DIAN-001 diseñado (70 preguntas: 50 funcional + 20 Likert) — pendiente para próxima sesión
 
 **Rama pendiente de merge:** `feat/fun-dian-03-nivel-maximo` (contiene FUN-DIAN-03 + FUN-DIAN-04).
 Link para mergear: https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/pull/new/feat/fun-dian-03-nivel-maximo
