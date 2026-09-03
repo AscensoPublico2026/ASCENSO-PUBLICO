@@ -109,9 +109,100 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 
 | Fecha | Versión | Cambio |
 |---|---|---|
+| 2026-09-03 | 3.0 | **ESTÁNDAR MÁXIMO consolidado + simulacro con sección Likert + lecciones aprendidas del curso DIAN.** Ver la sección "🧭 ESTÁNDAR v3.0 CONSOLIDADO" y "⚠️ ERRORES COMETIDOS Y CÓMO EVITARLOS" abajo. Resumen: (1) Desarrollo de guías funcionales sube a **MÍNIMO 10.000 palabras**, 10 módulos profundos (600-1.200 palabras c/u), 15+ ejemplos, 3-4 checkpoints, ejercicios con solución, flujos y tablas por módulo, bloque de fuentes con enlaces reales. (2) Simulacro final del curso (SIM-xxx) ahora tiene **DOS secciones**: 50 preguntas funcionales (juicio situacional) + **20 preguntas comportamentales en formato LIKERT** (escala "Muy en desacuerdo" a "Muy de acuerdo", Decreto 815/2018), con perfil por competencia. (3) Reglas anti-fuga, numeración de días, sincronización con bucket de Supabase, y método técnico de construcción por lotes. |
 | 2026-07-12 | 2.2 | **Longitud y riqueza tipo CNSC en el simulacro** (feedback del cliente sobre las guías de terapias): se hace OBLIGATORIO que el simulacro replique la extensión real de la prueba escrita CNSC → contexto extenso (5–9 renglones, 450–900 caract.), enunciado que replantea la tensión (2–4 renglones) y **las 4 opciones de respuesta LARGAS y elaboradas** (120–260 caract. c/u), todas del mismo nivel de detalle. Se añade paso de CALIBRACIÓN por longitud antes de aprobar cada pregunta. Antes las preguntas quedaban "telegráficas". |
 | 2026-06-16 | 2.1 | Mejoras al simulacro y al Desarrollo (a partir de feedback en FUN-ALM-01): (1) al hacer clic en una opción se muestran las explicaciones de LAS 4 opciones (por qué cada una es correcta o incorrecta), debajo de cada opción; (2) los contextos y enunciados del simulacro se hacen más largos y difíciles (escenarios con presión, conflicto de intereses, distractores plausibles); (3) el Desarrollo debe incluir un bloque ".fuentes" con enlaces a las fuentes oficiales/normas para profundizar. |
 | 2026-06-16 | 2.0 | **Variante Funcional v2** para todas las guías FUN-*: hilo narrativo (.narr), diagramas de proceso (.flujo), checkpoints intercalados "Aplica lo aprendido" (.checkpoint), tarjetas "En la práctica" (.practica) y micro-tips "Ojo en la prueba" (.ojo). Se añade la **regla de reutilización** (guías funcionales entidad-agnósticas) y la **codificación** FUN-[FAMILIA]-Nº + ENT-[SIGLA]-Nº. Se refuerza: feedback por CADA opción y contextos ricos en el simulacro. Primera guía con este estándar: FUN-ALM-01. |
 | 2026-06-13 | 1.0 | Versión inicial del prompt, consolidando todas las decisiones tomadas: identidad 60-30-10, 11 secciones, conceptos en 4 capas + sub-bloques desplegables, flashcards, glosario, botón "Avanzar", y **simulacro de juicio situacional** (12 preguntas, 4 opciones A-D, 4-5-3, retroalimentación por opción + temas a reforzar). Reemplaza la regla antigua de 3 opciones del estándar AP-QA-001. |
 
 > Para detalles de implementación (clases CSS, esquema de los arrays JS, validaciones), ver `ESTANDAR-TECNICO.md` y `PLANTILLA-GUIA.md`.
+
+
+
+---
+
+# 🧭 ESTÁNDAR v3.0 CONSOLIDADO (leer SIEMPRE antes de crear una guía o simulacro)
+
+> Esta sección recoge TODO lo aprendido hasta el curso DIAN Gestor I (sep-2026). Es la fuente de verdad operativa. Si algo aquí contradice el bloque de prompt de arriba, **manda esto**.
+
+## 1) Profundidad de las guías FUNCIONALES (producto premium — "la cara del negocio")
+- **Desarrollo: MÍNIMO 10.000 palabras.** Es lo que el cliente valora y por lo que paga (~$300.000). Nunca resúmenes.
+- **10 módulos** temáticos, **600–1.200 palabras cada uno**. Cada módulo SIN EXCEPCIÓN debe tener:
+  - Subtítulos internos + teoría desarrollada con frases clave en `<mark>` (subrayado dorado, NO fondo).
+  - Al menos **una tabla/esquema comparativo**.
+  - Al menos **2–3 ejemplos** prácticos desarrollados, ambientados en el rol real del servidor ("como Gestor I de fiscalización de la DIAN…").
+  - Un **diagrama de flujo** (`.flujo`) cuando el tema sea un proceso/secuencia.
+  - Acordeones (`details.acc`) con contenido complementario real.
+  - Bloques "En la práctica" (`.practica`) extensos y realistas.
+  - Micro-tips "Ojo en la prueba" (`.ojo`) y recuadros "En la prueba" (`.prueba`).
+- **3–4 CHECKPOINTS interactivos** por guía (`.checkpoint` con `.cp-opt` + handler JS), repartidos DENTRO del Desarrollo.
+- **EJERCICIOS con solución** dentro del Desarrollo (mini-casos para aplicar, no solo teoría).
+- **Cierre del Desarrollo:** box "Idea clave" + box de Tips + box dorado "⚡ Frase para recordar" + bloque `.fuentes` con enlaces DIRECTOS y VERIFICADOS a las normas (secretariasenado.gov.co, funcionpublica.gov.co, corteconstitucional.gov.co, dian.gov.co, etc.).
+- **Hilo narrativo:** un caso que abre en la sección Objetivo (`.narr`) y se retoma a lo largo de los módulos, cerrando en el módulo 10 ("resolviendo el caso del inicio").
+- Estructura de **11 secciones navegables** (nav sticky): Objetivo · Importancia · Desarrollo · Comparaciones · Casos · Errores · Tips · Trampas · Repaso (flashcards) · Resumen · Simulacro.
+- **Simulacro POR GUÍA:** 12 preguntas de juicio situacional (4 básicas + 5 intermedias + 3 avanzadas).
+- Benchmarks aprobados: FUN-DIAN-03 (10.373), FUN-DIAN-04 (10.001), FUN-MIPG-01 (10.000), FUN-DOC-01 (10.000).
+
+## 2) Guía "Conoce tu Entidad" (ENT-*) — PREMIUM y REUTILIZABLE por entidad
+- ~4.000–4.500 palabras, ~15 secciones navegables. GENERAL para cualquier cargo/nivel de esa entidad (NO menciona cargo/código/OPEC en el cuerpo). Benchmark: ENT-DIAN-01.
+- MUCHOS enlaces a fuentes oficiales verificadas, `<mark>` para frases clave, datos/cifras reales (nunca inventar).
+- Si el concurso es CNSC, mencionarla como organizadora; si es **régimen especial (PGN)**, NO mencionar CNSC.
+
+## 3) SIMULACRO FINAL DEL CURSO (SIM-xxx) — DOS SECCIONES (diseño v3.0)
+### Sección 1 — Funcional (50 preguntas)
+- Juicio situacional tipo CNSC. Modo "examen real" (responde todo → presenta → revisión + guía de refuerzo).
+- Distribución típica: 6 Generales + 6 Comportamentales del nivel + 32 Funcionales del cargo + resto transversales.
+- Dificultad: 15 básicas + 20 intermedias + 15 avanzadas. Contextos 450–1000 caract., 4 opciones 150–280 caract.
+### Sección 2 — Comportamental (20 preguntas) · FORMATO LIKERT (NUEVO)
+- La prueba comportamental real de la CNSC usa **escala Likert**: afirmaciones situacionales en primera persona que el aspirante califica de "Muy en desacuerdo" a "Muy de acuerdo" (escala de 5 puntos).
+- 20 afirmaciones contextualizadas en la entidad/cargo, mapeadas a las competencias del **Decreto 815 de 2018** para el nivel (profesional: Aprendizaje continuo, Experticia profesional, Trabajo en equipo, Creatividad e innovación, Liderazgo de grupos, Toma de decisiones, Orientación a resultados).
+- NO tienen respuesta "correcta/incorrecta": miden PERFIL. Al final se muestra un **perfil por competencia** (barras/porcentaje por competencia = suma de calificaciones).
+- Motor con **tabs** para navegar entre las dos secciones. Diseño premium Inter + Crimson Pro, navy/gold (reutilizar CSS de `simulacro/SIM-001.html`).
+
+## 4) NUMERACIÓN DE DÍAS (regla dura — ver .kiro/steering/numeracion-dias-guias.md)
+- El "Día" mostrado en el HTML sale SIEMPRE del campo `dia` de `biblioteca/biblioteca.json` (o del plan real), NUNCA del número del código.
+- Debe coincidir en 3 lugares: kicker (`Día N · …`), badge (`📅 Día N`) y botón de cierre (`✅ Finalizar Día N`).
+- Excepciones sin día numérico: comportamentales -COM/-ESP ("Nivel …"), INTRO ("Presentación"), BON ("Bonus"), ENT ("Conoce tu Entidad"), SIM (plantilla propia).
+
+## 5) MÉTODO TÉCNICO DE CONSTRUCCIÓN (para no romper el archivo)
+- Escribir el HTML **directamente en el repo** por lotes (con `cat >> archivo << 'EOF'`), NO en /tmp (fs_write y el shell no comparten /tmp). Cuidado con heredocs sin cerrar → duplican contenido.
+- Un simulacro de 70 preguntas es un archivo grande (~2.500 líneas). Escribir en **lotes de ~10 preguntas** y verificar líneas tras cada lote para evitar timeouts y corrupción.
+- Reutilizar el CSS/JS ya validado (copiar de una guía benchmark con `sed` para adaptar título/día/código).
+- **VALIDACIÓN OBLIGATORIA antes de entregar** (con `node -e`): (a) JS válido (`new Function(code)` por cada `<script>`); (b) HTML balanceado (open vs close de div/section/table/details); (c) conteo de palabras del Desarrollo ≥ 10.000; (d) 0 fugas; (e) día coherente; (f) todo botón con handler; (g) enlaces `target="_blank"` que abren la norma real.
+- **BUG RECURRENTE:** en el array `preguntas` de JS NUNCA usar `ops3:` como key. SIEMPRE `ops:['op1','op2','op3','op4']` (las 4 opciones como strings dentro del array).
+
+## 6) SINCRONIZACIÓN Y DESPLIEGUE
+- Tras crear/editar una guía: actualizar `biblioteca/biblioteca.json` (campo `archivo`, `dia`, `temas`) y correr `bash scripts/sync-biblioteca.sh` (requiere `chmod +x`) que copia catálogo + HTML a `plataforma/lib/` y `plataforma/public/seed-guias/`.
+- Las guías se sirven del **bucket de Supabase** ('guias'), NO directo del repo. Al MEJORAR una guía existente, el estudiante sigue viendo la versión vieja hasta re-subir el bucket: como admin visitar `https://ascensopublico.com/api/admin/seed-guias` (upsert=true) y recargar sin caché. El endpoint del estudiante auto-sube desde seed-guias solo si la guía NO existe aún en el bucket.
+- Merge: enviar a Julio el **link directo** de crear PR (`https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/pull/new/<rama>`), sin pasos intermedios.
+
+## 7) EXPEDIENTES DE ASPIRANTES (un archivo = un aspirante)
+- Cada aspirante tiene su carpeta en `referencias/expedientes/<slug-nombre>/` con: `expediente.md` (auditoría a profundidad), `documentos/LEEME.md` (para que suba PDFs) y `manuales-vacantes/` (fichas OPEC/manual de funciones).
+- El expediente audita: datos, formación (verificada por diploma), experiencia (cómputo por norma del concurso), vacante objetivo + cumplimiento requisito por requisito, documentación recibida/pendiente y RIESGOS.
+- NO mezclar información entre aspirantes. El USUARIO/cliente es **Julio César** (fundador); los aspirantes son los destinatarios del curso.
+
+---
+
+# ⚠️ ERRORES COMETIDOS Y CÓMO EVITARLOS (bitácora viva)
+
+> Anotar aquí cada error real para no repetirlo. Actualizar en cada sesión.
+
+1. **Guías con estructura "microlearning" incompatible.** Guías viejas (p.ej. la vieja FUN-MIPG-01 de 23 secciones cortas) NO sirven con el estándar actual. → Crear una NUEVA con nombre distinto y estructura de 11 secciones + 10 módulos; actualizar el `archivo` en biblioteca.json.
+2. **FUGAS de contenido cruzado.** Las guías se reutilizan entre cursos → riesgo alto de que quede el nombre de otro aspirante, cargo/código ajeno, otra entidad (URT, INDERVALLE), otro concurso (89-2026) o "CNSC" cuando el concurso es de régimen especial (PGN). → ANTES de asignar, auditar con grep: `Sandra`, `Sustanciador`, `4SU-08`, `URT`, `INDERVALLE`, `Procurador`, `Gina`, `PGN`, `CNSC` (según corresponda). Reescribir el ENFOQUE, no solo cambiar términos.
+3. **Día equivocado.** Se mostró el número del código en vez del día real del plan. → Tomar el día de biblioteca.json y verificarlo en kicker/badge/footer/JS.
+4. **`</practica>` y otros cierres inventados.** Se cerró un `.practica` con `</practica>` (no existe en HTML) → desbalance de `<div>`. → Los bloques `.practica`, `.ojo`, `.checkpoint` son `<div>`: se cierran con `</div>`.
+5. **`ops3:` en el simulacro.** Error de sintaxis JS recurrente. → SIEMPRE `ops:['a','b','c','d']`.
+6. **Word count por debajo de 10.000.** Varias guías quedaron en 8.000–9.900. → Medir con `node -e` el Desarrollo (sección data-sec="2") y ampliar módulos hasta pasar 10.000 ANTES de hacer push.
+7. **Heredoc que duplica contenido.** Un `cat >> << 'EOF'` mal cerrado repite el bloque. → Verificar `wc -l` y `tail` tras cada lote; si se duplicó, recortar con `head -N`.
+8. **Cifras inventadas.** No inventar número de vacantes/plazas ni datos de la entidad. Si no hay fuente oficial confiable, redacción genérica.
+9. **Archivo grande → timeouts.** Escribir simulacros/guías en lotes pequeños; considerar delegar en sub-agente con instrucciones muy detalladas, pero verificar SIEMPRE el resultado (el sub-agente puede quedar corto en palabras).
+10. **Régimen especial vs CNSC.** PGN NO es CNSC. En cursos de PGN no mencionar a la CNSC como organizadora ni en guías ni en simulacros.
+
+---
+
+# 🏛️ NOTA PGN (Procuraduría General de la Nación) — régimen ESPECIAL
+
+- La PGN organiza su **propio** concurso (NO la CNSC). No mencionar CNSC como organizadora en guías/simulacros de PGN.
+- Matriz fuente de vacantes: `Convocatorias_Procuraduria.xlsx` (296 vacantes / 2.824 plazas).
+- Temario funcional típico PGN (nivel profesional): función disciplinaria (CGP/Ley 1952 de 2019 y reforma Ley 2094/2021), función de instrucción/investigación, intervención judicial, MASC/conciliación, DDHH y DIH, justicia transicional, contratación estatal, CPACA, control interno/MIPG, gestión documental. Reutilizar familias FUN-* existentes (FUN-JUR, FUN-DDHH, FUN-CONC, FUN-MIPG, FUN-DOC…) y crear las específicas del cargo con enfoque de nivel profesional ("interviene y decide con criterio").
+- Guía de entidad: ENT-PGN-01 (ya existe) / ENT-PGN-PRO-01 (versión nivel profesional). Verificar cuál aplica y que no tenga fugas de otro aspirante.
