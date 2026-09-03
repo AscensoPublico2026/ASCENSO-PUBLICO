@@ -5,7 +5,28 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 28 de agosto de 2026 — **Curso DIAN Gestor I: 20 guías completas (Días 1-20). Pendiente: SIM-DIAN-001 (Día 21) — Simulacro Integral de 70 preguntas (50 funcionales + 20 Likert comportamentales).**_
+_Última actualización: 3 de septiembre de 2026 — **Curso DIAN Gestor I terminado (Días 1-21, incl. SIM-DIAN-001 con sección Likert). NUEVO CURSO: María Alejandra (PGN 2026, régimen especial) — expediente creado, pendiente recibir documentos. Estándar de guías consolidado a v3.0 en prompts/generador-guias.md.**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 3 sep 2026 — cierre curso DIAN + arranque curso María Alejandra PGN + estándar v3.0)
+
+**Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. Los aspirantes son los destinatarios de cada curso.
+
+**🎓 Curso DIAN Gestor I (Andrés Guillermo Díaz Zamora) — COMPLETO ✅**
+- Los 21 días están construidos, incluido **SIM-DIAN-001** (simulacro integral con Sección 1 funcional + Sección 2 comportamental **formato Likert**). Ya está en `simulacro/SIM-DIAN-001.html` y en biblioteca.json.
+
+**🆕 NUEVO CURSO: María Alejandra — PGN 2026 (régimen ESPECIAL, NO CNSC) 🔨 INICIANDO**
+- Aspirante: **María Alejandra** (apellidos y datos pendientes). Perfil YA creado en la plataforma por Julio César.
+- Concurso: **Procuraduría General de la Nación (PGN) 2026** — matriz `Convocatorias_Procuraduria.xlsx` (296 vacantes / 2.824 plazas).
+- **Expediente creado:** `referencias/expedientes/maria-alejandra/` con `expediente.md` (plantilla a completar), `documentos/LEEME.md` (para subir PDFs) y `manuales-vacantes/LEEME.md`.
+- **PENDIENTE:** que Julio suba los documentos de María Alejandra (hoja de vida, diplomas, tarjeta profesional si aplica, certificados laborales) para auditar el perfil, definir vacante objetivo y armar el plan de 21 días.
+- ⚠️ **PGN es régimen ESPECIAL:** NO mencionar la CNSC como organizadora en guías ni simulacros de este curso.
+- Otros aspirantes PGN en el repo (no confundir): Valentina Martínez, aspirante-2 (Nathaly), aspirante-3.
+
+**📐 ESTÁNDAR DE GUÍAS CONSOLIDADO A v3.0** (`prompts/generador-guias.md`):
+- Se agregaron dos secciones nuevas al documento vivo: **"🧭 ESTÁNDAR v3.0 CONSOLIDADO"** (profundidad 10.000+ palabras, ENT premium, simulacro de 2 secciones con Likert, numeración de días, método técnico de construcción por lotes, sincronización con bucket de Supabase, expedientes de aspirantes) y **"⚠️ ERRORES COMETIDOS Y CÓMO EVITARLOS"** (bitácora viva de los 10 errores reales cometidos y su solución) + nota PGN.
+- Toda guía/simulacro nuevo DEBE leer esa sección antes de construirse.
 
 ---
 
