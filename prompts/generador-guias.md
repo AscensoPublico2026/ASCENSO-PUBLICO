@@ -197,6 +197,8 @@ Así, la próxima guía generada ya nace con todas las mejoras y se mantiene **i
 8. **Cifras inventadas.** No inventar número de vacantes/plazas ni datos de la entidad. Si no hay fuente oficial confiable, redacción genérica.
 9. **Archivo grande → timeouts.** Escribir simulacros/guías en lotes pequeños; considerar delegar en sub-agente con instrucciones muy detalladas, pero verificar SIEMPRE el resultado (el sub-agente puede quedar corto en palabras).
 10. **Régimen especial vs CNSC.** PGN NO es CNSC. En cursos de PGN no mencionar a la CNSC como organizadora ni en guías ni en simulacros.
+11. **Texto invisible en el subtítulo del header.** El CSS base trae `strong{color:var(--azul)}`. Como el header tiene fondo azul, las palabras en `<strong>` dentro de `.header-sub` salen azul sobre azul → INVISIBLES. → El molde DEBE incluir SIEMPRE la regla `.header-sub strong{color:#fff;font-weight:700}` justo después de `.header-sub{...}`. Verificar con grep tras crear cada guía.
+12. **Simulacros telegráficos.** Casos/enunciados/opciones demasiado cortos se ven pobres y poco profesionales. → CONTEXTO 6-10 renglones (mín 550, ideal 650-1100 caracteres) con escenario situado, varias presiones y un distractor; ENUNCIADO 2-4 renglones que replantea la tensión (mín 180 car); 4 OPCIONES largas y elaboradas (mín 150, ideal 180-320 car c/u), todas plausibles y del mismo nivel de detalle. Nunca opciones de una línea.
 
 ---
 
