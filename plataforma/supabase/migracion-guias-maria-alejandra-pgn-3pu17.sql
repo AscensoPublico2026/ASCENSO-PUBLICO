@@ -21,7 +21,7 @@ SELECT c.id AS curso_id, c.opec, c.cargo_nombre, c.nivel, c.estado, c.created_at
        (SELECT COUNT(*) FROM public.guias_curso gc WHERE gc.curso_id = c.id) AS guias_actuales
 FROM public.cursos c
 JOIN public.profiles p ON p.id = c.usuario_id
-WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
 ORDER BY c.created_at DESC;
 
 
@@ -34,7 +34,7 @@ WITH curso AS (
   SELECT c.id
   FROM public.cursos c
   JOIN public.profiles p ON p.id = c.usuario_id
-  WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+  WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
   ORDER BY c.created_at DESC
   LIMIT 1
 ),
@@ -78,7 +78,7 @@ WITH curso AS (
   SELECT c.id
   FROM public.cursos c
   JOIN public.profiles p ON p.id = c.usuario_id
-  WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+  WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
   ORDER BY c.created_at DESC
   LIMIT 1
 ),
@@ -124,7 +124,7 @@ BEGIN
   SELECT c.id INTO v_curso_id
   FROM public.cursos c
   JOIN public.profiles p ON p.id = c.usuario_id
-  WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+  WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
   ORDER BY c.created_at DESC
   LIMIT 1;
 
@@ -184,7 +184,7 @@ SELECT gc.dia, gc.orden, gc.tipo, gc.titulo, gc.archivo_path
 FROM public.guias_curso gc
 JOIN public.cursos c ON c.id = gc.curso_id
 JOIN public.profiles p ON p.id = c.usuario_id
-WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
 ORDER BY gc.orden;
 
 -- E.2 Conteo total (debe ser 22) y archivo_path repetidos (debe ser 0 filas)
@@ -192,12 +192,12 @@ SELECT COUNT(*) AS total_guias
 FROM public.guias_curso gc
 JOIN public.cursos c ON c.id = gc.curso_id
 JOIN public.profiles p ON p.id = c.usuario_id
-WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA';   -- <<< EDITAR
+WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com';   -- <<< EDITAR
 
 SELECT gc.archivo_path, COUNT(*) AS veces
 FROM public.guias_curso gc
 JOIN public.cursos c ON c.id = gc.curso_id
 JOIN public.profiles p ON p.id = c.usuario_id
-WHERE LOWER(p.correo) = 'CORREO_MARIA_ALEJANDRA'   -- <<< EDITAR
+WHERE LOWER(p.correo) = 'alejandraranzazu@gmail.com'   -- <<< EDITAR
 GROUP BY gc.archivo_path
 HAVING COUNT(*) > 1;   -- si devuelve filas, hay duplicados (no debería)
