@@ -43,15 +43,25 @@
 
 ## 4. Certificaciones laborales (de la más reciente a la más antigua)
 
-| # | Empresa | Cargo | Periodo | ¿Funciones? |
+| # | Empresa | Cargo / Contrato | Periodo | ¿Funciones? |
 |---|---------|-------|---------|:-----------:|
-| 18 | Mario A. Huertas Cotes (MHC) | Director Adm. de Proyectos | 2022–2026 | ✅ SÍ |
+| 18 | Mario A. Huertas Cotes (MHC) | **Director Corporativo Redes** | 2022–2026 | ✅ SÍ |
 | 19 | Agencia Nacional de Tierras (ANT) | Contrato 325-2022 | 2022 | ✅ SÍ |
 | 20 | Agencia Nacional de Tierras (ANT) | Contrato 1323-2021 | 2021 | ✅ SÍ |
 | 21 | Agencia Nacional de Tierras (ANT) | Contrato 1203-2021 | 2021 | ✅ SÍ |
-| 22 | UAESP | Prestación de servicios | 2021 | ✅ SÍ |
-| 23 | Mario A. Huertas Cotes (MHC) | Director Adm. de Proyectos | 2013–2019 | ✅ SÍ |
-| 24 | Instituto de Desarrollo Urbano (IDU) | Varios contratos PSP | 2005–2013 | ✅ SÍ |
+| 22 | UAESP | Contrato UAESP-012-2021 | 2021 | ✅ SÍ |
+| 22.1 | UAESP | Contrato UAESP-491-2021 | 2021–2022 | ✅ SÍ |
+| 23 | Mario A. Huertas Cotes (MHC) | Director Administrativo de Proyectos | 2013–2019 | ✅ SÍ |
+| 24 | Instituto de Desarrollo Urbano (IDU) | Contrato IDU-19-2013 | 2013 | ✅ SÍ |
+| 24.1 | Instituto de Desarrollo Urbano (IDU) | Contrato DTGC-PSP-896-2012 | 2012–2013 | ✅ SÍ |
+| 24.2 | Instituto de Desarrollo Urbano (IDU) | Contrato DTGC-PSP-1-2012 | 2012 | ✅ SÍ |
+| 24.3 | Instituto de Desarrollo Urbano (IDU) | Contrato DTGC-PSP-205-2011 | 2011 | ✅ SÍ |
+| 24.4 | Instituto de Desarrollo Urbano (IDU) | Contrato DTGC-PSP-267-2010 | 2010–2011 | ✅ SÍ |
+| 24.5 | Instituto de Desarrollo Urbano (IDU) | Contrato DTA-PSP-1237-2009 | 2009–2010 | ✅ SÍ |
+| 24.6 | Instituto de Desarrollo Urbano (IDU) | Contrato DTA-PSP-60-2007 | 2007 | ✅ SÍ |
+| 24.7 | Instituto de Desarrollo Urbano (IDU) | Contrato DTA-PSP-855-2006 | 2006–2007 | ✅ SÍ |
+| 24.8 | Instituto de Desarrollo Urbano (IDU) | Contrato DTA-PSP-414-2006 | 2006 | ✅ SÍ |
+| 24.9 | Instituto de Desarrollo Urbano (IDU) | Contrato DTA-PSP-405-2005 | 2005–2006 | ✅ SÍ |
 | 25 | COLDEXA | — | 2008–2009 | ✅ SÍ |
 | 26 | Eternit Colombiana | Jefe Administración de Personal | 2007–2008 | ⚠️ NO |
 | 27 | Electrónica Bolivariana | Director Administrativo | 2004 | ⚠️ NO |
@@ -60,6 +70,10 @@
 | 30 | Centro Automotriz Colombiano | Asistente de Gerencia | 2001–2003 | ⚠️ NO |
 
 > **⚠️ Nota:** Las certificaciones 26, 27, 29 y 30 **NO tienen funciones detalladas**. Se incluyen porque no fue posible actualizarlas (experiencia antigua). Para la PGN es preferible que traigan funciones; si más adelante se consiguen actualizadas, se reemplazan.
+>
+> **✂️ Certificaciones separadas por contrato (a solicitud del cliente):** El documento de **UAESP** contenía 2 contratos → separados en **22 y 22.1**. El documento de **IDU** contenía 10 contratos en un solo certificado (No. 47180) → separados en **24, 24.1 … 24.9** para poder subir cada uno de forma independiente.
+>
+> **🔧 Corrección aplicada:** El doc **18** decía por error "Director Adm. de Proyectos"; el cargo real que certifica MHC para 2022–2026 es **Director Corporativo Redes** (verificado en el documento). El doc 23 (2013–2019) sí es "Director Administrativo de Proyectos".
 
 ## 5. Tarjeta profesional
 
