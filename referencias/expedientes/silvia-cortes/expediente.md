@@ -99,6 +99,22 @@
 
 **Manuales a revisar:** 33 (prioritario), 145, 152, 157, 175, 12, 39, 42. Ya cargados/en biblioteca: 33, 146 (146 es de admin/contaduría, no aplica a su perfil directo). Faltan: 145, 152, 157, 175, 12, 39, 42.
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (5 opciones finales)
 
-> Silvia cargó: 33, 34, 104, 146. De su análisis, el relevante es el **33**. Faltan por conseguir: 145, 152, 157, 175, 12, 39, 42.
+> Decisión (Julio/Laurita): entregar solo **5 opciones**. Plazas por ciudad confirmadas en manual.
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+
+| # | Código | Cargo (Grado) | Salario | Total plazas | Exp. | Posgrado | Ubicaciones (plazas) |
+|---|--------|---------------|--------:|:---:|:---:|:---:|---|
+| 1 | **145** | Prof. Universitario 3PU-17 | $8.972.318 | 12 | 2 años | No | Andes, Ibagué, Magangué, Neiva, Sincelejo 2, Amazonas, Guajira, Bolívar, Chocó, Magdalena, Putumayo |
+| 2 | **152** | Prof. Universitario 3PU-17 | $8.972.318 | 2 | 2 años | No | Bogotá 1, Atlántico 1 (Disciplinario) |
+| 3 | **157** | Prof. Universitario 3PU-17 | $8.972.318 | 2 | 2 años | No | Bogotá 2 (Preventivo) |
+| 4 | **175** | Prof. Universitario 3PU-17 | $8.972.318 | 2 | 2 años | No | Bogotá 2 (Adquisición Bienes y Servicios) |
+| 5 | **33** | **Asesor 1AS-19** | **$10.403.514** | 9 | 1 año | **Sí** | **Bucaramanga 1**, Cartagena 1, Santander regional 1, Carmen de Bolívar 1 |
+
+### Conclusión
+- **33 = su mejor opción** (mayor salario, Bucaramanga, aprovecha posgrado). Máxima recomendación.
+- 145/152/157/175 = Profesional $8.972.318 (cumple con sus 2,5 años), pero fuera de Medellín/Bucaramanga.
+- Medellín: no hay vacantes de ingeniería civil en esta convocatoria (comunicárselo con honestidad).
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
