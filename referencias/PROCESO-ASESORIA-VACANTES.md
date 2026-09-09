@@ -64,10 +64,15 @@ Al recibir "ya cargué la documentación": `git pull origin main`.
 - Lectura estratégica honesta (más plazas = más probabilidad, pero con matiz; posgrado como diferenciador).
 - Indicar de qué convocatorias pedir el manual. Commit + push.
 
-### PASO 6 — Operador carga manuales y avisa
-Dar enlace:
-`https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/upload/main/referencias/expedientes/<nombre>/manuales-vacantes`
-Al recibir aviso: `git pull`.
+### PASO 6 — Manuales (PRIMERO revisar la biblioteca central)
+- **ANTES de pedir manuales**, revisar la biblioteca central `referencias/manuales-funciones/INDICE.md`.
+  - Si el manual de la convocatoria **YA existe** → reutilizarlo directamente (copiar/leer desde ahí). NO pedirlo.
+  - Si **NO existe** → solo entonces dar el enlace de carga al operador:
+    `https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/upload/main/referencias/expedientes/<nombre>/manuales-vacantes`
+- Al recibir aviso de carga: `git pull`.
+- Después de leer los manuales nuevos, **agregarlos a la biblioteca**:
+  `python3 referencias/consolidar_manuales.py && python3 referencias/indice_manuales.py`
+  y commitear la biblioteca actualizada (así la próxima vez ya no se piden).
 
 ### PASO 7 — Cruce manuales↔perfil + PAQUETE PARA WHATSAPP
 Leer los manuales (pdfplumber). Extraer **plazas por ciudad** (solo están en el manual, no en la matriz).

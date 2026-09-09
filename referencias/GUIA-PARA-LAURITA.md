@@ -49,9 +49,10 @@ empezando desde el salario que pidió. Te dice cuáles son las mejores y por qu�
 
 Kiro te dirá cuáles **manuales de funciones** pedir (por número de convocatoria).
 
-### PASO 6 — Subes los manuales de funciones
-Kiro te da **otro enlace azul**. Descarga los manuales (Kiro te dice de cuáles) y súbelos ahí igual
-que en el paso 3. Luego escribe:
+### PASO 6 — Subes los manuales de funciones (solo los que falten)
+Kiro primero revisa la **biblioteca de manuales** que ya tenemos guardada. Si algún manual ya lo
+teníamos de otro aspirante, **no hay que volver a subirlo** 🎉. Kiro solo te pedirá los que falten
+y te dará **otro enlace azul**. Descargas esos y los subes igual que en el paso 3. Luego escribe:
 
 > "Listo Kiro, ya cargué los manuales"
 
