@@ -117,6 +117,26 @@
 
 **Convocatorias a pedir manual de funciones:** 147, 199, 01 y 35 (las de mayor volumen + mejor salario). Opcionalmente 148/202 si quiere foco disciplinario.
 
-## 7. Manuales de funciones
+## 7. Manuales de funciones — LEÍDOS Y CRUZADOS CON EL PERFIL
 
-> ⏳ Pendientes de cargar tras seleccionar convocatorias en la tabla de opciones.
+> Inscripciones: **07 al 18 de septiembre de 2026**. Prueba de conocimientos ELIMINATORIA (mín. 65/100). Peso: **Conocimientos 70% · Comportamentales 20% · Antecedentes 10%**. Lista de elegibles: puntaje total ≥ 70%.
+> Todos exigen tarjeta profesional (la tiene). Conocimientos evaluados: Derecho Constitucional, Disciplinario, Probatorio, Penal, Procesal y Administrativo; Contratación estatal; Estatuto Anticorrupción; DDHH y DIH.
+
+### Plazas por ciudad de interés (dato del manual)
+
+| Código | Cargo (Grado) | Salario | Total plazas | Exp. | Posgrado | Pasto | Ipiales | Popayán | Puerto Asís | Cartagena | Otras zonas de interés |
+|--------|---------------|--------:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|---|
+| 147 | Prof. Universitario 3PU-17 | $8.972.318 | 154 | 2 años | No | 3 | 2 | 2 | — | 2 | Manizales 1, Antioquia 8, Cauca 1, Putumayo 2, Bolívar 2 |
+| 148 | Prof. Universitario 3PU-17 (Juzgamiento) | $8.972.318 | 34 | 2 años | No | 2 | — | — | — | 1 | Antioquia 1 |
+| 199 | Prof. Universitario 3PU-18 | $9.646.860 | 97 | 3 años | No | 2 | 1 | 2 | — | — | Manizales 1, Nariño 1, Cauca 1, Bolívar 1, Antioquia 3 |
+| 202 | Prof. Universitario 3PU-18 (Juzgamiento) | $9.646.860 | 45 | 3 años | No | — | — | — | — | (regional) | Foco Bogotá/Juzgamiento |
+| **01** | **Asesor 1AS-19** | **$10.403.514** | 153 | 1 año | **Sí** | 1 | 2 | 2 | **4** | **5** | Antioquia 5, Bolívar 2 |
+| **35** | **Asesor 1AS-19** | **$10.403.514** | 180 | 1 año | **Sí** | 2 | 1 | 2 | **3** | **4** | Cauca 2, Nariño 1, Putumayo 3, Caldas 1, Antioquia 5, Bolívar 2 |
+
+### Conclusión del cruce (todas las CUMPLE)
+- Perfil (abogado + maestría + tarjeta + ~10 años) **supera holgadamente** el requisito de experiencia de todas (máx. exigido: 3 años).
+- Su **maestría** habilita los Asesor (01 y 35), que **exigen posgrado** → ventaja competitiva real.
+- **Afinidad temática**: su experiencia en control disciplinario/DDHH/gestión pública coincide con los conocimientos evaluados (disciplinario, DDHH, anticorrupción) → mejor preparación para la prueba.
+- **Mejores opciones (volumen + salario + ciudades):** 35 (180 plazas, mejor cobertura en sus ciudades) y 01 (153 plazas, Cartagena 5 / Puerto Asís 4); en Profesional, 147 (154) y 199 (97).
+
+## 8. Estado: LISTO PARA ENTREGAR GUIONES AL ASPIRANTE (Paso 7).
