@@ -3,7 +3,7 @@
 **Aspirante:** Michael Stiven Sierra Marín
 **C.C.:** 1.048.292.560 (Bogotá D.C.)
 **Profesión:** Ingeniero en Seguridad y Salud para el Trabajo
-**Total documentos finales:** 9 PDF (+ cédula pendiente de subir)
+**Total documentos finales:** 10 PDF (completos)
 
 > Numerados en el **orden de inscripción**, con la **cédula de PRIMERA**. Todos revisados, legibles y **derechos**.
 
@@ -12,7 +12,7 @@
 ## 1. Identidad
 | # | Documento | Estado |
 |---|-----------|--------|
-| **01** | **Cédula de Ciudadanía** | ⏳ **PENDIENTE POR CARGAR** al repositorio |
+| 01 | Cédula de Ciudadanía (ambas caras) | ✅ Integrada y verificada |
 
 ## 2. Formación académica
 | # | Documento | Institución | Año |
@@ -41,7 +41,7 @@
 - `Acta Universidad (1).pdf` era **idéntico** a `Acta Universidad.pdf` → se dejó una sola copia (doc 05).
 
 ## ⚠️ Puntos importantes
-1. **Cédula (doc 01):** pendiente de subir al repositorio. Se dejó el espacio reservado con el número 01. Cuando se suba, se guarda como `01 - CEDULA DE CIUDADANIA.pdf`.
+1. **Cédula (doc 01):** ✅ integrada y verificada (Michael Stiven Sierra Marín, C.C. 1.048.292.560).
 2. **Sin experiencia laboral:** Michael **no tiene certificaciones laborales** (confirmado). El paquete es solo formación académica + cursos + licencia profesional.
 3. **Sin certificado de votación** (no lo envió; es opcional).
 
