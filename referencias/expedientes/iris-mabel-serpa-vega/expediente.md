@@ -107,4 +107,13 @@ Cursos FGN: Rol del Fiscal, Fundamentos de Policía Judicial, Enfoque Diferencia
 
 > Nota 198 (manual leído): total **11 plazas** (la matriz decía 6; el dato correcto del manual es 11). En su zona: **Sucre 1** (Sincelejo). **No hay plaza en Córdoba/Montería.** Pide **3 años** de experiencia profesional (cumple). Acepta contaduría pública.
 
-## 8. Estado: LISTO PARA ENTREGAR GUIONES — los 4 manuales (100, 146, 151, 198) leídos y cruzados. ✅
+## 8. Verificación de mayor volumen / mejor salario (barrido completo de la matriz)
+
+> A petición del cliente (buscar opciones con más plazas), se barrió TODA la matriz sin prefiltro.
+- **Nivel Profesional:** los cargos con más plazas (147: 175, 199: 111, 104/105: 109/64) exigen **título de DERECHO** → NO aplican a una contadora. Los que aceptan contaduría son 100 (14), 146 (16), 151 (3), 198 (11) → ya incluidos. **No hay cargo profesional de mayor volumen para su perfil.**
+- **Nivel Asesor (mejor salario, $10.403.514, solo 1 año exp.):** MUCHOS aceptan contaduría (11, 17, 18, 19, 20, 21, 34, etc.), pero **TODOS exigen "Título de posgrado"**. **La aspirante confirmó que NO tiene posgrado** → nivel Asesor **DESCARTADO**.
+- **Niveles Técnico/Administrativo (más plazas, p.ej. 241: 132, 288: 84, 242: 69):** ella podría aplicar "hacia abajo" por tener título, pero pagan mucho menos ($3.4M–$5.4M) que su aspiración ($6.89M) y subutilizan su profesión → no recomendados salvo que priorice probabilidad sobre salario.
+
+**Conclusión:** las 4 opciones profesionales (100, 146, 151, 198) son las MEJORES para su perfil real. Si en el futuro obtiene un posgrado, se abre el nivel Asesor a $10.4M.
+
+## 9. Estado: LISTO Y ENTREGADO — los 4 manuales (100, 146, 151, 198) leídos y cruzados; barrido de volumen/salario hecho; Asesor descartado por falta de posgrado. ✅
