@@ -47,7 +47,7 @@ Vínculo **continuo e indefinido**: **01/02/2015 → 05/03/2026** (~**11 años**
 En los concursos públicos, la **experiencia profesional** solo se cuenta **desde la fecha de obtención del título profesional**. Viviana se tituló el **20/04/2021**.
 
 - **Experiencia profesional acreditable: del 20/04/2021 al 05/03/2026 ≈ 4 años y 10 meses.** Toda en Bogotá.
-- La experiencia 2015–2021 (≈ 6 años) **no cuenta como "profesional"**, pero sí sirve como **experiencia relacionada/laboral** y —muy importante— puede ser homologable como experiencia profesional bajo la **Ley 2039 de 2020** (experiencia previa al título). *Esto conviene alegarlo si en algún cómputo quedara justa; no es automático, se solicita.*
+- **Solo se le cuenta la experiencia profesional posterior al grado** (desde el 20/04/2021). La experiencia previa al título (2015–2021) **NO se computa** para este análisis.
 
 > ✅ **Conclusión del perfil:** título afín muy versátil (Administración de Empresas entra en casi todas estas convocatorias) + **~4 años 10 meses de experiencia profesional sólida y certificada con funciones**. Buen perfil. Su **única limitación es no tener posgrado**.
 
@@ -84,9 +84,7 @@ Todas: PGN, planta global, sede **Bogotá**, salario **muy por encima** de los $
 - **Estudio exigido:** administración de empresas, adm. pública, ing. industrial, ing. administrativa, economía **+ TÍTULO DE POSGRADO** en áreas relacionadas.
 - **Experiencia exigida:** **1 año** de experiencia profesional o docente.
 - **Situación de Viviana:** tiene el pregrado afín y la experiencia, **pero NO tiene posgrado**.
-- **Veredicto:** **⚠️ NO CUMPLE de forma directa.** El posgrado aquí es requisito de estudio.
-- **¿Hay salida por equivalencias?** El art. 20 del Decreto 263/2000 permite equivalencias estudios ↔ experiencia. En el régimen general colombiano, **la falta de un posgrado (especialización) suele compensarse con experiencia profesional adicional** (criterio análogo al Decreto 1083/2005 y conceptos de Función Pública: una especialización ≈ 2 años de experiencia profesional). Con **~4a10m** Viviana *podría* alcanzar la compensación, **pero esto NO es automático**: depende de la tabla de equivalencias específica que aplique la PGN en este concurso y de que el cargo de Asesor admita esa compensación.
-- **Recomendación:** **arriesgado para jugarse su única inscripción.** Solo considerarla si se **confirma por escrito** con la PGN/soporte del concurso que la equivalencia posgrado↔experiencia aplica para este empleo.
+- **Veredicto:** **❌ NO CUMPLE.** El posgrado es requisito de estudio y **esta convocatoria NO admite reemplazarlo por experiencia**. Viviana no lo tiene → **queda descartada de forma definitiva.**
 
 ---
 
@@ -97,7 +95,7 @@ Todas: PGN, planta global, sede **Bogotá**, salario **muy por encima** de los $
 | **112-2026** | Prof. Univ. 3PU-15 | $6.889.867 | 2 | Amplio (incluye Adm. Empresas) | **No exige** | **✅ Sí** | 🔴 Alta (sin experiencia = muchos aspirantes) |
 | **173-2026** | Prof. Univ. 3PU-17 | $8.972.318 | 4 | Contaduría/Adm. Emp./Adm. Púb. | 2 años | **✅ Sí** | 🟠 Media |
 | **211-2026** | Prof. Univ. 3PU-18 | $9.646.860 | 3 | Contaduría/Adm. Emp./Adm. Púb. | 3 años | **✅ Sí** | 🟡 Media-baja (3 años filtra gente) |
-| **25-2026** | Asesor 1AS-19 | $10.403.514 | 2 | + **Posgrado** | 1 año | ⚠️ **No directo** (falta posgrado) | — |
+| **25-2026** | Asesor 1AS-19 | $10.403.514 | 2 | + **Posgrado (obligatorio, no reemplazable)** | 1 año | ❌ **No cumple** (no tiene posgrado) | — |
 
 ---
 
@@ -120,8 +118,8 @@ Dado que **solo puede elegir una** vacante, la decisión no es "en cuál cumple"
 ### 🥉 Punto intermedio: **173-2026 (3PU-17 · $8.972.318)**
 - Buen salario, cumple, **4 cupos** en Bogotá (más cupos = más opciones de entrar). Equilibrio razonable entre salario y competencia.
 
-### ❌ Descartar (por ahora): **25-2026 (Asesor)**
-- Es la mejor pagada, pero **le falta el posgrado**. No conviene arriesgar su **única** inscripción en una equivalencia no confirmada. Reconsiderar **solo** si la PGN confirma que aplica la compensación posgrado↔experiencia.
+### ❌ Descartada: **25-2026 (Asesor)**
+- Es la mejor pagada, pero **exige título de posgrado y NO admite reemplazarlo por experiencia**. Viviana no tiene posgrado → **no cumple los requisitos mínimos. Queda descartada definitivamente.**
 
 > **Resumen para asesorar a Viviana:**
 > - Si quiere **el mejor salario cumpliendo requisitos con holgura** → **211-2026**.
@@ -154,7 +152,6 @@ Dado que **solo puede elegir una** vacante, la decisión no es "en cuál cumple"
 - [ ] Tener a mano la **tarjeta profesional 222.278** (algunos empleos la exigen "en los casos reglamentados por la ley").
 - [ ] Seleccionar **sede Bogotá** (crítico en la 112, que también ofrece Medellín).
 - [ ] Registrarse temprano en `www.meritoconstruyendoexcelencia.com.co` (no dejar para el último día).
-- [ ] (Opcional, solo si insiste en la 25-2026) Solicitar **por escrito** confirmación de la equivalencia posgrado↔experiencia.
 
 ---
 
@@ -164,7 +161,6 @@ Dado que **solo puede elegir una** vacante, la decisión no es "en cuál cumple"
 - Decreto 264 de 2000 — nomenclatura y clasificación de empleos PGN. [funcionpublica.gov.co](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=89986)
 - Resolución 076 de 2026 (apertura) y Resolución 133 de 2026 (ajuste de fechas al 7–18 de septiembre).
 - Regla de **inscripción única**: solo se permite inscribirse en **una (1) convocatoria**.
-- Ley 2039 de 2020 — homologación de **experiencia previa al título** como experiencia profesional (posible refuerzo).
 - Manuales de convocatoria PGN 2026 Nos. **25, 112, 173 y 211** (expediente, carpeta `manuales-vacantes/`).
 
 > *Nota: las asignaciones básicas indicadas corresponden a la "Vigencia 2025" que aparece en cada convocatoria. Verificar si hay ajuste salarial 2026 antes de la posesión.*
