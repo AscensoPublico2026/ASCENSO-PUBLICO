@@ -100,4 +100,28 @@ Prioridad por encaje real + ciudades + salario:
 - **243** (Cali, sin experiencia) · **242** (nombra Administración) · **288** (nombra Administración de Empresas, 84 plazas) · **236** (Cali, por bachiller técnico) · **291** (2 años superior, sin experiencia).
 El manual dará las **plazas por ciudad** exactas (solo están ahí, no en la matriz).
 
-## 7. Estado: perfil y tabla listos. Pendiente: subir soportes (notas UNAD + certificados laborales) y manuales para el cruce final y los guiones de WhatsApp.
+## 7. Manuales de funciones — LEÍDOS Y CRUZADOS (6 manuales)
+
+> Inscripciones: **07 al 18 de septiembre de 2026** (sede electrónica meritoconstruyendoexcelencia.com.co).
+> Esquema de pruebas (verificado en manual 288): **Conocimientos 60% — ELIMINATORIA** (mín. 65/100) · **Competencias Comportamentales 20%** · **Análisis de Antecedentes 20%**. (La prueba de conocimientos es la que elimina.)
+> Cargos de PLANTA GLOBAL: la mayoría de plazas quedan en Bogotá; en las ciudades del interés de Daniela suele haber 1–2 por convocatoria.
+
+### Plazas por ciudad de interés (dato del manual)
+
+| Conv. | Cargo (Grado) | Salario | Total | Estudio | Exp. | Cali | Pereira | Ibagué | Armenia | Manizales | Buenaventura | Otras de interés |
+|-------|---------------|--------:|:---:|---------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|---|
+| **241** | Oficinista (5OF-06) | $3.456.786 | 132 | 3 años bachillerato | 1 año | 1 | 1 | — | 1 | 1 | 2 | Popayán 1, Amagá 1, Villavicencio 2 (resto Bogotá) |
+| **243** | Auxiliar administrativo (5AM-09) | $4.565.448 | 26 | 1 año superior (admón) o bachiller+curso | **No req.** | 1 | — | 1 | 1 | — | — | (resto Bogotá 10) |
+| **288** | Sustanciador (4SU-11) | $5.424.740 | 84 | 1 año superior (**Admón de Empresas**) | 1.5 años | — | 1 | — | — | 1 | — | Popayán 1, Amagá 1 (resto Bogotá) |
+| **236** | Secretario ejecutivo (5SJ-12) | $5.846.100 | 5 | Bachiller técnico comercial / bachiller+curso | 1 año | 1 | — | — | — | — | — | (resto Bogotá) |
+| **291** | Secretario procuraduría (4SP-12) | $5.846.100 | 19 | **2 años** superior | **No req.** | — | — | 1 | — | — | — | (resto Bogotá 6) |
+| **283** | Secretario procuraduría (4SP-13) | $6.334.864 | 14 | **2 años** superior | 6 meses | — | — | — | — | — | — | Amagá 1 (resto Bogotá 13) |
+
+### Conclusión del cruce
+- **En Cali (su ciudad en la HV):** 241 (1), 243 (1), 236 (1). Directas sin mudarse.
+- **Mejor salario dentro de lo que cumple:** 283 ($6.33M, 2 años superior, solo 6 meses de exp.) y 291/236 ($5.84M). En sus ciudades, 291 aparece en Ibagué y 283 en Amagá.
+- **Mejor ajuste de ESTUDIO (nombran Administración):** 288 (Sustanciador, 84 plazas — sin Cali; Pereira/Manizales) y 243 (Cali/Armenia/Ibagué, sin experiencia).
+- **Volumen:** 241 (132) y 288 (84) → más probabilidad estadística.
+- ⚠️ Todos requieren **certificar semestres de la UNAD** (para el estudio) y **certificados laborales** (para la experiencia). Pendientes de subir.
+
+## 8. Estado: LISTO PARA ENTREGAR GUIONES AL ASPIRANTE (Paso 7). Pendiente registro: notas UNAD + certificados laborales + cédula/diplomas/electoral.
