@@ -82,7 +82,7 @@ Cursos FGN: Rol del Fiscal, Fundamentos de Policía Judicial, Enfoque Diferencia
 | 1 | **100-2026** | Coordinador administrativo (3CA-17) | $8.972.318 | 14 | Admón/Admón pública/Ing. industrial/**Contaduría** | 2 años | **Córdoba 1, Sucre 1** (+ Atlántico, Cesar) |
 | 2 | **146-2026** | Profesional universitario (3PU-17) | $8.972.318 | 16 | Admón/Admón pública/**Contaduría**/Ing. industrial | 2 años | Cartagena 1, Santa Marta 1, Valledupar 1, Magangué 1, Barranquilla 2 |
 | 3 | **151-2026** | Profesional universitario (3PU-17) | $8.972.318 | 3 | Admón/Admón financiera/**Contaduría**/Economía | 2 años | Atlántico (Barranquilla) |
-| 4 | **198-2026** | Profesional universitario (3PU-18) | $9.646.860 | 6 | Admón/Admón pública/**Contaduría**/Ing. industrial | 3 años | Sucre, Bolívar, Cesar, La Guajira |
+| 4 | **198-2026** | Profesional universitario (3PU-18) | $9.646.860 | 11 | Admón/Admón pública/**Contaduría**/Ing. industrial (+ otras) | 3 años | **Sucre 1** (Sincelejo), Cesar 2, Bolívar 1, Atlántico/Barranquilla 2, Guajira 1 |
 
 **Lectura estratégica (honesta):**
 - **La 100** es la más alineada: acepta contaduría, exige solo **2 años** de experiencia profesional (que cumple), salario **$8.97M** (por encima de su aspiración de $6.89M) y tiene plaza en **Córdoba y Sucre** (Montería/Sincelejo, su zona). Es la recomendación principal.
@@ -103,6 +103,8 @@ Cursos FGN: Rol del Fiscal, Fundamentos de Policía Judicial, Enfoque Diferencia
 | **100** | Coordinador administrativo (3CA-17) | $8.972.318 | 14 | Distribuido por departamento: **Córdoba 1, Sucre 1** (+ Atlántico 1, Cesar 1, Antioquia 1, etc.) |
 | **146** | Profesional universitario (3PU-17) | $8.972.318 | 16 | Cartagena 1, Santa Marta 1, Valledupar 1, Magangué 1, Barranquilla 2 |
 | **151** | Profesional universitario (3PU-17) | $8.972.318 | 3 | Bogotá 1, Antioquia 1, Atlántico 1 |
-| 198 | Profesional universitario (3PU-18) | $9.646.860 | 6 | Sucre/Bolívar/Cesar/La Guajira (confirmar con manual) |
+| **198** | Profesional universitario (3PU-18) | $9.646.860 | 11 | **Sucre 1**, Cesar 2, Atlántico 1, Barranquilla 1, Bolívar 1, Casanare 1, Guajira 1, Neiva 1, Manizales 1, Valle de Aburrá 1 |
 
-## 8. Estado: LISTO PARA ENTREGAR GUIONES AL ASPIRANTE (Paso 7).
+> Nota 198 (manual leído): total **11 plazas** (la matriz decía 6; el dato correcto del manual es 11). En su zona: **Sucre 1** (Sincelejo). **No hay plaza en Córdoba/Montería.** Pide **3 años** de experiencia profesional (cumple). Acepta contaduría pública.
+
+## 8. Estado: LISTO PARA ENTREGAR GUIONES — los 4 manuales (100, 146, 151, 198) leídos y cruzados. ✅
