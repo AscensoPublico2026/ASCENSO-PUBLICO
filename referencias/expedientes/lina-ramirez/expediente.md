@@ -101,6 +101,22 @@
 
 **Manuales a revisar:** 146, 198, 17, 19, 21. En biblioteca YA están: 146, 198. Faltan: **17, 19, 21**.
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (5 opciones finales)
 
-> 146 y 198 ya en biblioteca. Pedir: 17, 19, 21 (Asesor, contaduría + posgrado).
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+
+| # | Código | Cargo (Grado) | Salario | Plazas | Exp. | Posgrado | Ubicación |
+|---|--------|---------------|--------:|:---:|:---:|:---:|---|
+| 1 | **146** | Prof. Universitario 3PU-17 | $8.972.318 | 19 | 2 años | No | **Neiva (Huila), Chaparral (Tolima)**, Cartagena, Santa Marta, Valledupar, Bucaramanga… |
+| 2 | **198** | Prof. Universitario 3PU-18 | $9.646.860 | 6 | 3 años | No | Nacional (Disciplinario-Preventivo) |
+| 3 | **17** | **Asesor 1AS-19** | $10.403.514 | 3 | 1 año | **Sí** | Bogotá — proceso Financiera |
+| 4 | **19** | **Asesor 1AS-19** | $10.403.514 | 3 | 1 año | **Sí** | Bogotá — proceso Financiera |
+| 5 | **21** | **Asesor 1AS-19** | $10.403.514 | 3 | 1 año | **Sí** | Bogotá — proceso Talento Humano (nómina/seguridad social) |
+
+### Conclusión
+- Cumple las 5. Su **posgrado + ~7 años** la habilitan hasta $10,4M (Asesor), muy por encima de su aspiración inicial ($6M).
+- **146**: la más cercana (Neiva-Huila, Chaparral-Tolima) y con más plazas (19). Ideal si prioriza quedarse en su región.
+- **17/19/21 (Asesor $10,4M, Bogotá)**: mayor salario, enfoque financiero/contable/nómina (su fuerte). Requieren mudarse a Bogotá.
+- Ventaja: condición de **víctima RUV** (prioridad/desempate).
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
