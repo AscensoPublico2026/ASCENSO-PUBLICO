@@ -1,65 +1,103 @@
 # 🗂️ Expediente — Daniela Velásquez Nieto
 
-> Concurso: Procuraduría General de la Nación (PGN) 2026
+> Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 2 — expediente creado, enlace de carga entregado. A la espera de la hoja de vida.**
-> Análisis de matriz adelantado (preliminar) para dar opciones mientras llega la documentación.
+> Estado: **PASO 4-5 completado — hoja de vida leída al 100% (escaneada, revisada como imagen). Perfil + tabla de opciones lista. Falta cruce de manuales (PASO 7).**
 
 ---
 
-## 1. Datos generales (según lo que contó la aspirante — pendiente de verificar con documentos)
+## 1. Datos generales (según hoja de vida leída)
 
 | Campo | Dato |
 |-------|------|
 | Nombre | Daniela Velásquez Nieto |
-| C.C. | Pendiente (cédula) |
-| Formación profesional | **Administración de Empresas — EN CURSO** (UNAD), etapa avanzada; doble titulación con UNAD Florida (parte homologada) |
-| Formación media | **Bachiller técnico en Programación y Páginas Web** |
-| Formación adicional | Diseño Gráfico · Inglés B2 · cursos complementarios |
-| Ciudad actual | Pereira (Risaralda) |
-| **Salario aspirado** | Abierta: quiere el cargo con mejor ajuste a su perfil (no fijó piso) |
-| Ciudades de interés | Pereira, Bogotá, Medellín y otras ciudades principales |
+| Contacto (HV) | Cel. 322 608 0424 · daniela.sunbrightsolarusa@gmail.com |
+| Ciudad (HV) | **Cali, Valle del Cauca** (ojo: en el primer mensaje dijo Pereira; en la HV figura Cali) |
+| Formación profesional | **Administración de Empresas — EN CURSO**, UNAD Colombia + convenio UNAD Florida. **Octavo (8º) semestre**, promedio 4.5/5.0 (2021–actualidad) |
+| Otra formación | **Tecnología en Diseño Gráfico — Finalizado** · Bachiller técnico en Programación y Páginas Web (según su mensaje) |
+| Idiomas | Español nativo · **Inglés B2** |
+| Competencias | Excel, Word, PowerPoint, Google Workspace, Gestión documental, Bases de datos/CRM, atención al cliente, informes, Canva, Outlook/Teams, Meta Business Suite |
+| **Salario aspirado** | Abierta: quiere el cargo con mejor ajuste (no fijó piso) |
+| Ciudades de interés | Pereira, Bogotá, Medellín y otras principales (vive en Cali → sumar Valle) |
 | ¿Dispuesta a cambiar de ciudad? | Sí, según condiciones de la vacante |
 | ¿Concursos anteriores? | No (primera participación) |
 
-## 2. Punto clave del perfil (a confirmar con documentos)
+## 2. Punto clave del perfil
 
-- **Aún NO tiene título profesional** (Administración en curso). Por tanto, **hoy no clasifica en el nivel Profesional** de la PGN (ese nivel exige título universitario). Sí clasifica, según semestres aprobados, en niveles **Técnico** y **Administrativo**.
-- Lo decisivo será:
-  1. **Cuántos años/semestres de educación superior tiene APROBADOS y CERTIFICABLES** (muchos cargos piden "1 año" o "2 años de educación superior aprobados"). Necesitamos el **certificado de notas / historia académica de la UNAD** con la homologación de UNAD Florida.
-  2. **Cuánta EXPERIENCIA RELACIONADA certificada tiene** (con fechas, cargo y funciones). Varios cargos Técnicos exigen **1.5 años** de experiencia relacionada; otros piden 6 meses/1 año y algunos **no requieren experiencia**. Este es el filtro que define a cuáles puede aplicar.
-- Su bachillerato técnico + cursos de ofimática/diseño también habilitan cargos **Administrativos** por la vía "bachiller + curso específico".
+- **Aún NO tiene título profesional** (Administración en 8º semestre). Por eso **hoy NO clasifica en nivel Profesional/Asesor** (exigen título universitario). Cuando se gradúe, sí.
+- **Educación superior aprobada:** cursa 8º semestre → tiene **más de 3 años de educación superior aprobados**. Esto la habilita en cargos Técnico/Administrativo que piden "**1 año**" y "**2 años**" (e incluso "3 años") de educación superior aprobada. ⚠️ Debe **certificarlo con la historia académica/notas de la UNAD** (documento pendiente de subir).
+- **Tecnología en Diseño Gráfico (título finalizado)** = título de formación tecnológica → sirve para cargos que aceptan tecnólogo en área relacionada.
+- **Área de estudio:** Administración → encaja en cargos que nombran "Administración de Empresas / Administración" (242, 271, 288) y en los genéricos "áreas relacionadas con la especialidad de la dependencia".
 
-## 3. Documentación — a la espera (PASO 3)
-Se entregó el enlace de carga. Cuando la aspirante suba la hoja de vida y soportes, se hará `git pull`,
-se leerá el 100% (páginas escaneadas se revisan como imagen) y se completará la tabla ✅/⚠️/🔧.
+## 3. Experiencia laboral (leída en HV) y cálculo
 
-## 4. ANÁLISIS DE VACANTES — PRELIMINAR (matriz Convocatorias_Procuraduria.xlsx — datos reales)
+> Regla del método: unir intervalos sin doble conteo. Para niveles Técnico/Administrativo la experiencia
+> exigida es **experiencia relacionada / general**, NO "profesional desde el título" (ese criterio es para nivel Profesional).
+> ⚠️ Todos los periodos deben respaldarse con **certificados laborales** (con fechas exactas, cargo y funciones) — documentos pendientes de subir.
 
-> Base del concurso: **296 vacantes / 2.824 plazas**. La PGN es de **régimen especial** (NO CNSC).
-> Cargos de **planta globalizada**: pueden reubicarse según necesidad del servicio.
-> Filtro aplicado: nivel **Técnico / Administrativo** (acorde a estudios sin título aún),
-> con presencia en **Pereira/Risaralda, Bogotá, Medellín/Antioquia, Eje Cafetero y otras principales**.
-> Ordenadas de MENOR a MAYOR salario. **La elegibilidad final depende de la experiencia y semestres que certifique.**
+| Empresa | Cargo | Periodo (HV) | Tipo |
+|---------|-------|--------------|:----:|
+| Promotora Comercial (Bavaria/Aguardiente) | Promotora comercial | 2021 | Comercial |
+| Sukha Vapes | Administradora comercial | 2021–2022 | Administrativa/comercial |
+| Eco Hotel Green Edén | Coordinadora administrativa y operativa | 2022–2023 | Administrativa/operativa |
+| Producciones Más Publicidad | Auxiliar administrativa | 2023 | Administrativa |
+| Sunbright Solar USA | Administrative Support & Appointment Setter | 2024 | Administrativa (remoto) |
+| Global Unlimited Group Corp | Business Operations Assistant | 2024–2026 | Administrativa/operativa |
 
-| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Estudio exigido | Exp. exigida | Ciudades de su interés |
-|---|--------|---------------|-------|--------:|:------:|-----------------|--------------|------------------------|
-| 1 | **241-2026** | Oficinista (5OF-06) | Administrativo | $3.456.786 | **132** | 3 años bachillerato | 1 año relacionada | Pereira, Manizales, Armenia, Cali |
-| 2 | **289-2026** | Secretario procuraduría (4SP-10) | Técnico | $4.966.461 | 31 | 1 año educ. superior | 1 año relacionada | Pereira, Armenia, Cartago |
-| 3 | **242-2026** | Auxiliar administrativo (5AM-10) | Administrativo | $4.966.461 | **69** | 1 año educ. superior (incl. **Administración**) | 1 año relacionada | Pereira, Manizales, Armenia |
-| 4 | **288-2026** | Sustanciador (4SU-11) | Técnico | $5.424.740 | **84** | 1 año educ. superior (nombra **Administración de Empresas**) | **1.5 años** relacionada | Pereira, Manizales, Santa Rosa |
-| 5 | **234-2026** | Sustanciador (4SU-11) | Técnico | $5.424.740 | **180** | 1 año educ. superior **en derecho** | **1.5 años** relacionada | Pereira, Medellín, Manizales, Armenia, Cali, Ibagué |
-| 6 | **291-2026** | Secretario procuraduría (4SP-12) | Técnico | $5.846.100 | 19 | **2 años** educ. superior | **No requiere** | Ibagué (+ Valle) |
-| 7 | **283-2026** | Secretario procuraduría (4SP-13) | Técnico | $6.334.864 | 14 | **2 años** educ. superior | 6 meses relacionada | Amagá (Antioquia) |
+**Cálculo (uniendo intervalos, aprox. según años de la HV):** experiencia continua **2021 → 2026 ≈ 5 años** en apoyo administrativo/operativo, comercial y atención al cliente.
 
-> **Notas de elegibilidad (honestas):**
-> - **234** exige "1 año de educación superior **en derecho**": aplica solo si tiene un año de derecho cursado/homologado. Con Administración probablemente **no encaja** en el requisito de estudio, aunque tenga muchas plazas.
-> - **288 y 242** nombran **Administración** expresamente → mejor ajuste de estudio; el tope es la **experiencia** (288 pide 1.5 años; 242 pide 1 año).
-> - **291** es atractivo: **no exige experiencia**, pero pide **2 años de educación superior aprobados** (hay que verificar que ya los tenga certificados) y en sus ciudades solo aparece Ibagué.
-> - **289** (Pereira, en su ciudad) pide 1 año de superior + 1 año de experiencia relacionada.
+> **Conclusión de experiencia:** con ~5 años **supera holgadamente** los topes de experiencia relacionada de todos los cargos Técnico/Administrativo (máximo exigido en sus candidatos: 1.5 años). Aun descontando periodos que no queden bien certificados, cumple.
+> ⚠️ La HV NO trae fechas de día/mes ni si son certificables. El filtro real de "experiencia relacionada" lo confirma cada **certificado laboral**. Se los pediremos.
 
-## 5. Manuales a pedir (tras confirmar hoja de vida)
-Candidatos según encaje real: **242, 288, 289** (mejor ajuste de estudio + ciudades) y **291** (sin experiencia).
-Se confirmarán al leer la hoja de vida (semestres aprobados + experiencia certificada).
+## 4. TABLA DE ANÁLISIS DE DOCUMENTACIÓN
 
-## 6. Estado: esperando hoja de vida para pasar a PASO 4 (lectura y perfil) y afinar la tabla.
+| # | Documento | ¿Está? | Detalle |
+|---|-----------|:------:|---------|
+| 1 | Hoja de vida | ✅ | Leída (PDF escaneado, 1 pág.) |
+| 2 | Cédula de ciudadanía | ⚠️ | Falta subir |
+| 3 | Historia académica / notas UNAD (semestres aprobados + homologación UNAD Florida) | ⚠️ | **CLAVE** — falta. Certifica los años de educación superior aprobados |
+| 4 | Diploma/acta Tecnología en Diseño Gráfico | ⚠️ | Falta (título tecnólogo, suma) |
+| 5 | Diploma bachiller técnico | ⚠️ | Falta subir |
+| 6 | Certificados laborales (con fechas, cargo y funciones) | ⚠️ | **CLAVE** — faltan. Confirman experiencia relacionada |
+| 7 | Certificado de inglés B2 | ⚠️ | Falta (suma, no es requisito) |
+| 8 | Certificado electoral | ⚠️ | Falta subir |
+
+### 🔧 Recomendaciones de documentación
+1. ⚠️ **Historia académica / certificado de notas de la UNAD** con semestres aprobados y homologación de UNAD Florida — es lo que prueba "X años de educación superior aprobados".
+2. ⚠️ **Certificados laborales** de cada empresa con **fechas exactas (día/mes/año), cargo y funciones** — definen la experiencia relacionada.
+3. ⚠️ Cédula, diploma de bachiller técnico, diploma de Tecnología en Diseño Gráfico y certificado electoral para el registro.
+4. ✅ Aclarar ciudad base: la HV dice **Cali**; su primer mensaje decía Pereira. Confirmar para priorizar sedes.
+
+## 5. ANÁLISIS DE VACANTES (matriz Convocatorias_Procuraduria.xlsx — datos reales)
+
+> Base del concurso: **296 vacantes / 2.824 plazas**. Planta globalizada (reubicable según necesidad del servicio).
+> Filtro: nivel **Técnico / Administrativo** (no clasifica en Profesional por no tener título aún),
+> estudio compatible con **Administración / áreas relacionadas / bachiller técnico + tecnóloga en Diseño Gráfico**,
+> y presencia en sus zonas de interés: **Cali/Valle, Pereira, Bogotá, Medellín/Antioquia, Eje Cafetero**.
+> Ordenadas de MENOR a MAYOR salario. Cumple experiencia en todas (~5 años ≫ lo exigido, sujeto a certificados).
+
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Estudio exigido | Exp. exigida | Sedes de su interés |
+|---|--------|---------------|-------|--------:|:------:|-----------------|--------------|---------------------|
+| 1 | **241-2026** | Oficinista (5OF-06) | Administrativo | $3.456.786 | **132** | 3 años bachillerato | 1 año | **Cali**, Pereira, Manizales, Armenia, Buenaventura |
+| 2 | **243-2026** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | 1 año superior (incl. **administración**) o bachiller+curso >60h | **No requiere** | **Cali**, Armenia, Ibagué |
+| 3 | **242-2026** | Auxiliar administrativo (5AM-10) | Administrativo | $4.966.461 | **69** | 1 año superior (incl. **Administración**) | 1 año | Pereira, Manizales, Armenia, Bugalagrande |
+| 4 | **288-2026** | Sustanciador (4SU-11) | Técnico | $5.424.740 | **84** | 1 año superior (nombra **Administración de Empresas**) | 1.5 años | Pereira, Manizales, Amagá (Antioq.) |
+| 5 | **236-2026** | Secretario ejecutivo (5SJ-12) | Administrativo | $5.846.100 | 5 | Bachiller técnico comercial, o bachiller + curso ofimática | 1 año | **Cali** |
+| 6 | **291-2026** | Secretario procuraduría (4SP-12) | Técnico | $5.846.100 | 19 | **2 años** superior (áreas relacionadas) | **No requiere** | Ibagué |
+| 7 | **283-2026** | Secretario procuraduría (4SP-13) | Técnico | $6.334.864 | 14 | **2 años** superior (áreas relacionadas) | 6 meses | Amagá (Antioquia) |
+
+**Lectura estratégica (honesta):**
+- **En Cali (su ciudad):** las opciones directas son **243** (Auxiliar admin — nombra administración, **no exige experiencia**), **236** (Secretario ejecutivo — por su bachiller técnico + cursos de ofimática) y **241** (Oficinista, 132 plazas). Si acepta moverse, se abren más y mejor pagadas.
+- **Mejor ajuste de ESTUDIO (nombran Administración):** **242** y **288**. **288** es Técnico con 84 plazas y mejor salario, pero **no tiene sede en Cali** (sí Pereira/Manizales/Amagá) y exige 1.5 años de experiencia (que cumple).
+- **Sin exigencia de experiencia (útiles si algún certificado no queda perfecto):** **243** (Cali) y **291** (Ibagué).
+- **Volumen (más plazas = más probabilidad):** 241 (132), 288 (84), 242 (69), 289/283.
+- **Diferenciador:** su **Tecnología en Diseño Gráfico (finalizada)** + **inglés B2** + dominio ofimático/CRM refuerzan el ajuste, sobre todo en cargos de apoyo administrativo y de comunicaciones.
+
+⚠️ **234** (Sustanciador, 180 plazas, en Cali y muchas ciudades) exige "1 año de educación superior **en derecho**" → **NO encaja** con Administración, salvo que tenga un año de derecho cursado. Se descarta por estudio pese al volumen.
+
+## 6. Manuales de funciones a pedir (PASO 6)
+Prioridad por encaje real + ciudades + salario:
+- **243** (Cali, sin experiencia) · **242** (nombra Administración) · **288** (nombra Administración de Empresas, 84 plazas) · **236** (Cali, por bachiller técnico) · **291** (2 años superior, sin experiencia).
+El manual dará las **plazas por ciudad** exactas (solo están ahí, no en la matriz).
+
+## 7. Estado: perfil y tabla listos. Pendiente: subir soportes (notas UNAD + certificados laborales) y manuales para el cruce final y los guiones de WhatsApp.
