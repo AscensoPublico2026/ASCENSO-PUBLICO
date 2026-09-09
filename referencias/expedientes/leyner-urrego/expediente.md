@@ -95,6 +95,24 @@
 
 **Convocatorias sugeridas para pedir manual:** 112, 146 y 100 (mezcla: la que no pide experiencia + las de mejor salario/volumen que ya cumple). Opcional 151 si le interesa disciplinario en Antioquia.
 
-## 7. Manuales de funciones
+## 7. Manuales de funciones — LEÍDOS Y CRUZADOS (6 manuales)
 
-> ⏳ Pendientes de cargar tras seleccionar convocatorias.
+> Inscripciones: **07 al 18 de septiembre de 2026**. Prueba de conocimientos ELIMINATORIA (mín. 65/100).
+> Peso: **Conocimientos 70% · Comportamentales 20% · Antecedentes 10%**. Todos piden tarjeta profesional (la tiene). Ninguno de estos exige posgrado.
+
+| Código | Cargo (Grado) | Salario | Total plazas | Exp. | Ubicaciones principales |
+|--------|---------------|--------:|:---:|:---:|---|
+| **112** | Profesional Universitario 3PU-15 | $6.889.867 | 4 | **No requiere** | Bogotá 2, **Medellín 2** — proceso Disciplinario (Dir. Nac. Investigaciones Especiales) |
+| **115** | Profesional Universitario 3PU-15 | $6.889.867 | 3 | **No requiere** | Bogotá 3 — proceso Financiera (contabilidad, estados financieros) |
+| **139** | Profesional Universitario 3PU-15 | $6.889.867 | 1 | **No requiere** | Bogotá 1 — Control Interno / Evaluación Institucional |
+| **100** | Coordinador Administrativo 3CA-17 | $8.972.318 | 14 | 2 años | Antioquia 1, Atlántico, Cauca, Córdoba, Cesar, Cundinamarca, Huila, Putumayo, etc. (1 c/u) |
+| **146** | Profesional Universitario 3PU-17 | $8.972.318 | 19 | 2 años | **Valle 1, Meta 1**, Bolívar, Cesar, Chocó, Córdoba, Guajira, Sucre; Barranquilla 2, Neiva 2, Cartagena 1, etc. |
+| **151** | Profesional Universitario 3PU-17 | $8.972.318 | 3 | 2 años | Bogotá 1, **Antioquia 1** — proceso Disciplinario |
+
+### Conclusión del cruce (todas las CUMPLE)
+- **112** es ideal como opción de arranque: **no pide experiencia** y tiene **2 plazas en Medellín** (su ciudad).
+- **146** (19 plazas) y **100** (14 plazas) son las de más volumen a $8.972.318; piden 2 años (ya los tiene). 146 tiene plaza en Valle y Meta (sus departamentos); 100 en Antioquia.
+- **151** (Antioquia, disciplinario, 3 plazas) buena si quiere quedarse cerca de casa.
+- Su perfil contable encaja con procesos **Financiera** (115) y **Coordinador Administrativo** (100).
+
+## 8. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
