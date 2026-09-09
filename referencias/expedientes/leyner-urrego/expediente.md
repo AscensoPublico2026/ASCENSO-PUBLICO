@@ -68,6 +68,33 @@
 - ❗ **Priorizar cargos SIN requisito de posgrado** (la especialización está en curso). Los que exijan 2 años de experiencia le sirven ya; los de 3 años, aún no (le falta ~1 año, salvo que aporte más certificados).
 - Aspiración **$6–8M** → nivel **Profesional Universitario**. Filtrar por sus departamentos (Antioquia, Valle, Risaralda, Quindío, Meta, Boyacá) y abierto a otras ciudades.
 
-## 6. Manuales de funciones
+## 6. ANÁLISIS DE VACANTES (matriz — datos reales)
+
+> Filtro: cargos que **aceptan Contaduría Pública**, **SIN requisito de posgrado** (su especialización está en curso), experiencia exigida **≤ 2 años** (tiene ~2). Ordenado de menor a mayor salario desde su aspiración ($6M).
+> Resultado: 24 cargos aceptan Contaduría sin posgrado; le sirven YA los que piden ≤ 2 años. Los de 3 años (197, 198, 211, 222, 263 = $9.646.860) quedan como opción futura si suma experiencia.
+
+### ✅ Opciones que APLICA YA (selección de las mejores)
+
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. exigida | Enfoque | Deptos de su interés |
+|---|--------|---------------|-------|--------:|:------:|:---:|---------|---------|
+| 1 | **112** | Profesional Universitario (3PU-15) | Profesional | $6.889.867 | 5 | **No requiere** | Disciplinario | Antioquia |
+| 2 | **139** | Profesional Universitario (3PU-15) | Profesional | $6.889.867 | 1 | **No requiere** | Evaluación Institucional | — |
+| 3 | **115** | Profesional Universitario (3PU-15) | Profesional | $6.889.867 | 3 | **No requiere** | Financiera | — |
+| 4 | **100** | Coordinador Administrativo (3CA-17) | Profesional | $8.972.318 | 14 | 2 años | Talento Humano/Financiera | Antioquia |
+| 5 | **146** | Profesional Universitario (3PU-17) | Profesional | $8.972.318 | 16 | 2 años | General | Valle, Meta |
+| 6 | **151** | Profesional Universitario (3PU-17) | Profesional | $8.972.318 | 3 | 2 años | Disciplinario | Antioquia |
+| 7 | **173** | Profesional Universitario (3PU-17) | Profesional | $8.972.318 | 5 | 2 años | Financiera | — |
+
+**Otras que también aplica (nivel más bajo, más salario mín. seguridad):** 242/243 (Auxiliar administrativo $4,5–4,9M), 288 (Sustanciador $5,4M, 84 plazas) — por si quiere una opción de "entrada" con menor exigencia.
+
+### Lectura estratégica
+- **Punto de partida (su aspiración $6M):** las **112/115/139** ($6.889.867) son ideales porque **NO piden experiencia** → cumple solo con el título. La **112** (Antioquia, 5 plazas, disciplinario-financiero) es muy buena.
+- **Subiendo a $8.972.318** (pide 2 años, que ya tiene): **146** (16 plazas, Valle/Meta) y **100** (Coordinador Administrativo, 14 plazas, Antioquia) son las de más volumen → mejores probabilidades. **151** (Antioquia, disciplinario) también.
+- **Perfil afín:** contable/financiero → procesos Financiera y Administración encajan con su experiencia (NIIF, estados financieros, impuestos).
+- **A futuro:** si se gradúa de la especialización, o si sumara experiencia (3 años), se abren cargos de $9.646.860.
+
+**Convocatorias sugeridas para pedir manual:** 112, 146 y 100 (mezcla: la que no pide experiencia + las de mejor salario/volumen que ya cumple). Opcional 151 si le interesa disciplinario en Antioquia.
+
+## 7. Manuales de funciones
 
 > ⏳ Pendientes de cargar tras seleccionar convocatorias.
