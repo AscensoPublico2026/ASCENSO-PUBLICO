@@ -103,3 +103,30 @@ Filtro: requisito de estudio acepta **Derecho** + ubicación en ciudades/departa
 **Descartadas por debajo del perfil (nivel Técnico/Administrativo):** 234 y 288 (Sustanciador), 242 y 243 (Auxiliar).
 
 > El nº de plazas por ciudad NO está en la matriz: se confirma con el manual de funciones (PDF) de cada código.
+
+
+## 8. Análisis comparado contra los MANUALES DE FUNCIONES (plazas por sede)
+Leídos los 6 manuales completos. Requisitos coinciden con la matriz. Plazas por sede de interés (extraídas del manual):
+
+### Cómo cumple Juan Sebastián (todos ✅)
+- **Estudio:** todos piden título en Derecho → ✅. Los Asesor (01, 35) exigen además **posgrado en áreas relacionadas** → su **Maestría en Derecho (énfasis Derecho Público)** aplica → ✅.
+- **Tarjeta profesional:** exigida → tiene la 279209 (CSJ) → ✅.
+- **Experiencia:** exigen 1 a 3 años → tiene ~7,1 años post-título → ✅ holgado.
+
+### Plazas por sede de interés (dato del manual, no de la matriz)
+| Cód | Cargo · Grado · Salario | Exp | Pasto | Ipiales | Popayán | Puerto Asís | Cartagena | Tumaco | Otras de interés |
+|---|---|---|---|---|---|---|---|---|---|
+| **147** | Prof. Univ. 3PU-17 · $8.972.318 | 2a | **3** | 2 | 2 | — | 2 | 1 | Putumayo 2, Cauca 1, Antioquia 8, V. Aburrá 4, Bolívar 2 |
+| **199** | Prof. Univ. 3PU-18 · $9.646.860 | 3a | **2** | 1 | 2 | — | — | 1 | Nariño 1, Cauca 1, Antioquia 3, Santafé Ant. 4, Bolívar 1, Carmen Bol. 2 |
+| **148** | Prof. Univ. 3PU-17 · $8.972.318 (Juzgamiento) | 2a | **2** | — | — | — | 1 | — | Antioquia 1 |
+| **202** | Prof. Univ. 3PU-18 · $9.646.860 (Juzgamiento) | 3a | — | — | — | — | 2 | — | Putumayo 1, Antioquia 4, Bolívar 2 |
+| **35** | Asesor 1AS-19 · $10.403.514 (posgrado) | 1a | **2** | 1 | 2 | **3** | 4 | 1 | Nariño 1, Cauca 2, Putumayo 3, Caldas 1, Antioquia 5, Bolívar 2 |
+| **01** | Asesor 1AS-19 · $10.403.514 (posgrado, Juzgamiento) | 1a | **1** | 2 | 2 | **4** | 5 | 2 | Caldas 1, Antioquia 5, V. Aburrá 3, Bolívar 2 |
+
+### Pruebas (todas): Conocimientos ELIMINATORIA (mín. 65/100, peso 70%) + Comportamentales 20% + Antecedentes 10%. Lista de elegibles: total ≥ 70%.
+
+### Recomendación técnica
+- **Mejor equilibrio salario/plazas/afinidad en su ciudad:** **147-2026** (Pasto 3 plazas, $8,97M, solo 2 años exp.).
+- **Mejor sueldo aún cómodo de requisitos:** **199-2026** (Pasto 2, $9,65M, 3 años exp.).
+- **Si acepta Puerto Asís / mayor salario:** **35-2026** (Asesor, aprovecha su maestría; Puerto Asís 3, Pasto 2).
+- Juzgamiento (148/202): menos plazas en su zona → más competido.
