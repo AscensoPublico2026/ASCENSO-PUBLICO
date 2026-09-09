@@ -75,6 +75,14 @@ Al recibir "ya cargué la documentación": `git pull origin main`.
   y commitear la biblioteca actualizada (así la próxima vez ya no se piden).
 
 ### PASO 7 — Cruce manuales↔perfil + PAQUETE PARA WHATSAPP
+
+> 🚫 **REGLA OBLIGATORIA (Julio César, sep-2026): NO entregar guiones ni análisis final si falta algún manual.**
+> Antes de generar la tabla final y los guiones, verificar que se tiene el manual de **TODAS** las convocatorias
+> que le sirven al aspirante. Si falta alguno (no está en `referencias/manuales-funciones/`), **PEDIRLO al operador
+> con el enlace de carga y ESPERAR** a que lo suba (git pull) antes de continuar. Nada de entregar con sedes
+> "a confirmar" o datos incompletos: el cruce (plazas por ciudad, que solo está en el manual) debe quedar completo
+> para cada opción. Solo cuando estén todos los manuales leídos se arma el paquete.
+
 Leer los manuales (pdfplumber). Extraer **plazas por ciudad** (solo están en el manual, no en la matriz).
 Entregar, en este orden:
 1. **Tabla final** para reenviar al aspirante (Convocatoria · Cargo · Nivel · Salario · Plazas totales · plazas en sus ciudades).
@@ -94,6 +102,7 @@ Entregar, en este orden:
 - [ ] Se leyó el 100% de los documentos (escaneadas vistas como imagen).
 - [ ] Experiencia calculada desde el título, sin doble conteo.
 - [ ] Todos los datos (salario/plazas/requisitos) provienen de matriz/manual (0 inventados).
+- [ ] **Se tienen y leyeron los manuales de TODAS las opciones. Si faltaba alguno, se pidió y se esperó (no se entregó incompleto).**
 - [ ] Tabla ordenada de menor a mayor salario desde la aspiración.
 - [ ] Guiones en formato nota de voz, textos de PDF sin emojis.
 - [ ] Un expediente = un aspirante (sin mezclar datos de otros).
