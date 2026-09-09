@@ -101,6 +101,20 @@
 **Manuales a revisar:** 104 y 105 (prioritarias). Opcional 103/106/108 (Bogotá).
 Biblioteca: **104 YA está** ✅. Falta: **105** (y opcionales 103/106/108).
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (opciones finales)
 
-> 104 ya está en biblioteca. Pedir 105 (y opcionales). Ver punto 5.
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+> Todas piden solo título de abogado + tarjeta (la tiene). NINGUNA pide experiencia.
+
+| # | Código | Cargo (Grado) | Salario | Total plazas | Exp. | Plazas en sus ciudades |
+|---|--------|---------------|--------:|:---:|:---:|---|
+| 1 | **104** | Prof. Universitario 3PU-15 | $6.889.867 | 97-109 | No requiere | **Barranquilla 2**, Atlántico 3, Cartagena 1, Carmen de Bolívar 1, Santa Marta 1, Magdalena 2 |
+| 2 | **105** | Prof. Universitario 3PU-15 | $6.889.867 | 64 | No requiere | **Barranquilla 4**, Cartagena 2, Atlántico 2, Bolívar 2, Magdalena 3 |
+| 3 | **103** | Prof. Universitario 3PU-15 | $6.889.867 | 20-23 | No requiere | Solo Bogotá (Conciliación/Mixtas) |
+
+### Conclusión final
+- **104 y 105 = sus mejores opciones**: mismo salario ($6.889.867), sin experiencia, y **con la mayor presencia en Barranquilla y la Costa** (Atlántico, Bolívar, Magdalena). La 105 tiene más plazas en Barranquilla capital (4).
+- **103** es 100% Bogotá → solo si acepta trasladarse a la capital.
+- Se le entregan 3 opciones (104, 105, 103). Foco: 104 y 105.
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
