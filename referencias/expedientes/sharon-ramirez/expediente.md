@@ -2,7 +2,7 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 1 completado — esperando carga de documentación**
+> Estado: **PASO 1 completado (perfil reiniciado) — esperando carga de documentación**
 
 ---
 
@@ -11,44 +11,34 @@
 | Campo | Dato |
 |-------|------|
 | Nombre | Sharon Ramírez |
-| Profesión | Abogada (a confirmar con documentos) |
-| **Interés declarado** | **Convocatoria 89-2026 — Procurador Judicial II** |
-| Ciudad de interés | Montería (entre otras) — confirmar preferencias |
-| Salario | Implícito: $16.766.110 (el del cargo objetivo) |
-| ¿Cambia de ciudad? | ⚠️ Confirmar |
-| ¿Concursos anteriores? | ⚠️ Confirmar |
+| Profesión | ⚠️ **NO informada aún** — confirmar con documentos (define el filtro de vacantes) |
+| **Salario aspirado** | **$6.000.000 en adelante** |
+| Ciudades de interés | Medellín, Bogotá, departamento de Santander |
+| Otras ciudades/deptos | Antioquia, Bogotá, Santander |
+| ¿Dispuesta a cambiar de ciudad? | Sí |
+| ¿Concursos anteriores? | No |
 
-## 2. El cargo objetivo (datos reales de la matriz)
+> Nota: se DESCARTA la información previa (el interés en Procurador Judicial II fue un dato equivocado).
+> Se parte de cero con estos datos.
 
-- **Procurador Judicial II (3PJ-EC)** — convocatoria **89-2026**.
-- Salario: **$16.766.110** · **61 plazas**.
-- Estudio: título de abogado.
-- **Experiencia: NO inferior a 10 años de experiencia profesional JURÍDICA POST-título**
-  (Ley 2340/2024, art. 66 num. 3 — independiente, pública, privada o judicial).
-- Ciudades: Barranquilla, Bucaramanga, Florencia, Manizales, **Montería**, Pereira, Popayán, Quibdó,
-  Riohacha, Santa Marta, Sincelejo, Valledupar, Villavicencio.
-- Procesos: Preventivo · Intervención · Conciliación (agente del Ministerio Público).
+## 2. Lectura preliminar del perfil
 
-## 3. Lectura preliminar / punto crítico
+- ⚠️ **Falta la profesión y los estudios.** Es el dato más importante para filtrar las vacantes.
+  Se confirmará al leer los documentos (diploma profesional).
+- Aspiración **$6.000.000 en adelante** → apunta a nivel **Profesional Universitario 3PU-15 ($6.889.867)**,
+  donde muchos cargos NO exigen experiencia; y hacia arriba según profesión, posgrado y experiencia.
+- Ciudades: **Medellín (Antioquia), Bogotá, Santander (Bucaramanga)** → buena disponibilidad.
+- **PENDIENTE:** confirmar profesión, fecha de grado, posgrado y experiencia con los documentos.
 
-- ⚠️ **EL REQUISITO DECISIVO ES LA EXPERIENCIA: 10 años de ejercicio jurídico POST-título.**
-  Al revisar los documentos hay que:
-  - Confirmar la **fecha de grado de abogada** (los 10 años cuentan desde ahí).
-  - Sumar certificados laborales jurídicos (con fechas y funciones), uniendo intervalos sin doble conteo.
-  - Verificar que la experiencia sea JURÍDICA (litigio, cargos públicos/privados de abogada, función judicial).
-- Si NO llega a 10 años → plantear con honestidad alternativas: **Procurador Judicial I** (95-2026, $12.465.572,
-  5 años) o **Asesor** ($10.403.514, posgrado + 1 año), según su perfil.
-- Confirmar si tiene posgrado (abre nivel Asesor como respaldo).
-
-## 4. Documentación
+## 3. Documentación
 
 > ⏳ Aún no cargada. Enlace de carga entregado al asesor.
-> CLAVE: fecha de grado + certificados que acrediten 10 años de experiencia jurídica.
+> CLAVE: identificar la PROFESIÓN y la fecha de grado.
 
-## 5. Análisis de vacantes
+## 4. Análisis de vacantes
 
-> ⏳ Pendiente: confirmar si cumple los 10 años del Procurador Judicial II; si no, escalonar a Procurador Judicial I / Asesor.
+> ⏳ Pendiente (según profesión real, priorizando Medellín/Bogotá/Santander, salario desde $6M).
 
-## 6. Manuales de funciones
+## 5. Manuales de funciones
 
-> 89-2026 YA está en la biblioteca central. Se revisará según las opciones finales.
+> ⏳ Se revisará primero la biblioteca central; solo se piden los que falten.
