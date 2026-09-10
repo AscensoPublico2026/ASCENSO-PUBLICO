@@ -94,8 +94,19 @@
 - ✅ **234 (Sustanciador, $5.424.740, 180 plazas):** pide 1 año de educación superior en Derecho (lo cumple: 6º sem) + 1,5 años exp. relacionada (tiene ~4,4). Es la de MÁS plazas del concurso (180). En su rango.
 - Su aspiración era $5,5M: la **291 ($5,85M)** la supera y no pide experiencia → su mejor opción realista en Santa Marta.
 
-**Manuales a revisar:** 291 y 234 (las que cumple en Santa Marta) + 146 (aspiracional). En biblioteca YA: 146, 234. Falta: 291.
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (3 opciones finales)
 
-## 6. Manuales de funciones
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
 
-> 146 y 234 ya en biblioteca. Pedir: 291 (Secretario, Santa Marta).
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas totales | Plazas Santa Marta | Exp. | ¿Cumple? |
+|---|--------|---------------|-------|--------:|:---:|:---:|:---:|:---:|
+| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | $5.846.100 | 19 | **1** | **No requiere** | ✅ |
+| 2 | **234** | Sustanciador (4SU-11) | Técnico | $5.424.740 | 180 | **2** | 1,5 años relacionada | ✅ |
+| 3 | **146** | Prof. Universitario (3PU-17) | Profesional | $8.972.318 | 16 | 1 | 2 años profesional | ⚠️ meta (tiene ~1 año post-título) |
+
+### Conclusión
+- **291**: mejor opción segura en Santa Marta ($5.846.100, sin experiencia, supera su aspiración de $5,5M).
+- **234**: 2 plazas en Santa Marta, 180 en total; la cumple (Derecho 6º sem + experiencia).
+- **146**: meta a futuro (mejor salario $8,97M en Santa Marta) cuando complete 2 años como profesional.
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
