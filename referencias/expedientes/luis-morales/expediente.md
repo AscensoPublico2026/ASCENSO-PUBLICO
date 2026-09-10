@@ -50,14 +50,17 @@
 | Entidad | Cargo/Objeto | Periodo | ¿Cuenta jurídica? |
 |---------|--------------|---------|:-----------------:|
 | Alcaldía El Bagre (PS 300/2015) | Apoyo gestión Planeación (urbanismo) | 10/09/2015 – 09/12/2015 | ❌ antes del título |
+| **Registraduría Nacional del Estado Civil** (Deleg. Antioquia) | **Profesional Universitario 3020-01** (provisional) | 11/10/2016 – 09/01/2020 | ✅ **~3,25 años** (cubre el hueco 2016-2019) |
 | Politécnico JIC (PS-50918/2020) | Servicios prof. (CORANTIOQUIA) | 14/08/2020 – 31/12/2020 | ✅ (se solapa con SAVIA) |
 | **SAVIA Servicios ESP** | Asesoría jurídica en Derecho Ambiental | 04/03/2020 – 30/07/2021 | ✅ ~1,4 años |
 | **Tamana Pacific Corp.** | Acompañamiento jurídico ambiental/minero | 13/08/2021 – 30/04/2022 | ✅ ~0,7 años |
 | Corporación Opción Legal (1815-21) | Abogado Asesor (víctimas, Ley 1448) | 08/10/2021 – 31/12/2021 | ✅ (se solapa con Tamana) |
 | **Alcaldía El Bagre** | **Secretario General y de Gobierno** (nómina, LNR) | 01/01/2024 – 11/08/2026 | ✅ ~2,6 años |
 
-### 🧮 Experiencia jurídica CERTIFICADA post-título: **~4,7 años** (1.729 días, sin traslapes)
-> Trayectoria total como abogado: **10,7 años** (desde dic-2015), pero **solo ~4,7 años están certificados** con los documentos aportados. **Hay huecos sin soporte: 2016–feb2020 (~4 años) y may2022–dic2023 (~1,6 años).**
+### 🧮 Experiencia jurídica CERTIFICADA post-título: **~8 años** (2.915 días, sin traslapes)
+> ✅ **ACTUALIZADO** con el certificado de la **Registraduría Nacional (2016-2020, Profesional Universitario)**, que cubrió el hueco grande.
+> Trayectoria total como abogado: 10,7 años. Certificado hoy: **~8 años**. Único hueco menor sin soporte: may2022–dic2023 (~1,6 años, no necesario para cumplir requisitos).
+> **CONCLUSIÓN: cumple HOLGADAMENTE los 5 años del Procurador Judicial I. Le faltarían ~2 años para el Procurador Judicial II (10 años).**
 
 ## 4. TABLA DE ANÁLISIS DE DOCUMENTACIÓN
 
@@ -86,13 +89,32 @@
 
 ## 5. ANÁLISIS DE VACANTES (matriz — datos reales)
 
-> Meta del aspirante: **Procurador Judicial I** (conv. 95-2026, $12.465.572, 63 plazas, **5 años exp. jurídica post-título**).
-> ⚠️ Con ~4,7 años certificados HOY, está **al borde**: le faltan ~3 meses. Si completa certificados de los huecos, cumple.
-> Procurador Judicial II (89-2026, $16.766.110, 10 años): solo si logra certificar ~10 años (su trayectoria total lo permite, pero falta soporte).
-> Alternativas seguras que YA cumple (posgrado + ~4,7 años): **Asesor ($10.403.514, piden 1 año + posgrado)** y **Profesional 3PU-18 ($9.646.860, 3 años)**.
+> **Ciudades del aspirante: Bogotá, Medellín, Montería.** Experiencia jurídica certificada: **~8 años** → CUMPLE Procurador Judicial I.
 
-*(pendiente confirmar ciudad de interés del aspirante y elegir opciones)*
+### ✅ Su META la CUMPLE
+
+| # | Código | Cargo (Grado) | Salario | Plazas | Exp. exigida | ¿Cumple? | Sus ciudades |
+|---|--------|---------------|--------:|:---:|:---:|:---:|---|
+| 1 | **95** | **Procurador Judicial I (3PJ-EG)** | **$12.465.572** | 63 | 5 años jurídica | ✅ (tiene ~8) | **Medellín, Montería** (+ Barranquilla, Cartagena, Pereira…) |
+
+### 🚀 Aspiracional (si certifica ~2 años más → 10)
+| 89 | Procurador Judicial II (3PJ-EC) | $16.766.110 | 61 | 10 años | ⏳ le faltan ~2 años | **Montería** (+ Manizales, Barranquilla…) |
+> Si consigue certificar el hueco may2022–dic2023 y algo más de ejercicio, se acerca a los 10 años.
+
+### ✅ Alternativas de respaldo (las cumple de sobra, aprovechan su maestría)
+| Cargo | Salario | Requisito | Ciudad |
+|-------|--------:|-----------|--------|
+| Asesor (1AS-19) | $10.403.514 | posgrado + 1 año | varias (incluida Bogotá/Medellín según convocatoria) |
+| Prof. Universitario 3PU-18 | $9.646.860 | 3 años | varias |
+
+### Lectura estratégica
+- 🎯 **Su meta (Procurador Judicial I, $12.465.572) la CUMPLE** con ~8 años certificados. Plazas en **Medellín y Montería** (2 de sus 3 ciudades). En Bogotá NO hay Procurador Judicial I (revisar Asesor para Bogotá).
+- Perfil ideal: abogado + 3 especializaciones + maestría + experiencia en Registraduría, litigio ambiental/minero y como Secretario General y de Gobierno. Muy competitivo.
+- **Recomendación honesta:** para blindar el requisito de experiencia, aportar además certificado del hueco 2022-2023 (por si acaso), pero **ya cumple sin él**.
+- Si le interesara Procurador Judicial II ($16,7M, Montería): conseguir certificados hasta completar 10 años.
+
+**Manuales a revisar:** 95 (Procurador Judicial I, prioritario). Opcional: 89 (Proc. Judicial II) y algún Asesor para Bogotá.
 
 ## 6. Manuales de funciones
 
-> ⏳ Se revisará primero la biblioteca central; solo se piden los que falten.
+> Ninguno de estos (95, 89) está aún en biblioteca. Pedir: 95 (prioritario) + 89 si quiere ver el escenario Proc. Judicial II.
