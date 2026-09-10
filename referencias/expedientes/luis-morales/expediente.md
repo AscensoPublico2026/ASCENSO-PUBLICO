@@ -130,6 +130,21 @@
 2. **26 — Asesor** · $10.403.514 · Medellín · 65 plazas
 3. **35 — Asesor** · $10.403.514 · Montería + muchas · 180 plazas (máxima probabilidad)
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (4 opciones)
 
-> Pedir: **95, 26, 35** (ninguno en biblioteca aún). Opcional: 89 (Proc. Judicial II) y 73 (Asesor 1AS-21 Barranquilla).
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+
+| # | Código | Cargo (Grado) | Salario | Exp. | Posgrado | Sus ciudades | Enfoque |
+|---|--------|---------------|--------:|:---:|:---:|---|---|
+| 1 | **95** | 🎯 **Procurador Judicial I (3PJ-EG)** | $12.465.572 | 5 años | No exige | **Medellín, Montería** (+ Cartagena…) | Preventivo-Conciliación (agente Ministerio Público) |
+| 2 | **89** | 🚀 **Procurador Judicial II (3PJ-EC)** | $16.766.110 | 10 años | No exige | **Montería** (+ Manizales…) | Preventivo-Intervención-Conciliación |
+| 3 | **26** | **Asesor (1AS-19)** | $10.403.514 | posgrado + 1 año | Sí | **Medellín (2)** (+ Barranquilla, Cali) | Preventivo-Intervención-Disciplinario-Conciliación |
+| 4 | **35** | **Asesor (1AS-19)** | $10.403.514 | posgrado + 1 año | Sí | **Montería (3)**, Bogotá (2) + muchas | Preventivo-Disciplinario |
+
+### Conclusión final
+- **95 (Procurador Judicial I): su meta, la CUMPLE** con ~8 años. Plazas en Medellín y Montería.
+- **89 (Procurador Judicial II, $16,7M):** pide 10 años → HOY no llega (~8). Queda como aspiracional si certifica ~2 años más.
+- **26 y 35 (Asesor $10,4M):** las cumple de sobra (posgrado + 1 año). 26 en Medellín, 35 con más cobertura (Montería) → respaldos sólidos para dar confianza.
+- Recomendación: presentar 95 como meta + 26 y 35 como alternativas de respaldo. 89 mencionarlo como "a futuro si completa 10 años".
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
