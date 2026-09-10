@@ -113,8 +113,23 @@
 - **Recomendación honesta:** para blindar el requisito de experiencia, aportar además certificado del hueco 2022-2023 (por si acaso), pero **ya cumple sin él**.
 - Si le interesara Procurador Judicial II ($16,7M, Montería): conseguir certificados hasta completar 10 años.
 
-**Manuales a revisar:** 95 (Procurador Judicial I, prioritario). Opcional: 89 (Proc. Judicial II) y algún Asesor para Bogotá.
+### 🟦 DOS ALTERNATIVAS a Procurador (para dar confianza al aspirante) — nivel ASESOR, aprovechan su maestría
+
+| # | Código | Cargo (Grado) | Salario | Plazas | Exp. | Sus ciudades | Enfoque |
+|---|--------|---------------|--------:|:---:|:---:|---|---|
+| A | **26** | Asesor (1AS-19) | $10.403.514 | 65 | posgrado + 1 año | **Medellín** (+ Barranquilla, Cali, Bucaramanga) | General |
+| B | **35** | Asesor (1AS-19) | $10.403.514 | **180** | posgrado + 1 año | **Montería** + muchas ciudades | Preventivo-Disciplinario |
+
+> Ambas: exigen **posgrado + 1 año** → Luis cumple ampliamente (maestría + ~8 años). Son el nivel más alto después de Procurador.
+> - **26**: tiene plaza en **Medellín** (su ciudad), 65 plazas.
+> - **35**: la de MÁS plazas del concurso (180), con **Montería** y cobertura amplia → alta probabilidad estadística.
+> Alternativa premium adicional si prefiere Barranquilla: **73** (Asesor 1AS-21, **$12.150.564**, proceso que incluye Conciliación — y él es conciliador).
+
+### RESUMEN de las 3 opciones a presentar al aspirante
+1. 🎯 **95 — Procurador Judicial I** · $12.465.572 · Medellín/Montería · (su meta, la cumple)
+2. **26 — Asesor** · $10.403.514 · Medellín · 65 plazas
+3. **35 — Asesor** · $10.403.514 · Montería + muchas · 180 plazas (máxima probabilidad)
 
 ## 6. Manuales de funciones
 
-> Ninguno de estos (95, 89) está aún en biblioteca. Pedir: 95 (prioritario) + 89 si quiere ver el escenario Proc. Judicial II.
+> Pedir: **95, 26, 35** (ninguno en biblioteca aún). Opcional: 89 (Proc. Judicial II) y 73 (Asesor 1AS-21 Barranquilla).
