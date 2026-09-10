@@ -33,17 +33,66 @@
 - Nota: los estudios (posgrados) NO reemplazan los años de experiencia exigidos para Procurador Judicial;
   la Ley pide expresamente el lapso de experiencia jurídica post-título.
 
-## 3. Documentación
+## 3. Formación y experiencia (VERIFICADAS)
 
-> ⏳ Aún no cargada. Enlace de carga entregado al asesor.
-> CLAVE: fecha de grado de abogado + certificados laborales con fechas y funciones (para contar los 5/10 años).
+| Título/Doc | Detalle | Fecha | Notas |
+|-----------|---------|-------|-------|
+| **Abogado** | Corporación Universitaria Americana (Medellín), Acta 0008 | **11/12/2015** | ✅ Fecha base de experiencia |
+| **Tarjeta profesional** | Consejo Sup. Judicatura, Seccional Antioquia, N° **270134** (exp. 07/03/2016) | 2016 | ✅ |
+| Esp. Derecho Administrativo | (diploma aportado) | — | ✅ posgrado |
+| Esp. Derecho Minero y Ambiental | (diploma aportado) | — | ✅ posgrado |
+| Esp. Alto Gobierno | (diploma aportado) | — | ✅ posgrado |
+| **Magíster en Derecho Administrativo** | (diploma aportado) | — | ✅ maestría |
+| Diplomados | Derecho Probatorio, Conciliador | — | complementarios |
+| Nombre / C.C. | Luis Enrique Morales Garcés · 1.128.406.768 | — | ✅ |
 
-## 4. Análisis de vacantes
+### Experiencia JURÍDICA post-título (desde 11/12/2015) — VERIFICADA
+| Entidad | Cargo/Objeto | Periodo | ¿Cuenta jurídica? |
+|---------|--------------|---------|:-----------------:|
+| Alcaldía El Bagre (PS 300/2015) | Apoyo gestión Planeación (urbanismo) | 10/09/2015 – 09/12/2015 | ❌ antes del título |
+| Politécnico JIC (PS-50918/2020) | Servicios prof. (CORANTIOQUIA) | 14/08/2020 – 31/12/2020 | ✅ (se solapa con SAVIA) |
+| **SAVIA Servicios ESP** | Asesoría jurídica en Derecho Ambiental | 04/03/2020 – 30/07/2021 | ✅ ~1,4 años |
+| **Tamana Pacific Corp.** | Acompañamiento jurídico ambiental/minero | 13/08/2021 – 30/04/2022 | ✅ ~0,7 años |
+| Corporación Opción Legal (1815-21) | Abogado Asesor (víctimas, Ley 1448) | 08/10/2021 – 31/12/2021 | ✅ (se solapa con Tamana) |
+| **Alcaldía El Bagre** | **Secretario General y de Gobierno** (nómina, LNR) | 01/01/2024 – 11/08/2026 | ✅ ~2,6 años |
 
-> ⏳ Pendiente. Foco: Procurador Judicial I (95-2026, 5 años) y — si acredita 10 años — Procurador Judicial II
-> (89-2026). Alternativas de respaldo: Asesor ($10,4M, posgrado + 1-2 años) y Profesional 3PU-18 ($9,6M, 3 años)
-> por si la experiencia no llega a 5 años.
+### 🧮 Experiencia jurídica CERTIFICADA post-título: **~4,7 años** (1.729 días, sin traslapes)
+> Trayectoria total como abogado: **10,7 años** (desde dic-2015), pero **solo ~4,7 años están certificados** con los documentos aportados. **Hay huecos sin soporte: 2016–feb2020 (~4 años) y may2022–dic2023 (~1,6 años).**
 
-## 5. Manuales de funciones
+## 4. TABLA DE ANÁLISIS DE DOCUMENTACIÓN
+
+| # | Documento | ¿Está? | Detalle | Obs. |
+|---|-----------|:------:|---------|------|
+| 1 | Cédula | ✅ | C.C. 1.128.406.768 | ✅ |
+| 2 | Diploma bachiller | ✅ | aportado | ✅ |
+| 3 | Diploma Abogado + acta | ✅ | Corp. U. Americana, 11/12/2015 | ✅ |
+| 4 | Esp. Derecho Administrativo | ✅ | aportado | ✅ |
+| 5 | Esp. Derecho Minero y Ambiental | ✅ | aportado | ✅ |
+| 6 | Esp. Alto Gobierno | ✅ | aportado | ✅ |
+| 7 | Maestría Derecho Administrativo | ✅ | aportado | ✅ |
+| 8 | Tarjeta profesional | ✅ | N° 270134 | ✅ |
+| 9 | Certificados laborales | ✅ | SAVIA, Tamana, Opción Legal, El Bagre, Politécnico | ver punto 3 |
+| 10 | Certificado de votación | ⚠️ | No identificado en lo cargado | **Pedir** |
+| 11 | Vigencia tarjeta profesional | ⚠️ | No vino | Pedir para el registro |
+
+### 🔧 Pendientes / recomendaciones (CLAVE para Procurador Judicial)
+1. ❗❗ **EXPERIENCIA: hoy solo ~4,7 años certificados, y Procurador Judicial I exige 5 años.** Le faltarían ~3 meses.
+   **PEDIR certificados de los periodos sin soporte** (2016–2019 y 2022–2023): si trabajó como abogado en ese tiempo
+   (litigio independiente, otras entidades), esas certificaciones lo llevarían por encima de 5 años (y quizás cerca de 10).
+   Un certificado de ejercicio independiente (con un colega abogado/juzgados) puede cubrir los huecos.
+2. ⚠️ **Certificado de votación** (no identificado): pedirlo (puntaje en antecedentes).
+3. ⚠️ **Vigencia y antecedentes de la tarjeta** para el registro.
+4. ✅ Formación (3 esp. + maestría) impecable.
+
+## 5. ANÁLISIS DE VACANTES (matriz — datos reales)
+
+> Meta del aspirante: **Procurador Judicial I** (conv. 95-2026, $12.465.572, 63 plazas, **5 años exp. jurídica post-título**).
+> ⚠️ Con ~4,7 años certificados HOY, está **al borde**: le faltan ~3 meses. Si completa certificados de los huecos, cumple.
+> Procurador Judicial II (89-2026, $16.766.110, 10 años): solo si logra certificar ~10 años (su trayectoria total lo permite, pero falta soporte).
+> Alternativas seguras que YA cumple (posgrado + ~4,7 años): **Asesor ($10.403.514, piden 1 año + posgrado)** y **Profesional 3PU-18 ($9.646.860, 3 años)**.
+
+*(pendiente confirmar ciudad de interés del aspirante y elegir opciones)*
+
+## 6. Manuales de funciones
 
 > ⏳ Se revisará primero la biblioteca central; solo se piden los que falten.
