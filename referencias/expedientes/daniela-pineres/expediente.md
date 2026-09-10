@@ -88,6 +88,22 @@
 
 **Manuales a revisar:** 242, 288, 116, 141, 162. En biblioteca YA: 242. Faltan: 288, 116, 141, 162.
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (5 opciones finales)
 
-> 242 ya en biblioteca. Pedir: 288, 116, 141, 162 (según las opciones que se elijan).
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | Ubicación (sus ciudades) |
+|---|--------|---------------|-------|--------:|:---:|:---:|---|
+| 1 | **242** | Auxiliar administrativo (5AM-10) | Administrativo | $4.966.461 | 67-69 | 1 año | **Manizales 1, Armenia 2** + Bogotá y otras |
+| 2 | **288** | Sustanciador (4SU-11) | Técnico | $5.424.740 | 84 | 1,5 años | **Manizales 1, Pereira 1, Neiva 1** + Bogotá y otras |
+| 3 | **116** | Prof. Universitario (3PU-15) | Profesional | $6.889.867 | 4 | No requiere | Solo Bogotá (Talento Humano) |
+| 4 | **141** | Prof. Universitario (3PU-17) | Profesional | $8.972.318 | 2 | 2 años | Solo Bogotá |
+| 5 | **162** | Prof. Universitario (3PU-17) | Profesional | $8.972.318 | 2 | 2 años | Solo Bogotá (Talento Humano; psicología/sociología/trabajo social) |
+
+### Conclusión
+- **Manizales/su región**: solo en niveles Técnico/Administrativo (242, 288). Pocas plazas por ciudad (1 c/u) pero muchas a nivel nacional.
+- **Nivel profesional (mejor salario, hasta $8,97M)**: 116/141/162, todas en Bogotá.
+- Sin posgrado → Asesor descartado.
+- Decisión de la aspirante: ciudad (Manizales, técnico) vs. salario/nivel (Bogotá, profesional).
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
