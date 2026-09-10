@@ -99,8 +99,22 @@
 - Su gran palanca es conseguir **certificados de experiencia post-título** (como ingeniera ambiental o en SST desde 2021): con 1 año se abre el nivel **Asesor ($10,4M)**, incluida la **33 en Bucaramanga** (su ciudad).
 - Ser honestos: presentar la 111 como la opción que cumple ya, y explicar que si aporta experiencia sube muchísimo.
 
-**Manuales a revisar:** 111 (prioritario). Opcional: 33 y 27 (si va a conseguir la experiencia). En biblioteca YA está: 33. Faltan: 111 (y 27 opcional).
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (3 opciones finales elegidas)
 
-## 6. Manuales de funciones
+> Decisión (Julio César): 3 opciones → **245, 111, 283**. Todas las cumple HOY.
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+> Como es ingeniera titulada, cumple de sobra el estudio de los cargos Técnicos (piden "aprobación de 2-3 años de educación superior").
 
-> 33 ya en biblioteca. Pedir: 111 (prioritario) + 27 opcional.
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | Ubicación |
+|---|--------|---------------|-------|--------:|:---:|:---:|---|
+| 1 | **245** | Técnico Administrativo (4TM-16) | Técnico | **$7.551.499** | 5 | **No requiere** (opción C) | Bogotá, César, Huila (planta global) |
+| 2 | **111** | Prof. Universitario (3PU-15) | Profesional | $6.889.867 | 3 | No requiere | **Medellín (1)**, Bogotá (2) — Disciplinario |
+| 3 | **283** | Secretario Procuraduría (4SP-13) | Técnico | $6.334.864 | 14 | 6 meses | Bogotá (mayoría), Sincelejo, Santander regional |
+
+### Conclusión
+- **245 = mejor salario ($7.551.499) y NO pide experiencia** → cumple ya. Dato potente: paga MÁS que el cargo profesional (111).
+- **111 = la que está en Medellín** (su 1ª ciudad), profesional, sin experiencia.
+- **283 = más plazas (14)** y solo 6 meses de experiencia; mayormente Bogotá.
+- Todas superan su aspiración de $6M. Ninguna exige experiencia relevante que ella no tenga (283 pide 6 meses, manejable).
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
