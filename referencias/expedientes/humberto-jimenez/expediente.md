@@ -39,10 +39,10 @@
 | Nombre / C.C. | Humberto José Jiménez Ramírez · 7.384.078 (San Pelayo, Córdoba) | nac. 14/10/1981 | ✅ |
 | Reside | Sincelejo (Sucre) | — | — |
 
-### Experiencia
-- En la hoja de vida menciona **Contador Junior** en Contaclara S.A.S. y Contamas (Sincelejo), **PERO sin fechas y SIN certificados** aportados.
-- **Experiencia certificada a la fecha: 0 años.** (Trabajar con "sin experiencia" salvo que aporte certificados.)
-- ⚠️ Recomendación: si puede conseguir certificados laborales de Contaclara/Contamas (con fechas y funciones), se le abrirían cargos que piden 2 años.
+### Experiencia — CONFIRMADO: 0 años, NUNCA ha ejercido
+- ❗ **Confirmado por el cliente (Julio César): Humberto NUNCA ha ejercido como contador ni tiene experiencia laboral certificable.** Se dedicó a otras cosas.
+- Lo que aparece en la hoja de vida (Contaclara/Contamas) **NO se puede acreditar y NO se usa.**
+- **Solo aplica a cargos que NO exijan NINGUNA experiencia.**
 
 ## 4. TABLA DE ANÁLISIS DE DOCUMENTACIÓN
 
@@ -91,29 +91,26 @@
 
 **CONCLUSIÓN para Julio César:** conviene decirle a Humberto con honestidad que, tal como está (sin experiencia + Montería + $5M), las tres condiciones juntas son difíciles de cumplir. Lo ideal es: **(1)** que consiga certificados de Contaclara/Contamas → abre la 288 en Montería; o **(2)** que acepte otra ciudad (Medellín) para un cargo profesional de $6,89M sin experiencia.
 
-### ✅ ACTUALIZACIÓN: Humberto acepta cargos ASISTENCIALES/TÉCNICOS → SÍ cumple varias en Córdoba SIN experiencia
+### ✅ OPCIONES REALES (0 experiencia, contador titulado, zona Córdoba/Montería)
 
-> Como es **contador titulado (5 años completos)**, cumple de sobra el requisito de estudio de cargos técnicos/administrativos (que piden "1-2 años de educación superior"). Se buscan los que NO pidan experiencia.
+> Filtro ESTRICTO: cargos que NO exigen NINGUNA experiencia. Su título de contador cumple el estudio de cargos técnicos/administrativos.
 
-| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | ¿Cumple sin exp? | Zona |
-|---|--------|---------------|-------|--------:|:---:|:---:|:---:|------|
-| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | **$5.846.100** | 19 | **No requiere** | ✅ | Córdoba (regional) |
-| 2 | **243** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | **No requiere** | ✅ | Córdoba (regional) |
-| — | 242 | Auxiliar administrativo (5AM-10) | Administrativo | $4.966.461 | 69 | 1 año | ❌ (falta exp) | Córdoba |
-| — | 262 | Sustanciador (4SU-10) | Técnico | $4.966.461 | 23 | 1 año | ❌ | Córdoba |
-| — | 234/288 | Sustanciador (4SU-11) | Técnico | $5.424.740 | 180/84 | 1,5 años | ❌ | **Montería** |
-| — | 241 | Oficinista (5OF-06) | Administrativo | $3.456.786 | 132 | 1 año | ❌ | **Montería** |
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | Zona |
+|---|--------|---------------|-------|--------:|:---:|:---:|------|
+| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | **$5.846.100** | 19 | **No requiere** | Córdoba (regional) |
+| 2 | **243** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | **No requiere** | Córdoba (regional) |
+| 3 | 96 | Auxiliar de servicios generales (6AS-03) | Operativo | $2.383.208 | 67 | No requiere | **Montería** (muy bajo — no recomendado) |
 
-### Lectura estratégica (mejorada)
-- ✅ **291 (Secretario de Procuraduría, $5.846.100, 19 plazas, SIN experiencia):** ¡Su MEJOR opción! Cumple con su título de contador, **no pide experiencia** y **supera sus $5M**. En Córdoba (regional). Máxima recomendación.
-- ✅ **243 (Auxiliar, $4.565.448, sin experiencia):** respaldo, aunque por debajo de $5M.
-- 🟡 Si consigue **certificar 1-1,5 años** (Contaclara/Contamas): se abren 242, 262 (Córdoba) y **288/234 (Sustanciador en Montería, $5.424.740)**.
-- 🟢 A futuro, con 2 años certificados: 146/100 (Profesional, $8,97M).
+**En Montería CAPITAL sin experiencia:** solo el 96 (operativo, $2,38M) y las 104/105 (que piden **Derecho**, no le sirven). → Para su perfil de contador, Montería capital no ofrece opción sin experiencia decente.
 
-**CONCLUSIÓN:** con la apertura a cargos técnicos, Humberto **YA tiene una opción que cumple y supera sus $5M: la 291** (Secretario, sin experiencia). Y si consigue certificados de experiencia, sube a Sustanciador en Montería.
+### Lectura estratégica (HONESTA)
+- ✅ **291 (Secretario de Procuraduría, $5.846.100, 19 plazas, SIN experiencia):** es su **ÚNICA opción realmente buena**. Cumple con su título de contador, no pide experiencia y **supera sus $5M**. Está en Córdoba (regional) — implica posible reubicación dentro del departamento, no necesariamente Montería capital.
+- ✅ **243 (Auxiliar, $4.565.448):** respaldo sin experiencia, pero por debajo de $5M.
+- 🔴 Honestidad: como **no tiene experiencia**, los cargos de contador en Montería (Sustanciador, Profesional) NO los puede tomar hoy. Su vía de entrada es la **291**.
+- 💡 A futuro: al ganar experiencia en el sector público (p.ej. desde la 291), en próximos concursos podrá aspirar a cargos profesionales de contaduría.
 
-**Manuales:** 291, 243 (las que cumple ya) + 288/234 (si certifica exp). TODOS ya en biblioteca ✅.
+**CONCLUSIÓN:** su mejor —y prácticamente única— opción sólida sin experiencia es la **291 (Secretario de Procuraduría, $5.846.100)**. Supera su aspiración de $5M.
 
 ## 6. Manuales de funciones
 
-> ✅ 291, 243, 288, 234, 242, 262, 146, 100 — todos YA en biblioteca. No hay que subir ninguno.
+> ✅ 291, 243 ya en biblioteca. No hay que subir ninguno.
