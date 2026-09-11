@@ -117,3 +117,34 @@ Cursos FGN: Rol del Fiscal, Fundamentos de Policía Judicial, Enfoque Diferencia
 **Conclusión:** las 4 opciones profesionales (100, 146, 151, 198) son las MEJORES para su perfil real. Si en el futuro obtiene un posgrado, se abre el nivel Asesor a $10.4M.
 
 ## 9. Estado: LISTO Y ENTREGADO — los 4 manuales (100, 146, 151, 198) leídos y cruzados; barrido de volumen/salario hecho; Asesor descartado por falta de posgrado. ✅
+
+
+---
+
+## 10. OPCIÓN ALTERNATIVA — NIVEL TÉCNICO (a solicitud de la aspirante)
+
+> Iris pidió mirar cómo le va en nivel Técnico y ver salarios. Como tiene título profesional (Contadora),
+> cumple de sobra el requisito de estudio de los cargos Técnicos (piden "1, 2 o 3 años de educación superior")
+> y con su experiencia cumple los topes. Ventaja del Técnico: MÁS plazas. Desventaja: salarios menores que
+> las opciones Profesionales (100/146/151/198, entre $8.97M y $9.64M).
+> Los 6 manuales (262, 289, 288, 291, 283, 245) fueron LEÍDOS y cruzados. Ordenados de menor a mayor salario.
+
+| Código | Cargo (Grado) | Salario | Total plazas | Exp. | Plazas en su zona (dato del manual) |
+|--------|---------------|--------:|:---:|:---:|---|
+| **262** | Sustanciador (4SU-10) | $4.966.461 | 23 | 1 año | **Córdoba 1, Sucre 1** (resto Bogotá y otras) |
+| **289** | Secretario procuraduría (4SP-10) | $4.966.461 | 31 | 1 año | Cartagena 1, Barranquilla 1, San Andrés 1 |
+| **288** | Sustanciador (4SU-11) | $5.424.740 | **84** | 1.5 años | **Montería 1, Sincelejo 2**, Barranquilla 3, Valledupar 2, San Andrés 1 |
+| **291** | Secretario procuraduría (4SP-12) | $5.846.100 | 19 | **No requiere** | Santa Marta 1, Valledupar 1 (+ Córdoba según matriz) |
+| **283** | Secretario procuraduría (4SP-13) | $6.334.864 | 14 | 6 meses | **Sincelejo 1** |
+| **245** | Técnico administrativo (4TM-16) | $7.551.499 | 5 | 1 año | Cesar 1 |
+
+**Rango salarial nivel Técnico PGN:** $4.183.546 (mín, Sustanciador 4SU-08) a $8.972.318 (máx, Técnico investigador 4TI-17).
+
+**Lectura estratégica (Técnico):**
+- Mejor combinación plazas+zona: **288** (84 plazas, Montería 1 + Sincelejo 2). Es la más fuerte del nivel Técnico para ella.
+- **283**: $6.33M, Sincelejo 1, solo 6 meses de experiencia → buen salario dentro del Técnico.
+- **262**: tiene plaza en Córdoba 1 y Sucre 1 (su tierra), aunque salario más bajo ($4.96M).
+- ⚠️ La **234** (Sustanciador, 180 plazas, Montería/Sincelejo) pide "1 año de educación superior EN DERECHO" → NO aplica a contadora.
+- **Comparación honesta:** en Técnico el tope que alcanza (~$7.5M) es MENOR que las Profesionales (~$9M). Por salario le conviene el nivel Profesional; por volumen/probabilidad, el Técnico (288). Decisión de la aspirante.
+
+## 11. Estado: entregadas opciones Profesional (100/146/151/198) y Técnico (262/289/288/291/283/245), todas con manual leído. ✅
