@@ -76,3 +76,28 @@ _Auditoría: leído consolidado "REPÚBLICA DE COLOMBIA.pdf" (25 págs: hoja de 
 - En **Córdoba**, su techo es ~$8.97M (Coordinador Administrativo 100-2026 o Profesional Universitario 146-2026).
 - **Igual que Yissela:** viene de cargos DIRECTIVOS muy altos (Contralor Provincial, Gobernador Encargado). Hay que confirmar su objetivo y si estos salarios le convienen vs. lo que ha ganado. Verificar motivación (¿estabilidad de carrera? ¿ciudad?).
 - Confirmar ciudad/salario para cerrar recomendación.
+
+
+---
+
+## 🔄 ACTUALIZACIÓN (sep-2026): nueva preferencia — piso $9M con más plazas (Opción A)
+
+> Pedro Luis pidió mirar salario MÍNIMO $9.000.000 pero con "bastantes plazas". Hallazgo honesto: para su
+> perfil (Administrador + posgrado, NO abogado) NO hay convocatorias ≥$9M con muchas plazas (van de 1 a 7).
+> Confirmó **Opción A: mantener piso $9M**. Ciudades de interés: Barranquilla (Atlántico), Montería (Córdoba), Sincelejo (Sucre).
+> Los 4 manuales (198, 62, 34, 85) fueron LEÍDOS. Formato de plazas: TOTAL + desglose por ciudad de interés.
+
+| Código | Cargo (Grado) | Salario | Plazas TOTALES | Exp. | En sus ciudades de interés (dato del manual) |
+|--------|---------------|--------:|:---:|:---:|---|
+| **198** | Profesional Universitario (3PU-18) | $9.646.860 | **11** | 3 años | Atlántico/Barranquilla 1, **Sucre 1** (resto: Bolívar 1, Cesar 2, Guajira 1, Casanare 1, Neiva 1, Manizales 1, Valle de Aburrá 1) |
+| **62** | Asesor (1AS-19) | $10.403.514 | **6** | 1 año + posgrado | 0 en su zona (las 6 en **Bogotá**) |
+| **34** | Asesor (1AS-19) | $10.403.514 | **8** | 1 año + posgrado | **Atlántico 2** (resto: Valledupar 1, Cesar 1, Guajira 1, Bucaramanga 1, Santander 1, Huila 1) |
+| **85** | Asesor (1AS-24) | $15.863.546 | **4** | 4 años + posgrado | Atlántico (parte) + Bogotá (mejor salario; pide 4 años exp., los tiene) |
+
+**Requisitos confirmados (todos aceptan Administración de Empresas + Pedro Luis cumple):**
+- 198: título admón/contaduría/ing. industrial + 3 años exp. profesional. ✅ (tiene ~13 años). NO exige posgrado.
+- 62: título ing. industrial/economía/admón empresas/admón pública/finanzas + posgrado + 1 año. ✅ (2 especializaciones).
+- 34: título admón empresas/admón pública/contaduría/economía + posgrado + 1 año. ✅
+- 85: título derecho/economía/admón empresas/admón pública/etc + posgrado + 4 años. ✅ (tiene ~13 años; mejor salario $15.8M).
+
+**Recomendación:** en su zona, **34 (Atlántico 2, $10.4M)** y **198 (Barranquilla/Sucre, $9.6M, 11 plazas)** son las mejores. La **85** paga más ($15.8M) con sede en Atlántico. La **62** es solo Bogotá.
