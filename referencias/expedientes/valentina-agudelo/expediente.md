@@ -36,10 +36,15 @@
 | Documentos de estudio | (cursos/soportes aportados) | — | complementarios |
 | Nombre / C.C. | Valentina Agudelo Herrera · 1.116.284.139 | nac. 27/10/1999 (Riofrío, Valle) | ✅ |
 
-### Experiencia
-- ⚠️ **Los 3 certificados laborales están PROTEGIDOS CON CONTRASEÑA** (encriptados) → **NO se pudieron abrir/leer.**
-- Se graduó el 03/12/2022 → trayectoria posible ~2 años 9 meses. Experiencia real por confirmar cuando se puedan abrir los certificados.
-- **PEDIR a la aspirante que reenvíe los certificados SIN contraseña** (o que indique la clave), para cuantificar su experiencia.
+### Experiencia — DESBLOQUEADA (clave = cédula) y VERIFICADA
+| Empresa (temporales/RRHH) | Cargo | Periodo | Salario |
+|---------------------------|-------|---------|---------|
+| Activos S.A.S | **Analista de Selección** | 27/03/2023 – 01/04/2024 | $2.486.873 |
+| Atecno / (obra o labor) | **Analista de Selección** | 02/04/2024 – 15/04/2025 | $2.841.403 |
+| Activos S.A.S | **Analista de Selección** | 19/05/2025 – 06/11/2025 | $2.841.403 |
+
+### 🧮 Experiencia profesional post-título: **~2,5 años** (Analista de Selección — RRHH, afín a psicología)
+> ✅ Certificados desbloqueados con la cédula. Con ~2,5 años **YA cumple cargos que exigen 2 años**. Su experiencia es en selección de personal/RRHH (área organizacional de la psicología).
 
 ## 4. TABLA DE ANÁLISIS DE DOCUMENTACIÓN
 
@@ -104,10 +109,15 @@
 |--------|-------|--------:|:---:|-------|
 | **116** | Profesional Universitario (psicología) | $6.889.867 | No requiere | Planta global (mayormente Bogotá) |
 
-### Conclusión
-- **En el Valle sin experiencia:** 291 ($5.846.100) y 243 (Cali, $4.565.448) → cumplen su umbral (>$3M).
-- **Fuera del Valle:** 116 (Profesional psicología, $6.889.867, sin experiencia) → cumple su umbral (>$4M), acorde a su título.
-- 289 (Cartago) requiere 1 año de experiencia → depende de que abra sus certificados laborales.
-- PENDIENTE: reenviar los 3 certificados laborales SIN contraseña.
+### 🔓 ACTUALIZACIÓN (certificados desbloqueados): ahora tiene ~2,5 años → se le abren cargos de $8.972.318
+| Código | Cargo | Salario | Exp. | Dónde |
+|--------|-------|--------:|:---:|-------|
+| **141 / 162 / 264** | Profesional Universitario (psicología) | **$8.972.318** | 2 años (los tiene) | Planta global (mayormente Bogotá) |
+
+### Conclusión final
+- **En el Valle (>$3M):** 291 ($5.846.100, sin exp) y 243 (Cali, $4.565.448, sin exp) → las cumple.
+- **Fuera del Valle (>$4M):** ahora su MEJOR opción es un **Profesional Universitario de psicología a $8.972.318** (141/162/264), que **ya cumple con sus 2,5 años** — muy por encima de sus $4M. También la 116 ($6.889.867, sin exp).
+- 289 (Cartago, Valle): pide 1 año → **la cumple** (tiene 2,5).
+- Su experiencia en **selección de personal (RRHH)** es afín al área organizacional de la psicología.
 
 ## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
