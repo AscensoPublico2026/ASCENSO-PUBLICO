@@ -91,9 +91,29 @@
 
 **CONCLUSIÓN para Julio César:** conviene decirle a Humberto con honestidad que, tal como está (sin experiencia + Montería + $5M), las tres condiciones juntas son difíciles de cumplir. Lo ideal es: **(1)** que consiga certificados de Contaclara/Contamas → abre la 288 en Montería; o **(2)** que acepte otra ciudad (Medellín) para un cargo profesional de $6,89M sin experiencia.
 
-**Manuales a revisar (según lo que decida):** 288 (Montería, si consigue experiencia), 112 (Medellín, sin exp), 243 (Córdoba, sin exp). Todos YA en biblioteca ✅.
+### ✅ ACTUALIZACIÓN: Humberto acepta cargos ASISTENCIALES/TÉCNICOS → SÍ cumple varias en Córdoba SIN experiencia
+
+> Como es **contador titulado (5 años completos)**, cumple de sobra el requisito de estudio de cargos técnicos/administrativos (que piden "1-2 años de educación superior"). Se buscan los que NO pidan experiencia.
+
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | ¿Cumple sin exp? | Zona |
+|---|--------|---------------|-------|--------:|:---:|:---:|:---:|------|
+| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | **$5.846.100** | 19 | **No requiere** | ✅ | Córdoba (regional) |
+| 2 | **243** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | **No requiere** | ✅ | Córdoba (regional) |
+| — | 242 | Auxiliar administrativo (5AM-10) | Administrativo | $4.966.461 | 69 | 1 año | ❌ (falta exp) | Córdoba |
+| — | 262 | Sustanciador (4SU-10) | Técnico | $4.966.461 | 23 | 1 año | ❌ | Córdoba |
+| — | 234/288 | Sustanciador (4SU-11) | Técnico | $5.424.740 | 180/84 | 1,5 años | ❌ | **Montería** |
+| — | 241 | Oficinista (5OF-06) | Administrativo | $3.456.786 | 132 | 1 año | ❌ | **Montería** |
+
+### Lectura estratégica (mejorada)
+- ✅ **291 (Secretario de Procuraduría, $5.846.100, 19 plazas, SIN experiencia):** ¡Su MEJOR opción! Cumple con su título de contador, **no pide experiencia** y **supera sus $5M**. En Córdoba (regional). Máxima recomendación.
+- ✅ **243 (Auxiliar, $4.565.448, sin experiencia):** respaldo, aunque por debajo de $5M.
+- 🟡 Si consigue **certificar 1-1,5 años** (Contaclara/Contamas): se abren 242, 262 (Córdoba) y **288/234 (Sustanciador en Montería, $5.424.740)**.
+- 🟢 A futuro, con 2 años certificados: 146/100 (Profesional, $8,97M).
+
+**CONCLUSIÓN:** con la apertura a cargos técnicos, Humberto **YA tiene una opción que cumple y supera sus $5M: la 291** (Secretario, sin experiencia). Y si consigue certificados de experiencia, sube a Sustanciador en Montería.
+
+**Manuales:** 291, 243 (las que cumple ya) + 288/234 (si certifica exp). TODOS ya en biblioteca ✅.
 
 ## 6. Manuales de funciones
 
-> ✅ 288, 112, 243, 146, 100, 242 YA en biblioteca. No hay que subir ninguno.
-> Definir con el aspirante la estrategia (ciudad vs. experiencia) antes de armar guiones.
+> ✅ 291, 243, 288, 234, 242, 262, 146, 100 — todos YA en biblioteca. No hay que subir ninguno.
