@@ -111,6 +111,19 @@
 
 **CONCLUSIÓN:** su mejor —y prácticamente única— opción sólida sin experiencia es la **291 (Secretario de Procuraduría, $5.846.100)**. Supera su aspiración de $5M.
 
-## 6. Manuales de funciones
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (2 opciones finales)
 
-> ✅ 291, 243 ya en biblioteca. No hay que subir ninguno.
+> Decisión (Julio César): 2 opciones → **291 y 243**. Ambas SIN experiencia, en Córdoba.
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas totales | Plazas Córdoba | Exp. |
+|---|--------|---------------|-------|--------:|:---:|:---:|:---:|
+| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | $5.846.100 | 19 | 1 (Córdoba regional) | No requiere |
+| 2 | **243** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | 1 (Córdoba) | No requiere |
+
+### Conclusión
+- **291**: mejor opción ($5.846.100, supera sus $5M, sin experiencia). Cumple con su título de contador (requisito: 2 años educación superior).
+- **243**: respaldo sin experiencia ($4.565.448).
+- Ambas en Córdoba (puede implicar reubicación en el departamento, no solo Montería capital).
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
