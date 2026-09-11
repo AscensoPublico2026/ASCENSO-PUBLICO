@@ -87,8 +87,27 @@
 - **Si logra abrir/certificar sus 3 certificados laborales** (los que vinieron con clave): se le suman las de experiencia como la 234 (Sustanciador, Cali) o 289 (Cartago).
 - Asesor descartado (ella lo sabe): posgrado.
 
-**Manuales a revisar:** 291, 243 (Valle) + 116 (profesional fuera). TODOS ya en biblioteca ✅.
+## 6. Manuales de funciones — LEÍDOS Y CRUZADOS (opciones finales)
 
-## 6. Manuales de funciones
+> Prueba ELIMINATORIA (mín 65/100). Peso: Conocimientos 70% · Comportamentales 20% · Antecedentes 10%.
+> Es psicóloga titulada → cumple el estudio de cargos técnicos (piden 1-2 años de educación superior).
 
-> ✅ 291, 243, 116, 234, 289 — verificar en biblioteca. Pendiente: que reenvíe certificados laborales SIN contraseña.
+#### En el VALLE (desde $3M)
+| # | Código | Cargo (Grado) | Nivel | Salario | Plazas | Exp. | Ciudad Valle |
+|---|--------|---------------|-------|--------:|:---:|:---:|---|
+| 1 | **291** | Secretario Procuraduría (4SP-12) | Técnico | $5.846.100 | 19 | **No requiere** | Planta global (posible Valle) |
+| 2 | **243** | Auxiliar administrativo (5AM-09) | Administrativo | $4.565.448 | 26 | **No requiere** | **Cali** |
+| 3 | **289** | Secretario Procuraduría | Técnico | $4.966.461 | 31 | 1 año | **Cartago** (necesita certificar exp.) |
+
+#### FUERA del Valle (>$4M)
+| Código | Cargo | Salario | Exp. | Dónde |
+|--------|-------|--------:|:---:|-------|
+| **116** | Profesional Universitario (psicología) | $6.889.867 | No requiere | Planta global (mayormente Bogotá) |
+
+### Conclusión
+- **En el Valle sin experiencia:** 291 ($5.846.100) y 243 (Cali, $4.565.448) → cumplen su umbral (>$3M).
+- **Fuera del Valle:** 116 (Profesional psicología, $6.889.867, sin experiencia) → cumple su umbral (>$4M), acorde a su título.
+- 289 (Cartago) requiere 1 año de experiencia → depende de que abra sus certificados laborales.
+- PENDIENTE: reenviar los 3 certificados laborales SIN contraseña.
+
+## 7. Estado: LISTO PARA ENTREGAR GUIONES (Paso 7).
