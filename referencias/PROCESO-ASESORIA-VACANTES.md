@@ -84,8 +84,14 @@ Al recibir "ya cargué la documentación": `git pull origin main`.
 > para cada opción. Solo cuando estén todos los manuales leídos se arma el paquete.
 
 Leer los manuales (pdfplumber). Extraer **plazas por ciudad** (solo están en el manual, no en la matriz).
+
+> 📣 **REGLA DE PRESENTACIÓN DE PLAZAS (Julio César, sep-2026): SIEMPRE mostrar el TOTAL de plazas de la
+> convocatoria + el desglose en las ciudades de interés del aspirante.** Formato: "N plazas en total; de tus
+> ciudades: X en <ciudad>, Y en <ciudad>...". Ejemplo: "180 plazas en total; de tus ciudades: 1 en la Costa,
+> 2 en Bogotá". Nunca mostrar solo las plazas de la ciudad sin el total, ni solo el total sin el desglose.
+
 Entregar, en este orden:
-1. **Tabla final** para reenviar al aspirante (Convocatoria · Cargo · Nivel · Salario · Plazas totales · plazas en sus ciudades).
+1. **Tabla final** para reenviar al aspirante (Convocatoria · Cargo · Nivel · Salario · **Plazas TOTALES** · plazas en sus ciudades de interés — ambos datos siempre).
 2. **Guion de audio de saludo** (nota de voz, primera persona, sin emojis): disculpa por demora (orden de lista),
    mini-resumen del perfil, anuncio de opciones.
 3. **Texto corto por cada PDF de manual** (sobrio, sin emojis): N° convocatoria · Cargo · Nivel · Salario ·
