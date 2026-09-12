@@ -82,3 +82,26 @@ _Auditoría: leídos diploma+acta, tarjeta profesional, certificado laboral (Ind
 1. 🔴 Sin posgrado → techo Profesional Universitario ($6.89M).
 2. 🟡 Experiencia ~1.5 años → cumple 115/112 (no exigen exp) y 288/242 (piden 1-1.5, cubierto). Si acredita 2 años → se abren 3PU-17 ($8.97M).
 3. 🟢 Prueba de conocimientos ELIMINATORIA (mín 65/100). En la 115 los temas son contables/financieros (su fuerte) → ventaja. Ya hizo la prueba DIAN (conoce la dinámica).
+
+
+---
+
+## 🔄 ACTUALIZACIÓN (sep-2026): pidió MÁS opciones (las 3PU-15 no le sonaron)
+
+> El asesor indica que las opciones enviadas (112/115 Prof. Univ. $6.89M y respaldo 288/242) "no le sonaron mucho".
+> Busca OTRAS que pueda aplicar y con VARIAS vacantes. Barrido completo de matriz; se descartan cargos que
+> subutilizan su título (conductor, aux. servicios generales, citador). Nivel Técnico/Administrativo afín a contaduría.
+> Formato: total + Bogotá + Antioquia/Medellín. (Todas cumple: título completo + ~1.5 años exp., sin posgrado.)
+
+| Código | Cargo (Grado) | Salario | Total | Bogotá | Antioquia/Med. | Exp. exigida |
+|--------|---------------|--------:|:---:|:---:|:---:|---|
+| **283** | Secretario procuraduría (4SP-13) | $6.334.864 | 14 | 11 | 1 | 6 meses |
+| **257** | Técnico investigador (4TI-15) | $6.889.867 | 9 | 9 | 0 | no requiere / 1 año (+ curso específico según dependencia) |
+| **291** | Secretario procuraduría (4SP-12) | $5.846.100 | 19 | 6 | 0 | no requiere |
+| **289** | Secretario procuraduría (4SP-10) | $4.966.461 | 29 | 8 | 1 | 1 año |
+| **260** | Sustanciador (4SU-08) | $4.183.546 | 38 | 16 | 4 | 1 año (solo bachiller) |
+| **262** | Sustanciador (4SU-10) | $4.966.461 | 18 | 7 | 0 | 1 año |
+| **236** | Secretario ejecutivo (5SJ-12) | $5.846.100 | 4 | 1 | 1 | 1 año |
+
+**Lectura:** por salario+afinidad, **283** ($6.33M, 11 en Bogotá, solo 6 meses exp.) y **257** (Técnico investigador, $6.89M, 9 en Bogotá) son las mejores nuevas. Por volumen con sede en Antioquia, **260** (38 total, Bogotá 16, Antioquia/Med 4). **291** buen volumen sin exigir experiencia.
+Nota: la de mayor salario que cumple sigue siendo Prof. Universitario 3PU-15 $6.89M (ya mostradas 112/115); si acredita 2 años de experiencia se abren las 3PU-17 financieras ($8.97M).
