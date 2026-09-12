@@ -82,3 +82,20 @@
 - Faltan (bloque A, 1 plaza c/u): 255, 284 → conseguir solo si quiere enfocar criminalística de grado 17.
 
 ## 8. Estado: LISTO. Recomendación: presentar bloque A (285, $8.97M Bogotá) + bloque B (288/257/283) con tablita de total + Bogotá/Medellín.
+
+
+---
+
+## 9. Selección presentada a la aspirante (decisión del operador, sep-2026)
+
+Julio César indicó presentarle a Brenda **hasta la 242 solamente**. Se DEJAN POR FUERA (no se le muestran): 289, 243, 241.
+
+Opciones efectivamente presentadas:
+- **Grupo 1 (≥$8M):** 285 — Técnico en criminalística — $8.972.318 — total 1, Bogotá 1.
+- **Grupo 2 (más plazas en Bogotá):**
+  - 257 — Técnico investigador — $6.889.867 — total 9, Bogotá 9.
+  - 283 — Secretario de procuraduría — $6.334.864 — total 14, Bogotá 11.
+  - 288 — Sustanciador — $5.424.740 — total 78, Bogotá 50.
+  - 242 — Auxiliar administrativo — $4.966.461 — total 52, Bogotá 15.
+
+Pendiente (a solicitud): leer manuales 255 y 284 (criminalística grado alto, 1 plaza c/u) si se decide ampliar el Grupo 1.
