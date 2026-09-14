@@ -53,4 +53,17 @@ experiencia (desde la fecha del título, si es profesional).
 - **PENDIENTE:** leer manuales de Asesor 12/39/42 (los de $10.4M, Bogotá, posgrado + 1 año exp.) para ver si aceptan "y afines"/NBC. Si el manual lo permite → cumple seguro. Si dice solo "Ingeniería Civil" a secas → zona gris, NO ofrecer.
 - Manuales pendientes de cargar: 12-2026, 39-2026, 42-2026.
 
-## 5. Estado: PENDIENTE manuales 12/39/42 para confirmar si su carrera es aceptada (afines/NBC) antes de ofrecer.
+## 5. RESULTADO — manuales 12/39/42 leídos (sep-2026)
+
+✅ **12-2026 — Asesor (1AS-19) — CUMPLE AL 100% (sin zona gris):** el estudio incluye **TEXTUALMENTE "ingeniería de
+transportes y vías"** (junto con estadística, ing. civil, ing. topográfica) + posgrado. Salario **$10.403.514**,
+**2 plazas, ambas en Bogotá**, exp. 1 año profesional/docente (tiene ~9-10), tarjeta CPITVC vigente. Proceso: Disciplinario.
+→ **ESTA es su opción. La cumple sin ambigüedad.**
+
+❌ **39-2026:** pide solo "ingeniería civil" → NO menciona transporte y vías → zona gris → NO ofrecer.
+❌ **42-2026:** pide "ingeniería civil, topográfica y geomática" → NO menciona su carrera → NO ofrecer.
+
+> Nota: se revisó toda la matriz; la 12-2026 es (hasta ahora) el único cargo Asesor que nombra expresamente su carrera.
+> Si el cliente quiere más opciones, buscar Profesionales que la nombren textualmente o que digan "y afines"/NBC.
+
+## 6. Estado: LISTO — opción segura confirmada = 12-2026 (Asesor $10.4M, Bogotá 2 plazas). Cumple 100%.
