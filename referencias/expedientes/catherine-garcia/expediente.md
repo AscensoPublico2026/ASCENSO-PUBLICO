@@ -30,9 +30,27 @@ Se entregó el enlace de carga. Cuando suba los soportes, se hará `git pull`, s
 (páginas escaneadas se revisan como imagen) y se completará la tabla ✅/⚠️/🔧, más el cálculo de
 experiencia (desde la fecha del título, si es profesional).
 
-## 3. Siguiente paso
-Tras leer la documentación: perfil + análisis de matriz.
-🛑 REGLA DE ORO (ver PROCESO-ASESORIA-VACANTES.md, PASO 5): solo ofrecer cargos que cumple al 100%,
-verificando CADA requisito contra el manual (estudio APROBADO vs. en curso, carrera aceptada, curso
-específico cubierto sin duda, dependencia/ubicación real, vías A/B completas). Nada de zonas grises.
-Entregar tabla con plazas TOTALES + desglose por ciudad de interés.
+## 3. Documentación leída (100%) — perfil verificado
+- **Sandra Catherine García Herrera**, C.C. **33.377.634** de Tunja.
+- **Ingeniera en Transporte y Vías** (UPTC) — matrícula CPITVC 01115-10808, Res. 366 del 10/12/2015, VIGENTE.
+- **Especialista en Tránsito y Transporte** (UPTC) — diploma 22/07/2016; registro CPITVC 01316-10648 (Res. 390/2016), VIGENTE. ✅ POSGRADO confirmado.
+- **Tecnóloga en Electrónica** (no la ejerce).
+- Tarjetas profesionales del CPITVC vigentes (sin antecedentes).
+
+### Experiencia post-título (desde dic/2015) — verificada
+| Entidad | Cargo | Periodo |
+|---|---|---|
+| Consorcio TTU-INPROTEKTO | Ing. de Apoyo de Interventoría | 30/11/2015 – 12/08/2016 |
+| Secretaría Distrital de Movilidad (SDM) | Prof. control y vigilancia tránsito y transporte | desde 07/10/2016 (varios contratos) |
+| IDU (Instituto de Desarrollo Urbano) | Prof. área tránsito y transporte / PMT / señalización | 05/04/2021 → ACTUAL (contratos continuos) |
+| Consorcio TPF ICEACSA | Residente y Especialista de Tránsito | 10/11/2025 – 15/12/2025 |
+→ **~9-10 años de experiencia profesional**, toda en tránsito/transporte/vías. Cumple de sobra cualquier tope (1-3 años).
+
+## 4. ⚠️ HALLAZGO CRÍTICO (REGLA DE ORO) — carrera vs. cargos
+- **NINGÚN cargo del concurso menciona textualmente "Ingeniería de Transporte y Vías"** (su título exacto).
+- Los cargos afines (Asesor $10.4M: 12, 39, 42; Profesional: 152/157/175/207/210…) piden **"Ingeniería Civil"** (y a veces topográfica/ambiental).
+- Transporte y Vías es carrera propia (CPITVC, Ley 33/1989), afín a Ing. Civil por Núcleo Básico del Conocimiento (NBC), PERO la equivalencia la decide el VERIFICADOR → ZONA GRIS. No ofrecer como segura hasta verificar en el manual si dice "y afines"/NBC.
+- **PENDIENTE:** leer manuales de Asesor 12/39/42 (los de $10.4M, Bogotá, posgrado + 1 año exp.) para ver si aceptan "y afines"/NBC. Si el manual lo permite → cumple seguro. Si dice solo "Ingeniería Civil" a secas → zona gris, NO ofrecer.
+- Manuales pendientes de cargar: 12-2026, 39-2026, 42-2026.
+
+## 5. Estado: PENDIENTE manuales 12/39/42 para confirmar si su carrera es aceptada (afines/NBC) antes de ofrecer.
