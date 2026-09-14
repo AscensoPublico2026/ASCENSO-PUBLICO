@@ -53,11 +53,11 @@
 
 | Código | Cargo (Grado) | Salario | Plazas totales | En sus ciudades | Requisito (cumple) |
 |--------|---------------|--------:|:---:|---|---|
-| **285** | Técnico en criminalística (4TC-15) | **$8.972.318** | 1 | **Bogotá 1** | 3 años educ. superior + curso específico en el área. **Vía A NO exige experiencia.** ✅ (tiene semestres + cursos de criminalística/policía judicial) |
+| **285** | Técnico en criminalística (4TC-17) | **$8.972.318** | 1 | **Bogotá 1** | Vía A: 3 años educ. superior + CURSO ESPECÍFICO en criminalística (no exige exp.). ⚠️ Cumple 3 años; el "curso específico" depende de que la PGN acepte alguno de sus cursos afines (investigación criminal/lugar de los hechos) |
 | 255 | Técnico investigador (4TI-15→17) | $8.972.318 | 1 | (confirmar manual) | Título técnico/tecnólogo + curso + exp. (encaje más justo) |
 | 284 | Técnico en criminalística (4TC-17) | $8.972.318 | 1 | (confirmar manual) | Título técnico profesional + curso + 3 años exp. |
 
-**Lectura:** la **285** es la joya del bloque A: paga $8.97M (lo que ella quiere), está en **Bogotá**, y su perfil de **investigadora criminal + cursos de criminalística** encaja como anillo al dedo; la vía A **no pide experiencia**. Pero es **1 sola plaza** → alta competencia.
+**Lectura (revisada sep-2026):** la **285** paga $8.97M (lo que ella quiere) y está en **Bogotá**; por la vía A **no pide experiencia** y ella SÍ cumple los **3 años de educación superior**. ⚠️ PERO el requisito exige además un **"curso específico en el área" (criminalística)**: Brenda tiene cursos afines (investigación criminal, análisis del lugar de los hechos, policía judicial), que MUY probablemente sirven, pero su aceptación como "curso específico" **depende del verificador de la PGN**. No es garantía automática. Verificar cuál certificado (nombre + horas) respalda mejor ese requisito. Además es **1 sola plaza** → alta competencia. Corrección: el grado es **4TC-17** (no 4TC-15).
 
 ## 6. OPCIONES — BLOQUE B: por debajo de $8M pero con MUCHAS plazas (más probabilidad)
 
