@@ -70,3 +70,23 @@
 - Leídos/en biblioteca: 01, 35, 104, 105, 147, 199 (todos verificados).
 
 ## 6. Estado: LISTO para guiones. PENDIENTE: pedir certificados laborales para confirmar experiencia (define Asesor $10.4M y 3PU-17/18).
+
+
+---
+
+## 7. CIERRE (sep-2026): sin experiencia laboral certificable
+
+El cliente confirma que Christian **no tiene experiencia laboral certificable**. Por tanto se descartan los cargos que
+exigen experiencia (Asesor 01/35 con 1 año; profesionales 3PU-17/18 con 2-3 años). Se trabaja SOLO con cargos de Derecho
+que NO requieren experiencia.
+
+### Opciones que cumple al 100% (solo título de abogado + tarjeta vigente, SIN experiencia) — Valle
+| Código | Cargo (Grado) | Salario | Plazas totales | Cali | Proceso |
+|--------|---------------|--------:|:---:|:---:|---|
+| **104** | Profesional Universitario 3PU-15 | $6.889.867 | 100 | 2 | Preventivo–Disciplinario |
+| **105** | Profesional Universitario 3PU-15 | $6.889.867 | 54 | 2 | Disciplinario |
+
+Ambas por encima de su piso de $5M. Manuales leídos y verificados. Son las únicas de Derecho sin experiencia con plaza en
+Cali. Los cargos de mayor salario ($8.97M+) exigen 2-3 años de experiencia → no aplica hoy.
+
+## 8. Estado: LISTO — opciones seguras 104 y 105 (Prof. Universitario $6.89M, Cali). Cumple 100% sin experiencia.
