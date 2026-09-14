@@ -31,9 +31,26 @@
 | Imagen REISA S.A. | Arquitecta y Administradora Propiedad Horizontal | 10/01/2020 – 30/05/2026 |
 → **~10 años de experiencia profesional post-título**, toda en arquitectura/construcción/administración PH.
 
-### Documentación
-- ✅ HV, cédula, diplomas (arquitecta + diplomado), certificados laborales (Civiles JC, REISA, Imagen REISA).
-- ⚠️ FALTA: tarjeta profesional de Arquitecta (COPNIA/CPNAA) + vigencia; certificado electoral.
+### Documentación — INVENTARIO COMPLETO (PDF único de 13 págs, revisado 100% pág. por pág.)
+| Pág | Documento | Detalle |
+|-----|-----------|---------|
+| 1 | Hoja de vida | Perfil + experiencia + educación |
+| 2 | Cédula | 1.102.838.367, Sincelejo, nac. 04/02/1991 |
+| **3** | ✅ **TARJETA PROFESIONAL DE ARQUITECTA (CPNAA)** | **Matrícula A6162015-1102838367**, expedida 24/09/2015. VIGENTE (corrección: SÍ la tiene) |
+| 4 | Acta de grado Arquitecta | Acta N° 0318, CECAR, grado 24/09/2015, SNIES 8085 |
+| 5 | Certificado asistencia foro PH (Mitsubishi/La Lonja) | Medellín, abr 2026, 5 horas (no suma antecedentes: <8h) |
+| 6 | Diplomado Diseño Arquitectónico | CECAR, 100 horas, 2015 |
+| 7 | Acta de grado bachiller | Téc. Industrial (dibujo técnico), Antonio Prieto, 2009 |
+| 8 | Cert. Isaac & Durán | PRÁCTICA estudiantil 2014 (antes del título) → NO cuenta como exp. profesional |
+| 9 | Cert. laboral Civiles JC S.A.S | Arquitecta Residente, ~18 meses (2016) |
+| 10 | Cert. laboral REISA S.A. | Arquitecta Residente, 15/09/2017–31/12/2019 |
+| 11 | Cert. laboral Imagen REISA S.A. | Arquitecta + Admin. PH, 10/01/2020–30/05/2026 |
+| 12 | Cert. participación feria construcción | CECAR, 2011 |
+| 13 | Diploma bachiller | Confirma pág. 7 |
+
+- ✅ **Tarjeta profesional de Arquitecta CONFIRMADA (pág. 3)** — cumple el requisito de las convocatorias que la exigen (152, 175).
+- ⚠️ FALTA: certificado electoral · antecedentes (el operador dijo que los envía luego).
+- ⚠️ Posgrado: NO tiene (solo diplomado) → descarta nivel Asesor.
 
 ## 3. ⚠️ Punto a verificar (REGLA DE ORO)
 - Su carrera es **ARQUITECTURA**. Buscar en la matriz cargos que la acepten EXPRESAMENTE (varios Profesional la nombran
@@ -70,12 +87,16 @@ Los "sin experiencia" (111/129) son los más seguros si no acredita bien; pero n
 | **175** | Profesional Universitario 3PU-17 | $8.972.318 | 2 | Bogotá 2 | 2 años | Sí exige | ✅ — confirmar tarjeta |
 | **111** | Profesional Universitario 3PU-15 | $6.889.867 | 1 | Medellín 1 | No requiere | (no específica) | ✅ (la más segura; sin experiencia) |
 
-⚠️ Pendientes que definen la entrega final:
-- **Tarjeta profesional de Arquitecta (COPNIA/CPNAA):** 152 y 175 la exigen. Confirmar que la tenga y esté vigente.
-- **Traslado:** ninguno está en Sincelejo. La más cercana a su zona es **152 (Barranquilla, Atlántico)**. Si NO se traslada, no hay cargo profesional que acepte arquitectura en Sincelejo (solo la 288 Sustanciador nivel Técnico $5.42M llega a Sucre, por debajo de su piso y de nivel).
-- Faltan manuales 129, 204, 208, 231 (otros que aceptan arquitectura) por si se quieren más opciones.
+✅ **Tarjeta profesional de Arquitecta: CONFIRMADA (pág. 3, CPNAA, vigente)** → cumple el requisito de tarjeta de 152 y 175.
 
-## 7. Estado: PENDIENTE confirmar TRASLADO y TARJETA PROFESIONAL para cerrar. Opciones base: 152 (Barranquilla/Bogotá), 175 (Bogotá), 111 (Medellín, sin exp).
+⚠️ ÚNICO pendiente que define la entrega final:
+- **TRASLADO:** ninguno de los cargos profesionales que aceptan arquitectura está en Sincelejo. La más cercana a su zona
+  es **152 (Barranquilla, Atlántico)**; las demás en Bogotá (175) y Medellín (111). Si NO se traslada, no hay cargo
+  profesional de arquitectura en Sincelejo (lo único en Sucre es la 288, Sustanciador nivel Técnico $5.42M, por debajo de
+  su piso de $6M y no es profesional). CONFIRMAR con la aspirante si acepta traslado y a qué ciudades.
+- (Opcional) faltan manuales 129/204/208/231 para ampliar opciones, si se requieren.
+
+## 7. Estado: opciones profesionales confirmadas (cumple estudio+experiencia+tarjeta): **152** (Barranquilla 1 / Bogotá 1, $8.97M, 2 años exp), **175** (Bogotá 2, $8.97M, 2 años exp), **111** (Medellín 1, $6.89M, SIN experiencia). ÚNICO dato pendiente: confirmar si acepta traslado (ninguna está en Sincelejo).
 
 ## 3. Siguiente paso
 Tras leer la documentación: perfil + análisis de matriz.
