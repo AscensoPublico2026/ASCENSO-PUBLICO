@@ -66,4 +66,23 @@ transportes y vías"** (junto con estadística, ing. civil, ing. topográfica) +
 > Nota: se revisó toda la matriz; la 12-2026 es (hasta ahora) el único cargo Asesor que nombra expresamente su carrera.
 > Si el cliente quiere más opciones, buscar Profesionales que la nombren textualmente o que digan "y afines"/NBC.
 
-## 6. Estado: LISTO — opción segura confirmada = 12-2026 (Asesor $10.4M, Bogotá 2 plazas). Cumple 100%.
+## 6. Panorama completo de opciones (a solicitud del cliente: mostrarle "la ideal + otras que puede concursar")
+
+Barrido de toda la matriz + lectura de manuales 245/257/291/253/254. Resultado:
+
+| Nivel | Código | Cargo | Salario | Plazas (Bogotá) | Estado |
+|-------|--------|-------|--------:|:---:|--------|
+| 🟢 IDEAL | **12** | Asesor (1AS-19) | $10.403.514 | 2 (Bogotá 2) | **Cumple 100%** — menciona TEXTUAL "ingeniería de transportes y vías" + posgrado + 1 año exp. |
+| 🟢 ALTERNATIVA SEGURA | **291** | Secretario de procuraduría (4SP-12) | $5.846.100 | 19 (Bogotá 6) | **Cumple 100%** — estudio: solo "2 años de educación superior" (SIN área específica), NO requiere experiencia. |
+
+**Descartadas (zona gris / no encaja — REGLA DE ORO):**
+- 245, 257, 253, 254: piden educación superior "en áreas relacionadas con la especialidad de la dependencia", y esas
+  dependencias son Gestión Humana / Financiera / Investigaciones Especiales → ingeniería de transporte/vías NO es afín →
+  riesgo de rechazo. (257 además exige "curso específico".) NO ofrecer.
+- 39, 42 (Asesor): piden solo "ingeniería civil" (no nombran su carrera) → zona gris. NO ofrecer.
+
+**Conclusión para presentarle:** su opción que cumple su expectativa (Asesor, +$10M, Bogotá) es la **12**. Si quiere una
+opción de "entrada" más económica pero 100% segura para concursar, la **291** ($5.8M, no pide experiencia, solo 2 años de
+educación superior). Recordar: solo puede inscribirse en UNA.
+
+## 7. Estado: LISTO — 2 opciones seguras: 12 (Asesor $10.4M) y 291 (Secretario procuraduría $5.8M). Ambas cumple 100%.
