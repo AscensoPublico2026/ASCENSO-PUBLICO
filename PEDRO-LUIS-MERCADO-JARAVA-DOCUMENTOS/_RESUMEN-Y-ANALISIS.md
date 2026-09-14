@@ -22,7 +22,7 @@ La cédula va **de primera (01)**. Todo enderezado y comprimido a **menos de 2 M
 | 08 | **Cert. laboral GOBERNACIÓN DE CÓRDOBA** | Director Adm. de Planeación / Secretario del Interior / Gobernador (E), 2009–2011 — **con funciones** |
 | 09 | **Cert. laboral COMCAJA** | Subdirector Nivel Directivo Cat. II, 2007–2009 |
 | 10 | **Cert. laboral CÁMARA DE REPRESENTANTES** | Jefe División Financiera y Presupuesto, 2004–2007 — **con funciones** |
-| 11 | **Tarjeta Profesional** | Administrador de Empresas, Matrícula 38446 (versión legible) |
+| 11 | **Tarjeta Profesional** | Administrador de Empresas, Matrícula 38446 — **un solo PDF con el certificado formal (pág 1) + la tarjeta física, frente y reverso (pág 2)** |
 | 12 | **Certificado electoral** | Votación 2026 |
 
 ---
@@ -31,7 +31,7 @@ La cédula va **de primera (01)**. Todo enderezado y comprimido a **menos de 2 M
 
 - **Perfil sólido en el sector público** con más de 15 años de experiencia directiva: Contraloría (Contralor Provincial), Gobernación de Córdoba (Gobernador encargado en varios períodos), Cámara de Representantes (Jefe de División Financiera) y Alcaldía de Sahagún (Secretario de Tránsito). Casi todas las certificaciones **incluyen funciones**, lo cual es ideal para acreditar experiencia relacionada.
 - **Formación:** pregrado (Administración de Empresas) + 2 especializaciones (U. Rosario) + Maestría (UNIR 2025).
-- La **tarjeta profesional** venía dos veces en el paquete: una copia desgastada casi ilegible (descartada) y una legible (la incluida, doc 11).
+- **Tarjeta profesional (doc 11):** el paquete traía el certificado formal de la matrícula (nítido) y el carné físico plastificado (algo desgastado). No son duplicados sino dos formatos del mismo registro, así que los **uní en un solo PDF**: primero el certificado formal legible y después la tarjeta física (frente y reverso) como respaldo.
 - Se **descartó** la Hoja de Vida del SIGEP (formato interno, no es soporte).
 
 ## ⚠️ Lo que FALTA / a revisar
