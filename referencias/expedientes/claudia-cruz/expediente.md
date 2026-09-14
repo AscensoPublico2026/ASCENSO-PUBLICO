@@ -49,3 +49,35 @@ Tras leer la documentación: perfil + análisis de matriz.
 verificando CADA requisito contra el manual (estudio APROBADO vs. en curso, carrera aceptada, curso
 específico cubierto sin duda, dependencia/ubicación real, vías A/B completas). Nada de zonas grises.
 Entregar tabla con plazas TOTALES + desglose por ciudad de interés.
+
+
+---
+
+## 3. Preferencias confirmadas (WhatsApp, sep-2026)
+- Abogada con experiencia en rama judicial (NO en Procuraduría).
+- **Bogotá — NO quiere cambiar de ciudad.**
+- Quiere **Profesional Universitario SIN experiencia.**
+- Salario **$7.000.000 en adelante.**
+- Concursos: presentó uno hace mucho, no recuerda cuál.
+
+## 4. Aclaración honesta de salario (dada al operador)
+En la PGN NO existe un cargo profesional que sea "sin experiencia" Y pague ≥$7M al mismo tiempo:
+- Derecho SIN experiencia = grado 3PU-15 = **$6.889.867** (casi los $7M).
+- Derecho ≥$7M ($8.972.318) = TODOS exigen 2 años de experiencia.
+Decisión del operador (Julio César): **RUTA A** — sin experiencia, $6.889.867.
+
+## 5. OPCIONES ENTREGADAS — RUTA A (Profesional Universitario 3PU-15 · Derecho · SIN experiencia · Bogotá · $6.889.867)
+
+> Cumple 100% solo con título de abogada + tarjeta profesional vigente (verificado en manuales). Sin experiencia exigida.
+
+| Código | Cargo (Grado) | Salario | Plazas totales | En Bogotá | Proceso |
+|--------|---------------|--------:|:---:|:---:|---|
+| **103** | Profesional Universitario 3PU-15 | $6.889.867 | 20 | **18** | General |
+| **106** | Profesional Universitario 3PU-15 | $6.889.867 | 16 | **16** | Disciplinario |
+| **105** | Profesional Universitario 3PU-15 | $6.889.867 | 54 | 7 | Disciplinario |
+| **104** | Profesional Universitario 3PU-15 | $6.889.867 | 100 | 5 | Preventivo–Disciplinario |
+
+**Lectura:** las mejores para ella (que no se mueve de Bogotá) son **103 (18/20 en Bogotá)** y **106 (16/16 en Bogotá)** por concentración. La 104 tiene más plazas totales (100) pero solo 5 en Bogotá. Requisito de estudio: 103/105/106 piden SOLO derecho; la 104 acepta derecho entre varias carreras.
+Manuales leídos: 103, 104, 105, 106. Todos verificados: SIN experiencia + tarjeta.
+
+## 6. Estado: LISTO — Ruta A entregada (4 opciones verificadas, cumple al 100%).
