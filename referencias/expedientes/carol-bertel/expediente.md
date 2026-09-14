@@ -58,6 +58,25 @@
 Nota: como es arquitecta con ~10 años, cumpliría experiencia de todos; los Asesor requieren posgrado (confirmar si tiene).
 Los "sin experiencia" (111/129) son los más seguros si no acredita bien; pero no están en Sincelejo → depende de si acepta traslado.
 
+## 5. Preferencias confirmadas (sep-2026)
+- **Salario: desde $6.000.000.** · **Nivel: Profesional.** · Primera vez en concursos. · Antecedentes: los enviará luego.
+- Traslado: ⚠️ NO confirmado aún (vive en Sincelejo). Dato decisivo porque NINGÚN cargo profesional que acepte arquitectura está en Sincelejo.
+
+## 6. OPCIONES PROFESIONALES que aceptan Arquitectura y cumplen su piso ($6M) — manuales leídos
+
+| Código | Cargo (Grado) | Salario | Plazas totales | Sedes | Exp. | Tarjeta | ¿Cumple? |
+|--------|---------------|--------:|:---:|-------|:---:|:---:|:---:|
+| **152** | Profesional Universitario 3PU-17 | $8.972.318 | 2 | Bogotá 1, **Atlántico/Barranquilla 1** | 2 años | Sí exige | ✅ (tiene ~10 años exp) — confirmar tarjeta |
+| **175** | Profesional Universitario 3PU-17 | $8.972.318 | 2 | Bogotá 2 | 2 años | Sí exige | ✅ — confirmar tarjeta |
+| **111** | Profesional Universitario 3PU-15 | $6.889.867 | 1 | Medellín 1 | No requiere | (no específica) | ✅ (la más segura; sin experiencia) |
+
+⚠️ Pendientes que definen la entrega final:
+- **Tarjeta profesional de Arquitecta (COPNIA/CPNAA):** 152 y 175 la exigen. Confirmar que la tenga y esté vigente.
+- **Traslado:** ninguno está en Sincelejo. La más cercana a su zona es **152 (Barranquilla, Atlántico)**. Si NO se traslada, no hay cargo profesional que acepte arquitectura en Sincelejo (solo la 288 Sustanciador nivel Técnico $5.42M llega a Sucre, por debajo de su piso y de nivel).
+- Faltan manuales 129, 204, 208, 231 (otros que aceptan arquitectura) por si se quieren más opciones.
+
+## 7. Estado: PENDIENTE confirmar TRASLADO y TARJETA PROFESIONAL para cerrar. Opciones base: 152 (Barranquilla/Bogotá), 175 (Bogotá), 111 (Medellín, sin exp).
+
 ## 3. Siguiente paso
 Tras leer la documentación: perfil + análisis de matriz.
 🛑 REGLA DE ORO (ver PROCESO-ASESORIA-VACANTES.md, PASO 5): solo ofrecer cargos que cumple al 100%,
