@@ -6,19 +6,24 @@
 
 ---
 
-## 1. Datos generales (pendiente — se completa con la documentación y lo que cuente)
+## 1. Datos generales (según lo que contó — PENDIENTE verificar con documentos)
 
 | Campo | Dato |
 |-------|------|
 | Nombre | Catherine García (apellidos completos pendientes) |
 | C.C. | Pendiente |
-| Profesión / formación | Pendiente |
-| Ocupación actual | Pendiente |
-| Ciudad actual | Pendiente |
-| Salario aspirado | Pendiente |
-| Ciudades de interés | Pendiente |
-| ¿Dispuesta a cambiar de ciudad? | Pendiente |
-| ¿Concursos anteriores? | Pendiente |
+| Formación | **Tecnóloga en Electrónica** (no la ejerce) + **Ingeniera de Transporte y Vías** + **Especialización en Tránsito y Transporte** (grado dic/2015) |
+| Ocupación actual | **IDU** (Instituto de Desarrollo Urbano) — actual |
+| Experiencia (contada) | Interventoría Bogotá (~8 meses) · empresa privada Tunja (ingeniería, familiar) · **SDM** (Secretaría Distrital de Movilidad) hasta ~abr/2022 · **IDU** actual → ~9 años post-título (2015→hoy) |
+| Ciudad | **Bogotá — NO se traslada** |
+| Salario aspirado | **Desde $10.000.000** |
+| Nivel objetivo | **Asesor** |
+| ¿Concursos anteriores? | No (cargó mal documentos / estaba viajando) |
+
+## ⚠️ Punto a verificar (REGLA DE ORO)
+- Los cargos de **Asesor ($10.403.514)** exigen **posgrado** (lo tiene: especialización ✅) + experiencia (tiene ~9 años ✅).
+- CRÍTICO: confirmar en el manual de cada Asesor que **Ingeniería de Transporte y Vías** esté entre las **disciplinas académicas aceptadas** (los Asesor aceptan carreras puntuales). Solo ofrecer los que la incluyan sin ambigüedad.
+- Verificar tarjeta profesional de ingeniería (COPNIA) vigente.
 
 ## 2. Documentación — a la espera (PASO 3)
 Se entregó el enlace de carga. Cuando suba los soportes, se hará `git pull`, se leerá el 100%
