@@ -99,3 +99,18 @@ Opciones efectivamente presentadas:
   - 242 — Auxiliar administrativo — $4.966.461 — total 52, Bogotá 15.
 
 Pendiente (a solicitud): leer manuales 255 y 284 (criminalística grado alto, 1 plaza c/u) si se decide ampliar el Grupo 1.
+
+
+---
+
+## 10. ⚠️ CIERRE — inscripción realizada (sep-2026)
+
+La aspirante **decidió y ya se inscribió en la 285-2026** (Téc. Criminalística 4TC-17, $8.972.318, Bogotá 1).
+Advertencia registrada: el requisito de "curso específico en el área relacionada" para esa plaza (ubicada en
+**División de Gestión Humana / Talento Humano**) es una **zona gris** para su perfil (psicología en curso + cursos de
+investigación criminal/criminalística). La aceptación del curso específico depende del verificador de la PGN → **existe
+riesgo de no superar la verificación de requisitos.** Queda documentado para seguimiento.
+
+**Lección/Regla derivada (aplicar a TODOS los futuros aspirantes):** ver PROCESO-ASESORIA-VACANTES.md → PASO 5
+"REGLA DE ORO — SOLO OFRECER LO QUE CUMPLE SIN AMBIGÜEDAD". Solo se ofrecen cargos que el aspirante cumple al 100%,
+verificando cada requisito contra el manual (estudio aprobado vs. en curso, curso específico, dependencia real, vías A/B).

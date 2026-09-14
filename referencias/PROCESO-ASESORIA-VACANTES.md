@@ -59,6 +59,26 @@ Al recibir "ya cargué la documentación": `git pull origin main`.
 - Leer `Convocatorias_Procuraduria.xlsx` con **openpyxl** (18 columnas; ver prompt maestro).
 - Filtrar por: requisito de estudio que acepte su profesión, posgrado si aplica, experiencia real,
   y ciudades/departamentos de interés. Salario ≥ aspiración del aspirante.
+
+> 🛑 **REGLA DE ORO — SOLO OFRECER LO QUE CUMPLE SIN AMBIGÜEDAD (Julio César, sep-2026).**
+> El aspirante PAGA por la asesoría y se inscribe en UNA sola convocatoria. Si lo inscribimos en un cargo
+> cuyos requisitos no cumple con total claridad, NO pasa el primer filtro (verificación de requisitos) →
+> reclamo directo al negocio. Por eso:
+> 1. **Solo se le presentan cargos que cumple al 100%, sin condiciones ni "zonas grises".**
+> 2. **VERIFICAR CADA REQUISITO CONTRA EL MANUAL**, no solo la matriz. En especial:
+>    - **Estudio:** ¿el manual pide una carrera puntual? ¿"X años de educación superior APROBADOS" (no solo "cursando")?
+>      Un semestre EN CURSO no está aprobado; contar solo semestres/años ya terminados y certificados en NOTAS/historial.
+>    - **"Curso específico en el área relacionada":** si el cargo lo exige, confirmar que el aspirante tenga un curso
+>      que un verificador acepte SIN DUDA para esa dependencia. Si es dudoso → NO ofrecer ese cargo.
+>    - **Ubicación real / dependencia:** el NOMBRE del cargo puede engañar (p.ej. "Técnico en Criminalística" ubicado en
+>      Talento Humano). Leer la dependencia y las funciones reales antes de asumir afinidad.
+>    - **Experiencia y vías alternativas (A/B):** verificar que cumpla la vía COMPLETA (un "título técnico profesional"
+>      exige título terminado; un pregrado en curso NO equivale).
+> 3. Si un cargo tiene un requisito que depende del criterio del verificador → **marcarlo como NO seguro y NO incluirlo**
+>    en lo que se envía; a lo sumo mencionarlo aparte, con la advertencia explícita, y NUNCA como recomendación principal.
+> 4. Ante la duda entre "puede que sí" y "seguro que sí": **entregar solo los 'seguro que sí'.**
+> Antecedente que originó la regla: se ofreció la 285-2026 (Téc. Criminalística 4TC-17, ubicada en Talento Humano) a una
+> aspirante que estudia psicología (8º sem, sin curso específico claro para esa plaza); requisito ambiguo → riesgo de no pasar filtro.
 - Entregar **tabla ordenada de menor a mayor salario** desde su aspiración, escalando hasta el tope que cumple.
   Columnas: Código · Cargo (Grado) · Nivel · Salario · Plazas · Proceso · Ciudades de su interés.
 - Lectura estratégica honesta (más plazas = más probabilidad, pero con matiz; posgrado como diferenciador).
@@ -109,6 +129,7 @@ Entregar, en este orden:
 - [ ] Experiencia calculada desde el título, sin doble conteo.
 - [ ] Todos los datos (salario/plazas/requisitos) provienen de matriz/manual (0 inventados).
 - [ ] **Se tienen y leyeron los manuales de TODAS las opciones. Si faltaba alguno, se pidió y se esperó (no se entregó incompleto).**
+- [ ] **CADA cargo ofrecido lo cumple el aspirante al 100% SIN ambigüedad (estudio APROBADO no "en curso", carrera aceptada, "curso específico" cubierto sin duda, experiencia y vía A/B completas, dependencia real leída). Nada de "zonas grises" en lo que se envía.**
 - [ ] Tabla ordenada de menor a mayor salario desde la aspiración.
 - [ ] Guiones en formato nota de voz, textos de PDF sin emojis.
 - [ ] Un expediente = un aspirante (sin mezclar datos de otros).
