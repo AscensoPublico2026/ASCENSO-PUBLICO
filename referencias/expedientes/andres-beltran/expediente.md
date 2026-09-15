@@ -74,10 +74,25 @@
 
 Manuales: TODOS disponibles en biblioteca (199, 202, 147, 148, 104, 105, 01, 35, 85, 83, 87, 274).
 
-## 5. Estado: PERFIL COMPLETO. Falta 1 dato para cerrar: ¿el Máster (UNIR España) está CONVALIDADO ante el MEN?
-- Si SÍ → puede aspirar hasta $18M (Jefe División, Bogotá) / Asesor $10.4M en Montería.
-- Si NO → tope Profesional $9.646.860 (199) que cumple 100%.
-Tras confirmar, seguir flujo: verificar manuales de las finalistas → preguntar "¿generamos entregable?".
+## 5. DECISIÓN CONFIRMADA (sep-2026): Máster UNIR NO homologado → NO se cuenta como posgrado
+El aspirante confirmó que el Máster (UNIR España) **NO está homologado ante el MEN**. Por regla de oro NO se cuenta →
+se descartan Asesor y Jefe de División (exigen posgrado). Se trabaja SOLO nivel PROFESIONAL de Derecho, que cumple 100%.
+
+## 6. OPCIONES FINALES — todas VERIFICADAS CON MANUAL (cumple 100%: abogado + tarjeta 333055 + ~4 años exp)
+
+| Código | Cargo (Grado) | Salario | Plazas totales | Montería | Córdoba (prov.) | Exp. exigida |
+|--------|---------------|--------:|:---:|:---:|:---:|:---:|
+| **199** | Prof. Universitario (3PU-18) | **$9.646.860** | 97 | 2 | 2 | 3 años ✅ (tiene ~4) |
+| 202 | Prof. Universitario (3PU-18) | $9.646.860 | 45 | 2 | 1 | 3 años ✅ |
+| 147 | Prof. Universitario (3PU-17) | $8.972.318 | 148 | 3 | 1 | 2 años ✅ |
+| 148 | Prof. Universitario (3PU-17) | $8.972.318 | 34 | 2 | 0 | 2 años ✅ |
+| 104 | Prof. Universitario (3PU-15) | $6.889.867 | 100 | 1 | 1 | No requiere ✅ |
+| 105 | Prof. Universitario (3PU-15) | $6.889.867 | 54 | 3 | 1 | No requiere ✅ |
+
+Todas piden Derecho + tarjeta (los tiene) y exp que cumple con ~4 años. TODAS con plazas en Córdoba (Montería/provincias) → no necesita trasladarse.
+**Tope en su ciudad: 199 ($9.646.860, 3PU-18).** Si acepta traslado (dijo que sí, según salario), hay más plazas de estos mismos cargos en otras ciudades.
+
+## 7. Estado: TODO VERIFICADO CON MANUAL. LISTO para generar entregable tras OK del operador.
 
 ## 3. Flujo antes del entregable (REGLA Julio César, sep-2026)
 1) Buscar opciones en matriz → 2) revisar/leer manuales que ya se tienen → 3) verificar cumplimiento 100%
