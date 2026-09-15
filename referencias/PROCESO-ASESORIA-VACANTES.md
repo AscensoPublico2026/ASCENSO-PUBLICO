@@ -96,6 +96,16 @@ Al recibir "ya cargué la documentación": `git pull origin main`.
 
 ### PASO 7 — Cruce manuales↔perfil + PAQUETE PARA WHATSAPP
 
+> 🔄 **FLUJO OBLIGATORIO ANTES DE CUALQUIER ENTREGABLE (Julio César, sep-2026) — para NO rehacer guiones/tablas:**
+> El orden SIEMPRE es: (1) buscar opciones en la matriz; (2) revisar qué manuales YA se tienen en la biblioteca y LEERLOS;
+> (3) VERIFICAR contra cada manual que el aspirante cumple 100% (estudio, experiencia, posgrado, tarjeta, sede/ciudad);
+> (4) si falta algún manual de una opción candidata, PEDIRLO al operador y ESPERAR — sin armar nada aún; (5) cuando TODAS
+> las opciones estén verificadas y ordenadas de forma DEFINITIVA, PREGUNTAR al operador: "¿Procedemos a generar el
+> entregable?"; (6) solo con el OK, generar el paquete final (tabla + guion + análisis).
+> Motivo: si se entrega el guion antes de verificar todos los manuales, al llegar los faltantes puede cambiar el orden o
+> descartarse una opción, obligando a rehacer guion y tablas. NUNCA entregar el paquete final antes de validar todo y
+> pedir confirmación.
+
 > 🚫 **REGLA OBLIGATORIA (Julio César, sep-2026): NO entregar guiones ni análisis final si falta algún manual.**
 > Antes de generar la tabla final y los guiones, verificar que se tiene el manual de **TODAS** las convocatorias
 > que le sirven al aspirante. Si falta alguno (no está en `referencias/manuales-funciones/`), **PEDIRLO al operador

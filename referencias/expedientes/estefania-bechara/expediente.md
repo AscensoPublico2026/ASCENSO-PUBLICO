@@ -73,6 +73,23 @@
 → Todos aceptan derecho + posgrado y ella los cumple. El **tope $18M (Jefe de División)** está solo en Bogotá.
 → Opción intermedia atractiva en la Costa: **83 ($13.07M, Atlántico/N. Santander)** y **85 ($15.86M, Atlántico/Bogotá)** — Barranquilla queda relativamente cerca.
 
-⚠️ Manuales pendientes de leer para cerrar sedes exactas: 83, 73 (los demás verificados: 01, 35, 85, 87, 274).
+### ✅ TODAS las opciones verificadas con MANUAL (sep-2026)
+| Código | Cargo (Grado) | Salario | Estudio (manual) | Exp. | Sedes (manual) | ¿Cumple? |
+|--------|---------------|--------:|------------------|:---:|----------------|:---:|
+| **83** | Asesor (1AS-22) | **$13.074.900** | derecho (+ otras) + posgrado + tarjeta | 2.5 años | **Montería 1**, Barranquilla 1, Cúcuta 1 | ✅ **¡tiene plaza en MONTERÍA!** |
+| 35 | Asesor (1AS-19) | $10.403.514 | derecho + posgrado | 1 año | Montería 3 (total 157) | ✅ |
+| 01 | Asesor (1AS-19) | $10.403.514 | derecho + posgrado | 1 año | Montería 2 (total 139) | ✅ |
+| 87 | Jefe de División (2JD-22) | $18.073.001 | derecho (+ otras) + posgrado | 2.5 años | Bogotá 1 | ✅ |
+| 274 | Jefe de División (2JD-22) | $18.073.001 | derecho (+ otras) + posgrado | 2.5 años | Bogotá 1 | ✅ |
+| 85 | Asesor (1AS-24) | $15.863.546 | derecho (+ otras) + posgrado | 4 años | Atlántico / Bogotá | ✅ |
+| 73 | Asesor (1AS-21) | $12.150.564 | derecho + posgrado | 2 años | Barranquilla 2, Bogotá 4 | ✅ |
 
-## 5. Estado: opciones listas — Montería tope Asesor $10.4M (01/35, con plazas en Montería); traslado abre $18M (87/274 Bogotá), $15.86M (85), $13.07M (83). Confirmar traslado con la aspirante.
+**HALLAZGO CLAVE:** la **83 ($13.074.900) tiene 1 plaza en MONTERÍA** → es el MEJOR salario que puede tomar SIN trasladarse
+(supera al Asesor $10.4M que era el tope aparente en su ciudad). Cumple: derecho + maestría + 2.5 años exp (tiene ~8-9) + tarjeta.
+
+## 5. RESUMEN DE OPCIONES (todas verificadas con manual, cumple 100%)
+- **En Montería (sin trasladarse):** 🥇 **83 — Asesor $13.074.900 (1 plaza Montería)** ← mejor sueldo en su ciudad. Luego 35 ($10.4M, 3 plazas) y 01 ($10.4M, 2 plazas).
+- **Con traslado (mejor sueldo del concurso):** 87/274 — Jefe de División **$18.073.001** (Bogotá) · 85 — Asesor $15.863.546 (Atlántico/Bogotá) · 73 — Asesor $12.150.564 (Barranquilla/Bogotá).
+- Todas aceptan derecho + posgrado + tarjeta; ella supera experiencia en todas.
+
+## 6. Estado: TODO VERIFICADO CON MANUAL. Listo para generar entregable (tabla+guion+análisis) tras OK del operador. Falta solo confirmar con la aspirante si acepta traslado (define si va por 83 en Montería o sube a $18M/$15.8M fuera).
