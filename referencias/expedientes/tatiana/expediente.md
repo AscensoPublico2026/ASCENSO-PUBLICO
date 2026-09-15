@@ -47,7 +47,20 @@
 | **236** | Secretario ejecutivo (5SJ-12) | $5.846.100 | Bachiller + curso ofimática/gestión documental | 4 | **Valle de Aburrá/Medellín 1**, Cali 1 | ✅ (tiene curso Gestión Documental + 1 año exp) |
 | **260** | Sustanciador (4SU-08) | $4.183.546 | Diploma de bachiller | 38 | **Medellín 1, Barranquilla 1** (+ mucho volumen país) | ✅ (bachiller + 1 año exp) |
 
-⚠️ Falta verificar la **235** (Secretario ejecutivo 5SJ-13, $6.334.864, Barranquilla) — mismo requisito que 236 (bachiller+curso),
-pagaría más y está en Barranquilla. Pedir manual 235 (y 91 Conductor si aplica). NO tengo esos manuales aún.
+### 235 — LEÍDA Y DESCARTADA por ciudad
+La 235 (Secretario ejecutivo 5SJ-13, $6.334.864) pide bachiller técnico comercial O bachiller + curso ofimática/gestión
+documental + 2 años exp (Tatiana lo cumpliría). PERO el manual muestra plazas SOLO en **Bogotá 4, Valledupar 1, Zipaquirá 1**
+→ NINGUNA en Cartagena/Barranquilla/Medellín (la matriz decía "Barranquilla" pero el manual no lo confirma). DESCARTADA por ubicación.
 
-## 6. Estado: casi listo. FALTA leer manual 235 (Barranquilla, $6.33M, bachiller+curso — le serviría y paga más) antes de entregable.
+## 6. OPCIONES FINALES — verificadas con manual (cumple 100%: bachiller + curso + ~8-9 años exp)
+| Código | Cargo (Grado) | Salario | Total | En sus ciudades | Requisito |
+|--------|---------------|--------:|:---:|-----------------|-----------|
+| **236** | Secretario ejecutivo (5SJ-12) | **$5.846.100** | 4 | **Medellín 1**, Cali 1 | bachiller + curso ofimática/gestión doc + 1 año exp ✅ |
+| **244** | Auxiliar administrativo (5AM-08) | $4.183.546 | 6 | **Cartagena 1**, Antioquia 1 | bachiller + 1 año exp ✅ |
+| **260** | Sustanciador (4SU-08) | $4.183.546 | 38 | **Medellín 1, Barranquilla 1** (+ vol. país) | bachiller + 1 año exp ✅ |
+
+- Mejor salario en su zona: **236 ($5.846.100, Medellín)** — aprovecha su curso de Gestión Documental.
+- En Cartagena (su ciudad top): **244 ($4.183.546)**.
+- Más volumen (más probabilidad): **260** (38 plazas, con Medellín y Barranquilla).
+
+## 7. Estado: TODO VERIFICADO CON MANUAL. Listo para generar entregable tras OK del operador.
