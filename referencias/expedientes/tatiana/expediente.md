@@ -27,8 +27,12 @@
 ## 3. Documentación leída (100%) — perfil verificado
 - **Tatiana María Acosta Chico**, C.C. **1.123.622.519** de San Andrés Islas.
 - **Bachiller Académico** (Cartagena, 2004).
-- **Técnico en Sistemas — SENA (2017).** ⚠️ Formación titulada de nivel TÉCNICO (NO es técnico profesional ni tecnólogo)
-  → en la PGN NO cuenta como "educación superior". Solo sirve para cargos que pidan bachiller/bachiller+curso.
+- **Técnico en Sistemas — SENA (2017).** ⚠️ CONFIRMADO leyendo el título: es programa de **"Formación Profesional Integral"
+  bajo la Ley 119 de 1994**, título de **"Técnico"** (NO "Tecnólogo"). **NO tiene registro SNIES** (el "No. REGISTRO 27354540"
+  es interno del SENA, no SNIES). → Es **formación titulada para el TRABAJO, NO educación superior.** La propia aspirante lo
+  advirtió ("no se lo valían como técnico porque no tenía SNIES") y es CORRECTO. NO cumple cargos que pidan "educación superior"
+  ni "título de formación técnica profesional/tecnológica". Solo sirve para cargos de **bachiller / bachiller + curso**.
+  (Nota: el "Tecnólogo" del SENA sí es educación superior y sí tiene SNIES; el "Técnico" NO.)
 - Cursos: Gestión Documental, Atención y Servicio al Cliente, Inglés, EDL/CNSC, DIAN, Creole.
 - **Experiencia ADMINISTRATIVA en el Estado (~8-9 años):**
   - Migración Colombia — Secretario Ejecutivo 4210-15 (Asistencial): 14/11/2017 – 16/01/2022 (~4a 2m)
