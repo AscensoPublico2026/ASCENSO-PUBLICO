@@ -67,4 +67,22 @@ documental + 2 años exp (Tatiana lo cumpliría). PERO el manual muestra plazas 
 - En Cartagena (su ciudad top): **244 ($4.183.546)**.
 - Más volumen (más probabilidad): **260** (38 plazas, con Medellín y Barranquilla).
 
-## 7. Estado: TODO VERIFICADO CON MANUAL. Listo para generar entregable tras OK del operador.
+## 7. BARRIDO NACIONAL (a solicitud): opciones que pagan MÁS o con más vacantes
+
+Verificado que la vía B de "Secretario ejecutivo" pide **bachiller + curso en ofimática/gestión documental/archivo** →
+Tatiana lo cumple (tiene curso de Gestión Documental). PERO las mejor pagadas NO están en sus ciudades:
+
+| Código | Cargo (Grado) | Salario | Plazas | Ciudad | Exp. | ¿En sus ciudades? |
+|--------|---------------|--------:|:---:|--------|:---:|:---:|
+| 99 | Secretario ejecutivo (5SJ-15) | **$6.889.867** | 3 | Bucaramanga | 3 años | ❌ no |
+| 235 | Secretario ejecutivo (5SJ-13) | $6.334.864 | 6 | Bogotá/Valledupar/Zipaquirá | 2 años | ❌ no |
+| 280 | Secretario ejecutivo (5SJ-12) | $5.846.100 | 1 | (verificar manual) | 1 año | ❓ |
+| 237 | Secretario (5SE-11) | $5.424.740 | 7 | Cúcuta | No requiere | ❌ no |
+| **241** | Oficinista (5OF-06) | $3.456.786 | **132** | muchas ciudades | 1 año | (más volumen del país) |
+
+**Conclusión:** SÍ existen cargos que pagan más (hasta $6.89M) y que ella cumpliría por estudio+experiencia, PERO están
+en Bucaramanga/Bogotá/Valledupar/Cúcuta, NO en Cartagena/Barranquilla/Medellín. Para volumen máximo, la 241 (Oficinista, 132 plazas)
+pero es de menor salario ($3.45M). → PREGUNTAR a la aspirante si ampliaría a esas otras ciudades; si no, se queda con 236/244/260.
+Manuales pendientes si se amplía: 99, 280, 237, 241.
+
+## 8. Estado: opciones en sus ciudades listas (236/244/260). Barrido nacional hecho: hay mejor salario fuera (99 Bucaramanga $6.89M, 235 $6.33M). Confirmar con aspirante si amplía ciudades.
