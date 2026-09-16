@@ -91,6 +91,21 @@ Cali. Los cargos de mayor salario ($8.97M+) exigen 2-3 años de experiencia → 
 
 ## 8. Estado: LISTO — opciones seguras 104 y 105 (Prof. Universitario $6.89M, Cali). Cumple 100% sin experiencia.
 
+## 8.bis DOCUMENTOS ADICIONALES (sep-2026) — 3 certificaciones laborales (nombre+cédula verificados: CHRISTIAN ANTONIO SAMUDIO MERCADO, C.C. 6.391.526 de Palmira ✅)
+
+| Empresa | Cargo certificado | Desde | Hasta |
+|---------|-------------------|-------|-------|
+| SERMEQS S.A.S | **Asesor Comercial Técnico Quirúrgico y Auditor Interno** | 13/02/2017 | 31/12/2023 |
+| SURGICAL SUPPORT SAS | **Instrumentador Quirúrgico** | 01/05/2023 | (jun-2024) |
+| SMQS Colombia | **Instrumentador Soporte Quirúrgico y Asesor Jurídico** | 01/06/2024 | (feb-2025, "hasta la fecha") |
+
+### ⚠️ ANÁLISIS DE EXPERIENCIA (regla de oro — decisivo)
+- **Grado de ABOGADO: 06/09/2024.** La "experiencia profesional" para cargos de abogado (147/199/35/01) normalmente se cuenta a partir del grado del título con el que se concursa.
+- **Escenario A (estricto — experiencia como abogado, posterior al grado):** solo SMQS desde 06/09/2024 = **~2 años**, pero es un cargo MIXTO ("Instrumentador Soporte Quirúrgico y Asesor Jurídico"), no 100% jurídico → **ZONA GRIS**, no seguro para acreditar "experiencia profesional" de abogado.
+- **Escenario B (amplio — toda la experiencia profesional, sin exigir que sea jurídica):** unión sin solapes = **~9,6 años**. PERO casi toda es en rol comercial/quirúrgico/auditoría en salud (NO jurídico) y anterior al grado de abogado.
+- Los cargos 147 ($8.97M, 2 años), 199 ($9.64M, 3 años), 35/01 (Asesor $10.4M, 1 año + posgrado) piden "experiencia PROFESIONAL o docente". Si la PGN acepta experiencia profesional de CUALQUIER profesión (él es instrumentador quirúrgico desde 2009 y especialista) contada como profesional, tendría de sobra. Si exige que sea afín al derecho/posterior al grado de abogado, NO alcanza con seguridad.
+- **CONCLUSIÓN regla de oro:** las certificaciones NO despejan la zona gris para los cargos de mejor salario. Lo 100% seguro sigue siendo 104/105 (No requiere experiencia). Los de mayor salario quedan como "posibles con salvedad" y habría que confirmar el criterio de la PGN sobre experiencia profesional pre-grado / no jurídica.
+
 ## 9. ENTREGABLE GENERADO (sep-2026, nueva estructura 8 bloques sin emojis, por N° de concurso)
 - Verificado en manual: 104 (No requiere exp; Valle = 6 plazas: Cali 2, Buga 1, Cartago 1, Valle 2; total 100) y 105 (No requiere exp; Valle = 4: Cali 2, Valle 2; total 54). Ambos $6.889.867.
 - Recomendada: **104-2026** (más plazas en el Valle). 105 como 2ª opción (foco Cali).
