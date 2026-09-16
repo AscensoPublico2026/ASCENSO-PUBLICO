@@ -128,6 +128,16 @@ Revisadas las sedes reales: la 257 (Téc. Investigador), 245 (Téc. Admin) y 285
   - **234-2026 Sustanciador 4SU-11** ($5.42M-$6.36M): 1 año educ. superior derecho ✅ + **1,5 años exp relacionada** → su mejor opción SI certifica la experiencia policial.
 > ⚠️ Casi todas piden algo de experiencia relacionada → por eso es CLAVE que aporte la certificación de tiempo de servicio de la Policía. Con ella, el 234 (mejor salario) queda 100%.
 
+## 📤 ENTREGABLE GENERADO (sep-2026) — opciones + documento faltante
+Se le presentan 4 opciones en Manizales/eje cafetero (todas cumple el ESTUDIO; falta acreditar experiencia):
+| Concurso | Cargo | Salario | Zona (Manizales/cafetero) | Requisito |
+|----------|-------|---------|---------------------------|-----------|
+| **234-2026** (recomendada) | Sustanciador | $5.424.740 | Manizales 2, Pereira 2, Armenia 2 | 1 año educ. sup. derecho ✅ + 1,5 años exp relacionada |
+| 242-2026 | Aux Administrativo | $4.966.461 | Manizales 1, Pereira 1, Armenia 2 | 1 año educ. sup. derecho ✅ + 1 año exp |
+| 241-2026 | Oficinista | $3.456.786 | Manizales 1, Caldas 1, Pereira 1, Armenia 1 | bachillerato ✅ + 1 año exp |
+| 260-2026 | Sustanciador | $4.183.546 | Manizales 1 | bachiller ✅ + 1 año exp |
+> DOCUMENTO FALTANTE solicitado en el guion: **certificación de tiempo de servicio de la Policía Nacional** (Talento Humano/Dir. Personal, con fechas y cargos) para acreditar la experiencia relacionada. Con eso el 234 queda 100%.
+
 ## ⚠️ RIESGOS / PENDIENTES
 1. 🔴 **NO es abogado** — descarta todos los cargos profesionales. Confirmar con él si el grado está próximo (¿le falta preparatorios/judicatura/grado?). Si se gradúa ANTES del cierre (18 sep), se le abre el nivel profesional.
 2. 🔴 **Cursos SIN certificado físico** — están en la HV institucional pero debe SOLICITARLOS a la Policía. **Prioridad de solicitud:** seminarios de Investigación Criminal (SPOA), Redacción de Informes, Código de Policía, DDHH, Integridad/Anticorrupción, cursos de datos y ofimática. NO gastar en los operativos (pistola, COR, etc.).
