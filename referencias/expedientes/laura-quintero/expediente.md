@@ -36,7 +36,25 @@
 - La **104** es la de mas plazas en Bucaramanga (4) y a nivel nacional (109) → recomendada por probabilidad.
 - ❌ Descartados: cargos de abogado que exigen experiencia (147/199/Asesor/Proc Judicial) — no tiene experiencia post-titulo. Procurador Judicial I exige 5 años → NO.
 
-## 4. Pendiente
-- Confirmar a que convocatoria se inscribio (la de 1 vacante) para no repetirla y para el PQRS.
-- Pedir inscritos de 103/104/105 en Bucaramanga (para recomendar por probabilidad).
+## 4. Convocatoria a la que YA se inscribio (identificada)
+Dijo "Sustanciador judicial, 1 vacante". Cargos Sustanciador con Bucaramanga:
+| Concurso | Grado | Salario | Plazas Bucaramanga | Estudio |
+|----------|-------|---------|--------------------|---------|
+| 234 | 4SU-11 | $5.424.740 | 4 | 1 año educ. superior en derecho |
+| **260** | **4SU-08** | **$4.183.546** | **1** ← coincide con "1 vacante" | Diploma de bachiller |
+| 288 | 4SU-11 | $5.424.740 | 2 | 1 año educ. superior admin |
+➡️ Muy probablemente se inscribio a la **260-2026** (unica Sustanciador con 1 sola plaza en Bucaramanga). Confirmar con ella.
+⚠️ Nota: la 260 solo pide BACHILLER y paga $4.18M → para una ABOGADA es quedarse corta. Con el PQRS le conviene MUCHO mas apuntar a Profesional Universitario en derecho ($6.89M).
+
+## 5. RECOMENDACION si el PQRS la habilita: subir a Profesional Universitario (derecho, sin experiencia)
+| Concurso | Salario | Plazas Bucaramanga | vs la 260 |
+|----------|---------|--------------------|-----------|
+| **104** | $6.889.867 | 4 | +$2,7M y 4x plazas |
+| **105** | $6.889.867 | 3 | +$2,7M |
+| **103** | $6.889.867 | 1 | +$2,7M |
+Todas: derecho + NO exigen experiencia (ideal, se graduo mar-2026) + Bucaramanga. La 104 es la mas fuerte (4 plazas Buc).
+
+## 6. Pendiente
+- Confirmar con ella que la inscrita fue la 260.
+- Pedir inscritos de 103/104/105 en Bucaramanga (recomendar por probabilidad inscritos/plaza).
 - Todo depende de que el PQRS la habilite a re-inscribirse.
