@@ -105,4 +105,27 @@ Hallazgos que confirman/completan el perfil:
 2. ¿Acepta traslado? (los Prof. contaduria sin experiencia no estan en Villavicencio). Ella dijo: cambia de ciudad SI salario alto y cumple.
 3. Alternativa sin tarjeta: cargos de nivel TECNICO/administrativo que acepten "años de educacion superior en contaduria/afines" SIN exigir tarjeta profesional (ej. Tecnico administrativo/Sustanciador que pidan educ superior generica) — verificar cuales tienen Villavicencio/Meta y no exigen tarjeta.
 
-## 10. Flujo: barrido COMPLETO por profesion, verificar manual, solo 100%, guion 8 bloques sin emojis por N concurso.
+## 10. DECISION (Julio Cesar): tarjeta NO sale antes del 18/sep → descartar cargos que exijan tarjeta.
+Estrategia: explicarle la situacion + opciones en Villavicencio/Meta (nivel tecnico, sin tarjeta) + opciones fuera (traslado) aunque sean de menor valor pero que SI pueda aplicar. Entregar calidad.
+
+### CLAVE: su titulo de CONTADORA = "años de educacion superior" de sobra (3+ años) → cumple cargos TECNICOS que piden "1/2/3 años educacion superior en areas relacionadas". Estos NO exigen tarjeta (la tarjeta solo la exigen los "Profesional Universitario").
+
+### Opciones TECNICAS/ADMIN sin tarjeta (barrido verificado):
+| Concurso | Cargo | Salario | Exp | Villavo/Meta | Nota |
+|----------|-------|---------|-----|--------------|------|
+| **290** | Secretario Procuraduria 4SP-11 | $5.424.740 | 1,5 años relacionada | **SI (Villavicencio)** | ⚠️ FALTA MANUAL — pedir. Pide "1 año educ sup relacionada con dependencia" + 1,5 años exp. Ella tiene ~6 años como aux contable (¿cuenta como relacionada? verificar dependencia) |
+| 288 | Sustanciador 4SU-11 | $5.424.740 | 1,5 años | NO (manual sin Villavo) | acepta admin |
+| 289 | Secretario Procuraduria 4SP-10 | $4.966.461 | 1 año relacionada | NO | |
+| 262 | Sustanciador 4SU-10 | $4.966.461 | 1 año relacionada | NO (El Banco/Garzon/Ipiales) | |
+| 253 | Tecnico administrativo 4TM-12 | $5.846.100 | **No requiere** | NO (verificar sede) | 2 años educ superior relacionada |
+| 243 | Aux administrativo 5AM-09 | $4.565.448 | **No requiere** | NO (Armenia/Ibague/Cucuta/Cali/Tunja) | contaduria SI, sin exp |
+
+- ⚠️ Sobre EXPERIENCIA de los tecnicos: piden "experiencia RELACIONADA con las funciones". Su experiencia como auxiliar contable ES relacionada con funciones administrativas/contables → probablemente SI cuenta (a diferencia de cargos que piden experiencia PROFESIONAL de contador). Verificar por cargo.
+- ⚠️ Sobre "areas relacionadas con la especialidad de la dependencia": zona gris segun la dependencia. Los que dicen solo "X años educacion superior" (sin atar a dependencia) son mas seguros.
+
+### PENDIENTE para cerrar entregable de calidad:
+1. PEDIR MANUAL 290 (unico con Villavicencio) — verificar estudio/experiencia/tarjeta exactos.
+2. Definir opciones FUERA de Villavicencio (243 Aux admin sin exp - Tunja/Ibague/Cali; 253 Tec admin sin exp) como plan B con traslado.
+3. Confirmar que su experiencia de auxiliar contable cuenta como "relacionada" en los que piden experiencia.
+
+## 11. Flujo: barrido COMPLETO por profesion, verificar manual, solo 100%, guion 8 bloques sin emojis por N concurso.
