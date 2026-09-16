@@ -107,8 +107,25 @@ Barrido completo de cargos que aceptan ARQUITECTURA en toda la matriz:
   - **204/208/231-2026** Prof. Univ. 3PU-18 $9.646.860 — 3 años exp — aceptan arquitectura (verificar manual, FALTAN 204/208/231) — Bogotá/Antioquia. Carol cumple los 3 años (tiene ~10).
 - **Asesor 10/30/37** ($10.4M): exigen POSGRADO → Carol NO tiene (solo diplomado). Descartados.
 - **288** Sustanciador (Técnico $5.42M): tiene Sincelejo pero es < $6M y NO es profesional. Fuera del objetivo.
-> Manuales FALTANTES para ampliar al tope salarial ($9.64M): **204, 208, 231** (Prof 3PU-18).
-> ⚠️ DATO A CONFIRMAR CON CAROL: TRASLADO. Ninguna profesional de arquitectura está en Sincelejo. La más cercana: 152 (Barranquilla).
+## 9. TOPE SALARIAL VERIFICADO (sep-2026) — manuales 204/208/231 leídos ✅
+Los 3 aceptan ARQUITECTURA expresamente + exigen tarjeta profesional (Carol la tiene ✅) + 3 años de experiencia (tiene ~10 ✅) = **$9.646.860**:
+| Concurso | Cargo | Salario | Exp | Sede |
+|----------|-------|---------|-----|------|
+| **204-2026** | Prof. Universitario 3PU-18 | $9.646.860 | 3 años | Bogotá 1 |
+| **208-2026** | Prof. Universitario 3PU-18 | $9.646.860 | 3 años | Antioquia/Medellín 1 |
+| **231-2026** | Prof. Universitario 3PU-18 | $9.646.860 | 3 años | Bogotá 1 |
+> Todas Bogotá/Medellín (ninguna en la costa). Carol cumple 100% las 3.
+
+### RESUMEN FINAL de opciones (todas cumple 100%, ninguna en Sincelejo → requiere traslado):
+| Concurso | Cargo | Salario | Exp | Sedes |
+|----------|-------|---------|-----|-------|
+| 204 / 231 | Prof. Universitario 3PU-18 | $9.646.860 | 3 años | Bogotá |
+| 208 | Prof. Universitario 3PU-18 | $9.646.860 | 3 años | Medellín |
+| 152 | Prof. Universitario 3PU-17 | $8.972.318 | 2 años | **Barranquilla 1**, Bogotá 1 |
+| 175 | Prof. Universitario 3PU-17 | $8.972.318 | 2 años | Bogotá 2 |
+| 111 | Prof. Universitario 3PU-15 | $6.889.867 | No requiere | Medellín 1 |
+> La única en la COSTA (más cerca de Sincelejo) es la **152 (Barranquilla)**. El tope salarial ($9.64M) solo en Bogotá/Medellín.
+> ⚠️ TRASLADO: se explica en el guion (es tarde para preguntarle); ella responde a qué ciudad aceptaría.
 
 ## 3. Siguiente paso
 Tras leer la documentación: perfil + análisis de matriz.
