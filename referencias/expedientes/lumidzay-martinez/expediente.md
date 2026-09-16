@@ -78,4 +78,31 @@
   2. ¿Ya tiene el TÍTULO de contadora en firme (acta de grado)? Confirmar fecha.
 - ➡️ NO ofrecer aún cargos con tarjeta como "seguros". Pendiente aclarar tarjeta/título con ella y pedir manuales faltantes (290, y cargos de contaduría sin tarjeta si existieran).
 
-## 8. Flujo: barrido COMPLETO por profesion, verificar manual, solo 100%, guion 8 bloques sin emojis por N concurso.
+## 8. HOJA DE VIDA REVISADA A FONDO (10 imagenes embebidas leidas 100%)
+Hallazgos que confirman/completan el perfil:
+- ✅ **CONTADORA PUBLICA — U. Cooperativa de Colombia (Villavicencio), grado 26/09/2025** (acta 10-6740-2025, SNIES 6358, diploma registro 0639). TITULO EN FIRME. Es contadora titulada.
+- Certificado de notas Contaduria (promedio 4.01).
+- Tecnico SENA en Contabilizacion de Operaciones (grado 15/06/2021) + certificado notas.
+- Tecnico Laboral ITEC Auxiliar Contable y Administrativo (2019) = ETDH, NO educacion superior.
+- CODALTEC (feb-ago 2020) fue ETAPA PRODUCTIVA como APRENDIZ SENA (practica), no empleo formal.
+- La Nieve: Auxiliar Contable desde 03/02/2026 (vigente).
+- ❌ La TARJETA PROFESIONAL NO aparece expedida en la HV — solo la constancia de TRAMITE (radicada 31/08/2026).
+
+### Experiencia real
+- Como CONTADORA titulada (post 26/09/2025): solo ~8 meses (La Nieve), y en cargo AUXILIAR.
+- Todo lo demas (Fenix 2020-2025, CODALTEC) es previo al grado y como auxiliar/aprendiz.
+- ➡️ NO acredita experiencia PROFESIONAL como contadora (para cargos que piden 1-3 años profesional).
+
+## 9. ⚠️ CONCLUSION DEFINITIVA (regla de oro)
+- ✅ Es Contadora titulada (grado sep-2025) → cumple el ESTUDIO de cargos de contaduria.
+- ❌ TARJETA PROFESIONAL: solo en tramite. Los cargos de contaduria exigen "tarjeta profesional en los casos reglamentados por la ley" y contaduria ES reglamentada (Ley 43/1990) → HOY riesgo si la exigen. DEPENDE de que salga antes del cierre (18/sep) — MUY justo (radicada 31/ago).
+- ❌ Sin experiencia profesional → descartados los que piden 1-3 años (146 Villavicencio $8.97M, Asesores, etc.).
+- OPCION natural: Profesional Universitario contaduria SIN experiencia ($6.889.867: 112/115/139...) PERO (a) exigen tarjeta (en tramite) y (b) NINGUNO tiene sede en Villavicencio/Meta (tocaria traslado).
+- En Villavicencio/Meta NO hay cargo profesional de contaduria sin experiencia con sede local.
+
+### QUE HAY QUE DEFINIR / PREGUNTAR (para no fallar):
+1. ¿La tarjeta profesional saldra antes del 18/sep? (define si puede a los Prof. Universitario de contaduria).
+2. ¿Acepta traslado? (los Prof. contaduria sin experiencia no estan en Villavicencio). Ella dijo: cambia de ciudad SI salario alto y cumple.
+3. Alternativa sin tarjeta: cargos de nivel TECNICO/administrativo que acepten "años de educacion superior en contaduria/afines" SIN exigir tarjeta profesional (ej. Tecnico administrativo/Sustanciador que pidan educ superior generica) — verificar cuales tienen Villavicencio/Meta y no exigen tarjeta.
+
+## 10. Flujo: barrido COMPLETO por profesion, verificar manual, solo 100%, guion 8 bloques sin emojis por N concurso.
