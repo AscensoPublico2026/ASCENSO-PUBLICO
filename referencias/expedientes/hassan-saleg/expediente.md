@@ -18,6 +18,14 @@
 | Braco Company SAS | Ingeniero Residente de Obra | 29/12/2025 | actualidad |
 > ⚠️ Como INGENIERO (posterior al grado 29/11/2025) solo tiene ~9 meses. El periodo de "Auxiliar de Ing Civil" es previo al grado. Por eso NO alcanza 2-3 años de experiencia profesional como ingeniero → confirma que su ruta correcta es la 104 (sin experiencia).
 
+## ENTREGABLE GENERADO (sep-2026) — regla: dar lo que pide + MÁS opciones
+Barrido completo confirmado: los únicos cargos Profesional SIN experiencia que aceptan ingeniería civil son 104 (Cali ✅) y 111 (Medellín). El resto de "sin experiencia" (112/121/126/127/130/139/267) son de sistemas/admin/derecho, no ing civil. Los de mayor salario piden 2-3 años exp.
+| Concurso | Cargo | Salario | Exp | Zona |
+|----------|-------|---------|-----|------|
+| **104-2026** (recomendada, la que él identificó) | Prof. Universitario | $6.889.867 | No requiere | Cali 2, Buga 1, Cartago 1 |
+| **111-2026** (alternativa) | Prof. Universitario | $6.889.867 | No requiere | Medellín 1 |
+> Guion entregado: 104 principal (Cali) + 111 alternativa (Medellín) + proyección a futuro (con 2-3 años de exp se abren cargos $8.97M-$9.64M de ing civil). Estructura 8 bloques, sin emojis, por N° concurso.
+
 ---
 
 ## 1. Datos generales (según lo que contó — verificar con documentos)
