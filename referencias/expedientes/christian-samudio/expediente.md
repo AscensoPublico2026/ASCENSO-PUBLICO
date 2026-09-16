@@ -90,3 +90,8 @@ Ambas por encima de su piso de $5M. Manuales leídos y verificados. Son las úni
 Cali. Los cargos de mayor salario ($8.97M+) exigen 2-3 años de experiencia → no aplica hoy.
 
 ## 8. Estado: LISTO — opciones seguras 104 y 105 (Prof. Universitario $6.89M, Cali). Cumple 100% sin experiencia.
+
+## 9. ENTREGABLE GENERADO (sep-2026, nueva estructura 8 bloques sin emojis, por N° de concurso)
+- Verificado en manual: 104 (No requiere exp; Valle = 6 plazas: Cali 2, Buga 1, Cartago 1, Valle 2; total 100) y 105 (No requiere exp; Valle = 4: Cali 2, Valle 2; total 54). Ambos $6.889.867.
+- Recomendada: **104-2026** (más plazas en el Valle). 105 como 2ª opción (foco Cali).
+- Nota al aspirante: cargos de mayor salario (3PU-17/18 y Asesor $10.4M) exigen 2-3 años / 1 año de experiencia → si a futuro consigue certificaciones, se revisan.
