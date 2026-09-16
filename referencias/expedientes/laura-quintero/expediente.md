@@ -61,6 +61,11 @@ Todas: derecho + NO exigen experiencia (ideal, se graduo mar-2026) + Bucaramanga
 > "Santander de Quilichao" que aparece en 104 es de CAUCA (lejos) — NO cuenta como region.
 ➡️ Si amplia fuera de Bucaramanga pero en su departamento: la 104 le da 8 plazas en Santander (Bucaramanga, Barrancabermeja, San Gil, Vélez) → mucha mas probabilidad. Barrancabermeja es la mas cercana/grande despues de Bucaramanga.
 
+## 6.bis ENTREGABLE GENERADO (sep-2026)
+Estructura 8 bloques, sin emojis, por N concurso, tabla con vacantes TOTALES + en zona Santander.
+Recomendada 104 (109 nacional, 8 en Santander: Buc4+Barranca2+SanGil1+Velez1). 105 (64/Buc3+SanGil1). 103 (23/Buc1).
+Mensaje: explica que la 260 (donde estaba, bachiller $4.18M) es quedarse corta; con PQRS sube a Prof. Universitario abogada $6.89M.
+
 ## 6. Pendiente
 - Confirmar con ella que la inscrita fue la 260.
 - Pedir inscritos de 103/104/105 en Bucaramanga (recomendar por probabilidad inscritos/plaza).
