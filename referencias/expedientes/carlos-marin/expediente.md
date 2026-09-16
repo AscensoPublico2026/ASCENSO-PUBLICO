@@ -2,7 +2,7 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 6 — documentación leída al 100% y matriz filtrada. Faltan manuales de cargos operativos (92/90/96/94) para cerrar verificación antes del entregable.**
+> Estado: **PASO 7 — TODO verificado (docs 100% + manuales 92/90/241). Opciones finales listas. Esperando OK de Julio César para generar el entregable (tabla + guion WhatsApp).**
 
 ---
 
@@ -41,28 +41,28 @@
 - ❌ **Cargos Profesional / Asesor** (Profesional Universitario, Coordinador, Asesor, Jefe de División): exigen **TÍTULO UNIVERSITARIO** (ingeniería eléctrica/industrial/etc. + posgrado en varios). Carlos NO tiene pregrado universitario → **NO cumple. Descartados todos.**
 - ⚠️ **Cargos Técnico (Sustanciador/Secretario)** en Santander: piden "1-2 años de educación superior en DERECHO / administración / arquitectura / etc." — su tecnólogo eléctrico NO está en esas listas → **NO cumple.**
 
-### Candidatos REALES (cumple 100% o casi — verificar manual):
+### Candidatos FINALES (cumple 100% — VERIFICADO contra manual):
 
-| # | Código | Cargo | Nivel/Grado | Salario | Estudio exigido | ¿Carlos cumple? |
-|---|--------|-------|-------------|---------|-----------------|-----------------|
-| A | **242-2026** | Auxiliar administrativo | Admin 5AM-10 | $4.966.461 | 1 año educación superior en derecho, **ingenierías**, admón, contaduría… + 1 año exp relacionada | ⚠️ **Zona gris**: su tecnólogo es en el campo eléctrico. Depende de si PGN acepta "tecnología" dentro de "ingenierías". Exp ✅ sobra. Plaza Bucaramanga (1) / Santander (2). **REVISAR manual + criterio.** |
-| B | **92-2026** | Conductor | Oper 6CH-06 | $3.456.786 | 3 años básica secundaria + **licencia B1** + 1 año exp general | ✅✅ **Cumple 100%** (tiene B1, bachiller, 7,8 años exp). Santander en deptos. **FALTA MANUAL 92** para plazas por ciudad. |
-| C | **90-2026** | Citador | Oper 6CI-04 | $3.120.457 | 2 años básica secundaria | ✅ cumple (bachiller). Santander/Bucaramanga sí. **FALTA MANUAL 90.** |
-| D | **96-2026** | Auxiliar servicios generales | Oper 6AS-03 | $2.383.208 | 1 año básica secundaria | ✅ cumple. **FALTA MANUAL 96** (ver si hay plaza en Santander). |
-| E | **241-2026** | Oficinista | Admin 5OF-06 | $3.456.786 | 3 años básica secundaria | ✅ cumple. Bucaramanga sí (tengo manual). |
+| # | Código | Cargo | Nivel/Grado | Salario | Requisitos (manual) | ¿Carlos cumple? | Plazas |
+|---|--------|-------|-------------|---------|---------------------|-----------------|--------|
+| 1 | **92-2026** | Conductor | Oper 6CH-06 | $3.456.786 | 3 años secundaria + **licencia B1** + **1 año exp general** | ✅✅ **100%** (B1 ✅, bachiller ✅, 7,8 años exp ✅) | **44 plazas.** Santander (1). Otras: Bogotá (11), Valle (3), Atlántico, Cesar, Chocó, Córdoba, Guaviare, Magdalena, Meta, N. Santander, Quindío, Tolima, Valle del Aburrá (Medellín) |
+| 2 | **241-2026** | Oficinista | Admin 5OF-06 | $3.456.786 | 3 años secundaria + **1 año exp relacionada** | ✅✅ **100%** | **132 plazas** (la de mayor cobertura). Bucaramanga sí + casi todo el país |
+| 3 | **90-2026** | Citador | Oper 6CI-04 | $3.120.457 | 2 años secundaria · **no requiere exp** | ✅✅ **100%** | **39 plazas.** Santander (1), Bucaramanga (2), Barrancabermeja (1). Otras: Bogotá (19), Cali, Cartagena, Cúcuta, Girardot (2), etc. |
 
-### ❌ Descartado explícito
-- **Conductor 91 (6CH-08)** $4.183.546: exige **licencia B2** → Carlos NO tiene B2 (solo A2/B1/C1). Solo Barranquilla/Bogotá, no Santander. **Descartado** salvo que saque B2.
+### ❌ Descartados explícitos
+- **242-2026** (Aux admin $4.966.461): **DESCARTADO por Julio César** — zona gris tecnólogo eléctrico vs "ingenierías" del manual. No se ofrece.
+- **91-2026** (Conductor 6CH-08 $4.183.546): exige **licencia B2** → Carlos NO tiene. Solo Barranquilla/Bogotá. Descartado.
+- **96/94** (Aux servicios generales): **Julio César dijo que NO los tendremos en cuenta** (Carlos no los haría).
 
-## 4. Manuales pendientes de pedir a Julio César (ANTES del entregable)
-- **92-2026** (Conductor 6CH-06) — para confirmar plazas en Santander/Bucaramanga.
-- **90-2026** (Citador 6CI-04) — plazas Santander/Bucaramanga.
-- **96-2026** (Aux servicios generales 6AS-03) — ver si hay plaza en Santander.
-- (Opcional) **94-2026** (Aux servicios generales 6AS-04).
+### Nota — Conductor a nivel nacional
+En TODA la convocatoria PGN 2026 **solo hay 2 cargos de conductor**: 91 (B2, descartado) y 92 (B1). El **92 es la única opción de conductor** para Carlos, pero tiene 44 plazas repartidas en 14 departamentos.
 
-## 5. Pregunta pendiente para el aspirante
-- ¿Su licencia **C1** sigue vigente? (útil solo si aparece conductor que pida C1, pero 92 pide B1 que sí tiene).
-- ¿Está dispuesto a sacar **licencia B2** para abrir el conductor 91 (mejor sueldo)? — probablemente NO conviene porque 91 no tiene plaza en Santander.
+### Esquema de pruebas (nivel Operativo/Administrativo)
+Conocimientos 60% (ELIMINATORIA, mín 65/100) · Comportamentales 20% · Antecedentes/valoración 20%. Lista de elegibles: puntaje total ≥ 70%.
+
+## 4. Verificación completada
+✅ Documentos leídos 100% · ✅ Matriz filtrada · ✅ Manuales 92, 90, 241 verificados · ✅ Sin fugas de otros aspirantes.
+Pregunta al aspirante (opcional, para el guion): ¿prefiere quedarse buscando SOLO Santander, o le mostramos también las otras ciudades para tener más chance de pasar (dado que en Santander hay 1 plaza de conductor y 1 de citador)?
 
 ## 6. Flujo antes del entregable (regla Julio César)
 matriz → leer manuales que se tengan → verificar 100% contra manual → **pedir manuales faltantes y ESPERAR** →
