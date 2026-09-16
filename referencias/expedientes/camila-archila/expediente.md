@@ -94,10 +94,10 @@ El diploma y el acta (CUN, SNIES 108263) confirman que **SÍ es EDUCACIÓN SUPER
 - DOCUMENTO A PEDIR para validar 291/253: **certificado de notas / historia académica de la CUN** (que diga semestres cursados/aprobados). Si acredita ≥2 años → 291/253 pasan a 100% seguras (mejor salario $5.85M).
 ➡️ CONCLUSIÓN: hoy, la opción 100% segura es la **243**. La 291/253 son "muy probable" pero requieren confirmar duración (no ofrecer como seguras aún).
 
-## ENTREGABLE GENERADO (sep-2026) — estructura 8 bloques, sin emojis, por N° concurso
-- Opción principal recomendada: **243-2026** (Aux Administrativo, $4.565.448, 8 plazas Bogotá, NO exige exp) → 100% segura.
-- Alternativas con salvedad: 242 ($4.966.461, 15 plazas Bogotá, pero exige 1 año exp admin → riesgo), 241 (Oficinista $3.456.786, 37 plazas Bogotá, exp relacionada → salvedad pero funciones más genéricas).
-- Guion explica con transparencia por qué la 243 es la segura (su título cubre + sin exp) y marca la salvedad de las otras (experiencia social vs administrativa).
+## ENTREGABLE FINAL (sep-2026) — decisión de Julio César: presentar SOLO la 243
+- Se ofrece ÚNICAMENTE la **243-2026** (Aux Administrativo, $4.565.448, 8 plazas Bogotá, NO exige experiencia) por ser la ÚNICA 100% SEGURA (su Técnico Profesional en Procesos Administrativos cubre "1 año educ. superior en administración" sin discusión).
+- NO se ofrecen 291/253 (piden 2 años educ. superior — no confirmado; quedan en salvedad hasta ver certificado de notas CUN). NO se ofrecen 242/241 (exigen experiencia relacionada administrativa, su experiencia es social → riesgo).
+- Guion generado: estructura 8 bloques, sin emojis, por N° concurso, enfocado solo en la 243 y por qué cumple.
 
 ## 4. Flujo antes del entregable (regla Julio César)
 matriz → leer manuales que se tengan → verificar 100% contra manual → pedir manuales/documentos faltantes y ESPERAR →
