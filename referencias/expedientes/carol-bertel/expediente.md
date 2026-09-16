@@ -127,6 +127,10 @@ Los 3 aceptan ARQUITECTURA expresamente + exigen tarjeta profesional (Carol la t
 > La única en la COSTA (más cerca de Sincelejo) es la **152 (Barranquilla)**. El tope salarial ($9.64M) solo en Bogotá/Medellín.
 > ⚠️ TRASLADO: se explica en el guion (es tarde para preguntarle); ella responde a qué ciudad aceptaría.
 
+## 10. ENTREGABLE FINAL GENERADO (sep-2026) — 6 opciones, estructura 8 bloques sin emojis, por N° concurso
+Tabla ordenada por salario: 204/231 (Bogotá $9.64M), 208 (Medellín $9.64M), 152 (Barranquilla/Bogotá $8.97M), 175 (Bogotá $8.97M), 111 (Medellín $6.89M sin exp).
+Recomendación dual: mejor salario = 204/231/208; más cerca de casa = 152 (Barranquilla). Guion explica el traslado (no hay vacante de arquitectura en Sincelejo) y le pide que indique a qué ciudad aceptaría.
+
 ## 3. Siguiente paso
 Tras leer la documentación: perfil + análisis de matriz.
 🛑 REGLA DE ORO (ver PROCESO-ASESORIA-VACANTES.md, PASO 5): solo ofrecer cargos que cumple al 100%,
