@@ -98,6 +98,18 @@ Los "sin experiencia" (111/129) son los más seguros si no acredita bien; pero n
 
 ## 7. Estado: opciones profesionales confirmadas (cumple estudio+experiencia+tarjeta): **152** (Barranquilla 1 / Bogotá 1, $8.97M, 2 años exp), **175** (Bogotá 2, $8.97M, 2 años exp), **111** (Medellín 1, $6.89M, SIN experiencia). ÚNICO dato pendiente: confirmar si acepta traslado (ninguna está en Sincelejo).
 
+## 8. REVERIFICACIÓN (sep-2026) — salario confirmado desde $6M, nivel Profesional
+Barrido completo de cargos que aceptan ARQUITECTURA en toda la matriz:
+- **Profesional que aceptan arquitectura + cumple $6M+ y ~10 años exp:**
+  - **152-2026** Prof. Univ. 3PU-17 $8.972.318 — 2 años exp — acepta arquitectura ✅ + tarjeta ✅ — sedes: **Atlántico/Barranquilla 1, Bogotá 1**.
+  - **175-2026** Prof. Univ. 3PU-17 $8.972.318 — 2 años exp — acepta arquitectura ✅ + tarjeta ✅ — Bogotá 2.
+  - **111-2026** Prof. Univ. 3PU-15 $6.889.867 — **NO requiere exp** — acepta arquitectura ✅ — Medellín 1.
+  - **204/208/231-2026** Prof. Univ. 3PU-18 $9.646.860 — 3 años exp — aceptan arquitectura (verificar manual, FALTAN 204/208/231) — Bogotá/Antioquia. Carol cumple los 3 años (tiene ~10).
+- **Asesor 10/30/37** ($10.4M): exigen POSGRADO → Carol NO tiene (solo diplomado). Descartados.
+- **288** Sustanciador (Técnico $5.42M): tiene Sincelejo pero es < $6M y NO es profesional. Fuera del objetivo.
+> Manuales FALTANTES para ampliar al tope salarial ($9.64M): **204, 208, 231** (Prof 3PU-18).
+> ⚠️ DATO A CONFIRMAR CON CAROL: TRASLADO. Ninguna profesional de arquitectura está en Sincelejo. La más cercana: 152 (Barranquilla).
+
 ## 3. Siguiente paso
 Tras leer la documentación: perfil + análisis de matriz.
 🛑 REGLA DE ORO (ver PROCESO-ASESORIA-VACANTES.md, PASO 5): solo ofrecer cargos que cumple al 100%,
