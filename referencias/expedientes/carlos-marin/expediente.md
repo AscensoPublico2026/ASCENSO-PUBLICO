@@ -46,7 +46,7 @@
 | # | Código | Cargo | Nivel/Grado | Salario | Requisitos (manual) | ¿Carlos cumple? | Plazas |
 |---|--------|-------|-------------|---------|---------------------|-----------------|--------|
 | 1 | **92-2026** | Conductor | Oper 6CH-06 | $3.456.786 | 3 años secundaria + **licencia B1** + **1 año exp general** | ✅✅ **100%** (B1 ✅, bachiller ✅, 7,8 años exp ✅) | **44 plazas.** Santander (1). Otras: Bogotá (11), Valle (3), Atlántico, Cesar, Chocó, Córdoba, Guaviare, Magdalena, Meta, N. Santander, Quindío, Tolima, Valle del Aburrá (Medellín) |
-| 2 | **241-2026** | Oficinista | Admin 5OF-06 | $3.456.786 | 3 años secundaria + **1 año exp relacionada** | ✅✅ **100%** | **132 plazas** (la de mayor cobertura). Bucaramanga sí + casi todo el país |
+| 2 | **241-2026** | Oficinista | Admin 5OF-06 | $3.456.786 | 3 años secundaria + **1 año exp relacionada** | ✅✅ **100%** | **132 plazas.** Santander: **4** (Bucaramanga 3 [Judicial II 1 + Provinciales 2] + Regional Santander 1). Ojo: "Santander de Quilichao" es Cauca, no cuenta |
 | 3 | **90-2026** | Citador | Oper 6CI-04 | $3.120.457 | 2 años secundaria · **no requiere exp** | ✅✅ **100%** | **39 plazas.** Santander (1), Bucaramanga (2), Barrancabermeja (1). Otras: Bogotá (19), Cali, Cartagena, Cúcuta, Girardot (2), etc. |
 
 ### ❌ Descartados explícitos
