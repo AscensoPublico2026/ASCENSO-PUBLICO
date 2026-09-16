@@ -54,6 +54,13 @@ Dijo "Sustanciador judicial, 1 vacante". Cargos Sustanciador con Bucaramanga:
 | **103** | $6.889.867 | 1 | +$2,7M |
 Todas: derecho + NO exigen experiencia (ideal, se graduo mar-2026) + Bucaramanga. La 104 es la mas fuerte (4 plazas Buc).
 
+## 5.bis OPCIONES EN SANTANDER Y REGION (fuera de Bucaramanga) — Prof. Universitario derecho sin experiencia
+- **104-2026** ($6.889.867): Bucaramanga 4 + **Barrancabermeja 2** + **San Gil 1** + **Vélez 1** (todo Santander) = **8 en el depto Santander**; ademas Norte de Santander/Cúcuta 2, Tunja 2, Valledupar 2. → LA MAS COMPLETA.
+- **105-2026** ($6.889.867): Bucaramanga 3 + **San Gil 1** (Santander) + Norte de Santander 1 + Valledupar 5.
+- **103-2026** ($6.889.867): Bucaramanga 1 (sin otras cercanas).
+> "Santander de Quilichao" que aparece en 104 es de CAUCA (lejos) — NO cuenta como region.
+➡️ Si amplia fuera de Bucaramanga pero en su departamento: la 104 le da 8 plazas en Santander (Bucaramanga, Barrancabermeja, San Gil, Vélez) → mucha mas probabilidad. Barrancabermeja es la mas cercana/grande despues de Bucaramanga.
+
 ## 6. Pendiente
 - Confirmar con ella que la inscrita fue la 260.
 - Pedir inscritos de 103/104/105 en Bucaramanga (recomendar por probabilidad inscritos/plaza).
