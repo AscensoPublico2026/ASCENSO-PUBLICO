@@ -31,6 +31,11 @@
 | **Medio** | **260-2026** | Sustanciador | Técnico 4SU-08 | $4.183.546 | Diploma de bachiller | 1 año relacionada | Manizales, Ocaña (40 plazas) |
 | **Bajo/seguro** | **243-2026** | Auxiliar administrativo | Admin 5AM-09 | $4.565.448 | 1 año educ. superior en ingeniería / o curso en sistemas | No requiere | **Tunja**, Armenia, Boyacá (26 plazas) |
 
+### Desglose por CLIMA (para que Fabián elija — frías + templadas)
+- **288-2026** (Sustanciador $5.424.740, 84 plazas): FRÍAS → Manizales, Zipaquirá, Santa Rosa de Viterbo, Popayán, Nariño, Cundinamarca · TEMPLADAS → Pereira, Bucaramanga (2), Facatativá, Amagá, Valledupar (2).
+- **260-2026** (Sustanciador $4.183.546, 40 plazas): FRÍAS → Manizales · TEMPLADAS → Medellín, Cúcuta (2), Ibagué, Girardot, Ocaña (2), Amagá, Bucaramanga.
+- **243-2026** (Aux administrativo $4.565.448, 26 plazas): FRÍAS → Tunja, Boyacá · TEMPLADAS → Armenia, Ibagué, Cúcuta, Cali.
+
 ### ❌ Descartados
 - Todos los **Profesional/Asesor de sistemas** (121, 126, 155, 168, 209, 215, 216, etc.): exigen TÍTULO universitario de ingeniería → Fabián tiene la ingeniería EN CURSO, no cumple.
 - **234-2026** (Sustanciador): exige "1 año educ. superior **en DERECHO**" → Fabián no estudió derecho. Descartado (aunque tuviera Tunja x5).
