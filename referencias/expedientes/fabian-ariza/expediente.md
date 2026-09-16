@@ -2,7 +2,39 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 2 — expediente creado, enlace de carga entregado. A la espera de la documentación.**
+> Estado: **PASO 7 — docs leídos 100%, matriz filtrada, manuales verificados (288/260/243). Opciones bajo/medio/alto listas. Esperando OK de Julio para el entregable.**
+
+## DATOS VERIFICADOS con documentos
+- **Nombre:** FABIÁN ANDRÉS ARIZA ARIZA · **C.C. 1.098.171.632** (de El Peñón, Santander)
+- **Título:** **TECNÓLOGO EN ANÁLISIS Y DESARROLLO DE SISTEMAS DE INFORMACIÓN** (SENA, 10/09/2021) → educación superior tecnológica en área de SISTEMAS ✅. Con SNIES/registro SENA.
+- **Ingeniería de Software:** EN CURSO (último semestre, se gradúa ~ene 2027). ❌ Aún NO es título profesional.
+- **Bachiller** ✅. Cursos: SENA/everis (Python, desarrollo web, cloud, IA), diplomado ESAP Innovación Sector Público, curso Integridad/Transparencia PGN.
+
+### Experiencia laboral (verificada, unión sin solapes ≈ 3,16 años / 38,5 meses)
+| Entidad | Cargo/objeto | Desde | Hasta |
+|---------|--------------|-------|-------|
+| Alcaldía El Peñón (CPS-013-2022) | Apoyo admin Planeación/SISBEN | 13/01/2022 | 30/07/2022 |
+| Alcaldía El Peñón (CPS-067-2022) | Apoyo admin Planeación/SISBEN | 11/08/2022 | 11/12/2022 |
+| INSULOG | Supervisor Mantenimiento Tecnológico (HW/redes) | 23/05/2022 | 22/12/2023 |
+| IOLAVORANDO (E.S.E. Hospital El Peñón) | Auxiliar Administrativo | 02/01/2024 | 16/02/2024 |
+| Alcaldía El Peñón (CPS-118-2024) | Apoyo TIC/plataformas | 23/09/2024 | 27/12/2024 |
+| Alcaldía El Peñón (CPS-035-2025) | Apoyo TIC/plataformas | 10/02/2025 | 30/04/2025 |
+| Alcaldía El Peñón (CPS-067-2025) | Apoyo TIC/plataformas | 01/05/2025 | 30/07/2025 |
+| Alcaldía El Peñón (CPS-129-2025) | Apoyo TIC/plataformas | 14/08/2025 | 30/12/2025 |
+
+> Nota: "certificado operario PD" = solo capacitación electoral, NO experiencia. Los archivos 035/067/129-2025 eran actas de contratos de Fabián (no manuales de otro concurso).
+
+## OPCIONES QUE CUMPLE 100% (verificado contra manual) — franja bajo/medio/alto
+| Franja | Concurso | Cargo | Nivel | Salario | Estudio exigido | Exp exigida | Ciudades frías disponibles |
+|--------|----------|-------|-------|---------|-----------------|-------------|----------------------------|
+| **Alto** (techo real) | **288-2026** | Sustanciador | Técnico 4SU-11 | $5.424.740 | 1 año educ. superior en ing. de sistemas / sistemas informáticos (entre muchas) | 1,5 años relacionada | Manizales, Zipaquirá, Santa Rosa de Viterbo, Popayán, Pereira, Nariño, Cundinamarca (78-84 plazas) |
+| **Medio** | **260-2026** | Sustanciador | Técnico 4SU-08 | $4.183.546 | Diploma de bachiller | 1 año relacionada | Manizales, Ocaña (40 plazas) |
+| **Bajo/seguro** | **243-2026** | Auxiliar administrativo | Admin 5AM-09 | $4.565.448 | 1 año educ. superior en ingeniería / o curso en sistemas | No requiere | **Tunja**, Armenia, Boyacá (26 plazas) |
+
+### ❌ Descartados
+- Todos los **Profesional/Asesor de sistemas** (121, 126, 155, 168, 209, 215, 216, etc.): exigen TÍTULO universitario de ingeniería → Fabián tiene la ingeniería EN CURSO, no cumple.
+- **234-2026** (Sustanciador): exige "1 año educ. superior **en DERECHO**" → Fabián no estudió derecho. Descartado (aunque tuviera Tunja x5).
+- **283** (Secretario procuraduría): "2 años educ. superior relacionada con la especialidad" es zona gris + solo Amagá/Sincelejo (no frías). Fuera.
 
 ---
 
