@@ -1,15 +1,11 @@
-# 📂 Documentos del aspirante — Luis Morales
+# 📥 Documentos — Luis Morales
 
-Sube AQUÍ los PDF que envió el aspirante, cada uno en un archivo separado:
+Sube aquí TODOS los documentos de Luis Morales (PDF):
+- Cédula de ciudadanía
+- Tarjeta profesional de abogado (+ certificado de vigencia y antecedentes)
+- Acta de grado y diploma de Abogado (para confirmar la FECHA exacta del título — clave para contar los años de experiencia)
+- Diplomas/actas de las especializaciones (Derecho Administrativo, Derecho Minero y Ambiental, Alto Gobierno) y de la Maestría en Derecho Administrativo
+- **TODAS las certificaciones laborales / de experiencia profesional** (lo más importante para Procurador Judicial: hay que acreditar 10 años para el II o 5 años para el I)
+- Libreta militar (si aplica)
 
-1. Cédula
-2. Diploma de bachiller
-3. Diploma profesional (Derecho) + acta de grado
-4. Diplomas de posgrado: Esp. Derecho Administrativo, Esp. Derecho Minero y Ambiental,
-   Esp. Alto Gobierno, Maestría en Derecho Administrativo (+ actas)
-5. Certificados laborales (con fechas, cargo y funciones) — CLAVE para experiencia jurídica post-título
-6. Certificado de votación
-7. Tarjeta profesional de abogado + certificado de vigencia y antecedentes
-
-⚠️ Que se vean claros y legibles: nombres, fechas y número de documento.
-⚠️ Confirmar con el aspirante: salario aspirado, ciudad de interés, disponibilidad de traslado y si ha concursado antes.
+⚠️ Importante: si un documento está repetido o hay una versión más nueva, súbelos igual — yo reviso duplicados y me quedo con la versión actualizada.
