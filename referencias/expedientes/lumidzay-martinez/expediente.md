@@ -128,4 +128,19 @@ Estrategia: explicarle la situacion + opciones en Villavicencio/Meta (nivel tecn
 2. Definir opciones FUERA de Villavicencio (243 Aux admin sin exp - Tunja/Ibague/Cali; 253 Tec admin sin exp) como plan B con traslado.
 3. Confirmar que su experiencia de auxiliar contable cuenta como "relacionada" en los que piden experiencia.
 
-## 11. Flujo: barrido COMPLETO por profesion, verificar manual, solo 100%, guion 8 bloques sin emojis por N concurso.
+## 11. MANUAL 290 VERIFICADO + OPCIONES FINALES (sin tarjeta)
+- **290-2026** Secretario Procuraduria 4SP-11, **$5.424.740**: estudio "1 año educacion superior" (su contaduria lo cubre) + **NO exige tarjeta** ✅ + 1,5 años experiencia RELACIONADA (funciones: radicacion/tramite/archivo de documentos = soporte admin; su exp de auxiliar contable con "organizacion y archivo, gestion documental" es relacionada ✅). **Villavicencio: 1 plaza** ✅. → OPCION EN SU CIUDAD.
+
+### OPCIONES FINALES para Lumidzay (todas SIN tarjeta profesional):
+| # | Concurso | Cargo | Salario | Exp | Tarjeta | Ciudad |
+|---|----------|-------|---------|-----|---------|--------|
+| Villavicencio | **290** | Secretario Procuraduria (Tec) | $5.424.740 | 1,5 años relacionada (cumple con aux contable) | NO | **Villavicencio 1** |
+| Fuera (traslado) | **243** | Aux Administrativo | $4.565.448 | **No requiere** | NO | Tunja, Ibague, Cali, Armenia, Cucuta |
+| Fuera (traslado) | **253** | Tecnico Administrativo | $5.846.100 | **No requiere** | NO | Bogota |
+
+- La 290 es la de su CIUDAD (Villavicencio), mejor perfil, $5.42M — pero pide 1,5 años exp relacionada (su exp de auxiliar contable sirve).
+- La 243 es la MAS SEGURA (no exige experiencia ni tarjeta), acepta contaduria, pero con traslado (Tunja/Ibague/Cali/etc.).
+- La 253 paga mas ($5.85M) sin experiencia, pero solo Bogota.
+- ❌ Cargos Profesional contaduria ($6.89M): descartados (exigen tarjeta, en tramite, no sale antes del 18/sep).
+
+## 12. ENTREGABLE: explicar situacion (tarjeta en tramite → no profesional aun) + opcion en Villavicencio (290) + opciones fuera (243/253). Estructura 8 bloques, sin emojis, por N concurso.
