@@ -110,6 +110,24 @@ Revisadas las sedes reales: la 257 (Téc. Investigador), 245 (Téc. Admin) y 285
 - **Conocimientos que evalúa:** Constitución, Estatuto de Conciliación, CPACA, elaboración de documentos, atención al usuario, archivo/correspondencia, bases de datos.
 - **Pruebas:** Conocimientos ELIMINATORIA (mín 65/100) 60% · Competencias 20% · Antecedentes 20%.
 
+## 📎 CERTIFICADOS NUEVOS (sep-2026) — identidad verificada (Jhon Fredy García Rojas, C.C. 15.932.565 de Supía) ✅
+1. **Diplomado Internacional en DDHH para la Función Policial** (Esc. Inteligencia, 11-26 mar 2024, 140h) — duplicado oficial expedido 14/09/2026.
+2. **Seminario Redacción de Informes para el Servicio de Policía** (Esc. Investigación Criminal, 25 nov 2022) — expedido por la Policía 11/09/2026 a solicitud.
+> Son 2 de los cursos que estaban en la HV institucional sin certificado físico; ahora ya los tiene expedidos.
+> ✅ Aportan: refuerzan perfil investigativo/jurídico-policial; el de Investigación Criminal ayuda al "curso específico" de Técnicos Investigador/Criminalística.
+> ❌ NO resuelven lo decisivo: NO son certificación de EXPERIENCIA laboral (tiempo de servicio con fechas/funciones), NI título de abogado, NI constancia de años de educación superior.
+
+## 🔎 DEFINICIÓN FINAL (con lo que hay hoy)
+- Sigue **sin título de abogado** → NO cargos profesionales.
+- Cumple **estudio** de cargos que piden "1 año de educación superior en derecho" (tiene programa completo cursado).
+- **Experiencia:** su trayectoria policial (~21 años) es su experiencia relacionada, PERO aún NO ha aportado la **certificación de tiempo de servicio** (la HV institucional no es la certificación laboral formal). Para cargos que exigen experiencia (234 pide 1,5 años relacionada) hay que aportar ESA certificación de la Policía.
+- **Opción más segura HOY sin depender de más certificados de experiencia:** cargos que NO exigen experiencia con sede en Manizales/Caldas:
+  - **242-2026 Auxiliar Administrativo** ($4.966.461): 1 año educ. superior en Derecho ✅ + 1 año exp relacionada → aún pide 1 año exp.
+  - **260-2026 Sustanciador 4SU-08** ($4.183.546): solo **bachiller** ✅, **1 año exp relacionada**.
+  - **241-2026 Oficinista** ($3.456.786): 3 años bachillerato ✅ + 1 año exp relacionada.
+  - **234-2026 Sustanciador 4SU-11** ($5.42M-$6.36M): 1 año educ. superior derecho ✅ + **1,5 años exp relacionada** → su mejor opción SI certifica la experiencia policial.
+> ⚠️ Casi todas piden algo de experiencia relacionada → por eso es CLAVE que aporte la certificación de tiempo de servicio de la Policía. Con ella, el 234 (mejor salario) queda 100%.
+
 ## ⚠️ RIESGOS / PENDIENTES
 1. 🔴 **NO es abogado** — descarta todos los cargos profesionales. Confirmar con él si el grado está próximo (¿le falta preparatorios/judicatura/grado?). Si se gradúa ANTES del cierre (18 sep), se le abre el nivel profesional.
 2. 🔴 **Cursos SIN certificado físico** — están en la HV institucional pero debe SOLICITARLOS a la Policía. **Prioridad de solicitud:** seminarios de Investigación Criminal (SPOA), Redacción de Informes, Código de Policía, DDHH, Integridad/Anticorrupción, cursos de datos y ofimática. NO gastar en los operativos (pistola, COR, etc.).
