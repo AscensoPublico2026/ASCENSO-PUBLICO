@@ -146,3 +146,11 @@ Estrategia: explicarle la situacion + opciones en Villavicencio/Meta (nivel tecn
 ## 12. ENTREGABLE GENERADO (sep-2026)
 Estructura 8 bloques, sin emojis, por N concurso. Explica situacion (tarjeta en tramite → no cargos profesionales de contaduria ahora).
 Opciones: 290 (Villavicencio, $5.42M, sin tarjeta) principal local + 253 (Bogota $5.85M sin exp) + 243 (Aux admin $4.56M sin exp, varias ciudades). Todas sin tarjeta. Nota a futuro: cuando salga la tarjeta se abren Prof. Universitario contaduria $6.89M.
+
+### TABLA FINAL con vacantes (totales + ciudad interes) — OBLIGATORIO SIEMPRE:
+| Concurso | Cargo | Salario | Nacional | En su zona |
+|----------|-------|---------|----------|------------|
+| 290 | Secretario Procuraduria | $5.424.740 | 10 | Villavicencio: 1 |
+| 253 | Tecnico Administrativo | $5.846.100 | 2 | Bogota: 2 (no Villavo) |
+| 243 | Aux Administrativo | $4.565.448 | 26 | Tunja/Ibague/Cali/Armenia/Cucuta 1 c/u (no Villavo) |
+> RECORDATORIO: la tabla SIEMPRE debe llevar vacantes TOTALES nacional + vacantes en la ciudad/zona de interes (dato clave que el cliente comparte).
