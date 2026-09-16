@@ -73,6 +73,19 @@ Quiere cargo ADMINISTRATIVO en Bogotá, pero:
 ➡️ El 242 paga más pero exige experiencia ADMINISTRATIVA relacionada (su experiencia es social → zona gris, no seguro). El 253 (mejor salario, sin exp) es "casi" pero "relacionada con la especialidad de la dependencia" es matiz → verificar según dependencia.
 ⚠️ PENDIENTE: confirmar sede Bogotá del 243 con desglose exacto; pedir manuales 240/237/278 (otros administrativos sin experiencia) para ampliar opciones.
 
+## 🔎 BARRIDO COMPLETO (sep-2026) — ¿es la 243 la única? NO. Hay mejores.
+Su título es TÉCNICO PROFESIONAL (2 años educ. superior) → NO cumple Profesional Universitario/Asesor/Jefe (exigen título universitario). Sí cumple cargos que piden "1-2 años de educación superior". Filtrando SIN experiencia (su exp es social) + Bogotá:
+| Concurso | Cargo | Salario | Estudio (manual) | Exp | Bogotá | Seguridad |
+|----------|-------|---------|------------------|-----|--------|-----------|
+| **291** | Secretario Procuraduría 4SP-12 | **$5.846.100** | **2 años educ. superior (SIN carrera específica)** ✅ | **No requiere** | **6 plazas** | ✅✅ 100% (su técnico profesional = 2 años educ superior, cumple limpio) |
+| **253** | Técnico Administrativo 4TM-12 | $5.846.100 | 2 años educ. superior relacionada con la dependencia (propósito: gestión administrativa) | No requiere | 2 plazas | ✅ fuerte (su título es admin = afín a gestión admin) |
+| **243** | Aux. Administrativo 5AM-09 | $4.565.448 | 1 año educ. superior en administración ✅ | No requiere | 8 plazas | ✅✅ 100% |
+| 242 | Aux. Administrativo 5AM-10 | $4.966.461 | 1 año educ. superior admin ✅ | 1 año relacionada (admin) ⚠️ | 15 | 🟡 salvedad (exp social) |
+| 241 | Oficinista 5OF-06 | $3.456.786 | 3 años secundaria | 1 año relacionada ⚠️ | 37 | 🟡 salvedad |
+
+➡️ HALLAZGO: la **291 ($5.846.100, 6 plazas Bogotá, SIN experiencia, solo pide 2 años educ. superior sin carrera puntual) es MEJOR que la 243** (paga ~$1,28M más y también es 100% segura). La 253 (mismo salario) también sirve.
+➡️ NUEVAS opciones 100% seguras ordenadas por salario: 291 ($5.85M) = 253 ($5.85M) > 243 ($4.57M).
+
 ## ENTREGABLE GENERADO (sep-2026) — estructura 8 bloques, sin emojis, por N° concurso
 - Opción principal recomendada: **243-2026** (Aux Administrativo, $4.565.448, 8 plazas Bogotá, NO exige exp) → 100% segura.
 - Alternativas con salvedad: 242 ($4.966.461, 15 plazas Bogotá, pero exige 1 año exp admin → riesgo), 241 (Oficinista $3.456.786, 37 plazas Bogotá, exp relacionada → salvedad pero funciones más genéricas).
