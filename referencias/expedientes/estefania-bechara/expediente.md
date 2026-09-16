@@ -122,4 +122,11 @@ El análisis original filtró por "Asesor/Jefe de División" y se saltó los PRO
 |----------|---------|-----------------|-----------|---------------|
 | **83** | **$13.074.900** | 1 | **229** | ✅ RECOMENDADA (más salario + muchísima menos competencia) |
 | 35 | $10.403.514 | 3 | 1.831 | menos salario y 8x más competencia |
-→ La 83 gana en salario Y en probabilidad (relación plazas/inscritos muy superior pese a tener 1 plaza vs 3). Se recomienda la 83.
+→ CORRECCIÓN (análisis estadístico completo con plazas totales):
+| Concurso | Salario | Inscritos | Plazas TOTALES | Inscritos/plaza |
+|----------|---------|-----------|----------------|-----------------|
+| 83 | $13.074.900 | 229 | **2** | **~114 a 1** (competencia altísima) |
+| 35 | $10.403.514 | 1.831 | **180** | **~10 a 1** (competencia baja) |
+→ La primera lectura ("83 tiene menos inscritos") ENGAÑA: lo decisivo es inscritos/plaza. La **35 es MUCHO más ganable** (10 por cupo vs 114). 
+→ RECOMENDACIÓN TÉCNICA: si el objetivo es GANAR una plaza (sacar puntaje y quedar nombrada), la **35** es la apuesta inteligente (pájaro en mano, $10.4M, 3 plazas Montería, 10:1). La 83 paga $2.7M más pero es 114:1 por 1 plaza → muy difícil. Plantearle a Estefanía: probabilidad (35) vs salario con riesgo alto (83).
+→ REGLA aprendida: para comparar dificultad de vacantes, calcular SIEMPRE inscritos ÷ plazas totales, no solo el número de inscritos.
