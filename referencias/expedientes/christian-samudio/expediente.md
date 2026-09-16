@@ -106,6 +106,12 @@ Cali. Los cargos de mayor salario ($8.97M+) exigen 2-3 años de experiencia → 
 - Los cargos 147 ($8.97M, 2 años), 199 ($9.64M, 3 años), 35/01 (Asesor $10.4M, 1 año + posgrado) piden "experiencia PROFESIONAL o docente". Si la PGN acepta experiencia profesional de CUALQUIER profesión (él es instrumentador quirúrgico desde 2009 y especialista) contada como profesional, tendría de sobra. Si exige que sea afín al derecho/posterior al grado de abogado, NO alcanza con seguridad.
 - **CONCLUSIÓN regla de oro:** las certificaciones NO despejan la zona gris para los cargos de mejor salario. Lo 100% seguro sigue siendo 104/105 (No requiere experiencia). Los de mayor salario quedan como "posibles con salvedad" y habría que confirmar el criterio de la PGN sobre experiencia profesional pre-grado / no jurídica.
 
+## 8.ter DECISIÓN DE JULIO CÉSAR (sep-2026): NO usar los certificados quirúrgicos
+El cliente decide aplicar SOLO a lo de abogado. Los certificados quirúrgicos (SERMEQS, SURGICAL, SMQS) NO se tienen en
+cuenta: no suman como experiencia jurídica y pueden confundir/generar dudas en la validación. Por tanto se ofrece lo 100%
+seguro: cargos de abogado que NO exigen experiencia → **104 y 105** ($6.889.867). Se descartan definitivamente los de
+mayor salario que exigen experiencia (147/199/35/01).
+
 ## 9. ENTREGABLE GENERADO (sep-2026, nueva estructura 8 bloques sin emojis, por N° de concurso)
 - Verificado en manual: 104 (No requiere exp; Valle = 6 plazas: Cali 2, Buga 1, Cartago 1, Valle 2; total 100) y 105 (No requiere exp; Valle = 4: Cali 2, Valle 2; total 54). Ambos $6.889.867.
 - Recomendada: **104-2026** (más plazas en el Valle). 105 como 2ª opción (foco Cali).
