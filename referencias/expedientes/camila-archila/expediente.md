@@ -83,8 +83,16 @@ Su título es TÉCNICO PROFESIONAL (2 años educ. superior) → NO cumple Profes
 | 242 | Aux. Administrativo 5AM-10 | $4.966.461 | 1 año educ. superior admin ✅ | 1 año relacionada (admin) ⚠️ | 15 | 🟡 salvedad (exp social) |
 | 241 | Oficinista 5OF-06 | $3.456.786 | 3 años secundaria | 1 año relacionada ⚠️ | 37 | 🟡 salvedad |
 
-➡️ HALLAZGO: la **291 ($5.846.100, 6 plazas Bogotá, SIN experiencia, solo pide 2 años educ. superior sin carrera puntual) es MEJOR que la 243** (paga ~$1,28M más y también es 100% segura). La 253 (mismo salario) también sirve.
-➡️ NUEVAS opciones 100% seguras ordenadas por salario: 291 ($5.85M) = 253 ($5.85M) > 243 ($4.57M).
+➡️ HALLAZGO: la **291 ($5.846.100, 6 plazas Bogotá, SIN experiencia, pide 2 años educ. superior) y la 253 ($5.846.100) pagan más que la 243**.
+
+## ⚠️ VALIDACIÓN DEL TÍTULO (sep-2026) — CLAVE antes de ofrecer 291/253
+El diploma y el acta (CUN, SNIES 108263) confirman que **SÍ es EDUCACIÓN SUPERIOR** (Técnico Profesional = primer nivel de educación superior, Ley 30/1992). PERO **ni el diploma ni el acta dicen la DURACIÓN del programa (semestres/años)**.
+- Los programas de Técnico Profesional suelen durar 2-3 semestres (1 a 1,5 años); NO siempre llegan a 2 años.
+- Por REGLA DE ORO:
+  - **243** (pide "1 año educ. superior en administración") → ✅ **100% SEGURA** (el título supera 1 año sin discusión).
+  - **291 y 253** (piden "2 años de educación superior") → ⚠️ **NO confirmado. QUEDAN EN SALVEDAD** hasta verificar que el programa fue de ≥2 años (4 semestres).
+- DOCUMENTO A PEDIR para validar 291/253: **certificado de notas / historia académica de la CUN** (que diga semestres cursados/aprobados). Si acredita ≥2 años → 291/253 pasan a 100% seguras (mejor salario $5.85M).
+➡️ CONCLUSIÓN: hoy, la opción 100% segura es la **243**. La 291/253 son "muy probable" pero requieren confirmar duración (no ofrecer como seguras aún).
 
 ## ENTREGABLE GENERADO (sep-2026) — estructura 8 bloques, sin emojis, por N° concurso
 - Opción principal recomendada: **243-2026** (Aux Administrativo, $4.565.448, 8 plazas Bogotá, NO exige exp) → 100% segura.
