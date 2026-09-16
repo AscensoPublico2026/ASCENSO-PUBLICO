@@ -2,7 +2,7 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 7 — docs leídos 100%, matriz filtrada, manuales verificados (288/260/243). Opciones bajo/medio/alto listas. Esperando OK de Julio para el entregable.**
+> Estado: **PASO 8 — ENTREGABLE GENERADO. Se ofrecen 3 opciones (288 alto / 243 bajo-Tunja / 260 medio), todas 100%, con desglose frías + templadas para que Fabián elija. Recomendada: 288-2026.**
 
 ## DATOS VERIFICADOS con documentos
 - **Nombre:** FABIÁN ANDRÉS ARIZA ARIZA · **C.C. 1.098.171.632** (de El Peñón, Santander)
