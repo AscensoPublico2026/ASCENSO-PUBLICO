@@ -143,4 +143,6 @@ Estrategia: explicarle la situacion + opciones en Villavicencio/Meta (nivel tecn
 - La 253 paga mas ($5.85M) sin experiencia, pero solo Bogota.
 - ❌ Cargos Profesional contaduria ($6.89M): descartados (exigen tarjeta, en tramite, no sale antes del 18/sep).
 
-## 12. ENTREGABLE: explicar situacion (tarjeta en tramite → no profesional aun) + opcion en Villavicencio (290) + opciones fuera (243/253). Estructura 8 bloques, sin emojis, por N concurso.
+## 12. ENTREGABLE GENERADO (sep-2026)
+Estructura 8 bloques, sin emojis, por N concurso. Explica situacion (tarjeta en tramite → no cargos profesionales de contaduria ahora).
+Opciones: 290 (Villavicencio, $5.42M, sin tarjeta) principal local + 253 (Bogota $5.85M sin exp) + 243 (Aux admin $4.56M sin exp, varias ciudades). Todas sin tarjeta. Nota a futuro: cuando salga la tarjeta se abren Prof. Universitario contaduria $6.89M.
