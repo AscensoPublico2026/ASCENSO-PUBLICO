@@ -26,6 +26,14 @@ Barrido completo confirmado: los únicos cargos Profesional SIN experiencia que 
 | **111-2026** (alternativa) | Prof. Universitario | $6.889.867 | No requiere | Medellín 1 |
 > Guion entregado: 104 principal (Cali) + 111 alternativa (Medellín) + proyección a futuro (con 2-3 años de exp se abren cargos $8.97M-$9.64M de ing civil). Estructura 8 bloques, sin emojis, por N° concurso.
 
+## AMPLIACIÓN (sep-2026): ¿cargos NO relacionados con ing civil que igual cumpla?
+Barrido de cargos con estudio genérico ("X años de educación superior" / que acepten cualquier profesional). Revisados contra manual:
+- **245-2026** (Téc. Administrativo $7.551.499): estudio OK (3 años educ. superior sirve) PERO **exige experiencia** (Vía A 1 año / B 2 años). Hassan NO tiene experiencia certificable → **NO cumple. Descartado.**
+- **257/256/258/259** (Téc. Investigador $6.889.867, Vía A sin exp): piden "3 años educ. superior en áreas RELACIONADAS con la dependencia (Investigaciones Especiales/disciplinario) Y CURSO ESPECÍFICO" → doble ZONA GRIS (afinidad de ing civil + curso específico que no tiene) → **NO seguro, NO se ofrece** (mismo riesgo que el error 285 de Brenda).
+- **285/286/287** (Téc. Criminalística): piden curso específico → zona gris → NO.
+- **253** (Téc. Admin $5.846.100 sin exp) y otros técnicos: "áreas relacionadas con la especialidad de la dependencia" → zona gris de afinidad + salario menor que la 104 → no aportan.
+> CONCLUSIÓN: aplicando la REGLA DE ORO (solo 100% sin zonas grises), NO hay cargos fuera de ingeniería civil que Hassan cumpla con seguridad y que mejoren la 104. Los "genéricos" o exigen experiencia (que no tiene) o piden curso específico/afinidad de dependencia (zona gris). Se mantiene: 104 (Cali) + 111 (Medellín) como las únicas 100% seguras.
+
 ---
 
 ## 1. Datos generales (según lo que contó — verificar con documentos)
