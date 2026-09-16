@@ -134,7 +134,22 @@ Entregar, en este orden:
 
 ---
 
+## ⛔ REGLA CRÍTICA — BARRIDO COMPLETO POR PROFESIÓN (no por nombre de cargo)
+NUNCA filtrar la matriz por el "nombre del cargo" ni por una sola familia (p.ej. buscar solo "Asesor" para
+quien quiere buen sueldo). Eso hace que se escapen cargos de NOMBRE PROPIO que también sirven al perfil.
+MÉTODO OBLIGATORIO para cada aspirante:
+1. Barrer TODAS las 296 filas buscando la PALABRA CLAVE DEL ESTUDIO del aspirante (p.ej. "derecho"/"abogado",
+   "arquitect", "ingeniería civil", "sistemas", etc.), sin importar cómo se llame el cargo.
+2. Ordenar TODOS los resultados por SALARIO DESCENDENTE.
+3. De ahí filtrar por lo que cumple 100% (experiencia, sede/ciudad, tarjeta, posgrado).
+4. Presentar el abanico ordenado por salario.
+⚠️ Cargos que se escapan por nombre: **Procurador Judicial I (95) y II (89)** para ABOGADOS — no dicen "Asesor" ni
+"posgrado"; su experiencia va por Ley 2430/2024 (5 y 10 años). Antecedente: a Estefanía Bechara casi se le omite el
+Procurador Judicial (lo señaló un tercero) → pérdida de credibilidad. Verificar SIEMPRE que ninguna vacante de la
+profesión con igual o mejor salario y sede válida quede fuera del radar antes de entregar.
+
 ## ✅ Checklist de calidad antes de entregar
+- [ ] **Se hizo BARRIDO COMPLETO de la matriz por la PROFESIÓN del aspirante (todas las filas), ordenado por salario — NO se filtró por nombre de cargo. Se revisaron explícitamente Procurador Judicial I/II para abogados.**
 - [ ] Se leyó el 100% de los documentos (escaneadas vistas como imagen).
 - [ ] Experiencia calculada desde el título, sin doble conteo.
 - [ ] Todos los datos (salario/plazas/requisitos) provienen de matriz/manual (0 inventados).

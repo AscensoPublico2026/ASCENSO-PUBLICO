@@ -100,3 +100,19 @@
 - Nota comparativa: la **83 (Asesor $13.074.900, Montería)** paga un poco MÁS que el Proc. Judicial I y también está en Montería → ofrecer ambas; 95 como alternativa sólida.
 
 ## 8. Guion de audio generado (sep-2026). Opciones en Montería: 83 ($13.07M), 95 Proc. Judicial I ($12.46M), 35/01 ($10.4M). Con traslado: 87/274 Jefe División ($18.07M), 85 ($15.86M).
+
+## 9. ⚠️ CORRECCIÓN DE MÉTODO (sep-2026) — barrido COMPLETO por profesión (no por nombre de cargo)
+El análisis original filtró por "Asesor/Jefe de División" y se saltó los PROCURADOR JUDICIAL. Barrido completo de cargos que aceptan DERECHO, ordenado por salario, para Estefanía (abogada + maestría + tarjeta):
+| Concurso | Cargo | Salario | Exp exigida | ¿Cumple hoy (~8,4 años)? | Sede Montería |
+|----------|-------|---------|-------------|--------------------------|---------------|
+| 87/274 | Jefe de División | $18.073.001 | 2,5 años | ✅ | NO (Bogotá) |
+| **89** | **Procurador Judicial II** | **$16.766.110** | **10 años** | ❌ faltan ~1,6 años (revisar con certificado docencia UPB) | **SÍ** |
+| 85 | Asesor 1AS-24 | $15.863.546 | 4 años | ✅ | NO (Atlántico/Bogotá) |
+| 83/84 | Asesor 1AS-22 | $13.074.900 | 2,5 años | ✅ | **SÍ (83: Montería 1)** |
+| **95** | **Procurador Judicial I** | **$12.465.572** | **5 años** | ✅ | **SÍ** |
+| 73-82 | Asesor 1AS-21 | $12.150.564 | 2 años | ✅ | Barranquilla/Bogotá |
+| 35/01 etc | Asesor 1AS-19 | $10.403.514 | 1 año | ✅ | SÍ (35: 3, 01: 2) |
+
+- Experiencia neta verificada (sin solapes, post-título 27/02/2015): **~8,43 años**. Pendiente cert. docencia UPB (3 sem) → si no se traslapa con RECORD, la acerca a los 10 del Proc. Judicial II.
+- **CONCLUSIÓN para Estefanía:** en MONTERÍA su mejor salario 100% seguro HOY es el **Asesor 83 ($13.07M)**; el **Proc. Judicial I (95, $12.46M)** también (el que le recomendaron). El **Proc. Judicial II ($16.76M, Montería)** sería EL mejor, pero exige 10 años y hoy tiene ~8,4 → SOLO si el certificado de docencia UPB (u otra certificación) completa los 10 años. Con traslado: Jefe de División $18.07M (Bogotá).
+- REGLA aprendida: SIEMPRE barrer TODA la matriz por profesión y ordenar por salario; nunca filtrar por nombre de cargo.
