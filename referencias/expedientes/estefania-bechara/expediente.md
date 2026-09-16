@@ -116,3 +116,10 @@ El análisis original filtró por "Asesor/Jefe de División" y se saltó los PRO
 - Experiencia neta verificada (sin solapes, post-título 27/02/2015): **~8,43 años**. Pendiente cert. docencia UPB (3 sem) → si no se traslapa con RECORD, la acerca a los 10 del Proc. Judicial II.
 - **CONCLUSIÓN para Estefanía:** en MONTERÍA su mejor salario 100% seguro HOY es el **Asesor 83 ($13.07M)**; el **Proc. Judicial I (95, $12.46M)** también (el que le recomendaron). El **Proc. Judicial II ($16.76M, Montería)** sería EL mejor, pero exige 10 años y hoy tiene ~8,4 → SOLO si el certificado de docencia UPB (u otra certificación) completa los 10 años. Con traslado: Jefe de División $18.07M (Bogotá).
 - REGLA aprendida: SIEMPRE barrer TODA la matriz por profesión y ordenar por salario; nunca filtrar por nombre de cargo.
+
+## 10. DECISIÓN 83 vs 35 (sep-2026) — dato de inscritos aportado por Julio César
+| Concurso | Salario | Plazas Montería | Inscritos | Recomendación |
+|----------|---------|-----------------|-----------|---------------|
+| **83** | **$13.074.900** | 1 | **229** | ✅ RECOMENDADA (más salario + muchísima menos competencia) |
+| 35 | $10.403.514 | 3 | 1.831 | menos salario y 8x más competencia |
+→ La 83 gana en salario Y en probabilidad (relación plazas/inscritos muy superior pese a tener 1 plaza vs 3). Se recomienda la 83.
