@@ -93,3 +93,10 @@
 - Todas aceptan derecho + posgrado + tarjeta; ella supera experiencia en todas.
 
 ## 6. Estado: TODO VERIFICADO CON MANUAL. Listo para generar entregable (tabla+guion+análisis) tras OK del operador. Falta solo confirmar con la aspirante si acepta traslado (define si va por 83 en Montería o sube a $18M/$15.8M fuera).
+
+## 7. AÑADIDO (sep-2026): PROCURADOR JUDICIAL I (95-2026) verificado con manual
+- Requisitos 95: Título de abogado + tarjeta + **≥5 años de experiencia profesional post-título en actividades jurídicas** (Ley 2430/2024). Estefanía cumple (~8-9 años) ✅. **Tiene sede en Montería** ✅. Salario **$12.465.572**.
+- Consultas del cliente resueltas: (a) experiencia en 2 trabajos SIMULTÁNEOS NO suma doble — se cuenta por fechas de calendario, una sola vez (igual ella cumple de sobra). (b) SÍ puede aplicar al Proc. Judicial I.
+- Nota comparativa: la **83 (Asesor $13.074.900, Montería)** paga un poco MÁS que el Proc. Judicial I y también está en Montería → ofrecer ambas; 95 como alternativa sólida.
+
+## 8. Guion de audio generado (sep-2026). Opciones en Montería: 83 ($13.07M), 95 Proc. Judicial I ($12.46M), 35/01 ($10.4M). Con traslado: 87/274 Jefe División ($18.07M), 85 ($15.86M).
