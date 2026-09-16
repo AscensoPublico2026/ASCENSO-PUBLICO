@@ -137,6 +137,7 @@ Se le presentan 4 opciones en Manizales/eje cafetero (todas cumple el ESTUDIO; f
 | 241-2026 | Oficinista | $3.456.786 | Manizales 1, Caldas 1, Pereira 1, Armenia 1 | bachillerato ✅ + 1 año exp |
 | 260-2026 | Sustanciador | $4.183.546 | Manizales 1 | bachiller ✅ + 1 año exp |
 > DOCUMENTO FALTANTE solicitado en el guion: **certificación de tiempo de servicio de la Policía Nacional** (Talento Humano/Dir. Personal, con fechas y cargos) para acreditar la experiencia relacionada. Con eso el 234 queda 100%.
+> 📊 DATO ESTRATÉGICO (aportado por Julio César, sep-2026): a la fecha la **260-2026 es la que MENOS inscritos tiene** frente a las demás → menos competencia, mayor probabilidad de pasar (aunque salario menor $4.183.546). Se resalta en el guion como jugada para "asegurar el ingreso". NOTA: el n° de inscritos lo consulta el cliente en la plataforma; el asesor no tiene acceso en tiempo real.
 
 ## ⚠️ RIESGOS / PENDIENTES
 1. 🔴 **NO es abogado** — descarta todos los cargos profesionales. Confirmar con él si el grado está próximo (¿le falta preparatorios/judicatura/grado?). Si se gradúa ANTES del cierre (18 sep), se le abre el nivel profesional.
