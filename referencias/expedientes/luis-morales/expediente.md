@@ -2,7 +2,7 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 2 — expediente creado, enlace de carga entregado. A la espera de la documentación (revisar duplicados/versiones).**
+> Estado: **PASO 6 — documentación leída al 100%, duplicados depurados. Experiencia calculada ≈ 9,3 años. PUNTO CRÍTICO: no llega a los 10 años para Procurador Judicial II con lo certificado hoy. Pendiente comentar con Julio.**
 
 ---
 
@@ -34,6 +34,37 @@ La experiencia debe ser **posterior a la obtención del título de abogado**, en
 
 ➡️ Es una definición AMPLIA: casi cualquier ejercicio del derecho como abogado titulado cuenta.
 ⚠️ **NO aplican equivalencias** entre estudio y experiencia (los posgrados NO reemplazan años de experiencia).
+
+## 2.bis DATOS VERIFICADOS con documentos
+- **Nombre completo:** LUIS ENRIQUE MORALES GARCÉS · **C.C. 1.128.406.768** (de Medellín)
+- **Título de Abogado:** Corp. Univ. Americana — **grado 11/12/2015** (Acta 0008, Reg. 14). **Tarjeta Profesional No. 270134** (C.S. Antioquia, exp. 07/03/2016).
+- Posgrados: Esp. Derecho Administrativo · Esp. Derecho Minero y Ambiental · Esp. Alto Gobierno · Maestría en Derecho Administrativo (diplomas cargados).
+- ⚠️ La experiencia profesional para Procurador Judicial cuenta **desde el 11/12/2015** (fecha de grado), NO desde la tarjeta.
+
+## 2.ter TRAYECTORIA LABORAL (verificada — recortada al título)
+
+| Entidad | Cargo/objeto | Desde | Hasta | Cuenta | Meses netos |
+|---------|--------------|-------|-------|--------|-------------|
+| Alcaldía El Bagre (PS-300/2015) | Apoyo Secretaría Planeación | 10/09/2015 | 09/12/2015 | ❌ PREVIO al título | 0 |
+| Concejo El Bagre (Plan Anticorrup.) | Revisión Plan Anticorrupción | 10/12/2015 | 18/12/2015 | ⚠️ empalma con grado (7 d) | ~0,2 |
+| Concejo Zaragoza | **Personero Municipal** | 01/03/2016 | 27/05/2016 | ✅ | ~2,9 |
+| Registraduría Nacional (Antioquia) | Profesional Universitario 3020-01 | 11/10/2016 | 09/01/2020 | ✅ | ~39,5 |
+| SAVIA Servicios S.A.S | Asesoría jurídica der. ambiental | 04/03/2020 | 30/07/2021 | ✅ | ~17,1 |
+| Politécnico Colombiano (PS-50918/2020) | Servicios profesionales (CORANTIOQUIA) | 14/08/2020 | 31/12/2020 | ✅ (solapa SAVIA) | — |
+| TAMANA Pacific Corp. | Acompañamiento jurídico minero-ambiental | 13/08/2021 | 30/04/2022 | ✅ | ~8,7 |
+| Corp. Opción Legal (1815-21) | Abogado Asesor ASPEBAC | 08/10/2021 | 31/12/2021 | ✅ (solapa TAMANA) | — |
+| MIGNOVA S.A.S | Asesoría jurídica minero-ambiental | 22/06/2022 | 31/07/2023 | ✅ | ~13,5 |
+| Politécnico Colombiano (PS-53458/2022) | Servicios profesionales | 14/10/2022 | 31/12/2022 | ✅ (solapa MIGNOVA) | — |
+| Alcaldía El Bagre | **Secretario General y de Gobierno** (020-03) | 01/01/2024 | 11/08/2026 | ✅ | ~31,8 |
+
+### ➡️ EXPERIENCIA PROFESIONAL NETA (posterior al título, sin doble contar solapes): **≈ 9,34 años**
+- Máximo teórico desde el título hasta el cierre (18/09/2026): ~10,78 años.
+- **GAPS sin certificar** (por eso no llega a 10): dic-2015→mar-2016; may-2016→oct-2016; **ene-2020→mar-2020**; **ago-2023→dic-2023**.
+
+## 2.quater ⚠️ CONCLUSIÓN DE CUMPLIMIENTO (regla de oro)
+- **Procurador Judicial I (95)** — exige 5 años → **CUMPLE al 100%** (9,3 años). ✅ SÍ se ofrece.
+- **Procurador Judicial II (89)** — exige 10 años → **con lo certificado hoy (~9,3 años) NO llega. NO cumple al 100%.** ❌
+  - Solo cumpliría si aporta certificaciones adicionales que cubran los gaps (≈ 8 meses más de ejercicio como abogado, posterior al título) para superar los 10 años. → PREGUNTAR a Julio/aspirante si tiene más certificaciones (ej.: litigio independiente, otros contratos 2020, 2023, 2016).
 
 ## 3. Lo que hay que verificar SÍ o SÍ (regla de oro — no fallar)
 1. **Fecha exacta del título de abogado** (acta de grado / diploma). Si es de 2015 y hoy es sep-2026 → ~11 años.
