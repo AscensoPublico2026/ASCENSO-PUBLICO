@@ -2,7 +2,11 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 6 — documentación leída al 100%, duplicados depurados. Experiencia calculada ≈ 9,3 años. PUNTO CRÍTICO: no llega a los 10 años para Procurador Judicial II con lo certificado hoy. Pendiente comentar con Julio.**
+> Estado: **PASO 8 — ENTREGABLE GENERADO. Se ofrece Procurador Judicial I (95-2026) como opción recomendada y única que cumple 100% (9,3 años > 5 exigidos). Procurador Judicial II (89) descartado: faltan ~8 meses para los 10 años. Julio explicará con transparencia la suma de experiencia.**
+
+## PLAZAS 95-2026 (verificado en manual)
+- Total oficial en manual: **77 cargos** (planta global). Nota: la matriz mostraba 63; se usa el dato del manual vigente (77).
+- Ciudades de interés de Luis: **Bogotá, Medellín y Montería** — las TRES aparecen como sedes habilitadas. El manual no desglosa número por ciudad (planta global que se distribuye), así que se presenta como "77 a nivel nacional, con las 3 ciudades habilitadas".
 
 ---
 
