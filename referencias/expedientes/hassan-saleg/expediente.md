@@ -2,7 +2,21 @@
 
 > Concurso: Procuraduría General de la Nación (PGN) 2026 · Régimen especial (NO CNSC)
 > Asesor: Juan Gómez (Ascenso Público)
-> Estado: **PASO 2-6 — datos claros, matriz filtrada y manuales 104/111 verificados. A la espera de documentos para confirmar. Opción ideal ya identificada: 104-2026.**
+> Estado: **PASO 7 — documentos leídos 100% y verificados. Cumple 104-2026 al 100% (Ing Civil + tarjeta vigente, sin experiencia). Listo para entregable.**
+
+## DATOS VERIFICADOS con documentos
+- **Nombre:** HASSAN ALI SALEG LEGARDA · **C.C. 1.006.949.059** de Mocoa · nac. 06/07/2000
+- **Título:** INGENIERO CIVIL — **Universidad del Valle, grado 29/11/2025** (diploma verificado; él había dicho de memoria "dic/2024", el real es 29/11/2025).
+- **Tarjeta Profesional COPNIA:** Matrícula **171037-0807704 VLL** desde **22/12/2025**, VIGENTE, sin antecedentes (certificado CVAD-2026-4654134, exp. 05/08/2026) ✅.
+- Diplomados verificados: Contabilidad Básica (Politécnico, mar-abr 2023) y Gerencia de Proyectos (Politécnico, may-jul 2025) — YA los tiene (no eran necesarios para la 104).
+- Especialización Gerencia de Proyectos de Construcción (Univalle): EN CURSO 2º sem, NO titulada → no suma como posgrado.
+
+### Experiencia certificada (para referencia — NO necesaria para la 104)
+| Empresa | Cargo | Desde | Hasta |
+|---------|-------|-------|-------|
+| Construpacicol SAS (UT Eco-Pance) | Auxiliar de Ingeniería Civil | 01/08/2023 | 30/06/2025 |
+| Braco Company SAS | Ingeniero Residente de Obra | 29/12/2025 | actualidad |
+> ⚠️ Como INGENIERO (posterior al grado 29/11/2025) solo tiene ~9 meses. El periodo de "Auxiliar de Ing Civil" es previo al grado. Por eso NO alcanza 2-3 años de experiencia profesional como ingeniero → confirma que su ruta correcta es la 104 (sin experiencia).
 
 ---
 
