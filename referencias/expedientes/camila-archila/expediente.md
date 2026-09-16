@@ -73,6 +73,11 @@ Quiere cargo ADMINISTRATIVO en Bogotá, pero:
 ➡️ El 242 paga más pero exige experiencia ADMINISTRATIVA relacionada (su experiencia es social → zona gris, no seguro). El 253 (mejor salario, sin exp) es "casi" pero "relacionada con la especialidad de la dependencia" es matiz → verificar según dependencia.
 ⚠️ PENDIENTE: confirmar sede Bogotá del 243 con desglose exacto; pedir manuales 240/237/278 (otros administrativos sin experiencia) para ampliar opciones.
 
+## ENTREGABLE GENERADO (sep-2026) — estructura 8 bloques, sin emojis, por N° concurso
+- Opción principal recomendada: **243-2026** (Aux Administrativo, $4.565.448, 8 plazas Bogotá, NO exige exp) → 100% segura.
+- Alternativas con salvedad: 242 ($4.966.461, 15 plazas Bogotá, pero exige 1 año exp admin → riesgo), 241 (Oficinista $3.456.786, 37 plazas Bogotá, exp relacionada → salvedad pero funciones más genéricas).
+- Guion explica con transparencia por qué la 243 es la segura (su título cubre + sin exp) y marca la salvedad de las otras (experiencia social vs administrativa).
+
 ## 4. Flujo antes del entregable (regla Julio César)
 matriz → leer manuales que se tengan → verificar 100% contra manual → pedir manuales/documentos faltantes y ESPERAR →
 cuando TODO verificado, preguntar "¿generamos el entregable?" → guion 8 bloques, SIN emojis, por N° concurso, total plazas + Bogotá.
