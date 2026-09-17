@@ -104,3 +104,18 @@ Perfil confirmado: Contadora Publica (grado 13/12/2019) + tarjeta JCC 267703-T V
 - Salario: no dio minimo. Como no tiene piso, priorizar por SEGURIDAD y salario: 146 ($8,97M, 16 plazas costa) y 198 ($9,64M) arriba; 115 ($6,89M, sin experiencia, Bogota) como respaldo segurisimo; 288 ($5,42M) si quiere Sincelejo/mas plazas.
 - Certificado de votacion: NO lo pide ninguno de estos manuales como requisito de inscripcion (solo suma en desempate). No bloquea.
 - PENDIENTE: pedir a Julio los INSCRITOS por concurso para calcular inscritos/plaza.
+
+
+## 7. DECISION DE YINIT: quiere NIVEL TECNICO (mas probabilidad, todo a favor) — NO profesional
+Barrido COMPLETO de las 33 vacantes de nivel Tecnico, clasificando por como piden el estudio:
+- ✅ NOMBRAN "contaduria publica" TEXTUAL (100% seguras, sin zona gris): **288** (Sustanciador $5.424.740, 84 plazas, Sincelejo+Monteria+costa) y **271** (Sustanciador $5.424.740, 2 plazas, Bogota).
+- 🟡 TODAS las demas tecnicas (245,246,247,248,252,253,254,262,275,276,277,283,289,290,291...) piden estudio "relacionado con la especialidad de la dependencia" = ZONA GRIS (criterio del verificador). NO ofrecer como seguras (leccion Laura).
+- ❌ Tecnico investigador/criminalistica (255-259, 282, 284-287): piden CURSO ESPECIFICO que no tiene = doble zona gris. Descartadas.
+- ❌ 234 (Sustanciador 180 plazas): pide "educacion superior en DERECHO" → no aplica a contadora.
+- ❌ 260 (Sustanciador, solo bachiller, $4.18M): menor salario; cumple pero subutiliza.
+
+### VEREDICTO para Yinit (tecnico 100% seguro):
+- **288-2026** es LA opcion: nivel tecnico, nombra contaduria textual, 84 plazas (la de mas plazas del concurso = maxima probabilidad, lo que ella quiere), sede en Sincelejo/Monteria/toda la costa, exp 1,5 anios (cumple de sobra). $5.424.740.
+- **271-2026** respaldo mismo cargo/salario pero solo 2 plazas (Bogota) → 288 le gana ampliamente en probabilidad.
+- Certificado de votacion: no es requisito de inscripcion (solo desempate) → no bloquea.
+- Guion tecnico: 288 principal + 271 alternativa; explicar que 288 tiene 84 plazas = mejor chance.
