@@ -70,3 +70,15 @@ Mensaje: explica que la 260 (donde estaba, bachiller $4.18M) es quedarse corta; 
 - Confirmar con ella que la inscrita fue la 260.
 - Pedir inscritos de 103/104/105 en Bucaramanga (recomendar por probabilidad inscritos/plaza).
 - Todo depende de que el PQRS la habilite a re-inscribirse.
+
+
+## ANALISIS ESTADISTICO (inscritos aportados por Julio, 17-sep-2026) — CAMBIA la recomendacion
+Las 3 pagan lo mismo ($6.889.867), asi que el salario NO diferencia; lo que decide es inscritos/plaza:
+| Concurso | Inscritos | Plazas nacional | Inscritos/plaza | Bucaramanga |
+|----------|-----------|-----------------|-----------------|-------------|
+| **103** | 1.114 | 23 | **48** (LA MAS GANABLE) | 1 |
+| **105** | 3.581 | 64 | **56** | 3 |
+| **104** | 14.082 | 109 | **129** (LA MAS DIFICIL) | 4 |
+➡️ CORRECCION: la 104 (que se recomendaba por mas plazas) es la MAS DIFICIL (129/plaza, 14.082 inscritos). La **103 es la mas ganable (48/plaza)** pese a tener solo 1 plaza en Bucaramanga; la **105 es el punto medio (56/plaza) con 3 plazas en Bucaramanga**.
+➡️ RECOMENDACION por PROBABILIDAD: 103 (mejor chance) o 105 (buen equilibrio: 56/plaza + 3 plazas Bucaramanga). Mismo salario en las 3.
+> Regla: comparar por inscritos/plaza, no por # de plazas ni # de inscritos por separado.
