@@ -1,4 +1,4 @@
-# 📎 Documentos de JHON GARCÍA
+# 📎 Documentos de JHON GARCÍA — Vacante 234-2026
 
 Sube aquí (en esta carpeta) todos los PDF / imágenes de Jhon García.
 IMPORTANTE: no olvides la CÉDULA (ambas caras) — es lo primero que reviso.
@@ -12,7 +12,13 @@ menos de 2 MB y organizo en el orden estándar:
   3) Experiencia laboral (CERT. LABORAL ...)
   4) Adicionales (tarjeta profesional, certificado de votación)
 
-(Pendiente: confírmame a qué vacante se inscribió para verificar requisitos.)
+Recordatorio 234-2026 (Sustanciador 4SU-11, nivel Técnico):
+- Estudio: APROBACIÓN de 1 año de educación superior EN DERECHO.
+  OJO: debe ser DERECHO y ser 1 año APROBADO (no "cursando"). Se acredita con
+  historial/certificado de materias o semestres aprobados, NO con certificado de
+  "estudiante activo". Idealmente que suba el certificado de notas / semestres
+  aprobados de su carrera de Derecho.
+- Experiencia: 1.5 años de experiencia relacionada.
 
 Si algún documento viene con contraseña, avísame cuál es (suele ser la cédula).
 Cuando termines de cargarlos, avísame. 💪
