@@ -65,4 +65,18 @@
 - Opciones de mayor salario fuera / con matricula: 267 ($6.89M, sin exp), 264 ($8.97M, 2 años) — Negocios Internacionales, planta global (traslado), requieren matricula.
 - PENDIENTE: manual 261; confirmar con Julio si la PGN acepta el certificado CONPIA "en tramite".
 
-## 6. Flujo: guion 8 bloques sin emojis, por N concurso, tabla con vacantes totales + Antioquia.
+## 6. BARRIDO AMPLIADO (mas dinero / mas vacantes) — verificado
+- MAS VACANTES: 234 (180 plz) pide DERECHO → NO cumple. 288 (84 plz) su lista NO incluye negocios internacionales (lista cerrada) → NO cumple. 289 (31, zona gris "relacionada"). → NO hay cargo de alto volumen que cumpla limpio.
+- MAS DINERO que cumple: 264 (Prof Univ $8.972.318, 2 años exp — cumple justo, requiere matricula) y 267 ($6.889.867, sin exp, requiere matricula). Ambos Negocios Internacionales, planta global (traslado), matricula CONPIA en tramite (valida p/ convocatorias segun el propio certificado).
+- Asesor/Jefe ($10.4M-$18M): exigen POSGRADO → Wilson NO tiene → descartados.
+
+## 7. MAPA FINAL de opciones para Wilson
+| Concurso | Cargo | Salario | Vacantes | Sede | Requiere | Estado |
+|----------|-------|---------|----------|------|----------|--------|
+| 264 | Prof. Universitario | $8.972.318 | 2 | planta global (traslado) | matricula + 2 años exp | 🟡 mejor salario; matricula en tramite + traslado |
+| 267 | Prof. Universitario | $6.889.867 | 4 | planta global (traslado) | matricula, sin exp | 🟡 buen salario; matricula en tramite + traslado |
+| **261** | Sustanciador (Tec) | $4.565.448 | Medellin 1, Antioquia 1 | **Medellin** | sin matricula, sin exp | ✅ SEGURO en su ciudad |
+| **260** | Sustanciador (Tec) | $4.183.546 | Medellin 1, Amaga 1, Antioquia 2 | **Medellin** | sin matricula, bachiller+1año exp | ✅ SEGURO en su ciudad |
+> No hay cargo de mayor volumen de plazas que cumpla (234 pide derecho, 288 no incluye neg. internac.). No hay $10M+ sin posgrado.
+
+## 8. Flujo: guion 8 bloques sin emojis, por N concurso, tabla con vacantes totales + Antioquia.
