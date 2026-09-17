@@ -101,3 +101,14 @@ Estructura 8 bloques, sin emojis, por N concurso, tabla con vacantes totales + c
 | 291 | Secretario Procuraduria (Tec) | $5.846.100 | 19 | Ibague/Santa Marta/Valledupar | SIN matricula, sin exp (respaldo seguro) |
 | 261 | Sustanciador (Tec) | $4.565.448 | 13 | Medellin | SIN matricula, sin exp (respaldo en su ciudad) |
 Recomendacion: mejor salario 264 (Bogota); respaldo seguro 291 (sin matricula, 19 plz) o 261 (Medellin). Se explica la situacion de la matricula CONPIA con transparencia.
+
+
+## ANALISIS ESTADISTICO (inscritos aportados por Julio, 17-sep-2026)
+| Concurso | Salario | Inscritos | Plazas | Inscritos/plaza | Ciudad | Requiere |
+|----------|---------|-----------|--------|-----------------|--------|----------|
+| **261** | $4.565.448 | 1.150 | 13 | **88** (mas ganable) | Medellin | sin matricula, sin exp |
+| **291** | $5.846.100 | 2.448 | 19 | **129** | Ibague/Sta Marta/Valledupar | sin matricula, sin exp |
+| **264** | $8.972.318 | 409 | 2 | **204** | Bogota | matricula + 2 años exp |
+| **267** | $6.889.867 | 1.149 | 4 | **287** (mas dificil) | planta global | matricula |
+➡️ La 264 engaña (solo 409 inscritos) pero con 2 plazas = 204/plaza. La 267 es la peor (287/plaza) + matricula.
+➡️ RECOMENDACION por probabilidad: 261 (Medellin, 88/plaza, su ciudad, sin matricula) o 291 (129/plaza, mas salario $5.85M, sin matricula). La 264 solo si prioriza salario y asume triple riesgo (204/plaza + matricula CONPIA en tramite + Bogota).
