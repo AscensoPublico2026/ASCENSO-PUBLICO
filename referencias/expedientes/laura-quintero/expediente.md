@@ -82,3 +82,27 @@ Las 3 pagan lo mismo ($6.889.867), asi que el salario NO diferencia; lo que deci
 ➡️ CORRECCION: la 104 (que se recomendaba por mas plazas) es la MAS DIFICIL (129/plaza, 14.082 inscritos). La **103 es la mas ganable (48/plaza)** pese a tener solo 1 plaza en Bucaramanga; la **105 es el punto medio (56/plaza) con 3 plazas en Bucaramanga**.
 ➡️ RECOMENDACION por PROBABILIDAD: 103 (mejor chance) o 105 (buen equilibrio: 56/plaza + 3 plazas Bucaramanga). Mismo salario en las 3.
 > Regla: comparar por inscritos/plaza, no por # de plazas ni # de inscritos por separado.
+
+
+## 7. CORRECCION CRITICA (18-sep-2026) — Laura NO tiene tarjeta profesional NI la esta tramitando
+FALLO DETECTADO: se le ofrecieron 103/104/105 (Prof. Universitario derecho) que en "Otros requisitos" piden **"Tarjeta profesional en los casos reglamentados por la ley"**. Para ABOGADO la tarjeta ES requisito reglamentado (Consejo Superior de la Judicatura). Como Laura NO la tiene ni la tramita → esas 3 quedan DESCARTADAS. Reclamo de la aspirante (pago la asesoria). No repetir: SIEMPRE revisar col "Otros requisitos" (tarjeta) antes de ofrecer.
+
+### Barrido REAL de derecho SIN tarjeta (unico universo valido para Laura hoy)
+| Concurso | Cargo | Nivel | Salario | Plazas | Exp exigida | Bucaramanga | Cumple 100%? |
+|----------|-------|-------|---------|--------|-------------|-------------|--------------|
+| 82 | Asesor | Asesor | $12.150.564 | 2 | 2 anios + POSGRADO | no | ❌ (sin posgrado ni exp) |
+| 234 | Sustanciador | Tecnico | $5.424.740 | 180 | **1,5 anios relacionada** | **SI** | ⚠️ ZONA GRIS (exp ~17 meses, justo) |
+| 288 | Sustanciador | Tecnico | $5.424.740 | 84 | 1,5 anios relacionada | SI | ⚠️ ZONA GRIS (exp justa) |
+| 242 | Auxiliar Administrativo | Admin | $4.966.461 | 69 | **1 anio relacionada** | **SI** | ✅ cumple exp (judicatura+Superservicios ~17m) |
+| 243 | Auxiliar Administrativo | Admin | $4.565.448 | 26 | **NO requiere** | NO (Santander sin Buc; muni: Armenia, Ibague, Cucuta, Cali, Tunja) | ✅ 100% pero sin Buc |
+
+### Experiencia de Laura (para nivel tecnico/asistencial = "relacionada", NO "profesional de abogado")
+- Judicante Proc. Regional Santander (mar-dic 2025) ~10 meses + Contratista Superservicios (feb 2026-actual) ~7 meses = **~17 meses**.
+- Alcanza 1 anio (242) con holgura. Para 1,5 anios (234/288) queda JUSTO y depende de que el verificador acepte judicatura/contratos como "relacionada" → ZONA GRIS, NO ofrecer como seguro (regla de oro).
+
+### CONCLUSION honesta para Laura (abogada reciente, SIN tarjeta, SIN exp profesional)
+- Nivel PROFESIONAL en derecho ($6,89M): BLOQUEADO por tarjeta. Se abre apenas saque la tarjeta profesional (tramite rapido con el titulo). RUTA A FUTURO real.
+- Lo 100% seguro HOY en Bucaramanga: **242 (Auxiliar Admin, $4.96M, 69 plazas, Bucaramanga, pide 1 anio exp relacionada que ella cumple)**.
+- 100% seguro sin ninguna condicion: **243 (Auxiliar Admin, $4.56M, sin experiencia)** pero SIN Bucaramanga (mas cercano en region: confirmar; muni listados no incluyen Buc).
+- 234/288 (Sustanciador $5.42M, Bucaramanga): mejores en salario/plazas PERO experiencia JUSTA (zona gris) → mencionar con advertencia explicita, NO como principal.
+- ⚡ RECOMENDACION FUERTE al cliente: lo mas valioso para Laura es SACAR LA TARJETA PROFESIONAL de abogada (se obtiene con el titulo). Apenas la tenga, se le abren TODOS los Prof. Universitario en derecho ($6,89M, 103/104/105 y mas) sin pedir experiencia. Vale la pena esperar/tramitarla.
