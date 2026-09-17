@@ -64,3 +64,14 @@ TODOS los Prof. Universitario de ingenieria (121, 155-192, 209-228) aceptan elec
 - Cerca de Sincelejo: el 288 tambien tiene Monteria (1), Barranquilla, Valledupar — costa.
 
 ## 7. Flujo: guion 8 bloques sin emojis, por N concurso, tabla vacantes totales + Sucre/cercania.
+
+
+## ANALISIS ESTADISTICO (inscritos aportados por Julio, 17-sep-2026)
+| Concurso | Salario | Inscritos | Plazas | Inscritos/plaza | Ciudad |
+|----------|---------|-----------|--------|-----------------|--------|
+| **209** | $9.646.860 | 112 | 3 | **37** (mas ganable, empatado) | Bogota |
+| **155** | $8.972.318 | 37 | 1 | **37** | Bogota |
+| **288** | $5.424.740 | 3.856 | 84 | **46** | Sincelejo (su ciudad) |
+| **217** | $9.646.860 | 426 | 6 | **71** (mas competida) | Bogota |
+➡️ HALLAZGO: los de MEJOR salario (209/155, $9.64M/$8.97M) son a la vez los MAS GANABLES (~37/plaza) — poca gente cumple ingenieria+2/3 años exp. El 288 (Sincelejo) tiene mas competencia (46/plaza) por ser Sustanciador masivo.
+➡️ RECOMENDACION: si acepta traslado a Bogota, el **209 ($9.64M, 37/plaza, 3 plazas)** es la MEJOR jugada (mas salario Y mas ganable). Si quiere quedarse en Sincelejo, el **288 ($5.42M, 46/plaza)** es solido. Trade-off: Sincelejo $5.4M (288) vs Bogota $9.6M mejor probabilidad (209).
