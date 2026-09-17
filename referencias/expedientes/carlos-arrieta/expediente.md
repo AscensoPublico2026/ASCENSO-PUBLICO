@@ -48,4 +48,19 @@ Faltan manuales de los Prof. Universitario de ingenieria para ver si tienen sede
 > Carlos cumple experiencia para todos. Lo que define es la SEDE (quiere Sincelejo/cerca) y si alguno de mejor salario tiene costa. PEDIR esos manuales a Julio.
 > Si ninguno de mejor salario tiene sede en la costa (son planta global = traslado), la mejor opcion EN Sincelejo es el 288 ($5.42M).
 
-## 6. Flujo: verificar manuales → solo 100% → guion 8 bloques sin emojis, por N concurso, tabla vacantes totales + Sucre/cercania.
+## 6. MANUALES VERIFICADOS (13 de ingenieria) — CONCLUSION
+TODOS los Prof. Universitario de ingenieria (121, 155-192, 209-228) aceptan electronica Y sistemas ✅, Carlos cumple experiencia (20 años) ✅, PERO **TODOS son PLANTA GLOBAL ubicados en BOGOTA** (Dir. Apoyo Estrategico/Analisis de Datos o Investigaciones Especiales) — NINGUNO en Sincelejo/Sucre/costa. → Implican TRASLADO a Bogota.
+| Concurso | Salario | Exp | Sede | Nota |
+|----------|---------|-----|------|------|
+| 209/215/216/217/228 | $9.646.860 | 3 años ✅ | Bogota | traslado |
+| 155/156/167/168/169/190/192 | $8.972.318 | 2 años ✅ | Bogota | traslado |
+| 121 | $6.889.867 | No requiere | Bogota | traslado |
+| **288** | $5.424.740 | 1,5 años ✅ | **SINCELEJO 2 + Sucre 1 + Monteria** | ✅ EN SU CIUDAD |
+
+### CONCLUSION para Carlos (quiere Sincelejo/cerca, >$4M):
+- **EN SINCELEJO (su ciudad):** la unica opcion de ingenieria que cumple 100% y tiene sede local es el **288 (Sustanciador $5.424.740, Sincelejo 2)**. Supera su piso ($4M).
+- **MEJOR SALARIO (con traslado a Bogota):** cargos Prof. Universitario $8.97M (2 años) o $9.64M (3 años) — cumple todo pero tocaria irse a Bogota.
+- Asesores ($10.4M+): exigen POSGRADO → Carlos NO tiene (solo cursos) → descartados.
+- Cerca de Sincelejo: el 288 tambien tiene Monteria (1), Barranquilla, Valledupar — costa.
+
+## 7. Flujo: guion 8 bloques sin emojis, por N concurso, tabla vacantes totales + Sucre/cercania.
