@@ -128,6 +128,21 @@ Revisadas las sedes reales: la 257 (Téc. Investigador), 245 (Téc. Admin) y 285
   - **234-2026 Sustanciador 4SU-11** ($5.42M-$6.36M): 1 año educ. superior derecho ✅ + **1,5 años exp relacionada** → su mejor opción SI certifica la experiencia policial.
 > ⚠️ Casi todas piden algo de experiencia relacionada → por eso es CLAVE que aporte la certificación de tiempo de servicio de la Policía. Con ella, el 234 (mejor salario) queda 100%.
 
+## ✅ ACTUALIZACIÓN (sep-2026): EXPERIENCIA Y TÍTULO YA CERTIFICADOS — se resuelve el pendiente
+Jhon cargó los documentos que faltaban. Verificado:
+- **Certificación de tiempo de servicio Policía Nacional (Talento Humano):** ingresó **10/10/2003**, retiro **06/09/2024** (Res. 3116, llamamiento a calificar servicios) = **~21 años de servicio** ✅✅. Con todos los cargos y fechas (Patrullero, Comandante de Patrulla, Subcomandante Subestación, Operador de Despacho/CIEPS, Promotor Redes/Prevención, Responsable Coordinación Distrito). EXPERIENCIA RELACIONADA ARCHI-CERTIFICADA.
+- **TÍTULO: Técnico Profesional en Servicio de Policía** (Dirección Nacional de Escuelas — INSTITUCIÓN UNIVERSITARIA, Policía Nacional; grado 20/07/2008, acta 001, reg 1769) → **ES EDUCACIÓN SUPERIOR** (título de formación técnica profesional del nivel superior).
+- Programa de DERECHO: culminó materias (sin grado). Especialización Derecho Procesal (1er sem).
+- Cédula 15.932.565. Cursos: DDHH, Mediación Policial, Redacción Informes, Integridad/Transparencia, cursos de datos/redes SENA.
+
+### CUMPLIMIENTO CONFIRMADO (regla de oro) — YA cumple con experiencia
+- **234-2026 Sustanciador 4SU-11** ($5.424.740): pide "1 año educ. superior EN DERECHO" (Jhon culminó el programa de derecho = aprobó >1 año de educ. superior en derecho ✅) + "1,5 años exp relacionada" (tiene 21 años Policía certificados ✅). **Manizales/Caldas: 2 plazas** ✅ → **CUMPLE 100%. RECOMENDADA.**
+- **242-2026 Aux Administrativo** ($4.966.461): "1 año educ. superior en derecho/ingenierías/admin..." ✅ + 1 año exp relacionada ✅. Manizales/Caldas: 1.
+- **260-2026 Sustanciador 4SU-08** ($4.183.546): solo bachiller ✅ + 1 año exp ✅. Manizales: 1. (menor competencia — dato que Julio mencionó antes).
+- **241-2026 Oficinista** ($3.456.786): 3 años secundaria ✅ + 1 año exp ✅. Manizales/Caldas: 2.
+> Todos con experiencia YA acreditada. El 234 es el mejor (mayor salario + estudio en derecho + 2 plazas Manizales).
+> ⚠️ Sigue SIN ser abogado (no cargos profesionales). Su título técnico profesional (educación superior) + programa de derecho culminado cubren el "1 año de educación superior en derecho" del 234.
+
 ## 📤 ENTREGABLE GENERADO (sep-2026) — opciones + documento faltante
 Se le presentan 4 opciones en Manizales/eje cafetero (todas cumple el ESTUDIO; falta acreditar experiencia):
 | Concurso | Cargo | Salario | Zona (Manizales/cafetero) | Requisito |
