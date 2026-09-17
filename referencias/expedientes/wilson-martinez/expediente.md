@@ -51,7 +51,7 @@
 ## 5. OPCIONES TECNICAS en Antioquia (SIN matricula, verificado manual) — lo que le interesa a Wilson
 | Concurso | Cargo | Salario | Exp | Matricula | Antioquia | ¿Cumple? |
 |----------|-------|---------|-----|-----------|-----------|----------|
-| **261** | Sustanciador 4SU-09 | $4.565.448 | **No requiere** | NO | Medellin (verificar manual) | 🟡 FALTA MANUAL 261 — "1 año educ superior en areas relacionadas con dependencia" (su titulo cubre; zona gris "relacionada") |
+| **261** | Sustanciador 4SU-09 | $4.565.448 | **No requiere** | NO | **Medellin 1 + Antioquia 1** | ✅ VERIFICADO: "1 año educ superior en areas relacionadas con funciones/dependencia" (su titulo lo cubre) + NO exige matricula + NO requiere experiencia. Proposito: sustanciar/recopilar info (afin a su exp SNR) |
 | **260** | Sustanciador 4SU-08 | $4.183.546 | 1 año relacionada | NO | **Medellin 1, Amaga 1, Antioquia 2** | ✅ solo bachiller + su exp SNR sirve |
 | **288** | Sustanciador 4SU-11 | $5.424.740 | 1,5 años relacionada | NO | Amaga 1 | 🟡 verificar si acepta neg. internacionales en lista estudio |
 
