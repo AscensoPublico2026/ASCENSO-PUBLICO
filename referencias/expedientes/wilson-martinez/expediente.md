@@ -79,4 +79,17 @@
 | **260** | Sustanciador (Tec) | $4.183.546 | Medellin 1, Amaga 1, Antioquia 2 | **Medellin** | sin matricula, bachiller+1año exp | ✅ SEGURO en su ciudad |
 > No hay cargo de mayor volumen de plazas que cumpla (234 pide derecho, 288 no incluye neg. internac.). No hay $10M+ sin posgrado.
 
-## 8. Flujo: guion 8 bloques sin emojis, por N concurso, tabla con vacantes totales + Antioquia.
+## 8. RIESGO MATRICULA CONPIA + PLAN B (sep-2026)
+- El certificado CONPIA 5381/2025 dice TEXTUAL que el doc "en tramite" es "completamente valido para... participar en convocatorias para la provision de empleos en concurso de meritos" (Decreto 1083/2015, vigencia 1 año). → FUERTE a favor, pero NO 100% garantizado (decide el verificador PGN). Riesgo residual.
+- ✅ PLAN B si NO aceptan la matricula: los cargos TECNICOS NO exigen matricula. Wilson igual tiene BUENAS opciones (su titulo = años educ superior). Ordenadas por salario (sin matricula):
+| Concurso | Cargo | Salario | Plz | Exp | Sede notable |
+|----------|-------|---------|-----|-----|--------------|
+| 245 | Tecnico Administrativo | $7.551.499 | 5 | 1 año relacionada (vias A/B/C) | (verificar) |
+| 291 | Secretario Procuraduria | $5.846.100 | 19 | **No requiere** | Ibague/Santa Marta/Valledupar |
+| 253 | Tecnico Administrativo | $5.846.100 | 2 | **No requiere** | (verificar) |
+| 261 | Sustanciador | $4.565.448 | 13 | No requiere | **Medellin** |
+| 260 | Sustanciador | $4.183.546 | ~ | bachiller+1año | **Medellin/Amaga** |
+> Muchos tecnicos dicen "areas relacionadas con la especialidad de la dependencia" (matiz) — verificar cuales aceptan negocios internacionales/admin claro. Los que piden solo "2 años educacion superior" (291, 253) son los mas limpios.
+> CONCLUSION: aunque NO acepten la matricula, Wilson tiene plan B solido: en Medellin (261 sin exp $4.56M), o mejor salario en otras ciudades (291 $5.85M sin exp 19 plz; 245 $7.55M con exp). NO se queda sin opciones.
+
+## 9. Flujo: guion 8 bloques sin emojis, por N concurso, tabla con vacantes totales + ciudad.
