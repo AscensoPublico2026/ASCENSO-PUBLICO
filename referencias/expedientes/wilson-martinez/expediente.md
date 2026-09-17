@@ -92,4 +92,12 @@
 > Muchos tecnicos dicen "areas relacionadas con la especialidad de la dependencia" (matiz) — verificar cuales aceptan negocios internacionales/admin claro. Los que piden solo "2 años educacion superior" (291, 253) son los mas limpios.
 > CONCLUSION: aunque NO acepten la matricula, Wilson tiene plan B solido: en Medellin (261 sin exp $4.56M), o mejor salario en otras ciudades (291 $5.85M sin exp 19 plz; 245 $7.55M con exp). NO se queda sin opciones.
 
-## 9. Flujo: guion 8 bloques sin emojis, por N concurso, tabla con vacantes totales + ciudad.
+## 9. ENTREGABLE GENERADO (sep-2026) — decision Julio: arriesgar con matricula + dar respaldo
+Estructura 8 bloques, sin emojis, por N concurso, tabla con vacantes totales + ciudad.
+| Concurso | Cargo | Salario | Nacional | Ciudad | Requiere |
+|----------|-------|---------|----------|--------|----------|
+| 264 | Prof. Universitario | $8.972.318 | 2 | Bogota | matricula (CONPIA en tramite, valido p/ convocatoria) + 2 años exp |
+| 267 | Prof. Universitario | $6.889.867 | 4 | planta global | matricula, sin exp |
+| 291 | Secretario Procuraduria (Tec) | $5.846.100 | 19 | Ibague/Santa Marta/Valledupar | SIN matricula, sin exp (respaldo seguro) |
+| 261 | Sustanciador (Tec) | $4.565.448 | 13 | Medellin | SIN matricula, sin exp (respaldo en su ciudad) |
+Recomendacion: mejor salario 264 (Bogota); respaldo seguro 291 (sin matricula, 19 plz) o 261 (Medellin). Se explica la situacion de la matricula CONPIA con transparencia.
