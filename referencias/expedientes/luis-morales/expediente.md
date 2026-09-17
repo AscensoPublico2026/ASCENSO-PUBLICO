@@ -89,3 +89,20 @@ matriz → leer manuales que se tengan → verificar 100% contra manual → pedi
 cuando TODO esté verificado y ordenado, preguntar **"¿generamos el entregable?"** → con OK, generar guion con estructura de 8 bloques
 (saludo → explicación del caso → frase puente → tabla → aviso de manuales → descripción corta por PDF → análisis/recomendación → cierre),
 SIN emojis, identificando cada oferta por NÚMERO DE CONCURSO, mostrando total de plazas + desglose por ciudad de interés. Solo lo que cumple 100%.
+
+
+## ⚡ ACTUALIZACION DECISIVA (17-sep-2026): NUEVOS certificados → LUIS AHORA LLEGA A 10 AÑOS
+Luis envio 2 certificados con FECHAS ACTUALIZADAS/NUEVAS que suman experiencia y cambian la conclusion:
+- **MIGNOVA (version actualizada):** periodo real **22/06/2022 → 28/12/2023** (antes se tenia hasta 31/07/2023; son +5 meses). Asesorias minero-ambientales.
+- **SAVIA 2016 (NUEVO periodo):** abogado auxiliar area ambiental, **01/06/2016 → 23/09/2016** (periodo de 2016 que NO estaba contado antes).
+- RECALCULO experiencia neta post-titulo (grado 11/12/2015), sin solapes, solo periodos con certificacion formal: **≈ 10,04 años** (16 dias por encima de los 10 exigidos). ANTES era ~9,34.
+
+### ➡️ CONCLUSION ACTUALIZADA: AHORA SI CUMPLE el PROCURADOR JUDICIAL II (89-2026)
+| Concurso | Cargo | Salario | Exp exig | ¿Cumple? | Montería |
+|----------|-------|---------|----------|----------|----------|
+| **89** | **Procurador Judicial II** | **$16.766.110** | 10 años | ✅ SI (~10,04) — SU META ORIGINAL | SI |
+| 83 | Asesor 1AS-22 | $13.074.900 | 2,5 años | ✅ | SI (1) |
+| 95 | Procurador Judicial I | $12.465.572 | 5 años | ✅ | SI |
+- El 89 (Procurador Judicial II) era LA meta de Luis y AHORA la alcanza. Casi el tope del concurso ($16.76M), con sede en Montería.
+- ⚠️ MARGEN JUSTO (~16 dias): al inscribir, adjuntar TODAS las certificaciones (Personero Zaragoza, SAVIA 2016, Registraduria 2016-2020, SAVIA 2020-21, Opcion Legal, TAMANA, MIGNOVA actualizado, El Bagre Secretario Gral) para que el verificador sume los 10 años completos.
+- Nombres nuevos en carpeta: "Certificacion laboral Luis Morales- mignova.pdf" (hash distinto al MIGNOVA viejo) y "certificación-savia.pdf" (SAVIA 2016). Revisar si hay que depurar el MIGNOVA/SAVIA viejos (versiones desactualizadas) al organizar inscripcion.
