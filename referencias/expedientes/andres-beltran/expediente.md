@@ -99,3 +99,35 @@ Todas piden Derecho + tarjeta (los tiene) y exp que cumple con ~4 años. TODAS c
 contra el manual → 4) pedir manuales faltantes y esperar → 5) cuando TODO esté verificado y ordenado,
 preguntar "¿procedemos a generar el entregable?" → 6) con OK, generar tabla + guion + análisis.
 🛑 REGLA DE ORO: solo ofrecer cargos que cumple al 100%, sin zonas grises. Tabla con plazas TOTALES + desglose por ciudad.
+
+
+
+---
+
+## 8. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 147-2026 (Prof. Universitario 3PU-17)
+
+> Fecha: sep-2026. Carpeta: documentos-aspirantes/andres-beltran/ORGANIZADO/
+> Revisado hoja por hoja (paquete grande de 22 pags + adjuntos). Todo coincide con ANDRES FELIPE BELTRAN PIMIENTA, C.C. 1.069.501.579.
+
+### Verificacion 147-2026 (regla de oro)
+| Requisito | Exige | Aporta | ¿Cumple? |
+|-----------|-------|--------|:--------:|
+| Estudio | Titulo de abogado (Derecho) | Abogado U. Magdalena, acta 1220, grado 13-jul-2019 | ✅ |
+| Tarjeta profesional | Si | Tarjeta 333055 (CSJ Sucre) vigente | ✅ |
+| Experiencia | 2 años relacionada | ~4 años como abogado (Sahagun 2023-2026, Duque 2020-2021, Barranquilla 2023-2026) | ✅ excede |
+| Identidad | Cedula | C.C. 1.069.501.579 | ✅ |
+
+### Comparacion de la carga: 100% DUPLICADA de lo que ya estaba en el expediente (mismos hashes).
+- Duplicados internos detectados: "Adjunto.pdf" (= contrato 231-2023, pag 13 del paquete) y "Adjunto 1.pdf" (= contrato 097-2023, pag 14 del paquete). Se usaron los adjuntos sueltos para el 097 (evita enderezar la pag girada).
+- Hallazgo nuevo respecto al expediente: certificacion de la ALCALDIA DE BARRANQUILLA (Secretaria de Transito), 5 contratos de abogado 2023-2026 (firmada digital 15-sep-2026). Algunos periodos SOLAPAN con Sahagun (no afecta, la 147 pide 2 años y los excede).
+
+### La HOJA DE VIDA (paginas 1-4 del paquete SIGEP) NO se incluye (no se sube).
+### El Master UNIR (Espana) se incluye como adicional, pero NO cuenta como posgrado (no homologado ante MEN). La 147 no exige posgrado.
+### ⚠️ Diplomado en Derecho Procesal: NO vino en esta carga (esta mencionado en el expediente). No es requisito. Se puede pedir si se quiere sumar.
+
+### Carpeta final: 19 archivos, 23 paginas, todos < 2 MB
+01 Cedula · 02 Bachiller · 03 Acta Abogado · 04 Tarjeta Profesional · 05-11 CERT. LABORAL (Sahagun 2026/2025/2024/231-2023/097-2023, Duque 2020-2021, Barranquilla 2023-2026) · 16 Master UNIR · 17-23 antecedentes (Policia, RNMC, Procuraduria, RUT, Ley1918, REDAM, Contraloria).
+
+### Entrega
+- Rama huerfana solo-andres-beltran, carpeta ANDRES-BELTRAN-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-andres-beltran
