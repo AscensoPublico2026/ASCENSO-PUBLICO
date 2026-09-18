@@ -61,3 +61,28 @@
 - [ ] CERTIFICACIONES LABORALES (asistente admin/judicial) con fechas/cargo/funciones (define experiencia).
 - [ ] Confirmar cuantos semestres reales tiene aprobados.
 - [ ] Salario minimo y si acepta traslado o solo Yopal/Casanare.
+
+
+## BARRIDO CON DOCS ACTUALES (18-sep-2026) — vacantes ADMINISTRATIVAS sin experiencia
+Perfil hoy: bachiller + Derecho en curso (constancia UPTC: ~6 sem / 93% creditos) + cursos SENA (Elaborar documentos normas tecnicas nivel avanzado; Informatica 40h). SIN experiencia certificada. Ciudad Yopal/Casanare.
+
+### CANDIDATA PRINCIPAL
+- **243-2026 — Auxiliar Administrativo 5AM-09, $4.565.448, 26 plazas.** NO requiere experiencia. Sedes incluyen **Armenia** (eje cafetero), Ibague, Cucuta, Cali, Tunja (NO Yopal).
+  - Via A: "1 anio de educacion superior en DERECHO..." → Tania estudia derecho; si el CERTIFICADO DE NOTAS confirma >=1 anio (2 sem) aprobados, CUMPLE 100% sin zona gris. La constancia de 93% creditos sugiere que lo supera, pero se necesita el certificado de notas formal.
+  - Via B: bachiller + curso archivistica/gestion documental/sistemas >60h → su curso SENA "elaborar documentos" es afin PERO no consta duracion >=60h; el de informatica es 40h (<60). Via B NO limpia.
+  - VEREDICTO: CUMPLE por Via A, CONDICIONADO a subir certificado de notas (semestres aprobados). Es la mejor: buen salario, 26 plazas, Armenia.
+
+### OTRAS (sin experiencia, nivel administrativo/operativo)
+- 240-2026 Secretario $4.183.546 (bachiller tecnico comercial o bachiller+curso archivistica) — Chaparral/Facatativa/Girardot. Via curso: no limpia (mismo tema del curso >60h).
+- 237-2026 Secretario $5.424.740 (bachiller+curso archivistica/gestion documental/sistemas) — Cucuta. Mismo tema del curso.
+- 90/281 Citador $3.120.457, 94/96 Aux. Servicios Generales $2.38-3.12M, 98 Aux. Mantenimiento — solo secundaria, NO requieren experiencia, 100% seguras pero nivel muy basico y NINGUNA en Yopal.
+
+### SEDE YOPAL/CASANARE: 
+- En Yopal las vacantes son de nivel PROFESIONAL en derecho (104 sin exp $6.89M, 199 con 3 anios, 95 Proc. Judicial) → requieren TITULO de abogada (no lo tiene) → NO aplican.
+- 234 (Sustanciador, Yopal) pide "1 anio educ superior en derecho" PERO 1,5 anios de experiencia → sin experiencia certificada, NO cumple hoy.
+- NO hay vacante administrativa/asistencial con sede en Yopal que cumpla 100% sin experiencia. La mas cercana en eje cafetero/region es 243 (Armenia).
+
+### CONCLUSION / PENDIENTE
+- La opcion 100% viable y de mejor salario es la **243 (Auxiliar Administrativo, $4.565.448, Armenia)** por via A (año de educacion superior en derecho) → PEDIR CERTIFICADO DE NOTAS que confirme semestres aprobados.
+- Alternativa sin ningun condicionante (bachiller neto): Citador (90/281) o Aux. Servicios Generales (94/96) — pero nivel bajo y no en Yopal.
+- Confirmar: salario minimo y si acepta traslado (clave: en Yopal no hay administrativa que cumpla hoy).
