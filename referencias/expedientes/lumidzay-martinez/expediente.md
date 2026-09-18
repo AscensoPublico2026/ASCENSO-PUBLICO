@@ -154,3 +154,35 @@ Opciones: 290 (Villavicencio, $5.42M, sin tarjeta) principal local + 253 (Bogota
 | 253 | Tecnico Administrativo | $5.846.100 | 2 | Bogota: 2 (no Villavo) |
 | 243 | Aux Administrativo | $4.565.448 | 26 | Tunja/Ibague/Cali/Armenia/Cucuta 1 c/u (no Villavo) |
 > RECORDATORIO: la tabla SIEMPRE debe llevar vacantes TOTALES nacional + vacantes en la ciudad/zona de interes (dato clave que el cliente comparte).
+
+
+
+---
+
+## 13. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 290-2026 (Secretario de Procuraduria, Villavicencio)
+
+> Fecha: sep-2026. Carpeta: documentos-aspirantes/lumidzay-martinez/ORGANIZADO/
+> Revisado hoja por hoja. Todo coincide con LUMIDZAY MARTINEZ CARVAJAL, C.C. 1.193.088.615.
+
+### Verificacion 290-2026 (regla de oro)
+| Requisito | Exige | Aporta | ¿Cumple? |
+|-----------|-------|--------|:--------:|
+| Estudio | 1 año educacion superior | Contadora Publica (UCC, grado 26-sep-2025) — cubre de sobra | ✅ |
+| Experiencia | 1,5 años relacionada | Aux. Contable Fenix (2020-2025) + La Nieve (2026) + CODALTEC aprendiz (2020) — relacionada con funciones admin/documentales | ✅ |
+| Tarjeta profesional | NO exige (solo la exigen los "Profesional Universitario") | — | ✅ (no aplica) |
+| Identidad | Cedula | C.C. 1.193.088.615 | ✅ |
+
+### Comparacion de la carga nueva (hash MD5 + visual)
+- DUPLICADOS descartados: "3-1Certificados Fenix.pdf" (== Fenix ya incluido); "certificado ITEC.pdf" (cubierto por get-document(2) que trae diploma+acta ITEC); pagina en blanco de la cedula.
+- NUEVOS incorporados: Diploma+Acta Contadora UCC, Diploma+Acta Bachiller, Diploma+Acta Tecnico SENA, Tecnico ITEC (diploma+acta), CODALTEC aprendiz, Adendo La Nieve (Coordinador Contable temporal ago-sep 2026), Diplomado HSEQ, Constancia Programa Delfin (U. Hipocrates Mexico).
+
+### Carpeta final: 12 archivos, 16 paginas, todos < 2 MB
+01 Cedula · 02 Bachiller (diploma+acta) · 03 Tecnico ITEC Aux Contable (diploma+acta) · 04 Tecnico SENA Contabilizacion (diploma+acta) · 05 Diploma Contadora Publica · 06 Acta Grado Contadora · 07 Diplomado HSEQ · 08 Constancia Programa Delfin · 09 CERT. LABORAL La Nieve 2026 · 09.1 Adendo La Nieve Coordinador · 10 CERT. LABORAL Seguro Fenix 2020-2025 · 11 CERT. LABORAL CODALTEC Aprendiz 2020.
+
+### ⚠️ ADVERTENCIAS
+- La certificacion de La Nieve (doc 09) parece traer solo la hoja de funciones sin la hoja de firmas del representante legal/revisor fiscal. Conviene pedir la version COMPLETA y firmada para blindar la experiencia. El Adendo (09.1) si viene firmado pero es el encargo temporal como Coordinador, no la certificacion base.
+- La tarjeta profesional de contadora sigue EN TRAMITE (no habilita) — no afecta la 290 porque esta NO exige tarjeta.
+
+### Entrega
+- Rama huerfana solo-lumidzay-martinez, carpeta LUMIDZAY-MARTINEZ-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-lumidzay-martinez
