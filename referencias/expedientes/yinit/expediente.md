@@ -119,3 +119,32 @@ Barrido COMPLETO de las 33 vacantes de nivel Tecnico, clasificando por como pide
 - **271-2026** respaldo mismo cargo/salario pero solo 2 plazas (Bogota) → 288 le gana ampliamente en probabilidad.
 - Certificado de votacion: no es requisito de inscripcion (solo desempate) → no bloquea.
 - Guion tecnico: 288 principal + 271 alternativa; explicar que 288 tiene 84 plazas = mejor chance.
+
+
+
+---
+
+## 8. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 288-2026 (Sustanciador 4SU-11)
+
+> Fecha: sep-2026. Carpeta: documentos-aspirantes/yinit-urzola/ORGANIZADO/
+> Revisado hoja por hoja (8 PDFs / 14 pags). Todo coincide con YINIT YULIETH URZOLA MEZA, C.C. 1.103.219.103.
+
+### Verificacion 288-2026 (regla de oro)
+| Requisito | Exige | Aporta | ¿Cumple? |
+|-----------|-------|--------|:--------:|
+| Estudio | 1 año educacion superior (contaduria publica en la lista textual) | Contadora Publica (CUN, 13-dic-2019) + tecnologo + tecnico prof. | ✅ |
+| Experiencia | 1,5 años relacionada | Autogermana Prof. Contable desde 13-mar-2023 (~3,5 a) + M&G 2018-2019 + Supervariedades 2017-2018 + T-Employ 2022 | ✅ excede |
+| Identidad | Cedula | C.C. 1.103.219.103 | ✅ |
+
+### Comparacion de la carga: 100% DUPLICADA de lo del expediente (mismos hashes).
+### Separacion: "Diplomas Yinit.pdf" (7 pags) traia 6 titulos distintos apilados + 1 pagina en blanco -> se separaron en 6 PDFs individuales (bachiller, aux contable, asist admin, tecnico profesional, tecnologo, contador publico); la pagina en blanco se descarto.
+### Enderezado: "diplomado en Niff.pdf" venia girado 90° -> enderezado a 270°.
+
+### Carpeta final: 13 archivos, 13 paginas, todos < 2 MB (numeracion 01-13 consecutiva)
+01 Cedula · 02 Bachiller Tecnico Contable · 03 Tecnico Auxiliar Contable FUNDETEC · 04 Tecnico Asistencia Admin FUNDETEC · 05 Tecnico Profesional Contabilidad y Finanzas · 06 Tecnologo Gestion Contable y Financiera · 07 Contador Publico · 08 Tarjeta Profesional JCC 267703-T · 09 Diplomado Actualizacion Tributaria · 10 CERT. LABORAL Autogermana (Prof. Contable 2023-actual) · 11 CERT. LABORAL T-Employ (2022) · 12 CERT. LABORAL M&G Asociados (2018-2019) · 13 CERT. LABORAL Supervariedades (2017-2018).
+
+### Nota: Yinit NO tiene certificado de votacion (no es requisito de inscripcion en la 288, solo suma en desempate).
+
+### Entrega
+- Rama huerfana solo-yinit-urzola, carpeta YINIT-URZOLA-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-yinit-urzola
