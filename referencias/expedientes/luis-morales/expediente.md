@@ -106,3 +106,39 @@ Luis envio 2 certificados con FECHAS ACTUALIZADAS/NUEVAS que suman experiencia y
 - El 89 (Procurador Judicial II) era LA meta de Luis y AHORA la alcanza. Casi el tope del concurso ($16.76M), con sede en Montería.
 - ⚠️ MARGEN JUSTO (~16 dias): al inscribir, adjuntar TODAS las certificaciones (Personero Zaragoza, SAVIA 2016, Registraduria 2016-2020, SAVIA 2020-21, Opcion Legal, TAMANA, MIGNOVA actualizado, El Bagre Secretario Gral) para que el verificador sume los 10 años completos.
 - Nombres nuevos en carpeta: "Certificacion laboral Luis Morales- mignova.pdf" (hash distinto al MIGNOVA viejo) y "certificación-savia.pdf" (SAVIA 2016). Revisar si hay que depurar el MIGNOVA/SAVIA viejos (versiones desactualizadas) al organizar inscripcion.
+
+
+
+---
+
+## 10. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 89-2026 (Procurador Judicial II)
+
+> Fecha de organización: sep-2026. Carpeta: documentos-aspirantes/luis-morales/ORGANIZADO/
+> Revisado hoja por hoja (27 PDFs originales, 37 páginas, todo leído como imagen). Todo coincide con LUIS ENRIQUE MORALES GARCES, C.C. 1.128.406.768.
+
+### Verificación de cumplimiento 89-2026 (regla de oro)
+| Requisito | Exige | Aporta | ¿Cumple? |
+|-----------|-------|--------|:--------:|
+| Estudio | Título de abogado + tarjeta profesional | Abogado (Corp. U. Americana, grado 11-dic-2015) + Tarjeta Prof. 270134 | ✅ |
+| Experiencia | ≥ 10 años jurídica posterior al título (Ley 2430/2024) | **10,078 años** (3.681 días netos, uniendo intervalos sin doble contar solapes) | ✅ (margen ~28 días) |
+| Identidad | Cédula | C.C. 1.128.406.768 legible | ✅ |
+
+**CÁLCULO EXACTO (recorte al título 11-dic-2015, cierre 18-sep-2026):**
+- Intervalos unidos: 2015-12-11→18 (8d) · 2016-03-01→05-27 (88d) · 2016-06-01→09-23 (115d) · 2016-10-11→2020-01-09 (1186d) · 2020-03-04→2021-07-30 (514d) · 2021-08-13→2022-04-30 (261d) · 2022-06-22→2023-12-28 (555d) · 2024-01-01→2026-08-11 (954d) = **3.681 días = 10,078 años**.
+- Margen sobre 10 años: **~28 días**. ⚠️ Ajustado: al inscribir adjuntar TODAS las certificaciones para que el verificador sume el total.
+- GAPS sin certificar (oportunidad de ampliar margen si Luis consigue soportes): 19-dic-2015→29-feb-2016; 10-ene-2020→03-mar-2020 (~2m); 01-may-2022→21-jun-2022 (~1,5m). Litigio independiente o contratos en esos periodos ampliarían el margen.
+
+### Depuración aplicada
+- **DESCARTADO 1 documento:** MIGNOVA versión vieja ("Certificacion Luis Morales Garces MIGNOVA.pdf", hasta 31-jul-2023). Se dejó SOLO la versión actualizada (hasta 28-dic-2023), que da los 5 meses extra necesarios para superar los 10 años.
+- **El Bagre tiene 2 certificaciones del mismo periodo/cargo:** se dejaron ambas → 13 (con funciones) + 13.2 (RRHH, con salario). Se complementan.
+- **SENA (instructor 2016):** se solapa con Registraduría, no suma tiempo nuevo, pero se incluye como soporte (no se omite nada).
+- **Actas de inicio Politécnico (2020 y 2022):** solapan SAVIA/MIGNOVA, se incluyen como soporte.
+- **SAVIA son 2 periodos distintos** (2016 y 2020-2021): ambos se incluyen (no es duplicado).
+- 5 diplomas venían girados 90° → enderezados a 270° (tecnólogo, esp. admin, esp. minero, conciliación, derecho probatorio).
+
+### Carpeta final: 26 archivos, 35 páginas, todos < 2 MB
+01 Cédula · 02 Bachiller · 03 Tecnólogo Inv. Judicial · 04 Diploma Abogado · 05 Tarjeta Profesional · 06 Esp. Der. Administrativo · 07 Esp. Der. Minero y Ambiental · 08 Esp. Alto Gobierno · 09 Maestría Der. Administrativo · 10 Diplomado Conciliación · 11 Diplomado Der. Probatorio · 12 Diplomado Der. Ambiental · 13 CERT. LABORAL El Bagre Secretario 2024-2026 · 13.1 Resolución 1326 El Bagre · 13.2 CERT. LABORAL El Bagre RRHH (salario) · 14 CERT. LABORAL MIGNOVA 2022-2023 · 14.1 Acta Inicio Politécnico 2022 · 15 CERT. LABORAL TAMANA 2021-2022 · 16 CERT. LABORAL Opción Legal 2021 · 17 CERT. LABORAL SAVIA 2020-2021 · 17.1 Acta Inicio Politécnico 2020 · 18 CERT. LABORAL Registraduría 2016-2020 · 19 CERT. LABORAL SENA Instructor 2016 · 20 CERT. LABORAL SAVIA 2016 · 21 CERT. LABORAL Personero Zaragoza 2016 · 22 CERT. LABORAL Concejo El Bagre 2015.
+
+### Entrega
+- Rama huérfana solo-luis-morales, carpeta LUIS-MORALES-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-luis-morales
