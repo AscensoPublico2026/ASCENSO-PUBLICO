@@ -106,3 +106,33 @@ FALLO DETECTADO: se le ofrecieron 103/104/105 (Prof. Universitario derecho) que 
 - 100% seguro sin ninguna condicion: **243 (Auxiliar Admin, $4.56M, sin experiencia)** pero SIN Bucaramanga (mas cercano en region: confirmar; muni listados no incluyen Buc).
 - 234/288 (Sustanciador $5.42M, Bucaramanga): mejores en salario/plazas PERO experiencia JUSTA (zona gris) → mencionar con advertencia explicita, NO como principal.
 - ⚡ RECOMENDACION FUERTE al cliente: lo mas valioso para Laura es SACAR LA TARJETA PROFESIONAL de abogada (se obtiene con el titulo). Apenas la tenga, se le abren TODOS los Prof. Universitario en derecho ($6,89M, 103/104/105 y mas) sin pedir experiencia. Vale la pena esperar/tramitarla.
+
+
+
+---
+
+## 8. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 234-2026 (Sustanciador 4SU-11) — sep-2026
+
+> Carpeta: documentos-aspirantes/laura-quintero/ORGANIZADO/. Revisado hoja por hoja. Coincide LAURA FERNANDA QUINTERO LEON, C.C. 1.102.348.986.
+> ⚠️ El cliente (Julio Cesar) confirmo que la aspirante YA SE INSCRIBIO a la 234 AUNQUE NO cumple con holgura. Se arma la carpeta con lo enviado, dejando constancia de la advertencia.
+
+### ⚠️ VERIFICACION 234-2026 (regla de oro) — EXPERIENCIA JUSTA/CORTA
+Requisito: 1 año educacion superior EN DERECHO (✅ es abogada) + 1,5 años (18 meses) experiencia relacionada.
+Experiencia CERTIFICADA con fechas exactas:
+- Dependiente judicial (Abg. Piza Layton): 01-jun-2023 -> 15-dic-2023 = ~6,5 meses
+- Judicatura Proc. Regional Santander: 06-mar-2025 -> 10-dic-2025 = ~9,2 meses
+- SUBTOTAL con fechas = ~15,7 meses -> NO llega a 18.
+- Superservicios (Notificador DT Oriente): solo se aporto ESTUDIOS PREVIOS (precontractual, ene-2026), SIN certificacion laboral formal con fechas. Si se sumara (feb-sep 2026 ~7,6m) daria ~23 meses y cumpliria, PERO falta la certificacion formal con fechas.
+➡️ CONCLUSION: con lo aportado la experiencia queda CORTA (~15,7 meses < 18). Para cumplir, Laura DEBE aportar la CERTIFICACION LABORAL de Superservicios con fechas exactas. Advertido al cliente; el cliente pidio entregar la carpeta con lo enviado igual.
+
+### Depuracion
+- 2 diplomas de bachiller: se dejo la COPIA AUTENTICADA (mejor para tramite), se descarto "Diploma Laura Quintero.pdf" simple del bachiller (se mantuvo el de abogada con ese nombre).
+- Hoja de vida (Copia de HV): NO se incluye (no se sube).
+- Documento nuevo respecto al expediente: Invoice_170233143 = comprobante de pago de inscripcion.
+
+### Carpeta final: 9 archivos, 26 paginas, todos < 2 MB
+01 Cedula · 02 Bachiller autenticado · 03 Diploma Abogada · 04 CERT. LABORAL Judicatura Proc. Santander 2025 · 05 CERT. LABORAL Dependiente Judicial 2023 · 06 Superservicios Notificador (estudios previos 2026) · 07 Antecedentes Penales · 08 Reconocimiento Unidad Victimas · 09 Comprobante Pago Inscripcion.
+
+### Entrega
+- Rama huerfana solo-laura-quintero, carpeta LAURA-QUINTERO-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-laura-quintero
