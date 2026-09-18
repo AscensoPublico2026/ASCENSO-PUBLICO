@@ -75,3 +75,32 @@ TODOS los Prof. Universitario de ingenieria (121, 155-192, 209-228) aceptan elec
 | **217** | $9.646.860 | 426 | 6 | **71** (mas competida) | Bogota |
 ➡️ HALLAZGO: los de MEJOR salario (209/155, $9.64M/$8.97M) son a la vez los MAS GANABLES (~37/plaza) — poca gente cumple ingenieria+2/3 años exp. El 288 (Sincelejo) tiene mas competencia (46/plaza) por ser Sustanciador masivo.
 ➡️ RECOMENDACION: si acepta traslado a Bogota, el **209 ($9.64M, 37/plaza, 3 plazas)** es la MEJOR jugada (mas salario Y mas ganable). Si quiere quedarse en Sincelejo, el **288 ($5.42M, 46/plaza)** es solido. Trade-off: Sincelejo $5.4M (288) vs Bogota $9.6M mejor probabilidad (209).
+
+
+
+---
+
+## 8. DOCUMENTACION ORGANIZADA PARA INSCRIPCION — 288-2026 (Sustanciador 4SU-11, Sincelejo)
+
+> Fecha: sep-2026. Carpeta: documentos-aspirantes/carlos-arrieta/ORGANIZADO/
+> Revisado hoja por hoja (40 PDFs, 56 paginas). Todo coincide con CARLOS ANDRES ARRIETA MADERA, C.C. 92.536.320.
+
+### Verificacion 288-2026 (regla de oro)
+| Requisito | Exige | Aporta | ¿Cumple? |
+|-----------|-------|--------|:--------:|
+| Estudio | 1 año educacion superior (ing. sistemas/electronica en la lista) | Ing. Electronico (2006) + Ing. Sistemas (2022) | ✅ |
+| Experiencia | 1,5 años relacionada | +10 años como ingeniero/instructor (OpenAPI, Makrosistemas, Funpatria, CIME, SENA) | ✅ excede |
+| Identidad | Cedula | C.C. 92.536.320 Sincelejo | ✅ |
+
+### Comparacion de la carga nueva
+- Llego en 7 archivos .rar (comprimidos). Descomprimidos: 41 PDFs, TODOS con hash identico a lo del expediente → carga 100% DUPLICADA (nada nuevo).
+- Duplicado interno descartado: "integridad-transpariencia.pdf" (misma cert. de Funcion Publica que "certificado integridad..." version 2026; se dejo la 2026).
+
+### Nota tecnica: los archivos "sena20XX" son CERTIFICACIONES LABORALES del SENA (contratos de instructor), NO cursos → van como CERT. LABORAL (experiencia). Cada uno certifica contratos/periodos distintos.
+
+### Carpeta final: 35 archivos, 55 paginas, todos < 2 MB
+01 Cedula · 02 Bachiller · 03 Ing Electronico (diploma+acta) · 04 Ing Sistemas (diploma+acta) · 05 Tarjeta Ing Electronico+vigencia · 06 Tarjeta Ing Sistemas+vigencia · 07-25 CERT. LABORAL (CIME, OpenAPI x3, Funpatria, Makrosistemas, SENA instructor 2007-2023) · 26-34 cursos (integridad, pedagogia, ofimatica, etc.) · 35 Certificado Electoral.
+
+### Entrega
+- Rama huerfana solo-carlos-arrieta, carpeta CARLOS-ARRIETA-DOCUMENTOS.
+- Enlace descarga: https://codeload.github.com/AscensoPublico2026/ASCENSO-PUBLICO/zip/refs/heads/solo-carlos-arrieta
