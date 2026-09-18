@@ -125,3 +125,44 @@ El manual dará las **plazas por ciudad** exactas (solo están ahí, no en la ma
 - ⚠️ Todos requieren **certificar semestres de la UNAD** (para el estudio) y **certificados laborales** (para la experiencia). Pendientes de subir.
 
 ## 8. Estado: LISTO PARA ENTREGAR GUIONES AL ASPIRANTE (Paso 7). Pendiente registro: notas UNAD + certificados laborales + cédula/diplomas/electoral.
+
+---
+
+## 9. 📥 DOCUMENTACIÓN RECIBIDA Y ORGANIZADA — INSCRIPCIÓN VACANTE 288-2026 (sep-2026)
+
+> Daniela cargó su documentación para inscribirse a la **Convocatoria 288-2026 — Sustanciador (4SU-11), Nivel Técnico, $5.424.740**.
+> Revisada hoja por hoja (cada página leída como imagen). Organizada en `documentos-aspirantes/daniela-velasquez/ORGANIZADO/`.
+
+### Requisitos 288-2026 (textual del manual)
+- **Estudio:** Aprobación de **1 año de educación superior** en lista amplia que incluye **administración de empresas** y **diseño**.
+- **Experiencia:** **1.5 años de experiencia relacionada.**
+
+### ✅ Verificación de cumplimiento (regla de oro)
+| Requisito | Exige | Daniela aporta | ¿Cumple? |
+|-----------|-------|----------------|:--------:|
+| Estudio | 1 año educación superior (Admón Empresas está en la lista) | UNAD — Administración de Empresas (SNIES 1688): **5 períodos cursados, 90 de 151 créditos aprobados**, matriculada 2026-II | ✅ Excede |
+| Experiencia | 1.5 años relacionada | Producciones Más Publicidad (Aux. Administrativa) **17-mar-2021→20-jul-2023 = 2a 4m** + GlobalMax (Asist. Administrativa y Operaciones) **15-ene-2025→16-jul-2026 = 1a 6m** = **~3a 10m** con funciones | ✅ Excede |
+| Identidad | Cédula | C.C. **1.013.100.187**, ambas caras legibles | ✅ |
+
+**CONCLUSIÓN: Daniela CUMPLE los requisitos mínimos de la 288-2026.**
+
+### 📂 Documentos organizados (9 archivos, orden estándar)
+| # | Archivo | Contenido | Págs |
+|---|---------|-----------|:----:|
+| 01 | `01-Cedula.pdf` | Cédula de ciudadanía (ambas caras) | 2 |
+| 02 | `02-Constancia-UNAD-Admon-Empresas.pdf` | Constancia académica UNAD — Admón de Empresas (90 créditos, 5 períodos) — **acredita el estudio** | 1 |
+| 03 | `03-Diploma-Bachiller-Tecnico.pdf` | Diploma Bachiller Técnico + Acta de grado (ITS Pereira, Diseño Gráfico) | 2 |
+| 04 | `04-Tecnico-Diseno-Grafico.pdf` | Certificado Técnico Laboral por Competencias en Diseño Gráfico (Uni-técnica, 1519 h) | 1 |
+| 05 | `05-Cert-SENA-Campanas-Digitales.pdf` | Curso SENA — Caracterización de audiencia para campañas digitales (48 h) | 1 |
+| 06 | `06-Ingles-Colombo-B1-B2.pdf` | Certificados de inglés Colombo Americano (B1 y B2) | 2 |
+| 07 | `07-CERT.LABORAL-Prod-Mas-Publicidad.pdf` | Cert. laboral Producciones Más Publicidad — Aux. Administrativa (2021-2023) | 1 |
+| 08 | `08-CERT.LABORAL-GlobalMax.pdf` | Cert. laboral GlobalMax — Asist. Administrativa y Operaciones (2025-2026) | 1 |
+| 09 | `09-Certificado-Electoral.pdf` | Certificado electoral elecciones 21-jun-2026 (beneficio de ley) | 1 |
+
+### 🗑️ Descartado (no se sube)
+- **Hoja de vida** (`Hoja_de_Vida_Daniela_Velasquez_Nieto.pdf`) — no se carga en la inscripción; usada solo para contexto.
+
+### ⚠️ Notas / observaciones
+- La constancia UNAD tiene **validez de 30 días** (expedida 15-sep-2026): vigente para la inscripción (07-18 sep 2026).
+- El Técnico en Diseño Gráfico (04) y el SENA (05) son formación para el trabajo (ETDH), suman como respaldo pero **el estudio se acredita con la UNAD** (educación superior). Diseño también está en la lista de la 288.
+- Los certificados de inglés (06) y el electoral (09) son adicionales (no requisito), suman en antecedentes.
