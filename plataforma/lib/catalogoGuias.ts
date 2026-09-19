@@ -136,7 +136,11 @@ export function esRutaEntidad(archivoPath: string | null | undefined): boolean {
 
 /** Lista de nombres de archivo (basename) de todas las guías publicadas con archivo. */
 export function archivosSeed(): string[] {
+  // Quitar el prefijo de carpeta ("guias/" o "simulacro/") para dejar solo el
+  // basename: los HTML viven en public/seed-guias/ SIN carpeta, y en el bucket
+  // se guardan bajo "guias/<basename>". Antes solo se quitaba "guias/", por lo
+  // que los simulacros ("simulacro/SIM-...html") daban 404 en el seed.
   return guiasPublicadasConArchivo()
-    .map((g) => (g.archivoPath ? g.archivoPath.replace(/^guias\//, "") : ""))
+    .map((g) => (g.archivoPath ? g.archivoPath.replace(/^(guias|simulacro)\//, "") : ""))
     .filter(Boolean);
 }
