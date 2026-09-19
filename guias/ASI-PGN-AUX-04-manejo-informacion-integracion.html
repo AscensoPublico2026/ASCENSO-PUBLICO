@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASI-PGN-AUX-04 · Manejo de la Información e Integración de Competencias (Auxiliar Administrativo) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">ASI-PGN-AUX-04</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 8 · Competencias comportamentales</div>
+  <h1>Manejo de la Información e Integración de Competencias</h1>
+  <p class="header-sub">Cierre del bloque comportamental. Hoy trabajas el <strong>Manejo de la Información</strong> —custodiar, usar con veracidad y proteger la información y los datos que manejas— e <strong>integras todas las competencias</strong> vistas (responsabilidad, cumplimiento de parámetros, organización, gestión de recursos, orientación al usuario, trabajo en equipo) en un perfil comportamental completo, con el método para resolver cualquier pregunta de juicio situacional de tu prueba. Todo aplicado al rol real del <strong>Auxiliar Administrativo</strong> de la <strong>Procuraduría General de la Nación</strong>, según el <strong>Decreto 815 de 2018</strong> y el Diccionario de Competencias de la PGN.</p>
+  <div class="badges"><span class="badge">📅 Día 8 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">🎯 Comportamental</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Llegas al cierre del bloque comportamental. En los tres días anteriores viste seis competencias; hoy sumas una más —el <strong>Manejo de la Información</strong>— y, sobre todo, <mark>integras todo</mark> en un solo perfil de servidor. Porque en la vida real y en la prueba, las competencias no aparecen aisladas: una misma situación pone a prueba varias a la vez. Un documento sensible mal manejado toca el manejo de información, la responsabilidad y el cumplimiento de parámetros; una atención difícil toca el servicio, la calma y la ética. Hoy aprendes a manejar la información con criterio y a ver el cuadro completo.</p>
+    <p>Hoy vas a dominar el <strong>Manejo de la Información</strong> —custodiar, usar con veracidad y proteger la información y los datos que manejas, respetando la reserva y la protección de datos personales— y vas a <strong>integrar las competencias</strong> del bloque (responsabilidad, cumplimiento de parámetros, organización, gestión de recursos, orientación al usuario y trabajo en equipo) en el perfil comportamental completo del auxiliar. Cerramos con el <mark>método definitivo para resolver cualquier pregunta de juicio situacional</mark> de tu prueba. Todo según el Decreto 815 de 2018 y el Diccionario de Competencias de la PGN, aplicado a tu rol.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>La competencia <strong>Manejo de la Información</strong> y sus conductas.</li>
+      <li>La <strong>confidencialidad, la reserva</strong> y la protección de datos personales (Ley 1581 de 2012).</li>
+      <li>La <strong>veracidad e integridad</strong> de la información: no alterar, no inventar.</li>
+      <li>El <strong>buen uso de los sistemas</strong> y la seguridad de la información.</li>
+      <li>Una <strong>visión integrada</strong> de las seis competencias del bloque comportamental.</li>
+      <li>Cómo una situación puede evaluar <strong>varias competencias a la vez</strong>.</li>
+      <li>El <strong>método definitivo</strong> para resolver preguntas de juicio situacional.</li>
+      <li>El <strong>perfil comportamental completo</strong> del Auxiliar Administrativo de la PGN.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos ocho módulos: cuatro sobre el manejo de la información y cuatro que integran y sintetizan todo el bloque comportamental, con teoría aplicada, tablas, ejemplos "En la práctica", ejercicios y puntos de control. Cerramos con casos tipo prueba, errores, tips, trampas, repaso y un simulacro. Este día cierra el bloque comportamental (Días 5 a 8) y te deja lista para las guías funcionales de tu cargo que comienzan el Día 9.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>El Manejo de la Información es una competencia <mark>especialmente crítica en tu cargo</mark>: gran parte de tu trabajo es recibir, procesar, custodiar y expedir información y documentos, muchos de ellos sensibles o reservados (más aún en una entidad de control como la Procuraduría). Un mal manejo —una filtración, una alteración, una pérdida— puede vulnerar derechos y constituir una falta grave. Y este último día es clave porque <strong>integra todo</strong>: la prueba de juicio situacional rara vez evalúa una competencia "pura"; presenta situaciones donde <mark>se cruzan varias</mark>, y hoy aprendes a leerlas en conjunto y a aplicar el método que resuelve cualquiera de ellas.</p></div>
+  <div class="mmap-t">🗺️ Por qué este cierre integrador es clave</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🔐</span><h5>Manejo de la información</h5><p>Custodiar, usar con veracidad y proteger la información y los datos.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧩</span><h5>Todo se cruza</h5><p>Una situación real pone a prueba varias competencias a la vez.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧭</span><h5>Un método común</h5><p>Asumir, cumplir, servir y comunicar resuelve casi cualquier caso.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⭐</span><h5>Perfil completo</h5><p>El auxiliar íntegro, confiable, ordenado, servicial y colaborador.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>El cierre del bloque se resume así: <strong>Manejo de la Información = custodio, uso con veracidad y protejo la información y los datos que manejo, respetando la reserva y el habeas data; y todas las competencias se integran en un perfil: un auxiliar íntegro y responsable, riguroso y cumplidor, ordenado y cuidadoso de los recursos, servicial con el ciudadano y colaborador con el equipo, que ante cualquier situación asume, cumple, sirve y comunica con transparencia</strong>. Ese es el servidor que la prueba busca y que tu cargo necesita. Si retienes esa idea, tienes el mapa completo del bloque.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría General de la Nación tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000). Su concurso <strong>NO lo administra la CNSC</strong>: lo adelanta la propia Procuraduría con su operador. Las competencias se enmarcan en el <strong>Decreto 815 de 2018</strong> y en el Diccionario de Competencias de la PGN. La reserva y la protección de datos se apoyan además en la Ley 1712 de 2014 (transparencia) y la Ley 1581 de 2012 (datos personales), que verás con más detalle en las guías funcionales.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Desarrollo: manejar la información e integrar las competencias</h2>
+  <p class="lead">Ocho módulos: cuatro sobre el Manejo de la Información y cuatro que integran todo el bloque comportamental y te dan el método definitivo para el juicio situacional. Con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol y ejercicios resueltos.</p>
+
+  <!-- MÓDULO 1 -->
+  <h3 class="modulo">Módulo 1 · Qué es el Manejo de la Información</h3>
+  <p>El <strong>Manejo de la Información</strong> es la competencia de <mark>administrar la información y los documentos con responsabilidad</mark>: custodiarlos, usarlos con veracidad, mantenerlos organizados y disponibles para quien tiene derecho a ellos, y protegerlos de la pérdida, la alteración y la divulgación indebida. En una entidad, la información es un activo clave y, muchas veces, sensible: contiene datos de personas, actuaciones en curso, decisiones. Manejarla bien es una competencia común a todos los servidores (Decreto 815 de 2018) y absolutamente central para un auxiliar administrativo, cuyo trabajo gira en torno a documentos e información.</p>
+  <p>Esta competencia tiene <strong>tres pilares</strong> que conviene distinguir, tomados de la seguridad de la información. La <mark>confidencialidad</mark>: que la información solo la conozca quien tiene derecho (no divulgar lo reservado ni los datos personales). La <mark>integridad</mark>: que la información sea veraz y no se altere indebidamente (no falsear, no modificar sin autorización). Y la <mark>disponibilidad</mark>: que la información esté organizada y se pueda encontrar y entregar cuando se necesita legítimamente. Un buen manejo cuida los tres: protege lo reservado, mantiene la verdad y asegura el acceso legítimo. Fallar en cualquiera —filtrar, alterar o perder— es un mal manejo.</p>
+  <h4>Por qué es tan crítica en la Procuraduría</h4>
+  <p>En una entidad de control como la Procuraduría, el manejo de la información tiene un peso especial. La entidad tramita <strong>quejas, denuncias e investigaciones</strong> que contienen datos sensibles de personas y actuaciones que, muchas veces, son <mark>reservadas mientras están en curso</mark>. Un auxiliar que filtra información de un caso, que entrega un documento reservado a quien no debe, o que altera un registro, no solo comete una falla técnica: puede <strong>vulnerar derechos, afectar una investigación y cometer una falta disciplinaria grave</strong>. Por eso el manejo cuidadoso de la información es, en tu cargo, una de las competencias donde más se juega la confianza que la entidad deposita en ti.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Pilar</th><th>Qué protege</th><th>Conducta concreta tuya</th></tr>
+    <tr><td>Confidencialidad</td><td>Que solo acceda quien tiene derecho</td><td>No divulgar lo reservado ni los datos personales</td></tr>
+    <tr><td>Integridad</td><td>Que la información sea veraz</td><td>No alterar ni falsear; registrar la verdad</td></tr>
+    <tr><td>Disponibilidad</td><td>Que se encuentre y entregue legítimamente</td><td>Organizar, respaldar y entregar a quien corresponde</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Manejas el expediente de una queja disciplinaria. El buen manejo de la información significa: <mark>no comentar su contenido</mark> con quien no está en el caso (confidencialidad), <strong>no alterar</strong> ningún dato ni fecha (integridad), y mantenerlo <strong>organizado y localizable</strong> para quien sí debe consultarlo (disponibilidad). Cuidar esos tres pilares en cada documento es la esencia de la competencia y protege los derechos de las personas involucradas.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>El manejo de la información se juega en tres pilares: <strong>confidencialidad, integridad y disponibilidad</strong>. La respuesta correcta protege lo reservado, mantiene la verdad y asegura el acceso legítimo. Filtrar, alterar o perder información son siempre conductas incorrectas.</p></div>
+  <details class="acc"><summary>¿Toda la información de la entidad es reservada?</summary><div class="acc-body"><p>No. La regla general en lo público es la <strong>publicidad</strong> (la información es pública y accesible), y la reserva es la <strong>excepción</strong>, solo para los casos que la ley define (datos personales, investigaciones en curso, seguridad, etc.). Un buen manejo distingue: da acceso a lo público y protege lo reservado. Ante la duda sobre si algo es reservado, no se entrega por cuenta propia: se consulta al superior o al área competente.</p></div></details>
+
+    <h4>La información es un activo, no un papel más</h4>
+  <p>Vale la pena cambiar la forma de ver la información: no es "papeles que se mueven", sino un <mark>activo valioso</mark> de la entidad y de las personas. Un expediente contiene la historia de un caso; un dato personal, parte de la vida de alguien; un registro, la memoria de una actuación. Cuando entiendes que detrás de cada documento hay derechos, decisiones y personas, tu forma de manejarlo cambia: lo cuidas más, lo proteges mejor, no lo tratas con ligereza. Esa mirada —ver el valor de la información— es la base de la competencia.</p>
+  <p>En lo público, la información tiene además una dimensión de <strong>memoria institucional</strong>. Los documentos permiten reconstruir qué hizo la entidad, rendir cuentas, dar continuidad a los trámites y proteger los derechos de las personas a lo largo del tiempo. Una información bien manejada es la memoria confiable de la institución; una mal manejada —perdida, alterada, dispersa— hace que la entidad "pierda la memoria" y no pueda responder por sus actos. Como auxiliar, eres uno de los guardianes de esa memoria en tu dependencia.</p>
+  <p>Esta valoración conecta el manejo de la información con la <strong>gestión documental</strong> que verás en las guías funcionales (Ley 594 de 2000, tablas de retención). Lo comportamental (la actitud de cuidar la información) y lo técnico (cómo se organiza y conserva) se unen: no basta saber archivar si no hay la actitud de proteger y no alterar; y no basta la buena intención si no se conocen las técnicas. El buen manejo de la información combina el criterio comportamental con la competencia técnica, y las dos se refuerzan.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Al manejar un expediente, dejas de verlo como "otro papel" y lo ves como lo que es: la <mark>historia de un caso con derechos de personas en juego</mark>. Esa mirada te lleva a cuidarlo, protegerlo y no alterarlo con naturalidad. Ver el valor de la información es el primer paso para manejarla bien.</p></div>
+
+  <div class="checkpoint" data-cp="1">
+    <div class="cp-q">✅ Punto de control 1</div>
+    <p>El Manejo de la Información como competencia se sostiene en tres pilares:</p>
+    <div class="cp-op" data-ok="1">Confidencialidad (proteger lo reservado), integridad (mantener la verdad) y disponibilidad (acceso legítimo).</div>
+    <div class="cp-op" data-ok="0">Velocidad, cantidad y apariencia de los documentos.</div>
+    <div class="cp-op" data-ok="0">Divulgar todo a todos para ser transparente.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 2 -->
+  <h3 class="modulo">Módulo 2 · Confidencialidad, reserva y protección de datos</h3>
+  <p>El pilar más delicado del manejo de la información es la <strong>confidencialidad</strong>. En lo público conviven dos principios que hay que equilibrar: la <mark>publicidad</mark> (la información es, por regla general, pública) y la <mark>reserva</mark> (algunas informaciones se protegen por ley). Como auxiliar, debes saber que ciertos datos y actuaciones son <strong>reservados</strong> —investigaciones en curso, datos personales sensibles, información que la ley protege— y que divulgarlos indebidamente es una falta. La regla práctica: <strong>lo público se entrega a quien lo pida; lo reservado se protege</strong>, y ante la duda, se consulta antes de entregar.</p>
+  <p>Un componente específico es la <strong>protección de datos personales</strong>, regulada por la <strong>Ley 1581 de 2012</strong> (y el derecho fundamental de <mark>habeas data</mark>, art. 15 de la Constitución). Los datos personales de las personas (identificación, contacto, y más aún los datos sensibles) solo pueden usarse para el fin para el que se recogieron y no pueden divulgarse a terceros sin autorización o base legal. Para ti, esto significa: no compartir datos de una persona con quien no tiene derecho a conocerlos, no usar la información a la que accedes por tu cargo para fines personales, y tratar los datos con el cuidado que exige la ley. Un dato personal filtrado puede causar un daño real a alguien.</p>
+  <h4>El deber de reserva del servidor</h4>
+  <p>Los servidores públicos tienen un <strong>deber de reserva</strong> sobre la información que conocen por razón de su cargo. Esto no termina al salir de la oficina: no se comenta un caso con la familia, no se cuenta en redes, no se filtra a un interesado. La confidencialidad es una <mark>conducta permanente</mark>. Un auxiliar puede sentir la tentación de comentar "lo que vio" en un expediente interesante, o un conocido puede pedirle "el favor" de averiguar cómo va un caso: en ambos casos, la conducta correcta es <strong>guardar la reserva</strong>. Romperla no solo es una falta: traiciona la confianza que la entidad y las personas depositaron al entregar su información. La discreción es una marca del buen servidor.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Tipo de información</th><th>Cómo se maneja</th></tr>
+    <tr><td>Pública</td><td>Se entrega a quien la solicite, por los canales debidos</td></tr>
+    <tr><td>Reservada (ley)</td><td>Se protege; no se divulga; ante la duda, se consulta</td></tr>
+    <tr><td>Datos personales</td><td>Solo para su fin; no se comparten sin base legal (Ley 1581/2012)</td></tr>
+    <tr><td>Investigación en curso</td><td>Se guarda reserva mientras la ley lo indique</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Un conocido se entera de que trabajas en la Procuraduría y te pide "el favor" de averiguar cómo va una queja de un tercero, o de contarle qué dice un expediente. Por más confianza que te tenga, tu <mark>deber de reserva</mark> es claro: le explicas con amabilidad que no puedes acceder ni divulgar esa información, que existen los canales oficiales para consultar lo que corresponda. Guardar la reserva —aun ante un conocido— protege los derechos de las personas y tu propia integridad.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Ante una petición de información <strong>reservada</strong> o de <strong>datos personales</strong> por parte de quien no tiene derecho (incluso un conocido o un compañero curioso), la conducta correcta es <mark>no divulgar</mark> y remitir a los canales oficiales. Ceder por confianza o presión es una falta.</p></div>
+  <details class="acc"><summary>¿Y si es mi jefe quien me pide divulgar algo reservado?</summary><div class="acc-body"><p>Un superior puede acceder a información en el marco de sus funciones. Pero si te pidiera <strong>divulgar indebidamente</strong> información reservada o datos personales a un tercero sin base legal, esa orden no está amparada: como toda orden que implica una posible ilegalidad, no se ejecuta a ciegas y se consulta o eleva por el canal adecuado. El deber de reserva y la ley están por encima de una instrucción irregular.</p></div></details>
+
+    <h4>Publicidad y reserva: dos principios que conviven</h4>
+  <p>Conviene entender bien la tensión entre <strong>publicidad</strong> y <strong>reserva</strong>, porque la prueba la explota. La regla general en lo público es la <mark>publicidad</mark>: la información del Estado es pública y los ciudadanos tienen derecho a conocerla (así lo consagran la Constitución y la Ley 1712 de 2014 de transparencia). La <strong>reserva</strong> es la excepción: solo se protege lo que la ley expresamente reserva (investigaciones en curso, datos personales, seguridad nacional, secretos legales). El equilibrio correcto es: <strong>por defecto, la información es pública; se protege solo lo que la ley reserva</strong>.</p>
+  <p>Este equilibrio evita dos errores opuestos. Uno es el <mark>secretismo</mark>: tratar todo como reservado, negar información pública "por si acaso", poner trabas al acceso. Eso viola la transparencia y el derecho de la gente a saber. El otro es la <mark>indiscreción</mark>: divulgar lo reservado, filtrar datos personales, contar lo que debía protegerse. Eso vulnera derechos y es una falta. El buen manejo navega entre ambos: da acceso a lo público con disposición, y protege lo reservado con firmeza. Ni todo abierto ni todo cerrado: lo que corresponde en cada caso.</p>
+  <p>Para el auxiliar, la regla práctica ante una solicitud de información es: si es claramente <strong>pública</strong> y de quien tiene derecho, se tramita el acceso; si es claramente <strong>reservada</strong> o son datos personales de terceros, se protege; y si hay <strong>duda</strong> sobre su carácter, no se decide por cuenta propia: se consulta al superior o al área competente antes de entregar o negar. Esa consulta ante la duda es una conducta prudente que protege tanto el derecho de acceso como la reserva, sin que tú asumas una decisión que puede exceder tu rol.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Un ciudadano pide un documento y no tienes claro si es público o reservado. En vez de negarlo "por si acaso" (secretismo) o entregarlo sin más (posible indiscreción), <mark>consultas a tu superior</mark> sobre su carácter antes de actuar. Navegaste bien entre publicidad y reserva, sin asumir una decisión que no te corresponde.</p></div>
+
+    <h4>Datos sensibles: un cuidado reforzado</h4>
+  <p>Dentro de los datos personales, la ley distingue los <strong>datos sensibles</strong>: aquellos que afectan la intimidad o cuyo uso indebido puede generar discriminación (salud, orientación, creencias, origen étnico, datos de menores, entre otros). Estos exigen un <mark>cuidado reforzado</mark>: su tratamiento está especialmente restringido y su filtración puede causar un daño grave a la persona. En una entidad de control, donde los expedientes pueden contener este tipo de datos, el auxiliar debe ser particularmente cuidadoso: no comentarlos, no exponerlos, protegerlos con especial rigor.</p>
+  <p>El cuidado de los datos personales no es solo una obligación legal: es una forma de <strong>respeto a la dignidad</strong> de las personas. Detrás de cada dato hay alguien que confió su información al Estado esperando que se use bien y se proteja. Traicionar esa confianza —filtrando, exponiendo o usando mal los datos— es faltar al respeto y a la dignidad de esa persona. Ver la protección de datos desde este ángulo humano, y no solo como una norma, refuerza la actitud correcta de discreción y cuidado.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Un expediente contiene datos de salud de una persona. Los tratas con cuidado reforzado: no los comentas, no los dejas expuestos, los proteges especialmente. Entiendes que detrás de ese dato hay una persona que merece <mark>respeto y discreción</mark>. Proteger los datos sensibles es proteger la dignidad de quien confió en el Estado.</p></div>
+
+  <div class="checkpoint" data-cp="2">
+    <div class="cp-q">✅ Punto de control 2</div>
+    <p>Un conocido te pide que le averigües y le cuentes cómo va una queja de un tercero. Lo correcto es:</p>
+    <div class="cp-op" data-ok="0">Hacerle el favor, porque te tiene confianza y "no le va a pasar nada a nadie".</div>
+    <div class="cp-op" data-ok="1">Explicarle con amabilidad que no puedes acceder ni divulgar esa información y remitirlo a los canales oficiales; guardas la reserva.</div>
+    <div class="cp-op" data-ok="0">Contarle solo un poco, para no quedar mal con él.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 3 -->
+  <h3 class="modulo">Módulo 3 · Veracidad e integridad de la información</h3>
+  <p>El segundo pilar es la <strong>integridad</strong> de la información: que sea <mark>veraz y no se altere indebidamente</mark>. Esto tiene dos caras. Primera: <strong>no falsear ni inventar</strong>. Un registro debe reflejar la verdad: la fecha real de radicación, el dato exacto, el estado verdadero de un trámite. Alterar una fecha, "cuadrar" un dato, inventar una información o modificar un documento sin autorización es una falta grave, porque destruye la confiabilidad de la información pública. Segunda: <strong>no manejar información falsa como si fuera cierta</strong>: si detectas un dato erróneo, lo corriges o lo reportas, no lo propagas.</p>
+  <p>La integridad conecta directamente con la <strong>honestidad</strong> y con competencias que ya viste. Recuerda los casos del bloque: no cambiar una fecha de radicación aunque un compañero lo pida (Día 5), no "cuadrar" un inventario para ocultar un faltante (Días 5 y 6). Todos son, en el fondo, <mark>integridad de la información</mark>: mantener la verdad de los registros aunque incomode. Un servidor que altera información para "arreglar" un problema o hacer un favor no está ayudando: está corrompiendo el activo más valioso de la entidad, que es la confiabilidad de sus datos. La integridad no admite excepciones "pequeñas".</p>
+  <h4>Trazabilidad: la integridad demostrable</h4>
+  <p>La integridad se protege con <strong>trazabilidad</strong>: dejar constancia de qué se hizo, cuándo y quién, de modo que la información se pueda auditar y reconstruir. Una radicación con fecha y número, un registro de a quién se direccionó un documento, un soporte de entrega: todo eso hace la información <mark>confiable y verificable</mark>. La trazabilidad es la forma de demostrar que la información no se alteró y que las cosas se hicieron como se dice. En una entidad de control, donde todo puede ser objeto de revisión, la trazabilidad no es opcional: es la garantía de la integridad. Un auxiliar riguroso con los registros protege la verdad de la información de su dependencia.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Conducta correcta (integridad)</th><th>Conducta incorrecta</th></tr>
+    <tr><td>Registrar la fecha y los datos reales</td><td>Alterar fechas o "cuadrar" datos</td></tr>
+    <tr><td>Corregir o reportar un dato erróneo</td><td>Propagar información falsa</td></tr>
+    <tr><td>Dejar trazabilidad de lo hecho</td><td>Modificar sin dejar rastro</td></tr>
+    <tr><td>Mantener la verdad aunque incomode</td><td>Falsear para "arreglar" un problema o hacer un favor</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Un compañero te pide, "para ayudarlo", que modifiques la fecha de un documento en el sistema. La integridad de la información te dice claramente: <mark>no</mark>. Registras siempre la verdad, dejas trazabilidad y, si hay un problema de fondo con la fecha, se maneja por el canal correcto. Alterar el dato no es un favor: es corromper la información y una falta. Mantener la verdad, aunque incomode, es la conducta del servidor íntegro.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Alterar, falsear o "cuadrar" información —aunque sea para ayudar a alguien o resolver un problema— es siempre incorrecto. La respuesta correcta <mark>mantiene la verdad y deja trazabilidad</mark>. La integridad de la información no tiene excepciones "pequeñas".</p></div>
+  <details class="acc"><summary>¿Corregir un error mío en un dato es "alterar" la información?</summary><div class="acc-body"><p>No, si lo haces bien. Corregir un error propio conforme al procedimiento, dejando constancia de la corrección (y reportando si tuvo efectos), es lo correcto y hace parte de la integridad. Lo indebido es <strong>alterar sin autorización, sin dejar rastro o para ocultar algo</strong>. La diferencia está en la transparencia: corregir a la luz y con constancia es integridad; modificar a escondidas para tapar, es falta.</p></div></details>
+
+    <h4>Por qué la verdad de los registros es sagrada</h4>
+  <p>La integridad de la información —que los registros digan la verdad— es tan importante que merece entenderse a fondo. En lo público, las decisiones, los derechos y la rendición de cuentas se basan en que los <mark>registros sean fieles a la realidad</mark>. Si las fechas, los datos o los documentos pudieran alterarse "para arreglar cosas", nada sería confiable: no se podría saber quién hizo qué, ni cuándo, ni si un término se cumplió. Por eso alterar un registro no es una travesura menor: <strong>destruye la confiabilidad de todo el sistema</strong> y por eso la ley lo trata con severidad.</p>
+  <p>Esta es la razón por la que, a lo largo del bloque, la respuesta correcta <strong>nunca</strong> ha sido falsear: ni cambiar una fecha de radicación, ni "cuadrar" un inventario, ni sostener una versión falsa. Todas esas conductas atacan la integridad de la información. La coherencia del bloque no es casual: refleja que la <mark>honestidad con los datos</mark> es un pilar no negociable del servicio público. Un servidor puede fallar en muchas cosas y corregir, pero falsear información deliberadamente cruza una línea de integridad difícil de reparar.</p>
+  <p>Hay una consecuencia práctica liberadora: si siempre registras la verdad y dejas trazabilidad, <strong>estás protegido</strong>. Cuando las cosas se hacen y se registran con honestidad, cualquier revisión te dará la razón. Los problemas serios en lo público no suelen venir de los errores honestos (que se corrigen), sino de los ocultamientos y las falsificaciones. Mantener la verdad de los registros, además de ser lo correcto, es la mejor defensa del servidor: nada que se hizo con honestidad y quedó bien registrado se convierte en un problema para quien lo hizo.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Cometiste un error y lo registras y corriges con transparencia, dejando constancia. Meses después, alguien revisa ese trámite y ve que todo está claro: hubo un error honesto, se corrigió, quedó registrado. <mark>La verdad te protegió.</mark> En cambio, si lo hubieras ocultado alterando datos, el problema sería mucho mayor. La honestidad con los registros es tu mejor resguardo.</p></div>
+
+    <h4>El error honesto vs. la falta: una distinción liberadora</h4>
+  <p>Conviene distinguir con claridad entre un <strong>error honesto</strong> y una <strong>falta</strong>, porque libera de un miedo paralizante. Un error honesto es una equivocación involuntaria (un dato mal digitado, un olvido) que, apenas se detecta, se <mark>reconoce, corrige y reporta</mark> si tuvo efectos. Eso es humano y esperable; nadie es perfecto, y corregir con transparencia es la conducta correcta. Una falta, en cambio, es una conducta indebida deliberada: falsear, ocultar, filtrar. La diferencia no está tanto en el hecho inicial como en <strong>qué haces después</strong>: corregir con honestidad (error) u ocultar y falsear (falta).</p>
+  <p>Esta distinción importa para el manejo de la información. Si cometes un error con un dato, la integridad no te exige "no equivocarte nunca" (imposible), sino <mark>ser honesto al detectarlo</mark>: corregir por el procedimiento, dejar constancia, reportar si hace falta. Lo que convierte un error en falta es taparlo o falsear para ocultarlo. Por eso el miedo a "quedar mal" por un error lleva, paradójicamente, a la falta (ocultar) cuando lo correcto y más seguro es reconocer. Entender esto quita el miedo y refuerza la honestidad: los errores honestos se perdonan; los ocultamientos, no.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Detectas que digitaste mal un dato. En vez de entrar en pánico o intentar taparlo, lo corriges por el procedimiento y dejas constancia. Fue un <mark>error honesto bien manejado</mark>, no una falta. Entender la diferencia te libera del miedo y refuerza tu integridad: reconocer y corregir siempre es mejor que ocultar.</p></div>
+
+  <div class="checkpoint" data-cp="3">
+    <div class="cp-q">✅ Punto de control 3</div>
+    <p>Un compañero te pide modificar la fecha de un documento en el sistema "para ayudarlo". Lo correcto es:</p>
+    <div class="cp-op" data-ok="0">Hacerlo, porque es un favor pequeño y le sirve al compañero.</div>
+    <div class="cp-op" data-ok="1">Negarte: registrar siempre la verdad y dejar trazabilidad; el problema de fondo se maneja por el canal correcto.</div>
+    <div class="cp-op" data-ok="0">Modificarla solo si nadie va a revisar el documento después.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 4 -->
+  <h3 class="modulo">Módulo 4 · Buen uso de los sistemas y seguridad de la información</h3>
+  <p>El tercer pilar, la <strong>disponibilidad</strong>, y la protección general de la información dependen mucho del <mark>buen uso de los sistemas</mark> y de la seguridad. Hoy gran parte de la información se maneja en sistemas y computadores, así que manejar bien la información incluye cuidar el acceso a esos medios. Conductas básicas: <strong>no compartir tu contraseña</strong>, cerrar sesión al ausentarte, no dejar información sensible visible en pantalla o en el escritorio, guardar bajo llave los documentos físicos reservados, y usar los sistemas solo para lo laboral. Estas prácticas, sencillas pero constantes, son la primera línea de protección de la información.</p>
+  <p>La seguridad de la información también implica <strong>prevenir la pérdida</strong>. Un documento traspapelado, un archivo borrado por descuido, una información sin respaldo: todo eso es una falla de manejo. Por eso importan el orden (que ya viste en el Día 6), los respaldos y la trazabilidad. Y hay un riesgo moderno: la <mark>seguridad digital</mark>. No abrir enlaces o archivos sospechosos, no conectar dispositivos desconocidos, reportar cualquier situación extraña. Aunque tú no seas de sistemas, tu conducta cuidadosa protege la información de la entidad frente a errores y amenazas. La seguridad es responsabilidad de todos los que manejan información, no solo del área técnica.</p>
+  <h4>Usar la información solo para lo que corresponde</h4>
+  <p>Un principio que une manejo de información y ética: la información a la que accedes por tu cargo es <strong>para el trabajo, no para ti</strong>. No se usa para curiosear en asuntos ajenos, para beneficio personal, ni para satisfacer la curiosidad. Acceder a un expediente que no te corresponde "por curiosidad", buscar los datos de una persona conocida, o usar una información privilegiada para algún fin propio, son conductas indebidas aunque no las divulgues. El buen manejo de la información incluye <mark>acceder solo a lo que tu función requiere</mark> y usarlo solo para lo que corresponde. Esta disciplina, sumada a la confidencialidad y la integridad, completa el perfil del auxiliar que maneja la información con criterio y ética.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Buena práctica</th><th>Riesgo que previene</th></tr>
+    <tr><td>No compartir contraseñas, cerrar sesión</td><td>Accesos indebidos con tu identidad</td></tr>
+    <tr><td>No dejar información sensible a la vista</td><td>Filtraciones por descuido</td></tr>
+    <tr><td>Respaldar y no perder documentos</td><td>Pérdida de información</td></tr>
+    <tr><td>Acceder solo a lo que tu función requiere</td><td>Uso indebido o curiosidad sobre datos ajenos</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Te ausentas un momento de tu puesto. En vez de dejar el computador abierto con documentos a la vista, <mark>cierras la sesión</mark> y guardas los documentos sensibles. Además, resistes la curiosidad de mirar un expediente sonado que no te corresponde. Esas conductas —cuidar el acceso y acceder solo a lo tuyo— protegen la información de la entidad y demuestran un manejo de la información maduro y ético.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>La información a la que accedes por tu cargo es <strong>para el trabajo, no para curiosear ni para uso personal</strong>. Acceder a lo que no te corresponde, aun sin divulgarlo, es una conducta indebida. La respuesta correcta <mark>protege el acceso y respeta los límites</mark> de la propia función.</p></div>
+  <details class="acc"><summary>¿Está mal mirar un expediente "famoso" solo por curiosidad, si no lo divulgo?</summary><div class="acc-body"><p>Sí, está mal. Acceder a información que <strong>no requiere tu función</strong>, aunque sea solo "por curiosidad" y no la divulgues, es un uso indebido: violas el principio de acceder solo a lo necesario y puedes quedar registrado en los sistemas accediendo a algo que no te compete. El manejo correcto de la información limita el acceso a lo que el trabajo exige, sin excepciones por curiosidad.</p></div></details>
+
+    <h4>La cultura de seguridad: pequeñas conductas, gran protección</h4>
+  <p>La seguridad de la información no depende de grandes medidas técnicas, sino de una <strong>cultura de pequeñas conductas</strong> constantes. Un puesto de trabajo seguro es aquel donde: la pantalla se bloquea al ausentarse, los documentos sensibles no quedan a la vista, las contraseñas no se comparten ni se anotan en un papel pegado al monitor, los expedientes reservados se guardan bajo llave, y la papelería con datos se destruye adecuadamente en vez de botarla entera. Ninguna de estas conductas es difícil; lo valioso es hacerlas <mark>siempre</mark>, hasta que sean automáticas. La suma de esos pequeños hábitos protege la información mucho más que cualquier sistema.</p>
+  <p>Existe también un componente de <strong>seguridad digital</strong> cada vez más relevante. Los ataques a la información suelen entrar por descuidos humanos: abrir un enlace o archivo sospechoso, conectar un dispositivo desconocido, caer en un correo engañoso (phishing). Aunque tú no seas del área de sistemas, tu conducta prudente —desconfiar de lo sospechoso, no abrir lo que no esperabas, reportar situaciones extrañas— es una barrera importante. La seguridad de la información es responsabilidad de <mark>todos los que la manejan</mark>, no solo de los técnicos.</p>
+  <p>Y hay un principio que integra todo: el de <strong>mínimo acceso</strong>. Se accede solo a la información que la función requiere, se comparte solo con quien la necesita para su trabajo, y se conserva solo lo necesario. Este principio reduce los riesgos: mientras menos gente acceda a algo sin necesidad, menor el riesgo de filtración o mal uso. Aplicarlo significa resistir la curiosidad (no mirar lo que no me corresponde), no compartir "de más" y no acumular información sin razón. El mínimo acceso, junto con las conductas de seguridad, completa un manejo de la información maduro y protector.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Adoptas los pequeños hábitos: bloqueas la pantalla, guardas lo sensible, no compartes contraseñas, desconfías de un correo raro y lo reportas. Ninguno es difícil, pero juntos <mark>protegen la información de tu dependencia</mark>. La seguridad es una cultura de detalles constantes, y tú eres parte de esa primera línea de defensa.</p></div>
+
+  <div class="checkpoint" data-cp="4">
+    <div class="cp-q">✅ Punto de control 4</div>
+    <p>Sobre la información a la que accedes por tu cargo, lo correcto es:</p>
+    <div class="cp-op" data-ok="1">Acceder solo a lo que tu función requiere y usarla solo para el trabajo, cuidando el acceso (contraseñas, sesión, documentos).</div>
+    <div class="cp-op" data-ok="0">Mirar cualquier expediente por curiosidad, mientras no lo divulgues.</div>
+    <div class="cp-op" data-ok="0">Compartir tu contraseña con un compañero de confianza para agilizar.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 5 -->
+  <h3 class="modulo">Módulo 5 · Integración I: responsabilidad, cumplimiento y manejo de información</h3>
+  <p>Empezamos a <strong>integrar</strong>. Las competencias que has visto no viven separadas: en una situación real se entrelazan. Veamos cómo se conectan la <strong>responsabilidad</strong>, el <strong>cumplimiento de parámetros</strong> (Día 5) y el <strong>manejo de la información</strong> (hoy). Las tres comparten un núcleo: la <mark>integridad y la confiabilidad</mark>. El servidor responsable responde por lo suyo; el que cumple parámetros hace las cosas como está establecido; el que maneja bien la información no la altera ni la filtra. En conjunto, describen a alguien en quien se puede <strong>confiar</strong>: que asume, que sigue las reglas y que custodia con honestidad lo que se le entrega.</p>
+  <p>Un ejemplo integra las tres: te piden alterar una fecha de radicación. La <strong>responsabilidad</strong> te dice que respondas por la verdad de tu trabajo; el <strong>cumplimiento de parámetros</strong>, que sigas el procedimiento (que exige la fecha real); y el <strong>manejo de la información</strong>, que no alteres el registro. Las tres apuntan a lo mismo: <mark>no falsear, registrar la verdad, dejar constancia</mark>. Por eso, en la prueba, muchas situaciones "de una competencia" en realidad se resuelven con este núcleo común de integridad. Cuando reconoces que varias competencias apuntan a la misma conducta, respondes con más seguridad.</p>
+  <h4>El hilo conductor: la integridad</h4>
+  <p>Si buscas el hilo que une estas competencias, es la <strong>integridad</strong>: actuar con honestidad y coherencia, hacer lo correcto aunque cueste o aunque nadie mire. La integridad es un valor central del servicio público (está en el Código de Integridad) y atraviesa todo el bloque comportamental. Un servidor íntegro es responsable (asume), cumple los parámetros (no toma atajos indebidos) y maneja bien la información (no filtra ni altera). En una entidad de control como la Procuraduría, cuya misión es <mark>vigilar la integridad de los demás servidores</mark>, ser íntegro no es opcional: es coherencia con el propósito de la institución. La integridad es, quizás, la palabra que mejor resume lo que la prueba busca.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Competencia</th><th>Núcleo común</th></tr>
+    <tr><td>Responsabilidad con la organización</td><td>Responder por lo propio con honestidad</td></tr>
+    <tr><td>Cumplimiento de parámetros</td><td>Hacer las cosas como está establecido, sin atajos indebidos</td></tr>
+    <tr><td>Manejo de la información</td><td>No alterar, no filtrar; custodiar con verdad</td></tr>
+    <tr><td>El hilo que las une</td><td><strong>Integridad</strong>: hacer lo correcto aunque cueste</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Ante la presión de "arreglar" un dato para ocultar un retraso, reconoces que la situación toca tres competencias a la vez —responsabilidad, cumplimiento y manejo de información— y que todas apuntan a lo mismo: <mark>mantener la verdad</mark>. Actúas con integridad: registras lo real, dejas constancia y, si hay un problema, lo canalizas. Ver las competencias integradas te da una brújula clara para cualquier caso similar.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Muchas situaciones cruzan varias competencias, pero comparten un núcleo: la <strong>integridad</strong>. Cuando dudes, pregúntate "¿cuál opción es la honesta, la que mantiene la verdad y hace lo correcto?". Esa suele ser la respuesta, resuelva la competencia que resuelva.</p></div>
+  <details class="acc"><summary>¿Por qué la prueba mezcla varias competencias en un mismo caso?</summary><div class="acc-body"><p>Porque así es la realidad: en el trabajo, las situaciones no llegan etiquetadas "esto es responsabilidad" o "esto es manejo de información". Una situación real involucra varias a la vez. La prueba imita esa realidad para evaluar tu criterio integral, no la memorización de definiciones. Por eso conviene entender el <strong>núcleo común</strong> (integridad, servicio, cumplimiento) más que memorizar competencias por separado.</p></div></details>
+
+    <h4>Coherencia: el servidor íntegro es igual en todo</h4>
+  <p>Una consecuencia de ver la integridad como hilo conductor es la <strong>coherencia</strong>: el servidor íntegro actúa igual en todas las situaciones y ante todas las personas. No es responsable en unas tareas y descuidado en otras; no es honesto con el jefe y tramposo cuando no lo ven; no protege la información de unos y la filtra de otros. La integridad es <mark>de una sola pieza</mark>: se es íntegro siempre o no se es. Esta coherencia es lo que construye una reputación sólida y la confianza, porque los demás saben que pueden contar contigo en cualquier circunstancia.</p>
+  <p>La coherencia también significa que las conductas se <strong>refuerzan entre sí</strong>. El servidor que no falsea información tampoco toma atajos indebidos ni evade responsabilidades: las tres nacen del mismo carácter íntegro. Por eso, cultivar una competencia fortalece las otras. Cuando te acostumbras a registrar la verdad, se te hace natural cumplir los procedimientos y responder por tu trabajo. La integridad no es una competencia más en una lista: es el <mark>carácter</mark> que sostiene a todas las demás y les da coherencia.</p>
+  <p>En la Procuraduría, esta coherencia es especialmente significativa. La entidad existe para <strong>vigilar la conducta e integridad de los servidores públicos</strong>; trabajar allí exige ser ejemplo de lo que la institución reclama a los demás. Un servidor de la Procuraduría que fuera responsable en apariencia pero deshonesto con la información, o cumplidor de cara al jefe pero tramposo a sus espaldas, sería una contradicción viviente con la misión de su entidad. La coherencia íntegra no es solo una virtud personal: es una exigencia de coherencia institucional para quien trabajará vigilando la integridad ajena.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Actúas con la misma honestidad y rigor cuando el jefe está y cuando no, con el ciudadano importante y con el humilde, en la tarea vistosa y en la rutinaria. Esa <mark>coherencia íntegra</mark> construye tu reputación y es coherente con la misión de la Procuraduría de vigilar la integridad. El servidor íntegro es igual en todo: esa es su fortaleza.</p></div>
+
+    <h4>Reconocer el núcleo: la llave para responder rápido</h4>
+  <p>Entender que las competencias comparten núcleos comunes te da una <strong>llave práctica</strong> para la prueba: en vez de agobiarte tratando de identificar "exactamente cuál competencia" evalúa una pregunta, busca el <mark>núcleo</mark> que está en juego. ¿Es un tema de honestidad y verdad? El núcleo es la integridad. ¿Es de orden, tiempo o cuidado de recursos? El núcleo es la eficiencia con cuidado. ¿Es de trato a personas? El núcleo es el servicio con verdad y respeto. Identificar el núcleo te lleva directo a la conducta correcta, aunque el caso mezcle varias competencias.</p>
+  <p>Esta mirada por núcleos evita un error común: dudar entre dos competencias y bloquearse. Como las conductas correctas de las distintas competencias <mark>no se contradicen</mark> (todas apuntan a asumir, cumplir, servir, colaborar y ser transparente), no importa tanto "etiquetar" perfectamente la competencia: importa elegir la conducta íntegra, eficiente y de servicio. Los núcleos son como tres brújulas que, en la práctica, señalan la misma dirección: la del buen servidor. Con ellos internalizarás el criterio que la prueba busca.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Ante una pregunta que parece mezclar varias competencias, no te bloqueas tratando de etiquetarla: identificas el núcleo (¿honestidad? ¿cuidado? ¿servicio?) y eliges la conducta que lo refleja. <mark>Reconocer el núcleo</mark> te permite responder con seguridad y rapidez, sin perderte en clasificaciones.</p></div>
+
+  <div class="checkpoint" data-cp="5">
+    <div class="cp-q">✅ Punto de control 5</div>
+    <p>El hilo conductor que une la responsabilidad, el cumplimiento de parámetros y el manejo de la información es:</p>
+    <div class="cp-op" data-ok="1">La integridad: actuar con honestidad, mantener la verdad y hacer lo correcto aunque cueste.</div>
+    <div class="cp-op" data-ok="0">La rapidez: hacer todo lo más rápido posible.</div>
+    <div class="cp-op" data-ok="0">La simpatía: caerle bien a todos.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 6 -->
+  <h3 class="modulo">Módulo 6 · Integración II: organización, recursos y manejo de información</h3>
+  <p>Sigamos integrando. La <strong>organización del trabajo</strong> y la <strong>gestión de recursos</strong> (Día 6) se conectan estrechamente con el <strong>manejo de la información</strong>, porque la información <em>es</em> uno de los recursos que gestionas y su buen manejo <em>requiere</em> orden. Estas tres competencias comparten un núcleo: la <mark>eficiencia y el cuidado</mark>. El servidor organizado planea y ordena; el que gestiona recursos cuida lo que usa; el que maneja bien la información la mantiene disponible y protegida. En conjunto, describen a un auxiliar <strong>eficiente y cuidadoso</strong>, en cuyo trabajo nada se pierde, nada se desperdicia y nada se expone indebidamente.</p>
+  <p>La conexión es muy visible en tu cargo. Un <strong>archivo bien organizado</strong> (organización) es a la vez información protegida y disponible (manejo de información) y un recurso bien cuidado (gestión de recursos): las tres competencias en un solo acto. Cuando mantienes el orden de los documentos, dejas trazabilidad y proteges lo sensible, estás siendo organizado, cuidadoso con los recursos y buen manejador de la información al mismo tiempo. Por eso el <mark>orden del entorno documental</mark> es una de las conductas donde más se concentran las competencias: hacerlo bien demuestra varias a la vez.</p>
+  <h4>El hilo conductor: eficiencia y cuidado</h4>
+  <p>El hilo que une este grupo es la <strong>eficiencia con cuidado</strong>: lograr los objetivos con buen uso del tiempo, los recursos y la información, protegiéndolos. Es la conducta de quien no vive apagando incendios ni desperdiciando ni exponiendo, sino que trabaja con método y protección. En términos del artículo 209, es <mark>economía, eficacia y celeridad</mark> aplicadas al día a día. Un auxiliar que integra estas competencias hace que su rincón de la operación funcione como un reloj: ordenado, sin pérdidas y con la información protegida y disponible. Esa eficiencia cuidadosa, sumada a la integridad del grupo anterior, va perfilando al servidor completo.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Competencia</th><th>Núcleo común</th></tr>
+    <tr><td>Organización del trabajo</td><td>Planear y ordenar; nada se pierde</td></tr>
+    <tr><td>Gestión de recursos</td><td>Cuidar y optimizar; nada se desperdicia</td></tr>
+    <tr><td>Manejo de la información</td><td>Disponible y protegida; nada se expone indebidamente</td></tr>
+    <tr><td>El hilo que las une</td><td><strong>Eficiencia con cuidado</strong></td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Organizas el archivo de tu dependencia con criterio, proteges lo reservado bajo llave y dejas todo localizable con su trazabilidad. En ese solo trabajo demostraste <mark>tres competencias a la vez</mark>: organización (orden), gestión de recursos (cuidas la información como recurso) y manejo de la información (disponible y protegida). Ver esa integración te muestra que las buenas conductas se refuerzan entre sí.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>En situaciones de archivo, documentos o información, recuerda el trío: <strong>orden + cuidado + protección</strong>. La respuesta correcta suele mantener la información <mark>organizada, protegida y disponible legítimamente</mark>, a la vez.</p></div>
+  <details class="acc"><summary>¿El orden y la protección de la información pueden entrar en conflicto con darla a quien la pide?</summary><div class="acc-body"><p>No, si se entiende bien. Proteger la información no es "esconderla de todos": es dar acceso a lo <strong>público</strong> a quien lo pide y proteger lo <strong>reservado</strong>. El orden facilita ambas cosas: encontrar rápido lo que se debe entregar y proteger lo que se debe reservar. Un buen manejo equilibra transparencia (dar lo público) y reserva (proteger lo protegido); no son opuestos, son las dos caras del mismo criterio.</p></div></details>
+
+    <h4>Prevenir en vez de remediar: la actitud eficiente</h4>
+  <p>El hilo de la eficiencia con cuidado se resume en una actitud: <strong>prevenir en vez de remediar</strong>. El servidor organizado y cuidadoso se adelanta a los problemas: planea para no correr, anticipa el reabastecimiento para que no falte, ordena para no perder, respalda para no lamentar, protege para no filtrar. Prevenir cuesta un poco de disciplina; remediar cuesta mucho más (tiempo, recursos, disgustos, riesgos). La eficiencia madura entiende que <mark>una hora de prevención ahorra muchas de remedio</mark>, y por eso invierte en el orden, el cuidado y la protección desde el inicio.</p>
+  <p>Esta actitud preventiva conecta las tres competencias del grupo. En organización: planear evita las urgencias de última hora. En recursos: anticipar evita el desabastecimiento y el desperdicio. En información: proteger y respaldar evita las pérdidas y filtraciones. Todas son formas de <strong>adelantarse</strong> en lugar de reaccionar. El servidor eficiente no es el que resuelve heroicamente las crisis, sino el que <mark>evita que ocurran</mark> con su previsión constante. En lo público, donde una falla puede afectar derechos, prevenir es especialmente valioso.</p>
+  <p>Prevenir también implica <strong>reportar a tiempo</strong> los riesgos que uno detecta pero no puede resolver solo. Un insumo que se agota, un equipo que falla, un procedimiento que genera pérdidas, una información expuesta: reportarlos con anticipación permite corregir antes de que el problema estalle. Esta conducta —ver venir y avisar— es una de las más valoradas, porque le da a la entidad la oportunidad de actuar preventivamente. El servidor eficiente no solo cuida lo suyo: alerta sobre los riesgos que ve, contribuyendo a la prevención del conjunto.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>En vez de esperar a que las cosas fallen, te adelantas: planeas la semana, avisas que un insumo está bajo, respaldas la información, reportas un equipo que empieza a fallar. Cuando llega un día de mucha carga, estás preparada y nada te toma por sorpresa. <mark>Prevenir en vez de remediar</mark> es la actitud que hace eficiente y confiable a un auxiliar.</p></div>
+
+    <h4>La calidad de los datos: información útil es información buena</h4>
+  <p>La disponibilidad no basta con "tener" la información: la información debe ser de <strong>calidad</strong> para ser útil. Un dato completo, correcto, actualizado y bien registrado sirve; uno incompleto, erróneo o desactualizado engaña o entorpece. Por eso el buen manejo cuida la <mark>calidad de los datos</mark>: registrar completo, verificar antes de dar por cerrado, mantener actualizado. Un registro a medias o con errores es casi peor que no tenerlo, porque induce a decisiones equivocadas. La eficiencia con cuidado incluye asegurar que la información no solo exista, sino que sea confiable y utilizable.</p>
+  <p>La calidad de los datos conecta la organización, los recursos y la información en una sola conducta: registrar bien. Cuando llenas un formato completo, verificas un dato, actualizas un registro, dejas trazabilidad, estás produciendo información de calidad que otros podrán usar con confianza. En cambio, los registros descuidados generan un efecto dominó: quien los use después trabajará sobre datos malos. Cuidar la calidad de lo que registras es, entonces, una forma de servir al equipo y a la continuidad del trabajo, más allá de tu tarea inmediata.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Al registrar un dato, lo haces completo y lo verificas, en vez de dejarlo a medias "para completar después". Cuando un compañero usa ese registro más adelante, encuentra información <mark>confiable y utilizable</mark>. Cuidar la calidad de los datos que produces beneficia a todo el que los use después: es eficiencia con cuidado en acción.</p></div>
+
+  <div class="checkpoint" data-cp="6">
+    <div class="cp-q">✅ Punto de control 6</div>
+    <p>El hilo conductor que une la organización, la gestión de recursos y el manejo de la información es:</p>
+    <div class="cp-op" data-ok="1">La eficiencia con cuidado: método y protección para que nada se pierda, se desperdicie ni se exponga indebidamente.</div>
+    <div class="cp-op" data-ok="0">La improvisación: resolver sobre la marcha sin método.</div>
+    <div class="cp-op" data-ok="0">La acumulación: guardar todo sin criterio por si acaso.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 7 -->
+  <h3 class="modulo">Módulo 7 · Integración III: servicio, equipo e información</h3>
+  <p>Cerramos la integración con las competencias más humanas: la <strong>orientación al usuario</strong> y el <strong>trabajo en equipo</strong> (Día 7), conectadas con el manejo de la información. Su núcleo común es el <mark>servicio a las personas</mark>: al ciudadano al que atiendes y a los compañeros con quienes trabajas. Y la información las atraviesa: sirves bien al ciudadano cuando le das información <strong>veraz y clara</strong> (no lo confundes ni lo engañas), y proteges sus datos; trabajas bien en equipo cuando <strong>compartes la información</strong> que otros necesitan, pero sin filtrar lo reservado. El manejo de la información, entonces, tiene también una cara de servicio y de equipo.</p>
+  <p>Aquí aparece un equilibrio fino que la prueba explota: <strong>compartir sin filtrar</strong>. En el equipo, la buena comunicación exige compartir la información que los compañeros necesitan para trabajar; pero la confidencialidad exige no divulgar lo reservado ni los datos personales a quien no tiene derecho. El buen servidor equilibra ambos: <mark>comparte lo necesario para el trabajo con quien lo necesita, y protege lo reservado</mark>. Del mismo modo, con el ciudadano: le da toda la información pública que necesita (transparencia) y protege la que la ley reserva. Servir e informar bien no es "contar todo" ni "no contar nada": es dar lo que corresponde a quien corresponde.</p>
+  <h4>El hilo conductor: servir con verdad y respeto</h4>
+  <p>El hilo de este grupo es <strong>servir a las personas con verdad y respeto</strong>: tratar bien, informar con veracidad, proteger lo debido y colaborar. Un auxiliar que integra estas competencias es alguien que el ciudadano agradece (lo atendió bien y con información clara y honesta) y con quien los compañeros trabajan a gusto (comparte, coopera, comunica). Sumado a la integridad y a la eficiencia de los grupos anteriores, este servicio humano completa el perfil. Y todo es coherente con la Procuraduría, que <mark>protege los derechos de las personas</mark>: servir con verdad y respeto, cuidando su información, es la conducta que encarna esa misión en la ventanilla.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Competencia</th><th>Núcleo común</th></tr>
+    <tr><td>Orientación al usuario</td><td>Servir a la persona con calidez y verdad</td></tr>
+    <tr><td>Trabajo en equipo</td><td>Colaborar y compartir con los compañeros</td></tr>
+    <tr><td>Manejo de la información</td><td>Informar con veracidad; compartir sin filtrar lo reservado</td></tr>
+    <tr><td>El hilo que las une</td><td><strong>Servir con verdad y respeto</strong></td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Un compañero de otra área te pide información de un caso para su trabajo, y un ciudadano te pide información pública sobre su propio trámite. A ambos les das <mark>lo que corresponde</mark>: al compañero, lo necesario para su función; al ciudadano, la información pública sobre su asunto; y a ambos, con veracidad. Pero si alguien pidiera datos reservados de terceros, los protegerías. Integraste servicio, equipo y manejo de información: compartir con verdad, sin filtrar.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>El equilibrio clave: <strong>compartir lo necesario, con verdad, y proteger lo reservado</strong>. Ni "contar todo" (filtrar) ni "no dar nada" (obstaculizar). La respuesta correcta da la información pública a quien tiene derecho y protege la reservada.</p></div>
+  <details class="acc"><summary>¿Cómo sé qué información puedo compartir con un compañero?</summary><div class="acc-body"><p>La regla es la <strong>necesidad de conocer</strong>: comparte con un compañero la información que necesita para <strong>su función</strong>, no todo lo que sabes. Para el trabajo del equipo, la información fluye entre quienes deben conocerla; lo reservado o los datos personales no se comparten "de más" ni por curiosidad. Ante la duda sobre si algo es reservado, consulta antes de compartir. Colaborar no es filtrar: es dar lo necesario a quien lo necesita para trabajar.</p></div></details>
+
+    <h4>La confianza: lo que se gana sirviendo con verdad</h4>
+  <p>El hilo del servicio con verdad produce un fruto valioso: la <strong>confianza</strong>, tanto del ciudadano como del equipo. El ciudadano confía en el servidor que lo trata con respeto y le da información veraz; deja de confiar en quien lo maltrata o lo engaña con falsas promesas. El equipo confía en el compañero que colabora, comparte lo necesario y guarda la reserva de lo que debe; desconfía de quien filtra, no coopera o siembra chismes. La confianza es la <mark>moneda del trabajo con personas</mark>, y se gana con verdad y respeto sostenidos, no con simpatía superficial.</p>
+  <p>Esta confianza tiene un efecto multiplicador. Un ciudadano que confía en el servidor colabora más, se altera menos, entiende mejor las explicaciones; un equipo que confía en un compañero le comparte, lo apoya y trabaja con fluidez. La confianza, entonces, no es solo un buen sentimiento: <strong>mejora el trabajo</strong>. Por el contrario, la desconfianza traba todo: el ciudadano desconfiado exige y se queja; el equipo desconfiado se protege y oculta. Servir con verdad y respeto construye la confianza que hace que todo funcione mejor.</p>
+  <p>Para el auxiliar, ser digno de confianza —del ciudadano y del equipo— es quizás el mayor logro profesional. Significa que la gente sabe que la tratarás bien y con verdad, y que los compañeros saben que pueden contar contigo. Esa reputación de <mark>confiabilidad humana</mark>, sumada a la confiabilidad técnica (integridad, eficiencia), completa el perfil del servidor valioso. Y es coherente con la Procuraduría, cuya autoridad se basa, precisamente, en ser una institución en la que la sociedad puede confiar. Servir con verdad y respeto es construir, desde tu ventanilla, esa confianza en lo público.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Con el tiempo, los ciudadanos te buscan porque "trata bien y dice la verdad", y los compañeros cuentan contigo porque "colabora y es discreta". Esa <mark>confianza ganada</mark>, dentro y fuera, es el fruto de servir con verdad y respeto, y es lo que te vuelve un servidor en quien todos —ciudadanía y equipo— pueden apoyarse.</p></div>
+
+    <h4>Discreción: una virtud que se nota</h4>
+  <p>La <strong>discreción</strong> —guardar la reserva, no comentar lo que se sabe por el cargo, no exponer información— es una virtud que, aunque silenciosa, se nota y se valora enormemente. Los compañeros y los ciudadanos perciben quién es discreto y quién no: al indiscreto no le confían nada importante; al discreto le confían todo. En el manejo de información, la discreción es la conducta que sostiene la confidencialidad en el día a día: no es solo "no filtrar oficialmente", es <mark>no comentar por comentar</mark>, no alimentar la curiosidad ajena, no usar lo que se sabe para figurar o para chismes.</p>
+  <p>La discreción tiene una prueba difícil: la <strong>tentación de contar</strong>. Manejar información interesante puede generar la tentación de comentarla ("no sabes lo que vi en tal expediente"), de sentirse importante por saber, de compartir un dato jugoso. Resistir esa tentación es parte de la competencia. El servidor discreto entiende que la información que maneja <mark>no es suya para contarla</mark>, sino un depósito de confianza que debe custodiar. Esa contención, aunque nadie la aplauda, es una de las conductas que más distinguen a un servidor confiable de uno que no lo es.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Manejas información de un caso llamativo y sientes la tentación de comentarlo con un compañero para el que no es relevante. Te contienes: esa información <mark>no es tuya para contarla</mark>. Con el tiempo, todos saben que eres discreta, y por eso te confían lo importante. La discreción, aunque silenciosa, construye una reputación de confiabilidad invaluable.</p></div>
+
+  <div class="checkpoint" data-cp="7">
+    <div class="cp-q">✅ Punto de control 7</div>
+    <p>Sobre compartir información en el equipo y con el ciudadano, lo correcto es:</p>
+    <div class="cp-op" data-ok="1">Compartir lo necesario para el trabajo, con veracidad, y proteger lo reservado y los datos personales.</div>
+    <div class="cp-op" data-ok="0">Contar todo lo que uno sabe, para ser transparente y buen compañero.</div>
+    <div class="cp-op" data-ok="0">No dar ninguna información a nadie, por si acaso.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 8 -->
+  <h3 class="modulo">Módulo 8 · El método definitivo y el perfil comportamental completo</h3>
+  <p>Cerramos el bloque con dos herramientas. Primero, el <strong>método definitivo</strong> para resolver cualquier pregunta de juicio situacional, que ya viste y ahora consolidas: (1) <mark>identifica</mark> qué competencia(s) se evalúan; (2) recuerda la <mark>conducta ideal</mark> en nivel alto; (3) <mark>descarta los extremos</mark> (evadir, atajos, ocultar, filtrar, ceder a presiones, reaccionar de forma desproporcionada); (4) elige la <mark>conducta equilibrada</mark>: la que asume, cumple, sirve, colabora y comunica con transparencia. Este método funciona porque, como viste, todas las competencias comparten núcleos —integridad, eficiencia con cuidado, servicio con verdad— y la conducta correcta casi siempre los refleja.</p>
+  <p>Segundo, el <strong>perfil comportamental completo</strong> del Auxiliar Administrativo de la PGN, que reúne todo el bloque. Es un servidor: <strong>íntegro y responsable</strong> (asume, responde, no falsea); <strong>riguroso y cumplidor</strong> (sigue procedimientos, tiempos y estándares); <strong>ordenado y cuidadoso</strong> (planea, prioriza, cuida los recursos y la información); <strong>servicial</strong> (pone al ciudadano en el centro, con calidez y verdad); <strong>colaborador</strong> (aporta al equipo, comunica, cuida el clima); y <strong>discreto y protector de la información</strong> (guarda la reserva, protege los datos). Ese es el retrato del auxiliar que la prueba busca y que tu cargo necesita: <mark>alguien confiable, eficiente y humano</mark>.</p>
+  <h4>Del bloque comportamental a las guías funcionales</h4>
+  <p>Con este día cierras el <strong>bloque comportamental</strong> (Días 5 a 8) y quedas lista para las <strong>guías funcionales</strong> de tu cargo, que comienzan el Día 9 (gestión documental, ofimática, atención al ciudadano, inventarios, estructura de la PGN, y más). Pero las competencias que trabajaste no quedan atrás: <mark>acompañan cada tema funcional</mark>. Cuando estudies gestión documental, aplicarás organización y manejo de información; cuando veas atención al ciudadano, orientación al usuario; cuando manejes inventarios, gestión de recursos y responsabilidad. Lo comportamental y lo funcional se integran: el <em>qué sabes</em> y el <em>cómo actúas</em> se unen en el buen servidor. Llevas ya la mitad del perfil; ahora vienen los conocimientos técnicos que completan tu preparación.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Frente a cualquier pregunta situacional de tu prueba —sea de la competencia que sea— aplicas el método: identificas, recuerdas la conducta ideal, descartas los extremos y eliges la opción que <mark>asume, cumple, sirve, colabora y es transparente</mark>. Y en el trabajo, encarnas el perfil completo: íntegro, riguroso, ordenado, servicial, colaborador y discreto. Con esa brújula, ninguna situación —en la prueba o en la oficina— te tomará por sorpresa.</p>
+  </div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>El método universal: <strong>identificar → conducta ideal → descartar extremos → elegir la equilibrada</strong>. La respuesta correcta casi siempre <mark>asume, cumple, sirve, colabora y comunica con transparencia</mark>. Si una opción implica evadir, ocultar, filtrar, falsear o ceder a lo indebido, descártala.</p></div>
+  <details class="acc"><summary>¿Cómo repaso todo el bloque comportamental para la prueba?</summary><div class="acc-body"><p>Con dos ideas. Primera, los <strong>núcleos comunes</strong>: integridad (no falsear, no filtrar, asumir), eficiencia con cuidado (orden, recursos, información), y servicio con verdad (ciudadano y equipo). Segunda, el <strong>método</strong>: identificar la competencia, recordar la conducta ideal, descartar extremos, elegir la equilibrada. Si dominas los núcleos y el método, respondes bien cualquier pregunta situacional, aunque el caso concreto sea nuevo. No memorices casos: interioriza el criterio.</p></div></details>
+
+    <h4>Cómo estudiar y presentar la prueba de competencias</h4>
+  <p>Cerramos con consejos concretos para la <strong>prueba</strong>. Primero, no memorices casos: <mark>interioriza los núcleos</mark> (integridad, eficiencia con cuidado, servicio con verdad) y el método (identificar, conducta ideal, descartar extremos, elegir la equilibrada). Con eso resuelves cualquier situación, aunque el caso concreto sea nuevo. Segundo, lee con calma el contexto largo de cada pregunta: las situaciones traen detalles y distractores; identifica qué se está evaluando antes de mirar las opciones. Tercero, desconfía de las opciones extremas y de las que "parecen útiles" pero implican faltar a la ética o las reglas.</p>
+  <p>Un consejo clave: en las competencias comportamentales, responde según la <strong>conducta institucionalmente esperada</strong>, no según lo que harías por impulso o costumbre. La prueba busca al servidor que asume, cumple, sirve, colabora y es transparente; esa es la respuesta correcta aunque en la vida real a veces se actúe distinto. Con la práctica, además, esa conducta "correcta" se vuelve tu forma natural, lo que te hará mejor servidor y te dará seguridad en la prueba. Practicar simulacros (como el de esta guía y el simulacro final del curso) te entrena el criterio.</p>
+  <p>Y una idea final para todo el bloque: <strong>lo comportamental pesa tanto como lo técnico</strong>, y ahora que cierras este bloque, llevas la mitad del perfil del buen servidor. Las guías funcionales que vienen te darán los conocimientos (gestión documental, ofimática, atención, inventarios, estructura de la PGN, y más), pero recuerda que <mark>cada tema técnico se ejerce con estas competencias</mark>: con integridad, orden, servicio y discreción. El <em>qué sabes</em> y el <em>cómo actúas</em> se unen en el servidor completo que la Procuraduría busca. Has construido una base sólida de actitud; ahora vienen los conocimientos que la complementan.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Al presentar la prueba de competencias, no intentas recordar casos de memoria: aplicas los núcleos y el método. Lees con calma, identificas qué se evalúa, descartas los extremos y eliges la conducta que asume, cumple, sirve, colabora y es transparente. Con esa brújula, <mark>respondes con seguridad cualquier situación</mark>, y llevas a tu futuro cargo un perfil comportamental sólido.</p></div>
+
+    <h4>El cierre del bloque: media preparación conquistada</h4>
+  <p>Con este día completas el <strong>bloque comportamental</strong> del curso (Días 5 a 8) y, con él, una parte esencial de tu preparación. Has trabajado las siete competencias que definen cómo actúa un buen auxiliar —responsabilidad, cumplimiento de parámetros, organización del trabajo, gestión de recursos, orientación al usuario, trabajo en equipo y manejo de la información— y las has integrado en un perfil coherente y en un método de resolución. Esto no es un tema secundario: en tu concurso, las competencias son una prueba con peso propio, y en tu futuro cargo, son lo que hará que confíen en ti.</p>
+  <p>Vale la pena mirar el camino recorrido con perspectiva. La actitud del servidor —ser íntegro, riguroso, ordenado, servicial, colaborador y discreto— no se improvisa el día de la prueba ni el primer día de trabajo: se cultiva. Al estudiar este bloque, no solo te preparaste para responder preguntas: <mark>diste forma al tipo de servidora que quieres ser</mark>. Esa reflexión sobre cómo actuar bien es, quizás, tan valiosa como el conocimiento técnico, porque te acompañará durante toda tu carrera, mucho más allá del concurso.</p>
+  <p>Ahora vienen las <strong>guías funcionales</strong> (a partir del Día 9): gestión documental y archivo, elaboración de documentos, ofimática, atención al ciudadano, manejo de inventarios, estructura y funciones de la PGN, gestión pública, sistemas de gestión, transparencia y Constitución. Son los <em>conocimientos</em> que tu manual exige y que completan tu preparación. Pero llévate esta idea del bloque comportamental: <mark>cada uno de esos temas se ejerce con las competencias que ya dominas</mark>. La gestión documental con orden e integridad; la atención con servicio; los inventarios con cuidado de recursos. Lo que sabes y cómo actúas se unirán en la servidora completa que la Procuraduría busca. Vas por buen camino: la mitad del perfil ya está construida.</p>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div><p>Cierras el bloque comportamental sabiendo no solo responder preguntas de competencias, sino <mark>cómo quieres actuar como servidora</mark>: con integridad, orden, servicio y discreción. Ese perfil te acompañará en las guías funcionales que siguen y en toda tu carrera. Has conquistado la mitad de tu preparación; ahora, a por los conocimientos técnicos. Y llévate la certeza de que el esfuerzo de estos cuatro días no se agota en la prueba: la actitud íntegra, ordenada, servicial y discreta que cultivaste será, día tras día, la que haga que en la Procuraduría confíen en ti y te den un lugar sólido en la carrera administrativa. Ese es el verdadero premio de haber estudiado bien estas competencias: no solo aprobar una prueba, sino convertirte en la clase de servidora pública que la entidad quiere conservar y hacer crecer con el paso de los años. Ese es, al final, el sentido de todo el bloque comportamental.</p></div>
+
+  <div class="checkpoint" data-cp="8">
+    <div class="cp-q">✅ Punto de control 8</div>
+    <p>El perfil comportamental completo del Auxiliar Administrativo de la PGN se describe mejor como alguien:</p>
+    <div class="cp-op" data-ok="1">Íntegro y responsable, riguroso, ordenado y cuidadoso, servicial, colaborador y discreto con la información.</div>
+    <div class="cp-op" data-ok="0">Rápido a cualquier costo, aunque tome atajos y descuide el trato.</div>
+    <div class="cp-op" data-ok="0">Individualista y reservado con los compañeros, pero simpático con el jefe.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="box key"><div class="box-title">🔑 Idea clave del día</div><p>Hoy cerraste el bloque comportamental. El <strong>Manejo de la Información</strong> se sostiene en tres pilares: <strong>confidencialidad</strong> (proteger lo reservado y los datos personales, con deber de reserva), <strong>integridad</strong> (no alterar ni falsear; mantener la verdad con trazabilidad) y <strong>disponibilidad</strong> (orden, buen uso de sistemas, acceso legítimo). Y todas las competencias del bloque <strong>se integran</strong> en un perfil: un auxiliar <strong>íntegro y responsable, riguroso, ordenado y cuidadoso, servicial, colaborador y discreto</strong>. Ante cualquier situación de la prueba, aplica el método: <strong>identificar → conducta ideal → descartar extremos → elegir la que asume, cumple, sirve, colabora y comunica con transparencia</strong>. Ese es el servidor que la Procuraduría busca. Recuerda los tres núcleos que integran todo el bloque —integridad (no falsear, no filtrar, asumir), eficiencia con cuidado (orden, recursos, información protegida) y servicio con verdad (ciudadano y equipo)— y las claves del manejo de la información: proteger lo reservado y los datos personales incluso ante conocidos, mantener la verdad de los registros con trazabilidad, acceder solo a lo que la función requiere y compartir sin filtrar. Con este día cierras el bloque comportamental (Días 5 a 8) y quedas lista para las guías funcionales del Día 9 en adelante, donde estas competencias acompañarán cada tema técnico de tu cargo.</p></div>
+  <div class="box tips"><div class="box-title">💡 Tips para recordar</div>
+    <ul>
+      <li><strong>Manejo de información:</strong> confidencialidad + integridad + disponibilidad.</li>
+      <li><strong>Reserva y datos:</strong> proteger lo reservado y los datos personales (Ley 1581/2012, habeas data); no filtrar, ni a conocidos.</li>
+      <li><strong>Integridad:</strong> no alterar ni falsear; mantener la verdad y dejar trazabilidad.</li>
+      <li><strong>Seguridad:</strong> cuidar contraseñas y sesión; acceder solo a lo que la función requiere; no curiosear.</li>
+      <li><strong>Compartir sin filtrar:</strong> dar lo necesario a quien lo necesita, proteger lo reservado.</li>
+      <li><strong>Núcleos que integran todo:</strong> integridad, eficiencia con cuidado, servicio con verdad.</li>
+      <li><strong>Método universal:</strong> identificar → conducta ideal → descartar extremos → elegir la equilibrada.</li>
+      <li><strong>Perfil completo:</strong> íntegro, responsable, riguroso, ordenado, cuidadoso, servicial, colaborador y discreto.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">⚡ Frase para recordar</div><p><strong>"Custodio la información con reserva, verdad y cuidado; y ante cualquier situación, asumo, cumplo, sirvo, colaboro y comunico con transparencia. Soy un servidor íntegro, riguroso, ordenado, servicial, colaborador y discreto: eso es lo que la Procuraduría espera de mí y lo que me hará confiable en mi cargo. No falseo ni filtro, protejo los datos de las personas, accedo solo a lo que mi función requiere y comparto sin filtrar; ante la duda, consulto. Con integridad, eficiencia y servicio he construido la mitad de mi preparación; ahora los conocimientos técnicos completarán a la servidora que quiero ser."</strong></p></div>
+
+  <div class="fuentes"><div class="fuentes-tag">📚 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=86438" target="_blank" rel="noopener">Decreto 815 de 2018 — competencias laborales de los empleos públicos</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981" target="_blank" rel="noopener">Ley 1581 de 2012 — protección de datos personales (habeas data)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=58150" target="_blank" rel="noopener">Ley 1712 de 2014 — transparencia y acceso a la información pública</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4499" target="_blank" rel="noopener">Decreto Ley 262 de 2000 — régimen especial de la PGN</a></li>
+      <li><a href="https://www.procuraduria.gov.co/" target="_blank" rel="noopener">Procuraduría General de la Nación — sitio oficial</a></li>
+    </ul>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Ahora repasa las distinciones que confunde la prueba.</span><button class="advance-btn" data-goto="3">Ver distinciones →</button></div>
+</section>
+
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>Las competencias se prestan a confusiones finas. Aquí tienes las parejas de este día que más se confunden, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Publicidad</strong></td><td><strong>Reserva</strong></td><td>Publicidad = la información es pública por regla general. Reserva = excepción legal para proteger ciertos datos o actuaciones.</td></tr>
+    <tr><td><strong>Confidencialidad</strong></td><td><strong>Integridad</strong></td><td>Confidencialidad = que solo acceda quien tiene derecho. Integridad = que la información sea veraz y no se altere.</td></tr>
+    <tr><td><strong>Compartir con el equipo</strong></td><td><strong>Filtrar</strong></td><td>Compartir = dar lo necesario a quien lo necesita para su función. Filtrar = divulgar lo reservado a quien no tiene derecho.</td></tr>
+    <tr><td><strong>Corregir un error</strong></td><td><strong>Alterar información</strong></td><td>Corregir = ajustar conforme al procedimiento, con constancia. Alterar = modificar sin autorización o para ocultar.</td></tr>
+    <tr><td><strong>Acceder por función</strong></td><td><strong>Curiosear</strong></td><td>Por función = a lo que tu trabajo requiere. Curiosear = mirar lo que no te corresponde, aun sin divulgarlo; es indebido.</td></tr>
+    <tr><td><strong>Datos personales</strong></td><td><strong>Información pública</strong></td><td>Datos personales = protegidos (Ley 1581/2012). Información pública = accesible a quien la solicite.</td></tr>
+    <tr><td><strong>Deber de reserva</strong></td><td><strong>Chisme</strong></td><td>Reserva = guardar la información del cargo. Chisme = comentar lo que se sabe; rompe la reserva y el clima.</td></tr>
+    <tr><td><strong>Competencia aislada</strong></td><td><strong>Situación integrada</strong></td><td>Aislada = una sola competencia (raro en la prueba). Integrada = varias competencias a la vez (lo habitual).</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: <strong>construye una frase con cada pareja</strong>. Por ejemplo: "compartir es dar lo necesario a quien lo necesita; filtrar es divulgar lo reservado" o "corregir con constancia es integridad; alterar a escondidas es falta". Si puedes decirla sin dudar, la dominaste.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Auxiliar Administrativo de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · El conocido curioso</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un conocido, al saber que trabajas en la Procuraduría, te pide "el favor" de averiguar cómo va una queja de un tercero y de contarle qué dice el expediente. Insiste en que es solo por curiosidad y que "nadie se va a enterar".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Guardas tu <mark>deber de reserva</mark>: le explicas con amabilidad que no puedes acceder ni divulgar esa información, que existen canales oficiales para lo que corresponda. No accedes al expediente por curiosidad (solo accedes a lo que tu función requiere) ni divulgas nada. Proteger la información de terceros, aun ante un conocido, es tu obligación y protege sus derechos.</p></div>
+    <span class="label">Por qué</span><p>El deber de reserva y la protección de datos prohíben divulgar información de terceros; además, no se accede a lo que no compete a la propia función.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · "Cambia esa fecha para ayudarme"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un compañero te pide que modifiques en el sistema la fecha de radicación de un documento para que no aparezca tardío y así "evitarse un problema". Te dice que es un cambio pequeño.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Te niegas con respeto: la <mark>integridad de la información</mark> exige registrar la verdad. Mantienes la fecha real, dejas trazabilidad y, si hay un problema de fondo, se maneja por el canal correcto. Alterar el dato no es un favor: corrompe la información pública y es una falta. Aquí se cruzan responsabilidad, cumplimiento de parámetros y manejo de información, y todas apuntan a lo mismo: no falsear.</p></div>
+    <span class="label">Por qué</span><p>Alterar un registro para ocultar algo es una falta; la conducta correcta mantiene la verdad y la trazabilidad, sin excepción.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · Compartir con el equipo, proteger de terceros</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un compañero de tu área necesita, para su trabajo, cierta información de un caso que tú manejas. Al mismo tiempo, una persona ajena a la entidad te pide datos personales de alguien involucrado en ese mismo caso.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Aplicas el equilibrio <mark>compartir sin filtrar</mark>: al compañero le das la información que necesita para su función (necesidad de conocer); a la persona ajena le proteges los datos personales del involucrado (Ley 1581/2012) y la remites a los canales oficiales si tiene un derecho legítimo. Compartes con quien debe, para lo que debe, y proteges lo reservado. Integraste trabajo en equipo, servicio y manejo de información.</p></div>
+    <span class="label">Por qué</span><p>La información se comparte por necesidad de conocer para el trabajo; los datos personales de terceros se protegen y no se entregan a quien no tiene derecho.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Divulgar información reservada o datos personales</div><p>Filtrar lo reservado o los datos de una persona, aunque sea a un conocido, es una falta y vulnera derechos. Se guarda la reserva.</p></div>
+  <div class="box danger"><div class="box-title">❌ Alterar o falsear información</div><p>Cambiar una fecha, "cuadrar" un dato o modificar un documento sin autorización corrompe la información. Se mantiene la verdad y la trazabilidad.</p></div>
+  <div class="box danger"><div class="box-title">❌ Acceder por curiosidad a lo que no te corresponde</div><p>Mirar un expediente "famoso" o los datos de un conocido sin que tu función lo requiera es un uso indebido, aunque no lo divulgues.</p></div>
+  <div class="box danger"><div class="box-title">❌ Descuidar la seguridad (contraseñas, sesión, documentos)</div><p>Compartir contraseñas, dejar la sesión abierta o documentos sensibles a la vista expone la información. Se cuida el acceso.</p></div>
+  <div class="box danger"><div class="box-title">❌ Perder documentos por desorden</div><p>Un documento traspapelado o sin respaldo es una falla de disponibilidad. El orden y la trazabilidad protegen la información.</p></div>
+  <div class="box danger"><div class="box-title">❌ Confundir transparencia con "contar todo"</div><p>Transparencia es dar lo público a quien tiene derecho, no divulgar lo reservado. Compartir sin filtrar es la regla.</p></div>
+  <div class="box danger"><div class="box-title">❌ Ver las competencias como compartimentos aislados</div><p>En la realidad se cruzan. La respuesta correcta suele reflejar los núcleos comunes: integridad, eficiencia con cuidado, servicio con verdad.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>La frase maestra:</strong> custodio la información con reserva, verdad y cuidado; y ante todo caso, asumo, cumplo, sirvo, colaboro y comunico con transparencia.</li>
+    <li><strong>Manejo de información:</strong> confidencialidad + integridad + disponibilidad.</li>
+    <li><strong>Reserva:</strong> proteger lo reservado y los datos personales (Ley 1581/2012), incluso ante conocidos o compañeros curiosos.</li>
+    <li><strong>Integridad:</strong> no alterar ni falsear; mantener la verdad y dejar trazabilidad.</li>
+    <li><strong>Acceso:</strong> solo a lo que tu función requiere; no curiosear; cuidar contraseñas y sesión.</li>
+    <li><strong>Compartir sin filtrar:</strong> dar lo necesario a quien lo necesita, proteger lo reservado.</li>
+    <li><strong>Núcleos que integran todo:</strong> integridad; eficiencia con cuidado; servicio con verdad.</li>
+    <li><strong>Método universal:</strong> identificar competencia → conducta ideal → descartar extremos → elegir la equilibrada.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"Contarle a un conocido cómo va una queja no tiene nada de malo si confío en él y no lo divulga más."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "es solo un conocido de confianza".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> divulgar información reservada o datos de terceros rompe el deber de reserva y vulnera derechos, sin importar la confianza.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> guardar la reserva; explicar que existen canales oficiales; no acceder ni divulgar.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Ser transparente es contar toda la información que uno maneja a quien la pida."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "la transparencia es dar información".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la transparencia da acceso a lo público, pero la ley protege lo reservado y los datos personales.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> compartir sin filtrar: dar lo público a quien tiene derecho y proteger lo reservado.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Mirar un expediente famoso por curiosidad no es problema si no cambio ni divulgo nada."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "solo estoy mirando, no hago nada con eso".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> acceder a lo que no requiere tu función es un uso indebido, y puede quedar registrado.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> acceder solo a lo que tu función exige; la curiosidad no justifica el acceso.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Cambiar una fecha para ayudar a un compañero es un gesto solidario sin consecuencias."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "es ayudar y el cambio es pequeño".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> alterar un registro corrompe la información y es una falta; la integridad no tiene excepciones pequeñas.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> registrar la verdad, dejar trazabilidad y canalizar el problema de fondo por el conducto adecuado.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Manejo de la Información</h4><p>Custodiar, usar con veracidad y proteger la información. Tres pilares: confidencialidad, integridad y disponibilidad.</p></div>
+    <div class="resumen-item"><h4>Confidencialidad y reserva</h4><p>Lo público se entrega; lo reservado se protege. Deber de reserva permanente; protección de datos (Ley 1581/2012, habeas data).</p></div>
+    <div class="resumen-item"><h4>Integridad</h4><p>No alterar ni falsear; mantener la verdad de los registros con trazabilidad. La integridad no tiene excepciones pequeñas.</p></div>
+    <div class="resumen-item"><h4>Seguridad y acceso</h4><p>Cuidar contraseñas, sesión y documentos; acceder solo a lo que la función requiere; no curiosear ni usar para lo personal.</p></div>
+    <div class="resumen-item"><h4>Integración I</h4><p>Responsabilidad + cumplimiento + manejo de información = integridad (hacer lo correcto aunque cueste).</p></div>
+    <div class="resumen-item"><h4>Integración II</h4><p>Organización + recursos + información = eficiencia con cuidado (nada se pierde, se desperdicia ni se expone).</p></div>
+    <div class="resumen-item"><h4>Integración III</h4><p>Servicio + equipo + información = servir con verdad y respeto (compartir sin filtrar).</p></div>
+    <div class="resumen-item"><h4>Método y perfil</h4><p>Identificar → conducta ideal → descartar extremos → elegir la equilibrada. Perfil: íntegro, riguroso, ordenado, servicial, colaborador y discreto.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Manejo de la Información</dt><dd>Custodiar, usar con veracidad y proteger la información (confidencialidad, integridad, disponibilidad).</dd>
+      <dt>Reserva</dt><dd>Excepción legal por la que cierta información se protege y no se divulga.</dd>
+      <dt>Habeas data</dt><dd>Derecho a la protección de los datos personales (art. 15 CP; Ley 1581/2012).</dd>
+      <dt>Necesidad de conocer</dt><dd>Principio: se comparte la información que el otro necesita para su función, no más.</dd>
+      <dt>Perfil comportamental</dt><dd>Íntegro, responsable, riguroso, ordenado, cuidadoso, servicial, colaborador y discreto.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Manejo de la Información e Integración</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 8. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 8</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.checkpoint').forEach(cp=>{const fb=cp.querySelector('.cp-fb');cp.querySelectorAll('.cp-op').forEach(op=>{op.addEventListener('click',function(){if(cp.dataset.done)return;cp.dataset.done='1';const ok=this.dataset.ok==='1';cp.querySelectorAll('.cp-op').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ok==='1')o.classList.add('cp-ok');});if(!ok)this.classList.add('cp-no');if(fb){fb.classList.add('show');fb.innerHTML=ok?'<strong>¡Correcto!</strong> Muy bien.':'<strong>Revisa.</strong> La opción correcta queda resaltada en verde.';}});});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 8: Manejo de la Información e Integración de Competencias. Con esto cierras el bloque comportamental. ¡Excelente!');});
+const flashcards=[
+  {f:'¿Qué es el Manejo de la Información como competencia?',b:'Administrar la información y los documentos con responsabilidad: custodiarlos, usarlos con veracidad, mantenerlos organizados y disponibles para quien tiene derecho, y protegerlos de la pérdida, la alteración y la divulgación indebida.'},
+  {f:'¿Cuáles son los tres pilares del manejo de la información?',b:'Confidencialidad (que solo acceda quien tiene derecho), integridad (que sea veraz y no se altere) y disponibilidad (que se encuentre y entregue legítimamente).'},
+  {f:'¿Qué es el deber de reserva del servidor?',b:'La obligación de guardar la información que se conoce por razón del cargo: no comentarla, no filtrarla, ni siquiera a conocidos. Es una conducta permanente, dentro y fuera de la oficina.'},
+  {f:'¿Qué protege la Ley 1581 de 2012 y el habeas data?',b:'Los datos personales: solo pueden usarse para el fin para el que se recogieron y no divulgarse a terceros sin autorización o base legal. El habeas data (art. 15 CP) es el derecho fundamental a protegerlos.'},
+  {f:'¿Alterar una fecha o "cuadrar" un dato es aceptable si es para ayudar?',b:'No, nunca. Alterar o falsear información corrompe la integridad de los registros y es una falta grave. Se mantiene la verdad y se deja trazabilidad, sin excepciones "pequeñas".'},
+  {f:'¿Puedo mirar un expediente por curiosidad si no lo divulgo?',b:'No. Acceder a información que no requiere tu función, aunque no la divulgues, es un uso indebido y puede quedar registrado. Se accede solo a lo que el trabajo exige.'},
+  {f:'¿Qué prácticas de seguridad de la información debo tener?',b:'No compartir contraseñas, cerrar sesión al ausentarte, no dejar información sensible a la vista, guardar bajo llave lo reservado, respaldar, y usar los sistemas solo para lo laboral.'},
+  {f:'¿Cómo se equilibra compartir con el equipo y proteger la reserva?',b:'Con el principio de "necesidad de conocer": se comparte lo que el otro necesita para su función, con veracidad, y se protege lo reservado y los datos personales. Compartir no es filtrar.'},
+  {f:'¿Cuál es el hilo que une responsabilidad, cumplimiento y manejo de información?',b:'La integridad: actuar con honestidad, mantener la verdad y hacer lo correcto aunque cueste o aunque nadie mire.'},
+  {f:'¿Cuál es el hilo que une organización, recursos e información?',b:'La eficiencia con cuidado: trabajar con método y protección para que nada se pierda, se desperdicie ni se exponga indebidamente.'},
+  {f:'¿Cuál es el método universal para las preguntas de juicio situacional?',b:'Identificar la competencia evaluada, recordar la conducta ideal en nivel alto, descartar los extremos (evadir, atajos, ocultar, filtrar, ceder, reaccionar de más) y elegir la conducta equilibrada: asumir, cumplir, servir, colaborar y comunicar con transparencia.'},
+  {f:'¿Cuál es el perfil comportamental completo del Auxiliar de la PGN?',b:'Un servidor íntegro y responsable, riguroso y cumplidor, ordenado y cuidadoso de los recursos y la información, servicial con el ciudadano, colaborador con el equipo y discreto/protector de la información.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Deber de reserva', ctx:'Eres Auxiliar Administrativo y manejas documentos de casos que se tramitan en tu dependencia. Un conocido tuyo, al enterarse de dónde trabajas, te escribe pidiéndote "el favor" de averiguar y contarle cómo va una queja de un tercero y qué dice el expediente. Insiste en que es solo por curiosidad y que "queda entre nosotros".', q:'¿Cuál es la actuación más apropiada?', ops:['Buscar el expediente y contarle en general cómo va, ya que confías en él y promete no divulgarlo.','Explicarle con amabilidad que no puedes acceder a esa información ni divulgarla, que tienes un deber de reserva y que existen canales oficiales para lo que corresponda; no accedes al expediente por curiosidad.','Contarle solo un pequeño detalle, para no quedar mal con tu conocido.','Acceder al expediente para enterarte tú, pero no contarle nada a él.'], correcta:1, expl:['Incorrecto. Divulgar información de terceros rompe el deber de reserva y vulnera derechos, por más confianza que haya.','Correcto. Se guarda la reserva, no se accede por curiosidad ni se divulga; se remite a los canales oficiales.','Incorrecto. "Un pequeño detalle" sigue siendo una filtración de información reservada.','Incorrecto. Acceder por curiosidad a lo que no requiere tu función también es un uso indebido, aunque no lo divulgues.'] },
+  { nivel:'b', tema:'Integridad de la información', ctx:'Un compañero te pide, en tono de favor, que modifiques en el sistema la fecha de radicación de un documento para que no aparezca como recibido tarde y así evitarse un llamado de atención. Te asegura que es un cambio pequeño y que nadie lo va a notar.', q:'¿Cuál es la actuación más apropiada?', ops:['Cambiar la fecha, porque es un favor pequeño y le evita un problema al compañero.','Negarte con respeto y registrar la fecha real, dejando la trazabilidad; si hay un problema de fondo con el retraso, se maneja por el canal correcto.','Cambiar la fecha pero anotar aparte la fecha verdadera, por si acaso.','Cambiar la fecha solo si el documento no lo va a revisar nadie más.'], correcta:1, expl:['Incorrecto. Alterar un registro corrompe la información y es una falta, aunque el cambio parezca pequeño.','Correcto. La integridad de la información exige mantener la verdad y la trazabilidad; el problema de fondo se canaliza aparte.','Incorrecto. Falsear el registro sigue siendo indebido aunque anotes la fecha real en otro lado.','Incorrecto. Que nadie lo revise no cambia que se está falseando un dato oficial.'] },
+  { nivel:'i', tema:'Compartir sin filtrar', ctx:'En un mismo momento, un compañero de tu área te pide cierta información de un caso que tú manejas, porque la necesita para una tarea que le asignaron; y una persona ajena a la entidad te pide datos personales de alguien involucrado en ese mismo caso, diciendo que "tiene derecho a saber".', q:'¿Cómo debes actuar con cada uno?', ops:['Darle a ambos toda la información, para ser transparente y colaborador.','Compartir con el compañero la información que necesita para su función (necesidad de conocer) y, a la persona ajena, proteger los datos personales del involucrado, remitiéndola a los canales oficiales si tiene un derecho legítimo.','No darle información a ninguno de los dos, por si acaso.','Darle la información a la persona ajena porque insiste, y negársela al compañero porque él ya debería saberla.'], correcta:1, expl:['Incorrecto. Dar todo a todos ignora la reserva y la protección de datos personales.','Correcto. Se comparte con el equipo por necesidad de conocer y se protegen los datos personales de terceros frente a quien no tiene derecho.','Incorrecto. Negarle al compañero lo que necesita para su función traba el trabajo del equipo; no todo es reservado.','Incorrecto. Está invertido: se protege frente al ajeno y se comparte lo necesario con el compañero.'] },
+  { nivel:'i', tema:'Seguridad y acceso', ctx:'Estás por ausentarte de tu puesto unos minutos. En tu pantalla hay un documento con datos sensibles de un caso, y sobre el escritorio quedaron otros expedientes. Además, un compañero te comenta que, como su usuario está fallando, le prestes tu contraseña un momento para terminar algo rápido.', q:'¿Cuál es la actuación más apropiada?', ops:['Dejar todo como está y prestarle la contraseña, para agilizar el trabajo del compañero.','Cerrar tu sesión, guardar los documentos sensibles antes de ausentarte, y no prestar tu contraseña: sugerirle al compañero que reporte la falla de su usuario por el canal correcto.','Dejar la sesión abierta pero tapar la pantalla con un papel, y prestarle la contraseña solo esta vez.','Prestarle la contraseña y pedirle que no haga nada indebido con ella.'], correcta:1, expl:['Incorrecto. Dejar todo expuesto y compartir la contraseña viola la seguridad de la información.','Correcto. Cerrar sesión, proteger los documentos y no compartir contraseñas son prácticas básicas de seguridad; la falla del usuario se reporta por el canal debido.','Incorrecto. Tapar la pantalla no protege la sesión abierta, y prestar la contraseña sigue siendo indebido.','Incorrecto. Compartir la contraseña compromete tu identidad en el sistema y la seguridad, sin importar la promesa.'] },
+  { nivel:'a', tema:'Integración de competencias', ctx:'Es un día de mucha carga. Tienes documentos sensibles por radicar con un término próximo, un ciudadano confundido esperando orientación, y un compañero que te pide "cubrirlo" afirmando ante el jefe que un dato se perdió por el sistema, cuando en realidad fue un descuido suyo. Sientes la presión de resolver todo a la vez y de quedar bien con tu compañero.', q:'¿Cuál es la actuación más apropiada, integrando las competencias?', ops:['Radicar rápido y sin verificar para ganar tiempo, atender al ciudadano de afán y ayudar al compañero con la versión falsa ante el jefe.','Priorizar la radicación por su término manteniendo el rigor y la protección de los datos, atender al ciudadano con calidez orientándolo bien, y respecto al compañero declinar con respeto cubrirlo con una versión falsa (eso sería faltar a la integridad y al manejo de la información), apoyándolo solo en lo legítimo.','Dedicarte solo a cubrir a tu compañero, que te lo pidió primero, y dejar el resto para después.','Atender únicamente al ciudadano e ignorar la radicación con término y al compañero.'], correcta:1, expl:['Incorrecto. Radicar sin rigor, atender de afán y sostener una mentira falla a varias competencias y a la ética.','Correcto. Integra organización (priorizar por término), manejo de información y cumplimiento (rigor y protección), servicio (atender con calidez) e integridad (no encubrir con una versión falsa), apoyando al compañero solo en lo legítimo.','Incorrecto. Abandonar la radicación con término y al ciudadano por cubrir a un compañero es un error múltiple, y encubrir es una falta.','Incorrecto. Ignorar la radicación con término puede vulnerar derechos; hay que priorizar e integrar, no abandonar tareas.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

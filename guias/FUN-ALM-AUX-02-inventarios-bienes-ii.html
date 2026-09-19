@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ALM-AUX-02 · Manejo de Inventarios y Control de Bienes II (Auxiliar Administrativo) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ALM-AUX-02</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 15 · Funcional del cargo</div>
+  <h1>Manejo de Inventarios y Control de Bienes II</h1>
+  <p class="header-sub">El cierre del ciclo de vida del bien público: <strong>salidas, traslados, bajas y responsabilidad</strong>. Salida y entrega de bienes, traslados y reintegros, hurtos y pérdidas, bajas y disposición final, depreciación y conciliación con contabilidad, y la responsabilidad fiscal ante la Contraloría, aplicados al rol real del <strong>Auxiliar Administrativo</strong> de la <strong>Procuraduría General de la Nación</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 15 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Ayer aprendiste cómo entran y se controlan los bienes de la entidad. Hoy te toca lo más delicado: <strong>lo que sale, se mueve o desaparece</strong>. En una misma semana se te presentan varias situaciones: un funcionario que se traslada a otra ciudad quiere <strong>llevarse el computador</strong> asignado; un compañero renuncia y "deja botados" un monitor y una silla sin decir nada; encuentras en un depósito <strong>tres impresoras dañadas y obsoletas</strong> que nadie usa y ocupan espacio; te reportan que <strong>se perdió un video-beam</strong> que estaba a cargo de una oficina; y el jefe de almacén te pide apoyar la <strong>baja de bienes</strong> del semestre. Te asaltan las dudas: ¿puede alguien llevarse un bien porque sí? ¿qué se hace cuando un funcionario deja el cargo? ¿se pueden "botar" los bienes dañados o hay un trámite? ¿qué pasa cuando se pierde o se hurta un bien? ¿quién responde con su propio bolsillo?</p>
+    <p>Hoy vas a dominar el <strong>cierre del ciclo de vida del bien público</strong>: cómo un bien sale, se traslada, se reintegra, se da de baja y se dispone finalmente, y —lo más importante— <mark>quién responde cuando algo se pierde o se daña</mark>. Tu manual lo exige: <mark>"Manejo de inventarios"</mark> es un conocimiento específico del cargo, y tu función esencial n.º 6 habla de "verificar inventarios físicos y realizar trámites ante el almacén". Un bien del Estado no se bota, no se regala y no se lo lleva nadie "de palabra": todo movimiento tiene un trámite y deja soporte. Un buen Auxiliar sabe que detrás de cada salida hay un responsable, y que un descuido puede acarrear <mark>responsabilidad fiscal</mark> ante la Contraloría.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>La <strong>salida y entrega de bienes</strong>: cómo se asigna un bien a un funcionario y qué lo soporta.</li>
+      <li>Los <strong>traslados</strong> entre dependencias y personas, y el <strong>reintegro</strong> de bienes al almacén.</li>
+      <li>Qué pasa cuando un funcionario <strong>se retira o cambia de cargo</strong>: el paz y salvo de bienes.</li>
+      <li>Las <strong>pérdidas y hurtos</strong> de bienes: qué hacer, a quién avisar y qué documentar.</li>
+      <li>La <strong>baja de bienes</strong>: qué es, causales (obsolescencia, daño, pérdida) y el trámite.</li>
+      <li>La <strong>disposición final</strong>: qué se hace con lo dado de baja (venta, donación, destrucción, chatarrización).</li>
+      <li>La <strong>depreciación</strong> y la conciliación del inventario con contabilidad.</li>
+      <li>La <strong>responsabilidad fiscal</strong>, el control de la Contraloría y el proceso de responsabilidad fiscal.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos ocho módulos con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro situacional. Este es el segundo de dos días sobre bienes: ayer (Día 14) viste los fundamentos —qué son, cómo entran, cómo se controlan— y hoy cierras el ciclo: las salidas, traslados, bajas, disposición final y la responsabilidad por los bienes públicos.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>"Manejo de inventarios" aparece <strong>textualmente</strong> como conocimiento específico en tu manual, y tu función esencial n.º 6 habla de "verificar inventarios físicos y realizar trámites ante el almacén". La prueba evalúa el cierre del ciclo del bien con <mark>preguntas de concepto</mark> ("¿qué es dar de baja un bien?", "¿qué soporta un traslado?") y con <mark>casos prácticos</mark> ("un funcionario se va y deja bienes, ¿qué haces?", "se perdió un equipo, ¿qué haces?"). Este es el terreno donde nace la <mark>responsabilidad fiscal</mark>: las salidas, pérdidas y bajas mal manejadas son las que terminan en un proceso ante la Contraloría. Por eso la prueba insiste tanto en que sepas que ningún bien se mueve sin soporte.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba evalúa el manejo de bienes</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📌</span><h5>Está en el manual</h5><p>"Manejo de inventarios" (conocimiento) + función esencial n.º 6 (trámites ante el almacén).</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🔄</span><h5>Todo movimiento se documenta</h5><p>Salidas, traslados, reintegros y bajas dejan siempre un soporte.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Aquí nace la responsabilidad</h5><p>Pérdidas y bajas mal manejadas terminan en responsabilidad fiscal.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🔍</span><h5>Lo audita la Contraloría</h5><p>El control fiscal vigila el buen uso, cuidado y disposición de los bienes.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>El cierre del ciclo del bien tiene un principio que atraviesa todo: <strong>ningún bien público se mueve, sale o desaparece sin trámite y sin responsable</strong>. Un bien no se lo lleva nadie "de palabra", no se bota porque esté dañado, y una pérdida no se calla: cada salida, traslado, reintegro, baja o pérdida tiene un procedimiento y deja soporte, y siempre hay alguien que responde por el bien. Esta idea —trámite + responsable en cada movimiento— es lo que la prueba busca comprobar. Los conceptos clave los repasas con flashcards al final.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría General de la Nación tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000). Su concurso <strong>NO lo administra la CNSC</strong>: lo adelanta la propia Procuraduría con su operador. Las normas de manejo de bienes y control fiscal que verás aplican a TODA entidad pública del país (incluida la PGN), pero el examen y sus reglas son los del proceso de la Procuraduría.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Manejo de Inventarios y Control de Bienes para el Auxiliar de la PGN</h2>
+  <p>Ocho módulos para cerrar el ciclo de vida del bien público con orden, trámite y responsabilidad. Cada uno con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control. Hoy lo más delicado: lo que sale, se mueve, se pierde o se da de baja, y quién responde por ello.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>La salida y entrega de bienes: cómo un bien queda a cargo de alguien</h3></div>
+    <div class="b-texto">
+      <p>Ayer viste cómo un bien <strong>entra</strong> al almacén: llega el proveedor, se recibe, se verifica y se registra con un comprobante de entrada. Pero un bien no se compra para que se quede guardado en el almacén: se compra para que alguien lo use. Ese paso —cuando el bien <strong>sale del almacén</strong> y queda <mark>a cargo de un funcionario o una dependencia</mark>— es la salida y entrega de bienes, y es donde empieza todo lo que veremos hoy. Grábate esta idea desde ya: cuando un bien sale del almacén, no desaparece del control; simplemente <strong>cambia de responsable</strong>. Antes respondía el almacén; ahora responde quien lo recibió.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>salida de bienes</strong> es el <mark>acto por el cual un bien deja la custodia del almacén y queda asignado a un funcionario o dependencia</mark> para su uso. Se soporta con un <strong>comprobante de salida</strong> y, en el caso de los bienes devolutivos, con la <strong>firma del funcionario que los recibe</strong>, quien desde ese momento es el responsable del bien.</p></div>
+      <h4>Salida de consumo vs. salida de devolutivos</h4>
+      <p>Recordarás del Día 14 la distinción entre bienes <strong>de consumo</strong> (se agotan con el uso: papel, tóner, lapiceros) y bienes <strong>devolutivos</strong> (no se agotan, se usan y deben devolverse: computadores, sillas, video-beam). Esta distinción es la que manda en las salidas:</p>
+      <ul class="lista">
+        <li>Cuando sale un bien <strong>de consumo</strong>, el almacén lo entrega y lo descarga: ese papel ya no vuelve, se gastará. La salida es definitiva y el control del inventario de ese elemento disminuye.</li>
+        <li>Cuando sale un bien <strong>devolutivo</strong>, el almacén no lo "gasta": lo <mark>asigna a una persona</mark>. El bien sigue siendo del Estado y sigue en el inventario, pero ahora aparece a cargo de un responsable con nombre y cédula. Por eso el funcionario firma: está aceptando que responde por él.</li>
+      </ul>
+      <p>Esta diferencia es clave para la prueba y para tu trabajo: <strong>el papel que entregas no lo tienes que perseguir; el computador que entregas sí</strong>. Por eso las salidas de devolutivos exigen firma y quedan en la hoja de vida del bien y en el inventario individual del funcionario.</p>
+      <div class="tabla-wrap"><table>
+        <caption>Salida de bienes según su tipo</caption>
+        <thead><tr><th>Aspecto</th><th>Bien de consumo</th><th>Bien devolutivo</th></tr></thead>
+        <tbody>
+          <tr><td>Qué pasa al salir</td><td>Se entrega para gastarse; no vuelve.</td><td>Se asigna a un responsable; debe devolverse.</td></tr>
+          <tr><td>Efecto en el inventario</td><td>Disminuye la existencia (se descarga).</td><td>Sigue en el inventario, pero a cargo de una persona.</td></tr>
+          <tr><td>Firma del que recibe</td><td>Normalmente basta un vale o registro simple.</td><td>Obligatoria: acepta la responsabilidad del bien.</td></tr>
+          <tr><td>Ejemplo</td><td>Una resma de papel, una caja de tóner.</td><td>Un portátil, una silla ergonómica, una impresora.</td></tr>
+        </tbody>
+      </table></div>
+      <h4>La asignación individual: el inventario a nombre de cada funcionario</h4>
+      <p>Cuando un bien devolutivo se asigna, queda en un documento clave: el <strong>inventario individual</strong> (o "cuentadante") del funcionario. Es el listado de todos los bienes devolutivos que una persona tiene a su cargo. Si a Viviana le asignan un portátil, un monitor, un teléfono y una silla, esos cuatro bienes aparecen en su inventario individual. El día que se retire o cambie de oficina, tendrá que devolverlos o justificar dónde están. Ese documento es el que firma y el que la Contraloría puede revisar. Por eso conviene revisarlo al recibir el cargo: <mark>nunca firmes un inventario sin verificar que los bienes existan y estén completos</mark>, porque estás aceptando responder por ellos.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Un funcionario nuevo llega a tu dependencia y el jefe te dice: "asígnale el computador que está en el escritorio del fondo y una silla del depósito". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No basta con señalarle el escritorio. Tramitas la <strong>salida de esos bienes del inventario</strong> a nombre de él: identificas la placa del computador y de la silla, verificas que estén funcionando, elaboras o solicitas al almacén el <strong>comprobante de salida/asignación</strong>, y haces que el funcionario <strong>firme</strong> aceptando que quedan a su cargo. A partir de esa firma, esos dos bienes son su responsabilidad. Le explicas con amabilidad que si algún día cambia de oficina o se retira, deberá devolverlos o reportar su estado.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>La pregunta clásica: "se le entrega un bien devolutivo a un funcionario, ¿qué lo respalda?". La respuesta: <strong>el comprobante de salida y la firma del funcionario que lo recibe</strong>, con lo cual el bien queda en su inventario individual. La firma no es un formalismo: es la aceptación de la responsabilidad.</p></div>
+      <details class="acc"><summary>¿Puedo entregar un bien devolutivo solo porque el jefe lo pidió de palabra?</summary><div class="acc-body"><p>No. La orden del jefe explica <em>por qué</em> se entrega, pero no reemplaza el trámite. Todo bien devolutivo que sale debe tener su comprobante y la firma de quien lo recibe. Si lo entregas de palabra y luego se pierde, no habrá cómo saber quién responde, y el problema podría recaer sobre ti por haberlo entregado sin soporte.</p></div></details>
+      <details class="acc"><summary>¿Qué diferencia hay entre "asignar" y "prestar" un bien?</summary><div class="acc-body"><p>Asignar es entregar un bien para el uso permanente de un funcionario (queda en su inventario individual). Prestar es una entrega temporal —por ejemplo, un video-beam para una reunión— que debe devolverse pronto y suele registrarse en un formato de préstamo con fecha de devolución. En ambos casos hay soporte, pero el préstamo es de corta duración y no cambia el inventario individual de forma permanente.</p></div></details>
+          <h4>La cadena de custodia del bien: siempre hay alguien que responde</h4>
+      <p>Hay una idea que conviene fijar bien porque explica todo el sistema: en el manejo de bienes públicos <mark>nunca existe un bien "sin dueño responsable"</mark>. Desde que ingresa hasta que se da de baja, siempre hay una persona o un área que responde por él. Al principio responde el <strong>almacén</strong> (custodia general); cuando sale, responde el <strong>funcionario</strong> al que se le asignó; cuando se traslada, responde el <strong>nuevo titular</strong>; cuando se reintegra, vuelve a responder el almacén; y cuando se da de baja, sale del patrimonio. Piensa en ello como una cadena: cada eslabón es un responsable, y cada cambio de eslabón deja un documento que prueba en qué manos estaba el bien en cada momento. Cuando esa cadena se rompe —un bien que "no se sabe quién tiene"— es cuando aparecen los problemas.</p>
+      <p>Para tu rol de Auxiliar, esto tiene una consecuencia muy concreta y práctica: cada vez que un bien pase por tus manos, la pregunta que debes hacerte es "¿quién responde por este bien ahora, y quedó eso documentado?". Si entregas un portátil, ¿firmó quien lo recibió? Si moviste una impresora, ¿hay acta? Si alguien devolvió una silla, ¿hay comprobante de reintegro? No se trata de desconfiar de las personas, sino de proteger tanto al bien como a ti misma: el documento es lo que demuestra que hiciste bien tu trabajo. Un Auxiliar que mantiene la cadena de custodia clara es un Auxiliar en quien el almacén y los jefes confían, porque con él o ella los bienes nunca "se pierden en el aire".</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Al revisar el inventario individual que te van a hacer firmar al llegar al cargo, notas que aparece un escáner que no está físicamente en tu puesto: nadie sabe dónde está. El encargado te dice "firma tranquila, eso siempre ha estado así". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> <strong>No firmas</strong> un inventario con un bien que no puedes ver ni verificar. Firmar significa aceptar que respondes por ese escáner, y si mañana lo buscan y no aparece, el responsable serás tú. Pides que primero se aclare dónde está el escáner: puede estar en reparación, trasladado sin registrar o realmente perdido. Solicitas que se regularice (con el traslado, el reporte de pérdida o lo que corresponda) y solo firmas por los bienes que efectivamente recibes y verificas. Esta prudencia al inicio te ahorra un problema enorme más adelante.</p>
+      </div>
+
+    </div>
+    <div class="checkpoint" data-cp="1">
+      <div class="cp-q">✋ Punto de control 1: A un funcionario se le entrega un computador portátil (bien devolutivo). ¿Qué es lo esencial de esa salida?</div>
+      <button class="cp-op" data-ok="0">Que se anote en una libreta interna de la oficina.</button>
+      <button class="cp-op" data-ok="1">Que se soporte con comprobante de salida y la firma del funcionario, quedando a su cargo en su inventario individual.</button>
+      <button class="cp-op" data-ok="0">Que el jefe lo autorice verbalmente, sin más trámite.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>Traslados y reintegros: cuando el bien cambia de manos o vuelve al almacén</h3></div>
+    <div class="b-texto">
+      <p>Los bienes no se quedan quietos toda su vida. Un computador que hoy usa una persona mañana puede pasar a otra; una impresora de una oficina puede necesitarse en otra; un funcionario que ya no usa un equipo puede devolverlo al almacén. Estos movimientos tienen nombre y trámite: el <strong>traslado</strong> y el <strong>reintegro</strong>. Y aquí aplica de nuevo la idea que atraviesa todo el día: <mark>el bien no cambia de manos "de palabra"</mark>; cada movimiento se documenta para que en todo momento se sepa dónde está y quién responde.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>traslado</strong> es el <mark>movimiento de un bien de un responsable o dependencia a otro</mark>, sin que salga del patrimonio de la entidad. El <strong>reintegro</strong> es la <mark>devolución de un bien al almacén</mark> por parte del funcionario que lo tenía a cargo, porque ya no lo necesita, cambia de cargo o se retira.</p></div>
+      <h4>El traslado: el bien pasa de un responsable a otro</h4>
+      <p>Cuando un bien se traslada, ocurre algo importante: <strong>cambia el responsable</strong>. Si el computador estaba a cargo de Ana y pasa a Pedro, hay que <mark>descargarlo del inventario de Ana y cargarlo al de Pedro</mark>. Ana deja de responder por él; Pedro empieza a responder. Este cambio se soporta con un <strong>acta o comprobante de traslado</strong> que firman quien entrega y quien recibe. Si no se documenta, el inventario de Ana seguirá mostrando un bien que ella ya no tiene, y el día de un inventario físico o de su retiro aparecerá un "faltante" que en realidad es un traslado mal registrado. Muchos problemas de inventario no son robos: son traslados que nunca se anotaron.</p>
+      <h4>El reintegro: el bien vuelve al almacén</h4>
+      <p>A veces un funcionario ya no necesita un bien: le cambiaron el equipo, se reorganizó la oficina, o simplemente sobra. En ese caso el bien no se guarda en un cajón ni se "presta informalmente" a un compañero: se <strong>reintegra al almacén</strong>. El funcionario lo entrega, el almacén lo recibe verificando su estado, elabora el <strong>comprobante de reintegro</strong>, y el bien vuelve a estar disponible bajo custodia del almacén (que podrá reasignarlo, guardarlo o, si está inservible, iniciar su baja). El reintegro es la forma correcta de "soltar" un bien: descarga tu responsabilidad de manera formal.</p>
+      <div class="tabla-wrap"><table>
+        <caption>Traslado vs. reintegro</caption>
+        <thead><tr><th>Aspecto</th><th>Traslado</th><th>Reintegro</th></tr></thead>
+        <tbody>
+          <tr><td>Hacia dónde va el bien</td><td>A otro funcionario o dependencia.</td><td>De vuelta al almacén.</td></tr>
+          <tr><td>Quién queda responsable</td><td>El nuevo responsable que lo recibe.</td><td>El almacén (custodia general).</td></tr>
+          <tr><td>Soporte</td><td>Acta/comprobante de traslado (firma quien entrega y quien recibe).</td><td>Comprobante de reintegro (firma el almacén al recibir).</td></tr>
+          <tr><td>Cuándo se usa</td><td>Reorganización, un bien pasa a otra persona.</td><td>El bien ya no se necesita, cambio de cargo, retiro.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> En tu dependencia hay una impresora que casi no se usa, y otra oficina la necesita con urgencia. El coordinador te dice: "llévala allá y ya". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No la mueves "y ya". Tramitas el <strong>traslado</strong>: identificas la placa de la impresora, verificas que funcione, elaboras el acta/comprobante de traslado indicando de qué dependencia sale y a cuál llega, y consigues la <strong>firma de quien la entrega y de quien la recibe</strong>. Con eso, la impresora sale del inventario de tu dependencia y entra al de la otra, y queda claro quién responde por ella desde ahora. Si el día de mañana la impresora se daña o se pierde en la otra oficina, el acta demuestra que tu dependencia ya no la tenía.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>Cuidado con confundir traslado y reintegro. <strong>Traslado = de una persona/dependencia a otra</strong> (sigue en uso, cambia de responsable). <strong>Reintegro = de vuelta al almacén</strong> (deja de estar en uso, la custodia vuelve al almacén). Un caso típico: "un funcionario ya no necesita un equipo y lo devuelve al almacén" → eso es un <strong>reintegro</strong>, no un traslado.</p></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Un compañero te dice: "yo tengo dos monitores y solo uso uno; préstale el otro a la practicante, total es lo mismo". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> Le explicas con tacto que un bien devolutivo no se "presta entre compañeros" por fuera del control. Si el monitor le sobra, lo correcto es <strong>reintegrarlo al almacén</strong>; y si la practicante lo necesita, el almacén se lo <strong>asigna formalmente</strong>. Así el inventario refleja la realidad y nadie termina respondiendo por un bien que en verdad tiene otra persona. Un préstamo informal entre escritorios es la fuente número uno de faltantes en un inventario físico.</p>
+      </div>
+      <details class="acc"><summary>Si presto un bien un ratico a otra oficina, ¿tengo que hacer acta?</summary><div class="acc-body"><p>Para un préstamo verdaderamente corto (unas horas, una reunión) suele bastar un formato de préstamo con fecha de devolución. Pero si el bien va a quedarse allá de forma indefinida, ya no es préstamo: es un traslado, y necesita su acta con firmas. La regla práctica: si no tiene fecha de devolución cercana, trátalo como traslado.</p></div></details>
+      <details class="acc"><summary>¿Qué pasa si el traslado nunca se registró y luego hacen inventario físico?</summary><div class="acc-body"><p>Aparecerá una diferencia: en el inventario individual de quien entregó el bien figurará un elemento que ya no tiene (posible "faltante"), y en la otra dependencia habrá un bien "de más" sin soporte. Esas diferencias hay que aclararlas y regularizarlas con las actas correspondientes. Por eso registrar el traslado a tiempo evita dolores de cabeza a todos.</p></div></details>
+          <h4>Por qué los movimientos informales son la raíz de casi todos los faltantes</h4>
+      <p>Si preguntaras a cualquier persona que lleve años en un almacén cuál es la causa más frecuente de los "faltantes" en un inventario, la respuesta rara vez sería "robos": casi siempre sería <mark>los movimientos que se hicieron y nunca se registraron</mark>. El préstamo entre escritorios que se volvió permanente, el equipo que "pasó" a otra oficina sin acta, la silla que alguien se llevó "un momentico" y quedó allá. Cada uno de esos movimientos informales rompe la coincidencia entre lo que dice el papel y lo que hay en la realidad. Cuando llega el inventario físico, esos bienes aparecen como faltantes en un lado y como sobrantes sin soporte en otro, y toca dedicar días enteros a rastrear qué pasó con cada uno.</p>
+      <p>La enseñanza para tu rol es directa: <strong>ser un poco "insistente" con el trámite no es ser difícil, es ser profesional</strong>. Cuando un compañero te diga "hágame el favor y pasemos esta impresora a la otra oficina, sin tanto papeleo", la respuesta amable pero firme es "claro que sí, y la paso hoy mismo; solo firmamos el acta para que quede a cargo de ellos y no de nosotros". Así proteges a todos: a quien entrega (que deja de responder), a quien recibe (que sabe qué tiene) y a la entidad (cuyo inventario refleja la verdad). El "papeleo" del traslado no es un capricho: es lo único que evita que ese bien se convierta en un faltante inexplicable dentro de seis meses.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Descubres que hace meses una calculadora y una grapadora industrial "pasaron" a otra área sin registro, y ahora en tu inventario figuran como si las tuvieras tú. ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No los ignoras ni esperas al inventario físico. Localizas físicamente los bienes en la otra área, confirmas sus placas, y <strong>regularizas el traslado ahora</strong>: elaboras el acta de traslado con las firmas de quien los tiene y de tu dependencia, para que salgan de tu inventario y entren al de ellos. Así corriges la realidad antes de que se convierta en un problema. Documentar tarde es mejor que no documentar; pero lo ideal, aprendida la lección, es hacerlo en el momento del movimiento.</p>
+      </div>
+
+    </div>
+    <div class="checkpoint" data-cp="2">
+      <div class="cp-q">✋ Punto de control 2: Un funcionario ya no necesita un escáner y lo devuelve al almacén. ¿Cómo se llama ese movimiento?</div>
+      <button class="cp-op" data-ok="0">Traslado, porque el bien cambia de lugar.</button>
+      <button class="cp-op" data-ok="0">Baja, porque el funcionario ya no lo usa.</button>
+      <button class="cp-op" data-ok="1">Reintegro: el bien vuelve al almacén y la custodia deja de estar en el funcionario.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>Cuando un funcionario se retira o cambia de cargo: el paz y salvo de bienes</h3></div>
+    <div class="b-texto">
+      <p>Uno de los momentos más delicados del manejo de bienes es cuando <mark>una persona deja el cargo</mark>: renuncia, se traslada de ciudad, se pensiona, termina su contrato o simplemente cambia de dependencia. ¿Qué pasa con todos los bienes que tenía a su cargo? No pueden quedar en el aire. Aquí entra un trámite fundamental: el <strong>paz y salvo de bienes</strong>, que consiste en verificar que la persona <mark>entrega o justifica todos los bienes de su inventario individual</mark> antes de irse. Si esto no se hace bien, la entidad puede quedarse sin saber dónde están sus equipos, y quien se fue puede terminar respondiendo por bienes que ya no controla.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>paz y salvo de bienes</strong> es la <mark>constancia de que un funcionario que se retira o cambia de cargo ha entregado, trasladado o aclarado todos los bienes que tenía a su cargo</mark>. Sin ese paz y salvo, la entidad suele no dar trámite a la liquidación o a la salida definitiva, porque el servidor sigue siendo responsable de esos bienes.</p></div>
+      <h4>Por qué el paz y salvo protege a todos</h4>
+      <p>El paz y salvo no es un obstáculo burocrático: es una <strong>protección</strong>, tanto para la entidad como para el funcionario que se va. Para la entidad, garantiza que los bienes no se pierdan en la salida de una persona. Para el funcionario, es la prueba de que <mark>entregó todo y ya no responde por nada</mark>. Imagina que alguien se retira sin firmar paz y salvo y, seis meses después, en un inventario físico, aparece que faltan tres equipos que estaban a su nombre: sin la constancia de entrega, esa persona podría verse enredada en una investigación por unos bienes que quizá sí entregó, pero sin soporte. El paz y salvo evita exactamente eso.</p>
+      <h4>Qué se revisa en el paz y salvo</h4>
+      <p>Cuando alguien se va, se toma su <strong>inventario individual</strong> y se verifica, uno por uno, cada bien: ¿lo entregó al almacén (reintegro)? ¿lo trasladó a quien lo reemplaza (traslado)? ¿está completo y en buen estado? Solo cuando todos los bienes están entregados, trasladados o debidamente aclarados, se firma el paz y salvo. Si falta algún bien, hay que aclararlo antes: puede haberse dañado (y entonces se tramita según corresponda), haberse perdido (y entonces se activa el procedimiento de pérdida que veremos en el módulo 4) o simplemente estar en otro lado sin haberse registrado.</p>
+      <div class="tabla-wrap"><table>
+        <caption>Qué hacer con los bienes al retirarse o cambiar de cargo</caption>
+        <thead><tr><th>Situación del bien</th><th>Trámite</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td>Ya no lo va a usar nadie por ahora</td><td>Reintegro al almacén</td><td>Vuelve a la custodia del almacén.</td></tr>
+          <tr><td>Lo seguirá usando quien lo reemplaza</td><td>Traslado al nuevo responsable</td><td>Cambia de titular en el inventario.</td></tr>
+          <tr><td>Está dañado o inservible</td><td>Reintegro + eventual baja</td><td>El almacén evalúa si se da de baja.</td></tr>
+          <tr><td>No aparece</td><td>Procedimiento de pérdida</td><td>Se investiga antes de firmar paz y salvo.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Un funcionario de tu dependencia renunció y "se fue" el viernes. El lunes el jefe te pide apoyar el paz y salvo de bienes. En su inventario individual figuran un portátil, un monitor, una silla y un teléfono, pero en el escritorio solo encuentras el monitor y la silla. ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No firmas ningún paz y salvo con bienes faltantes. Verificas el <strong>inventario individual</strong> y confirmas físicamente qué hay: monitor y silla presentes. El portátil y el teléfono no aparecen. Antes de asumir lo peor, indagas: preguntas al jefe y a compañeros si el portátil quedó en soporte técnico, si el teléfono se trasladó, si hay algún registro. Documentas todo por escrito e informas al almacén y a tu jefe. El paz y salvo <strong>no se firma</strong> hasta aclarar los dos bienes faltantes; si de verdad se perdieron, se activa el procedimiento de pérdida. Tu papel es dejar constancia clara, no encubrir el faltante ni firmar "para no demorar la liquidación".</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>Una tentación típica en los casos: "el funcionario ya se fue y hay que agilizar su liquidación, así que firmas el paz y salvo aunque falten bienes". <strong>Nunca es correcto.</strong> Firmar un paz y salvo con bienes faltantes es faltar a la verdad en un documento y puede comprometer tu responsabilidad. Lo correcto es aclarar primero.</p></div>
+      <details class="acc"><summary>¿El paz y salvo de bienes es lo mismo que el paz y salvo general de la entidad?</summary><div class="acc-body"><p>El paz y salvo general suele incluir varios frentes (bienes, cartera, biblioteca, elementos de dotación, etc.). El paz y salvo de bienes es el componente específico sobre los bienes del inventario individual. Aquí nos concentramos en ese, porque es el que corresponde al manejo de inventarios y el que tú apoyas desde el rol administrativo.</p></div></details>
+      <details class="acc"><summary>Si un bien del que se fue está dañado, ¿la persona responde igual?</summary><div class="acc-body"><p>Depende de la causa del daño. El deterioro normal por el uso no genera responsabilidad. Pero un daño por negligencia o mal uso sí puede generarla. Por eso, al recibir un bien reintegrado, el almacén verifica su estado y deja constancia: si el daño es anormal, se evalúa según los procedimientos internos. Lo importante para ti: documentar el estado en que llega el bien.</p></div></details>
+          <h4>El empalme: entregar el cargo dejando todo claro</h4>
+      <p>Ligado al paz y salvo está el <strong>empalme</strong>, que es el momento en que quien deja un cargo le entrega a quien llega (o al jefe) el estado de las cosas, incluidos los bienes. Un buen empalme de bienes consiste en revisar juntos el <mark>inventario individual</mark>, verificar bien por bien que cada elemento esté presente y en el estado descrito, y dejar constancia firmada de la entrega. Cuando el empalme se hace bien, la persona que llega sabe exactamente qué recibe y por qué responde, y la que se va queda tranquila porque entregó todo con soporte. Cuando no se hace o se hace mal —"ahí quedan las cosas, ya me voy"— el que llega hereda un inventario que quizá no coincide con la realidad, y termina respondiendo por bienes que nunca vio.</p>
+      <p>Para tu rol, el empalme es una oportunidad de oro para partir con el pie derecho: <strong>nunca aceptes un cargo con bienes sin verificarlos</strong>. Tómate el tiempo de revisar cada bien del inventario que te van a asignar, señala lo que no aparezca o esté dañado, y solo firma por lo que efectivamente recibes. Es preferible incomodar un poco durante el empalme que cargar durante años con la responsabilidad de bienes fantasma. Y cuando seas tú quien entregue el cargo, aplica lo mismo hacia el otro lado: deja todo documentado, para irte en paz y salvo de verdad.</p>
+
+    </div>
+    <div class="checkpoint" data-cp="3">
+      <div class="cp-q">✋ Punto de control 3: Un funcionario se retira y en su inventario individual falta un equipo. El jefe te pide firmar el paz y salvo "para no demorar la liquidación". ¿Qué haces?</div>
+      <button class="cp-op" data-ok="0">Firmo el paz y salvo: la orden del jefe me cubre.</button>
+      <button class="cp-op" data-ok="1">No firmo con bienes faltantes; dejo constancia, informo y aclaro el faltante antes de firmar.</button>
+      <button class="cp-op" data-ok="0">Firmo pero anoto en una libreta personal que faltaba un equipo.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>Pérdidas y hurtos de bienes: qué hacer cuando algo desaparece</h3></div>
+    <div class="b-texto">
+      <p>Ningún manejo de bienes está libre de que algo salga mal: un equipo que se pierde, un bien que es hurtado, un elemento que "estaba ayer y hoy no está". Es una de las situaciones más incómodas, y también donde más errores se cometen por miedo o por no saber qué hacer. La regla de oro es simple y debes grabarla: <mark>una pérdida no se calla, no se resuelve "reponiéndola en secreto" y no se deja pasar</mark>. Se <strong>reporta de inmediato y por escrito</strong>, y se sigue el procedimiento. Ocultar una pérdida es mucho más grave que la pérdida misma.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>pérdida de un bien</strong> es su <mark>desaparición sin que se sepa su paradero</mark>, ya sea por extravío, por hurto (cuando alguien lo sustrae) o por caso fortuito. Frente a una pérdida, el responsable debe <strong>reportarla oportunamente</strong>, y la entidad debe investigar para determinar si hubo o no responsabilidad de quien tenía el bien a cargo.</p></div>
+      <h4>Los pasos frente a una pérdida o un hurto</h4>
+      <p>Cuando desaparece un bien, hay una secuencia de actuación que conviene tener clara. No la improvises: síguela.</p>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="flujo-num">1</span><div><strong>Reportar de inmediato.</strong> El responsable del bien informa por escrito a su jefe y al almacén apenas advierte la pérdida. La oportunidad importa: reportar rápido demuestra buena fe.</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">2</span><div><strong>Denunciar si hubo hurto.</strong> Si el bien fue sustraído (robo, hurto), se pone la denuncia penal ante la autoridad competente. La copia de la denuncia es un soporte clave.</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">3</span><div><strong>Documentar las circunstancias.</strong> Se deja constancia de cómo, cuándo y dónde ocurrió, con los datos del bien (placa, descripción, valor).</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">4</span><div><strong>La entidad investiga.</strong> Se determina si hubo negligencia del responsable o si fue un hecho ajeno a su voluntad (caso fortuito, fuerza mayor).</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">5</span><div><strong>Se define la consecuencia.</strong> Si hubo negligencia, puede haber responsabilidad (reposición del bien o proceso de responsabilidad fiscal). Si no la hubo, se tramita la baja por pérdida sin cargo al responsable.</div></div>
+      </div>
+      <h4>No toda pérdida genera responsabilidad</h4>
+      <p>Este es un punto que tranquiliza y que la prueba valora: <strong>no siempre que se pierde un bien, la persona debe pagarlo</strong>. Si el bien se perdió por un hecho totalmente ajeno a la voluntad y el cuidado del responsable —un hurto con violencia, un desastre natural, un incendio— y la persona actuó diligentemente (lo cuidaba, lo reportó a tiempo, denunció), normalmente <mark>no hay responsabilidad fiscal</mark> y el bien simplemente se da de baja. La responsabilidad aparece cuando hay <strong>negligencia</strong>: dejar un portátil a la vista en un carro, no reportar la pérdida durante semanas, prestarlo a alguien sin control. La diferencia entre "mala suerte" y "descuido" es lo que determina si alguien responde.</p>
+      <div class="tabla-wrap"><table>
+        <caption>¿Hay responsabilidad por la pérdida?</caption>
+        <thead><tr><th>Escenario</th><th>¿Actuó con cuidado y reportó?</th><th>Consecuencia probable</th></tr></thead>
+        <tbody>
+          <tr><td>Hurto con violencia, denunciado de inmediato</td><td>Sí</td><td>Baja por pérdida, sin cargo al responsable.</td></tr>
+          <tr><td>Se dejó el equipo desatendido y a la vista</td><td>No (negligencia)</td><td>Posible responsabilidad: reposición o proceso fiscal.</td></tr>
+          <tr><td>Se perdió y se reportó semanas después</td><td>Reporte tardío</td><td>Se agrava la situación del responsable.</td></tr>
+          <tr><td>Desastre natural (inundación, incendio)</td><td>Sí (caso fortuito)</td><td>Baja, sin cargo al responsable.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Reportan que se perdió un video-beam que estaba a cargo de una oficina. Un compañero, nervioso, te dice: "mejor no digamos nada, yo consigo uno igual y lo reponemos y ya, para no meternos en líos". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> Le dices con claridad que <strong>eso no se puede hacer</strong>. Reponer un bien "por debajo de la mesa" para ocultar la pérdida es peor que la pérdida: falsea el inventario y puede constituir una falta grave. Lo correcto es <strong>reportar la pérdida por escrito de inmediato</strong> al jefe y al almacén, y si hubo hurto, poner la denuncia. Que la entidad investigue y determine si hubo o no responsabilidad. Actuar de frente y a tiempo es lo que protege a todos; ocultar es lo que hunde.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>La respuesta correcta ante una pérdida o hurto en un caso situacional casi siempre incluye tres cosas: <strong>reportar de inmediato y por escrito</strong>, <strong>denunciar si fue hurto</strong> y <strong>dejar que la entidad investigue</strong>. Nunca es correcto ocultar, "reponer en secreto" ni esperar a ver si aparece. La oportunidad del reporte es un factor que juega a favor del responsable.</p></div>
+      <details class="acc"><summary>¿Reportar rápido me perjudica, como si estuviera confesando algo?</summary><div class="acc-body"><p>Al contrario. Reportar oportunamente es señal de buena fe y diligencia, y suele jugar a favor del responsable. Lo que perjudica es el silencio: una pérdida que se descubre tarde y que la persona nunca reportó levanta sospechas de encubrimiento. Reportar a tiempo es siempre la mejor decisión, aunque incomode.</p></div></details>
+      <details class="acc"><summary>Si me hurtan un bien de la entidad fuera de la oficina, ¿respondo yo?</summary><div class="acc-body"><p>Depende de si actuaste con cuidado. Si sacaste el bien con autorización, lo cuidaste razonablemente y el hurto ocurrió pese a ello (y lo denunciaste), es probable que no haya responsabilidad. Si lo sacaste sin autorización o lo dejaste desatendido, el panorama cambia. La clave es la diligencia y la denuncia.</p></div></details>
+          <h4>Diferencia entre extravío, hurto y caso fortuito: por qué importa</h4>
+      <p>No toda desaparición de un bien es igual, y conviene distinguir tres situaciones porque la prueba las diferencia y porque cambian el trámite. El <strong>extravío</strong> es cuando el bien se pierde sin que se sepa bien cómo (quedó en un lado, no aparece); el <strong>hurto</strong> es cuando alguien lo sustrae, con o sin violencia (aquí hay un delito y por eso se denuncia penalmente); y el <strong>caso fortuito o fuerza mayor</strong> es cuando el bien se pierde o destruye por un hecho imprevisible e irresistible ajeno a la voluntad del responsable (un incendio, una inundación, un desastre). La diferencia importa porque el hurto exige denuncia penal, mientras que el caso fortuito, si se prueba, normalmente exime de responsabilidad. En los tres casos, lo común e ineludible es <mark>reportar de inmediato y por escrito</mark>.</p>
+      <p>Para ti, como Auxiliar, el detalle fino de calificar jurídicamente si fue hurto o caso fortuito no es tu tarea —eso lo determina la investigación—, pero sí debes saber que <strong>tu deber es documentar los hechos con precisión</strong>: qué bien es (placa, descripción), cuándo se advirtió su ausencia, dónde estaba, quién lo tenía a cargo y qué circunstancias rodearon la desaparición. Cuanto más clara y oportuna sea esa constancia, más fácil será para la entidad calificar la situación y para el responsable demostrar su diligencia. Un reporte vago y tardío ("como que se perdió un equipo hace un tiempo") es lo peor que puede pasar; un reporte claro e inmediato es lo que protege a todos.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Una funcionaria te cuenta que le hurtaron el portátil de la entidad en un bus, y no sabe si "vale la pena denunciar porque igual no lo van a recuperar". ¿Qué le dices?</p>
+        <p><strong>Cómo actúas.</strong> Le explicas que la denuncia <strong>no es solo para recuperar el bien</strong>: es un soporte indispensable del trámite. La copia de la denuncia demuestra que hubo un hurto (no un descuido ni una apropiación), respalda su buena fe y es requisito para tramitar la baja del bien por pérdida. Le ayudas a reportar el hecho por escrito a su jefe y al almacén ese mismo día, y le recuerdas que ponga la denuncia. Sin denuncia y sin reporte, el hurto puede terminar viéndose como una pérdida negligente, en su perjuicio.</p>
+      </div>
+
+    </div>
+    <div class="checkpoint" data-cp="4">
+      <div class="cp-q">✋ Punto de control 4: Un compañero te propone reponer en secreto un equipo perdido "para no meterse en líos". ¿Qué es lo correcto?</div>
+      <button class="cp-op" data-ok="1">Reportar la pérdida de inmediato y por escrito, denunciar si hubo hurto y dejar que la entidad investigue.</button>
+      <button class="cp-op" data-ok="0">Aceptar reponerlo en secreto para evitar problemas.</button>
+      <button class="cp-op" data-ok="0">Esperar unos días a ver si el bien aparece antes de decir algo.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>La baja de bienes: cuando un bien sale definitivamente del inventario</h3></div>
+    <div class="b-texto">
+      <p>Llegamos a uno de los conceptos que más se pregunta: la <strong>baja de bienes</strong>. Volvamos a la escena del comienzo: encuentras tres impresoras dañadas y obsoletas que nadie usa. La tentación es decir "eso ya no sirve, bótalo". Pero recuerda: un bien público <mark>no se bota</mark>. Retirarlo del inventario tiene un nombre —darlo de baja— y un trámite formal. Botar un bien sin trámite es hacer desaparecer patrimonio del Estado sin soporte, y eso puede constituir una falta. La baja es, precisamente, la manera <strong>legal y documentada</strong> de que un bien salga del inventario para siempre.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>baja de bienes</strong> es el <mark>retiro definitivo de un bien del inventario y de la contabilidad de la entidad</mark>, por causas justificadas (obsolescencia, daño irreparable, pérdida, inservibilidad). Requiere un <strong>acto administrativo</strong> (resolución o acta) que la autorice, previo concepto técnico que sustente la causal.</p></div>
+      <h4>Las causales de baja: por qué se retira un bien</h4>
+      <p>Un bien no se da de baja por capricho, sino porque hay una razón que lo justifica. Las causales más comunes son:</p>
+      <ul class="lista">
+        <li><strong>Obsolescencia:</strong> el bien quedó tecnológicamente desactualizado (un computador que ya no soporta los programas actuales).</li>
+        <li><strong>Daño o inservibilidad:</strong> el bien está tan deteriorado que repararlo cuesta más de lo que vale o simplemente ya no funciona.</li>
+        <li><strong>Pérdida o hurto:</strong> el bien desapareció y, tras el procedimiento del módulo 4, se retira del inventario.</li>
+        <li><strong>Vencimiento:</strong> algunos elementos (por ejemplo, ciertos insumos) tienen vida útil limitada.</li>
+      </ul>
+      <p>Un punto que la prueba valora: <mark>que un bien esté viejo o dañado no autoriza a botarlo</mark>. La antigüedad o el daño son la <em>causal</em> que justifica <em>iniciar</em> el trámite de baja, pero mientras no exista el acto administrativo que la autoriza, el bien <strong>sigue en el inventario y bajo custodia</strong>. No es lo mismo "este bien merece baja" que "este bien ya está de baja". Entre lo uno y lo otro hay un procedimiento.</p>
+      <h4>El trámite de baja, paso a paso</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="flujo-num">1</span><div><strong>Identificación.</strong> Se detectan los bienes candidatos a baja (inservibles, obsoletos), a menudo durante un inventario físico o un reintegro.</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">2</span><div><strong>Concepto técnico.</strong> Un experto o comité verifica el estado y sustenta la causal (por ejemplo, que el equipo es irreparable).</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">3</span><div><strong>Acto administrativo.</strong> La autoridad competente expide la resolución o acta que <mark>autoriza la baja</mark>. Sin este acto, no hay baja.</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">4</span><div><strong>Descargue.</strong> El almacén retira el bien del inventario y se hace el registro contable correspondiente.</div></div>
+        <div class="flujo-arrow">↓</div>
+        <div class="flujo-paso"><span class="flujo-num">5</span><div><strong>Disposición final.</strong> Se decide qué se hace físicamente con el bien dado de baja (venta, donación, destrucción, etc.), tema del módulo 6.</div></div>
+      </div>
+      <div class="tabla-wrap"><table>
+        <caption>Bien candidato a baja vs. bien ya dado de baja</caption>
+        <thead><tr><th>Aspecto</th><th>Candidato a baja</th><th>Ya dado de baja</th></tr></thead>
+        <tbody>
+          <tr><td>¿Está en el inventario?</td><td>Sí, sigue registrado y bajo custodia.</td><td>No, fue descargado tras el acto administrativo.</td></tr>
+          <tr><td>¿Se puede desechar?</td><td>No, hasta que se autorice la baja.</td><td>Se define su disposición final.</td></tr>
+          <tr><td>Qué falta</td><td>Concepto técnico + acto administrativo.</td><td>Ya se surtió el trámite.</td></tr>
+          <tr><td>Quién responde por él</td><td>Aún hay un responsable/custodio.</td><td>Salió del patrimonio.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Encuentras en un depósito tres impresoras dañadas que nadie usa. El coordinador te dice: "eso ya no sirve, sácalo a la basura para desocupar". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No las tiras a la basura. Le explicas que, aunque estén dañadas, son <strong>bienes del inventario</strong> y no pueden desecharse sin trámite. Verificas sus placas, confirmas que siguen registradas, y reportas al almacén que son <strong>candidatas a baja</strong> por daño/obsolescencia, para que se surta el procedimiento: concepto técnico, acto administrativo de baja y luego la disposición final (posiblemente chatarrización o entrega a un gestor de residuos electrónicos). Mientras tanto, las mantienes identificadas y bajo control. Así "desocupas" el depósito de forma correcta, sin hacer desaparecer patrimonio sin soporte.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>La trampa más común: presentar un bien "viejo, dañado o inservible" y sugerir que por eso ya se puede botar. <strong>Falso.</strong> El estado del bien justifica <em>iniciar</em> la baja, pero el bien no sale del inventario hasta que exista el <strong>acto administrativo que la autoriza</strong>. Antes de eso, botarlo es hacer desaparecer patrimonio sin soporte.</p></div>
+      <details class="acc"><summary>¿Un Auxiliar Administrativo autoriza bajas?</summary><div class="acc-body"><p>No. La baja la autoriza una autoridad competente mediante acto administrativo, con soporte de un comité o concepto técnico. El Auxiliar <em>apoya</em> el trámite: identifica candidatos, reúne información, elabora borradores de documentos, mantiene los bienes controlados. Ejecuta y apoya el procedimiento, pero la decisión de fondo la toma quien tiene la competencia.</p></div></details>
+      <details class="acc"><summary>¿Y si el bien está dañado pero podría repararse?</summary><div class="acc-body"><p>Entonces no procede la baja por inservibilidad todavía. Se evalúa si la reparación es viable y razonable en costo. La baja por daño aplica cuando el bien es irreparable o cuando repararlo cuesta más de lo que vale. Esa evaluación es la que hace el concepto técnico.</p></div></details>
+          <h4>El papel del Auxiliar en la baja: apoyar sin decidir</h4>
+      <p>Es importante que tengas claro el <mark>límite de tu rol</mark> en un trámite de baja, porque es un tema donde muchos se confunden. El Auxiliar Administrativo <strong>no autoriza bajas ni decide qué se retira del inventario</strong>: esa decisión corresponde a una autoridad competente que expide el acto administrativo, apoyada en un concepto técnico y, a menudo, en un comité. Lo tuyo es la parte operativa y de apoyo, que no por eso es menos importante: identificar los bienes candidatos durante los inventarios y reintegros, reunir la información de cada uno (placa, descripción, estado, valor en libros), elaborar los borradores de los documentos que se te pidan, mantener los bienes candidatos identificados y bajo control mientras se surte el trámite, y luego apoyar el descargue y la disposición final una vez autorizada la baja.</p>
+      <p>Esta distinción —<strong>ejecuto y apoyo, pero no decido de fondo</strong>— es la esencia del nivel asistencial y aparece una y otra vez en la prueba. La respuesta correcta en un caso de baja casi nunca será "el Auxiliar da de baja el bien", sino "el Auxiliar apoya el trámite y espera el acto administrativo". Saber cuál es tu campo te protege: no te corresponde tomar decisiones que no son tuyas, pero sí te corresponde hacer impecablemente la parte operativa. Si haces bien tu apoyo —bienes identificados, información completa, documentos ordenados— el trámite de baja fluye; si lo haces mal —bienes revueltos, datos incompletos— todo se traba.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> El jefe te dice: "de una vez retira del inventario esos cinco equipos dañados, yo después firmo el papel". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> Con respeto, le explicas que el orden correcto es al revés: <strong>primero el acto administrativo, después el descargue</strong>. Mientras no exista la resolución o acta de baja, esos equipos siguen en el inventario y bajo custodia, así estén dañados. Le propones adelantar tu parte de una vez —reunir las placas, el estado y la información de los cinco equipos, y dejar listo el borrador— para que él pueda gestionar el acto administrativo cuanto antes. Así avanzas sin saltarte el paso que da soporte a todo. Retirarlos "y después firmar" dejaría un descargue sin respaldo, que es justo lo que la prueba y la Contraloría reprochan.</p>
+      </div>
+
+    </div>
+    <div class="checkpoint" data-cp="5">
+      <div class="cp-q">✋ Punto de control 5: Hay equipos obsoletos en un depósito. ¿A partir de qué momento pueden retirarse físicamente del inventario?</div>
+      <button class="cp-op" data-ok="0">Apenas se detecta que están obsoletos, se pueden botar.</button>
+      <button class="cp-op" data-ok="1">Solo después del acto administrativo que autoriza la baja, con su concepto técnico previo.</button>
+      <button class="cp-op" data-ok="0">Cuando el coordinador dé la orden verbal de desocupar el depósito.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">6</div><h3>La disposición final: qué se hace con lo que se dio de baja</h3></div>
+    <div class="b-texto">
+      <p>Una vez que un bien fue dado de baja y salió del inventario, queda una pregunta física muy concreta: <strong>¿qué se hace con él?</strong> No porque un bien ya no le sirva a la entidad significa que "no vale nada" o que se pueda regalar a quien pase. El destino de los bienes dados de baja también está reglado, porque incluso lo que ya no se usa puede tener valor (dinero de una venta, utilidad para otra entidad, o simplemente la obligación de disponerlo de forma ambientalmente responsable). A esto se le llama <strong>disposición final</strong>, y es el verdadero cierre del ciclo de vida del bien.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>disposición final</strong> es la <mark>decisión sobre el destino físico de un bien dado de baja</mark>: qué se hace con él una vez que salió del patrimonio de la entidad. Las opciones típicas son la venta, la donación o transferencia a otra entidad, la destrucción/chatarrización, o la entrega a gestores de residuos, según el tipo de bien y su estado.</p></div>
+      <h4>Las formas de disposición final</h4>
+      <ul class="lista">
+        <li><strong>Venta:</strong> si el bien aún tiene valor de mercado (por ejemplo, vehículos o equipos usados que funcionan), la entidad puede venderlo mediante los procedimientos de contratación, y el dinero ingresa como recurso público.</li>
+        <li><strong>Donación o transferencia:</strong> a otra entidad pública o a organizaciones que la ley permita, cuando el bien puede seguir siendo útil aunque a la entidad ya no le sirva.</li>
+        <li><strong>Destrucción o chatarrización:</strong> cuando el bien es inservible y no tiene valor de reventa (por ejemplo, equipos totalmente dañados), se destruye de forma controlada, dejando acta.</li>
+        <li><strong>Gestión de residuos:</strong> los residuos electrónicos, pilas, tóneres, etc., se entregan a <mark>gestores autorizados</mark> por normas ambientales, no se tiran a la basura común.</li>
+      </ul>
+      <p>La regla que atraviesa todas estas opciones: <strong>cada forma de disposición deja soporte</strong> (acta de destrucción, contrato de venta, acta de donación, certificado del gestor de residuos). Nunca la disposición final es "lo boté" sin más. Incluso destruir un bien es un acto documentado, porque hay que demostrar qué pasó con ese patrimonio.</p>
+      <div class="tabla-wrap"><table>
+        <caption>Opciones de disposición final</caption>
+        <thead><tr><th>Opción</th><th>Cuándo aplica</th><th>Soporte</th></tr></thead>
+        <tbody>
+          <tr><td>Venta</td><td>El bien funciona y tiene valor de mercado.</td><td>Procedimiento de venta; ingreso del dinero.</td></tr>
+          <tr><td>Donación / transferencia</td><td>Sirve a otra entidad, aunque no a la nuestra.</td><td>Acta de donación/transferencia.</td></tr>
+          <tr><td>Destrucción / chatarrización</td><td>Inservible, sin valor de reventa.</td><td>Acta de destrucción.</td></tr>
+          <tr><td>Gestor de residuos</td><td>Residuos electrónicos, pilas, tóneres.</td><td>Certificado del gestor autorizado.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Ya se dieron de baja las tres impresoras dañadas. Un compañero dice: "yo me llevo una para la casa, total ya nadie las quiere". ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> Le explicas que <strong>un bien dado de baja no se lo lleva nadie a título personal</strong>, aunque parezca que "ya no vale nada". Su destino lo define la disposición final: puede que se chatarricen, se entreguen a un gestor de residuos electrónicos o se donen, pero siempre por el canal formal y con soporte. Llevarse un bien dado de baja "porque nadie lo quiere" es apropiarse de un bien público, y eso no cambia por el hecho de que esté dañado. Reportas que están listas para disposición final y esperas el procedimiento.</p>
+      </div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> El almacén te pide apoyar la entrega de unos equipos dados de baja a un gestor de residuos electrónicos. ¿Qué cuidas?</p>
+        <p><strong>Cómo actúas.</strong> Verificas que los equipos correspondan exactamente a los que figuran en el acto de baja (placas y descripción), acompañas la entrega, y te aseguras de que el gestor expida el <strong>certificado o acta</strong> que soporta que los recibió para su disposición ambiental. Ese certificado se archiva como prueba de que la entidad dispuso de esos bienes de forma responsable y controlada. Sin el soporte, no hay cómo demostrar el destino final.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>Idea que rinde: <strong>que un bien esté dado de baja no lo convierte en "de nadie"</strong>. Sigue habiendo un procedimiento para decidir su destino (venta, donación, destrucción, gestor de residuos), y ese destino se documenta. Apropiarse de un bien dado de baja "porque ya no sirve" sigue siendo apropiación de patrimonio público.</p></div>
+      <details class="acc"><summary>¿Por qué no se puede simplemente botar a la basura un computador dañado?</summary><div class="acc-body"><p>Por dos razones. Primera, porque es un bien del inventario y necesita el trámite de baja. Segunda, porque los equipos electrónicos son residuos peligrosos regulados por normas ambientales: contienen materiales que no pueden ir a la basura común. Deben entregarse a gestores autorizados, con certificado. Es a la vez un tema de control patrimonial y de responsabilidad ambiental.</p></div></details>
+      <details class="acc"><summary>Si un bien dado de baja aún funciona, ¿se destruye igual?</summary><div class="acc-body"><p>No necesariamente. Si funciona y tiene valor, lo lógico es venderlo o donarlo/transferirlo a otra entidad que lo necesite, para aprovechar su utilidad. La destrucción se reserva para lo inservible. La disposición final busca el mejor destino posible para cada bien, no destruir por destruir.</p></div></details>
+          <h4>Responsabilidad ambiental: los residuos electrónicos no son basura común</h4>
+      <p>Un aspecto de la disposición final que cada vez pesa más es el <mark>manejo ambiental de los bienes tecnológicos</mark>. Computadores, monitores, impresoras, teléfonos, pilas y tóneres contienen materiales que no pueden ir a la basura común porque contaminan: son <strong>residuos de aparatos eléctricos y electrónicos</strong>, regulados por normas ambientales. Por eso, cuando un equipo se da de baja por daño u obsolescencia, su destino no puede ser el contenedor de basura del edificio: debe entregarse a un <strong>gestor autorizado</strong> que los recibe, los trata o los aprovecha de forma responsable y expide un <strong>certificado</strong> que soporta la entrega. Ese certificado no es un simple recibo: es la prueba de que la entidad cumplió su deber ambiental, y se archiva junto con los documentos de la baja.</p>
+      <p>Para el Auxiliar, esto significa un cuidado adicional muy concreto: no basta con "sacar del inventario" los equipos dados de baja; hay que asegurarse de que su disposición sea la correcta. Si te toca apoyar la entrega a un gestor, verifica que los equipos coincidan con los del acto de baja y consigue el certificado. Si alguien pretende simplemente botarlos, adviértelo: es a la vez una irregularidad patrimonial y ambiental. Cuidar el patrimonio público, en pleno siglo XXI, también incluye cuidar que los bienes que ya cumplieron su vida útil terminen su ciclo sin dañar el ambiente ni desaparecer sin rastro.</p>
+
+    </div>
+    <div class="checkpoint" data-cp="6">
+      <div class="cp-q">✋ Punto de control 6: Unas impresoras ya fueron dadas de baja y un compañero quiere llevarse una a su casa "porque ya nadie las quiere". ¿Es correcto?</div>
+      <button class="cp-op" data-ok="0">Sí, un bien dado de baja ya no es de nadie.</button>
+      <button class="cp-op" data-ok="1">No: su destino lo define la disposición final (venta, donación, destrucción o gestor), siempre por el canal formal y con soporte.</button>
+      <button class="cp-op" data-ok="0">Sí, siempre que avise verbalmente al almacén.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">7</div><h3>Depreciación y conciliación: por qué el inventario y la contabilidad deben coincidir</h3></div>
+    <div class="b-texto">
+      <p>Hasta aquí hemos hablado de los bienes como objetos físicos: entran, salen, se trasladan, se dan de baja. Pero recuerda algo que vimos el primer día: cada bien también es una <strong>cifra en la contabilidad</strong> de la entidad. Por eso existe un principio que cierra todo el manejo de bienes: <mark>lo que dice el inventario y lo que dice la contabilidad tienen que coincidir</mark>. Cuando no coinciden, hay un problema que hay que resolver. A ese proceso de "cuadrar" ambos registros se le llama <strong>conciliación</strong>, y para entenderlo bien hay que conocer primero la depreciación.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>depreciación</strong> es la <mark>disminución del valor de un bien con el paso del tiempo y el uso</mark>. Un computador nuevo vale más que el mismo computador tres años después; contablemente, ese menor valor se va reconociendo de forma gradual. La <strong>conciliación</strong> es la <mark>verificación de que el inventario físico y los registros contables reflejan la misma realidad</mark>.</p></div>
+      <h4>Depreciación: los bienes pierden valor con el tiempo</h4>
+      <p>No necesitas ser contadora para entender la idea: casi ningún bien vale lo mismo con los años. Un vehículo, un computador, un mueble van perdiendo valor por el uso y el paso del tiempo. La contabilidad pública reconoce esa pérdida de valor mediante la <strong>depreciación</strong>, distribuyendo el costo del bien a lo largo de su <em>vida útil</em>. Para tu rol, lo importante no es calcular la depreciación —eso lo hace el área contable— sino <mark>entender que el valor de un bien en libros cambia con el tiempo</mark>, y que un bien totalmente depreciado no por eso desaparece del control: sigue existiendo físicamente y sigue teniendo un responsable, aunque su valor en libros sea mínimo.</p>
+      <h4>Conciliación: que el papel y la realidad coincidan</h4>
+      <p>La conciliación responde a una pregunta sencilla: <strong>¿lo que hay físicamente es lo mismo que dicen los registros?</strong> Si el inventario físico muestra 50 computadores pero la contabilidad tiene registrados 52, hay una diferencia de 2 que hay que explicar: ¿se dieron de baja y no se descargaron contablemente? ¿se perdieron y no se registró? ¿hubo un error de digitación? La conciliación detecta esas diferencias y obliga a aclararlas. Es la razón de fondo por la que <mark>todo movimiento debe tener soporte</mark>: para que, cuando se comparen físico y contable, todo cuadre. Cada acta de baja, cada comprobante de traslado, cada reporte de pérdida es una pieza que permite explicar por qué el número de hoy es distinto al de ayer.</p>
+      <div class="tabla-wrap"><table>
+        <caption>Diferencias típicas en una conciliación y su causa</caption>
+        <thead><tr><th>Diferencia detectada</th><th>Causa probable</th><th>Cómo se corrige</th></tr></thead>
+        <tbody>
+          <tr><td>Hay menos bienes físicos que en libros</td><td>Bajas o pérdidas no descargadas.</td><td>Registrar la baja/pérdida con su soporte.</td></tr>
+          <tr><td>Hay más bienes físicos que en libros</td><td>Ingresos no registrados; donaciones no incorporadas.</td><td>Incorporar el bien con su comprobante de entrada.</td></tr>
+          <tr><td>Un bien figura a nombre de quien ya no lo tiene</td><td>Traslado no registrado.</td><td>Elaborar el acta de traslado faltante.</td></tr>
+          <tr><td>El valor no coincide</td><td>Depreciación no actualizada o error.</td><td>Ajuste contable por el área competente.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Tras un inventario físico, se detecta que el inventario y la contabilidad no cuadran: físicamente hay dos equipos menos que en los registros. El jefe te pide apoyar la aclaración. ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> Buscas la explicación con soportes, no adivinando. Revisas si esos dos equipos fueron <strong>dados de baja</strong> (y no se descargaron), <strong>trasladados</strong> a otra dependencia (y no se registró el traslado) o <strong>reportados como perdidos</strong>. Reúnes las actas y comprobantes que expliquen su ausencia. Si de verdad no hay soporte de su salida, se documenta como un faltante para investigar. Tu aporte es <strong>rastrear el soporte de cada movimiento</strong>: casi siempre la diferencia se explica por un trámite que no se registró a tiempo, y aparece al buscar los papeles.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>Recuerda la conexión: el manejo de bienes no es solo físico, también es contable. Por eso <strong>inventario físico y contabilidad deben conciliar</strong>, y por eso cada movimiento (entrada, salida, traslado, baja, pérdida) debe tener soporte: es lo que permite explicar cualquier diferencia. Un inventario "que no cuadra" no siempre es un robo; muchas veces es un trámite que faltó por registrar.</p></div>
+      <details class="acc"><summary>¿El Auxiliar calcula la depreciación?</summary><div class="acc-body"><p>No. El cálculo de la depreciación es una tarea del área contable/financiera, que aplica las normas de contabilidad pública. El Auxiliar debe entender el concepto (los bienes pierden valor con el tiempo) y saber que un bien depreciado sigue existiendo y con responsable, pero no hace los cálculos. Tu terreno es el control físico y documental, que alimenta lo contable.</p></div></details>
+      <details class="acc"><summary>¿Por qué insisten tanto en que "todo movimiento deja soporte"?</summary><div class="acc-body"><p>Precisamente por la conciliación. Cuando llega el momento de comparar lo físico con lo contable, la única forma de explicar cualquier diferencia es con los soportes de cada movimiento. Un bien que salió sin comprobante se convierte en un faltante inexplicable; con su acta, es simplemente una salida registrada. El soporte es lo que convierte una "diferencia sospechosa" en un "movimiento normal".</p></div></details>
+          <h4>El inventario físico como momento de verdad</h4>
+      <p>El inventario físico, que estudiaste en su parte de fundamentos el Día 14, es el momento en que todo lo visto hoy se pone a prueba. Es cuando se sale a <mark>contar y verificar, uno por uno, los bienes que existen realmente</mark> y se comparan con lo que dicen los registros. Si durante el año todas las salidas, traslados, reintegros, pérdidas y bajas se documentaron bien, el inventario físico "cuadra" con facilidad y es un trámite tranquilo. Si, en cambio, hubo movimientos informales, préstamos no registrados o bajas mal descargadas, el inventario físico saca a la luz todas esas diferencias, y toca dedicar tiempo a explicar cada una. Por eso se dice que el inventario físico es el "momento de verdad": revela qué tan bien se llevó el control durante todo el período.</p>
+      <p>Tu papel en el inventario físico es muy práctico: acompañar la toma física (ir bien por bien verificando placa, descripción y estado), registrar con exactitud lo que se encuentra, y ayudar a rastrear los soportes de las diferencias que aparezcan. No se trata de "cuadrar a la fuerza" el número —ajustar la contabilidad para que coincida sin explicar por qué—, sino de <strong>explicar cada diferencia con su soporte</strong>. Un faltante que se explica con un acta de baja no es un problema; un faltante sin ningún soporte sí lo es y hay que investigarlo. La calidad de tu trabajo durante todo el año se mide, en buena parte, en lo tranquilo o lo caótico que resulte el inventario físico.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Durante el inventario físico encuentras un bien que está físicamente presente pero no aparece en ningún registro (ni en libros ni en el inventario individual de nadie). ¿Qué haces?</p>
+        <p><strong>Cómo actúas.</strong> No lo ignoras "porque está de más". Un bien que existe y no está registrado también es una diferencia que hay que aclarar: puede ser una donación no incorporada, una compra mal registrada o un traslado recibido sin acta. Lo reportas al almacén con su descripción, y se busca su origen para <strong>incorporarlo formalmente</strong> con el soporte que corresponda. Un sobrante sin explicación es tan irregular como un faltante: ambos rompen la coincidencia entre lo físico y lo contable, y ambos se resuelven con soporte.</p>
+      </div>
+
+    </div>
+    <div class="checkpoint" data-cp="7">
+      <div class="cp-q">✋ Punto de control 7: El inventario físico muestra menos equipos que la contabilidad. ¿Qué es lo primero que se busca?</div>
+      <button class="cp-op" data-ok="0">Asumir que hubo un robo y denunciar de inmediato a alguien.</button>
+      <button class="cp-op" data-ok="1">Los soportes de movimientos (bajas, traslados, pérdidas) que expliquen la diferencia, y aclararla con ellos.</button>
+      <button class="cp-op" data-ok="0">Ajustar la contabilidad al número físico sin más, para que cuadre.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>Responsabilidad fiscal y el control de la Contraloría</h3></div>
+    <div class="b-texto">
+      <p>Todo lo que hemos visto hoy —salidas, traslados, pérdidas, bajas— desemboca en un concepto que le da sentido a la exigencia de orden y soporte: la <strong>responsabilidad fiscal</strong>. La razón por la que ningún bien se mueve sin trámite y sin responsable es, en el fondo, esta: si por acción u omisión de un servidor se causa un <mark>daño al patrimonio público</mark>, ese servidor puede tener que <strong>responder con su propio patrimonio</strong>. No es una amenaza abstracta: es un régimen real que administra la Contraloría. Entender esto te ayuda a ver que todo el cuidado que has aprendido hoy no es "burocracia", sino tu propia protección.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>responsabilidad fiscal</strong> es la <mark>obligación de resarcir el daño causado al patrimonio público</mark> por la conducta dolosa o gravemente culposa de quien maneja recursos o bienes del Estado. Se determina en un <strong>proceso de responsabilidad fiscal</strong> adelantado por la <strong>Contraloría</strong>, órgano de control fiscal, y puede terminar en la obligación de pagar el valor del daño.</p></div>
+      <h4>La Contraloría: el órgano que vigila el patrimonio público</h4>
+      <p>La <strong>Contraloría General de la República</strong> (y las contralorías territoriales) ejerce el <mark>control fiscal</mark>: vigila que los recursos y bienes públicos se manejen de forma correcta. No confundas los controles, porque la prueba lo pregunta: la <strong>Procuraduría</strong> ejerce el control disciplinario (sobre la conducta del servidor: destitución, suspensión, multa); la <strong>Contraloría</strong> ejerce el control fiscal (sobre el daño al patrimonio: obligación de resarcir el dinero). Un mal manejo de bienes puede activar los dos a la vez: disciplinario por la conducta y fiscal por el daño patrimonial. Por eso el descuido con un bien no es "cosa menor".</p>
+      <div class="tabla-wrap"><table>
+        <caption>Los dos controles frente al manejo de bienes</caption>
+        <thead><tr><th>Aspecto</th><th>Control disciplinario</th><th>Control fiscal</th></tr></thead>
+        <tbody>
+          <tr><td>Quién lo ejerce</td><td>La Procuraduría (y oficinas de control interno disciplinario).</td><td>La Contraloría.</td></tr>
+          <tr><td>Qué vigila</td><td>La conducta del servidor (cumplimiento de deberes).</td><td>El daño al patrimonio público.</td></tr>
+          <tr><td>Qué sanción/efecto</td><td>Destitución, suspensión, multa, amonestación.</td><td>Obligación de resarcir (pagar) el daño causado.</td></tr>
+          <tr><td>Ejemplo por un bien perdido por negligencia</td><td>Falta al deber de cuidar los bienes.</td><td>Pagar el valor del bien perdido.</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Cuándo se responde fiscalmente y cuándo no</h4>
+      <p>La responsabilidad fiscal no es automática: no basta con que un bien se pierda o se dañe. Se necesita que haya un <strong>daño al patrimonio</strong>, una <strong>conducta</strong> del servidor (dolosa o gravemente culposa) y un <strong>nexo</strong> entre ambos. Por eso volvemos al hilo del módulo 4: si el bien se perdió por un hecho ajeno a tu voluntad y actuaste con diligencia (lo cuidaste, lo reportaste, denunciaste), normalmente no respondes fiscalmente. La responsabilidad aparece cuando hubo <mark>negligencia grave o intención</mark>. Tu mejor defensa, siempre, es haber hecho las cosas bien: soportes en regla, reportes a tiempo, bienes cuidados. Ahí está el sentido de todo lo aprendido hoy.</p>
+      <div class="practica"><div class="practica-tag">🧩 En la práctica</div>
+        <p><strong>Situación.</strong> Un compañero, angustiado, te dice que le abrieron un proceso de responsabilidad fiscal por un equipo perdido y te pregunta qué significa. ¿Cómo lo orientas?</p>
+        <p><strong>Cómo actúas.</strong> Le explicas con calma que el proceso de responsabilidad fiscal, que adelanta la <strong>Contraloría</strong>, busca determinar si su conducta causó un daño al patrimonio y si debe resarcirlo; que <strong>no toda pérdida termina en condena</strong>: se valora si actuó con diligencia y si reportó a tiempo; y que lo más importante es que <mark>reúna y presente todos los soportes</mark> (el reporte de la pérdida, la denuncia si hubo hurto, cualquier constancia de que cuidó el bien). Le recuerdas que tú no eres su abogado ni decides el proceso, pero que puedes ayudarle a ubicar los documentos del almacén. Lo tranquilizas sin darle falsas seguridades: el proceso existe para esclarecer, no necesariamente para condenar.</p>
+      </div>
+      <div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div><p>No confundas los controles. <strong>Contraloría = control fiscal</strong> (daño al patrimonio, resarcir dinero). <strong>Procuraduría = control disciplinario</strong> (conducta del servidor, sanciones como destitución o suspensión). Un mal manejo de bienes puede activar ambos. Y recuerda: la responsabilidad fiscal exige daño + conducta culposa/dolosa + nexo; no es automática por cualquier pérdida.</p></div>
+      <details class="acc"><summary>Como Auxiliar, ¿puedo tener responsabilidad fiscal?</summary><div class="acc-body"><p>Sí. Cualquier servidor que maneje o custodie bienes o recursos públicos puede ser sujeto de control fiscal si su conducta causa un daño al patrimonio. No importa el nivel del cargo: importa que hayas tenido bienes a cargo. Por eso el cuidado y los soportes son igual de importantes para un Auxiliar que para un directivo. Tu diligencia es tu protección.</p></div></details>
+      <details class="acc"><summary>¿La responsabilidad fiscal reemplaza a la disciplinaria o a la penal?</summary><div class="acc-body"><p>No, son independientes y pueden coexistir. Un mismo hecho —por ejemplo, la pérdida de un bien por negligencia grave— puede generar responsabilidad fiscal (resarcir el daño, ante la Contraloría), disciplinaria (por la conducta, ante la Procuraduría o control interno) e incluso penal si hubo delito. Son tres vías distintas que no se excluyen entre sí.</p></div></details>
+    </div>
+    <div class="checkpoint" data-cp="8">
+      <div class="cp-q">✋ Punto de control 8: ¿Qué órgano determina la responsabilidad fiscal por un daño al patrimonio público?</div>
+      <button class="cp-op" data-ok="0">La Procuraduría, mediante el proceso disciplinario.</button>
+      <button class="cp-op" data-ok="1">La Contraloría, mediante el proceso de responsabilidad fiscal (obligación de resarcir el daño).</button>
+      <button class="cp-op" data-ok="0">El almacén de la entidad, descontando el valor del salario.</button>
+      <div class="cp-fb"></div>
+    </div>
+  </div>
+
+  <div class="box gold"><div class="box-title">⚡ Idea clave del día</div><p>El ciclo de vida del bien público se cierra con una sola regla que atraviesa todo: <strong>ningún bien se mueve, sale, se pierde o se retira sin trámite y sin responsable</strong>. Cada salida tiene su comprobante y su firma; cada traslado, su acta; cada reintegro, su constancia; cada pérdida, su reporte y denuncia; cada baja, su acto administrativo; cada disposición final, su soporte. Todo esto se sostiene sobre la conciliación entre inventario y contabilidad, y detrás de todo está la responsabilidad fiscal: cuidar el patrimonio del Estado no es formalismo, es tu propia protección.</p></div>
+
+  <div class="box info"><div class="box-title">🧰 Tips para grabar el ciclo del bien</div>
+    <ul class="lista">
+      <li><strong>Salida:</strong> el bien queda a cargo de alguien → comprobante + firma.</li>
+      <li><strong>Traslado:</strong> cambia de responsable → acta con dos firmas.</li>
+      <li><strong>Reintegro:</strong> vuelve al almacén → comprobante de reintegro.</li>
+      <li><strong>Pérdida/hurto:</strong> reportar de inmediato + denunciar + investigar.</li>
+      <li><strong>Baja:</strong> retiro definitivo → concepto técnico + acto administrativo.</li>
+      <li><strong>Disposición final:</strong> venta, donación, destrucción o gestor → siempre con soporte.</li>
+    </ul>
+  </div>
+
+  <div class="box gold"><div class="box-title">⚡ Frase para recordar</div><p><strong>"El bien es del Estado; yo lo administro, no lo poseo. Nada se mueve sin trámite ni sin responsable, y cada movimiento deja su soporte."</strong></p></div>
+
+  <div class="fuentes"><div class="fuentes-tag">📚 Fuentes oficiales para profundizar</div>
+    <ul>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62518" target="_blank" rel="noopener">Ley 1474 de 2011 — Estatuto Anticorrupción (fortalecimiento del control fiscal y disciplinario)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=99230" target="_blank" rel="noopener">Ley 2195 de 2022 — transparencia y lucha contra la corrupción</a></li>
+      <li><a href="https://www.contraloria.gov.co/" target="_blank" rel="noopener">Contraloría General de la República — control fiscal</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=304" target="_blank" rel="noopener">Ley 610 de 2000 — proceso de responsabilidad fiscal</a></li>
+      <li><a href="https://www.contaduria.gov.co/" target="_blank" rel="noopener">Contaduría General de la Nación — normas de contabilidad pública (bienes, depreciación)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=63935" target="_blank" rel="noopener">Ley 734 de 2002 y Ley 1952 de 2019 — Código Disciplinario (deberes del servidor)</a></li>
+    </ul>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Ahora repasa las distinciones que confunde la prueba.</span><button class="advance-btn" data-goto="3">Ver distinciones →</button></div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos de este día que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Traslado</strong></td><td><strong>Reintegro</strong></td><td>Traslado = el bien pasa a otro funcionario/dependencia (cambia de responsable). Reintegro = el bien vuelve al almacén (la custodia regresa al almacén).</td></tr>
+    <tr><td><strong>Baja del bien</strong></td><td><strong>Disposición final</strong></td><td>Baja = retiro definitivo del inventario (con acto administrativo). Disposición final = qué se hace físicamente con lo dado de baja (venta, donación, destrucción, gestor).</td></tr>
+    <tr><td><strong>Candidato a baja</strong></td><td><strong>Bien ya dado de baja</strong></td><td>Candidato = sigue en el inventario y con responsable (falta el acto). Dado de baja = ya salió del patrimonio tras el acto administrativo.</td></tr>
+    <tr><td><strong>Extravío / caso fortuito</strong></td><td><strong>Hurto</strong></td><td>Extravío/caso fortuito = pérdida sin sustracción (hecho ajeno). Hurto = alguien sustrae el bien; hay delito y por eso se denuncia penalmente.</td></tr>
+    <tr><td><strong>Responsabilidad fiscal</strong></td><td><strong>Responsabilidad disciplinaria</strong></td><td>Fiscal = por daño al patrimonio, resarcir dinero (Contraloría). Disciplinaria = por incumplir deberes, sanción a la conducta (Procuraduría). Pueden concurrir.</td></tr>
+    <tr><td><strong>Paz y salvo de bienes</strong></td><td><strong>Empalme</strong></td><td>Paz y salvo = constancia de que quien se va entregó/aclaró todos sus bienes. Empalme = entrega del cargo (incluye revisar juntos el inventario) a quien llega.</td></tr>
+    <tr><td><strong>Depreciación</strong></td><td><strong>Baja</strong></td><td>Depreciación = pérdida gradual de valor por el tiempo/uso (el bien sigue existiendo). Baja = salida definitiva del inventario (el bien deja de figurar).</td></tr>
+    <tr><td><strong>Asignar</strong></td><td><strong>Disponer</strong></td><td>Asignar = entregar el bien a un funcionario para su uso (permitido, con soporte). Disponer = venderlo, regalarlo o llevárselo (NO corresponde al funcionario).</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: <strong>construye una frase con cada pareja</strong>. Por ejemplo: "Traslado cambia de dueño, reintegro vuelve al almacén" o "Baja retira, disposición final decide el destino". Si puedes decir la frase completa sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Auxiliar Administrativo de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · El funcionario que se va y deja bienes</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un funcionario renunció y ya no volvió. En su inventario individual figuran cuatro bienes, pero físicamente solo aparecen dos. El jefe te pide firmar el paz y salvo de bienes "para no demorar su liquidación".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p><strong>No firmas el paz y salvo con bienes faltantes.</strong> Verificas físicamente qué hay contra el inventario individual, dejas constancia escrita de los dos bienes que no aparecen e indagas su paradero (soporte técnico, traslado sin registrar, posible pérdida). Informas a tu jefe y al almacén. Solo cuando los cuatro bienes estén entregados, trasladados o debidamente aclarados se firma el paz y salvo; si de verdad se perdieron, se activa el procedimiento de pérdida. El afán de la liquidación no justifica firmar en falso.</p></div>
+    <span class="label">Por qué</span><p>Firmar un paz y salvo con faltantes es faltar a la verdad en un documento y puede comprometer tu responsabilidad. El paz y salvo protege a todos solo si refleja la realidad.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · "Eso ya no sirve, bótalo"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Encuentras tres impresoras dañadas y obsoletas en un depósito. El coordinador te dice: "eso ya no sirve, sácalo a la basura para desocupar el espacio".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>No las botas. Aunque estén dañadas, son <strong>bienes del inventario</strong> y no salen de él sin trámite. Verificas sus placas, confirmas que siguen registradas y las reportas al almacén como <mark>candidatas a baja</mark> por daño/obsolescencia, para que se surta el procedimiento (concepto técnico + acto administrativo de baja) y luego la disposición final (posible entrega a un gestor de residuos electrónicos, con certificado). Mientras tanto, las mantienes identificadas y bajo control. Así desocupas el depósito de forma correcta, sin hacer desaparecer patrimonio sin soporte.</p></div>
+    <span class="label">Por qué</span><p>El deterioro justifica <em>iniciar</em> la baja, pero el bien no sale del inventario hasta el acto administrativo. Botarlo antes deja un faltante y puede acarrear responsabilidad.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · La pérdida que "mejor callamos"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Se perdió un video-beam a cargo de una oficina. Un compañero, nervioso, te propone: "consigo uno igual, lo reponemos en silencio y no decimos nada, para no meternos en líos".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Le dices con claridad que <strong>eso no se puede hacer</strong>: reponer un bien en secreto para ocultar la pérdida falsea el inventario y es peor que la pérdida misma. Lo correcto es <mark>reportar la pérdida de inmediato y por escrito</mark> al jefe y al almacén, poner la denuncia si hubo hurto, y dejar que la entidad investigue si hubo o no responsabilidad. Reportar a tiempo demuestra buena fe y suele jugar a favor del responsable; ocultar es lo que agrava todo.</p></div>
+    <span class="label">Por qué</span><p>Ante una pérdida, lo correcto es siempre reportar, denunciar si aplica e investigar. Ocultar o "reponer en secreto" puede constituir una falta grave.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Entregar un bien devolutivo sin firma</div><p>La salida de un devolutivo exige comprobante y la firma de quien recibe. Sin firma, no queda claro quién responde y el problema puede recaer en quien lo entregó.</p></div>
+  <div class="box danger"><div class="box-title">❌ Mover o prestar bienes sin acta</div><p>Los préstamos informales entre escritorios y los traslados no registrados son la causa n.º 1 de faltantes. Todo traslado deja acta con dos firmas.</p></div>
+  <div class="box danger"><div class="box-title">❌ Firmar un paz y salvo con bienes faltantes</div><p>Nunca se firma "para agilizar la liquidación". Primero se aclaran todos los bienes; firmar en falso compromete tu responsabilidad.</p></div>
+  <div class="box danger"><div class="box-title">❌ Botar un bien dañado sin baja</div><p>El deterioro justifica iniciar la baja, pero el bien no sale del inventario hasta el acto administrativo. Botarlo antes deja un faltante.</p></div>
+  <div class="box danger"><div class="box-title">❌ Ocultar o "reponer en secreto" una pérdida</div><p>Una pérdida se reporta de inmediato y por escrito, se denuncia si hubo hurto y se investiga. Callarla o reponerla en silencio es peor que la pérdida.</p></div>
+  <div class="box danger"><div class="box-title">❌ Llevarse un bien dado de baja</div><p>Que un bien esté dado de baja no lo vuelve "de nadie": su destino lo define la disposición final. Apropiárselo sigue siendo apropiación de patrimonio público.</p></div>
+  <div class="box danger"><div class="box-title">❌ "Cuadrar" el inventario a la fuerza</div><p>Ante una diferencia entre físico y contable, no se ajusta el número sin más: se busca el soporte de cada movimiento y se explica la diferencia.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Nada se mueve sin trámite ni sin responsable:</strong> es la regla que resume todo el día.</li>
+    <li><strong>Salida</strong> = queda a cargo de alguien (comprobante + firma). <strong>Traslado</strong> = cambia de responsable (acta con dos firmas). <strong>Reintegro</strong> = vuelve al almacén (comprobante).</li>
+    <li><strong>Retiro o cambio de cargo:</strong> paz y salvo de bienes; nunca se firma con faltantes.</li>
+    <li><strong>Pérdida/hurto:</strong> reportar de inmediato + denunciar si aplica + dejar investigar. No ocultar, no reponer en secreto.</li>
+    <li><strong>Baja</strong> = retiro definitivo, requiere acto administrativo (el deterioro solo la <em>inicia</em>).</li>
+    <li><strong>Disposición final:</strong> venta, donación, destrucción o gestor de residuos; siempre con soporte.</li>
+    <li><strong>Contraloría = control fiscal</strong> (resarcir el daño); <strong>Procuraduría = control disciplinario</strong> (sanción a la conducta).</li>
+    <li><strong>Cuando dudes,</strong> elige la opción con SOPORTE y PROCEDIMIENTO: nunca botar, llevarse ni disponer de un bien por cuenta propia.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"El equipo está viejo y obsoleto, así que ya se puede dar de baja y sacarlo hoy mismo."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "es la causal de baja, ya no sirve".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la obsolescencia <em>justifica iniciar</em> la baja, pero el bien no sale del inventario hasta el acto administrativo que la autoriza.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> reportarlo como candidato a baja y esperar el concepto técnico y el acto administrativo antes de descargarlo o desecharlo.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El funcionario ya se fue; firmo el paz y salvo aunque falten bienes, para no demorar su liquidación."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "hay que agilizar y ya no está".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> firmar un paz y salvo con faltantes es faltar a la verdad en un documento y puede comprometer tu responsabilidad.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> aclarar primero cada bien faltante (traslado, reintegro, pérdida) y solo entonces firmar.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Se perdió un equipo; mejor conseguimos otro igual y lo reponemos en silencio para no meternos en líos."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "así nadie se entera y no hay problema".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> reponer en secreto falsea el inventario y es peor que la pérdida; puede constituir una falta grave.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> reportar de inmediato y por escrito, denunciar si hubo hurto y dejar que la entidad investigue.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El bien ya está dado de baja, así que como nadie lo quiere, me lo llevo a la casa."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "ya no es de nadie, ya no sirve".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> un bien dado de baja no es "de nadie": su destino lo define la disposición final por el canal formal.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> dejar que se decida su disposición (venta, donación, destrucción o gestor) con su soporte; nunca apropiárselo.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Regla que atraviesa todo</h4><p>Ningún bien se mueve, sale, se pierde o se retira sin trámite y sin responsable. Cada movimiento deja soporte.</p></div>
+    <div class="resumen-item"><h4>Salida y asignación</h4><p>El bien queda a cargo de un funcionario: comprobante + firma (en devolutivos). Entra a su inventario individual.</p></div>
+    <div class="resumen-item"><h4>Traslado y reintegro</h4><p>Traslado = pasa a otro responsable (acta con dos firmas). Reintegro = vuelve al almacén (comprobante de reintegro).</p></div>
+    <div class="resumen-item"><h4>Retiro del funcionario</h4><p>Paz y salvo de bienes: se entregan o aclaran todos los bienes. Nunca se firma con faltantes.</p></div>
+    <div class="resumen-item"><h4>Pérdidas y hurtos</h4><p>Reportar de inmediato + denunciar si hubo hurto + investigar. No toda pérdida genera responsabilidad; la negligencia sí.</p></div>
+    <div class="resumen-item"><h4>Baja y disposición final</h4><p>Baja = retiro definitivo (concepto técnico + acto administrativo). Disposición = venta, donación, destrucción o gestor, con soporte.</p></div>
+    <div class="resumen-item"><h4>Depreciación y conciliación</h4><p>Los bienes pierden valor con el tiempo. Inventario físico y contabilidad deben coincidir; las diferencias se explican con soporte.</p></div>
+    <div class="resumen-item"><h4>Responsabilidad fiscal</h4><p>Por daño al patrimonio, la determina la Contraloría (resarcir). Exige daño + conducta culposa/dolosa + nexo. Tu diligencia es tu escudo.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Traslado / reintegro</dt><dd>El bien pasa a otro responsable / el bien vuelve al almacén.</dd>
+      <dt>Paz y salvo de bienes</dt><dd>Constancia de que quien se retira entregó o aclaró todos los bienes a su cargo.</dd>
+      <dt>Baja de bienes</dt><dd>Retiro definitivo de un bien del inventario, mediante acto administrativo.</dd>
+      <dt>Disposición final</dt><dd>Destino físico de un bien dado de baja: venta, donación, destrucción o gestor de residuos.</dd>
+      <dt>Responsabilidad fiscal</dt><dd>Obligación de resarcir el daño al patrimonio público; la determina la Contraloría.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Manejo de Inventarios y Control de Bienes</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 15. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 15</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 15: Manejo de Inventarios y Control de Bienes II. ¡Vas por muy buen camino, sigue así!');});
+const flashcards=[
+  {f:'¿Qué respalda la salida de un bien devolutivo a un funcionario?',b:'El comprobante de salida y la firma del funcionario que lo recibe; con ello el bien queda a su cargo en su inventario individual. La firma es la aceptación de la responsabilidad.'},
+  {f:'¿Cuál es la diferencia entre traslado y reintegro?',b:'Traslado = el bien pasa a otro funcionario o dependencia (cambia de responsable, con acta y dos firmas). Reintegro = el bien vuelve al almacén (la custodia regresa al almacén).'},
+  {f:'¿Qué es el inventario individual (cuentadante)?',b:'El listado de los bienes devolutivos que una persona tiene a su cargo; es lo que se verifica al asignar bienes, al trasladar y al firmar el paz y salvo.'},
+  {f:'¿Qué es el paz y salvo de bienes?',b:'La constancia de que un funcionario que se retira o cambia de cargo entregó, trasladó o aclaró todos sus bienes. Nunca se firma con bienes faltantes.'},
+  {f:'¿Qué se hace ante la pérdida o hurto de un bien?',b:'Reportar de inmediato y por escrito, denunciar penalmente si hubo hurto, documentar las circunstancias y dejar que la entidad investigue. No se oculta ni se repone en secreto.'},
+  {f:'¿Toda pérdida de un bien genera responsabilidad?',b:'No. Si hubo caso fortuito/fuerza mayor y el responsable actuó con diligencia (cuidó, reportó, denunció), normalmente no responde. La responsabilidad aparece con la negligencia grave o el dolo.'},
+  {f:'¿Qué es dar de baja un bien?',b:'El retiro definitivo del bien del inventario y de la contabilidad, por causa justificada (obsolescencia, daño, pérdida). Requiere concepto técnico y acto administrativo que la autoriza.'},
+  {f:'¿Un bien obsoleto o dañado ya se puede botar?',b:'No. El deterioro solo justifica INICIAR la baja; el bien no sale del inventario hasta el acto administrativo. Antes de eso sigue registrado y con responsable.'},
+  {f:'¿Qué es la disposición final?',b:'La decisión sobre el destino físico de un bien dado de baja: venta, donación/transferencia, destrucción/chatarrización o entrega a un gestor de residuos, siempre con soporte.'},
+  {f:'¿Qué es la depreciación?',b:'La disminución del valor de un bien con el tiempo y el uso. El bien sigue existiendo y con responsable; el cálculo lo hace el área contable, no el Auxiliar.'},
+  {f:'¿Qué es la conciliación de inventarios?',b:'La verificación de que el inventario físico y los registros contables reflejan la misma realidad. Las diferencias se explican con los soportes de cada movimiento.'},
+  {f:'¿Qué órgano determina la responsabilidad fiscal y qué implica?',b:'La Contraloría, mediante el proceso de responsabilidad fiscal: la obligación de resarcir (pagar) el daño causado al patrimonio público. Exige daño + conducta culposa/dolosa + nexo.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Salida y asignación de bienes', ctx:'Eres Auxiliar Administrativo en una Procuraduría Regional y apoyas el control de bienes de tu dependencia. Llega un funcionario recién posesionado y tu jefe te dice: "asígnale el computador portátil que está guardado en el almacén y una silla ergonómica". El funcionario, con afán por empezar a trabajar, te dice que no hay necesidad de tanto trámite, que simplemente le entregues los equipos y listo, que él ya sabe que son de la entidad. Tú eres quien tiene a cargo el control de esos elementos devolutivos.', q:'¿Cómo debes proceder con la entrega de estos bienes devolutivos?', ops:['Entregarle el computador y la silla de una vez, sin firma, ya que él reconoce verbalmente que son de la entidad y tiene afán por trabajar.','Tramitar la salida de ambos bienes del inventario a su nombre: identificar sus placas, verificar que funcionen, generar el comprobante de salida/asignación y hacer que el funcionario firme, con lo cual quedan a su cargo en su inventario individual.','Anotar en un cuaderno de la oficina que le entregaste los equipos, sin generar comprobante ni pedirle firma, para no demorarlo.','Entregarle solo la silla (por ser de menor valor) sin trámite, y hacer comprobante únicamente para el computador portátil.'], correcta:1, expl:['El reconocimiento verbal no reemplaza el soporte: si el bien se pierde, no habrá cómo saber quién responde, y el problema podría recaer sobre quien lo entregó sin registro.','Correcto. La salida de un devolutivo se soporta con comprobante y la firma de quien recibe; así el bien queda a su cargo en el inventario individual. La firma es la aceptación de la responsabilidad, no un formalismo.','El cuaderno de la oficina no es el soporte oficial: la salida de un devolutivo requiere comprobante y firma, sin importar el afán.','Ambos bienes son devolutivos y requieren el mismo trámite; el valor no cambia la regla: los dos salen con comprobante y firma.'] },
+  { nivel:'b', tema:'Traslados y reintegros', ctx:'En tu dependencia hay una impresora que casi no se usa, y otra oficina de la misma Procuraduría la necesita con urgencia. El coordinador te dice: "llévala allá de una vez, que la necesitan hoy". Por otro lado, un compañero de tu misma oficina ya no usa un escáner que tiene asignado y quiere quitárselo de encima; te comenta que se lo va a "prestar de una vez" a la practicante que llegó, para no tener que devolverlo al almacén.', q:'¿Cuál es la actuación correcta frente a ambos movimientos?', ops:['Llevar la impresora a la otra oficina sin acta (total es urgente) y dejar que el compañero le preste el escáner a la practicante, ya que igual sigue en la misma dependencia.','Tramitar el traslado formal de la impresora (acta con la firma de quien entrega y quien recibe, para que salga de tu inventario y entre al de la otra oficina), y explicar que el escáner no se "presta" informalmente: se reintegra al almacén, que luego podrá asignárselo formalmente a la practicante.','Llevar la impresora con acta, pero permitir el préstamo informal del escáner porque no sale de la dependencia.','No mover la impresora bajo ninguna circunstancia y ordenar que el escáner se bote, ya que el compañero no lo usa.'], correcta:1, expl:['Mover sin acta y prestar informalmente son las causas número uno de faltantes: el inventario deja de reflejar la realidad y aparecen diferencias en el inventario físico.','Correcto. El traslado cambia el responsable y se soporta con acta y dos firmas; el escáner que sobra se reintegra al almacén (no se presta entre escritorios), y el almacén lo asigna formalmente a quien lo necesite.','El préstamo informal, aunque sea dentro de la dependencia, rompe el control: el escáner debe reintegrarse y asignarse formalmente, no pasarse de mano en mano.','La impresora sí puede trasladarse (con acta), y un escáner que sobra no se bota: se reintegra al almacén. Botar un bien útil sería improcedente.'] },
+  { nivel:'i', tema:'Paz y salvo de bienes', ctx:'Un funcionario de tu dependencia renunció y ya no volvió a la entidad. El lunes tu jefe te pide apoyar el paz y salvo de bienes para agilizar su liquidación. En el inventario individual del funcionario figuran un portátil, un monitor, una silla y un teléfono, pero al revisar físicamente su antiguo puesto solo encuentras el monitor y la silla; el portátil y el teléfono no aparecen. El jefe insiste: "firma el paz y salvo de una vez, que la liquidación no puede esperar y el señor ya se fue".', q:'¿Qué debes hacer?', ops:['Firmar el paz y salvo de inmediato, ya que la orden del jefe te cubre y la liquidación es urgente.','No firmar el paz y salvo con bienes faltantes: dejar constancia escrita de los dos bienes que no aparecen, indagar su paradero (soporte técnico, traslado no registrado, posible pérdida) e informar al jefe y al almacén; solo firmar cuando los cuatro bienes estén entregados, trasladados o aclarados.','Firmar el paz y salvo pero anotar aparte, en una libreta personal, que faltaban dos bienes, para tener un respaldo por si acaso.','Descontar del valor de la liquidación del funcionario el precio del portátil y el teléfono, y con eso firmar el paz y salvo.'], correcta:1, expl:['Firmar con faltantes es faltar a la verdad en un documento y puede comprometer tu responsabilidad; la orden del jefe no legitima firmar en falso.','Correcto. El paz y salvo no se firma con bienes faltantes: primero se aclara cada uno (traslado, reintegro o pérdida) y se deja constancia; si de verdad se perdieron, se activa el procedimiento de pérdida.','La libreta personal no es soporte oficial y no resuelve el problema: el paz y salvo seguiría firmado en falso. Hay que aclarar antes de firmar.','El Auxiliar no decide descuentos sobre la liquidación; eso corresponde a otro procedimiento. Lo que procede es aclarar los faltantes antes de firmar.'] },
+  { nivel:'i', tema:'Pérdidas y hurtos', ctx:'Una funcionaria a la que le habían asignado un portátil de la entidad te informa, muy angustiada, que se lo hurtaron cuando iba en un bus. Un compañero que escucha la conversación interviene y propone una "solución": que entre todos reúnan plata, compren un portátil igual, lo repongan en silencio y no le digan nada a nadie, "así no se mete en problemas y el inventario queda cuadrado". La funcionaria te mira esperando tu orientación sobre qué hacer.', q:'¿Cuál es la actuación correcta?', ops:['Aceptar la propuesta del compañero: reunir plata, reponer el portátil en silencio y no reportar nada, para proteger a la funcionaria de un problema.','Orientarla a reportar la pérdida de inmediato y por escrito al jefe y al almacén, poner la denuncia penal por el hurto (la copia es un soporte clave) y dejar que la entidad investigue si hubo o no responsabilidad; reponer en secreto falsearía el inventario y sería peor.','Decirle que espere unos días a ver si el portátil aparece o la policía lo recupera, y solo entonces decidir si reporta algo.','Recomendarle que asuma personalmente el pago del portátil de inmediato, sin reportar el hurto, para dejar el tema resuelto cuanto antes.'], correcta:1, expl:['Reponer en secreto oculta la pérdida y falsea el inventario: puede constituir una falta grave y es mucho peor que el hurto mismo.','Correcto. Ante una pérdida o hurto se reporta de inmediato y por escrito, se denuncia (la denuncia respalda que fue hurto y no descuido) y se deja investigar. Reportar a tiempo demuestra buena fe y suele jugar a favor del responsable.','Esperar "a ver si aparece" es un reporte tardío que agrava la situación de la responsable; la pérdida se reporta de inmediato, no después.','Asumir el pago sin reportar oculta el hurto; además, no toda pérdida genera responsabilidad, y eso solo se define tras reportar e investigar, no pagando de una vez en silencio.'] },
+  { nivel:'a', tema:'Baja de bienes y responsabilidad fiscal', ctx:'Durante una revisión encuentras en un depósito tres impresoras dañadas e inservibles que ocupan espacio. El coordinador te dice: "eso ya no sirve, sácalo a la basura hoy mismo para desocupar". Además, un compañero que ve las impresoras comenta que una de ellas "todavía prende a veces" y que se la va a llevar para la casa "porque total ya nadie las quiere". Debes actuar con criterio frente a ambas situaciones, sabiendo que un mal manejo puede derivar en responsabilidad fiscal ante la Contraloría.', q:'¿Cuál es la actuación correcta en conjunto?', ops:['Botar las tres impresoras a la basura de inmediato, como pide el coordinador, y dejar que el compañero se lleve la que "todavía prende", ya que igual iban a la basura.','No botarlas ni permitir que se las lleven: reportarlas como candidatas a baja por daño/obsolescencia (verificando placas y que sigan registradas), esperar el concepto técnico y el acto administrativo que autoriza la baja, y solo entonces gestionar su disposición final (por ejemplo, gestor de residuos electrónicos, con certificado).','Registrar las impresoras a tu nombre para poder botarlas legalmente, y dejar que el compañero se lleve una si firma un papel de recibido.','Botar las dos que no prenden (por estar totalmente dañadas) y dejar la que "todavía prende" en el depósito indefinidamente, sin ningún trámite.'], correcta:1, expl:['Botar sin baja hace desaparecer patrimonio sin soporte (posible responsabilidad fiscal), y llevarse una impresora es apropiación de un bien público, aunque esté dañado.','Correcto. El deterioro solo justifica INICIAR la baja: el bien no sale del inventario hasta el acto administrativo. Luego viene la disposición final por el canal formal (gestor de residuos electrónicos, con certificado). Nada se bota ni se lleva por cuenta propia.','No corresponde auto-asignarse los bienes para botarlos, ni resolver con "papelitos" informales; la baja y la disposición tienen su procedimiento reglado.','El estado (prenda o no) no autoriza botar ni dejar bienes sin trámite: todas requieren el procedimiento de baja antes de cualquier disposición.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

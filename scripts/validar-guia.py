@@ -1,71 +1,73 @@
 #!/usr/bin/env python3
-"""Valida una guía HTML de Ascenso Público (curso PGN Procurador Judicial II).
-Uso: python3 scripts/validar-guia.py guias/ARCHIVO.html [--min 3300]
-Chequea: balance de etiquetas de bloque, palabras en Desarrollo (data-sec="2"),
-fugas de 'Sustanciador'/'INDERVALLE', presencia de nav 10 secciones y script.
-El node --check del JS se hace aparte en bash.
+"""Validador de guías Ascenso Público (uso interno del curso Viviana/PGN 242).
+Uso: python3 scripts/validar-guia.py guias/ARCHIVO.html "Día N"
+Verifica: HTML balanceado, conteo palabras Desarrollo, 4 opciones/pregunta,
+día coherente, fugas de otro cargo/entidad. NO valida JS (usar node --check aparte).
+Sale con código 0 si todo OK, 1 si hay problemas.
 """
-import re, sys, html
+import re, html, sys
 
 def main():
-    path = sys.argv[1]
-    minw = 3300
-    if '--min' in sys.argv:
-        minw = int(sys.argv[sys.argv.index('--min')+1])
-    h = open(path, encoding='utf-8').read()
-    problems = []
-    warns = []
+    if len(sys.argv) < 2:
+        print("Uso: validar-guia.py <archivo.html> [Dia N]"); return 2
+    f = sys.argv[1]
+    dia = sys.argv[2] if len(sys.argv) > 2 else None
+    t = open(f, encoding='utf-8').read()
+    problemas = []
+    ok = []
 
-    # 1) Balance de etiquetas de bloque clave
-    for tag in ['section', 'div', 'details', 'table', 'script', 'header', 'nav', 'main', 'footer', 'ul', 'ol']:
-        opens = len(re.findall(r'<%s(?:\s|>)' % tag, h))
-        closes = len(re.findall(r'</%s>' % tag, h))
-        if opens != closes:
-            problems.append(f'DESBALANCE <{tag}>: {opens} abren, {closes} cierran')
+    # 1. Balance de etiquetas
+    for tag in ['section','main','div','table','details']:
+        o = len(re.findall(r'<'+tag+r'[ >]', t)); c = t.count('</'+tag+'>')
+        if o != c: problemas.append(f"MISMATCH <{tag}>: {o} abiertas / {c} cerradas")
+        else: ok.append(f"{tag} {o}/{c}")
 
-    # 2) Palabras en Desarrollo (top-level section data-sec="2")
-    idxs = [(m.group(1), m.start()) for m in re.finditer(r'<section class="section[^"]*" data-sec="(\d+)"', h)]
-    dev_words = 0
-    for i,(sec,pos) in enumerate(idxs):
-        end = idxs[i+1][1] if i+1 < len(idxs) else h.find('</main>')
-        if sec == '2':
-            seg = h[pos:end]
-            txt = re.sub(r'<[^>]+>', ' ', seg)
-            txt = html.unescape(txt)
-            txt = re.sub(r'\s+', ' ', txt)
-            dev_words = len(txt.split())
-    if dev_words < minw:
-        problems.append(f'Desarrollo con {dev_words} palabras (< {minw})')
-    else:
-        print(f'  ✓ Desarrollo: {dev_words} palabras (>= {minw})')
+    # 2. Palabras del Desarrollo (section data-sec=2)
+    m = re.search(r'<section class="section" data-sec="2">(.*?)</section>', t, re.S)
+    seg = m.group(1) if m else ''
+    des = len(html.unescape(re.sub(r'<[^>]+>',' ', seg)).split())
+    if des < 10000: problemas.append(f"Desarrollo con {des} palabras (<10.000)")
+    else: ok.append(f"Desarrollo {des} pal")
 
-    # 3) Fugas prohibidas
-    for bad in ['Sustanciador', 'sustanciador', 'INDERVALLE', 'Indervalle']:
-        n = h.count(bad)
-        if n:
-            problems.append(f'FUGA "{bad}": {n} ocurrencias')
+    # 3. Opciones por pregunta del simulacro (deben ser 4)
+    for i, ops in enumerate(re.findall(r'ops:\[(.*?)\], correcta', t, re.S)):
+        n = ops.count("','") + 1
+        if n != 4: problemas.append(f"Pregunta {i+1} tiene {n} opciones (deben ser 4)")
+    npreg = len(re.findall(r'ops:\[.*?\], correcta', t, re.S))
+    ok.append(f"preguntas simulacro: {npreg}")
 
-    # 4) Estructura: nav 10 secciones, 10 sections, script
-    navbtns = len(re.findall(r'nav button|<button[^>]*data-sec=', h))
-    secs = len(re.findall(r'<section class="section', h))
-    if secs != 10:
-        problems.append(f'Se esperaban 10 <section>, hay {secs}')
-    if '<script>' not in h:
-        problems.append('Falta <script>')
+    # 4. Día coherente
+    if dia:
+        kick = re.search(r'kicker">'+re.escape(dia)+r' ', t)
+        badge = re.search(r'badge">📅 '+re.escape(dia)+r' de 21', t)
+        fin = re.search(r'Finalizar '+re.escape(dia)+r'<', t)
+        if not kick: problemas.append(f"kicker no dice '{dia}'")
+        if not badge: problemas.append(f"badge no dice '{dia} de 21'")
+        if not fin: problemas.append(f"botón finalizar no dice '{dia}'")
+        if kick and badge and fin: ok.append(f"{dia} coherente")
+        # que no haya otro "Finalizar Día X" distinto
+        otros = set(re.findall(r'Finalizar (Día \d+)<', t))
+        if otros - {dia}: problemas.append(f"botón finalizar con día ajeno: {otros}")
 
-    # 5) Enlaces normativos target=_blank (informativo)
-    ext = len(re.findall(r'secretariasenado\.gov\.co', h))
-    n_acc = len(re.findall(r'details class="acc"', h))
-    n_tab = h.count('<table')
-    n_caso = len(re.findall(r'class="caso"', h))
-    print('  · enlaces secretariasenado: %d · acordeones: %d · tablas: %d · casos: %d' % (ext, n_acc, n_tab, n_caso))
+    # 5. Fugas de contenido (contexto real, no substrings)
+    fugas = []
+    for pat in [r'\bGestor I\b', r'\bSustanciador\b', r'\b3PU-\d', r'\b4SU-\d',
+                r'\bProcurador Judicial\b', r'\bURT\b', r'\bINDERVALLE\b',
+                r'\bpaciente', r'\bcl[ií]nic', r'\btributari', r'\bcontribuyente',
+                r'\bDIAN\b']:
+        for mm in re.finditer(pat, t):
+            frag = t[max(0,mm.start()-30):mm.start()+40]
+            fugas.append(frag.strip())
+    if fugas:
+        problemas.append("POSIBLES FUGAS: " + " || ".join(fugas[:6]))
 
-    if problems:
-        print('  ✗ PROBLEMAS:')
-        for p in problems:
-            print('    -', p)
-        sys.exit(1)
-    print('  ✅ VALIDACIÓN OK')
+    print("ARCHIVO:", f)
+    print("OK:", " | ".join(ok))
+    if problemas:
+        print("*** PROBLEMAS ***")
+        for p in problemas: print("  -", p)
+        return 1
+    print(">>> VALIDACIÓN OK <<<")
+    return 0
 
-if __name__ == '__main__':
-    main()
+sys.exit(main())
