@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-ALM-AUX-01 · Manejo de Inventarios y Control de Bienes I (Auxiliar Administrativo) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-ALM-AUX-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 14 · Funcional del cargo</div>
+  <h1>Manejo de Inventarios y Control de Bienes I</h1>
+  <p class="header-sub">El cuidado del patrimonio público: <strong>los bienes de la entidad</strong>. Qué son los bienes del Estado, tipos de bienes, el almacén, el ingreso de bienes, los comprobantes y el inventario físico, aplicados al rol real del <strong>Auxiliar Administrativo</strong> de la <strong>Procuraduría General de la Nación</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 14 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Tu jefe te encarga apoyar el manejo de los bienes de la dependencia. En un mismo día se te presentan varias situaciones: llega el <strong>proveedor con una caja de resmas de papel y unos computadores</strong> que la entidad compró, y hay que recibirlos; un compañero te pide "unas grapadoras del almacén" y tú no sabes si simplemente entregarlas; encuentras un <strong>computador viejo dañado</strong> arrumado en un rincón y alguien dice "eso ya sirve para nada, bótalo"; y el jefe te avisa que en dos semanas hay que hacer el <strong>inventario físico</strong> de la oficina. Te asaltan las dudas: ¿cómo recibo lo que llegó? ¿cómo se registra? ¿puedo entregar elementos así no más? ¿se puede botar el computador dañado? ¿qué es y cómo se hace un inventario físico?</p>
+    <p>Hoy vas a dominar el <strong>manejo de inventarios y el control de bienes</strong>, que es el cuidado del <mark>patrimonio público</mark>. Tu manual lo exige: <mark>"Manejo de inventarios"</mark> es un conocimiento específico del cargo, y tu función esencial n.º 6 es "verificar inventarios físicos y realizar trámites ante el almacén". Los bienes de la entidad —computadores, muebles, papelería, equipos— son del Estado, y quien los maneja responde por ellos. Un buen Auxiliar sabe recibir, registrar, entregar y verificar bienes con orden y control, porque un descuido en el manejo de bienes públicos puede acarrear responsabilidad fiscal y disciplinaria.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué son los <strong>bienes del Estado</strong> y por qué su cuidado es un deber (patrimonio público).</li>
+      <li>Los <strong>tipos de bienes</strong>: de consumo y devolutivos; muebles e inmuebles; y por qué importa distinguirlos.</li>
+      <li>El <strong>almacén</strong> y su papel en la administración de bienes.</li>
+      <li>El <strong>ingreso de bienes</strong>: recepción, verificación y registro de lo que entra.</li>
+      <li>Los <strong>comprobantes</strong> de almacén (entrada, salida) y su importancia como soporte.</li>
+      <li>El <strong>inventario físico</strong>: qué es, para qué sirve y cómo se hace.</li>
+      <li>Los conceptos de <strong>responsable del bien</strong>, placa de inventario y hoja de vida del bien.</li>
+      <li>La <strong>responsabilidad</strong> por los bienes: fiscal, disciplinaria y el control de la Contraloría.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos ocho módulos con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro situacional. Este es el primero de dos días sobre bienes: hoy los fundamentos (qué son, cómo entran, cómo se controlan) y mañana (Día 15) las salidas, bajas, traslados y la responsabilidad.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>"Manejo de inventarios" aparece <strong>textualmente</strong> como conocimiento específico en tu manual, y tu función esencial n.º 6 habla de "verificar inventarios físicos y realizar trámites ante el almacén". La prueba lo evalúa con <mark>preguntas de concepto</mark> ("¿qué es un bien devolutivo?", "¿qué comprobante soporta una salida de almacén?") y con <mark>casos prácticos</mark> ("llega un bien, ¿qué haces?"). Manejar bienes públicos con orden no es un tema menor: de él depende que el patrimonio del Estado esté cuidado y que nadie responda por faltantes que pudo evitar.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba evalúa el manejo de bienes</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📌</span><h5>Está en el manual</h5><p>"Manejo de inventarios" (conocimiento) + función esencial n.º 6.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🏛️</span><h5>Es patrimonio público</h5><p>Los bienes son del Estado; cuidarlos es un deber, no una opción.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Genera responsabilidad</h5><p>Un faltante o un mal manejo puede acarrear responsabilidad fiscal y disciplinaria.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🔍</span><h5>Lo audita el control</h5><p>La Contraloría vigila el buen uso y cuidado de los bienes públicos.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>El manejo de bienes tiene un principio que atraviesa todo: <strong>todo movimiento de un bien deja soporte</strong>. Un bien no entra, sale, se traslada o se da de baja "de palabra": cada movimiento se documenta con un comprobante y se registra. Así se sabe siempre qué hay, dónde está y quién responde por él. Esta idea —el soporte y la trazabilidad de los bienes— es lo que la prueba busca comprobar. Los conceptos clave los repasas con flashcards al final.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría General de la Nación tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000). Su concurso <strong>NO lo administra la CNSC</strong>: lo adelanta la propia Procuraduría con su operador. Las normas de archivo que verás aplican a TODA entidad pública del país (incluida la PGN), pero el examen y sus reglas son los del proceso de la Procuraduría.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Manejo de Inventarios y Control de Bienes para el Auxiliar de la PGN</h2>
+  <p>Ocho módulos para que cuides el patrimonio público con orden y control. Cada uno con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control. Hoy los fundamentos: qué son los bienes, cómo entran al almacén y cómo se controlan.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>Los bienes del Estado: patrimonio público que debes cuidar</h3></div>
+    <div class="b-texto">
+      <p>Empecemos por lo esencial. Los computadores, muebles, vehículos, papelería y equipos que usa la entidad <mark>no son de nadie en particular</mark>: son bienes públicos, es decir, patrimonio del Estado, comprados con recursos de todos. Por eso su manejo no es informal: quien los recibe, usa o custodia <strong>responde por ellos</strong>. Este día es el primero de dos sobre el tema, y sienta las bases: entender qué son los bienes, cómo entran y cómo se controlan. Mañana (Día 15) veremos qué pasa cuando salen, se trasladan o se dan de baja. Pero todo parte de esta idea inicial, que conviene grabar bien: <strong>el bien es del Estado; tú lo administras, no lo posees</strong>.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Los <strong>bienes del Estado</strong> (o bienes públicos) son los <mark>elementos y recursos materiales de propiedad de las entidades públicas</mark>, destinados al cumplimiento de sus funciones. Al ser patrimonio público, su adquisición, uso, custodia y disposición están reglados, y su cuidado es un deber de todo servidor.</p></div>
+      <h4>Por qué el manejo de bienes es tan reglado</h4>
+      <p>Porque detrás de cada bien hay <mark>recursos públicos</mark>, y el Estado debe rendir cuentas de cómo los usa y los cuida. Si un bien se pierde, se daña por descuido o se usa para fines personales, se afecta el patrimonio público, y eso puede generar responsabilidades. Por eso el manejo de bienes se conecta con el control fiscal (la Contraloría), con el disciplinario (la Procuraduría) y con normas de contabilidad pública.</p>
+      <p>Conviene notar que los bienes, además, tienen un <strong>valor contable</strong>: aparecen en los estados financieros de la entidad como parte de su patrimonio. Cuando ingresa un bien, aumenta el patrimonio registrado; cuando se da de baja, disminuye. Por eso los movimientos de bienes no son solo un asunto "de almacén": tienen efecto en la contabilidad pública, y de ahí que cada movimiento necesite soporte documental que respalde el registro contable. No necesitas ser experta en contabilidad, pero sí entender que cuando manejas un bien estás moviendo, en el fondo, una cifra del patrimonio del Estado, y que por eso todo debe quedar respaldado.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Referente</th><th>Qué aporta</th><th>Por qué te importa</th></tr>
+        <tr><td><strong>Régimen de bienes públicos</strong></td><td>Reglas de adquisición, administración y disposición de bienes estatales.</td><td>Marca cómo se ingresan, controlan y dan de baja los bienes.</td></tr>
+        <tr><td><strong>Contabilidad pública</strong></td><td>Los bienes se registran contablemente (patrimonio, depreciación).</td><td>Por eso todo movimiento debe tener soporte.</td></tr>
+        <tr><td><strong>Control fiscal (Contraloría)</strong></td><td>Vigila el buen uso y cuidado de los recursos y bienes públicos.</td><td>Un mal manejo puede derivar en responsabilidad fiscal.</td></tr>
+        <tr><td><strong>Control disciplinario</strong></td><td>El descuido o mal uso de bienes puede ser falta disciplinaria.</td><td>Cuidar los bienes es parte de tus deberes.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la idea de fondo es que los bienes públicos <mark>no son propiedad del funcionario que los usa</mark>. Un computador asignado a tu puesto es del Estado; tú lo custodias y respondes por él, pero no puedes disponer de él como si fuera tuyo (venderlo, regalarlo, llevártelo). Confundir "usar" con "ser dueño" es un error grave.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>💰 ¿Qué es la responsabilidad fiscal?</summary><div class="acc-body"><p>Es la que se deriva del <strong>daño al patrimonio público</strong>. Si por acción u omisión de un servidor se pierde o se daña un bien del Estado, la Contraloría puede adelantar un <mark>proceso de responsabilidad fiscal</mark> para que ese servidor responda económicamente por el daño. Por eso cuidar los bienes no es solo "buena práctica": te protege de responder con tu propio patrimonio.</p></div></details>
+        <details class="acc"><summary>🤝 El bien "a cargo": custodia y responsabilidad</summary><div class="acc-body"><p>Cuando un bien se asigna a un funcionario, este queda como <strong>responsable de su custodia</strong>: debe usarlo bien, cuidarlo y responder por él. Si se traslada o se retira, debe hacerse el movimiento formal para que la responsabilidad pase a quien corresponde. Un bien "a tu cargo" del que no dejas constancia al entregarlo sigue siendo tu responsabilidad.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El computador "no es tuyo"</div><div class="practica-body"><p>Llevas años usando el mismo computador en tu puesto y sientes que "es tuyo". Pero recuerdas que es un <strong>bien del Estado a tu cargo</strong>: lo custodias y respondes por él, pero no puedes llevártelo si te trasladan, ni disponer de él. Si cambias de puesto, se hace el <mark>traslado formal</mark> del bien para que la responsabilidad pase a quien corresponda. Entender esta diferencia entre usar y ser dueño es la base de todo el manejo de bienes.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La diferencia entre "usar" y "disponer"</div><div class="practica-body"><p>Tienes a cargo una impresora. <strong>Usarla</strong> para el trabajo de la dependencia está bien: para eso está. Pero <strong>disponer</strong> de ella —venderla, regalarla, prestarla para fines personales, llevártela— NO puedes, aunque la uses a diario y sientas que "es tuya". La línea es clara: usas el bien para las funciones de la entidad; nunca decides sobre su destino como si fueras el dueño. Confundir "lo uso" con "puedo hacer lo que quiera con él" es el origen de muchos problemas de responsabilidad con bienes públicos.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Cuidar es protegerte</div><div class="practica-body"><p>Un compañero deja su portátil institucional sin cuidado y se lo roban. Como no había constancia clara de a quién estaba asignado ni de las condiciones de custodia, el asunto se complica. Tú, en cambio, cuidas los bienes a tu cargo y dejas constancia de cada movimiento: si algo pasa, hay <strong>trazabilidad</strong> que muestra que actuaste con diligencia. Cuidar los bienes públicos no es solo un deber: es tu propia protección frente a la responsabilidad fiscal.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 1</div><div class="cp-q">Un computador está asignado a tu puesto de trabajo desde hace años. ¿Cómo debes entenderlo?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">Como tuyo, ya que lo has usado tanto tiempo puedes disponer de él libremente.</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">Como un bien del Estado a tu cargo: lo custodias y respondes por él, pero no puedes disponer de él como propio; los traslados se hacen formalmente.</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">Como un bien sin dueño, que cualquiera puede tomar o llevarse.</button>
+      </div><div class="cp-fb" id="cpfb1"><strong>Correcto: la segunda.</strong> Los bienes públicos son del Estado; el funcionario los custodia y responde por ellos, pero no es su dueño. Usar no es poseer: no se puede disponer del bien como propio.</div></div>
+      <h4>El manejo de bienes conecta con todo lo que has visto</h4>
+      <p>Un detalle interesante es que el manejo de bienes reúne varias competencias que ya trabajaste en días anteriores. Cuando recibes un bien, aplicas <strong>verificación</strong> (como al recibir documentos, Día 9); cuando lo registras, produces un <strong>comprobante</strong> (elaboración de documentos, Día 11); cuando haces un inventario, cuentas y organizas datos que podrías llevar en una <strong>hoja de cálculo</strong> (ofimática, Día 12); y cuando entregas o recibes, dejas <strong>soporte y trazabilidad</strong> (gestión documental, Día 10). El manejo de bienes no es un mundo aparte: es la aplicación de esos mismos principios de orden, soporte y control al patrimonio físico de la entidad. Verlo así te ayuda a entenderlo con naturalidad.</p>
+      <p>Vale la pena recalcar por qué el Estado es tan estricto con esto. Los bienes públicos se compran con <strong>recursos de todos los ciudadanos</strong> (los impuestos), y por eso su cuidado es una forma de respeto al dinero público. Un computador que se pierde por descuido, unos elementos que "se esfuman" sin registro, un vehículo usado para fines personales: todo eso es, en el fondo, un mal uso de recursos que pertenecen a la sociedad. Cuando un servidor cuida los bienes, no está siendo "exagerado": está honrando la confianza que la ciudadanía depositó en el Estado. Esta mirada le da sentido a la disciplina del control y explica por qué su incumplimiento se sanciona.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> los bienes de la entidad son patrimonio público del Estado, no del funcionario. Quien los usa o custodia responde por ellos. Su manejo es reglado y se conecta con el control fiscal (Contraloría) y disciplinario. Cuidarlos es un deber, honra el dinero público, y es tu propia protección.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>Tipos de bienes: de consumo y devolutivos</h3></div>
+    <div class="b-texto">
+      <p>No todos los bienes se manejan igual. La distinción más importante —y la que más pregunta la prueba— es entre <strong>bienes de consumo</strong> y <strong>bienes devolutivos</strong>. De ella depende cómo se registran, controlan y dan de baja. Es de esas distinciones que parecen sencillas pero que, si no se dominan, generan errores en cadena: clasificar mal un bien lleva a controlarlo mal, a no ponerle placa cuando debía, o a "descargarlo" cuando debía seguir en inventario. Por eso vale la pena entenderla a fondo, no solo memorizar los ejemplos.</p>
+      <div class="concepto"><div class="concepto-head">📦 Dos grandes tipos de bienes</div><div class="concepto-body">
+        <div><strong>Bienes de consumo.</strong> Los que <mark>se agotan o se extinguen con el primer uso</mark> o en poco tiempo: papelería, tóner, elementos de aseo, café. No se "devuelven": se consumen.</div>
+        <div><strong>Bienes devolutivos.</strong> Los que <mark>NO se consumen con el uso y tienen una vida útil prolongada</mark>: computadores, muebles, equipos, vehículos. Se pueden reintegrar (devolver) porque siguen existiendo.</div>
+      </div></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>Criterio</th><th>Bien de consumo</th><th>Bien devolutivo</th></tr>
+        <tr><td>Se agota con el uso</td><td>Sí (o en poco tiempo)</td><td>No; dura años</td></tr>
+        <tr><td>Ejemplos</td><td>Papel, esferos, tóner, aseo</td><td>Computador, escritorio, silla, vehículo</td></tr>
+        <tr><td>¿Se devuelve?</td><td>No (se consumió)</td><td>Sí (se reintegra al almacén)</td></tr>
+        <tr><td>Control</td><td>Por existencias/salida (se descarga al entregar)</td><td>Por inventario individual (con placa y responsable)</td></tr>
+        <tr><td>Placa de inventario</td><td>No</td><td>Sí (se identifica cada uno)</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la clave para distinguirlos: <mark>¿se acaba con el uso? → consumo. ¿dura y se puede devolver? → devolutivo</mark>. Un resma de papel es de consumo (se gasta); un computador es devolutivo (se usa años y se puede reintegrar). Los devolutivos llevan <strong>placa de inventario</strong> y responsable; los de consumo no.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🏷️ La placa de inventario</summary><div class="acc-body"><p>Es una <strong>etiqueta con un número único</strong> que se pega a cada bien devolutivo para identificarlo y hacerle seguimiento. Gracias a la placa, se sabe exactamente qué computador es cuál, a quién está asignado y dónde está. Los bienes de consumo no llevan placa porque se agotan; los devolutivos sí, porque hay que controlarlos individualmente.</p></div></details>
+        <details class="acc"><summary>🏠 Bienes muebles e inmuebles</summary><div class="acc-body"><p>Otra clasificación: <strong>muebles</strong> son los que se pueden trasladar (computadores, sillas, vehículos) e <strong>inmuebles</strong> los que no (edificios, terrenos, lotes). El Auxiliar Administrativo maneja sobre todo bienes muebles (los de la oficina). Los inmuebles tienen su propio régimen de administración, más complejo, que no es el foco del cargo.</p></div></details>
+        <details class="acc"><summary>⏳ Vida útil y depreciación (nociones)</summary><div class="acc-body"><p>Los bienes devolutivos tienen una <strong>vida útil</strong> (los años que se espera que sirvan) y contablemente se <strong>deprecian</strong> (pierden valor con el tiempo). No necesitas dominar la contabilidad, pero sí saber que por eso los devolutivos se registran y se controlan: su valor y su estado importan para el patrimonio de la entidad.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Clasificar lo que llegó</div><div class="practica-body"><p>Recuerdas el caso del inicio: llegaron resmas de papel y computadores. Los clasificas: el <strong>papel es de consumo</strong> (se gasta, no lleva placa, se controla por existencias); los <strong>computadores son devolutivos</strong> (duran años, llevan placa de inventario y se asignan a un responsable). Esta clasificación define cómo registrarás cada uno. Confundirlos —tratar un computador como si fuera "gastable"— sería un error de control.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El caso dudoso: ¿consumo o devolutivo?</div><div class="practica-body"><p>Llega una calculadora sencilla y también una calculadora científica costosa. ¿Consumo o devolutivo? La pregunta clave: ¿se agota con el uso o dura y se puede reintegrar? Ambas <strong>duran</strong>, así que en rigor son devolutivas; pero muchas entidades manejan como "de consumo" (o de menor cuantía) los elementos de bajo valor y vida corta, y como devolutivos con placa los de valor significativo y larga vida. Ante la duda, se consulta el criterio de la entidad. Lo importante es no tratar automáticamente como "gastable" algo valioso y duradero que debería controlarse individualmente.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El bien devolutivo que se asigna</div><div class="practica-body"><p>Un computador nuevo se le asigna a un funcionario. Como es <strong>devolutivo</strong>, se le pone su <mark>placa de inventario</mark>, se registra a quién queda asignado (el responsable) y se deja constancia. Así, si mañana ese funcionario se traslada, se sabe qué bien tiene a cargo y se hace el reintegro o traslado formal. La placa y el registro son lo que permite controlar cada devolutivo a lo largo de su vida útil.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 2</div><div class="cp-q">Llega al almacén un lote de tóner para impresora y también tres sillas de oficina. ¿Cómo se clasifican?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="1">El tóner es bien de consumo (se agota con el uso, sin placa); las sillas son bienes devolutivos (duran, se pueden reintegrar, con placa).</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Ambos son bienes de consumo, porque son elementos de oficina.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Ambos son devolutivos, porque todo lo que compra la entidad se puede devolver.</button>
+      </div><div class="cp-fb" id="cpfb2"><strong>Correcto: la primera.</strong> El tóner se consume con el uso (bien de consumo, sin placa); las sillas duran años y se pueden reintegrar (bien devolutivo, con placa y responsable). La regla: ¿se agota? consumo; ¿dura y se devuelve? devolutivo.</div></div>
+      <h4>Por qué la clasificación no es un tecnicismo, sino la base del control</h4>
+      <p>Podría parecer que distinguir "consumo" de "devolutivo" es solo una etiqueta, pero de esa distinción depende <strong>toda la forma de controlar cada bien</strong>. Un bien de consumo se controla por <mark>cantidad/existencias</mark>: interesa cuántas resmas de papel quedan, no "cuál" resma específica es. Un bien devolutivo se controla <mark>individualmente</mark>: interesa ese computador en particular, identificado con su placa, asignado a una persona concreta, con su historia. Por eso a los devolutivos se les pone placa y se les asigna responsable, y a los de consumo no. Confundirlos lleva a errores prácticos: intentar "controlar por unidad" cada esfero sería absurdo, y "controlar solo por cantidad" los computadores dejaría sin rastro individual bienes valiosos.</p>
+      <p>Esta lógica también explica el destino de cada tipo. Los bienes de consumo, una vez entregados, se <strong>descargan del inventario</strong> porque se van a consumir (no volverán). Los devolutivos, en cambio, permanecen en el inventario mientras existan, cambiando de responsable o de ubicación mediante los movimientos formales, hasta que se den de baja. Así, la pregunta "¿este bien se agota o permanece?" no es teórica: define si se controla por existencias o por unidad, si lleva placa o no, y si algún día se reintegra o simplemente se consume. Dominar esta distinción es dominar la puerta de entrada a todo el manejo de bienes.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> los bienes se clasifican en de consumo (se agotan con el uso; papel, tóner; sin placa; control por existencias) y devolutivos (duran, se reintegran; computadores, muebles; con placa y responsable; control individual). También en muebles e inmuebles. La clasificación define toda la forma de controlar cada bien.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>El almacén: el corazón de la administración de bienes</h3></div>
+    <div class="b-texto">
+      <p>El <strong>almacén</strong> es la dependencia (o el área) encargada de <mark>recibir, custodiar, controlar y entregar los bienes</mark> de la entidad. Como Auxiliar, harás "trámites ante el almacén" (tu función esencial n.º 6): pedir elementos, recibir, verificar existencias, reintegrar. Conviene entender su papel. Aunque no seas tú quien dirija el almacén, tu dependencia es uno de sus "clientes" internos y tú eres el enlace: por tus manos pasan las solicitudes, las entregas y las verificaciones. Cuanto mejor entiendas cómo funciona el almacén, mejor podrás tramitar ante él sin errores ni demoras. En algunas sedes pequeñas, además, el propio Auxiliar puede terminar haciendo varias funciones de almacén de su dependencia, así que dominar su lógica no es solo "saber pedir": puede ser parte directa de tu trabajo diario.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>almacén</strong> es el <mark>área responsable de la administración física de los bienes</mark>: los recibe cuando se adquieren, los custodia, controla sus existencias, los entrega a las dependencias que los necesitan y registra cada movimiento. Es el punto central por donde pasan los bienes de la entidad.</p></div>
+      <p>Una forma útil de entender el almacén es verlo como el "banco" de los bienes de la entidad: así como un banco sabe en todo momento cuánto dinero tiene y registra cada movimiento de las cuentas, el almacén sabe qué bienes hay, dónde están y quién responde por ellos, y registra cada entrada y salida. Nadie aceptaría que un banco entregara dinero "de palabra", sin registrar; del mismo modo, el almacén no mueve bienes sin soporte. Esta analogía te ayuda a recordar por qué el control es tan estricto: se trata de administrar un patrimonio que no es propio, con la misma seriedad con que se administra el dinero ajeno.</p>
+      <h4>Las funciones del almacén</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Función</th><th>En qué consiste</th></tr>
+        <tr><td><strong>Recepción</strong></td><td>Recibir los bienes que se adquieren, verificando que coincidan con lo comprado.</td></tr>
+        <tr><td><strong>Custodia</strong></td><td>Guardar y conservar los bienes en buenas condiciones y con seguridad.</td></tr>
+        <tr><td><strong>Control de existencias</strong></td><td>Saber cuánto hay de cada elemento (stock) y evitar faltantes o excesos.</td></tr>
+        <tr><td><strong>Entrega/salida</strong></td><td>Entregar los bienes a las dependencias que los solicitan, con soporte.</td></tr>
+        <tr><td><strong>Registro</strong></td><td>Documentar cada entrada, salida y movimiento (comprobantes).</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el principio del almacén es la <mark>trazabilidad de existencias</mark>: en todo momento debe saberse cuánto hay de cada bien y dónde está. Por eso nada entra ni sale del almacén sin quedar registrado. Entregar elementos "de palabra", sin descargarlos del sistema, rompe el control y genera descuadres.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>📊 El control de existencias (stock)</summary><div class="acc-body"><p>El almacén lleva la cuenta de cuánto hay de cada elemento. Cuando entra un lote, sube la existencia; cuando se entrega, baja. Ese control permite saber cuándo hay que <strong>reabastecer</strong> (pedir más antes de que se agote) y detectar faltantes. Un buen control de existencias evita quedarse sin papel en un momento crítico y también evita comprar de más.</p></div></details>
+        <details class="acc"><summary>🔄 El Auxiliar y el almacén</summary><div class="acc-body"><p>Aunque exista un área de almacén, el Auxiliar de una dependencia interactúa constantemente con él: <strong>solicita elementos</strong> (con orden de pedido, Día 11), <strong>recibe</strong> lo que le entregan, <strong>verifica</strong> los inventarios de su dependencia y <strong>reintegra</strong> lo que ya no se usa. Tu función esencial n.º 6 es precisamente ese enlace con el almacén.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Pedir al almacén con soporte</div><div class="practica-body"><p>Tu oficina necesita papel y carpetas. En vez de "ir a pedir de palabra", elaboras la <strong>orden de pedido</strong> (Día 11) con descripción y cantidades precisas, y la tramitas ante el almacén. El almacén verifica existencias, entrega lo disponible y <mark>descarga la salida</mark> del sistema, dejando el comprobante. Así el movimiento queda registrado: se sabe qué salió, para quién y cuándo. Pedir con soporte es lo que mantiene el control.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El descuadre que aparece por entregar sin registro</div><div class="practica-body"><p>Un día, el sistema del almacén dice que hay 50 resmas de papel, pero al contar solo hay 30. ¿Qué pasó? Alguien entregó 20 "de palabra", sin descargar la salida. Ahora hay un <mark>descuadre de 20 resmas</mark> que nadie puede explicar, y en una auditoría eso es un hallazgo. Este es el problema que causa entregar sin comprobante: el registro y la realidad dejan de coincidir. Por eso, por más pequeña que sea la entrega, siempre se documenta: es la única forma de que el inventario refleje la verdad.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Avisar antes de que se agote</div><div class="practica-body"><p>Notas que en tu dependencia quedan pocas resmas de papel. En vez de esperar a quedarte sin nada, avisas al almacén con tiempo para <strong>reabastecer</strong>. Un buen control de existencias es preventivo: anticipar la necesidad evita la parálisis de "no hay con qué imprimir". Estar atento al stock de tu dependencia es parte de tu apoyo al manejo de bienes.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 3</div><div class="cp-q">¿Cuál es el principio que rige el manejo del almacén?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="1">La trazabilidad de existencias: en todo momento debe saberse cuánto hay de cada bien y dónde está; nada entra ni sale sin registro.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">La rapidez: entregar los elementos lo más rápido posible, aunque sea sin registro, para no demorar a nadie.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">La confianza: entregar de palabra a los compañeros conocidos, sin necesidad de comprobantes.</button>
+      </div><div class="cp-fb" id="cpfb3"><strong>Correcto: la primera.</strong> El almacén se rige por la trazabilidad de existencias: saber siempre cuánto hay y dónde. Por eso todo movimiento se registra. Entregar sin soporte, por rapidez o confianza, rompe el control.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el almacén recibe, custodia, controla existencias, entrega y registra los bienes. Su principio es la trazabilidad: siempre se sabe cuánto hay y dónde. El Auxiliar interactúa con el almacén (pide, recibe, verifica, reintegra) siempre con soporte, nunca "de palabra".</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>El ingreso de bienes: recibir, verificar y registrar</h3></div>
+    <div class="b-texto">
+      <p>Cuando la entidad compra algo, ese bien tiene que <strong>ingresar</strong> formalmente. No basta con que llegue físicamente: hay que recibirlo bien, verificar que sea lo correcto y registrarlo. Este es un momento crítico, porque un error al ingresar arrastra problemas después. Piensa en el ingreso como la "puerta de entrada" al patrimonio de la entidad: todo lo que pasa por esa puerta queda bajo control y responsabilidad; todo lo que entra mal (sin verificar, sin registrar) queda como un problema latente. Por eso los buenos manejadores de bienes cuidan especialmente este momento.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>ingreso de bienes</strong> es el <mark>proceso por el cual un bien adquirido entra formalmente al patrimonio y al control de la entidad</mark>: se recibe, se verifica contra la compra, se registra y se genera el comprobante de entrada. A partir de ese momento, el bien está bajo el control del almacén.</p></div>
+      <h4>El paso a paso del ingreso</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Recepción</h4><p>Se recibe físicamente el bien del proveedor.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Verificación</h4><p>Se coteja contra la orden de compra/factura (cantidad, calidad, especificaciones).</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Registro</h4><p>Se ingresa al sistema; a los devolutivos se les asigna placa.</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Comprobante</h4><p>Se genera el comprobante de entrada como soporte.</p></div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el paso más importante y más evaluado es la <mark>verificación</mark>: no se recibe "a ojo cerrado". Se coteja lo que llegó contra lo que se compró (la orden/factura): que la cantidad, la calidad y las especificaciones coincidan. Firmar el recibido de algo que no se verificó, o que llegó incompleto o defectuoso, es un error que compromete a quien recibe.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔍 Qué se verifica al recibir</summary><div class="acc-body"><p>Se comprueba: la <strong>cantidad</strong> (que lleguen todas las unidades), la <strong>calidad y el estado</strong> (que no vengan dañados o defectuosos), las <strong>especificaciones</strong> (que sean exactamente lo comprado: la marca, el modelo, las características pactadas), y que coincida con la <strong>factura y la orden de compra</strong>. Si algo no coincide, se deja constancia y no se recibe a conformidad hasta resolverlo.</p></div></details>
+        <details class="acc"><summary>📄 El comprobante de entrada</summary><div class="acc-body"><p>Es el documento que <strong>soporta el ingreso</strong> del bien: registra qué entró, cuándo, en qué cantidad, de qué proveedor y con qué valor. Es la prueba de que el bien ingresó al patrimonio de la entidad y el punto de partida de su control. Sin comprobante de entrada, el bien "existe físicamente" pero no está formalmente controlado.</p></div></details>
+        <details class="acc"><summary>🏷️ La placa y la hoja de vida del bien</summary><div class="acc-body"><p>A cada bien devolutivo que ingresa se le asigna una <strong>placa de inventario</strong> (número único) y puede abrírsele una <strong>hoja de vida</strong> donde se registran sus datos, su asignación y sus mantenimientos. Así el bien queda plenamente identificado y con seguimiento desde su ingreso hasta su baja.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Recibir los computadores del caso inicial</div><div class="practica-body"><p>Llega el proveedor con los computadores que compró la entidad. No los recibes "a ojo cerrado": <strong>verificas</strong> que sea la cantidad correcta, que sean el modelo y las características que se compraron, y que no vengan dañados, cotejando contra la <mark>orden de compra y la factura</mark>. Solo cuando todo coincide, das el recibido a conformidad, se registra el ingreso, se les pone placa (son devolutivos) y se genera el comprobante de entrada. Si faltara uno o viniera dañado, lo dejas por escrito y no recibes a conformidad hasta resolverlo.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Cuando algo no coincide con la compra</div><div class="practica-body"><p>Al verificar unos equipos que llegaron, notas que la orden de compra decía 10 unidades pero solo llegaron 9, y una viene con la caja golpeada. No firmas el recibido "a conformidad" como si todo estuviera bien. Recibes <strong>con observaciones</strong> (o no recibes hasta aclarar), dejando por <mark>escrito</mark> que falta una unidad y que otra llegó con posible daño. Así el reclamo al proveedor procede y no quedas tú respondiendo por un faltante que llegó desde el origen. Documentar la inconsistencia en el momento es lo que protege a la entidad y a ti.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El papel que llega para consumo</div><div class="practica-body"><p>Llegan las resmas de papel. Como es bien de <strong>consumo</strong>, verificas cantidad y estado, registras la entrada al almacén (sube la existencia) y generas el comprobante, pero <mark>no le pones placa</mark> (los de consumo no llevan). Queda listo para entregarse a las dependencias conforme lo soliciten. Cada tipo de bien tiene su forma de ingreso, pero ninguno entra sin verificación ni sin comprobante.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 4</div><div class="cp-q">Llega un proveedor con unos equipos que compró la entidad y te pide firmar el recibido de inmediato porque "va de afán". ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="0">Firmar el recibido enseguida para no demorar al proveedor; ya después revisas si todo está bien.</button>
+        <button class="cp-opt" data-cp="4" data-ans="1">Verificar primero que los equipos coincidan en cantidad, calidad y especificaciones con la orden de compra y la factura; solo si todo coincide, dar el recibido a conformidad y registrar el ingreso.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Recibirlos sin verificar y sin firmar nada, para no comprometerte con ningún documento.</button>
+      </div><div class="cp-fb" id="cpfb4"><strong>Correcto: la segunda.</strong> Nunca se recibe "a ojo cerrado". Se verifica contra la orden de compra y la factura (cantidad, calidad, especificaciones), y solo si coincide se da el recibido a conformidad. El afán del proveedor no justifica saltarse la verificación.</div></div>
+      <h4>Recibir bien evita problemas que después no tienen solución</h4>
+      <p>La verificación al recibir es tan importante porque es el <strong>único momento</strong> en que se puede reclamar sin complicaciones. Si firmas el recibido "a conformidad" y luego descubres que faltaba una unidad o que un equipo venía dañado, ya es tarde: el proveedor dirá "usted firmó que estaba todo bien", y demostrar lo contrario después es difícil. En cambio, si detectas el problema en el momento de recibir y lo dejas por escrito (no recibes a conformidad, o recibes con observaciones), el reclamo procede sin discusión. Por eso los buenos manejadores de bienes son <mark>meticulosos justo al recibir</mark>: saben que ese es el momento de la verdad, y que un descuido ahí se paga después.</p>
+      <p>Hay un matiz importante sobre quién asume qué. Cuando el bien ingresa correctamente, la responsabilidad de custodia pasa al almacén y luego, con la salida, a quien lo recibe. Pero si tú recibiste mal (firmaste algo incompleto o defectuoso sin observar), podrías quedar <strong>respondiendo por un faltante que no era tuyo</strong>. La verificación cuidadosa, entonces, no es solo por el bien de la entidad: es también tu protección personal, porque delimita con claridad qué recibiste realmente y en qué estado. Recibir con diligencia es una forma de cuidar el patrimonio y de cuidarte a ti misma de responsabilidades ajenas.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el ingreso de bienes es recibir + verificar (contra orden y factura) + registrar + comprobante de entrada. La verificación es el paso crítico y el único momento para reclamar sin problemas: no se recibe a ojo cerrado. Los devolutivos reciben placa; ninguno ingresa sin comprobante.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>Los comprobantes de almacén: todo movimiento deja soporte</h3></div>
+    <div class="b-texto">
+      <p>Este es el principio que atraviesa todo el manejo de bienes: <mark>todo movimiento deja soporte documental</mark>. Los <strong>comprobantes de almacén</strong> son esos soportes. Sin ellos, no hay control ni trazabilidad, y aparecen los faltantes que nadie sabe explicar. Si el módulo anterior era sobre la puerta de entrada, este es sobre <strong>todas las puertas</strong>: cada vez que un bien se mueve —entra, sale, cambia de manos, se devuelve, se da de baja— ese movimiento debe quedar registrado con su comprobante. Es la regla de oro que hace posible que el inventario cuadre y que siempre se sepa quién responde por cada bien.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Un <strong>comprobante de almacén</strong> es el <mark>documento que registra y respalda un movimiento de un bien</mark> (su entrada, su salida, su traslado, su baja). Es la "prueba" de qué pasó con cada bien, y la base del control de existencias y del inventario.</p></div>
+      <h4>Los principales comprobantes</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Comprobante</th><th>Qué respalda</th><th>Cuándo se usa</th></tr>
+        <tr><td><strong>Comprobante de entrada</strong></td><td>El ingreso de un bien al almacén.</td><td>Cuando se adquiere/recibe un bien.</td></tr>
+        <tr><td><strong>Comprobante de salida</strong></td><td>La entrega de un bien a una dependencia o funcionario.</td><td>Cuando el almacén entrega un elemento.</td></tr>
+        <tr><td><strong>Reintegro</strong></td><td>La devolución de un bien devolutivo al almacén.</td><td>Cuando ya no se usa o cambia el responsable.</td></tr>
+        <tr><td><strong>Traslado</strong></td><td>El cambio de responsable/ubicación de un bien.</td><td>Cuando un bien pasa de una persona/área a otra.</td></tr>
+        <tr><td><strong>Baja</strong></td><td>El retiro definitivo de un bien del inventario.</td><td>Cuando el bien se da de baja (Día 15).</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la regla de oro: <mark>ningún bien se mueve sin su comprobante</mark>. Entregar un elemento sin comprobante de salida, o recibir uno sin comprobante de entrada, rompe el control. El comprobante dice qué, cuánto, cuándo, a quién y con qué autorización: es lo que permite que el inventario cuadre y que se sepa quién responde por cada bien.</p></div>
+      <p>Fíjate en que cada comprobante responde a una pregunta distinta sobre el bien. El de <strong>entrada</strong> responde "¿cómo llegó al patrimonio?"; el de <strong>salida</strong>, "¿a quién se entregó y quién responde ahora?"; el de <strong>traslado</strong>, "¿de quién a quién pasó?"; el de <strong>reintegro</strong>, "¿quién lo devolvió y se liberó de la responsabilidad?"; y el de <strong>baja</strong>, "¿por qué salió definitivamente del inventario?". Juntos, forman la biografía completa de cada bien, desde que ingresa hasta que se da de baja. Cuando esa biografía está completa y sin huecos, el bien es plenamente rastreable y su manejo es impecable; cuando hay huecos (movimientos sin comprobante), aparecen las dudas y los faltantes inexplicables.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>📤 El comprobante de salida y la responsabilidad</summary><div class="acc-body"><p>Cuando el almacén entrega un bien devolutivo, el comprobante de salida registra <strong>a quién se lo entrega</strong>. A partir de ahí, esa persona es la responsable de su custodia. Por eso el comprobante de salida no es un mero papel: es lo que <mark>traslada la responsabilidad</mark> del almacén al funcionario que recibe. Quien recibe firma, y con eso asume el cuidado del bien.</p></div></details>
+        <details class="acc"><summary>🔁 Reintegro: cuando el bien vuelve</summary><div class="acc-body"><p>Cuando un funcionario deja de usar un bien devolutivo (se traslada, ya no lo necesita, se dañó), lo <strong>reintegra</strong> al almacén con su comprobante. El reintegro es importante porque <mark>libera al funcionario de la responsabilidad</mark> sobre ese bien: mientras no lo reintegre formalmente, sigue respondiendo por él. "Dejarlo tirado" en un rincón no es reintegrarlo.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Entregar con comprobante</div><div class="practica-body"><p>Un compañero te pide "unas grapadoras del almacén" (recuerdas el caso inicial). No se las entregas "así no más": se tramita la <strong>salida</strong> con su comprobante, que registra qué se entregó, cuánto y a quién. Si fueran bienes devolutivos, quien recibe firma y asume la responsabilidad. Entregar sin comprobante generaría un descuadre: el sistema mostraría existencias que ya no están, sin saber a dónde fueron.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El traslado entre compañeros</div><div class="practica-body"><p>Un compañero te dice: "pásame ese monitor que tú no lo estás usando, yo lo necesito". Aunque sea entre compañeros de la misma oficina, un bien devolutivo no cambia de responsable "de palabra": se hace el <strong>traslado formal</strong> con su comprobante, para que el registro muestre que ahora el monitor está a cargo de él. Si no lo haces, ante un inventario el monitor seguirá figurando a tu nombre aunque lo tenga otro, y tú <mark>seguirás respondiendo por él</mark>. El comprobante de traslado protege a ambos y mantiene el registro fiel a la realidad.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Reintegrar para liberarte de la responsabilidad</div><div class="practica-body"><p>Un funcionario que se traslada tiene un computador a cargo. Antes de irse, lo <strong>reintegra al almacén</strong> con su comprobante de reintegro. Con eso, deja de ser responsable de ese bien. Si simplemente lo dejara en su antiguo puesto sin reintegrarlo, <mark>seguiría respondiendo por él</mark> aunque ya no lo tenga. El comprobante de reintegro es lo que cierra formalmente su responsabilidad.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 5</div><div class="cp-q">Un compañero te pide entregar unos elementos devolutivos del almacén "rápido y sin tanto papeleo". ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="5" data-ans="0">Se los entrego sin comprobante para agilizar, ya que confío en el compañero.</button>
+        <button class="cp-opt" data-cp="5" data-ans="1">Tramito la salida con su comprobante, que registra qué se entrega y a quién; quien recibe firma y asume la responsabilidad del bien.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">Se los entrego y anoto en un cuaderno personal, sin generar el comprobante oficial.</button>
+      </div><div class="cp-fb" id="cpfb5"><strong>Correcto: la segunda.</strong> Ningún bien se mueve sin comprobante. La salida se documenta oficialmente y quien recibe firma, asumiendo la responsabilidad. Entregar "de confianza" o anotar en un cuaderno personal rompe el control y genera descuadres.</div></div>
+      <h4>Por qué los comprobantes evitan los "misterios" del almacén</h4>
+      <p>Todo el mundo ha oído la frase "ese elemento se perdió y nadie sabe cómo". Casi siempre, detrás de ese misterio hay una falla de comprobantes: bienes que salieron sin registro, que se prestaron "de confianza", que cambiaron de manos sin dejar rastro. Cuando cada movimiento tiene su comprobante, esos misterios <mark>no ocurren</mark>: si algo no está, se puede reconstruir su historia (entró tal día, salió a tal persona, se reintegró o no) y determinar dónde se rompió la cadena. Los comprobantes son, en el fondo, la <strong>memoria de los bienes</strong>: sin ellos, el almacén funciona a ciegas; con ellos, todo movimiento es rastreable.</p>
+      <p>Conviene entender que el comprobante protege a <strong>todas las partes</strong>. Protege a la entidad (que sabe dónde está su patrimonio), protege a quien entrega (que demuestra que ya no tiene el bien) y protege a quien recibe (que tiene claro qué asumió y en qué estado). Por eso, cuando alguien propone "hagámoslo sin tanto papeleo para agilizar", en realidad está proponiendo dejar a todos desprotegidos. El comprobante no es un obstáculo a la agilidad: es lo que permite que, cuando haya que responder por un bien, cada quien pueda demostrar lo que hizo. Un almacén ágil y bien documentado no son opuestos: la documentación es lo que lo hace confiable.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> todo movimiento de un bien deja soporte: comprobantes de entrada, salida, reintegro, traslado y baja. El comprobante de salida traslada la responsabilidad a quien recibe; el reintegro la libera. Los comprobantes son la memoria de los bienes y protegen a todas las partes. Ningún bien se mueve "de palabra".</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">6</div><h3>El inventario físico: verificar que lo que hay coincide con lo registrado</h3></div>
+    <div class="b-texto">
+      <p>Llegamos a tu función esencial n.º 6: <strong>verificar inventarios físicos</strong>. El inventario físico es el "momento de la verdad" del manejo de bienes: cuando se cuenta lo que realmente hay y se compara con lo que dicen los registros. Es, quizás, la tarea de bienes que con más probabilidad te tocará realizar directamente como Auxiliar, porque tu manual la menciona textualmente. Y es también una de las más importantes, porque de ella depende que la entidad sepa con certeza qué posee: sin inventarios físicos periódicos, los registros se vuelven "papel" que no refleja la realidad, y los faltantes se acumulan en silencio hasta que estallan en una auditoría.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>inventario físico</strong> es la <mark>verificación real y presencial de los bienes existentes</mark>, contándolos e identificándolos uno por uno, para compararlos con lo que figura en los registros. Sirve para confirmar que lo registrado coincide con lo real y detectar faltantes, sobrantes o bienes en mal estado.</p></div>
+      <p>La palabra clave de la definición es <strong>"real y presencial"</strong>. El inventario físico no se hace desde el escritorio revisando el sistema: se hace <mark>recorriendo la dependencia y viendo los bienes con los propios ojos</mark>. Esta es la gran diferencia con el "inventario en libros" (lo que dice el registro): el físico va a confrontar ese registro con la realidad. Y precisamente porque los dos pueden no coincidir es que el inventario físico existe. Si siempre coincidieran, no haría falta contarlos; se hace justamente para descubrir las diferencias y corregirlas. Por eso hacerlo "confiando en el sistema" sin verificar de verdad es no hacerlo: se pierde todo su sentido.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación en el inventario</th><th>Qué es</th><th>Qué se hace</th></tr>
+        <tr><td>Coincide registro y realidad</td><td>El bien está y figura correctamente.</td><td>Se confirma; sin novedad.</td></tr>
+        <tr><td><strong>Faltante</strong></td><td>Figura en el registro pero no aparece.</td><td>Se deja en acta y se investiga la causa.</td></tr>
+        <tr><td><strong>Sobrante</strong></td><td>Existe físicamente pero no figura.</td><td>Se deja en acta y se regulariza el registro.</td></tr>
+        <tr><td>Bien en mal estado</td><td>Existe pero está dañado/deteriorado.</td><td>Se registra su estado; se evalúa reparación o baja.</td></tr>
+        <tr><td>Bien sin placa</td><td>Devolutivo sin identificación.</td><td>Se le asigna placa y se regulariza.</td></tr>
+      </table></div>
+      <h4>El paso a paso de un inventario físico</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Preparar</h4><p>Obtener el listado de bienes registrados de la dependencia.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Verificar</h4><p>Recorrer y confirmar cada bien por su placa, uno por uno.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Cotejar</h4><p>Comparar lo hallado con el listado (faltantes/sobrantes).</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Registrar</h4><p>Dejar acta con hallazgos y firmar.</p></div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el inventario físico se hace <mark>contando lo real, no "confiando en el registro"</mark>. El objetivo es justamente detectar si el registro y la realidad coinciden. Si al contar encuentras un faltante (un bien registrado que no aparece) o un sobrante (un bien que existe pero no está registrado), <strong>se deja constancia</strong> y se investiga; nunca se "ajusta" el conteo para que cuadre con el papel.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>❓ ¿Qué es un faltante y qué es un sobrante?</summary><div class="acc-body"><p>Un <strong>faltante</strong> es un bien que está en el registro pero no aparece físicamente (se perdió, se prestó sin registro, se dañó y botó sin baja). Un <strong>sobrante</strong> es un bien que existe físicamente pero no está en el registro (ingresó sin comprobante, o hay error). Ambos son alertas: se dejan por escrito y se investiga su causa. Un inventario que "cuadra perfecto" sin haber revisado bien puede estar ocultando problemas.</p></div></details>
+        <details class="acc"><summary>📅 ¿Cada cuánto se hace?</summary><div class="acc-body"><p>Las entidades hacen inventarios físicos <strong>periódicamente</strong> (por ejemplo, una vez al año) y también cuando hay cambios de responsable (cuando un funcionario que tenía bienes a cargo se va, se verifica que entregue todo). El inventario periódico es una buena práctica de control y muchas veces una obligación de la gestión de bienes.</p></div></details>
+        <details class="acc"><summary>📋 El acta de inventario</summary><div class="acc-body"><p>El resultado del inventario físico se consigna en un <strong>acta</strong> (recuerda el Día 11): qué se verificó, qué se encontró, los faltantes o sobrantes hallados y las firmas de quienes participaron. Esa acta es el soporte del inventario y el punto de partida para corregir las diferencias detectadas.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El inventario físico del caso inicial</div><div class="practica-body"><p>Llega la fecha del inventario físico de tu oficina. Consigues el <strong>listado de bienes registrados</strong> y recorres la dependencia verificando cada bien por su <mark>placa</mark>, uno por uno. Cotejas: los computadores, las sillas, los escritorios... ¿está todo lo que dice el registro? Encuentras que un monitor registrado no aparece (faltante): lo <strong>dejas por escrito</strong> en el acta para que se investigue. No "ajustas" el conteo para que cuadre: reportas la diferencia. Ese es el propósito del inventario.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Verificar por placa, no "a ojo"</div><div class="practica-body"><p>Durante el inventario, la tentación es mirar el escritorio y decir "sí, ahí está el computador, listo". Pero el inventario riguroso verifica <strong>por placa</strong>: confirmas que el número de placa del bien físico coincide con el del registro. ¿Por qué? Porque puede haber un computador en el puesto, sí, pero ¿es el que figura en el registro o es otro que llegó sin registrar? Verificar por placa elimina esa ambigüedad: <mark>identifica el bien exacto</mark>, no solo "un bien parecido". Ese nivel de detalle es lo que hace confiable un inventario.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El cambio de responsable</div><div class="practica-body"><p>Un funcionario con varios bienes a cargo se va a trasladar. Antes de que se vaya, haces la <strong>verificación de los bienes a su cargo</strong>: cuentas que estén todos los que figuran a su nombre. Si está completo, se hacen los reintegros o traslados formales y queda libre de responsabilidad; si falta algo, se deja constancia antes de su salida. Verificar en los cambios de responsable evita que después "aparezcan" faltantes sin saber de quién era la responsabilidad.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 6</div><div class="cp-q">Durante el inventario físico encuentras que un bien que figura en el registro no aparece físicamente. ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="6" data-ans="0">Ajusto el conteo para que cuadre con el registro y evito problemas.</button>
+        <button class="cp-opt" data-cp="6" data-ans="1">Dejo constancia por escrito del faltante en el acta de inventario para que se investigue su causa; no altero el conteo real.</button>
+        <button class="cp-opt" data-cp="6" data-ans="0">Borro el bien del registro sin más, ya que si no aparece es porque no existe.</button>
+      </div><div class="cp-fb" id="cpfb6"><strong>Correcto: la segunda.</strong> El inventario físico cuenta lo real y reporta las diferencias. Un faltante se deja por escrito y se investiga; nunca se "ajusta" el conteo ni se borra del registro por cuenta propia (eso ocultaría un posible daño al patrimonio).</div></div>
+      <h4>El inventario físico es un acto de honestidad institucional</h4>
+      <p>Hay algo profundo en el inventario físico: es el momento en que la entidad se "mira al espejo" y confirma si lo que dice tener es lo que realmente tiene. Por eso su valor depende de que se haga con <strong>honestidad y rigor</strong>. Un inventario hecho "por cumplir", en el que se marca todo como presente sin verificar de verdad, no sirve para nada: oculta los problemas en lugar de revelarlos, y cuando esos problemas salgan a la luz (por una auditoría, por ejemplo), será peor. El propósito del inventario no es "que cuadre", sino <mark>saber la verdad</mark> sobre los bienes, para poder corregir lo que esté mal. Un buen inventario a veces incomoda porque revela faltantes; pero es justamente ahí donde cumple su función.</p>
+      <p>Para el Auxiliar, esto significa una actitud clara: verificar bien in situ, bien por bien, sin atajos, y reportar con transparencia lo que se encuentre. Si aparece un faltante, no es tu culpa por reportarlo —al contrario, tu diligencia permite detectarlo y actuar—; ocultarlo sí te haría cómplice del problema. La honestidad en el inventario protege a la entidad y te protege a ti: demuestra que hiciste tu trabajo con seriedad. En un organismo de control como la Procuraduría, que exige transparencia a los demás, hacer inventarios honestos y rigurosos es, además, una cuestión de coherencia.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el inventario físico verifica lo real (contando, por placa) y lo compara con el registro, para detectar faltantes y sobrantes. Se hace periódicamente y en los cambios de responsable. Los hallazgos se dejan en acta; nunca se "ajusta" el conteo para que cuadre. Es un acto de honestidad: sirve para saber la verdad, no para "cuadrar el papel".</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">7</div><h3>Conservación y cuidado de los bienes</h3></div>
+    <div class="b-texto">
+      <p>Controlar los bienes no es solo contarlos: también es <strong>cuidarlos</strong> para que duren y se conserven en buen estado. Un bien bien cuidado sirve más años y le ahorra recursos al Estado; uno descuidado se deteriora antes de tiempo, lo que también es un daño al patrimonio. A menudo se piensa que "cuidar" es responsabilidad de otros (del área de mantenimiento, del almacén), pero la realidad es que el cuidado empieza en quien usa el bien todos los días. Un computador maltratado, una silla forzada, un equipo dejado a la intemperie: nada de eso lo previene el área de mantenimiento, sino el buen uso cotidiano de cada funcionario. Por eso el cuidado es una responsabilidad compartida en la que tú, como usuaria y custodia de bienes, tienes un papel central.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>conservación de bienes</strong> es el <mark>conjunto de cuidados para mantener los bienes en condiciones óptimas de uso y prolongar su vida útil</mark>: buen uso, mantenimiento, condiciones adecuadas de almacenamiento y seguridad. Cuidar el bien es parte de la responsabilidad de quien lo custodia.</p></div>
+      <p>Este módulo conecta con algo que ya viste en gestión documental (Día 9): así como los documentos se conservan con cuidado para que duren y sirvan como prueba, los bienes se conservan para que cumplan su vida útil y no se conviertan en una pérdida para el patrimonio. En ambos casos, la conservación es un deber de quien tiene la custodia y una forma de proteger recursos públicos. La lógica del cuidado es transversal a todo tu cargo.</p>
+      <div class="iconrow">
+        <div class="ic-item"><span class="em">🧴</span><strong>Buen uso:</strong> emplear el bien para lo que es, sin maltratarlo.</div>
+        <div class="ic-item"><span class="em">🔧</span><strong>Mantenimiento:</strong> reportar y atender fallas a tiempo.</div>
+        <div class="ic-item"><span class="em">🌡️</span><strong>Condiciones:</strong> almacenar en lugar adecuado (sin humedad, sin riesgo).</div>
+        <div class="ic-item"><span class="em">🔒</span><strong>Seguridad:</strong> evitar pérdidas o hurtos; no dejar bienes expuestos.</div>
+        <div class="ic-item"><span class="em">📋</span><strong>Hoja de vida:</strong> registrar mantenimientos y novedades del bien.</div>
+        <div class="ic-item"><span class="em">⚠️</span><strong>Reportar daños:</strong> avisar cuando un bien se dañe, no ocultarlo.</div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el <strong>mal uso o descuido</strong> de un bien público que lo dañe o deteriore antes de tiempo puede generar responsabilidad. Cuidar el bien no es opcional: es parte del deber de custodia. Y si un bien se daña, se <mark>reporta</mark> (no se oculta ni se bota por cuenta propia): el daño se documenta para el trámite que corresponda.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔧 El mantenimiento preventivo</summary><div class="acc-body"><p>Es el cuidado que se hace <strong>antes</strong> de que el bien falle (revisiones, limpieza, servicios programados), para que dure más y no se dañe. Es más económico que reparar o reemplazar. El Auxiliar apoya reportando la necesidad de mantenimiento y cuidando el buen uso cotidiano de los bienes de su dependencia.</p></div></details>
+        <details class="acc"><summary>📋 La hoja de vida del bien</summary><div class="acc-body"><p>Es el registro de la "historia" de un bien devolutivo: sus datos, a quién ha estado asignado, sus mantenimientos y reparaciones, sus novedades. Permite saber en qué estado está y decidir cuándo conviene repararlo o darlo de baja. Es al bien lo que la hoja de control es al expediente: su seguimiento.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El equipo que empieza a fallar</div><div class="practica-body"><p>Notas que una impresora de la oficina empieza a fallar. En vez de ignorarlo hasta que se dañe del todo, <strong>reportas la falla</strong> para que se le haga mantenimiento. Actuar a tiempo (mantenimiento preventivo) evita que el bien se pierda antes de su vida útil y que la oficina se quede sin impresora en un momento crítico. Reportar el daño también deja constancia de que actuaste con diligencia.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — No ocultar un daño</div><div class="practica-body"><p>Se te cae y se daña un equipo que tenías a cargo. La tentación podría ser "esconderlo" o botarlo para que nadie se dé cuenta. Pero eso es lo peor: botarlo sin baja formal genera un faltante y ocultarlo agrava tu situación. Lo correcto es <mark>reportar el daño</mark>, dejar constancia de cómo ocurrió y seguir el trámite (reparación o baja según corresponda, Día 15). La transparencia te protege; el ocultamiento te compromete.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 7</div><div class="cp-q">Un bien a tu cargo se daña. ¿Qué es lo correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="7" data-ans="0">Botarlo discretamente para que no quede constancia de que se dañó estando a tu cargo.</button>
+        <button class="cp-opt" data-cp="7" data-ans="1">Reportar el daño, dejar constancia de cómo ocurrió y seguir el trámite correspondiente (reparación o baja formal); nunca botarlo por cuenta propia.</button>
+        <button class="cp-opt" data-cp="7" data-ans="0">Guardarlo dañado en un rincón sin decir nada y esperar a que nadie lo note.</button>
+      </div><div class="cp-fb" id="cpfb7"><strong>Correcto: la segunda.</strong> Un daño se reporta y se documenta; nunca se oculta ni se bota por cuenta propia (eso generaría un faltante y agravaría tu situación). La transparencia protege; el ocultamiento compromete.</div></div>
+      <h4>Cuidar el bien es cuidar recursos y personas</h4>
+      <p>El cuidado de los bienes tiene un impacto que a veces no se ve. Un equipo bien mantenido dura años y le ahorra a la entidad tener que reemplazarlo antes de tiempo; uno descuidado se daña pronto, y ese reemplazo prematuro es dinero público que se pudo evitar. Multiplica eso por los cientos de bienes de una entidad y verás que el cuidado cotidiano representa un <mark>ahorro real y significativo</mark> para el Estado. Además, muchos bienes (equipos, instalaciones) tienen que ver con la seguridad de las personas: una instalación eléctrica descuidada, un equipo en mal estado, pueden generar riesgos. Cuidar los bienes es, en ese sentido, cuidar también a quienes trabajan y acuden a la entidad.</p>
+      <p>Para el Auxiliar, el cuidado se ejerce en gestos pequeños y constantes: usar los equipos como es debido, no forzarlos, mantener limpio y ordenado el espacio, reportar a tiempo cualquier falla, guardar bien lo que se debe guardar, y no dejar bienes valiosos expuestos o sin vigilancia. Ninguno de estos gestos es heroico, pero su suma marca la diferencia entre una dependencia cuyos bienes duran y funcionan, y otra donde todo se daña y se pierde. Ser cuidadoso con lo público es una forma concreta y diaria de servir bien.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> cuidar los bienes (buen uso, mantenimiento, condiciones, seguridad) es parte del deber de custodia, prolonga su vida útil, ahorra recursos públicos y hasta cuida a las personas. El mal uso que dañe un bien puede generar responsabilidad. Si un bien se daña, se reporta y documenta; nunca se oculta ni se bota por cuenta propia.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>La responsabilidad por los bienes y el control</h3></div>
+    <div class="b-texto">
+      <p>Cerramos con la razón de fondo de todo lo anterior: quien maneja bienes públicos <strong>responde por ellos</strong>. Entender esta responsabilidad es lo que le da sentido a todo el control (registros, comprobantes, inventarios, cuidado). No se trata de generar miedo, sino de entender el porqué: todo el aparato de control que has visto hoy existe precisamente porque hay una responsabilidad real detrás, y ese control es el mecanismo que permite ejercer y, a la vez, demostrar el cumplimiento de esa responsabilidad.</p>
+      <p>Conviene entender que esta responsabilidad no busca "atrapar" al servidor, sino <strong>proteger el patrimonio de todos</strong>. Los recursos públicos son escasos y provienen del esfuerzo de los ciudadanos; que existan controles y responsabilidades es lo que garantiza que esos recursos se usen para lo que deben y no se desvíen o se pierdan por descuido o mala fe. Un servidor honesto y diligente no tiene por qué temerle a la responsabilidad: la responsabilidad recae sobre quien actúa mal o con negligencia, no sobre quien cumple su deber con cuidado. Por eso la mejor forma de estar tranquilo frente a estos controles es, simplemente, hacer bien el trabajo y documentarlo.</p>
+      <div class="destacado azul"><span class="dst-ic">⚖️</span><div class="dst-body"><span class="dst-title">Todo lo que controlas te protege</span><p>Cada registro, cada comprobante, cada inventario y cada reporte de daño <mark>construye la trazabilidad</mark> que muestra que actuaste con diligencia. Si un día hay un faltante o un problema, la pregunta será "¿quién respondía por ese bien y qué hizo?". Quien manejó todo con soporte puede demostrar su diligencia; quien manejó "de palabra" queda expuesto. El control no es burocracia: es tu escudo.</p></div></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>Tipo de responsabilidad</th><th>Quién la ejerce</th><th>Cuándo aplica</th></tr>
+        <tr><td><strong>Fiscal</strong></td><td>Contraloría</td><td>Cuando hay daño al patrimonio público (pérdida, deterioro por descuido).</td></tr>
+        <tr><td><strong>Disciplinaria</strong></td><td>Procuraduría / Control Interno Disciplinario</td><td>Cuando el servidor incumple sus deberes en el manejo de bienes.</td></tr>
+        <tr><td><strong>Penal</strong></td><td>Fiscalía / jueces</td><td>Cuando hay delito (peculado, hurto, apropiación de bienes públicos).</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> apropiarse de un bien público, usarlo para fines personales o disponer de él como propio puede constituir <mark>peculado</mark> (un delito grave). Y la pérdida o deterioro por descuido genera responsabilidad fiscal. Por eso la respuesta correcta siempre es la del manejo <strong>reglado y con soporte</strong>: nunca "tomar prestado" un bien, llevárselo o disponer de él sin autorización y comprobante.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>⚖️ ¿Qué es el peculado (en términos simples)?</summary><div class="acc-body"><p>Es el delito que comete el servidor que <strong>se apropia, usa indebidamente o deja perder</strong> bienes o recursos públicos que están bajo su administración o custodia. Llevarse un computador del Estado, usar el vehículo oficial para fines personales o "prestar" bienes públicos sin autorización pueden encajar en esta figura. Es una de las razones de peso por las que el manejo de bienes es tan reglado.</p></div></details>
+        <details class="acc"><summary>🔍 El control interno y externo</summary><div class="acc-body"><p>El manejo de bienes está vigilado por dentro (control interno de la entidad, que revisa que los procedimientos se cumplan) y por fuera (la <strong>Contraloría</strong>, que ejerce el control fiscal). Los inventarios, comprobantes y registros son justamente lo que estos controles revisan. Un buen manejo de bienes pasa sin problemas las auditorías; uno descuidado genera hallazgos.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El computador viejo "que ya no sirve"</div><div class="practica-body"><p>Recuerdas el caso del inicio: el computador dañado que alguien dice "botar". Ahora sabes por qué NO se bota por cuenta propia: es un bien público registrado, y sacarlo del inventario requiere un <strong>trámite formal de baja</strong> (Día 15), no la caneca. Botarlo sin baja generaría un <mark>faltante</mark> y podría configurar un problema de responsabilidad. Lo correcto: reportarlo para que se le dé de baja por el procedimiento, con su acta y autorización.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — "Préstame ese equipo un momentico"</div><div class="practica-body"><p>Un conocido te pide "prestado" un equipo de la entidad para algo personal "solo un ratico". Por más inofensivo que parezca, <strong>no puedes disponer de un bien público para fines personales ni prestarlo sin autorización</strong>: eso puede configurar un uso indebido de bienes públicos. Los bienes se usan para las funciones de la entidad, no para favores personales. Decir "no" con claridad te protege a ti y protege el patrimonio.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 8</div><div class="cp-q">Un funcionario quiere llevarse a su casa, para uso personal, un computador de la entidad "porque igual no lo están usando". ¿Es correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="8" data-ans="0">Sí, si de verdad no lo están usando, no le hace daño a nadie aprovecharlo.</button>
+        <button class="cp-opt" data-cp="8" data-ans="1">No: es un bien público que solo puede usarse para las funciones de la entidad; disponer de él para fines personales puede constituir uso indebido o peculado.</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">Sí, siempre que lo devuelva después y nadie se dé cuenta.</button>
+      </div><div class="cp-fb" id="cpfb8"><strong>Correcto: la segunda.</strong> Los bienes públicos son del Estado y solo se usan para las funciones de la entidad. Llevárselos o usarlos para fines personales puede constituir uso indebido de bienes o peculado, sin importar la intención de devolverlos.</div></div>
+      <h4>La diligencia como escudo: el gran mensaje del día</h4>
+      <p>Si tuvieras que quedarte con una sola idea de todo el día, sería esta: en el manejo de bienes, <strong>la diligencia documentada es tu escudo</strong>. Nadie está exento de que un bien se pierda, se dañe o desaparezca; lo que marca la diferencia entre responder por ello o no es haber actuado con cuidado y haberlo dejado por escrito. Un servidor que recibió verificando, que registró cada movimiento con su comprobante, que hizo los inventarios con rigor y que reportó las novedades a tiempo, puede demostrar que cumplió su deber aunque algo salga mal. En cambio, quien manejó todo "de confianza" y sin soporte queda sin defensa cuando aparece el faltante. Por eso la disciplina del control no es exceso de trámite: es, literalmente, lo que te permite dormir tranquila sabiendo que, pase lo que pase, hiciste tu parte y puedes probarlo.</p>
+      <p>Esta mentalidad transforma la forma de ver el trabajo. En vez de sentir los comprobantes y los inventarios como "carga burocrática", los ves como <mark>tu respaldo profesional</mark>. Cada firma que pides al entregar, cada acta que dejas de un inventario, cada reporte de daño, es un ladrillo en el muro que protege tu buen nombre y el patrimonio de la entidad. Los servidores más experimentados lo saben bien: en el sector público, "lo que no está documentado, no ocurrió", y ante un problema con bienes, el papel es lo que habla por ti. Adoptar esta cultura del soporte desde el primer día de trabajo es una de las mejores decisiones profesionales que puedes tomar.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> quien maneja bienes públicos responde por ellos: fiscal (Contraloría, por daño al patrimonio), disciplinaria (Procuraduría) y penal (peculado). El control (registros, comprobantes, inventarios) es tu escudo: demuestra tu diligencia. Nunca disponer de un bien público como propio ni para fines personales. Lo que no está documentado, no ocurrió.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:30px 0 8px">🧮 Ejercicios prácticos resueltos</h3>
+  <p>Pon a prueba tu criterio con estos mini-casos de manejo de bienes. Lee, piensa tu respuesta y despliega la solución.</p>
+  <div class="acordeon">
+    <details class="acc"><summary>Ejercicio 1 — Llegan al almacén 20 resmas de papel y 5 monitores. ¿Cómo clasificas cada uno y qué implica?</summary><div class="acc-body"><p><strong>Solución:</strong> el papel es <mark>bien de consumo</mark> (se agota con el uso, sin placa, se controla por existencias); los monitores son <mark>bienes devolutivos</mark> (duran años, se pueden reintegrar, llevan placa de inventario y se asignan a un responsable). Ambos ingresan verificando cantidad y estado y con su comprobante de entrada, pero solo los monitores reciben placa e identificación individual.</p></div></details>
+    <details class="acc"><summary>Ejercicio 2 — Un proveedor entrega equipos y te apura para que firmes el recibido sin revisar. ¿Qué haces?</summary><div class="acc-body"><p><strong>Solución:</strong> no firmas sin verificar. <mark>Cotejas contra la orden de compra y la factura</mark>: cantidad, calidad, estado y especificaciones. Solo si todo coincide das el recibido a conformidad y registras el ingreso; si algo falta o viene defectuoso, lo dejas por escrito y no recibes a conformidad hasta resolverlo. El afán del proveedor no justifica saltarse la verificación.</p></div></details>
+    <details class="acc"><summary>Ejercicio 3 — Un compañero se traslada y tenía un computador a cargo. ¿Qué debe pasar con el bien?</summary><div class="acc-body"><p><strong>Solución:</strong> antes de irse debe <mark>reintegrar el bien al almacén</mark> (o trasladarlo formalmente a quien lo reciba) con su comprobante. Mientras no lo reintegre formalmente, sigue siendo responsable de él aunque ya no lo tenga. Dejarlo "tirado" en el puesto no lo libera de la responsabilidad. Se verifica que entregue todos los bienes a su cargo antes de su salida.</p></div></details>
+    <details class="acc"><summary>Ejercicio 4 — En el inventario físico encuentras un bien que existe pero no está en el registro. ¿Qué es y qué haces?</summary><div class="acc-body"><p><strong>Solución:</strong> es un <mark>sobrante</mark> (bien físico sin registro; pudo ingresar sin comprobante o haber un error). No lo ignoras ni lo "desapareces": lo <strong>dejas por escrito en el acta</strong> del inventario para que se investigue su origen y se regularice su registro. Igual que con los faltantes, las diferencias se reportan, no se ocultan.</p></div></details>
+    <details class="acc"><summary>Ejercicio 5 — Alguien dice que un computador viejo y dañado "ya no sirve, hay que botarlo". ¿Se puede?</summary><div class="acc-body"><p><strong>Solución:</strong> no se bota por cuenta propia. Es un bien público registrado; retirarlo del inventario requiere un <mark>trámite formal de baja</mark> (con acta y autorización, Día 15). Botarlo sin baja generaría un faltante y podría configurar responsabilidad. Lo correcto es reportarlo para que se le dé de baja por el procedimiento. El estado de deterioro no autoriza botarlo sin trámite.</p></div></details>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⭐</span><div class="dst-body"><span class="dst-title">Idea clave de todo el día</span><p>Los bienes de la entidad son <mark>patrimonio público</mark>: quien los usa o custodia responde por ellos. Se clasifican en de consumo (se agotan) y devolutivos (duran, con placa y responsable). El almacén los recibe, custodia, controla y entrega, siempre con <mark>comprobantes</mark> (todo movimiento deja soporte). El inventario físico verifica lo real contra el registro. Y quien maneja bienes responde fiscal, disciplinaria y penalmente: por eso el control con soporte no es burocracia, es tu escudo.</p></div></div>
+
+  <div class="box gold"><div class="box-title">🧰 Tips para grabar en la memoria</div>
+    <ul class="lista">
+      <li><strong>Los bienes son del Estado,</strong> no del funcionario: se custodian, no se poseen.</li>
+      <li><strong>Consumo</strong> (se agota; sin placa) vs. <strong>devolutivo</strong> (dura, se reintegra; con placa y responsable).</li>
+      <li><strong>Ingreso:</strong> recibir + verificar (contra orden y factura) + registrar + comprobante de entrada.</li>
+      <li><strong>Todo movimiento deja comprobante:</strong> entrada, salida, reintegro, traslado, baja.</li>
+      <li><strong>La salida traslada la responsabilidad</strong> a quien recibe; el reintegro la libera.</li>
+      <li><strong>Inventario físico:</strong> contar lo real por placa y cotejar con el registro; faltantes/sobrantes se dejan en acta.</li>
+      <li><strong>Nunca botar, prestar ni llevarse un bien público</strong> por cuenta propia: puede ser peculado o generar faltante.</li>
+    </ul>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"El bien es del Estado, tú lo custodias: todo movimiento con comprobante, todo faltante en acta. El control no es papeleo, es lo que demuestra que cuidaste el patrimonio."</p></div></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Consulta estas fuentes (se abren en una pestaña nueva):</p>
+    <ul class="lista">
+      <li><a href="https://www.contaduria.gov.co/" target="_blank" rel="noopener">Contaduría General de la Nación — régimen de contabilidad pública y bienes</a></li>
+      <li><a href="https://www.contraloria.gov.co/" target="_blank" rel="noopener">Contraloría General de la República — control fiscal y responsabilidad fiscal</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_0610_2000.html" target="_blank" rel="noopener">Ley 610 de 2000 — proceso de responsabilidad fiscal</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/codigo_penal.html" target="_blank" rel="noopener">Código Penal — delitos contra la administración pública (peculado)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/" target="_blank" rel="noopener">Función Pública — orientaciones de gestión administrativa y de bienes</a></li>
+    </ul>
+  </div>
+
+  <div class="advance-bar"><span class="advance-hint">Terminaste el Desarrollo. Afina el criterio con distinciones, casos y trampas.</span><button class="advance-btn" data-goto="3">Ver distinciones clave →</button></div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos de este día que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Bien de consumo</strong></td><td><strong>Bien devolutivo</strong></td><td>Consumo = se agota con el uso (papel, tóner), sin placa. Devolutivo = dura y se puede reintegrar (computador, mueble), con placa y responsable.</td></tr>
+    <tr><td><strong>Usar el bien</strong></td><td><strong>Disponer del bien</strong></td><td>Usar = emplearlo para las funciones de la entidad (permitido). Disponer = venderlo, prestarlo, llevárselo (NO: es del Estado, no tuyo).</td></tr>
+    <tr><td><strong>Comprobante de entrada</strong></td><td><strong>Comprobante de salida</strong></td><td>Entrada = respalda el ingreso de un bien. Salida = respalda su entrega y traslada la responsabilidad a quien recibe.</td></tr>
+    <tr><td><strong>Faltante</strong></td><td><strong>Sobrante</strong></td><td>Faltante = está en el registro pero no aparece físicamente. Sobrante = existe físicamente pero no está en el registro.</td></tr>
+    <tr><td><strong>Reintegro</strong></td><td><strong>Traslado</strong></td><td>Reintegro = devolver el bien al almacén (libera la responsabilidad). Traslado = pasarlo a otro responsable/ubicación.</td></tr>
+    <tr><td><strong>Inventario físico</strong></td><td><strong>Registro (en libros)</strong></td><td>Físico = contar lo real, presencial, por placa. Registro = lo que dice el sistema. El físico confronta el registro con la realidad.</td></tr>
+    <tr><td><strong>Bien mueble</strong></td><td><strong>Bien inmueble</strong></td><td>Mueble = se puede trasladar (computador, silla). Inmueble = no (edificio, terreno). El Auxiliar maneja sobre todo muebles.</td></tr>
+    <tr><td><strong>Responsabilidad fiscal</strong></td><td><strong>Responsabilidad disciplinaria</strong></td><td>Fiscal = por daño al patrimonio (Contraloría). Disciplinaria = por incumplir deberes (Procuraduría). Pueden concurrir.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: <strong>construye una frase con cada pareja</strong>. Por ejemplo: "Consumo se agota, devolutivo dura y lleva placa" o "Usar sí, disponer no". Si puedes decir la frase completa sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Auxiliar Administrativo de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · El proveedor que llega con afán</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un proveedor entrega unos equipos que compró la entidad y te pide firmar el recibido de inmediato "porque va de afán". No has cotejado lo que llegó contra la orden de compra.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p><strong>Verificas antes de firmar</strong>: cotejas cantidad, calidad, estado y especificaciones contra la orden de compra y la factura. Solo si todo coincide, das el recibido a conformidad, registras el ingreso, asignas placa a los devolutivos y generas el comprobante de entrada. Si algo falta o viene defectuoso, lo <mark>dejas por escrito</mark> y no recibes a conformidad hasta resolverlo. El afán del proveedor no justifica saltarse la verificación.</p></div>
+    <span class="label">Por qué</span><p>El momento de recibir es el único para reclamar sin problemas. Firmar sin verificar podría dejarte respondiendo por un faltante que llegó desde el origen.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · El computador viejo "que hay que botar"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Encuentras un computador dañado arrumado en un rincón y un compañero dice: "eso ya no sirve, bótalo de una vez para hacer espacio".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>No lo botas por cuenta propia. Es un <strong>bien público registrado</strong>; retirarlo del inventario requiere un <mark>trámite formal de baja</mark> (con acta y autorización, que verás en el Día 15). Botarlo sin baja generaría un faltante y podría configurar un problema de responsabilidad. Lo correcto: reportarlo para que se le dé de baja por el procedimiento. El estado de deterioro no autoriza botarlo sin trámite.</p></div>
+    <span class="label">Por qué</span><p>Ningún bien sale del inventario "de palabra". La baja es un acto reglado; botar sin baja rompe el control y deja un faltante inexplicable.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · Entregar elementos "de confianza"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un compañero te pide unos elementos del almacén "rápido y sin tanto papeleo, que hay confianza".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Tramitas la <strong>salida con su comprobante</strong>, que registra qué se entrega, cuánto y a quién; si son devolutivos, quien recibe firma y asume la responsabilidad. No entregas "de confianza" ni anotas en un cuaderno personal: eso genera un <mark>descuadre</mark> entre lo que dice el sistema y lo que hay. Ningún bien se mueve sin soporte, por más confianza que exista.</p></div>
+    <span class="label">Por qué</span><p>Todo movimiento deja comprobante. Entregar sin registro rompe la trazabilidad y produce faltantes que después nadie puede explicar.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Confundir "usar" con "ser dueño"</div><p>El bien es del Estado: se usa para las funciones de la entidad, pero no se puede disponer de él (vender, prestar, llevárselo) como si fuera propio.</p></div>
+  <div class="box danger"><div class="box-title">❌ Recibir sin verificar</div><p>Firmar el recibido "a ojo cerrado". Se coteja cantidad, calidad y especificaciones contra la orden y la factura antes de dar conformidad.</p></div>
+  <div class="box danger"><div class="box-title">❌ Mover bienes sin comprobante</div><p>Entregar, prestar o trasladar "de palabra". Todo movimiento deja soporte (entrada, salida, reintegro, traslado, baja).</p></div>
+  <div class="box danger"><div class="box-title">❌ Botar un bien público por cuenta propia</div><p>Botar un bien dañado sin baja formal genera un faltante y puede acarrear responsabilidad. La baja es un trámite reglado (Día 15).</p></div>
+  <div class="box danger"><div class="box-title">❌ Dejar un bien "tirado" en vez de reintegrarlo</div><p>Mientras no se reintegre o traslade formalmente, la persona sigue respondiendo por el bien, aunque ya no lo tenga.</p></div>
+  <div class="box danger"><div class="box-title">❌ "Ajustar" el inventario para que cuadre</div><p>El inventario físico cuenta lo real y reporta faltantes/sobrantes. Nunca se altera el conteo ni se borra un bien del registro por cuenta propia.</p></div>
+  <div class="box danger"><div class="box-title">❌ Ocultar el daño de un bien</div><p>Si un bien a tu cargo se daña, se reporta y documenta. Ocultarlo o botarlo agrava tu situación y genera un faltante.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>El bien es del Estado,</strong> no del funcionario: se custodia y se usa, no se posee ni se dispone.</li>
+    <li><strong>Consumo</strong> (se agota, sin placa) vs. <strong>devolutivo</strong> (dura, se reintegra, con placa y responsable).</li>
+    <li><strong>Ingreso:</strong> recibir + verificar (contra orden y factura) + registrar + comprobante de entrada. Nunca a ojo cerrado.</li>
+    <li><strong>Todo movimiento deja comprobante:</strong> entrada, salida, reintegro, traslado, baja.</li>
+    <li><strong>La salida traslada la responsabilidad</strong> a quien recibe; el reintegro la libera.</li>
+    <li><strong>Inventario físico:</strong> contar lo real por placa y cotejar con el registro; faltantes/sobrantes se dejan en acta.</li>
+    <li><strong>Cuando dudes,</strong> elige la opción con SOPORTE y PROCEDIMIENTO: nunca botar, prestar ni disponer de un bien por cuenta propia.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"El computador está dañado y viejo, así que lo boto para hacer espacio."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "ya no sirve, estorba".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> es un bien público registrado; botarlo sin baja genera un faltante y puede acarrear responsabilidad.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> reportarlo para el trámite formal de baja (acta y autorización). El deterioro no autoriza botarlo.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Como hay confianza con el compañero, le entrego los elementos sin comprobante para agilizar."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "es más rápido y hay confianza".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> entregar sin comprobante genera un descuadre entre el sistema y la realidad.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> tramitar la salida con su comprobante; quien recibe firma y asume la responsabilidad.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El equipo igual no lo están usando, me lo llevo un ratico a la casa y lo devuelvo."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "no le hace daño a nadie y lo devuelvo".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> disponer de un bien público para fines personales puede constituir uso indebido o peculado.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> los bienes se usan solo para las funciones de la entidad; nunca para fines personales, sin importar la intención de devolverlos.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"En el inventario falta un bien, pero lo marco como presente para que cuadre y no haya problemas."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "así no hay líos".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> falsear el inventario oculta un posible daño al patrimonio y agrava la situación cuando se descubra.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> dejar el faltante por escrito en el acta e investigar su causa. El inventario reporta la verdad, no la maquilla.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Bienes = patrimonio público</h4><p>Son del Estado, no del funcionario. Quien los usa o custodia responde por ellos. Se usan, no se poseen.</p></div>
+    <div class="resumen-item"><h4>Tipos</h4><p>Consumo (se agotan; sin placa) vs. devolutivos (duran, se reintegran; con placa y responsable). Muebles vs. inmuebles.</p></div>
+    <div class="resumen-item"><h4>El almacén</h4><p>Recibe, custodia, controla existencias, entrega y registra. Principio: trazabilidad (saber siempre cuánto hay y dónde).</p></div>
+    <div class="resumen-item"><h4>Ingreso</h4><p>Recibir + verificar (contra orden y factura) + registrar + comprobante de entrada. Verificar es el paso crítico.</p></div>
+    <div class="resumen-item"><h4>Comprobantes</h4><p>Todo movimiento deja soporte: entrada, salida, reintegro, traslado, baja. La salida traslada la responsabilidad.</p></div>
+    <div class="resumen-item"><h4>Inventario físico</h4><p>Contar lo real por placa y cotejar con el registro. Faltantes/sobrantes se dejan en acta; no se "ajusta".</p></div>
+    <div class="resumen-item"><h4>Conservación</h4><p>Buen uso, mantenimiento, condiciones y seguridad. Un daño se reporta; nunca se oculta ni se bota por cuenta propia.</p></div>
+    <div class="resumen-item"><h4>Responsabilidad</h4><p>Fiscal (Contraloría), disciplinaria (Procuraduría), penal (peculado). El control con soporte es tu escudo.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Bien de consumo / devolutivo</dt><dd>Se agota con el uso / dura y se puede reintegrar (con placa y responsable).</dd>
+      <dt>Placa de inventario</dt><dd>Número único que identifica cada bien devolutivo para su seguimiento.</dd>
+      <dt>Comprobante de almacén</dt><dd>Documento que respalda un movimiento de un bien (entrada, salida, reintegro, traslado, baja).</dd>
+      <dt>Inventario físico</dt><dd>Verificación real y presencial de los bienes, para compararlos con el registro.</dd>
+      <dt>Faltante / sobrante</dt><dd>Bien registrado que no aparece / bien físico que no está registrado.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Manejo de Inventarios y Control de Bienes</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 14. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 14</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 14: Manejo de Inventarios y Control de Bienes I. ¡Vas por muy buen camino, sigue así!');});
+const flashcards=[
+  {f:'¿De quién son los bienes que usa la entidad?',b:'Del Estado (patrimonio público), no del funcionario. Quien los usa o custodia responde por ellos, pero no puede disponer de ellos como propios.'},
+  {f:'¿Cuál es la diferencia entre bien de consumo y devolutivo?',b:'Consumo = se agota con el uso (papel, tóner), sin placa. Devolutivo = dura y se puede reintegrar (computador, mueble), con placa y responsable.'},
+  {f:'¿Qué es la placa de inventario?',b:'Una etiqueta con un número único que identifica cada bien devolutivo para hacerle seguimiento (los de consumo no llevan).'},
+  {f:'¿Qué se hace al ingresar un bien?',b:'Recibir + verificar contra la orden de compra y la factura (cantidad, calidad, especificaciones) + registrar + generar comprobante de entrada. Los devolutivos reciben placa.'},
+  {f:'¿Cuáles son los principales comprobantes de almacén?',b:'De entrada, de salida, de reintegro, de traslado y de baja. Todo movimiento de un bien deja su comprobante.'},
+  {f:'¿Qué traslada el comprobante de salida?',b:'La responsabilidad de custodia del bien a quien lo recibe (que firma). El reintegro, en cambio, libera de esa responsabilidad.'},
+  {f:'¿Qué es el inventario físico?',b:'La verificación real y presencial de los bienes (contándolos por placa) para compararlos con el registro y detectar faltantes o sobrantes.'},
+  {f:'¿Qué son un faltante y un sobrante?',b:'Faltante = bien registrado que no aparece físicamente. Sobrante = bien físico que no está en el registro. Ambos se dejan en acta y se investigan.'},
+  {f:'¿Se puede botar un bien público dañado por cuenta propia?',b:'No. Retirarlo del inventario requiere un trámite formal de baja (acta y autorización). Botarlo sin baja genera un faltante y puede acarrear responsabilidad.'},
+  {f:'¿Qué responsabilidades genera el mal manejo de bienes?',b:'Fiscal (Contraloría, por daño al patrimonio), disciplinaria (Procuraduría) y penal (peculado). El control con soporte demuestra tu diligencia.'},
+  {f:'¿Qué es el peculado (en términos simples)?',b:'El delito del servidor que se apropia, usa indebidamente o deja perder bienes o recursos públicos bajo su custodia.'},
+  {f:'¿Qué principio atraviesa todo el manejo de bienes?',b:'Todo movimiento deja soporte (comprobante) y trazabilidad: siempre se sabe qué hay, dónde está y quién responde. Ningún bien se mueve "de palabra".'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Clasificación de bienes', ctx:'Eres Auxiliar Administrativo y apoyas el manejo de bienes de tu dependencia en una Procuraduría Regional. Llega al almacén un pedido que incluye 30 resmas de papel bond, 4 cajas de tóner para impresora, 6 sillas ergonómicas y 3 computadores portátiles. Tu jefe te pide que ayudes a clasificar los bienes para su registro, y un compañero comenta: "total, todo eso es material de oficina, regístralo igual".', q:'¿Cómo debes clasificar estos bienes y qué implica?', ops:['Registrar todo como bienes de consumo, porque son elementos de oficina y así el trámite es más rápido y uniforme.','Clasificar el papel y el tóner como bienes de consumo (se agotan con el uso, sin placa, control por existencias), y las sillas y los computadores como bienes devolutivos (duran, se pueden reintegrar, llevan placa de inventario y se asignan a un responsable).','Registrar todo como bienes devolutivos, porque todo lo que compra la entidad debe llevar placa de inventario y responsable.','Registrar solo los computadores, porque son los únicos bienes valiosos; el resto no necesita registro.'], correcta:1, expl:['No todo es de consumo: las sillas y los computadores duran años y se pueden reintegrar, así que son devolutivos y requieren placa y responsable.','Correcto. La clasificación se hace por si el bien se agota o perdura: papel y tóner (consumo, sin placa); sillas y computadores (devolutivos, con placa y responsable). Esa clasificación define cómo se controla cada uno.','No todo es devolutivo: el papel y el tóner se consumen con el uso y se controlan por existencias, no llevan placa individual.','Todos los bienes que ingresan se registran, no solo los valiosos; el papel y el tóner también entran con su comprobante y control de existencias.'] },
+  { nivel:'b', tema:'Recepción y verificación de bienes', ctx:'Un proveedor llega a entregar 10 computadores que la entidad adquirió. Te pide que firmes de inmediato el recibido a conformidad "porque tiene que salir corriendo a otra entrega". Aún no has cotejado los equipos contra la orden de compra ni revisado su estado, y notas que una de las cajas viene visiblemente golpeada.', q:'¿Cuál es la actuación correcta?', ops:['Firmar el recibido a conformidad de una vez para no demorar al proveedor; si luego aparece algún problema, se le reclama después por teléfono.','Verificar primero contra la orden de compra y la factura (cantidad, especificaciones y estado), revisar la caja golpeada, y solo dar el recibido a conformidad si todo coincide; si algo falla, dejarlo por escrito y no recibir a conformidad hasta resolverlo.','Recibir los equipos sin firmar ningún documento, para no comprometerte, y guardarlos mientras decides qué hacer.','Rechazar toda la entrega y devolver los 10 computadores al proveedor por el solo hecho de que una caja viene golpeada.'], correcta:1, expl:['Firmar a conformidad sin verificar te deja respondiendo por lo que firmaste; reclamar después es difícil porque ya diste conformidad.','Correcto. La verificación contra orden y factura es el paso crítico y el único momento para reclamar sin problemas. Si algo falla (como la caja golpeada), se deja por escrito y no se recibe a conformidad hasta aclararlo.','Recibir sin ningún documento rompe el control: el ingreso debe quedar soportado. La solución no es evitar el papel, sino verificar y documentar.','Rechazar toda la entrega por una caja golpeada es desproporcionado: se verifica esa unidad y se deja constancia de su estado; lo que coincide y está bien se recibe.'] },
+  { nivel:'i', tema:'Comprobantes y movimientos', ctx:'Un compañero de otra oficina te pide que le entregues del almacén dos calculadoras y una impresora (bien devolutivo). Te dice: "hazlo rápido y sin comprobante, que hay confianza y estoy de afán; después si acaso lo anotas". Tú eres quien tiene a cargo el control de esos elementos.', q:'¿Cómo debes proceder?', ops:['Entregarle los elementos sin comprobante para agilizar, ya que hay confianza, y anotarlo después en un cuaderno personal si te acuerdas.','Tramitar la salida con su comprobante, que registra qué se entrega y a quién; como la impresora es devolutiva, quien la recibe firma y asume la responsabilidad de su custodia. Sin comprobante no se mueve ningún bien.','Entregarle solo las calculadoras sin comprobante (por ser de menor valor) y hacer comprobante únicamente para la impresora.','Negarte a entregar cualquier cosa, porque prestar bienes entre oficinas no está permitido bajo ninguna circunstancia.'], correcta:1, expl:['Entregar sin comprobante genera un descuadre entre lo que dice el sistema y lo que hay; anotar en un cuaderno personal no es el soporte oficial.','Correcto. Todo movimiento deja comprobante: la salida registra qué se entrega y a quién, y en los devolutivos quien recibe firma y asume la responsabilidad. La confianza o el afán no eximen del soporte.','Todo movimiento requiere soporte, sin importar el valor del bien; también las calculadoras deben salir con su registro de existencias.','No es que esté prohibido entregar entre oficinas: se puede, pero siempre con el comprobante correspondiente (salida o traslado).'] },
+  { nivel:'i', tema:'Inventario físico', ctx:'Estás haciendo el inventario físico de tu dependencia. Recorriendo puesto por puesto, encuentras que un monitor que figura en el registro a nombre de tu área no aparece por ningún lado, y además hallas una impresora en funcionamiento que no está registrada en el listado. Un compañero te sugiere: "marca el monitor como presente para que cuadre, y a la impresora no le pares bolas, así no complicas el inventario".', q:'¿Qué debes hacer con estos hallazgos?', ops:['Seguir el consejo del compañero: marcar el monitor como presente y omitir la impresora, para que el inventario cuadre y no haya problemas.','Dejar por escrito en el acta de inventario el faltante (el monitor que no aparece) y el sobrante (la impresora no registrada), para que se investigue la causa de cada uno y se regularice; nunca alterar el conteo para que cuadre.','Borrar el monitor del registro por tu cuenta (ya que no aparece) y registrar la impresora a tu nombre, resolviendo ambas diferencias en el momento.','Suspender el inventario y no reportar nada hasta que aparezca el monitor, para no dejar constancia de un faltante.'], correcta:1, expl:['Marcar como presente lo que no está y omitir un sobrante es falsear el inventario: oculta un posible daño al patrimonio y agrava la situación al descubrirse.','Correcto. El inventario físico reporta la verdad: el faltante (monitor) y el sobrante (impresora) se dejan en acta y se investigan. Nunca se "ajusta" el conteo para que cuadre.','No corresponde al Auxiliar borrar bienes del registro ni auto-asignarse un sobrante por cuenta propia; las diferencias se reportan para que se regularicen por el procedimiento.','Suspender y no reportar oculta el faltante; el inventario debe dejar constancia de las diferencias, no esconderlas.'] },
+  { nivel:'a', tema:'Responsabilidad por los bienes', ctx:'En tu dependencia hay un computador dado a un funcionario que ya se trasladó a otra ciudad hace un mes; el equipo quedó en su antiguo puesto sin ningún trámite. Además, otro compañero te comenta que "ese computador viejo del rincón ya no sirve, mejor lo botamos y así liberamos espacio", y un tercero te pide "prestado un portátil de la entidad el fin de semana para un asunto personal, que el lunes lo devuelve". Debes actuar frente a las tres situaciones.', q:'¿Cuál es la actuación correcta en conjunto?', ops:['Botar el computador viejo, prestar el portátil al compañero (total lo devuelve) y dejar el equipo del funcionario trasladado donde está, ya que él fue quien se fue.','Gestionar el reintegro o traslado formal del equipo del funcionario trasladado (sigue siendo su responsabilidad hasta que se formalice); reportar el computador viejo para su baja formal en lugar de botarlo; y NO prestar el portátil para fines personales, porque los bienes públicos solo se usan para las funciones de la entidad.','Registrar el computador viejo a tu nombre para poder botarlo, prestar el portátil solo si el compañero firma un papelito, y llamar al funcionario trasladado para que venga por su equipo.','Botar tanto el computador viejo como el del funcionario trasladado (ya que ninguno se está usando) y prestar el portátil, siempre que nadie se entere.'], correcta:1, expl:['Botar sin baja genera faltante; prestar para fines personales puede ser uso indebido/peculado; y dejar el equipo sin trámite mantiene la responsabilidad en el funcionario que se fue sin resolverla.','Correcto. Cada situación por el procedimiento: el equipo del trasladado se reintegra o traslada formalmente; el computador viejo se reporta para baja (no se bota); y el portátil no se presta para fines personales (los bienes son solo para las funciones de la entidad).','No se resuelven las cosas con "papelitos" informales ni auto-asignándose bienes para botarlos: cada movimiento tiene su comprobante y su procedimiento formal.','Botar bienes públicos por cuenta propia genera faltantes y responsabilidad, y prestar para fines personales es uso indebido: ninguna de esas conductas es correcta.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
