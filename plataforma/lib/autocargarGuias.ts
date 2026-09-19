@@ -304,3 +304,142 @@ export async function copiarPlanDesdeOPEC(
   }
   return true;
 }
+
+
+/**
+ * Rutas (archivo_path) de las guías GENÉRICAS que la auto-carga histórica pudo
+ * haber insertado en cursos que en realidad usan un plan propio (p. ej. PGN-AUX).
+ * Son las versiones "viejas" comunes/CNSC que deben limpiarse cuando el curso
+ * ya tiene su equivalente propio.
+ */
+const RUTAS_GENERICAS = new Set<string>([
+  "guias/INTRO-00-presentacion-curso.html",
+  "guias/GEN-01-estado-funcion-publica.html",
+  "guias/GEN-02-relacion-estado-ciudadano.html",
+  "guias/GEN-03-marco-institucional.html",
+  "guias/ASI-COM-01-cumplimiento-desarrollo-laboral.html",
+  "guias/ASI-COM-02-atencion-colaboracion.html",
+  "guias/ASI-ESP-01-competencias-nivel-asistencial.html",
+  "guias/ASI-ESP-02-alcance-cargo-asistencial.html",
+  "guias/TEC-COM-01-desempeno-cumplimiento.html",
+  "guias/TEC-COM-02-usuarios-trabajo-colaborativo.html",
+  "guias/TEC-ESP-01-competencias-nivel-tecnico.html",
+  "guias/TEC-ESP-02-alcance-cargo-tecnico.html",
+  "guias/PRO-COM-01-gestion-cumplimiento.html",
+  "guias/PRO-COM-02-servicio-articulacion.html",
+  "guias/PRO-ESP-01-competencias-nivel-profesional.html",
+  "guias/PRO-ESP-02-alcance-cargo-profesional.html",
+]);
+
+/**
+ * AUTO-SANEAMIENTO de un curso: elimina las guías GENÉRICAS (comunes/CNSC) que
+ * quedaron mezcladas cuando el curso ya tiene su plan PROPIO por entidad
+ * (p. ej. las -PGN-AUX de la Procuraduría, o cualquier plan con "Conoce tu
+ * Entidad" propia + generales/nivel específicas).
+ *
+ * Es CONSERVADOR: solo actúa si el curso tiene señales claras de un plan propio
+ * (una guía "Conoce tu Entidad" ENT-… asignada, o alguna guía -PGN-AUX). En ese
+ * caso, las genéricas de RUTAS_GENERICAS sobran (fueron auto-cargadas por error)
+ * y se eliminan. Si el curso es legítimamente genérico (sin plan propio), NO
+ * toca nada.
+ *
+ * Se puede llamar de forma idempotente en cada carga del perfil/preview: si no
+ * hay nada que limpiar, no hace ninguna escritura.
+ *
+ * @returns número de guías eliminadas (0 si no había nada que sanear).
+ */
+export async function sanearGuiasGenericas(
+  supabase: SupabaseClient,
+  cursoId: string
+): Promise<number> {
+  const { data: guias } = await supabase
+    .from("guias_curso")
+    .select("id, archivo_path")
+    .eq("curso_id", cursoId);
+  if (!guias || guias.length === 0) return 0;
+
+  // ¿El curso tiene un plan PROPIO? Señales: una guía de entidad (ENT-…) o
+  // alguna guía con sufijo -AUX (plan reenfocado por cargo).
+  const tienePlanPropio = guias.some((g: any) => {
+    const p = (g.archivo_path || "").toString();
+    return /(^|\/)ENT-/i.test(p) || /-AUX[-.]/i.test(p) || /-AUX\//i.test(p) || p.includes("-PGN-AUX");
+  });
+  if (!tienePlanPropio) return 0; // curso genérico legítimo: no tocar.
+
+  // Eliminar las genéricas sobrantes.
+  const aEliminar = guias.filter((g: any) => g.archivo_path && RUTAS_GENERICAS.has(g.archivo_path));
+  if (aEliminar.length === 0) return 0;
+
+  const ids = aEliminar.map((g: any) => g.id);
+  const { error } = await supabase.from("guias_curso").delete().in("id", ids);
+  if (error) {
+    console.error("[sanearGuiasGenericas] Error al eliminar genéricas:", error.message);
+    return 0;
+  }
+  return ids.length;
+}
+
+/**
+ * AUTO-COMPLETADO del plan PGN Auxiliar Administrativo.
+ *
+ * Si el curso tiene señales claras de ser el plan PGN-AUX (alguna guía cuyo
+ * archivo_path contenga "-PGN-AUX" o sea del set del plan), y le FALTAN guías
+ * de ese plan, las inserta automáticamente desde la plantilla
+ * `pgn-auxiliar-administrativo` (resolviendo cada código contra el catálogo).
+ * Es idempotente: no duplica las que ya estén (compara por archivo_path).
+ *
+ * Esto garantiza que, aunque el curso se haya creado antes del arreglo (y le
+ * falten las funcionales/simulacro), al abrir el perfil el plan quede completo
+ * de forma automática, sin intervención del admin.
+ *
+ * @returns número de guías insertadas (0 si ya estaba completo o no aplica).
+ */
+export async function asegurarPlanPGNAuxiliar(
+  supabase: SupabaseClient,
+  cursoId: string
+): Promise<number> {
+  const { getGuiaCatalogo } = await import("./catalogoGuias");
+  const plan = PLANES_PLANTILLA["pgn-auxiliar-administrativo"];
+  if (!plan) return 0;
+
+  const { data: guias } = await supabase
+    .from("guias_curso")
+    .select("archivo_path")
+    .eq("curso_id", cursoId);
+  if (!guias) return 0;
+
+  const rutasActuales = new Set((guias as any[]).map((g) => g.archivo_path).filter(Boolean));
+
+  // Rutas del plan (resueltas del catálogo).
+  const rutasPlan: { codigo: string; ruta: string; item: ItemPlanPlantilla; titulo: string; tipo: string }[] = [];
+  for (const item of plan.guias) {
+    const g = getGuiaCatalogo(item.codigo);
+    if (g && g.archivoPath && g.estado === "publicada") {
+      rutasPlan.push({ codigo: item.codigo, ruta: g.archivoPath, item, titulo: g.titulo, tipo: g.tipo });
+    }
+  }
+
+  // ¿El curso es del plan PGN-AUX? Señal: comparte al menos una ruta del plan.
+  const esPlanPGN = rutasPlan.some((r) => rutasActuales.has(r.ruta));
+  if (!esPlanPGN) return 0; // no es este plan: no tocar.
+
+  // Insertar las que falten.
+  const registros = rutasPlan
+    .filter((r) => !rutasActuales.has(r.ruta))
+    .map((r) => ({
+      curso_id: cursoId,
+      titulo: r.titulo,
+      dia: r.item.dia,
+      tipo: r.tipo,
+      orden: r.item.orden ?? r.item.dia ?? 0,
+      archivo_path: r.ruta,
+    }));
+  if (registros.length === 0) return 0;
+
+  const { error } = await supabase.from("guias_curso").insert(registros);
+  if (error) {
+    console.error("[asegurarPlanPGNAuxiliar] Error al completar el plan:", error.message);
+    return 0;
+  }
+  return registros.length;
+}

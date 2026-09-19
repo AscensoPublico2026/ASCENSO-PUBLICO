@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
 import { waUrl, WA_MENSAJES } from "@/lib/contacto";
+import { sanearGuiasGenericas } from "@/lib/autocargarGuias";
 import Contador from "../Contador";
 
 export const dynamic = "force-dynamic";
@@ -74,7 +75,22 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   // Modo vista previa: admin revisando un curso que no es suyo (antes de habilitarlo).
   const esPreview = esAdmin && curso.usuario_id !== user.id;
 
-  // Obtener las guías del curso
+  // AUTO-SANEAMIENTO: si el curso tiene su plan propio (p. ej. -PGN-AUX de la
+  // Procuraduría) pero le quedaron mezcladas guías genéricas/CNSC auto-cargadas
+  // por error, se eliminan automáticamente aquí (con cliente admin, que sí puede
+  // borrar). Es idempotente: si no hay nada que limpiar, no escribe nada.
+  try {
+    const admin = createAdminClient();
+    await sanearGuiasGenericas(admin, curso.id);
+    // Si es el plan PGN Auxiliar y le faltan guías, completarlo automáticamente.
+    const { asegurarPlanPGNAuxiliar } = await import("@/lib/autocargarGuias");
+    await asegurarPlanPGNAuxiliar(admin, curso.id);
+  } catch (e) {
+    // No bloquear la carga del perfil si el saneamiento/completado falla.
+    console.error("[perfil] auto-saneamiento de guías:", e);
+  }
+
+  // Obtener las guías del curso (ya saneadas)
   const { data: guias } = await supabase
     .from("guias_curso")
     .select("*")
