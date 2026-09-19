@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getGuiaCatalogo } from "@/lib/catalogoGuias";
-import { copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
+import { copiarPlanDesdeOPEC, PLANES_PLANTILLA } from "@/lib/autocargarGuias";
 import { correoCursoListo } from "@/lib/email";
 
 // Formatea fecha/hora en español Colombia (para avisar cuándo estará disponible).
@@ -173,4 +173,72 @@ export async function copiarPlanOPEC(cursoId: string) {
   const { data: curso } = await supabase.from("cursos").select("opec").eq("id", cursoId).single();
   await copiarPlanDesdeOPEC(supabase, cursoId, curso?.opec ?? null);
   revalidatePath(`/admin/cursos/${cursoId}`);
+}
+
+/**
+ * "Armar plan completo desde una plantilla" — Inserta de una sola vez TODAS
+ * las guías de un plan predefinido (ver PLANES_PLANTILLA en autocargarGuias.ts),
+ * resolviendo cada guía por su CÓDIGO contra el catálogo (biblioteca.json). Así
+ * el admin arma un curso completo (Días 1 a 21) con un clic, sin subir HTML ni
+ * teclear guía por guía. Es idempotente: no duplica las que ya estén asignadas
+ * (compara por archivo_path) y omite con aviso las que no estén publicadas.
+ *
+ * @returns objeto con conteos {insertadas, omitidas, faltantes[]} — se usa para
+ *          mostrar un resumen al admin.
+ */
+export async function armarPlanPlantilla(cursoId: string, planId: string) {
+  await requireAdmin();
+  const plan = PLANES_PLANTILLA[planId];
+  if (!plan) throw new Error(`No existe la plantilla de plan "${planId}".`);
+
+  const supabase = createAdminClient();
+
+  // Guías ya asignadas al curso (para no duplicar).
+  const { data: yaTiene } = await supabase
+    .from("guias_curso")
+    .select("archivo_path")
+    .eq("curso_id", cursoId);
+  const existentes = new Set((yaTiene || []).map((g: any) => g.archivo_path).filter(Boolean));
+
+  const registros: any[] = [];
+  const faltantes: string[] = [];
+  let omitidas = 0;
+
+  for (const item of plan.guias) {
+    const guia = getGuiaCatalogo(item.codigo);
+    // La guía debe existir en el catálogo y tener su HTML publicado en el bucket.
+    if (!guia || !guia.archivoPath || guia.estado !== "publicada") {
+      faltantes.push(item.codigo);
+      continue;
+    }
+    if (existentes.has(guia.archivoPath)) {
+      omitidas++;
+      continue;
+    }
+    registros.push({
+      curso_id: cursoId,
+      titulo: guia.titulo,
+      dia: item.dia,
+      tipo: guia.tipo,
+      orden: item.orden ?? item.dia ?? 0,
+      archivo_path: guia.archivoPath,
+    });
+  }
+
+  if (registros.length > 0) {
+    const { error } = await supabase.from("guias_curso").insert(registros);
+    if (error) throw new Error("No se pudo armar el plan: " + error.message);
+  }
+
+  revalidatePath(`/admin/cursos/${cursoId}`);
+  return { insertadas: registros.length, omitidas, faltantes };
+}
+
+/**
+ * Wrapper con firma `(formData) => Promise<void>` para usar directamente como
+ * `action` de un <form> (Next exige que la action del form no devuelva datos).
+ * Delega en `armarPlanPlantilla`. El planId se pasa por bind() o por el form.
+ */
+export async function armarPlanPlantillaForm(cursoId: string, planId: string, _formData: FormData): Promise<void> {
+  await armarPlanPlantilla(cursoId, planId);
 }

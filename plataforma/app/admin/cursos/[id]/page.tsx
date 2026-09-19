@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
+import { PLANES_PLANTILLA } from "@/lib/autocargarGuias";
 import BarraTiempoAdmin from "../BarraTiempoAdmin";
 import BarraProgresoAdmin from "../BarraProgresoAdmin";
 
@@ -177,6 +178,21 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       <p style={{ color: "var(--texto-suave)", fontSize: ".78rem", margin: "8px 0 18px", textAlign: "center" }}>
         Revisa las guías y el simulacro antes de dar "Curso listo" o "Habilitar ahora".
       </p>
+
+      {/* Armar plan completo desde una plantilla (1 clic) */}
+      <div style={{ ...box, background: "linear-gradient(135deg,#FBF3E1,#FFF9EF)", border: "1px solid #F0DCB0" }}>
+        <h2 style={{ fontSize: "1rem", marginBottom: 6 }}>⚡ Armar plan completo (plantilla)</h2>
+        <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", margin: "0 0 12px" }}>
+          Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
+        </p>
+        {Object.values(PLANES_PLANTILLA).map((plan) => (
+          <form key={plan.id} action={armarPlanPlantillaForm.bind(null, curso.id, plan.id)} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 6 }}>
+            <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "var(--azul)", fontWeight: 700 }}>{plan.nombre}</span>
+            <span style={{ fontSize: ".76rem", color: "var(--texto-suave)" }}>{plan.guias.length} guías</span>
+            <button className="btn btn-oro" style={{ padding: "9px 16px", fontSize: ".84rem" }}>⚡ Armar este plan</button>
+          </form>
+        ))}
+      </div>
 
       {/* Habilitar acceso */}
       {curso.estado !== "listo" && (
