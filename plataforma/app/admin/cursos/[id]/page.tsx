@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm, rehacerPlanPlantillaForm } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm, rehacerPlanPlantillaForm, vaciarCursoForm } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 import { PLANES_PLANTILLA } from "@/lib/autocargarGuias";
 import BarraTiempoAdmin from "../BarraTiempoAdmin";
@@ -185,6 +185,16 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", margin: "0 0 12px" }}>
           Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
         </p>
+
+        {/* Recomendado si el curso quedó con duplicados: vaciar y armar */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12, padding: "10px 12px", background: "#FFF", border: "1px dashed #E0B84D", borderRadius: 10 }}>
+          <span style={{ flex: 1, minWidth: 220, fontSize: ".82rem", color: "var(--texto)" }}>
+            ¿El curso quedó con guías duplicadas/genéricas? <strong>Vacíalo</strong> y luego usa <strong>Armar</strong> para dejarlo perfecto.
+          </span>
+          <form action={vaciarCursoForm.bind(null, curso.id)}>
+            <button className="btn" style={{ padding: "9px 14px", fontSize: ".82rem", background: "#b00020", color: "#fff", border: "none", borderRadius: 8 }}>🗑️ Vaciar curso (borrar TODAS las guías)</button>
+          </form>
+        </div>
         {Object.values(PLANES_PLANTILLA).map((plan) => (
           <div key={plan.id} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8, paddingBottom: 8, borderBottom: "1px dashed #F0DCB0" }}>
             <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "var(--azul)", fontWeight: 700 }}>{plan.nombre}</span>

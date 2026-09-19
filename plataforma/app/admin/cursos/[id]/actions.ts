@@ -162,6 +162,25 @@ export async function eliminarGuia(cursoId: string, guiaId: string) {
 }
 
 /**
+ * "Vaciar curso" — Elimina TODAS las guías del curso (lo deja en cero).
+ * Útil cuando el curso quedó con guías genéricas/duplicadas mezcladas y se
+ * prefiere partir de limpio y luego usar "⚡ Armar plan completo".
+ * No toca el curso en sí (cliente, estado, etc.), solo sus guías.
+ */
+export async function vaciarCurso(cursoId: string) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("guias_curso").delete().eq("curso_id", cursoId);
+  if (error) throw new Error("No se pudieron borrar las guías: " + error.message);
+  revalidatePath(`/admin/cursos/${cursoId}`);
+}
+
+/** Wrapper `(formData)=>Promise<void>` para usar vaciarCurso en un <form>. */
+export async function vaciarCursoForm(cursoId: string, _formData: FormData): Promise<void> {
+  await vaciarCurso(cursoId);
+}
+
+/**
  * "Copiar plan del mismo OPEC" — trae las guías (funcionales, entidad,
  * simulacro, etc.) de otro curso ya armado con el mismo OPEC, sin duplicar
  * las que ya estén. Útil para cursos creados antes de la reutilización
