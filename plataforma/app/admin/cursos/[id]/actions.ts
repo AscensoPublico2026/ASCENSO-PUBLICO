@@ -242,3 +242,83 @@ export async function armarPlanPlantilla(cursoId: string, planId: string) {
 export async function armarPlanPlantillaForm(cursoId: string, planId: string, _formData: FormData): Promise<void> {
   await armarPlanPlantilla(cursoId, planId);
 }
+
+/**
+ * "Rehacer plan (limpiar y armar)" — Deja el curso EXACTAMENTE con el plan de
+ * la plantilla:
+ *  1) ELIMINA del curso toda guía cuyo archivo_path NO pertenezca al plan
+ *     (p. ej. las genéricas CNSC que la auto-carga insertó por error).
+ *  2) INSERTA las guías del plan que falten (idempotente, sin duplicar).
+ *
+ * Resuelve el caso típico: un curso PGN al que se le auto-cargaron las guías
+ * genéricas (INTRO-00 CNSC, GEN-01/02/03, ASI-COM/ESP) y hay que sustituirlas
+ * por las -PGN-AUX correctas del cargo. Un solo clic deja el plan limpio.
+ *
+ * @returns {eliminadas, insertadas, conservadas, faltantes[]}
+ */
+export async function rehacerPlanPlantilla(cursoId: string, planId: string) {
+  await requireAdmin();
+  const plan = PLANES_PLANTILLA[planId];
+  if (!plan) throw new Error(`No existe la plantilla de plan "${planId}".`);
+
+  const supabase = createAdminClient();
+
+  // Resolver las rutas (archivo_path) que SÍ pertenecen al plan.
+  const rutasPlan = new Set<string>();
+  const faltantes: string[] = [];
+  for (const item of plan.guias) {
+    const g = getGuiaCatalogo(item.codigo);
+    if (g && g.archivoPath && g.estado === "publicada") rutasPlan.add(g.archivoPath);
+    else faltantes.push(item.codigo);
+  }
+
+  // Guías actuales del curso.
+  const { data: actuales } = await supabase
+    .from("guias_curso")
+    .select("id, archivo_path")
+    .eq("curso_id", cursoId);
+
+  // 1) Eliminar las que NO están en el plan (incluye las de archivo_path null/vacío).
+  const aEliminar = (actuales || []).filter(
+    (g: any) => !(g.archivo_path && rutasPlan.has(g.archivo_path))
+  );
+  let eliminadas = 0;
+  if (aEliminar.length > 0) {
+    const ids = aEliminar.map((g: any) => g.id);
+    const { error } = await supabase.from("guias_curso").delete().in("id", ids);
+    if (error) throw new Error("No se pudieron eliminar las guías sobrantes: " + error.message);
+    eliminadas = ids.length;
+  }
+
+  // 2) Insertar las del plan que falten (comparando por archivo_path ya presente).
+  const restantes = (actuales || []).filter(
+    (g: any) => g.archivo_path && rutasPlan.has(g.archivo_path)
+  );
+  const yaPresentes = new Set(restantes.map((g: any) => g.archivo_path));
+  const registros: any[] = [];
+  for (const item of plan.guias) {
+    const g = getGuiaCatalogo(item.codigo);
+    if (!g || !g.archivoPath || g.estado !== "publicada") continue;
+    if (yaPresentes.has(g.archivoPath)) continue;
+    registros.push({
+      curso_id: cursoId,
+      titulo: g.titulo,
+      dia: item.dia,
+      tipo: g.tipo,
+      orden: item.orden ?? item.dia ?? 0,
+      archivo_path: g.archivoPath,
+    });
+  }
+  if (registros.length > 0) {
+    const { error } = await supabase.from("guias_curso").insert(registros);
+    if (error) throw new Error("No se pudo armar el plan: " + error.message);
+  }
+
+  revalidatePath(`/admin/cursos/${cursoId}`);
+  return { eliminadas, insertadas: registros.length, conservadas: restantes.length, faltantes };
+}
+
+/** Wrapper `(formData)=>Promise<void>` para usar rehacerPlanPlantilla en un <form>. */
+export async function rehacerPlanPlantillaForm(cursoId: string, planId: string, _formData: FormData): Promise<void> {
+  await rehacerPlanPlantilla(cursoId, planId);
+}
