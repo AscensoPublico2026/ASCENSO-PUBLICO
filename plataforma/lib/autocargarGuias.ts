@@ -152,6 +152,18 @@ export async function cargarGuiasAutomaticas(
   const nivelNorm = (nivel || "").toLowerCase().trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
+  // GUARDA IDEMPOTENTE: si el curso ya tiene guías, NO volver a auto-cargar.
+  // Evita el bug de duplicados cuando esta función se ejecuta más de una vez
+  // sobre el mismo curso (p. ej. por un reproceso o un webhook reintentado).
+  const { count: yaTiene } = await supabase
+    .from("guias_curso")
+    .select("id", { count: "exact", head: true })
+    .eq("curso_id", cursoId);
+  if ((yaTiene ?? 0) > 0) {
+    console.warn(`[autocargarGuias] El curso ${cursoId} ya tiene ${yaTiene} guías; se omite la auto-carga (idempotente).`);
+    return;
+  }
+
   // --- PGN nivel asistencial: usar las guías propias -PGN-AUX (no las genéricas) ---
   // La Procuraduría (régimen especial) tiene guías reenfocadas al cargo Auxiliar
   // Administrativo. Si es PGN + asistencial, auto-cargamos las AUX correctas

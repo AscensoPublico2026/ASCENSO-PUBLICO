@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm, rehacerPlanPlantillaForm } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 import { PLANES_PLANTILLA } from "@/lib/autocargarGuias";
 import BarraTiempoAdmin from "../BarraTiempoAdmin";
@@ -186,12 +186,21 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
           Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
         </p>
         {Object.values(PLANES_PLANTILLA).map((plan) => (
-          <form key={plan.id} action={armarPlanPlantillaForm.bind(null, curso.id, plan.id)} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 6 }}>
+          <div key={plan.id} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8, paddingBottom: 8, borderBottom: "1px dashed #F0DCB0" }}>
             <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "var(--azul)", fontWeight: 700 }}>{plan.nombre}</span>
             <span style={{ fontSize: ".76rem", color: "var(--texto-suave)" }}>{plan.guias.length} guías</span>
-            <button className="btn btn-oro" style={{ padding: "9px 16px", fontSize: ".84rem" }}>⚡ Armar este plan</button>
-          </form>
+            <form action={armarPlanPlantillaForm.bind(null, curso.id, plan.id)}>
+              <button className="btn btn-oro" style={{ padding: "9px 14px", fontSize: ".82rem" }}>⚡ Armar (agregar las que falten)</button>
+            </form>
+            <form action={rehacerPlanPlantillaForm.bind(null, curso.id, plan.id)}>
+              <button className="btn btn-azul" style={{ padding: "9px 14px", fontSize: ".82rem" }}>🔄 Rehacer (limpiar y dejar solo este plan)</button>
+            </form>
+          </div>
         ))}
+        <p style={{ color: "var(--texto-suave)", fontSize: ".76rem", margin: "6px 0 0" }}>
+          <strong>Armar</strong>: agrega las guías del plan que falten, sin borrar nada. &nbsp;•&nbsp;
+          <strong>Rehacer</strong>: elimina del curso las guías que NO son de este plan (p. ej. las genéricas CNSC auto-cargadas) y deja exactamente las 21 correctas. Úsalo si el curso quedó con guías mezcladas.
+        </p>
       </div>
 
       {/* Habilitar acceso */}
@@ -253,7 +262,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       {/* DÍA 1 — Introducción y tu entidad */}
       <div style={box}>
         <h2 style={{ fontSize: "1rem", marginBottom: 12 }}>📅 Día 1 · Introducción y tu entidad</h2>
-        {intro ? filaGuia(intro, false) : (
+        {intro ? filaGuia(intro, true) : (
           <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>La presentación (INTRO-00) se auto-carga al confirmar la compra.</p>
         )}
 
@@ -285,7 +294,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         {guiasAuto.length === 0 ? (
           <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>No hay guías auto-cargadas todavía.</p>
         ) : (
-          <div style={{ display: "grid", gap: 6 }}>{guiasAuto.map((g: any) => filaGuia(g, false))}</div>
+          <div style={{ display: "grid", gap: 6 }}>{guiasAuto.map((g: any) => filaGuia(g, true))}</div>
         )}
       </div>
 
