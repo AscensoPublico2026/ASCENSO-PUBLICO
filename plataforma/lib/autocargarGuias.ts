@@ -62,6 +62,54 @@ const GUIAS_BONUS = [
   { codigo: "BON-02", dia: null, titulo: "Ofimática (Bonus)", tipo: "bonus", orden: 101 },
 ];
 
+/**
+ * PLANTILLAS DE PLAN COMPLETO por cargo/curso.
+ *
+ * Cada plantilla lista, por CÓDIGO de la biblioteca, TODAS las guías de un plan
+ * de estudio de 21 días (intro + entidad + generales + nivel + funcionales +
+ * simulacro) con su día. El admin arma el curso completo con un clic desde el
+ * panel (server action `armarPlanPlantilla`), que resuelve cada código contra
+ * el catálogo (biblioteca.json) y lo inserta en `guias_curso` sin duplicar.
+ *
+ * Ventaja: no se hardcodean rutas ni títulos aquí (eso vive en biblioteca.json);
+ * solo la correspondencia código→día del plan. Para un cargo nuevo, se agrega
+ * una entrada aquí con la lista de códigos y sus días.
+ */
+export interface ItemPlanPlantilla { codigo: string; dia: number; orden?: number }
+export interface PlanPlantilla { id: string; nombre: string; guias: ItemPlanPlantilla[] }
+
+export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
+  // Procuraduría General de la Nación — Auxiliar Administrativo (5AM-10), Convocatoria 242-2026.
+  "pgn-auxiliar-administrativo": {
+    id: "pgn-auxiliar-administrativo",
+    nombre: "PGN · Auxiliar Administrativo (5AM-10) — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-AUX", dia: 1 },
+      { codigo: "ENT-PGN-AUX-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-AUX", dia: 2 },
+      { codigo: "GEN-02-PGN-AUX", dia: 3 },
+      { codigo: "GEN-03-PGN-AUX", dia: 4 },
+      { codigo: "ASI-PGN-AUX-01", dia: 5 },
+      { codigo: "ASI-PGN-AUX-02", dia: 6 },
+      { codigo: "ASI-PGN-AUX-03", dia: 7 },
+      { codigo: "ASI-PGN-AUX-04", dia: 8 },
+      { codigo: "FUN-GDOC-AUX-01", dia: 9 },
+      { codigo: "FUN-GDOC-AUX-02", dia: 10 },
+      { codigo: "FUN-OFI-AUX-01", dia: 11 },
+      { codigo: "FUN-OFI-AUX-02", dia: 12 },
+      { codigo: "FUN-ATC-AUX-01", dia: 13 },
+      { codigo: "FUN-ALM-AUX-01", dia: 14 },
+      { codigo: "FUN-ALM-AUX-02", dia: 15 },
+      { codigo: "FUN-PGN-AUX-01", dia: 16 },
+      { codigo: "FUN-GP-AUX-01", dia: 17 },
+      { codigo: "FUN-MIPG-AUX-01", dia: 18 },
+      { codigo: "FUN-TRANS-AUX-01", dia: 19 },
+      { codigo: "FUN-CONST-AUX-01", dia: 20 },
+      { codigo: "SIM-PGN-5AM10-001", dia: 21 },
+    ],
+  },
+};
+
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
   "INTRO-00": "guias/INTRO-00-presentacion-curso.html",
@@ -103,6 +151,39 @@ export async function cargarGuiasAutomaticas(
   // Normalizar nivel (quitar tildes para que "técnico" → "tecnico")
   const nivelNorm = (nivel || "").toLowerCase().trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // --- PGN nivel asistencial: usar las guías propias -PGN-AUX (no las genéricas) ---
+  // La Procuraduría (régimen especial) tiene guías reenfocadas al cargo Auxiliar
+  // Administrativo. Si es PGN + asistencial, auto-cargamos las AUX correctas
+  // (Días 1-8: intro + entidad + generales + competencias) resolviéndolas por
+  // código contra el catálogo. Las funcionales y el simulacro las arma el admin
+  // (o el botón "Armar plan completo").
+  if (esPGN(convocatoriaId) && nivelNorm === "asistencial") {
+    const CODIGOS_PGN_AUX: Array<{ codigo: string; dia: number; orden: number; tipo: string }> = [
+      { codigo: "INTRO-00-PGN-AUX", dia: 1, orden: 0, tipo: "general" },
+      { codigo: "ENT-PGN-AUX-01", dia: 1, orden: 1, tipo: "general" },
+      { codigo: "GEN-01-PGN-AUX", dia: 2, orden: 2, tipo: "general" },
+      { codigo: "GEN-02-PGN-AUX", dia: 3, orden: 3, tipo: "general" },
+      { codigo: "GEN-03-PGN-AUX", dia: 4, orden: 4, tipo: "general" },
+      { codigo: "ASI-PGN-AUX-01", dia: 5, orden: 5, tipo: "nivel" },
+      { codigo: "ASI-PGN-AUX-02", dia: 6, orden: 6, tipo: "nivel" },
+      { codigo: "ASI-PGN-AUX-03", dia: 7, orden: 7, tipo: "nivel" },
+      { codigo: "ASI-PGN-AUX-04", dia: 8, orden: 8, tipo: "nivel" },
+    ];
+    const guia = (await import("./catalogoGuias")).getGuiaCatalogo;
+    const registrosPGN = CODIGOS_PGN_AUX
+      .map((c) => {
+        const g = guia(c.codigo);
+        if (!g || !g.archivoPath || g.estado !== "publicada") return null;
+        return { curso_id: cursoId, dia: c.dia, titulo: g.titulo, tipo: c.tipo, orden: c.orden, archivo_path: g.archivoPath };
+      })
+      .filter(Boolean) as any[];
+    if (registrosPGN.length > 0) {
+      const { error } = await supabase.from("guias_curso").insert(registrosPGN);
+      if (error) console.error("[autocargarGuias] Error al insertar guías PGN-AUX:", error.message);
+    }
+    return;
+  }
 
   // Elegir la guía de introducción según tipo de concurso
   const intro = esPGN(convocatoriaId) ? INTRO_PGN : INTRO_CNSC;
