@@ -262,7 +262,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       {/* DÍA 1 — Introducción y tu entidad */}
       <div style={box}>
         <h2 style={{ fontSize: "1rem", marginBottom: 12 }}>📅 Día 1 · Introducción y tu entidad</h2>
-        {intro ? filaGuia(intro, false) : (
+        {intro ? filaGuia(intro, true) : (
           <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>La presentación (INTRO-00) se auto-carga al confirmar la compra.</p>
         )}
 
@@ -294,7 +294,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         {guiasAuto.length === 0 ? (
           <p style={{ color: "var(--texto-suave)", fontSize: ".85rem" }}>No hay guías auto-cargadas todavía.</p>
         ) : (
-          <div style={{ display: "grid", gap: 6 }}>{guiasAuto.map((g: any) => filaGuia(g, false))}</div>
+          <div style={{ display: "grid", gap: 6 }}>{guiasAuto.map((g: any) => filaGuia(g, true))}</div>
         )}
       </div>
 
