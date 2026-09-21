@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>SAGRILAFT & PTEE · Conocimiento de Contrapartes · EVOLTI</title>
+<style>
+  :root{
+    --navy:#062A54; --navy-2:#0A3A70; --blue:#1259A8;
+    --ink:#1c2430; --ink-soft:#5b6675; --line:#b9c4d4; --line-soft:#e3e9f1;
+    --band-txt:#ffffff; --bg-soft:#eef3f9; --bg-zebra:#f6f9fc;
+  }
+  *{box-sizing:border-box;}
+  @page{ size:Letter; margin:0; }
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+    color:var(--ink); font-size:8.2px; line-height:1.2;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  /* Cada .page es exactamente una hoja Carta (816x1056px) con margenes internos */
+  .page{
+    width:816px; height:1056px; position:relative; overflow:hidden;
+    padding:8mm 12mm 14mm 12mm;
+    break-after:page; page-break-after:always;
+  }
+  .page:last-child{ break-after:auto; page-break-after:auto; }
+  .top{ display:flex; align-items:center; justify-content:space-between;
+        border-bottom:3px solid var(--navy); padding:2px 0 8px; margin-bottom:2px;}
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand img{ height:28px; display:block; }
+  .doc-meta table{ border-collapse:collapse; }
+  .doc-meta td{ border:1px solid var(--line); padding:2px 8px; font-size:7.4px; color:var(--ink-soft);}
+  .doc-meta td.k{ background:var(--navy); color:#fff; font-weight:600; border-color:var(--navy);}
+  .doc-meta input.metaf{ border:none; background:var(--bg-zebra); width:74px; font:inherit; font-size:7.4px; color:#000; padding:1px 4px; outline:none; }
+  .title{ text-align:center; margin:7px 0 2px; }
+  .title h1{ font-size:12.5px; letter-spacing:.6px; margin:0; text-transform:uppercase; color:var(--navy); }
+  .title p{ font-size:7.8px; color:var(--ink-soft); margin:1px 0 0; letter-spacing:.3px;}
+
+  .tramite{ display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap;
+            border:1.4px solid var(--navy); background:var(--bg-soft);
+            padding:5px 10px; margin:7px 0 0; border-radius:5px; }
+  .tramite .lbl{ font-weight:700; color:var(--navy); letter-spacing:.3px; }
+  .datebox{ display:inline-flex; align-items:center; gap:6px; }
+
+  .sec{ margin-top:5px; border:1px solid var(--line); border-radius:5px; overflow:hidden; }
+  .sec > .band{
+    background:linear-gradient(90deg,var(--navy),var(--navy-2));
+    color:var(--band-txt); padding:4px 10px; font-weight:700; font-size:8.6px; letter-spacing:.6px;
+    text-transform:uppercase; display:flex; align-items:center; gap:8px;
+  }
+  .sec > .band .n{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:14px; height:14px; background:#fff; color:var(--navy); border-radius:50%;
+    font-size:7.6px; font-weight:800;
+  }
+  .sec .body{ padding:5px 8px; }
+  .subband{ background:var(--bg-soft); color:var(--navy); font-weight:700; font-size:7.6px;
+            text-transform:uppercase; letter-spacing:.3px; padding:3px 8px; margin:6px -8px 4px;
+            border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft);}
+  .sec .body > .subband:first-child{ margin-top:-5px; }
+
+  .grid{ display:grid; gap:5px 8px; }
+  .g2{ grid-template-columns:1fr 1fr; }
+  .g3{ grid-template-columns:1fr 1fr 1fr; }
+  .g4{ grid-template-columns:1fr 1fr 1fr 1fr; }
+  .g5{ grid-template-columns:1fr 1fr 1fr 1fr 1fr; }
+  .field{ display:flex; flex-direction:column; gap:2px; }
+  .field .lab{ font-size:7px; text-transform:uppercase; letter-spacing:.3px; color:var(--navy); font-weight:700;}
+  .field input, .field textarea{
+    border:none; border-bottom:1.2px solid var(--line); background:var(--bg-zebra);
+    border-radius:3px 3px 0 0; min-height:16px; font:inherit; color:var(--ink);
+    padding:2px 5px; width:100%; outline:none;
+  }
+  .field input:focus, .field textarea:focus{ border-bottom-color:var(--blue); background:#fff; }
+  .field.wide{ grid-column:1/-1; }
+  .span2{ grid-column:span 2; } .span3{ grid-column:span 3; }
+
+  .checks{ display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; }
+  .chk{ display:inline-flex; align-items:center; gap:5px; font-size:8px; }
+  .chk input[type=checkbox]{
+    appearance:none; -webkit-appearance:none; width:12px; height:12px; margin:0;
+    border:1.4px solid var(--navy); border-radius:3px; background:#fff;
+    box-sizing:border-box; flex:0 0 auto; padding:0;
+  }
+  .chk .mini{ border:none; border-bottom:1px solid var(--line); background:var(--bg-zebra);
+    font:inherit; padding:1px 4px; width:120px; }
+  .inline-lab{ font-size:7.2px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:.3px; margin-right:2px;}
+  .q{ font-size:7.6px; color:var(--ink); }
+
+  table.form{ width:100%; border-collapse:collapse; margin-top:2px; }
+  table.form th{
+    background:var(--bg-soft); border:1px solid var(--line);
+    font-size:6.9px; text-transform:uppercase; letter-spacing:.2px;
+    padding:3px 5px; color:var(--navy); font-weight:700; text-align:left;
+  }
+  table.form td{ border:1px solid var(--line); padding:0; }
+  table.form td input{ border:none; background:transparent; width:100%; height:18px; padding:2px 5px; font:inherit; outline:none; }
+  table.form td input:focus{ background:var(--bg-zebra); }
+  table.form td.fixed{ padding:2px 5px; background:var(--bg-zebra); font-weight:600; color:var(--navy); font-size:7.6px; }
+
+  .hint{ font-size:7px; color:var(--ink-soft); font-style:italic; margin:4px 0 2px;}
+  .legal{ font-size:6.2px; color:var(--ink-soft); text-align:justify; line-height:1.3; }
+  .legal b{ color:var(--navy); }
+  .legal p{ margin:0 0 3px; }  .legal p:last-child{ margin:0; }
+  .legal ol{ margin:0; padding-left:12px; }  .legal li{ margin:0 0 2px; }
+
+  .firmas{ display:grid; grid-template-columns:1.3fr 1fr .7fr; gap:20px; margin-top:6px; }
+  .firma .line{ border-bottom:1.2px solid var(--ink); height:30px; }
+  .firma .cap{ font-size:7px; text-transform:uppercase; letter-spacing:.3px; color:var(--navy); font-weight:700; text-align:center; margin-top:3px;}
+  .firma .subcap{ font-size:7px; color:var(--ink-soft); margin-top:3px; display:flex; gap:5px; align-items:center; justify-content:center; }
+  .firma .subcap input{ border:none; border-bottom:1px solid var(--line); background:var(--bg-zebra); font:inherit; padding:1px 3px; }
+  .huella{ border:1.4px dashed var(--line); border-radius:5px; height:52px; display:flex; align-items:center; justify-content:center; font-size:7px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ENCABEZADO -->
+  <div class="top">
+    <div class="brand">
+      <img src="data:image/png;base64,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" alt="EVOLTI">
+    </div>
+    <div class="doc-meta">
+      <table>
+        <tr>
+          <td class="k">Código</td><td><input type="text" class="metaf"></td>
+          <td class="k">Versión</td><td><input type="text" class="metaf" style="width:26px"></td>
+          <td class="k">Actualización</td><td><input type="text" class="metaf"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="title">
+    <h1>SAGRILAFT &amp; PTEE — Conocimiento y vinculación de contrapartes</h1>
+    <p>Formulario de conocimiento del cliente / proveedor / contratista</p>
+  </div>
+
+  <!-- TIPO DE TRÁMITE / RELACIÓN -->
+  <div class="tramite">
+    <span class="lbl">Fecha de diligenciamiento (dd/mm/aa):</span>
+    <input class="mini" type="text" style="width:110px">
+    <span class="lbl" style="margin-left:8px">Tipo de trámite:</span>
+    <label class="chk"><input type="checkbox"><span>Primera vez</span></label>
+    <label class="chk"><input type="checkbox"><span>Actualización</span></label>
+  </div>
+  <div class="tramite" style="margin-top:4px;">
+    <span class="lbl">Relación:</span>
+    <label class="chk"><input type="checkbox"><span>Proveedor</span></label>
+    <label class="chk"><input type="checkbox"><span>Contratista</span></label>
+    <label class="chk"><input type="checkbox"><span>Otro</span></label>
+    <span class="inline-lab">¿Cuál?</span><input class="mini" type="text" style="width:170px">
+  </div>
+
+  <!-- A. PERSONA NATURAL -->
+  <div class="sec">
+    <div class="band"><span class="n">A</span> Persona natural</div>
+    <div class="body">
+      <div class="grid g4">
+        <div class="field span2"><span class="lab">Nombre completo</span><input type="text"></div>
+        <div class="field"><span class="lab">Lugar de nac. — Ciudad</span><input type="text"></div>
+        <div class="field"><span class="lab">Lugar de nac. — País</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px; align-items:end">
+        <div class="checks">
+          <span class="inline-lab">Tipo de ID:</span>
+          <label class="chk"><input type="checkbox"><span>C.C.</span></label>
+          <label class="chk"><input type="checkbox"><span>C.E.</span></label>
+          <label class="chk"><input type="checkbox"><span>T.I.</span></label>
+          <label class="chk"><input type="checkbox"><span>PP</span></label>
+        </div>
+        <div class="field"><span class="lab">N° de identificación</span><input type="text"></div>
+        <div class="field"><span class="lab">Fecha nac. (dd/mm/aaaa)</span><input type="text"></div>
+        <div class="field"><span class="lab">Actividad económica — CIIU</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px">
+        <div class="field span2"><span class="lab">Dirección de domicilio</span><input type="text"></div>
+        <div class="field"><span class="lab">Ciudad</span><input type="text"></div>
+        <div class="field"><span class="lab">Departamento</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px">
+        <div class="field"><span class="lab">País</span><input type="text"></div>
+        <div class="field"><span class="lab">Contacto / teléfono</span><input type="text"></div>
+        <div class="field span2"><span class="lab">Correo electrónico</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px; align-items:end">
+        <div class="field span2"><span class="lab">Ocupación, profesión u oficio</span><input type="text"></div>
+        <div class="checks">
+          <label class="chk"><input type="checkbox"><span>Dependiente</span></label>
+          <label class="chk"><input type="checkbox"><span>Independiente</span></label>
+        </div>
+        <div class="field"><span class="lab">Actividad económica</span><input type="text"></div>
+      </div>
+      <div class="grid g2" style="margin-top:6px">
+        <div class="checks"><span class="q">¿Administra recursos públicos?</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+        <div class="checks"><span class="q">¿Es persona expuesta públicamente?</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="subband">Información financiera — persona natural</div>
+      <div class="grid g3">
+        <div class="field"><span class="lab">Ingresos mensuales</span><input type="text"></div>
+        <div class="field"><span class="lab">Egresos mensuales</span><input type="text"></div>
+        <div class="field"><span class="lab">Total activos</span><input type="text"></div>
+      </div>
+      <div class="grid g3" style="margin-top:5px">
+        <div class="field"><span class="lab">Otros ingresos</span><input type="text"></div>
+        <div class="field"><span class="lab">Otros egresos</span><input type="text"></div>
+        <div class="field"><span class="lab">Total patrimonio</span><input type="text"></div>
+      </div>
+      <div class="field wide" style="margin-top:5px"><span class="lab">Origen de otros ingresos</span><input type="text"></div>
+    </div>
+  </div>
+
+  <!-- B. PERSONA JURÍDICA -->
+  <div class="sec">
+    <div class="band"><span class="n">B</span> Persona jurídica</div>
+    <div class="body">
+      <div class="grid g4">
+        <div class="field span2"><span class="lab">Razón social</span><input type="text"></div>
+        <div class="field span2"><span class="lab">Dirección de la empresa</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px; align-items:end">
+        <div class="checks">
+          <span class="inline-lab">Tipo ID fiscal:</span>
+          <label class="chk"><input type="checkbox"><span>NIT</span></label>
+          <label class="chk"><input type="checkbox"><span>RUC</span></label>
+          <label class="chk"><input type="checkbox"><span>CUIT</span></label>
+          <label class="chk"><input type="checkbox"><span>CNPJ</span></label>
+        </div>
+        <div class="field"><span class="lab">N° de identificación</span><input type="text"></div>
+        <div class="field"><span class="lab">Fecha matrícula (dd/mm/aaaa)</span><input type="text"></div>
+        <div class="field"><span class="lab">Actividad económica — CIIU</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px; align-items:end">
+        <div class="field span2"><span class="lab">Página web / correo electrónico</span><input type="text"></div>
+        <div class="field"><span class="lab">Contacto</span><input type="text"></div>
+        <div class="checks" style="flex-direction:column; align-items:flex-start; gap:3px">
+          <span class="inline-lab">Tipo de empresa:</span>
+          <div class="checks">
+            <label class="chk"><input type="checkbox"><span>Privada</span></label>
+            <label class="chk"><input type="checkbox"><span>Pública</span></label>
+            <label class="chk"><input type="checkbox"><span>Estatal</span></label>
+            <label class="chk"><input type="checkbox"><span>Mixta</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="subband">Representante legal principal</div>
+      <div class="grid g4">
+        <div class="field span2"><span class="lab">Nombre completo del rep. legal</span><input type="text"></div>
+        <div class="field"><span class="lab">Lugar de nac. — Ciudad</span><input type="text"></div>
+        <div class="field"><span class="lab">Lugar de nac. — País</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px; align-items:end">
+        <div class="checks">
+          <span class="inline-lab">Tipo de ID:</span>
+          <label class="chk"><input type="checkbox"><span>C.C.</span></label>
+          <label class="chk"><input type="checkbox"><span>C.E.</span></label>
+          <label class="chk"><input type="checkbox"><span>T.I.</span></label>
+          <label class="chk"><input type="checkbox"><span>PP</span></label>
+        </div>
+        <div class="field"><span class="lab">N° de identificación</span><input type="text"></div>
+        <div class="field"><span class="lab">Fecha nac. (dd/mm/aaaa)</span><input type="text"></div>
+        <div class="field"><span class="lab">Contacto / teléfono</span><input type="text"></div>
+      </div>
+      <div class="grid g4" style="margin-top:5px">
+        <div class="field span2"><span class="lab">Dirección de domicilio</span><input type="text"></div>
+        <div class="field"><span class="lab">Ciudad</span><input type="text"></div>
+        <div class="field"><span class="lab">Departamento / País</span><input type="text"></div>
+      </div>
+      <div class="field wide" style="margin-top:5px"><span class="lab">Correo electrónico del rep. legal</span><input type="text"></div>
+
+      <div class="subband">Información financiera — persona jurídica</div>
+      <div class="grid g3">
+        <div class="field"><span class="lab">Ingresos mensuales</span><input type="text"></div>
+        <div class="field"><span class="lab">Egresos mensuales</span><input type="text"></div>
+        <div class="field"><span class="lab">Total activos</span><input type="text"></div>
+      </div>
+      <div class="grid g3" style="margin-top:5px">
+        <div class="field"><span class="lab">Otros ingresos</span><input type="text"></div>
+        <div class="field"><span class="lab">Otros egresos</span><input type="text"></div>
+        <div class="field"><span class="lab">Total patrimonio</span><input type="text"></div>
+      </div>
+      <div class="field wide" style="margin-top:5px"><span class="lab">Origen de otros ingresos</span><input type="text"></div>
+
+      <div class="subband">Composición accionaria</div>
+      <table class="form">
+        <tr><th style="width:42%">Nombre del socio / accionista</th><th>Tipo de ID</th><th>N° de identificación</th><th>% de participación</th></tr>
+        <tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+        <tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+        <tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+        <tr><td><input></td><td><input></td><td><input></td><td><input></td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /page 1 -->
+<div class="page">
+
+  <!-- CERTIFICACIONES -->
+  <div class="sec">
+    <div class="band"><span class="n">C</span> Certificaciones</div>
+    <div class="body">
+      <div class="grid g4" style="align-items:end">
+        <div class="checks"><span class="q">¿Su empresa está certificada y/o acreditada?</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+        <div class="field span2"><span class="lab">¿En qué sistema de gestión?</span><input type="text"></div>
+        <div class="field"><span class="lab">¿Cuál?</span><input type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D. OPERACIONES EN MONEDA EXTRANJERA -->
+  <div class="sec">
+    <div class="band"><span class="n">D</span> Operaciones en moneda extranjera</div>
+    <div class="body">
+      <div class="grid g2">
+        <div class="checks"><span class="q">¿Realiza operaciones en moneda extranjera?</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+        <div class="checks"><span class="q">¿Posee cuentas en moneda extranjera?</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+      </div>
+      <div class="field wide" style="margin-top:5px"><span class="lab">¿Cuáles operaciones?</span><input type="text"></div>
+      <div class="grid g4" style="margin-top:5px">
+        <div class="field"><span class="lab">N° de cuenta</span><input type="text"></div>
+        <div class="field"><span class="lab">Moneda</span><input type="text"></div>
+        <div class="field"><span class="lab">Ciudad</span><input type="text"></div>
+        <div class="field"><span class="lab">País</span><input type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E. PEP (parte 1) -->
+  <div class="sec">
+    <div class="band"><span class="n">E</span> Conocimiento de Personas Expuestas Políticamente (PEP)</div>
+    <div class="body">
+      <p class="legal" style="margin-bottom:5px"><b>Artículo 2, Decreto 830/21:</b> se consideran Personas Expuestas Políticamente (PEP) los servidores públicos de cualquier nomenclatura de la administración pública nacional y territorial con funciones de expedición de normas o regulaciones, dirección general, formulación de políticas y adopción de planes, programas y proyectos; manejo directo de bienes, dineros o valores del Estado; administración de justicia o facultades administrativo-sancionatorias; y los particulares con dirección o manejo de recursos en movimientos o partidos políticos. También quienes ejerzan funciones directivas en una organización internacional y los extranjeros con funciones públicas prominentes en otro país, conforme al capítulo X de la CBJ (Circular 100-000016 de 2020) de la Superintendencia de Sociedades.</p>
+      <div class="grid g2">
+        <div class="checks"><span class="q">Por mi cargo o actividad manejo recursos públicos o ejerzo algún grado de poder público.</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+        <div class="checks"><span class="q">Por mi actividad u oficio gozo de reconocimiento público.</span>
+          <label class="chk"><input type="checkbox"><span>Sí</span></label>
+          <label class="chk"><input type="checkbox"><span>No</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEP (parte 2 - marque sí o no) -->
+  <div class="sec">
+    <div class="band"><span class="n">E</span> PEP — Por favor marque Sí o No</div>
+    <div class="body">
+      <table class="form">
+        <tr><th style="width:60%">Declaración</th><th style="text-align:center">Sí</th><th style="text-align:center">No</th></tr>
+        <tr><td class="fixed">Existen PEP en su empresa</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+        <tr><td class="fixed">He sido funcionario judicial de alto rango</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+        <tr><td class="fixed">He sido funcionario gubernamental o político de alto rango</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+        <tr><td class="fixed">He sido PEP nacional o extranjero</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+        <tr><td class="fixed">He sido jefe de Estado o de gobierno</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+        <tr><td class="fixed">He sido militar de alto rango</td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td><td style="text-align:center"><input type="checkbox" style="margin:3px"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- F. REFERENCIAS -->
+  <div class="sec">
+    <div class="band"><span class="n">F</span> Referencias</div>
+    <div class="body">
+      <div class="subband" style="margin-top:-5px">Referencias comerciales</div>
+      <table class="form">
+        <tr><th style="width:40%">Razón social</th><th>Persona de contacto</th><th>Contacto — celular</th></tr>
+        <tr><td><input></td><td><input></td><td><input></td></tr>
+        <tr><td><input></td><td><input></td><td><input></td></tr>
+      </table>
+      <div class="subband">Referencias financieras</div>
+      <table class="form">
+        <tr><th style="width:40%">Entidad</th><th>Tipo de cuenta</th><th>Contacto</th></tr>
+        <tr><td><input></td><td><input></td><td><input></td></tr>
+        <tr><td><input></td><td><input></td><td><input></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- G. ORIGEN DE FONDOS -->
+  <div class="sec">
+    <div class="band"><span class="n">G</span> Origen de fondos</div>
+    <div class="body">
+      <div class="field wide"><span class="lab">Describa brevemente el origen de sus recursos</span><input type="text" style="min-height:30px"></div>
+    </div>
+  </div>
+
+</div><!-- /page 2 -->
+<div class="page">
+
+  <!-- DECLARACIONES Y AUTORIZACIONES -->
+  <div class="sec">
+    <div class="band"><span class="n">H</span> Declaraciones y autorizaciones (persona natural y jurídica)</div>
+    <div class="body legal">
+      <ol>
+        <li>Los recursos con los cuales realizo mi actividad económica provienen de lo descrito en la casilla "Origen de los recursos" de este formulario.</li>
+        <li>Declaro que estos recursos no provienen de ninguna actividad ilícita.</li>
+        <li>No contrataré, ni tendré vínculos, ni admitiré que terceros efectúen en mi nombre o a nombre propio operaciones ilegales o cuyos recursos o fondos provengan o sean destinados para actividades ilícitas contempladas en la ley vigente, ni efectuaré transacciones destinadas a tales actividades o a favor de personas relacionadas con las mismas o cualquier otro tercero.</li>
+        <li>Me comprometo a comunicar de inmediato a EVOLTI COMPANY S.A.S sobre cualquier acto ilícito que pueda exponer a un riesgo legal y/o que ponga en entredicho su reputación.</li>
+        <li>Me comprometo a mantener la integridad y los lineamientos éticos al interior de mi entidad.</li>
+        <li>No he sido, ni la entidad que represento, ni sus accionistas, socios, representantes legales y miembros del máximo órgano de administración, incluido(s) en investigaciones relacionadas con LA/FT/FPADM, ni en listas restrictivas, o en alguna clase de investigación por delitos, quedando facultada la empresa para efectuar las verificaciones que considere pertinentes, así como para dar por terminada cualquier relación comercial o jurídica si verifica que yo o alguna de las personas a quienes represento figuran en dichas listas o investigaciones.</li>
+        <li>Que yo y/o la entidad que represento rechazamos cualquier acto de ilegalidad que pueda involucrar a las empresas, y me aseguraré de que las partes que intervengan en el desarrollo de este negocio o contrato mantengamos controles de prevención y control de riesgos de lavado de activos, financiación del terrorismo y proliferación de armas de destrucción masiva, soborno, soborno transnacional o corrupción, bien sea que por ley estén obligados a cumplir o por buenas prácticas se realicen.</li>
+        <li>Me comprometo a mantener informada a EVOLTI COMPANY S.A.S de cualquier cambio o modificación de la información aquí contenida.</li>
+        <li>Que yo y/o la entidad que represento garantizamos el cumplimiento absoluto de las leyes colombianas y la política anticorrupción y antisoborno de EVOLTI COMPANY S.A.S, y nos abstendremos de hacer ofertas, promesas, pagos y acuerdos de pago o soborno, u otro tipo de beneficio o ventaja, y de entregar objetos de valor pecuniario a funcionarios públicos, personas, entidades u otros terceros a cambio de ventajas indebidas, ya sean directas o indirectas.</li>
+        <li>Me comprometo a no realizar ningún pago, directo o indirecto, en dinero o en especie, con motivo de la prestación de los servicios materia de esta relación comercial, a ninguna dependencia de gobierno, partido político, candidato o servidor público, con el propósito de ejercer influencia o impulsar una situación de negocios relacionada con la presente negociación que pueda constituir una violación a la ley colombiana o de otro país en materia de corrupción, o que pueda resultar en perjuicio de la reputación, imagen o nombre de EVOLTI COMPANY S.A.S, sus filiales, afiliadas, subsidiarias, directores y empleados.</li>
+        <li>Autorizo a EVOLTI COMPANY S.A.S para que verifique la veracidad y realice las consultas que estime necesarias con el propósito de confirmar la información registrada en este formulario, para el control y prevención de LA/FT/FPADM.</li>
+        <li>Autorizo a EVOLTI COMPANY S.A.S para reportar, procesar, divulgar y solicitar información sobre el comportamiento comercial y financiero reportado en las bases de datos de las centrales de riesgo de la empresa que represento.</li>
+        <li>Estoy informado de mi obligación de actualizar anualmente la información que solicite EVOLTI COMPANY S.A.S por cada producto o servicio que utilice, suministrando la información documental exigida para dar cumplimiento a la normatividad vigente.</li>
+        <li>En caso de infracción de cualquiera de los hechos contenidos en este documento, eximo a EVOLTI COMPANY S.A.S de toda responsabilidad que se derive por información errónea, falsa o inexacta que se hubiere proporcionado, o de la violación de este.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- I. AUTORIZACIÓN TRATAMIENTO DE DATOS -->
+  <div class="sec">
+    <div class="band"><span class="n">I</span> Autorización de tratamiento de datos personales</div>
+    <div class="body legal">
+      <p>A nombre propio y en mi calidad de representante legal, propietario y/o funcionario encargado (identificado como aparece al pie de mi firma), de la empresa descrita en este formulario, otorgo mi autorización expresa e irrevocable a EVOLTI COMPANY S.A.S y a quienes en el futuro ostenten los derechos aquí autorizados para que:</p>
+      <ol>
+        <li>Recolecte, use, transfiera, transmita y en general procese mis datos personales conforme a la Ley 1581 de 2012, sus decretos reglamentarios y la normatividad vigente. Las finalidades incluyen el cumplimiento de los fines de EVOLTI COMPANY S.A.S; el cumplimiento de obligaciones legales o contractuales con terceros; el cumplimiento de las políticas internas; gestionar y consolidar registros; realizar campañas de actualización de datos; estudios de seguridad; prevención de fraudes, lavado de activos y financiación del terrorismo; administración de sistemas de información y comunicaciones; eventuales investigaciones para dar cumplimiento a los reglamentos internos; reporte de información a las autoridades competentes; y la consolidación de bases de datos, entre otros.</li>
+        <li>Realice la verificación pertinente de la información suministrada en este formulario.</li>
+        <li>En cualquier tiempo, consulte la información comercial, crediticia y financiera en bases de datos y listas restrictivas, de fuente nacional o de otros países, atinente a las relaciones comerciales con el sistema financiero, comercial y de servicios, o de cualquier sector, tanto en Colombia como en el exterior.</li>
+        <li>Acepto y conozco los derechos como titular de mis datos personales, que incluyen presentar solicitudes de información, actualización, supresión y/o rectificación sobre mis datos.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- J. ACEPTACIÓN DEL CLIENTE + FIRMAS -->
+  <div class="sec">
+    <div class="band"><span class="n">J</span> Aceptación del cliente</div>
+    <div class="body">
+      <p class="legal">Declaro que he leído, entendido, aceptado y diligenciado correcta, completa y verazmente el presente documento. En constancia, firmo el presente formulario a los <input class="mini" type="text" style="width:44px"> días del mes de <input class="mini" type="text" style="width:110px"> del año <input class="mini" type="text" style="width:60px"> en la ciudad de <input class="mini" type="text" style="width:150px">.</p>
+      <div class="firmas">
+        <div class="firma">
+          <div class="line"></div>
+          <div class="cap">Firma · Representante legal</div>
+          <div class="subcap">Nombre: <input type="text" style="width:130px"></div>
+          <div class="subcap" style="margin-top:2px">N° identificación: <input type="text" style="width:110px"></div>
+        </div>
+        <div class="firma">
+          <div class="line"></div>
+          <div class="cap">Firma</div>
+        </div>
+        <div class="firma">
+          <div class="huella">Huella</div>
+          <div class="cap">Huella</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- K. VERIFICACIÓN EVOLTI -->
+  <div class="sec">
+    <div class="band"><span class="n">K</span> Verificación — espacio para EVOLTI COMPANY S.A.S (Oficial de cumplimiento)</div>
+    <div class="body">
+      <div class="grid g4" style="align-items:end">
+        <div class="field span2"><span class="lab">Verificación de la información</span><input type="text"></div>
+        <div class="checks">
+          <label class="chk"><input type="checkbox"><span>Aprobado</span></label>
+          <label class="chk"><input type="checkbox"><span>Rechazado</span></label>
+        </div>
+        <div class="field"><span class="lab">Fecha verif. (dd/mm/aa)</span><input type="text"></div>
+      </div>
+      <div class="field wide" style="margin-top:5px"><span class="lab">N° de radicado</span><input type="text" style="width:200px"></div>
+      <div class="firmas" style="grid-template-columns:1fr 1fr; margin-top:10px">
+        <div class="firma">
+          <div class="line"></div>
+          <div class="cap">Nombre de la persona que realiza la validación</div>
+        </div>
+        <div class="firma">
+          <div class="line"></div>
+          <div class="cap">Nombre y firma del Oficial de Cumplimiento</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page 3 -->
+</body>
+</html>
