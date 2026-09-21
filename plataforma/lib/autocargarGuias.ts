@@ -108,6 +108,37 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-PGN-5AM10-001", dia: 21 },
     ],
   },
+
+  // Procuraduría General de la Nación — Profesional Universitario (3PU-15), Convocatoria 112-2026.
+  // Proceso disciplinario (Dirección Nacional de Investigaciones Especiales) con énfasis financiero-contable.
+  "pgn-profesional-3pu15": {
+    id: "pgn-profesional-3pu15",
+    nombre: "PGN · Profesional Universitario (3PU-15) — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-PU15", dia: 1 },
+      { codigo: "ENT-PGN-PU-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-PU15", dia: 2 },
+      { codigo: "GEN-02-PGN-PU15", dia: 3 },
+      { codigo: "GEN-03-PGN-PU15", dia: 4 },
+      { codigo: "FUN-PU15-COM-01", dia: 5 },
+      { codigo: "FUN-PU15-COM-02", dia: 6 },
+      { codigo: "FUN-PU15-COM-03", dia: 7 },
+      { codigo: "FUN-PU15-COM-04", dia: 8 },
+      { codigo: "FUN-PGN-PU15-01", dia: 9 },
+      { codigo: "FUN-GP-PU15-01", dia: 10 },
+      { codigo: "FUN-CONST-PU15-01", dia: 11 },
+      { codigo: "FUN-DISC-PU15-01", dia: 12 },
+      { codigo: "FUN-DISC-PU15-02", dia: 13 },
+      { codigo: "FUN-CONT-PU15-01", dia: 14 },
+      { codigo: "FUN-PPTO-PU15-01", dia: 15 },
+      { codigo: "FUN-CPUB-PU15-01", dia: 16 },
+      { codigo: "FUN-FINP-PU15-01", dia: 17 },
+      { codigo: "FUN-PJUD-PU15-01", dia: 18 },
+      { codigo: "FUN-ANTIC-PU15-01", dia: 19 },
+      { codigo: "FUN-MIPG-PU15-01", dia: 20 },
+      { codigo: "SIM-PGN-3PU15-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')

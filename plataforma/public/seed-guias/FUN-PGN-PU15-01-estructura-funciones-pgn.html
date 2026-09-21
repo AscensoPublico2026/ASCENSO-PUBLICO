@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-PGN-PU15-01 · Estructura, Organización y Funciones de la PGN (Profesional Universitario 3PU-15) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt,.cp-op{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;margin:6px 0;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover,.cp-op:hover{border-color:var(--oro);}
+.cp-opt.cp-lock,.cp-op.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok,.cp-op.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no,.cp-op.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb.ok{background:var(--verde-suave);border-left-color:var(--verde);}
+.cp-fb.no{background:var(--rojo-suave);border-left-color:var(--rojo);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+/* === Elementos dinámicos (estilo Leyner) === */
+.datoclave{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,var(--oro-suave),#fff);border:1px solid var(--oro-borde);border-left:5px solid var(--oro);border-radius:12px;padding:14px 16px;margin:18px 0;box-shadow:0 3px 10px rgba(232,163,61,0.12);}
+.datoclave .dc-ic{font-size:1.5rem;line-height:1;flex-shrink:0;}
+.datoclave .dc-body{font-size:.93rem;color:var(--texto);}
+.datoclave .dc-body strong{color:var(--azul);}
+.datoclave .dc-tag{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--oro);margin-bottom:3px;}
+.reto{background:var(--azul-suave);border:1.5px solid var(--azul-borde);border-radius:14px;padding:16px 18px;margin:20px 0;}
+.reto-q{font-weight:700;color:var(--azul);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.reto-q .reto-badge{background:var(--azul);color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.1em;padding:3px 9px;border-radius:20px;text-transform:uppercase;}
+.reto details{margin-top:8px;}
+.reto summary{cursor:pointer;font-weight:600;color:var(--azul-claro);font-size:.9rem;list-style:none;padding:8px 12px;background:#fff;border:1px dashed var(--azul-borde);border-radius:9px;transition:all .15s;}
+.reto summary:hover{background:var(--azul-suave);border-color:var(--azul-claro);}
+.reto summary::-webkit-details-marker{display:none;}
+.reto summary::before{content:'👉 ';}
+.reto details[open] summary::before{content:'✅ ';}
+.reto .reto-r{margin-top:10px;padding:12px 14px;background:#fff;border-radius:10px;border-left:4px solid var(--verde,#2E9E5B);font-size:.9rem;color:var(--texto);}
+.retoexpres{background:linear-gradient(135deg,#08234F,var(--azul-medio));color:#fff;border-radius:14px;padding:16px 18px;margin:22px 0;}
+.retoexpres .re-tag{font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-claro);}
+.retoexpres p{margin:6px 0 0;font-size:.95rem;color:rgba(255,255,255,.94);}
+.retoexpres strong{color:#fff;}
+.modprog{position:sticky;top:52px;z-index:40;background:rgba(255,255,255,.96);border:1px solid var(--azul-borde);border-radius:10px;padding:8px 14px;margin:0 0 18px;font-size:.8rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:10px;backdrop-filter:blur(4px);}
+.modprog .mp-bar{flex:1;height:7px;background:var(--azul-suave);border-radius:5px;overflow:hidden;}
+.modprog .mp-fill{height:100%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:5px;transition:width .4s;}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-PGN-PU15-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 9 · Estructura y Funciones de la PGN</div>
+  <h1>Estructura, Organización y Funciones de la PGN</h1>
+  <p class="header-sub">Antes de analizar un solo peso de lo público, necesitas saber <strong>en qué casa trabajas</strong>: cómo se organiza la <strong>Procuraduría General de la Nación</strong> a partir del <strong>Decreto Ley 262 de 2000</strong>, quién es el Procurador General y su Viceprocurador, qué hacen las procuradurías delegadas, regionales y provinciales, cómo la PGN integra el <strong>Ministerio Público</strong> (arts. 118, 277 y 278 de la Constitución), sus tres grandes funciones —<strong>preventiva, de intervención y disciplinaria</strong>—, la <strong>Dirección Nacional de Investigaciones Especiales</strong> donde te ubicas y el Instituto de Estudios del Ministerio Público, todo enfocado en dónde encaja el <strong>Profesional Universitario 3PU-15</strong> y su rol de apoyo técnico-financiero.</p>
+  <div class="badges"><span class="badge">📅 Día 9 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Piensa en tu primer día en la <strong>Dirección Nacional de Investigaciones Especiales</strong>. Te entregan un carné, un escritorio y un expediente: un contrato con presuntos sobrecostos que hay que analizar. Antes de abrir el primer estado financiero, surge una pregunta que muchos aspirantes pasan por alto: <mark>¿dónde estoy exactamente parado dentro de la Procuraduría?</mark> ¿Quién manda? ¿A quién le rindo mi dictamen? ¿Por qué esta entidad puede meterse en la conducta de un funcionario de cualquier alcaldía del país? Hoy vas a construir ese mapa completo, porque tu trabajo técnico-financiero solo tiene sentido si sabes en qué engranaje encaja.</p>
+    <p>No te preocupes: no vamos a hacerte experto en organigramas. Vamos a darte <mark>la fotografía nítida</mark> de la <strong>Procuraduría General de la Nación</strong> a partir de su norma madre, el <strong>Decreto Ley 262 de 2000</strong>, y de la Constitución. Verás cómo la PGN nace del <strong>Ministerio Público</strong>, quién la dirige, cómo se despliega en delegadas, regionales y provinciales, y cuáles son sus tres funciones que sostienen todo lo demás. Y en cada pieza te mostraremos dónde entra el <strong>Profesional Universitario 3PU-15</strong>. Es de los primeros bloques del temario porque sin él, lo demás flota en el aire.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es la <strong>Procuraduría General de la Nación</strong> y en qué se funda (arts. 118, 275 a 278 CP y Decreto Ley 262/2000).</li>
+      <li>Qué es el <strong>Ministerio Público</strong> y quiénes lo integran (Procurador, Defensor del Pueblo y personeros).</li>
+      <li>La estructura de dirección: el <strong>Procurador General</strong>, el <strong>Viceprocurador</strong> y el nivel directivo.</li>
+      <li>Las <strong>procuradurías delegadas</strong> y su despliegue <strong>territorial</strong> (regionales y provinciales).</li>
+      <li>Las tres grandes funciones de la PGN: <strong>preventiva</strong>, <strong>de intervención</strong> y <strong>disciplinaria</strong>.</li>
+      <li>La <strong>Dirección Nacional de Investigaciones Especiales</strong>, donde trabaja el 3PU-15, y su papel técnico-científico.</li>
+      <li>El <strong>Instituto de Estudios del Ministerio Público</strong> y por qué existe.</li>
+      <li>Dónde encaja tu rol de <strong>apoyo técnico-financiero</strong> y por qué la estructura te importa en el día a día.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos ocho módulos, pero de forma dinámica: teoría al grano, <strong>tarjetas de dato clave</strong> que resumen lo esencial, retos <strong>"¿Tú qué harías?"</strong> para que pienses como profesional, tablas comparativas, ejemplos "En la práctica" en tu rol, esquemas y puntos de control. Cerramos con distinciones, casos tipo prueba, errores, tips, trampas, repaso y un simulacro. La idea: que aprendas activo, no leyendo de corrido.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>Aquí va la verdad sin rodeos: aunque tu perfil es <strong>financiero-contable</strong>, no puedes analizar el manejo de lo público si no sabes <mark>quién te lo pide, para qué y con qué facultad</mark>. La estructura y las funciones de la PGN son un bloque <strong>base</strong> del temario del 3PU-15, y la prueba lo evalúa con preguntas de concepto ("¿quién integra el Ministerio Público?", "¿qué función ejerce la PGN cuando previene un daño antes de que ocurra?") y con casos aplicados ("recibes una solicitud de una procuraduría delegada, ¿qué significa eso?"). Dominarlo te da dos cosas: <strong>puntos en el examen</strong> y <strong>ubicación real</strong> para que tu dictamen llegue a quien corresponde, por el canal correcto.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba evalúa la estructura de la PGN</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🏛️</span><h5>Es la casa donde trabajas</h5><p>Todo tu apoyo técnico se produce dentro de esta arquitectura institucional.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">📜</span><h5>Tiene norma propia</h5><p>El Decreto Ley 262 de 2000 define su estructura, cargos y funciones.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧭</span><h5>Se despliega en el país</h5><p>Delegadas, regionales y provinciales llevan la PGN a todo el territorio.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🎯</span><h5>Enmarca tu dictamen</h5><p>Saber quién es quién hace que tu informe sea útil, oportuno y bien dirigido.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>La Procuraduría se entiende con una frase: <strong>es el organismo de control que, como cabeza del Ministerio Público (art. 118 CP), vigila la conducta de quienes ejercen funciones públicas; la dirige el Procurador General (art. 275 CP), se organiza según el Decreto Ley 262 de 2000 en delegadas y en un despliegue territorial de regionales y provinciales, y ejerce tres funciones —preventiva, de intervención y disciplinaria (arts. 277 y 278 CP)—; dentro de ella, la Dirección Nacional de Investigaciones Especiales aporta el apoyo técnico-científico donde tú, como Profesional Universitario 3PU-15, pones tu criterio financiero-contable</strong>. Si retienes eso, tienes el mapa. Los detalles los repasas con flashcards al final.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría General de la Nación tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000), por lo que su concurso de la Convocatoria <strong>112-2026</strong> <strong>NO lo administra la CNSC</strong>: lo adelanta la propia Procuraduría con su operador. Aclarado ese punto, todo lo que estudies hoy es el terreno institucional donde vive tu cargo.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Desarrollo: la Procuraduría por dentro, tu casa institucional</h2>
+  <p class="lead">Ocho módulos, pero al grano y dinámicos. En cada uno encontrarás tarjetas de dato clave, un reto "¿Tú qué harías?" para pensar como profesional, tablas y ejemplos en tu rol. La meta: que domines la arquitectura de la PGN y sepas exactamente dónde encaja tu dictamen financiero-contable.</p>
+  <p>Antes de arrancar, una idea que te va a ordenar todo el día. La Procuraduría se entiende respondiendo, en orden, a seis preguntas encadenadas: <strong>¿de dónde nace?</strong> (el Ministerio Público en la Constitución); <strong>¿con qué norma se organiza?</strong> (el Decreto Ley 262 de 2000); <strong>¿quién la dirige?</strong> (el Procurador General y el Viceprocurador); <strong>¿cómo se despliega?</strong> (delegadas y territoriales); <strong>¿para qué sirve?</strong> (sus funciones preventiva, de intervención y disciplinaria); y <strong>¿dónde trabajas tú?</strong> (la Dirección Nacional de Investigaciones Especiales y el apoyo técnico). Si en cada módulo te preguntas cuál de esas seis piezas estás viendo, no te perderás. Y como tu perfil es contable, en cada pieza te mostraremos <mark>dónde encaja tu criterio</mark>: no estudias esto como abogado constitucionalista, sino como el profesional técnico que necesita ubicarse para que su trabajo tenga destino y efecto. Piénsalo así: el día que rindas tu primer dictamen, sabrás por qué la entidad puede pedírtelo, quién lo va a usar y hasta dónde alcanza tu responsabilidad. Ese mapa vale oro tanto en la prueba como en el cargo.</p>
+
+  <!-- ===== MÓDULO 1 ===== -->
+  <h3 class="modulo">Módulo 1 · El Ministerio Público: la raíz constitucional de la PGN</h3>
+  <p>Empecemos por el principio, porque aquí muchos se confunden. La Procuraduría no es una entidad suelta: es la cabeza de algo más grande llamado <strong>Ministerio Público</strong>. Y ojo, "Ministerio Público" no es un ministerio del Gobierno (no depende del Presidente ni maneja una cartera como Salud o Hacienda). Es un concepto constitucional distinto: el conjunto de organismos encargados de <mark>guardar y promover los derechos, vigilar la conducta oficial y defender el interés público</mark>. Lo dice el <strong>artículo 118 de la Constitución</strong>: el Ministerio Público será ejercido por el Procurador General de la Nación, por el Defensor del Pueblo, por los procuradores delegados y agentes ante las autoridades jurisdiccionales, y por los personeros municipales.</p>
+  <p>Fíjate en la lista, porque la prueba la explota: el Ministerio Público lo integran, en esencia, tres piezas. Primero, la <strong>Procuraduría General de la Nación</strong>, cabeza del sistema, dirigida por el Procurador. Segundo, la <strong>Defensoría del Pueblo</strong>, encargada de promover y proteger los derechos humanos, que actúa <em>bajo la suprema dirección</em> del Procurador General según la Constitución. Y tercero, las <strong>personerías municipales y distritales</strong>, que son el Ministerio Público en el nivel local. Esos tres brazos persiguen un mismo norte —velar por lo público y por los derechos— pero cada uno con su misión. Cuando la Constitución habla del Ministerio Público, entonces, no se refiere a una sola oficina, sino a un sistema con varias entidades que se reparten la tarea de custodiar lo público.</p>
+  <p>Conviene detenerse en <strong>por qué la Constitución de 1991 creó este esquema</strong>. La idea de fondo es sencilla y poderosa: el poder del Estado debe ser vigilado por alguien que no forme parte de ese mismo poder. Si quien maneja los recursos fuera también quien se vigila a sí mismo, no habría control real. Por eso los constituyentes ubicaron al Ministerio Público <em>por fuera</em> de las ramas ejecutiva, legislativa y judicial, dándole autonomía e independencia. Así, la PGN puede pedirle cuentas a un ministro, a un gobernador o a un congresista sin depender de ninguno de ellos. Para tu cargo esto es más que teoría: es la garantía de que tu dictamen financiero, aunque señale a un alto funcionario, no puede ser silenciado por el investigado ni por su superior jerárquico.</p>
+  <div class="datoclave"><span class="dc-ic">🏛️</span><div class="dc-body"><span class="dc-tag">Dato clave</span>El <strong>Ministerio Público</strong> (art. 118 CP) lo ejercen el <strong>Procurador General</strong>, el <strong>Defensor del Pueblo</strong> y los <strong>personeros</strong>. NO es un ministerio del Gobierno: es un órgano de control autónomo. Su función es guardar el orden jurídico, el patrimonio público y los derechos fundamentales.</div></div>
+  <h4>¿Qué es un "órgano de control" y por qué la PGN lo es?</h4>
+  <p>La Constitución de 1991 organizó el poder del Estado en tres ramas clásicas —ejecutiva, legislativa y judicial— pero añadió algo decisivo: unos <strong>órganos autónomos e independientes</strong> que no pertenecen a ninguna rama y que existen justamente para vigilarlas. Entre ellos están los <mark>órganos de control</mark>. El artículo 117 de la Constitución dice que el Ministerio Público y la Contraloría General de la República son órganos de control. Es decir, la PGN no está "dentro" del Gobierno ni "dentro" de la Rama Judicial: está por fuera, para poder vigilar con independencia. Esa autonomía es la que le permite investigar a un ministro, a un alcalde o a un congresista sin pedirle permiso a nadie.</p>
+  <p>Hay una segunda familia de órganos autónomos que conviene no confundir con los de control: los <strong>órganos de la organización electoral</strong> (Consejo Nacional Electoral y Registraduría) y ciertos entes autónomos como el Banco de la República. Todos comparten la idea de estar "fuera de las ramas", pero cumplen funciones distintas. Para tu tema de hoy, lo esencial es fijar que <mark>la PGN es un órgano de control</mark>, junto con la Contraloría, y que ese estatus explica su independencia y su poder para vigilar toda la administración.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Órgano</th><th>A qué grupo pertenece</th><th>Misión esencial</th></tr>
+    <tr><td><strong>Procuraduría (Ministerio Público)</strong></td><td>Órgano de control</td><td>Vigilar la conducta oficial y defender lo público y los derechos</td></tr>
+    <tr><td><strong>Contraloría</strong></td><td>Órgano de control</td><td>Vigilancia de la gestión fiscal y del patrimonio público</td></tr>
+    <tr><td><strong>Defensoría del Pueblo</strong></td><td>Ministerio Público</td><td>Promover y proteger los derechos humanos</td></tr>
+    <tr><td><strong>Personerías</strong></td><td>Ministerio Público (local)</td><td>Vigilancia y defensa de lo público en el municipio</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Un compañero de otra dependencia te comenta que "la Procuraduría depende del Ministerio de Justicia porque ambos ven temas legales". Tú, ubicado, corriges con criterio: la PGN es un <strong>órgano de control autónomo</strong> que encabeza el Ministerio Público (art. 118 CP); <mark>no depende del Gobierno</mark>. Esa independencia es la razón por la que tu dictamen financiero puede señalar a un alto funcionario sin conflicto: la entidad no responde ante el investigado ni ante su jefe. Comprender esto también te ayuda a explicarles a terceros por qué la PGN puede requerir información a cualquier entidad pública sin necesitar autorización del Gobierno.</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>En una charla de inducción alguien afirma: "como el Defensor del Pueblo también es Ministerio Público, entonces él puede sancionar disciplinariamente a los funcionarios igual que el Procurador".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>Es falso.</strong> Aunque el Defensor del Pueblo integra el Ministerio Público, su misión es <strong>promover y proteger los derechos humanos</strong>, no ejercer la potestad disciplinaria. Quien vigila la conducta oficial y sanciona disciplinariamente es la <strong>Procuraduría</strong> (y, en lo local, las personerías y el control interno disciplinario). Cada brazo del Ministerio Público tiene su propio carril.</div></details>
+  </div>
+  <div class="checkpoint" data-cp="1">
+    <div class="cp-q">✅ Punto de control 1</div>
+    <p>El Ministerio Público, según el artículo 118 de la Constitución, es ejercido por:</p>
+    <div class="cp-op" data-ok="1">El Procurador General, el Defensor del Pueblo y los personeros municipales; es un órgano de control autónomo.</div>
+    <div class="cp-op" data-ok="0">El Ministerio de Justicia y sus dependencias adscritas.</div>
+    <div class="cp-op" data-ok="0">La Rama Judicial, porque investiga y sanciona.</div>
+    <div class="cp-fb"></div>
+  </div>
+  <h4>Los artículos que tienes que amarrar: 118, 277 y 278</h4>
+  <p>Hay tres artículos de la Constitución que resumen la razón de ser de la PGN y que conviene tener en la punta de la lengua. El <strong>artículo 118</strong> define qué es el Ministerio Público y quién lo ejerce. El <strong>artículo 277</strong> enumera las funciones del Procurador General (por sí o por sus delegados y agentes): vigilar el cumplimiento de la Constitución y las leyes, proteger los derechos humanos, defender los intereses de la sociedad y del patrimonio público, vigilar la conducta oficial de quien desempeña funciones públicas y ejercer preferentemente el poder disciplinario. Y el <strong>artículo 278</strong> señala las funciones que el Procurador ejerce <em>directamente</em> (por ejemplo, desvincular del cargo al funcionario que incurra en faltas gravísimas allí descritas). Amarrar estos tres números te blinda contra la mitad de las preguntas del tema.</p>
+  <p>Un truco para no olvidarlos: piensa en una escalera. El <strong>118</strong> te dice <em>quién</em> es el Ministerio Público; el <strong>277</strong> te dice <em>qué</em> hace (sus funciones generales, que puede ejercer por medio de delegados); y el <strong>278</strong> te dice <em>qué hace el Procurador en persona</em>, sin delegar. Cuando una pregunta mezcle "funciones que ejerce directamente el Procurador", tu radar debe apuntar al 278; cuando hable de funciones generales de vigilancia y disciplina, al 277; y cuando pregunte por la integración del Ministerio Público, al 118. Esa secuencia mental resuelve muchas preguntas de un vistazo.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Artículo CP</th><th>De qué trata</th><th>Para recordar</th></tr>
+    <tr><td><strong>Art. 118</strong></td><td>Qué es el Ministerio Público y quién lo ejerce</td><td>Procurador + Defensor + personeros</td></tr>
+    <tr><td><strong>Art. 277</strong></td><td>Funciones del Procurador (por sí o por delegados/agentes)</td><td>Vigilar, proteger derechos, defender lo público, disciplinar</td></tr>
+    <tr><td><strong>Art. 278</strong></td><td>Funciones que el Procurador ejerce directamente</td><td>Desvinculación por faltas gravísimas allí listadas</td></tr>
+  </table></div>
+  <details class="acc"><summary>¿La PGN pertenece a alguna de las tres ramas del poder?</summary><div class="acc-body">No. La Procuraduría es un <strong>órgano autónomo e independiente</strong> que, junto con la Contraloría, conforma los órganos de control (art. 117 CP). No es rama ejecutiva, ni legislativa, ni judicial. Esa ubicación por fuera de las ramas es lo que garantiza su imparcialidad para vigilarlas a todas.</div></details>
+  <details class="acc"><summary>¿Por qué se dice que el Procurador tiene "suprema dirección" del Ministerio Público?</summary><div class="acc-body">Porque la Constitución (art. 281) coloca al Defensor del Pueblo bajo la suprema dirección del Procurador General, y porque el Procurador encabeza el sistema del Ministerio Público. No significa que dé órdenes al detalle a cada personería, sino que es la cabeza institucional del conjunto.</div></details>
+  <details class="acc"><summary>¿Cuál es la diferencia entre el Ministerio Público y la Contraloría, si ambos son control?</summary><div class="acc-body">El Ministerio Público (con la PGN a la cabeza) vigila la <strong>conducta</strong> de los servidores y defiende los derechos y el orden jurídico. La Contraloría vigila la <strong>gestión fiscal</strong>: el buen manejo de los recursos y bienes públicos, y establece la responsabilidad fiscal (el deber de resarcir el daño patrimonial). Son controles distintos y compatibles: un mismo hecho puede activarlos a los dos.</div></details>
+  <h4>La conducta oficial: qué vigila realmente la PGN</h4>
+  <p>Un concepto que atraviesa todo el tema es el de <strong>conducta oficial</strong>. La Procuraduría no vigila la vida privada de las personas: vigila cómo se comportan quienes ejercen <mark>funciones públicas</mark> en el desempeño de sus cargos. Eso incluye a los servidores públicos de las tres ramas y de los órganos autónomos, pero también —y esto sorprende a muchos— a ciertos <strong>particulares que ejercen funciones públicas o administran recursos del Estado</strong>: un notario, un interventor de un contrato estatal, el administrador de recursos parafiscales. El común denominador no es el tipo de vínculo, sino el hecho de <em>manejar lo público o ejercer una función pública</em>.</p>
+  <p>Para tu perfil contable, esta amplitud es relevante. Cuando analices el manejo de unos recursos, no solo importa quién es servidor de planta: importa quién <strong>administró o dispuso del dinero público</strong>. Un particular contratista que ejecuta recursos del Estado puede quedar sujeto a la vigilancia disciplinaria en lo relacionado con esa función. Tener claro el alcance de "conducta oficial" te ayuda a delimitar sobre quién y sobre qué recae tu análisis, y a no descartar por error a un actor relevante solo porque no aparece en la nómina.</p>
+  <div class="ojo"><b>Ojo:</b> "conducta oficial" ≠ vida privada. La PGN vigila el ejercicio de funciones públicas y el manejo de recursos del Estado, incluso por particulares que cumplen esas tareas. El foco está en lo público, no en lo personal.</div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 1</span><p>En una frase: ¿qué es el Ministerio Público y quiénes lo integran? <strong>Respuesta mental:</strong> es el órgano de control autónomo que guarda lo público y los derechos, integrado por el Procurador General, el Defensor del Pueblo y los personeros (art. 118 CP).</p></div>
+
+  <!-- ===== MÓDULO 2 ===== -->
+  <h3 class="modulo">Módulo 2 · El Decreto Ley 262 de 2000: la norma que arma la PGN</h3>
+  <p>Si la Constitución dice <em>qué</em> es la Procuraduría, hay una norma que dice <em>cómo</em> está armada por dentro: el <strong>Decreto Ley 262 de 2000</strong>. Memoriza el nombre y la lógica, porque es el "plano arquitectónico" de tu entidad. Este decreto (expedido con base en facultades extraordinarias) fija la <mark>estructura y organización</mark> de la PGN, sus dependencias, la planta de personal, las funciones de cada nivel y el régimen especial de carrera. Cuando en la prueba te pregunten "¿qué norma organiza la Procuraduría?", la respuesta casi siempre es el Decreto Ley 262 de 2000.</p>
+  <p>Vale la pena entender por qué existe una norma <em>específica</em> para la PGN. Como la Procuraduría es un órgano autónomo, su organización no la define el Gobierno con un decreto ordinario ni se rige por las reglas generales del Ejecutivo. El constituyente y el legislador quisieron que su estructura tuviera una base sólida y estable, por eso se acudió a un decreto con fuerza de ley. Esto le da a la entidad una arquitectura propia que no cambia con cada gobierno de turno, reforzando —otra vez— su independencia. Para ti, esto explica por qué tus funciones y tu nivel tienen respaldo normativo firme y no dependen del capricho de un jefe.</p>
+  <div class="datoclave"><span class="dc-ic">📜</span><div class="dc-body"><span class="dc-tag">Dato clave · memorízalo</span>El <strong>Decreto Ley 262 de 2000</strong> establece la <strong>estructura y organización</strong> de la PGN, sus funciones por dependencia y su <strong>régimen especial de carrera</strong>. Es la norma base del "por dentro" de la entidad. La Constitución define el <em>qué</em>; el 262/2000 define el <em>cómo</em>.</div></div>
+  <h4>Qué encuentras dentro del Decreto Ley 262 de 2000</h4>
+  <p>Sin entrar en el detalle fino que no te exigen, conviene saber qué tipo de cosas regula esta norma, porque te ayuda a ubicar cada pieza de la entidad. El decreto organiza a la PGN en <strong>despachos y dependencias</strong>: el despacho del Procurador, el del Viceprocurador, las procuradurías delegadas, las procuradurías regionales y provinciales, el Instituto de Estudios del Ministerio Público, y las direcciones y oficinas de apoyo —entre ellas la que interesa a tu cargo—. También define las <strong>funciones</strong> de cada uno, el <strong>nivel jerárquico</strong> de los empleos (directivo, asesor, profesional, técnico, asistencial) y las reglas de la carrera. Todo lo que estudies hoy sobre "quién hace qué" tiene su fuente aquí.</p>
+  <p>Los <strong>niveles jerárquicos</strong> merecen una nota, porque ubican tu cargo. En el sector público, los empleos se agrupan por niveles según su naturaleza y responsabilidad: el <strong>directivo</strong> (quienes dirigen la entidad), el <strong>asesor</strong> (quienes aconsejan a la alta dirección), el <strong>profesional</strong> (quienes aplican conocimientos propios de una profesión, como la contaduría), el <strong>técnico</strong> (quienes desarrollan labores técnicas de apoyo) y el <strong>asistencial</strong> (quienes realizan labores de apoyo administrativo y operativo). Tu cargo, el <strong>Profesional Universitario 3PU-15</strong>, está en el nivel <mark>profesional</mark>: por eso se te exige criterio, análisis y dictamen, no simple ejecución de tareas rutinarias.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Bloque del Decreto 262/2000</th><th>Qué regula</th></tr>
+    <tr><td>Estructura orgánica</td><td>Despachos, delegadas, territoriales, direcciones y oficinas</td></tr>
+    <tr><td>Funciones por dependencia</td><td>Qué le corresponde a cada nivel y despacho</td></tr>
+    <tr><td>Planta y niveles de empleo</td><td>Directivo, asesor, profesional, técnico, asistencial</td></tr>
+    <tr><td>Régimen de carrera especial</td><td>Ingreso, permanencia y retiro propios de la PGN</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Al firmar tu vinculación como <strong>Profesional Universitario 3PU-15</strong>, tu nivel (<strong>profesional</strong>) y tus funciones no salen de un manual improvisado: se derivan del <strong>Decreto Ley 262 de 2000</strong> y de los actos que fijan el manual de funciones de la entidad. Saber esto te ayuda a entender por qué se te exige <mark>decidir y conceptuar con criterio</mark> —no solo ejecutar tareas—: el nivel profesional implica análisis, dictamen y responsabilidad técnica. Si algún día te piden algo por fuera de tus funciones, puedes ubicarte en el marco normativo para entender qué te corresponde y qué no.</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Un aspirante te dice que "la Procuraduría se organiza igual que cualquier entidad del Estado, según la Ley 489 de 1998". ¿Le das la razón?</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>No del todo.</strong> La Ley 489 de 1998 organiza la administración pública en general (rama ejecutiva). Pero la PGN es un <strong>órgano de control autónomo</strong> con norma propia: el <strong>Decreto Ley 262 de 2000</strong>, que define su estructura y su <strong>régimen especial</strong>. Por eso, además, su concurso no lo administra la CNSC. Cuidado con aplicarle a la PGN, sin más, las reglas generales del Ejecutivo.</div></details>
+  </div>
+  <h4>Régimen especial de carrera: por qué tu concurso es distinto</h4>
+  <p>Este punto conecta directamente con tu proceso. La mayoría de los empleos del Estado se rigen por la carrera administrativa general que administra la Comisión Nacional del Servicio Civil. Pero la Constitución permite <strong>regímenes especiales</strong> para ciertas entidades, y la PGN es una de ellas: el Decreto Ley 262 de 2000 crea un <mark>régimen de carrera propio</mark>. ¿Qué implica para ti? Que el concurso de la Convocatoria 112-2026 lo adelanta la <strong>propia Procuraduría</strong> con su operador, con sus reglas, y <strong>no</strong> la CNSC. Esto es un dato que la prueba a veces usa como distractor ("el concurso lo organiza la CNSC" → falso para la PGN).</p>
+  <p>Aun siendo un régimen especial, los principios de fondo del empleo público siguen vigentes: el <strong>mérito</strong> como regla de ingreso, la <strong>igualdad</strong> de oportunidades, la <strong>publicidad</strong> del proceso y la <strong>transparencia</strong>. Lo que cambia es la <em>administración</em> del concurso, no la esencia meritocrática. Por eso puedes confiar en que tu esfuerzo de preparación importa: no hay atajos, y quien mejor domine el temario —como esta guía de estructura y funciones— tiene ventaja real. Entender el régimen especial también te evita cometer errores prácticos, como dirigir una reclamación a una entidad que no organiza tu concurso.</p>
+  <div class="destacado azul"><span class="dst-ic">🎓</span><div class="dst-body"><span class="dst-title">Aterrízalo a tu concurso</span><p>Tu cargo <strong>Profesional Universitario 3PU-15</strong> hace parte del <strong>régimen especial</strong> de la PGN (Decreto Ley 262/2000). El concurso 112-2026 es de la Procuraduría, no de la CNSC. Estás compitiendo por un empleo de <strong>nivel profesional</strong>, que exige criterio técnico y no mera ejecución.</p></div></div>
+  <details class="acc"><summary>¿El régimen especial significa que la PGN no tiene concurso de méritos?</summary><div class="acc-body">Al contrario. La PGN sí provee sus empleos de carrera por <strong>concurso de méritos</strong>; lo especial es que el proceso lo administra la propia entidad con su operador, bajo sus propias reglas, y no la CNSC. El mérito sigue siendo la regla; cambia quién organiza el concurso.</div></details>
+  <details class="acc"><summary>¿La Ley 489 de 1998 no aplica en nada a la PGN?</summary><div class="acc-body">La Ley 489 organiza la administración pública de la rama ejecutiva. La PGN, como órgano autónomo, se rige principalmente por su norma propia (Decreto Ley 262/2000). Algunos principios generales de la función administrativa pueden servir de referencia, pero la organización y la carrera de la Procuraduría no dependen de la Ley 489: tienen fuente propia.</div></details>
+  <h4>Constitución, decreto y manual de funciones: la pirámide normativa de tu cargo</h4>
+  <p>Para no perderte, conviene ver cómo se ordenan las normas que definen tu cargo, de lo más general a lo más concreto. En la cúspide está la <strong>Constitución</strong> (arts. 118, 275 a 278), que crea la Procuraduría y le asigna sus grandes funciones. Debajo, el <strong>Decreto Ley 262 de 2000</strong>, que la organiza por dentro: dependencias, niveles y régimen de carrera. Y en la base, los <strong>actos administrativos de la propia entidad</strong> que fijan el <mark>manual específico de funciones y competencias</mark> de cada empleo, incluido el Profesional Universitario 3PU-15. Cada nivel desarrolla al anterior: el manual no puede contradecir el decreto, ni el decreto la Constitución.</p>
+  <p>Esta pirámide te da una herramienta práctica. Si algún día tienes dudas sobre qué te corresponde hacer, la respuesta se busca de abajo hacia arriba: primero el manual de funciones de tu cargo, luego el decreto de estructura y, si hace falta, la Constitución. Y al revés, cuando estudias para la prueba, entender que "todo baja de la Constitución" te ayuda a no memorizar datos sueltos, sino a ver el sistema completo. El examen premia a quien comprende la lógica, no solo a quien repite artículos.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Nivel normativo</th><th>Qué define para tu cargo</th></tr>
+    <tr><td>Constitución (arts. 118, 275-278)</td><td>Crea la PGN y sus funciones; da fundamento a todo</td></tr>
+    <tr><td>Decreto Ley 262 de 2000</td><td>Estructura, dependencias, niveles y régimen de carrera</td></tr>
+    <tr><td>Manual de funciones (actos de la PGN)</td><td>Funciones y competencias específicas del 3PU-15</td></tr>
+  </table></div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 2</span><p>En una frase: ¿qué norma organiza por dentro a la PGN y qué implica para tu concurso? <strong>Respuesta mental:</strong> el Decreto Ley 262 de 2000, que fija su estructura y un régimen especial de carrera; por eso el concurso lo administra la PGN y no la CNSC.</p></div>
+
+  <!-- ===== MÓDULO 3 ===== -->
+  <h3 class="modulo">Módulo 3 · La dirección: Procurador General y Viceprocurador</h3>
+  <p>Toda casa tiene una cabeza, y la de la Procuraduría es el <strong>Procurador General de la Nación</strong>. La Constitución (art. 275) lo llama el <mark>supremo director del Ministerio Público</mark>. No es un cargo cualquiera: es una de las figuras de mayor peso institucional del país, con la misión de velar por el correcto ejercicio de la función pública. Entender cómo se elige, cuánto dura y qué hace te ubica en la cúspide de la entidad donde vas a trabajar.</p>
+  <p>¿Cómo llega al cargo? El Procurador General es <strong>elegido por el Senado de la República</strong>, para un período de <strong>cuatro años</strong>, de una <strong>terna</strong> integrada por candidatos del Presidente de la República, la Corte Suprema de Justicia y el Consejo de Estado. Fíjate en el detalle: intervienen las tres cabezas de las ramas (Ejecutivo, Judicial) más el Senado (Legislativo). Ese origen "compartido" busca reforzar su independencia: no le debe el cargo a un solo poder. Es un dato que la prueba pregunta con frecuencia.</p>
+  <p>Entre las atribuciones más relevantes del Procurador —muchas ejercidas por medio de sus delegados y agentes, otras de forma directa— están: dirigir la política de vigilancia de la conducta oficial; ejercer preferentemente el poder disciplinario; intervenir en procesos judiciales y administrativos en defensa del orden jurídico, el patrimonio público y los derechos; rendir conceptos; y, en los casos del artículo 278, desvincular directamente a servidores por faltas gravísimas allí descritas. No necesitas memorizar la lista completa, pero sí captar la <mark>magnitud</mark> del cargo: es la cabeza de un aparato de control que llega a todo el Estado.</p>
+  <div class="datoclave"><span class="dc-ic">👤</span><div class="dc-body"><span class="dc-tag">Dato clave</span>El <strong>Procurador General</strong> es el supremo director del Ministerio Público (art. 275 CP). Lo <strong>elige el Senado</strong> por <strong>4 años</strong>, de una <strong>terna</strong> del Presidente, la Corte Suprema y el Consejo de Estado. Ese origen plural refuerza su independencia.</div></div>
+  <h4>El Viceprocurador y el nivel directivo</h4>
+  <p>Detrás del Procurador está el <strong>Viceprocurador General de la Nación</strong>, que es <mark>nombrado por el propio Procurador</mark>. El Viceprocurador colabora en la dirección de la entidad, lo reemplaza en sus faltas temporales y asume las funciones que el Procurador le delegue. Junto a ellos, el Decreto Ley 262 de 2000 organiza un <strong>nivel directivo</strong> —procuradores delegados, directores, jefes de oficina— que despliega la gestión en las distintas áreas. Piensa en una pirámide: en la cima el Procurador, luego el Viceprocurador, después las delegadas y direcciones, y en la base el nivel profesional, técnico y asistencial que hace el trabajo del día a día. Tu cargo, el 3PU-15, vive en ese nivel <strong>profesional</strong>.</p>
+  <p>Entender la pirámide te ayuda a leer bien tu entorno de trabajo. Las decisiones de política y los criterios generales bajan desde la dirección; las tareas concretas y los productos técnicos —como tu dictamen— suben desde el nivel profesional. Ese doble flujo (arriba–abajo para directrices, abajo–arriba para insumos) es el ritmo natural de la entidad. Cuando sepas en qué escalón estás y hacia dónde va tu producto, tu trabajo será más ordenado y tendrá más impacto.</p>
+  <div class="flujo">
+    <div class="flujo-paso"><span class="fp-n">1</span><h4>Procurador General</h4><p>Supremo director del Ministerio Público. Elegido por el Senado, 4 años.</p></div>
+    <div class="flujo-paso"><span class="fp-n">2</span><h4>Viceprocurador</h4><p>Nombrado por el Procurador; colabora y lo reemplaza en faltas temporales.</p></div>
+    <div class="flujo-paso"><span class="fp-n">3</span><h4>Delegadas y direcciones</h4><p>Nivel directivo que ejecuta las funciones por áreas y materias.</p></div>
+    <div class="flujo-paso"><span class="fp-n">4</span><h4>Profesionales y apoyo</h4><p>Nivel profesional (tu 3PU-15), técnico y asistencial: el trabajo diario.</p></div>
+  </div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Tu dictamen financiero, una vez firmado, no se queda contigo: sube por esta cadena. Lo recibe el funcionario que dirige la investigación en tu dependencia, que a su vez responde ante una dirección o delegada. Entender la pirámide te permite <mark>dirigir bien tu producto</mark>: sabes a quién le rindes, quién decide con tu insumo y por qué el rigor técnico importa (tu informe puede terminar sustentando una decisión de alto nivel).</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Un compañero asegura: "el Procurador General lo nombra directamente el Presidente de la República, por eso la Procuraduría depende del Gobierno".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>Es falso en las dos partes.</strong> Al Procurador lo <strong>elige el Senado</strong> (no lo nombra el Presidente), de una terna en la que el Presidente solo aporta <em>un</em> candidato junto a la Corte Suprema y el Consejo de Estado. Y la PGN <strong>no depende del Gobierno</strong>: es un órgano de control autónomo. Confundir esto es un error clásico que la prueba castiga.</div></details>
+  </div>
+  <div class="checkpoint" data-cp="2">
+    <div class="cp-q">✅ Punto de control 2</div>
+    <p>El Procurador General de la Nación es elegido por:</p>
+    <div class="cp-op" data-ok="1">El Senado de la República, para un período de 4 años, de una terna del Presidente, la Corte Suprema y el Consejo de Estado.</div>
+    <div class="cp-op" data-ok="0">El Presidente de la República, de manera directa y discrecional.</div>
+    <div class="cp-op" data-ok="0">La Corte Constitucional, mediante concurso de méritos.</div>
+    <div class="cp-fb"></div>
+  </div>
+  <details class="acc"><summary>¿Qué pasa cuando el Procurador falta temporalmente?</summary><div class="acc-body">Lo reemplaza el <strong>Viceprocurador General</strong>, que fue nombrado por el propio Procurador. En faltas absolutas se activan las reglas de reemplazo previstas en la Constitución y la ley. Para tu nivel basta con saber que el Viceprocurador es el segundo a bordo y el reemplazo natural en ausencias temporales.</div></details>
+  <details class="acc"><summary>¿El Procurador puede delegar sus funciones?</summary><div class="acc-body">Sí. El artículo 277 CP habla de funciones que el Procurador ejerce "por sí o por medio de sus delegados y agentes". Por eso existen las procuradurías delegadas: ejercen atribuciones por delegación. Otras funciones, las del artículo 278, las ejerce el Procurador de forma directa.</div></details>
+  
+  <h4>Las procuradurías delegadas, regionales y provinciales: el territorio del control</h4>
+  <p>La Procuraduría no es una oficina única en Bogotá: es una red que cubre todo el país, y conviene tener claro ese mapa porque explica dónde puede caer tu trabajo. En la cúspide está el <strong>Procurador General de la Nación</strong>, elegido por el Senado de terna, con un periodo fijo. Debajo, el <strong>Viceprocurador</strong>, las <strong>procuradurías delegadas</strong> (especializadas por materias: contratación estatal, vigilancia administrativa, asuntos disciplinarios, etc.), las <strong>procuradurías regionales</strong> (una por departamento, en general) y las <strong>procuradurías provinciales</strong> (que cubren zonas dentro de un departamento). A ello se suman las <mark>personerías municipales</mark>, que también integran el Ministerio Público en el nivel local.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Nivel</th><th>Ámbito</th><th>Rol frente al control disciplinario</th></tr>
+    <tr><td>Procurador General</td><td>Nacional</td><td>Dirige; ejerce poder preferente sobre casos de alto impacto</td></tr>
+    <tr><td>Procuradurías delegadas</td><td>Por materias especializadas</td><td>Conocen asuntos según su especialidad (contratación, disciplinario, etc.)</td></tr>
+    <tr><td>Procuradurías regionales</td><td>Departamental</td><td>Vigilan la conducta oficial en el territorio</td></tr>
+    <tr><td>Procuradurías provinciales</td><td>Zonas dentro del departamento</td><td>Acercan el control al nivel local</td></tr>
+    <tr><td>Personerías</td><td>Municipal</td><td>Ministerio Público en el municipio</td></tr>
+  </table></div>
+  <p>Para tu perfil, esta estructura tiene una lectura práctica: los expedientes que analizas pueden provenir de cualquier nivel, y tu dictamen financiero-contable puede ser requerido tanto por una delegada especializada como por una regional. Entender el mapa te permite saber <mark>a quién le rindes</mark>, con qué competencia actúa y por qué un mismo tipo de irregularidad puede tramitarse en distintos despachos según el territorio y la materia. No es teoría vacía: es saber dónde encaja tu trabajo en la maquinaria.</p>
+  <details class="acc"><summary>¿Qué es el poder disciplinario preferente?</summary><div class="acc-body">Es la facultad de la Procuraduría de desplazar a las oficinas de control interno disciplinario de las entidades y asumir directamente un caso. Se usa en asuntos de especial relevancia o cuando conviene garantizar independencia. Explica por qué un caso que empezó en el control interno de una entidad puede terminar en manos de la PGN.</div></details>
+  <details class="acc"><summary>¿Dónde encaja la Dirección Nacional de Investigaciones Especiales?</summary><div class="acc-body">Es una dependencia de apoyo técnico-científico a las investigaciones. Allí trabajan profesionales como el 3PU-15 que aportan análisis especializados (financiero, contable, contractual) y ejercen funciones de policía judicial para recaudar pruebas. No decide el fondo disciplinario, pero produce los insumos técnicos que lo sustentan.</div></details>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Una procuraduría delegada para la contratación estatal recibe una queja sobre un convenio con sobrecostos y solicita a la Dirección Nacional de Investigaciones Especiales un análisis financiero. Como Profesional Universitario 3PU-15, tú reconstruyes la ejecución del convenio y entregas el dictamen. Saber que la solicitud viene de una <mark>delegada especializada</mark> y no de una regional te ayuda a entender el contexto y la relevancia del caso, y a dirigir bien tu informe.</p>
+  </div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 3</span><p>En una frase: ¿quién dirige la PGN y cómo llega al cargo? <strong>Respuesta mental:</strong> el Procurador General, supremo director del Ministerio Público, elegido por el Senado por 4 años de una terna del Presidente, la Corte Suprema y el Consejo de Estado, apoyado por el Viceprocurador.</p></div>
+
+  <!-- ===== MÓDULO 4 ===== -->
+  <h3 class="modulo">Módulo 4 · Procuradurías delegadas: la especialización por materias</h3>
+  <p>Ya sabemos quién manda. Ahora, ¿cómo se reparte el trabajo? La PGN no atiende todo de forma indiferenciada: se especializa a través de las <strong>procuradurías delegadas</strong>. Una delegada es una dependencia de alto nivel que ejerce, por delegación del Procurador, funciones en una <mark>materia o sector específico</mark>. Piensa en ellas como "áreas expertas": hay delegadas para asuntos disciplinarios, para la vigilancia de la contratación estatal, para asuntos ambientales y agrarios, para la defensa de derechos, para la vigilancia de la función pública, entre otras. Así, la Procuraduría puede vigilar con conocimiento técnico cada campo de la administración.</p>
+  <p>La lógica de las delegadas es la misma que la de un hospital con especialidades: no le pides a un cardiólogo que opere una fractura. La administración pública es enorme y variada —contratación, medio ambiente, hacienda, derechos, servicios públicos—, y vigilarla bien exige conocimiento específico. Por eso la PGN reparte su vigilancia por materias. Para tu perfil de contador, esto significa que tu análisis financiero puede resultar útil de manera transversal: casi todas las materias tienen un componente de recursos que alguien debe leer con ojo técnico.</p>
+  <div class="datoclave"><span class="dc-ic">🧩</span><div class="dc-body"><span class="dc-tag">Dato clave</span>Las <strong>procuradurías delegadas</strong> son dependencias que ejercen, por delegación del Procurador, funciones especializadas por <strong>materia o sector</strong> (disciplinario, contratación, ambiental, defensa de derechos, vigilancia de la función pública, etc.). Permiten una vigilancia con conocimiento experto.</div></div>
+  <h4>Por qué la especialización importa para tu dictamen</h4>
+  <p>Aquí hay una conexión directa con tu rol. Cuando tú produces un análisis financiero-contable —digamos, sobre la ejecución de un contrato o el manejo de un anticipo—, ese insumo puede alimentar la labor de una delegada especializada, por ejemplo la que vigila la <strong>contratación estatal</strong> o la que lleva <strong>asuntos disciplinarios</strong>. La especialización explica por qué tu trabajo debe ser <mark>técnicamente impecable y bien enfocado</mark>: no va a un cajón genérico, sino a manos de quienes conocen a fondo esa materia y sabrán exigir rigor.</p>
+  <p>También conviene distinguir entre <strong>procuradores delegados</strong> que cumplen funciones de <em>vigilancia y prevención</em>, otros que actúan en <em>intervención</em> ante las altas cortes y jurisdicciones, y otros que conocen de <em>asuntos disciplinarios</em>. Esa variedad refleja las tres funciones de la entidad que veremos más adelante: la especialización por materias se cruza con la especialización por tipo de función. No necesitas la lista exacta, pero sí la idea de que "delegada" no es una sola cosa, sino una familia de dependencias expertas.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Ejemplos de delegadas (por materia)</th><th>Qué vigilan</th><th>Conexión con tu perfil</th></tr>
+    <tr><td>Asuntos disciplinarios</td><td>Conducta oficial y faltas de los servidores</td><td>Tu dictamen puede ser prueba técnica</td></tr>
+    <tr><td>Vigilancia de la contratación estatal</td><td>Legalidad y buen manejo de contratos públicos</td><td>Tu análisis de ejecución y sobrecostos</td></tr>
+    <tr><td>Vigilancia de la función pública</td><td>Correcto ejercicio de las funciones administrativas</td><td>Tu evaluación de proyectos y presupuesto</td></tr>
+    <tr><td>Defensa de los derechos</td><td>Protección de derechos y del interés público</td><td>Intervención del Ministerio Público</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Elaboras un informe que evidencia pagos por obra no ejecutada. Ese hallazgo puede resultar relevante para la delegada de <strong>vigilancia de la contratación</strong> y, a la vez, para la de <strong>asuntos disciplinarios</strong>. Como profesional, entregas un producto claro que cada área pueda usar en su carril. <mark>Saber que existen delegadas especializadas te enseña a redactar pensando en su destinatario experto.</mark></p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Te dicen: "una procuraduría delegada es lo mismo que una procuraduría regional, solo cambia el nombre".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>Es falso.</strong> La <strong>delegada</strong> se especializa por <em>materia o sector</em> (es un criterio temático). La <strong>regional</strong> se organiza por <em>territorio</em> (es un criterio geográfico). Una vigila un tema en todo el país; la otra vigila muchos temas en una zona. Confundir el criterio temático con el geográfico es una trampa frecuente.</div></details>
+  </div>
+  <details class="acc"><summary>¿Las delegadas dependen del Procurador o son autónomas?</summary><div class="acc-body">Ejercen sus funciones <strong>por delegación</strong> del Procurador General, dentro de la estructura del Decreto Ley 262 de 2000. Tienen autonomía técnica para conocer sus asuntos, pero forman parte de la PGN y actúan bajo la dirección institucional del Procurador. No son entidades separadas.</div></details>
+  <details class="acc"><summary>¿Una delegada puede pedirle apoyo técnico a la DNIE?</summary><div class="acc-body">Sí. Cuando una investigación requiere conocimiento especializado —financiero, contable, de ingeniería, informático—, la labor se articula con la Dirección Nacional de Investigaciones Especiales, que aporta ese soporte técnico-científico. Ahí es donde tu dictamen como 3PU-15 puede resultar decisivo para una delegada.</div></details>
+  <h4>Delegadas, agentes del Ministerio Público y la cadena de tu dictamen</h4>
+  <p>Vale la pena precisar dos figuras que la Constitución menciona en el artículo 277: el Procurador ejerce sus funciones "por sí o por medio de sus <strong>delegados</strong> y <strong>agentes</strong>". Los <em>delegados</em> son, típicamente, los procuradores que encabezan las delegadas y ejercen atribuciones por delegación. Los <em>agentes del Ministerio Público</em> son quienes intervienen, en representación de la PGN, ante distintas autoridades y jurisdicciones. Esta distinción explica cómo una entidad con una sola cabeza logra estar presente en miles de asuntos a la vez: multiplica su acción a través de delegados y agentes.</p>
+  <p>¿Qué tiene esto que ver contigo? Que tu dictamen, según la materia, puede terminar en manos de un delegado o servir de insumo a un agente que interviene en un proceso. Cuando entiendes esta cadena, redactas mejor: un informe técnico que va a sustentar una decisión disciplinaria debe ser claro para el delegado que decide; uno que apoyará una intervención debe darle al agente argumentos técnicos sólidos. En ambos casos, tu <mark>rigor y tu claridad</mark> determinan qué tan útil resulta tu trabajo. El profesional que conoce el destino de su producto lo construye con el lector correcto en mente.</p>
+  <div class="ejemplo"><div class="ejemplo-head">Ejemplo · un mismo dictamen, dos destinos</div><div class="ejemplo-body"><p>Tu análisis de la ejecución de un anticipo puede ir a una <strong>delegada de asuntos disciplinarios</strong> (que decidirá si hay mérito para investigar a un servidor) y, a la vez, aportar a un <strong>agente del Ministerio Público</strong> que interviene en un proceso judicial conexo. Un solo trabajo técnico, bien hecho, sirve en dos carriles distintos de la entidad.</p></div></div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 4</span><p>En una frase: ¿qué son las procuradurías delegadas y con qué criterio se organizan? <strong>Respuesta mental:</strong> dependencias que ejercen funciones especializadas por materia o sector, por delegación del Procurador (criterio temático, no geográfico).</p></div>
+  <!-- ===== MÓDULO 5 ===== -->
+  <h3 class="modulo">Módulo 5 · El despliegue territorial: regionales y provinciales</h3>
+  <p>La Procuraduría no vigila solo desde Bogotá: llega a todo el país. Para eso se despliega en un <strong>nivel territorial</strong> con dos escalones. Primero, las <strong>procuradurías regionales</strong>, que cubren, por lo general, el ámbito de un departamento y coordinan la labor del Ministerio Público en esa zona. Segundo, las <strong>procuradurías provinciales</strong>, que atienden un ámbito más pequeño (varias provincias, municipios o circuitos) y son el escalón más cercano al ciudadano y a las entidades locales. Así, un caso que ocurre en un municipio apartado puede ser conocido por una provincial, coordinada por su regional, dentro de la estructura nacional.</p>
+  <p>¿Por qué este despliegue importa tanto? Porque Colombia es un país grande y diverso, y buena parte de la gestión pública —y de sus irregularidades— ocurre en el territorio: en alcaldías, gobernaciones, hospitales locales, empresas de servicios. Si la PGN solo existiera en Bogotá, no podría vigilar de cerca esa realidad. El nivel territorial acerca el control disciplinario y preventivo al lugar donde suceden las cosas, garantizando que la vigilancia no sea un asunto lejano sino una presencia real en cada región.</p>
+  <div class="datoclave"><span class="dc-ic">🗺️</span><div class="dc-body"><span class="dc-tag">Dato clave</span>El nivel <strong>territorial</strong> de la PGN tiene dos escalones: <strong>procuradurías regionales</strong> (ámbito departamental, coordinan la zona) y <strong>procuradurías provinciales</strong> (ámbito local, más cerca del ciudadano). Criterio <strong>geográfico</strong>, distinto del criterio por materia de las delegadas.</div></div>
+  <h4>Cómo se conecta el territorio con el nivel central</h4>
+  <p>Piensa en la PGN como un cuerpo con un cerebro central (los despachos del Procurador, Viceprocurador y delegadas en Bogotá) y unas extremidades que llegan a cada región (regionales) y a cada zona (provinciales). Esa arquitectura permite <mark>cobertura nacional con dirección única</mark>: las políticas y criterios se definen en el nivel central, y el trabajo del día a día en el territorio lo hacen regionales y provinciales. Para un caso concreto, importa saber qué dependencia territorial tiene competencia, porque de ahí puede provenir una solicitud o hacia allá puede dirigirse un resultado.</p>
+  <p>El reparto de competencias combina lo territorial con lo funcional. Una provincial puede adelantar la vigilancia y ciertas actuaciones disciplinarias de primer contacto en su zona; una regional coordina y conoce asuntos de mayor alcance en el departamento; y el nivel central —delegadas y despachos— asume los casos de mayor complejidad o relevancia nacional, apoyándose, cuando hace falta, en la Dirección Nacional de Investigaciones Especiales. Ese engranaje explica por qué un expediente puede "subir" desde una provincial hasta tu escritorio: no porque las de abajo fallen, sino porque el caso exige un apoyo técnico especializado.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Nivel</th><th>Criterio</th><th>Ámbito típico</th><th>Rol</th></tr>
+    <tr><td>Delegadas</td><td>Materia / sector</td><td>Todo el país (por tema)</td><td>Vigilancia especializada</td></tr>
+    <tr><td>Regionales</td><td>Territorio</td><td>Departamento</td><td>Coordinan la zona</td></tr>
+    <tr><td>Provinciales</td><td>Territorio</td><td>Provincia / municipios</td><td>Cercanía al ciudadano</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Recibes un expediente sobre un contrato de una alcaldía pequeña. El caso pudo iniciarse en la <strong>procuraduría provincial</strong> de esa zona, coordinada por su <strong>regional</strong>, y llegar a la Dirección Nacional de Investigaciones Especiales por su complejidad técnica. Entender el mapa territorial te ayuda a leer el expediente: sabes <mark>de dónde viene</mark> el asunto y por qué requiere tu apoyo especializado.</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Alguien afirma: "las procuradurías provinciales son las que más mandan, porque están más cerca de la gente".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>Confunde cercanía con jerarquía.</strong> Las provinciales son el escalón <strong>más cercano al ciudadano</strong>, pero no "las que más mandan": la dirección de la entidad es única y recae en el Procurador. Regionales y provinciales cumplen funciones dentro de una estructura jerárquica con criterios definidos en el nivel central. Cercanía ≠ mayor jerarquía.</div></details>
+  </div>
+  <details class="acc"><summary>¿Una regional puede vigilar cualquier tema o solo algunos?</summary><div class="acc-body">Las regionales y provinciales conocen los asuntos del Ministerio Público en su territorio conforme a las competencias que fija la norma y las asignaciones del Procurador. No se limitan a un solo tema como las delegadas, pero sí operan dentro del reparto de competencias territoriales y por materia que organiza la entidad.</div></details>
+  <details class="acc"><summary>¿El nivel territorial también hace función preventiva?</summary><div class="acc-body">Sí. Regionales y provinciales ejercen, en su zona, las tres funciones de la PGN según sus competencias: previenen (vigilan la gestión local), intervienen (ante autoridades del territorio) y adelantan actuaciones disciplinarias. El territorio no es solo "disciplinario": es la PGN completa, más cerca del ciudadano.</div></details>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 5</span><p>En una frase: ¿cómo llega la PGN a todo el país? <strong>Respuesta mental:</strong> con un nivel territorial de procuradurías regionales (departamento) y provinciales (local), bajo dirección única del nivel central.</p></div>
+
+  <!-- ===== MÓDULO 6 ===== -->
+  <h3 class="modulo">Módulo 6 · Las tres funciones de la PGN: preventiva, de intervención y disciplinaria</h3>
+  <p>Llegamos al corazón del tema, lo más preguntado: <strong>¿para qué sirve la Procuraduría?</strong> Su labor se resume en <mark>tres grandes funciones</mark> que debes distinguir con claridad, porque la prueba las cruza y las confunde a propósito.</p>
+  <p>La <strong>función preventiva</strong> es la de <em>vigilancia y prevención</em>: la PGN actúa <strong>antes</strong> de que ocurra un daño, para que las cosas se hagan bien. Hace seguimiento a la gestión pública, advierte riesgos, emite directivas, vigila el buen uso de los recursos y llama la atención sobre irregularidades para corregirlas a tiempo. Es "la Procuraduría que previene". Muchos la consideran la función más valiosa, porque evitar el daño siempre es mejor que sancionarlo cuando ya ocurrió.</p>
+  <p>La <strong>función de intervención</strong> es la del <em>Ministerio Público en los procesos</em>: la PGN interviene ante las autoridades judiciales y administrativas en defensa del orden jurídico, del patrimonio público y de los derechos y garantías fundamentales. Es "la Procuraduría que participa en los procesos de otros" para que se respete la ley y el interés general. Aquí actúan los procuradores judiciales y agentes del Ministerio Público que emiten conceptos y velan por la legalidad dentro de procesos que no son suyos.</p>
+  <p>La <strong>función disciplinaria</strong> es la del <em>poder sancionador</em>: la PGN vigila la conducta oficial de quienes desempeñan funciones públicas y, cuando incumplen sus deberes, adelanta la investigación y puede sancionarlos. Tiene poder disciplinario <strong>preferente</strong> (puede desplazar al control interno de las entidades). Es "la Procuraduría que investiga y sanciona", y es la función donde tu dictamen tiene el papel más directo, pues alimenta la investigación con prueba técnica.</p>
+  <div class="datoclave"><span class="dc-ic">⚖️</span><div class="dc-body"><span class="dc-tag">Dato clave · el trío que más preguntan</span><strong>Preventiva</strong> = vigilar y prevenir <em>antes</em> del daño. <strong>Intervención</strong> = actuar como Ministerio Público <em>dentro</em> de procesos judiciales y administrativos. <strong>Disciplinaria</strong> = investigar y <em>sancionar</em> la conducta oficial (poder preferente). Fundamento: arts. 277 y 278 CP.</div></div>
+  <div class="mmap-t">🗺️ Las tres funciones, de un vistazo</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🛡️</span><h5>Preventiva</h5><p>Actúa antes: vigila, advierte, previene el daño a lo público.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🗣️</span><h5>De intervención</h5><p>Actúa dentro de procesos judiciales y administrativos de otros.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Disciplinaria</h5><p>Investiga y sanciona la conducta oficial; poder preferente.</p></div>
+  </div>
+  <p>Un detalle que la prueba adora: la <strong>línea del tiempo</strong>. La preventiva mira <em>hacia adelante</em> (antes del daño); la disciplinaria mira <em>hacia atrás</em> (a una conducta ya ocurrida que podría ser falta); y la de intervención ocurre <em>en paralelo</em> a procesos ajenos, aportando la voz del Ministerio Público. Si en una pregunta identificas <mark>en qué momento</mark> actúa la PGN, casi siempre aciertas la función. "Antes = preventiva; durante otro proceso = intervención; después de una posible falta = disciplinaria".</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Función</th><th>¿Cuándo actúa?</th><th>Ejemplo típico</th><th>Dónde entra tu apoyo</th></tr>
+    <tr><td><strong>Preventiva</strong></td><td>Antes del daño</td><td>Seguimiento a la ejecución de recursos de un proyecto</td><td>Analizas cifras para advertir riesgos financieros</td></tr>
+    <tr><td><strong>De intervención</strong></td><td>Dentro de un proceso de otro</td><td>Concepto del Ministerio Público en un proceso</td><td>Aportas soporte técnico-contable al concepto</td></tr>
+    <tr><td><strong>Disciplinaria</strong></td><td>Ante una posible falta</td><td>Investigación por sobrecostos en un contrato</td><td>Rindes dictamen financiero-contable como prueba</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Un mismo tema —el manejo de los recursos de un proyecto de infraestructura— puede tocar las tres funciones: la PGN <strong>previene</strong> haciendo seguimiento antes de que se ejecute mal; <strong>interviene</strong> si el asunto llega a un proceso judicial; e investiga <strong>disciplinariamente</strong> si un funcionario incumplió sus deberes. Tú, con tu perfil contable, puedes aportar en las tres: <mark>alertas de riesgo, soporte a un concepto y dictamen probatorio</mark>. Por eso el contador es tan valorado en la PGN moderna.</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Un compañero dice: "cuando la Procuraduría hace seguimiento a un contrato para que no se ejecute mal, está ejerciendo la función disciplinaria".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>Es incorrecto.</strong> Hacer seguimiento <em>antes</em> del daño, para que las cosas se hagan bien, es la función <strong>preventiva</strong>. La <strong>disciplinaria</strong> aparece <em>después</em>, cuando ya hay una posible falta e implica investigar y eventualmente sancionar. Confundir "prevenir" con "sancionar" es una de las trampas más repetidas del tema.</div></details>
+  </div>
+  <div class="checkpoint" data-cp="3">
+    <div class="cp-q">✅ Punto de control 3</div>
+    <p>Cuando la PGN interviene ante un juez, en un proceso judicial, para defender el orden jurídico y el patrimonio público, ejerce su función:</p>
+    <div class="cp-op" data-ok="0">Preventiva, porque evita daños futuros.</div>
+    <div class="cp-op" data-ok="1">De intervención, propia del Ministerio Público dentro de procesos judiciales y administrativos.</div>
+    <div class="cp-op" data-ok="0">Disciplinaria, porque va a sancionar al juez.</div>
+    <div class="cp-fb"></div>
+  </div>
+  <details class="acc"><summary>¿Qué significa "poder disciplinario preferente"?</summary><div class="acc-body">Significa que la Procuraduría puede <strong>desplazar</strong> al control interno disciplinario de una entidad y asumir directamente la investigación de un caso cuando lo considere conveniente. Es una manifestación de su rol como máxima autoridad disciplinaria. No siempre lo ejerce, pero puede hacerlo.</div></details>
+  <details class="acc"><summary>¿La función preventiva puede terminar en sanción?</summary><div class="acc-body">No directamente: la preventiva busca corregir y advertir antes del daño. Pero si en el ejercicio de la vigilancia preventiva se detecta una posible falta, el asunto puede dar lugar a que se active —por separado— la función disciplinaria. Son funciones distintas, aunque a veces una conduzca a la otra.</div></details>
+  <h4>La función preventiva en detalle: tu terreno natural como contador</h4>
+  <p>De las tres funciones, la <strong>preventiva</strong> es donde tu perfil financiero puede brillar más temprano. Prevenir significa <mark>vigilar antes de que el daño ocurra</mark>: hacer seguimiento a proyectos, a la ejecución de recursos, a la contratación en marcha, y advertir a tiempo cuando algo apunta a un mal manejo. La PGN emite directivas, formula requerimientos y activa alertas preventivas para que las entidades corrijan el rumbo. Un análisis financiero que detecta, por ejemplo, que un anticipo se está girando sin soporte de ejecución, es exactamente el tipo de insumo que alimenta esta función.</p>
+  <p>La lógica preventiva tiene una gran ventaja: <strong>evitar el daño cuesta menos que repararlo</strong>. Una alerta oportuna puede impedir que se pierdan recursos que, una vez desviados, son muy difíciles de recuperar. Por eso la función preventiva se ha vuelto central en la Procuraduría moderna, y por eso los profesionales con formación contable son tan valorados: son capaces de leer las señales tempranas en los números antes de que se conviertan en un detrimento consumado. Cuando aportas a la prevención, no solo ayudas a sancionar: ayudas a que el daño no llegue a ocurrir.</p>
+  <div class="destacado azul"><span class="dst-ic">🛡️</span><div class="dst-body"><span class="dst-title">Prevenir con números</span><p>Tu ojo contable puede anticipar riesgos: pagos sin soporte, ejecución que no coincide con lo pactado, anticipos sin amortizar. En la función preventiva, esos hallazgos se traducen en alertas que evitan el daño <em>antes</em> de que se materialice. Prevenir también es parte de tu valor como 3PU-15.</p></div></div>
+  
+  <h4>Las tres grandes funciones de la Procuraduría: preventiva, de intervención y disciplinaria</h4>
+  <p>Si tuvieras que explicarle a alguien qué hace la Procuraduría en una sola frase, dirías que <strong>vigila</strong>. Pero esa vigilancia se despliega en tres funciones distintas que conviene no confundir, porque la prueba las diferencia. La <strong>función preventiva</strong> busca evitar que ocurran las irregularidades: vigila la gestión pública, hace seguimiento a políticas y advierte riesgos antes de que se materialicen. La <strong>función de intervención</strong> (como Ministerio Público) implica actuar en procesos judiciales y administrativos en defensa del orden jurídico, el patrimonio público y los derechos fundamentales. Y la <strong>función disciplinaria</strong> es la de investigar y sancionar a los servidores que incumplen sus deberes, que es donde aterriza tu trabajo.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Función</th><th>Qué persigue</th><th>Momento</th></tr>
+    <tr><td>Preventiva</td><td>Evitar la irregularidad antes de que ocurra</td><td>Antes / durante la gestión</td></tr>
+    <tr><td>De intervención (Ministerio Público)</td><td>Defender el orden jurídico y lo público en procesos</td><td>Durante procesos judiciales/administrativos</td></tr>
+    <tr><td>Disciplinaria</td><td>Investigar y sancionar el incumplimiento de deberes</td><td>Después de la conducta</td></tr>
+  </table></div>
+  <p>Fíjate en algo importante para ubicar tu rol: aunque tu dictamen se usa sobre todo en la <mark>función disciplinaria</mark>, la información que produces también puede alimentar la preventiva (detectar patrones de riesgo) y la de intervención (aportar en procesos donde la PGN actúa como Ministerio Público). Un buen profesional entiende que su análisis no sirve a un solo propósito: es un insumo transversal para la misión completa de la entidad. Esa visión de conjunto es la que distingue a quien "hace números" de quien realmente <strong>aporta al control del Estado</strong>.</p>
+  <details class="acc"><summary>¿La función preventiva puede evitar procesos disciplinarios?</summary><div class="acc-body">Sí, ese es su propósito: al advertir riesgos y vigilar la gestión a tiempo, busca corregir antes de que la irregularidad se consume. Cuando la prevención falla o se ignora, entra la función disciplinaria. Ambas son complementarias.</div></details>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Al analizar varios expedientes, notas que un mismo tipo de irregularidad (anticipos sin amortizar) se repite en varias entidades de una región. Además de sustentar los casos disciplinarios puntuales, tu observación puede alimentar una <strong>alerta preventiva</strong> para que la Procuraduría advierta el riesgo de forma general. Ahí tu trabajo técnico trasciende el caso individual y sirve a la <mark>función preventiva</mark> de la entidad.</p>
+  </div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 6</span><p>En una frase: ¿cuáles son las tres funciones de la PGN? <strong>Respuesta mental:</strong> preventiva (antes del daño), de intervención (dentro de procesos como Ministerio Público) y disciplinaria (investiga y sanciona, con poder preferente).</p></div>
+
+  <!-- ===== MÓDULO 7 ===== -->
+  <h3 class="modulo">Módulo 7 · La Dirección Nacional de Investigaciones Especiales: tu casa dentro de la casa</h3>
+  <p>Y aquí llegamos a tu escritorio. Dentro de la Procuraduría existe una dependencia clave para tu cargo: la <strong>Dirección Nacional de Investigaciones Especiales (DNIE)</strong>. Su razón de ser es aportar <mark>apoyo técnico-científico</mark> a las investigaciones —especialmente las disciplinarias— que requieren conocimiento especializado que un abogado, por sí solo, no siempre tiene: análisis financiero, contable, de contratación, de ingeniería, informático. Es, en pocas palabras, el <strong>brazo técnico y de investigación</strong> de la entidad.</p>
+  <p>La existencia de una dependencia así responde a una verdad práctica: muchas irregularidades de lo público están escondidas en los <em>números y en los papeles</em>. Un sobrecosto no se ve a simple vista; hay que reconstruir la ejecución de un contrato, cruzar comprobantes, revisar la ejecución presupuestal y cuantificar el daño. Esa es una tarea de especialistas. Por eso la PGN necesita profesionales con tu perfil, y por eso tu cargo tiene tanto valor: eres quien traduce la maraña financiera en un dictamen claro que el operador jurídico puede usar como prueba.</p>
+  <div class="datoclave"><span class="dc-ic">🔬</span><div class="dc-body"><span class="dc-tag">Dato clave · tu dependencia</span>La <strong>Dirección Nacional de Investigaciones Especiales</strong> es el <strong>brazo técnico-científico</strong> de la PGN. Apoya las investigaciones con análisis especializado (financiero, contable, de contratación, etc.) y ejerce funciones de <strong>Policía Judicial</strong>. Es donde trabaja el <strong>Profesional Universitario 3PU-15</strong>.</div></div>
+  <h4>Qué hace el Profesional Universitario 3PU-15 aquí</h4>
+  <p>Tu rol en la DNIE es concreto y valioso. Como profesional de apoyo técnico-financiero, tú <strong>analizas información financiera, contable y económica</strong> relacionada con las investigaciones; <strong>evalúas proyectos y contratos</strong>; <strong>verificas la ejecución presupuestal</strong>; <strong>rindes dictámenes</strong> técnicos que sirven como prueba; ejerces funciones de <strong>Policía Judicial</strong> (recaudo y aseguramiento de elementos materiales de prueba, con las garantías de ley); y <strong>asistes a audiencias</strong> cuando tu concepto técnico es requerido. Es un cargo <mark>profesional que decide y conceptúa con criterio</mark>, no una labor meramente operativa: tu firma respalda un análisis que puede orientar una decisión.</p>
+  <p>Detengámonos en dos funciones que a veces sorprenden. Primera, la de <strong>Policía Judicial</strong>: cuando la ley y la orden competente lo permiten, puedes recaudar y asegurar elementos materiales de prueba (documentos, soportes, información) siguiendo protocolos y cadena de custodia. No es una función policial en el sentido común; es la facultad técnica de <em>asegurar</em> la prueba para que sirva en el proceso. Segunda, la de <strong>asistir a audiencias</strong>: tu dictamen puede ser sometido a contradicción, y tú debes poder <em>sustentarlo y aclararlo</em>. Esto exige que tu trabajo sea sólido, metódico y explicable, no una simple planilla de cifras.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Función del 3PU-15</th><th>En qué consiste</th></tr>
+    <tr><td>Analizar información financiera/contable</td><td>Leer estados, comprobantes, movimientos y detectar irregularidades</td></tr>
+    <tr><td>Evaluar proyectos y contratos</td><td>Verificar coherencia entre lo pactado, lo ejecutado y lo pagado</td></tr>
+    <tr><td>Verificar ejecución presupuestal</td><td>Contrastar apropiaciones, compromisos, obligaciones y pagos</td></tr>
+    <tr><td>Rendir dictámenes</td><td>Producir el concepto técnico que sirve de prueba en la investigación</td></tr>
+    <tr><td>Ejercer Policía Judicial</td><td>Recaudar y asegurar elementos de prueba con las garantías legales</td></tr>
+    <tr><td>Asistir a audiencias</td><td>Sustentar o aclarar el dictamen cuando se requiere</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Te asignan un expediente de un contrato con posible sobrecosto. Tú <strong>evalúas el contrato</strong>, <strong>verificas la ejecución presupuestal</strong>, cruzas comprobantes de pago con actas de obra y <strong>rindes un dictamen</strong> que cuantifica el presunto detrimento. Ese documento, firmado por ti, se convierte en <mark>prueba técnica</mark> de la investigación disciplinaria. No ejecutaste una tarea rutinaria: emitiste un juicio profesional con consecuencias. Eso es el 3PU-15.</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Un colega te sugiere: "como somos apoyo técnico, basta con pasar los datos crudos; que el abogado saque las conclusiones, nosotros no opinamos".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>No es así.</strong> El 3PU-15 es un cargo <strong>profesional</strong> que <mark>dictamina y conceptúa con criterio</mark>. No entregas datos crudos: rindes un <strong>dictamen</strong> con análisis, metodología y conclusiones técnicas dentro de tu competencia (lo financiero-contable), respetando el debido proceso. El abogado valora lo jurídico; tú respondes por el rigor de tu concepto técnico.</div></details>
+  </div>
+  <div class="destacado oro"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">El corazón del enfoque de tu cargo</span><p>Tú no eres un digitador de cifras: eres un <strong>profesional que investiga, dictamina y conceptúa</strong>. La DNIE necesita tu criterio contable para darle solidez técnica a las investigaciones. Ese es el nivel de responsabilidad del 3PU-15.</p></div></div>
+  <details class="acc"><summary>¿La función de Policía Judicial me convierte en investigador penal?</summary><div class="acc-body">No. La facultad de Policía Judicial en tu rol es un apoyo técnico para <strong>recaudar y asegurar prueba</strong> con las garantías legales, en el marco de las investigaciones de la PGN. No te convierte en fiscal ni en juez: sigues siendo un profesional de apoyo cuyo producto es un dictamen técnico, recaudado y conservado con rigor.</div></details>
+  <h4>El dictamen del 3PU-15: por qué tu firma pesa</h4>
+  <p>Conviene entender qué hace especial a un <strong>dictamen</strong> frente a un simple reporte. Un reporte describe; un dictamen <mark>concluye con criterio profesional</mark>. Cuando rindes un dictamen financiero-contable, aplicas una metodología, examinas los soportes, contrastas lo pactado con lo ejecutado y con lo pagado, y emites una conclusión técnica que puede afirmar, por ejemplo, la existencia de un sobrecosto por una cantidad determinada. Ese producto tiene valor probatorio: entra al expediente como <strong>prueba técnica</strong> y puede ser controvertido por la defensa. Por eso tu firma no es un trámite: es la asunción de responsabilidad por un juicio profesional.</p>
+  <p>Esta naturaleza explica tres exigencias sobre tu trabajo. Primera, la <strong>metodología</strong>: debes poder explicar cómo llegaste a tu conclusión, paso a paso. Segunda, la <strong>trazabilidad</strong>: cada afirmación se apoya en un soporte identificable, recaudado y conservado con las garantías del caso. Y tercera, la <strong>imparcialidad</strong>: tu dictamen no busca "condenar" a nadie, sino establecer la verdad técnica de los hechos financieros, favorezca a quien favorezca. Un dictamen sólido resiste la contradicción en audiencia; uno improvisado se cae. Ese es el estándar del cargo que estás persiguiendo.</p>
+  <div class="ejemplo"><div class="ejemplo-head">Ejemplo · reporte vs. dictamen</div><div class="ejemplo-body"><p>Un <strong>reporte</strong> dice: "se giraron $500 millones de anticipo". Un <strong>dictamen</strong> dice: "de los $500 millones girados como anticipo, según los soportes examinados, $180 millones no fueron amortizados ni respaldados con ejecución verificable, lo que sugiere un posible detrimento por esa suma". Lo segundo concluye con criterio y sirve como prueba: eso es lo que rinde un 3PU-15.</p></div></div>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 7</span><p>En una frase: ¿qué es la DNIE y qué haces tú allí? <strong>Respuesta mental:</strong> es el brazo técnico-científico de la PGN; el 3PU-15 analiza información financiera, evalúa contratos, verifica presupuesto, rinde dictámenes, ejerce Policía Judicial y asiste a audiencias.</p></div>
+
+  <!-- ===== MÓDULO 8 ===== -->
+  <h3 class="modulo">Módulo 8 · El Instituto de Estudios del Ministerio Público y el cierre del mapa</h3>
+  <p>Nos falta una pieza para completar el mapa: el <strong>Instituto de Estudios del Ministerio Público (IEMP)</strong>. Es la dependencia académica y de investigación de la PGN. Su misión es <mark>formar y capacitar</mark> a los servidores del Ministerio Público, producir estudios, doctrina y materiales, y apoyar los procesos de selección y capacitación. Piensa en él como la "universidad interna" de la entidad: donde se cultiva el conocimiento que después se aplica en la vigilancia, la intervención y la investigación disciplinaria.</p>
+  <p>¿Por qué una entidad de control necesita su propio instituto? Porque vigilar bien exige conocimiento actualizado. El derecho disciplinario cambia, la contratación se reforma, aparecen nuevas modalidades de corrupción y nuevos métodos de investigación. El IEMP mantiene a los servidores al día, produce publicaciones y doctrina que orientan la interpretación de las normas, y apoya la formación de quienes ingresan. Para ti, es un aliado: buena parte de la cualificación que recibirás en el cargo puede provenir de sus programas.</p>
+  <div class="datoclave"><span class="dc-ic">📚</span><div class="dc-body"><span class="dc-tag">Dato clave</span>El <strong>Instituto de Estudios del Ministerio Público (IEMP)</strong> es la dependencia de <strong>formación, capacitación e investigación</strong> de la PGN. Produce estudios y doctrina y apoya la cualificación de los servidores. Es la "universidad interna" del Ministerio Público.</div></div>
+  <h4>Cómo se conecta todo: el mapa completo de la PGN</h4>
+  <p>Recapitulemos con una imagen mental que te servirá el día de la prueba. En la cima, el <strong>Procurador General</strong> (supremo director) y el <strong>Viceprocurador</strong>. De ahí bajan dos grandes ramas de trabajo: por <strong>materia</strong>, las <strong>procuradurías delegadas</strong> (especializadas por sector); por <strong>territorio</strong>, las <strong>regionales</strong> y <strong>provinciales</strong>. Cruzando todo eso, la entidad ejerce sus <strong>tres funciones</strong> (preventiva, de intervención y disciplinaria). Y como apoyo especializado, la <strong>Dirección Nacional de Investigaciones Especiales</strong> —tu casa— y el <strong>IEMP</strong> como brazo académico. Toda esa arquitectura nace de la Constitución (arts. 118, 275 a 278) y se organiza en el <strong>Decreto Ley 262 de 2000</strong>.</p>
+  <p>Fíjate en la belleza del diseño: <mark>una sola cabeza, dos criterios de despliegue (materia y territorio), tres funciones y dos brazos de apoyo</mark>. Si memorizas esa fórmula —"1 cabeza, 2 criterios, 3 funciones, 2 apoyos"—, tienes el esqueleto completo de la entidad. Y sobre ese esqueleto, tú te ubicas en un punto muy concreto: el brazo técnico de apoyo, en el nivel profesional, produciendo el insumo contable que nutre la función disciplinaria y también la preventiva. Saber exactamente dónde estás es lo que convierte tu trabajo en algo con propósito, y lo que te da seguridad frente a las preguntas del examen.</p>
+  <div class="flujo">
+    <div class="flujo-paso"><span class="fp-n">1</span><h4>Raíz</h4><p>Constitución: Ministerio Público (art. 118) y funciones (277-278).</p></div>
+    <div class="flujo-paso"><span class="fp-n">2</span><h4>Organización</h4><p>Decreto Ley 262/2000: estructura y régimen especial.</p></div>
+    <div class="flujo-paso"><span class="fp-n">3</span><h4>Dirección</h4><p>Procurador y Viceprocurador; nivel directivo.</p></div>
+    <div class="flujo-paso"><span class="fp-n">4</span><h4>Despliegue</h4><p>Delegadas (materia) + regionales/provinciales (territorio).</p></div>
+    <div class="flujo-paso"><span class="fp-n">5</span><h4>Apoyo</h4><p>DNIE (técnico-científico, tu cargo) e IEMP (académico).</p></div>
+  </div>
+  <div class="practica"><div class="practica-tag">🛠️ En la práctica</div>
+    <p>Durante tu inducción, el IEMP puede ofrecerte capacitación sobre el proceso disciplinario y las metodologías de investigación. Aprovecharla te hace mejor 3PU-15: <mark>conectas tu saber contable con el marco institucional</mark>. Y cuando entregues un dictamen, sabrás que se inserta en una estructura que va desde tu escritorio en la DNIE hasta la cabeza de la entidad. Ese sentido de conjunto es lo que distingue a un profesional que "sabe dónde está".</p>
+  </div>
+  <div class="reto"><div class="reto-q"><span class="reto-badge">¿Tú qué harías?</span></div>
+    <p>Te preguntan en la prueba: "¿el Instituto de Estudios del Ministerio Público es el que sanciona disciplinariamente a los funcionarios?".</p>
+    <details><summary>Ver la respuesta correcta</summary><div class="reto-r"><strong>No.</strong> El IEMP <strong>forma, capacita e investiga académicamente</strong>; no ejerce la función disciplinaria sancionadora. Quien investiga y sanciona es la Procuraduría a través de sus despachos, delegadas y territoriales competentes. Cada dependencia tiene su rol: no confundas la "universidad interna" con el poder sancionador.</div></details>
+  </div>
+  <div class="checkpoint" data-cp="4">
+    <div class="cp-q">✅ Punto de control 4</div>
+    <p>La Dirección Nacional de Investigaciones Especiales, donde trabaja el 3PU-15, se caracteriza porque:</p>
+    <div class="cp-op" data-ok="1">Es el brazo técnico-científico de la PGN que apoya las investigaciones con análisis especializado y ejerce Policía Judicial.</div>
+    <div class="cp-op" data-ok="0">Es la dependencia que forma y capacita a los servidores del Ministerio Público.</div>
+    <div class="cp-op" data-ok="0">Es la máxima autoridad que elige al Procurador General.</div>
+    <div class="cp-fb"></div>
+  </div>
+  <details class="acc"><summary>¿El IEMP entrega títulos como una universidad?</summary><div class="acc-body">El IEMP desarrolla formación, capacitación e investigación para el Ministerio Público y puede ofrecer programas y publicaciones. Su foco es cualificar a los servidores y producir conocimiento útil para las funciones de la PGN, más que operar como una universidad tradicional que otorga títulos profesionales.</div></details>
+  <div class="retoexpres"><span class="re-tag">⚡ Reto exprés · Módulo 8</span><p>En una frase: ¿qué es el IEMP y cómo cierra el mapa de la PGN? <strong>Respuesta mental:</strong> es la dependencia de formación e investigación; junto con la DNIE (apoyo técnico) completa una estructura dirigida por el Procurador, desplegada en delegadas y territoriales, que ejerce tres funciones.</p></div>
+
+  <!-- ===== CIERRE DEL DESARROLLO ===== -->
+  <div class="box key" style="background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:18px 20px;margin:22px 0;"><div class="box-title" style="color:var(--azul);font-weight:800;">🔑 Idea clave del día</div><p>La PGN es el <strong>órgano de control autónomo</strong> que encabeza el Ministerio Público (art. 118 CP); se organiza según el <strong>Decreto Ley 262 de 2000</strong>, la dirige el <strong>Procurador General</strong> (elegido por el Senado, 4 años) con su Viceprocurador, se despliega por <strong>materia</strong> (delegadas) y por <strong>territorio</strong> (regionales y provinciales), y ejerce tres funciones: <strong>preventiva, de intervención y disciplinaria</strong>. Tú, como <strong>Profesional Universitario 3PU-15</strong>, trabajas en la <strong>Dirección Nacional de Investigaciones Especiales</strong>, aportando el criterio técnico-financiero que da solidez a las investigaciones.</p></div>
+  <div class="box tips" style="background:var(--verde-suave);border:1px solid var(--verde-borde);border-radius:13px;padding:18px 20px;margin:16px 0;"><div class="box-title" style="color:var(--verde);font-weight:800;">🧠 Tips para fijar el tema</div><p>Amarra tres pares de "nombre + número": <strong>Ministerio Público → art. 118</strong>; <strong>funciones del Procurador → arts. 277 y 278</strong>; <strong>estructura de la PGN → Decreto Ley 262 de 2000</strong>. Y una fórmula del organigrama: "1 cabeza, 2 criterios (materia y territorio), 3 funciones, 2 apoyos (DNIE e IEMP)". Con eso resuelves la mayoría de las preguntas.</p></div>
+  <div class="box gold"><div class="box-title">⚡ Frase para recordar</div><p><strong>"La Procuraduría previene, interviene y disciplina; nace del Ministerio Público (art. 118), se arma con el Decreto Ley 262 de 2000, y en su brazo técnico —la Dirección Nacional de Investigaciones Especiales— es donde el 3PU-15 pone los números al servicio de la vigilancia de lo público."</strong></p></div>
+  <div class="fuentes"><div class="box-title">📚 Fuentes para profundizar (enlaces oficiales)</div>
+    <p>Consulta siempre las normas en su fuente oficial. Estas son las básicas del día:</p>
+    <ul class="lista">
+      <li><a href="https://www.constitucioncolombia.com/titulo-10/capitulo-2/articulo-118" target="_blank" rel="noopener">Constitución Política, art. 118 — Ministerio Público</a></li>
+      <li><a href="https://www.constitucioncolombia.com/titulo-10/capitulo-2/articulo-277" target="_blank" rel="noopener">Constitución Política, art. 277 — Funciones del Procurador</a></li>
+      <li><a href="https://www.constitucioncolombia.com/titulo-10/capitulo-2/articulo-278" target="_blank" rel="noopener">Constitución Política, art. 278 — Funciones que ejerce directamente</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=6146" target="_blank" rel="noopener">Decreto Ley 262 de 2000 — Estructura y organización de la PGN (Gestor Normativo)</a></li>
+      <li><a href="https://www.procuraduria.gov.co/" target="_blank" rel="noopener">Sitio oficial de la Procuraduría General de la Nación</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">Constitución Política de 1991 (texto completo, Secretaría del Senado)</a></li>
+    </ul>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Ahora afinemos las distinciones que confunde la prueba.</span><button class="advance-btn" data-goto="3">Ver distinciones clave →</button></div>
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de este día que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Ministerio Público</strong></td><td><strong>Ministerio del Gobierno</strong></td><td>El Ministerio Público es órgano de control autónomo (art. 118 CP); no es una cartera del Ejecutivo ni depende del Presidente.</td></tr>
+    <tr><td><strong>Procuraduría</strong></td><td><strong>Contraloría</strong></td><td>PGN vigila la conducta oficial (disciplinario). Contraloría vigila la gestión fiscal y el patrimonio. Ambas son órganos de control.</td></tr>
+    <tr><td><strong>Procuraduría delegada</strong></td><td><strong>Procuraduría regional</strong></td><td>Delegada = criterio por materia/sector. Regional = criterio territorial (departamento).</td></tr>
+    <tr><td><strong>Regional</strong></td><td><strong>Provincial</strong></td><td>Regional cubre ámbito departamental y coordina; provincial es el escalón local, más cercano al ciudadano.</td></tr>
+    <tr><td><strong>Función preventiva</strong></td><td><strong>Función disciplinaria</strong></td><td>Preventiva actúa antes del daño (vigilar/advertir). Disciplinaria actúa después (investigar/sancionar).</td></tr>
+    <tr><td><strong>Función de intervención</strong></td><td><strong>Función disciplinaria</strong></td><td>Intervención = participar en procesos de otros (judiciales/administrativos). Disciplinaria = proceso propio contra el servidor.</td></tr>
+    <tr><td><strong>DNIE</strong></td><td><strong>IEMP</strong></td><td>DNIE = apoyo técnico-científico a investigaciones (tu cargo). IEMP = formación, capacitación e investigación académica.</td></tr>
+    <tr><td><strong>Art. 277 CP</strong></td><td><strong>Art. 278 CP</strong></td><td>277 = funciones por sí o por delegados/agentes. 278 = funciones que el Procurador ejerce directamente.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>Construye una frase con cada pareja: "delegada = materia; regional = territorio"; "preventiva = antes; disciplinaria = después"; "DNIE = técnica; IEMP = académica". Si la dices sin dudar, la dominaste.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Profesional Universitario 3PU-15 (apoyo técnico en la Dirección Nacional de Investigaciones Especiales), con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · ¿A quién le rindo mi dictamen?</div><div class="caso-body">
+    <span class="label">Situación</span><p>Terminas un dictamen sobre la ejecución de un contrato. Un amigo te dice que lo envíes "directo al Procurador General, porque él es el jefe de todos". ¿Es lo adecuado?</p>
+    <span class="label">¿Qué corresponde?</span>
+    <div class="resp-correcta"><p>No. Tu dictamen sigue la <mark>línea funcional</mark>: lo entregas al despacho que dirige la investigación en tu dependencia, dentro de la estructura de la DNIE, que a su vez se articula con la dirección o delegada competente. La entidad tiene una jerarquía y unos canales; saltarse la línea desordena el trámite. El Procurador dirige la entidad, pero el trabajo fluye por sus dependencias.</p></div>
+    <span class="label">Por qué</span><p>La PGN se organiza por niveles (Decreto Ley 262/2000). El producto técnico se dirige por el canal competente, no directamente a la cúspide.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · Prevenir o sancionar</div><div class="caso-body">
+    <span class="label">Situación</span><p>Te piden analizar, antes de que se ejecute, el presupuesto de un convenio, para advertir riesgos y evitar un mal manejo. Un colega dice que "eso ya es un proceso disciplinario".</p>
+    <span class="label">¿Qué corresponde?</span>
+    <div class="resp-correcta"><p>Es función <mark>preventiva</mark>, no disciplinaria. Estás apoyando la vigilancia <em>antes</em> del daño para que las cosas se hagan bien. La disciplinaria solo aparecería <em>después</em>, si hubiera una posible falta que investigar. Tu análisis financiero de riesgo es un insumo típico de la función preventiva de la PGN.</p></div>
+    <span class="label">Por qué</span><p>Preventiva = antes del daño; disciplinaria = después, ante una posible falta. Son funciones distintas (arts. 277-278 CP).</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · ¿La CNSC o la PGN?</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un aspirante te comenta que reclamará ante la CNSC por un puntaje del concurso 112-2026. ¿Tiene sentido dirigir el reclamo allí?</p>
+    <span class="label">¿Qué corresponde?</span>
+    <div class="resp-correcta"><p>No. La PGN tiene <mark>régimen especial de carrera</mark> (Decreto Ley 262/2000): su concurso <strong>no lo administra la CNSC</strong>, sino la propia Procuraduría con su operador. Las reclamaciones se surten ante la entidad organizadora del concurso, conforme a las reglas de la convocatoria 112-2026, no ante la CNSC.</p></div>
+    <span class="label">Por qué</span><p>El régimen especial implica que el proceso de selección lo maneja la PGN, no la CNSC. Es un distractor frecuente.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Creer que la PGN depende del Gobierno</div><p>Es un órgano de control autónomo (art. 117 y 118 CP). No pertenece a ninguna rama del poder ni depende del Ejecutivo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Confundir Ministerio Público con un ministerio</div><p>El Ministerio Público no es una cartera del Gobierno: lo integran el Procurador, el Defensor del Pueblo y los personeros.</p></div>
+  <div class="box danger"><div class="box-title">❌ Decir que al Procurador lo nombra el Presidente</div><p>Lo elige el Senado, por 4 años, de una terna del Presidente, la Corte Suprema y el Consejo de Estado.</p></div>
+  <div class="box danger"><div class="box-title">❌ Mezclar delegadas (materia) con territoriales (geografía)</div><p>Delegadas = por materia/sector; regionales y provinciales = por territorio. Criterios distintos.</p></div>
+  <div class="box danger"><div class="box-title">❌ Confundir la función preventiva con la disciplinaria</div><p>Preventiva actúa antes del daño; disciplinaria investiga y sanciona después. No son lo mismo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Pensar que la CNSC organiza el concurso de la PGN</div><p>La PGN tiene régimen especial (Decreto Ley 262/2000): su concurso 112-2026 lo administra ella misma, no la CNSC.</p></div>
+  <div class="box danger"><div class="box-title">❌ Creer que el 3PU-15 solo pasa datos</div><p>Es un cargo profesional que dictamina y conceptúa con criterio, no una labor meramente operativa.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Los tres números clave:</strong> Ministerio Público = art. 118; funciones = arts. 277 y 278; estructura = Decreto Ley 262 de 2000.</li>
+    <li><strong>El trío de funciones:</strong> preventiva (antes), intervención (dentro de procesos), disciplinaria (después, con poder preferente).</li>
+    <li><strong>Integrantes del Ministerio Público:</strong> Procurador General + Defensor del Pueblo + personeros.</li>
+    <li><strong>Dirección:</strong> Procurador (Senado, 4 años, terna Presidente/Corte Suprema/Consejo de Estado) + Viceprocurador (lo nombra el Procurador).</li>
+    <li><strong>Despliegue:</strong> delegadas = materia; regionales = departamento; provinciales = local.</li>
+    <li><strong>Tu casa:</strong> Dirección Nacional de Investigaciones Especiales = brazo técnico-científico; el IEMP = formación e investigación.</li>
+    <li><strong>Tu rol:</strong> analizar finanzas, evaluar contratos, verificar presupuesto, rendir dictámenes, Policía Judicial, audiencias.</li>
+    <li><strong>Tu concurso:</strong> régimen especial (262/2000); lo administra la PGN, NO la CNSC (convocatoria 112-2026).</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"La Procuraduría es un ministerio del Gobierno porque se llama 'Ministerio Público'."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la palabra "ministerio" suena a cartera del Ejecutivo.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el Ministerio Público es un órgano de control autónomo, no una cartera del Gobierno.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> lo integran el Procurador, el Defensor del Pueblo y los personeros (art. 118 CP); no depende del Presidente.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El Procurador General es nombrado directamente por el Presidente de la República."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> el Presidente participa en el proceso.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el Presidente solo aporta un candidato a la terna; no nombra al Procurador.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> lo elige el Senado, por 4 años, de una terna del Presidente, la Corte Suprema y el Consejo de Estado.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Cuando la PGN hace seguimiento a un contrato antes de que se ejecute, ejerce función disciplinaria."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la PGN es conocida por sancionar.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> vigilar antes del daño es función preventiva, no disciplinaria.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> la disciplinaria aparece después, ante una posible falta que investigar y sancionar.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El concurso de la Procuraduría lo organiza la CNSC, como el de las demás entidades."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la CNSC administra la mayoría de los concursos públicos.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la PGN tiene régimen especial de carrera (Decreto Ley 262/2000).</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> el concurso 112-2026 lo administra la propia Procuraduría con su operador, no la CNSC.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Ministerio Público</h4><p>Órgano de control autónomo (art. 118 CP): Procurador, Defensor del Pueblo y personeros. No es cartera del Gobierno.</p></div>
+    <div class="resumen-item"><h4>Norma que organiza</h4><p>Decreto Ley 262 de 2000: estructura, funciones por dependencia y régimen especial de carrera.</p></div>
+    <div class="resumen-item"><h4>Dirección</h4><p>Procurador General (Senado, 4 años, terna) + Viceprocurador (lo nombra el Procurador).</p></div>
+    <div class="resumen-item"><h4>Delegadas</h4><p>Especialización por materia/sector, por delegación del Procurador.</p></div>
+    <div class="resumen-item"><h4>Territoriales</h4><p>Regionales (departamento) y provinciales (local, cercanas al ciudadano).</p></div>
+    <div class="resumen-item"><h4>Tres funciones</h4><p>Preventiva (antes), de intervención (dentro de procesos) y disciplinaria (después, poder preferente).</p></div>
+    <div class="resumen-item"><h4>Tu casa: DNIE</h4><p>Brazo técnico-científico. El 3PU-15 analiza finanzas, evalúa contratos, rinde dictámenes, ejerce Policía Judicial.</p></div>
+    <div class="resumen-item"><h4>IEMP</h4><p>Formación, capacitación e investigación del Ministerio Público. Es la "universidad interna".</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Órgano de control</dt><dd>Entidad autónoma (Ministerio Público y Contraloría) que vigila a las ramas del poder (art. 117 CP).</dd>
+      <dt>Procuraduría delegada</dt><dd>Dependencia especializada por materia que ejerce funciones por delegación del Procurador.</dd>
+      <dt>Poder disciplinario preferente</dt><dd>Facultad de la PGN de desplazar al control interno de una entidad y asumir la investigación.</dd>
+      <dt>DNIE</dt><dd>Dirección Nacional de Investigaciones Especiales: apoyo técnico-científico y Policía Judicial.</dd>
+      <dt>IEMP</dt><dd>Instituto de Estudios del Ministerio Público: formación, capacitación e investigación.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de práctica — Estructura y Funciones de la PGN</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 9. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 9</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.checkpoint').forEach(function(cp){
+  const fb=cp.querySelector('.cp-fb');
+  cp.querySelectorAll('.cp-op').forEach(function(op){
+    op.addEventListener('click',function(){
+      if(cp.dataset.done==='1')return;
+      cp.dataset.done='1';
+      const acerto=this.dataset.ok==='1';
+      cp.querySelectorAll('.cp-op').forEach(function(o){
+        o.classList.add('cp-lock');
+        if(o.dataset.ok==='1')o.classList.add('cp-ok');
+        else o.classList.add('cp-no');
+      });
+      if(fb){
+        fb.classList.add('show');
+        fb.classList.add(acerto?'ok':'no');
+        fb.innerHTML=acerto
+          ?'<strong>¡Correcto!</strong> Muy bien: dominaste este punto.'
+          :'<strong>Revisa.</strong> La opción marcada en verde es la correcta; vuelve al módulo si te quedó duda.';
+      }
+    });
+  });
+});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 9: Estructura y Funciones de la PGN. ¡Ya sabes en qué casa trabajas, sigue así!');});
+const flashcards=[
+  {f:'¿Qué es el Ministerio Público y quiénes lo ejercen?',b:'Es el órgano de control autónomo que guarda el orden jurídico, el patrimonio público y los derechos (art. 118 CP). Lo ejercen el Procurador General, el Defensor del Pueblo y los personeros municipales. NO es una cartera del Gobierno.'},
+  {f:'¿Qué norma organiza la estructura de la PGN?',b:'El Decreto Ley 262 de 2000, que fija la estructura, las funciones por dependencia y el régimen especial de carrera de la Procuraduría. La Constitución define el qué; el 262/2000 define el cómo.'},
+  {f:'¿Cómo se elige al Procurador General y por cuánto tiempo?',b:'Lo elige el Senado de la República por un período de 4 años, de una terna integrada por candidatos del Presidente, la Corte Suprema de Justicia y el Consejo de Estado. Ese origen plural refuerza su independencia.'},
+  {f:'¿Quién es el Viceprocurador y quién lo nombra?',b:'Es el segundo a bordo de la entidad, nombrado por el propio Procurador General. Colabora en la dirección de la PGN y lo reemplaza en sus faltas temporales.'},
+  {f:'¿Qué diferencia hay entre una procuraduría delegada y una regional?',b:'La delegada se especializa por materia o sector (criterio temático). La regional se organiza por territorio, con ámbito departamental (criterio geográfico). Una vigila un tema en todo el país; la otra, muchos temas en una zona.'},
+  {f:'¿Qué son las procuradurías provinciales?',b:'Son el escalón territorial más cercano al ciudadano, con ámbito local (provincias/municipios), coordinadas por su regional. Cercanía no significa mayor jerarquía: la dirección de la entidad es única.'},
+  {f:'¿Cuáles son las tres grandes funciones de la PGN?',b:'Preventiva (vigilar y advertir antes del daño), de intervención (actuar como Ministerio Público dentro de procesos judiciales y administrativos) y disciplinaria (investigar y sancionar la conducta oficial, con poder preferente). Arts. 277 y 278 CP.'},
+  {f:'¿Qué significa que la PGN tenga poder disciplinario preferente?',b:'Que puede desplazar al control interno disciplinario de una entidad y asumir directamente la investigación de un caso cuando lo considere conveniente.'},
+  {f:'¿Qué es la Dirección Nacional de Investigaciones Especiales (DNIE)?',b:'Es el brazo técnico-científico de la PGN: apoya las investigaciones con análisis especializado (financiero, contable, de contratación) y ejerce Policía Judicial. Es donde trabaja el Profesional Universitario 3PU-15.'},
+  {f:'¿Qué funciones cumple el Profesional Universitario 3PU-15?',b:'Analiza información financiera y contable, evalúa proyectos y contratos, verifica la ejecución presupuestal, rinde dictámenes, ejerce Policía Judicial y asiste a audiencias. Es un cargo profesional que dictamina y conceptúa con criterio.'},
+  {f:'¿Qué es el Instituto de Estudios del Ministerio Público (IEMP)?',b:'Es la dependencia de formación, capacitación e investigación de la PGN: la "universidad interna" del Ministerio Público. No ejerce la función disciplinaria sancionadora.'},
+  {f:'¿Quién administra el concurso de la PGN?',b:'La propia Procuraduría con su operador, porque tiene régimen especial de carrera (Decreto Ley 262 de 2000). La convocatoria 112-2026 NO la administra la CNSC: ese es un distractor clásico de la prueba.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Naturaleza del Ministerio Público', ctx:'Es tu primera semana como Profesional Universitario 3PU-15 en la Direcci\u00f3n Nacional de Investigaciones Especiales. En una charla de inducci\u00f3n, un compa\u00f1ero reci\u00e9n vinculado comenta con seguridad que "la Procuradur\u00eda es un ministerio m\u00e1s del Gobierno, adscrito al Ministerio de Justicia, y por eso el Procurador recibe instrucciones del Presidente". Varios asienten porque el nombre "Ministerio P\u00fablico" les suena a cartera del Ejecutivo. El facilitador te pide, como contador que estudi\u00f3 el tema, que aclares el punto ante el grupo.', q:'\u00bfQu\u00e9 es lo correcto?', ops:['El compa\u00f1ero tiene raz\u00f3n: la Procuradur\u00eda es un ministerio del Gobierno adscrito al Ministerio de Justicia y recibe instrucciones del Presidente.','El Ministerio P\u00fablico es un \u00f3rgano de control aut\u00f3nomo (art. 118 CP), integrado por el Procurador, el Defensor del Pueblo y los personeros; no es una cartera del Gobierno ni depende del Presidente, y esa autonom\u00eda es la que le permite vigilar con independencia.','Es un \u00f3rgano de la Rama Judicial, porque investiga y sanciona igual que un juez penal.','Es una dependencia del Congreso, ya que el Senado elige al Procurador General.'], correcta:1, expl:['Falso: no es un ministerio del Gobierno ni est\u00e1 adscrito a ninguna cartera; es \u00f3rgano de control aut\u00f3nomo.','Correcto. El art. 118 CP define el Ministerio P\u00fablico como \u00f3rgano de control aut\u00f3nomo; su independencia respecto del Gobierno es esencial para vigilar con imparcialidad.','No pertenece a la Rama Judicial; es \u00f3rgano de control aut\u00f3nomo (art. 117 CP), distinto de los jueces.','Que el Senado elija al Procurador no lo convierte en dependencia del Congreso; la PGN conserva su autonom\u00eda como \u00f3rgano de control.'] },
+  { nivel:'b', tema:'Elecci\u00f3n del Procurador General', ctx:'Durante una capacitaci\u00f3n del Instituto de Estudios del Ministerio P\u00fablico, surge una discusi\u00f3n sobre c\u00f3mo llega el Procurador General a su cargo. Un asistente sostiene que "lo nombra el Presidente de la Rep\u00fablica de forma directa, como a sus ministros"; otro dice que "lo elige la Corte Constitucional mediante concurso". A ti, como aspirante que prepara la prueba de la convocatoria 112-2026, te piden precisar el mecanismo exacto de elecci\u00f3n y el per\u00edodo, porque es un punto que suele aparecer en el examen.', q:'\u00bfCu\u00e1l es la respuesta correcta?', ops:['Lo nombra directamente el Presidente de la Rep\u00fablica, de manera discrecional, igual que a sus ministros.','Lo elige el Senado de la Rep\u00fablica, para un per\u00edodo de cuatro a\u00f1os, de una terna integrada por candidatos del Presidente, la Corte Suprema de Justicia y el Consejo de Estado.','Lo elige la Corte Constitucional mediante un concurso de m\u00e9ritos administrado por la CNSC.','Lo elige la Asamblea de Gobernadores por votaci\u00f3n territorial, para un per\u00edodo de ocho a\u00f1os.'], correcta:1, expl:['Falso: el Presidente no lo nombra; solo aporta un candidato a la terna.','Correcto. El Senado lo elige por 4 a\u00f1os de una terna del Presidente, la Corte Suprema y el Consejo de Estado; ese origen plural refuerza su independencia.','No interviene la Corte Constitucional ni la CNSC en su elecci\u00f3n; no es un concurso de m\u00e9ritos.','No existe tal mecanismo: la elecci\u00f3n corresponde al Senado, no a gobernadores, y el per\u00edodo es de 4 a\u00f1os.'] },
+  { nivel:'i', tema:'Delegadas vs. territoriales', ctx:'Recibes un expediente que lleg\u00f3 a la Direcci\u00f3n Nacional de Investigaciones Especiales sobre un contrato de una alcald\u00eda de un municipio peque\u00f1o. En el reparto interno, un colega afirma que "una procuradur\u00eda delegada y una procuradur\u00eda regional son lo mismo, solo cambia el nombre seg\u00fan la ciudad" y que por eso "da igual a cu\u00e1l se le atribuya el origen del caso". Tu jefe, que valora tu criterio, te pide que expliques la diferencia porque afecta c\u00f3mo se lee la trazabilidad del expediente.', q:'\u00bfQu\u00e9 corresponde aclarar?', ops:['El colega tiene raz\u00f3n: delegada y regional son sin\u00f3nimos y solo cambia el nombre seg\u00fan la ciudad donde est\u00e9n.','Se distinguen por su criterio de organizaci\u00f3n: la delegada se especializa por materia o sector (criterio tem\u00e1tico, con alcance nacional en su tema), mientras la regional se organiza por territorio (criterio geogr\u00e1fico, \u00e1mbito departamental); no son sin\u00f3nimos.','La delegada solo existe en Bogot\u00e1 y la regional solo en pueblos; su diferencia es el tama\u00f1o de la ciudad.','La regional manda sobre la delegada porque est\u00e1 m\u00e1s cerca del ciudadano y tiene mayor jerarqu\u00eda.'], correcta:1, expl:['Falso: no son sin\u00f3nimos; responden a criterios de organizaci\u00f3n distintos.','Correcto. Delegada = criterio por materia/sector; regional = criterio territorial. Distinguirlos permite leer bien de d\u00f3nde viene y hacia d\u00f3nde va el asunto.','No es un tema de tama\u00f1o de ciudad: la diferencia es tem\u00e1tico vs. geogr\u00e1fico, no urbano vs. rural.','La cercan\u00eda territorial no implica mayor jerarqu\u00eda; la direcci\u00f3n de la entidad es \u00fanica y recae en el Procurador.'] },
+  { nivel:'i', tema:'Funciones de la PGN', ctx:'Te asignan apoyar el an\u00e1lisis del presupuesto de un convenio interadministrativo ANTES de que se ejecute, con el fin de advertir riesgos financieros y evitar un mal manejo de los recursos. Un compa\u00f1ero insiste en que "eso ya es un proceso disciplinario en curso" y quiere que en el documento se hable de "investigaci\u00f3n disciplinaria" y de "posible sanci\u00f3n". Tu jefe te pide que precises, t\u00e9cnicamente, en cu\u00e1l de las funciones de la Procuradur\u00eda se enmarca esta actuaci\u00f3n, porque de ello depende c\u00f3mo se rotula el trabajo.', q:'\u00bfCu\u00e1l es la respuesta t\u00e9cnicamente correcta?', ops:['Es funci\u00f3n disciplinaria: como hay an\u00e1lisis de recursos, ya existe un proceso sancionatorio en curso.','Es funci\u00f3n preventiva: la PGN act\u00faa antes del da\u00f1o, vigilando y advirtiendo para que las cosas se hagan bien; la disciplinaria solo aparecer\u00eda despu\u00e9s, ante una posible falta que investigar y sancionar.','Es funci\u00f3n de intervenci\u00f3n: porque la PGN interviene en el convenio como parte contratante.','No corresponde a ninguna funci\u00f3n de la PGN, porque analizar presupuestos es tarea exclusiva de la Contralor\u00eda.'], correcta:1, expl:['Falso: analizar recursos antes del da\u00f1o no es un proceso disciplinario; ese aparece despu\u00e9s de una posible falta.','Correcto. Vigilar y advertir antes del da\u00f1o es la funci\u00f3n preventiva (arts. 277-278 CP); rotularla como disciplinaria ser\u00eda un error.','La intervenci\u00f3n es actuar como Ministerio P\u00fablico dentro de procesos judiciales/administrativos de otros, no ser parte del convenio.','S\u00ed corresponde a la PGN, en su funci\u00f3n preventiva; el control fiscal de la Contralor\u00eda es un carril distinto y compatible.'] },
+  { nivel:'a', tema:'Ubicaci\u00f3n del cargo y r\u00e9gimen especial', ctx:'Un aspirante te plantea dos cosas antes de la prueba de la convocatoria 112-2026. Primero, que "como el 3PU-15 es apoyo t\u00e9cnico, basta con entregar los datos crudos y que el abogado saque todas las conclusiones, porque el profesional no conceptu\u00faa". Segundo, que "si tiene una reclamaci\u00f3n sobre el puntaje del concurso, la presentar\u00e1 ante la CNSC, porque esa comisi\u00f3n administra todos los concursos p\u00fablicos del pa\u00eds". Te pide que valides o corrijas ambas afirmaciones con fundamento.', q:'\u00bfCu\u00e1l es la respuesta correcta a los dos planteamientos?', ops:['Acierta en ambos: el 3PU-15 solo pasa datos crudos y las reclamaciones del concurso se presentan ante la CNSC.','En ambos se equivoca: el 3PU-15 es un cargo profesional que dictamina y conceptúa con criterio (no solo pasa datos), y la PGN tiene r\u00e9gimen especial de carrera (Decreto Ley 262/2000), por lo que su concurso 112-2026 lo administra la propia Procuradur\u00eda con su operador, no la CNSC.','Acierta solo en lo primero: el 3PU-15 solo pasa datos, pero la reclamaci\u00f3n s\u00ed va a la PGN.','Acierta solo en lo segundo: la reclamaci\u00f3n va a la CNSC, pero el 3PU-15 s\u00ed conceptu\u00faa con criterio.'], correcta:1, expl:['Falso en las dos: el 3PU-15 rinde dictamen con criterio y el concurso no lo administra la CNSC.','Correcto. El cargo es profesional (analiza, eval\u00faa y dictamina) y el r\u00e9gimen especial de la PGN implica que ella misma administra el concurso, no la CNSC.','Incorrecto en la primera parte: el 3PU-15 no se limita a datos crudos; rinde dictamen t\u00e9cnico con conclusiones.','Incorrecto en la segunda parte: la reclamaci\u00f3n se surte ante la PGN (r\u00e9gimen especial), no ante la CNSC.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
