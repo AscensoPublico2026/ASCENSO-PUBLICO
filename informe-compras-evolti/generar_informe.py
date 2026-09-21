@@ -132,6 +132,21 @@ def money(cell):
     cell.number_format = MONEY_FMT
     cell.alignment = Alignment(horizontal="right")
 
+def norm_key(x):
+    """Normaliza un texto de agrupacion para evitar duplicados por
+    mayusculas/minusculas o espacios. Excel SUMIFS es INSENSIBLE a
+    mayusculas, asi que 'Servicio' y 'SERVICIO' se contarian doble si
+    quedan como filas separadas. Aqui los unificamos a una sola etiqueta
+    canonica (Capitalizada) para que cada grupo/subgrupo sea unico."""
+    s = clean(x)
+    if not s:
+        return s
+    # colapsar espacios multiples
+    s = " ".join(s.split())
+    # etiqueta canonica: Primera Letra De Cada Palabra en mayuscula
+    # (conserva legibilidad y elimina duplicados por caja)
+    return s.title()
+
 # ================= construccion de un proyecto =================
 def build(project_label, project_sub, filename, out_name):
     path = os.path.join(BASE, filename)
@@ -154,7 +169,7 @@ def build(project_label, project_sub, filename, out_name):
         v = num(vtot); q = num(cant)
         if noOC is not None: ocs.add(noOC)
         if isinstance(fecha, datetime): fechas.append(fecha)
-        g = clean(grupo) or "(sin grupo)"; s = clean(subg) or "(sin subgrupo)"
+        g = norm_key(grupo) or "(Sin Grupo)"; s = norm_key(subg) or "(Sin Subgrupo)"
         p = clean(prov) or "(sin proveedor)"
         cat = categorizar_item(clean(prod))
         prod_c = clean(prod) or "(sin nombre)"
@@ -190,7 +205,7 @@ def build(project_label, project_sub, filename, out_name):
         v = num(vtot); iva = num(vimp)
         cat_item = categorizar_item(clean(prod))
         vals = [fecha, noOC, noPed, clean(estado), clean(estleg),
-                clean(grupo) or "(sin grupo)", clean(subg) or "(sin subgrupo)",
+                norm_key(grupo) or "(Sin Grupo)", norm_key(subg) or "(Sin Subgrupo)",
                 clean(prod), num(cant), num(precio), v, clean(tipimp), iva, None,
                 clean(quien), clean(prov) or "(sin proveedor)", clean(tsol),
                 clean(tproy), clean(nofact), cat_item]
@@ -361,13 +376,12 @@ def build(project_label, project_sub, filename, out_name):
                 cell.fill = PatternFill("solid", fgColor=SUBFILL); cell.border = BORDER
             rr += 1
     data_end = rr - 1
-    # fila TOTAL
+    # fila TOTAL -> se calcula directamente sobre TODO el Detalle (gran total real),
+    # NO como suma de filas de grupo, para que sea imposible el doble conteo y
+    # SIEMPRE coincida con la hoja Resumen.
     ws2.cell(row=rr, column=2, value="TOTAL").font = Font(bold=True, color=NAVY)
-    # total = suma de las filas de grupo
-    grp_sum_valor = "+".join([f"D{gr}" for gr in grupo_rows])
-    grp_sum_iva = "+".join([f"E{gr}" for gr in grupo_rows])
-    c = ws2.cell(row=rr, column=4, value=f"={grp_sum_valor}"); money(c)
-    c = ws2.cell(row=rr, column=5, value=f"={grp_sum_iva}"); money(c)
+    c = ws2.cell(row=rr, column=4, value=f"={TOT_VALOR}"); money(c)
+    c = ws2.cell(row=rr, column=5, value=f"={TOT_IVA}"); money(c)
     c = ws2.cell(row=rr, column=6, value=f"=D{rr}+E{rr}"); money(c)
     c = ws2.cell(row=rr, column=7, value=1.0); c.number_format = PCT_FMT; c.alignment = Alignment(horizontal="center")
     for cx in range(2, 8):
@@ -426,8 +440,8 @@ def build(project_label, project_sub, filename, out_name):
     de = rr - 1
     wsi.cell(row=rr, column=2, value="TOTAL").font = Font(bold=True, color=NAVY)
     c = wsi.cell(row=rr, column=3, value=f"=SUM(C{ds}:C{de})"); c.number_format = '#,##0.##'; c.alignment = Alignment(horizontal="right")
-    c = wsi.cell(row=rr, column=4, value=f"=SUM(D{ds}:D{de})"); money(c)
-    c = wsi.cell(row=rr, column=5, value=f"=SUM(E{ds}:E{de})"); money(c)
+    c = wsi.cell(row=rr, column=4, value=f"={TOT_VALOR}"); money(c)
+    c = wsi.cell(row=rr, column=5, value=f"={TOT_IVA}"); money(c)
     c = wsi.cell(row=rr, column=6, value=f"=D{rr}+E{rr}"); money(c)
     c = wsi.cell(row=rr, column=7, value=1.0); c.number_format = PCT_FMT; c.alignment = Alignment(horizontal="center")
     for rx in range(ds, rr + 1):
@@ -501,8 +515,8 @@ def build(project_label, project_sub, filename, out_name):
         rr += 1
     de = rr - 1
     ws3.cell(row=rr, column=2, value="TOTAL").font = Font(bold=True, color=NAVY)
-    c = ws3.cell(row=rr, column=3, value=f"=SUM(C{ds}:C{de})"); money(c)
-    c = ws3.cell(row=rr, column=4, value=f"=SUM(D{ds}:D{de})"); money(c)
+    c = ws3.cell(row=rr, column=3, value=f"={TOT_VALOR}"); money(c)
+    c = ws3.cell(row=rr, column=4, value=f"={TOT_IVA}"); money(c)
     c = ws3.cell(row=rr, column=5, value=f"=C{rr}+D{rr}"); money(c)
     c = ws3.cell(row=rr, column=6, value=1.0); c.number_format = PCT_FMT; c.alignment = Alignment(horizontal="center")
     for rx in range(ds, rr + 1):
