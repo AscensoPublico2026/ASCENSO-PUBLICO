@@ -89,3 +89,27 @@ El validador marcará "POSIBLES FUGAS: 3PU-15" → **falso positivo** (es el car
 - Escribir fragmentos en el repo (no /tmp para pasar contenido a shell).
 - Registrar cada guía en biblioteca/biblioteca.json (biblioteca "Funcional"/"General"/"Por Nivel").
 - Sincronizar guias/ ↔ plataforma/public/seed-guias/ al final.
+
+
+
+---
+
+## 8. AJUSTES FINALES APLICADOS (post-revisión de Julio, sep-2026)
+
+1. **Plan plantilla en la plataforma:** se agregó `pgn-profesional-3pu15` a `plataforma/lib/autocargarGuias.ts`
+   (22 guías por código, Días 1-21). Habilita el botón "⚡ Armar plan completo / 🔄 Rehacer" en el panel admin.
+
+2. **Simulacro final reorganizado (independiente):** el simulacro se movió de `guias/` a `simulacro/SIM-PGN-3PU15-001.html`
+   (nombre corto, igual que los que funcionan 5AM10/3PU17), y su categoría en biblioteca pasó de "Simulacro" a
+   **"Simulacro Final"**. Sin esto, se agrupaba por error en "Conocimientos Generales". Ahora queda en su módulo
+   propio al final del plan.
+
+3. **Simulacro reconstruido al nivel de la prueba real:** las 70 preguntas se rehicieron con contexto largo
+   (6-10 renglones), enunciado que replantea la tensión, y 4 opciones largas y confusas (enunciado prom ~371 car,
+   opciones prom ~190 car, 0 opciones cortas). Antes estaban demasiado cortas y sencillas.
+
+4. **Sincronización biblioteca.json:** recordar que el catálogo lee `plataforma/lib/biblioteca.json` (copia del
+   deploy), no solo `biblioteca/biblioteca.json`. Mantener ambos iguales.
+
+El proceso completo y reutilizable quedó documentado en `referencias/PROCESO-CURSOS-GUIAS.md` y el prompt de
+inicio para nuevos cursos en `referencias/PROMPT-INICIO-CURSO.md`.
