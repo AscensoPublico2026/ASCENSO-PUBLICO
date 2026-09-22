@@ -167,6 +167,35 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-PGN-1AS19-001", dia: 21 },
     ],
   },
+
+  "pgn-asesor-1as19-nathaly": {
+    id: "pgn-asesor-1as19-nathaly",
+    nombre: "PGN · Asesor (1AS-19) Despacho Procurador General (Conv. 02-2026) — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-1AS19N", dia: 1 },
+      { codigo: "ENT-PGN-PU-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-1AS19N", dia: 2 },
+      { codigo: "GEN-02-PGN-1AS19N", dia: 3 },
+      { codigo: "GEN-03-PGN-1AS19N", dia: 4 },
+      { codigo: "1AS19N-COM-01", dia: 5 },
+      { codigo: "1AS19N-COM-02", dia: 6 },
+      { codigo: "1AS19N-COM-03", dia: 7 },
+      { codigo: "1AS19N-COM-04", dia: 8 },
+      { codigo: "FUN-PGN-1AS19N-01", dia: 9 },
+      { codigo: "FUN-GP-1AS19N-01", dia: 10 },
+      { codigo: "FUN-CONST-1AS19N-01", dia: 11 },
+      { codigo: "FUN-LEG-1AS19N-01", dia: 12 },
+      { codigo: "FUN-JUR-1AS19N-01", dia: 13 },
+      { codigo: "FUN-MP-1AS19N-01", dia: 14 },
+      { codigo: "FUN-PREV-1AS19N-01", dia: 15 },
+      { codigo: "FUN-CONT-1AS19N-01", dia: 16 },
+      { codigo: "FUN-ANTIC-1AS19N-01", dia: 17 },
+      { codigo: "FUN-PLAN-1AS19N-01", dia: 18 },
+      { codigo: "FUN-ELEC-1AS19N-01", dia: 19 },
+      { codigo: "FUN-COOP-1AS19N-01", dia: 20 },
+      { codigo: "SIM-PGN-1AS19N-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')

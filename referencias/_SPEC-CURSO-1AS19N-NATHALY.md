@@ -47,3 +47,33 @@ NO es el instructor disciplinario de Instrucción (ese es Silvia 33-2026). Rol t
 ## 5. Estándar (v3.0): Desarrollo ≥10.000 pal, módulos profundos, tablas+.practica+acordeones+.flujo+.ojo por módulo,
 3-4 checkpoints, cierre Idea clave/Tips/Frase + .fuentes con enlaces reales target=_blank, <mark> dorado, día coherente.
 Simulacro tipo prueba real (ctx 6-10 renglones, 4 ops 120-280 car). Registrar en biblioteca.json x2 + seed-guias + plan plantilla `pgn-asesor-1as19-nathaly`.
+
+
+---
+
+## 8. CURSO COMPLETO ✅ (22 guías construidas, validadas y pusheadas)
+Rama `feat/curso-pgn-1as19-nathaly-rodriguez`. Plan plantilla `pgn-asesor-1as19-nathaly` en `plataforma/lib/autocargarGuias.ts`.
+
+| Día | Código | Guía | Estado |
+|---|---|---|---|
+| 1 | INTRO-00-PGN-1AS19N | Presentación del curso | ✏️ reenfoque |
+| 2-4 | GEN-01/02/03-PGN-1AS19N | Estado / Estado-ciudadano / Marco institucional | ✏️ reenfoque |
+| 5-8 | 1AS19N-COM-01/02/03/04 | Comportamentales (7 competencias Dec. 815/2018) | ✏️ reenfoque |
+| 9 | FUN-PGN-1AS19N-01 | Estructura y funciones de la PGN | ✏️ |
+| 10 | FUN-GP-1AS19N-01 | Gestión pública | ✏️ |
+| 11 | FUN-CONST-1AS19N-01 | Constitución | ✏️ |
+| 12 | FUN-LEG-1AS19N-01 | Técnica legislativa y proyectos de ley | 🆕 (piloto) |
+| 13 | FUN-JUR-1AS19N-01 | Derecho administrativo y CPACA | ✏️ |
+| 14 | FUN-MP-1AS19N-01 | Intervención judicial y Ministerio Público | 🆕 |
+| 15 | FUN-PREV-1AS19N-01 | Función preventiva, control de gestión y DDHH | ✏️ |
+| 16 | FUN-CONT-1AS19N-01 | Contratación estatal | ✏️ |
+| 17 | FUN-ANTIC-1AS19N-01 | Estatuto anticorrupción | ✏️ |
+| 18 | FUN-PLAN-1AS19N-01 | Planeación institucional, MIPG y control interno | ✏️ |
+| 19 | FUN-ELEC-1AS19N-01 | Derecho electoral y vigilancia preventiva | 🆕 |
+| 20 | FUN-COOP-1AS19N-01 | Cooperación internacional y relaciones institucionales | 🆕 |
+| 21 | SIM-PGN-1AS19N-001 | Simulacro final (50 funcional + 20 comportamental = 70) | 🆕 |
+| — | ENT-PGN-PU-01 | Conoce tu entidad (PGN) | ♻️ reutilizada |
+
+Validación: todas JS OK (node --check), HTML balanceado, Desarrollo ≥10.000 palabras (funcionales/generales 10.040–12.196), días coherentes, 0 fugas de Silvia/33-2026/instrucción/ingeniería. Simulacro: 70 preg = 70 feedbacks, correctas balanceadas (18/20/16/16). Registradas en biblioteca.json x2 + seed-guias. Plan plantilla `pgn-asesor-1as19-nathaly`.
+
+PENDIENTE (Julio): merge PR a main → deploy Vercel → panel admin del curso de Nathaly "🔄 Rehacer" con plan `pgn-asesor-1as19-nathaly` → visitar /api/admin/seed-guias → recargar sin caché.
