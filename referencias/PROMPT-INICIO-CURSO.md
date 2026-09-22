@@ -33,12 +33,13 @@ Kiro, vamos a **construir el CURSO de preparación (21 días de guías HTML)** d
 - **Registrar** cada guía en `biblioteca/biblioteca.json` Y `plataforma/lib/biblioteca.json` (sincronizados), sincronizar a `plataforma/public/seed-guias/`, y agregar el **plan plantilla** a `plataforma/lib/autocargarGuias.ts` para el botón de 1 clic.
 
 **Flujo de trabajo esperado:**
-1. Pídeme (o lee del expediente) el nombre del aspirante, su cargo, código de empleo, convocatoria, dependencia y perfil. Si su expediente/manual de vacante está en el repo (rama `expediente-<aspirante>` o `docs-<aspirante>`), léelo.
-2. Escribe un spec corto del curso (como `_SPEC-CURSO-3PU15-LEYNER.md`) con el plan de 21 días mapeado a moldes.
-3. Construye la guía PILOTO (una funcional central del cargo), valídala, púshéala y pásame el enlace para mi visto bueno ANTES de producir las 20 restantes.
-4. Con mi OK, produce el resto (puedes paralelizar con sub-agentes), push por tanda.
-5. Cierra con: registro en biblioteca.json (x2), sync a seed-guias, plan plantilla, PR a main, y me pasas los pasos de carga.
+1. Pídeme (o lee del expediente) el nombre del aspirante, su cargo, código de empleo, convocatoria, dependencia y perfil. **Lee el MANUAL DE FUNCIONES del cargo** (rama `expediente-<aspirante>` o `docs-<aspirante>`, carpeta `manuales-vacantes/`, o lo mando yo).
+2. **Arma el PLAN DE ESTUDIO de 21 días a partir del manual:** los temas fijos según el nivel (INTRO, generales, comportamentales, simulacro, entidad) y los **12 temas funcionales** que salgan de los conocimientos específicos del manual.
+3. **Haz el ANÁLISIS DE REUTILIZACIÓN contra la biblioteca** (`biblioteca/biblioteca.json` + `guias/`): clasifica CADA guía del plan en ♻️ REUTILIZAR tal cual / ✏️ MODIFICAR ligero y reutilizar / 🆕 CREAR desde cero, indicando el molde/base. Preséntame el plan en una TABLA (día · tema · tipo · decisión de reuso · molde) y **espera mi OK** antes de producir.
+4. Con mi OK, escribe un spec corto (como `_SPEC-CURSO-3PU15-LEYNER.md`) y construye la guía PILOTO (una funcional central), valídala, púshéala y pásame el enlace para mi visto bueno ANTES de las demás.
+5. Con mi visto bueno de la piloto, produce el resto (puedes paralelizar con sub-agentes), push por tanda.
+6. Cierra con: registro en biblioteca.json (x2), sync a seed-guias, plan plantilla, PR a main, y me pasas los pasos de carga.
 
-**Empecemos:** confírmame que ya leíste `PROCESO-CURSOS-GUIAS.md` y el caso de referencia, y quédate esperando a que te dé los datos del **nuevo aspirante** (nombre, cargo, código, convocatoria y perfil).
+**Empecemos:** confírmame que ya leíste `PROCESO-CURSOS-GUIAS.md` y el caso de referencia, y quédate esperando a que te dé los datos del **nuevo aspirante** (nombre, cargo, código, convocatoria y perfil). Recuerda: primero el PLAN DE ESTUDIO con el análisis de reutilización y mi OK; después construyes.
 
 ## 👆 (fin del prompt)

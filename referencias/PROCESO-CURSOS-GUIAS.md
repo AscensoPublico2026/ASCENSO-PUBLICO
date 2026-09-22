@@ -29,6 +29,54 @@ Sistemas de gestión/MIPG.
 
 ---
 
+## 0.5. PRIMER PASO OBLIGATORIO: PLAN DE ESTUDIO + ANÁLISIS DE REUTILIZACIÓN
+
+> ⚠️ ANTES de crear una sola guía, se arma un **PLAN DE ESTUDIO** y se decide qué se REUTILIZA de la
+> biblioteca y qué se CREA. Esto ahorra créditos, tiempo y evita rehacer lo que ya existe.
+
+### Paso 1 — Recibir los datos del aspirante y LEER EL MANUAL DE FUNCIONES
+Con el nombre, cargo, código, convocatoria, dependencia y perfil, **leer el manual de funciones del cargo**
+(está en el repo, rama `expediente-<aspirante>` o `docs-<aspirante>`, carpeta `manuales-vacantes/`, o lo
+manda Julio). Del manual se extraen:
+- Los **conocimientos funcionales/específicos** que exige el cargo (esos definen los temas de los Días 9-20).
+- Los **conocimientos básicos/comunes** y las **competencias comportamentales** (por nivel).
+
+### Paso 2 — Definir el temario de 21 días
+- **Fijos según el nivel** (ya los conocemos, casi no cambian entre cargos del mismo nivel):
+  - Día 1 INTRO · Días 2-4 GENERALES (Estado, relación Estado-ciudadano, marco institucional) ·
+    Días 5-8 COMPORTAMENTALES (competencias del Decreto 815/2018 del nivel) · Día 21 SIMULACRO · ENT (entidad).
+- **Variables según el manual** = los **12 temas funcionales** (Días 9-20). Estos SÍ cambian por cargo
+  y salen de los conocimientos específicos del manual. Ejemplo 3PU-15 (financiero-contable): Estructura PGN,
+  Gestión pública, Constitución, Disciplinario, CPACA, Contratación, Presupuesto, Contabilidad pública,
+  Finanzas/proyectos, Policía judicial, Anticorrupción, Sistemas de gestión/MIPG.
+
+### Paso 3 — ANÁLISIS DE REUTILIZACIÓN contra la biblioteca (el paso que ahorra trabajo)
+Revisar `biblioteca/biblioteca.json` (y los archivos en `guias/`) y clasificar CADA guía del temario en una
+de tres categorías. Para decidir, mirar: mismo nivel (Asistencial/Técnico/Profesional), misma entidad,
+mismo tema, y si el enfoque del rol coincide o no.
+
+| Categoría | Cuándo aplica | Acción |
+|---|---|---|
+| ♻️ **REUTILIZAR TAL CUAL** | Ya existe una guía del MISMO nivel, entidad y tema, SIN fugas de otro cargo y con el enfoque correcto (p.ej. la ENT de la entidad, o una general ya reenfocada al nivel). | Solo registrarla en el plan del curso. Cero producción. |
+| ✏️ **MODIFICAR LIGERO y reutilizar** | Existe una guía del tema pero es de OTRO cargo/código/convocatoria del mismo nivel (p.ej. familia `-PU` de otro aspirante): sirve el 90%, solo hay que limpiar fugas y reenfocar el rol al cargo nuevo. | Reenfoque de molde (ver §2). Es el caso más común y el más eficiente. |
+| 🆕 **CREAR desde cero** | El tema NO existe en la biblioteca para ese nivel, o el enfoque es tan distinto que no hay molde aprovechable. | Construcción completa desde el molde estructural más cercano (ver §2). |
+
+**Cómo hacer el barrido de la biblioteca (rápido):**
+```bash
+# Ver todas las guías por tema/nivel para decidir reutilización
+python3 -c "import json;d=json.load(open('biblioteca/biblioteca.json',encoding='utf-8'));[print(g['codigo'],'|',g.get('biblioteca'),'|',g.get('nivel'),'|',g['titulo']) for g in d['guias']]" | sort
+# Buscar guías de un tema concreto (ej. contratación) para ver si hay molde reutilizable
+grep -il "contratacion\|presupuesto\|disciplinario" guias/*.html
+```
+
+### Paso 4 — Entregar el PLAN DE ESTUDIO a Julio para su OK
+Presentar una **tabla del plan de 21 días** con: día, tema, tipo, y la **decisión de reutilización**
+(♻️ reutilizar / ✏️ modificar / 🆕 crear) y el molde/base propuesto para cada una. Así Julio ve de una
+qué se reaprovecha y qué se produce, y aprueba antes de arrancar. RECIÉN con su OK se construye
+(empezando por la guía PILOTO, ver §1 y flujo).
+
+---
+
 ## 1. Regla de oro del flujo: PUSH POR GUÍA (nada se pierde)
 
 **LECCIÓN DURA (Leyner):** una sesión anterior produjo ~17 guías y NO se hizo commit → el sandbox
