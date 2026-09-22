@@ -5,7 +5,22 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 3 de septiembre de 2026 — **Curso DIAN Gestor I terminado (Días 1-21, incl. SIM-DIAN-001 con sección Likert). NUEVO CURSO: María Alejandra (PGN 2026, régimen especial) — expediente creado, pendiente recibir documentos. Estándar de guías consolidado a v3.0 en prompts/generador-guias.md.**_
+_Última actualización: 22 de septiembre de 2026 — **NUEVO CURSO TERMINADO: Silvia Fernanda Cortés Vallejo — PGN Asesor 1AS-19 (Conv. 33-2026), 22 guías (Días 1-21 + simulacro) construidas, validadas y pusheadas. Rama `feat/curso-pgn-1as19-silvia-cortes`, pendiente merge a main + pasos de carga.**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 22 sep 2026 — NUEVO CURSO: Silvia Cortés · PGN Asesor 1AS-19 · Conv. 33-2026)
+
+**Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. La aspirante/estudiante de este curso es **Silvia Fernanda Cortés Vallejo** (silviafernanda85@hotmail.com).
+
+**🎓 Curso PGN Asesor 1AS-19 (Silvia Fernanda Cortés Vallejo) — COMPLETO ✅ (pendiente merge + carga)**
+- Cargo: **Asesor, código 1AS-19, Nivel Asesor**, Convocatoria **33-2026** (Res. 243/2026), PGN. Dependencia: **Procuradurías de Instrucción**, proceso **Preventivo–Disciplinario**, sede objetivo **Bucaramanga**. Perfil aspirante: Ingeniera Civil + Especialización en Gerencia e Interventoría de Obras Civiles (cumple 100%). Régimen ESPECIAL (NO CNSC).
+- **Rama:** `feat/curso-pgn-1as19-silvia-cortes`. Spec: `referencias/_SPEC-CURSO-1AS19-SILVIA.md`. Plan plantilla: `pgn-asesor-1as19`.
+- **Método:** reenfoque de la familia de moldes `-PU15` (curso Leyner 3PU-15) al rol **Asesor** (asesora, ejerce vigilancia superior por designación, evalúa la actuación disciplinaria y **elabora los proyectos de decisión para consideración del jefe**), NO "perito/analista financiero-contable". Reenfoque frase por frase, 0 fugas verificadas con grep + word boundary.
+- **22 guías:** Día 1 INTRO-00-PGN-1AS19 · Días 2-4 GEN-01/02/03-PGN-1AS19 · Días 5-8 comportamentales 1AS19-COM-01/02/03/04 (7 competencias del manual: Responsabilidad B, Organización B, Investigación B, Pensamiento Conceptual A, Orientación a Resultados A, Cumplimiento B, Creatividad e Innovación C) · Días 9-20 funcionales (FUN-PGN, FUN-GP, FUN-CONST, FUN-DIS-01, FUN-DIS-02, FUN-JUR/CPACA, FUN-PROB, FUN-CONT, FUN-ANTIC, **FUN-OT Ordenamiento Territorial [NUEVA desde cero]**, FUN-PREV, FUN-MIPG) · Día 21 **SIM-PGN-1AS19-001** (50 funcionales + 20 comportamentales, 70 preguntas). ENT reutilizada: **ENT-PGN-PU-01**.
+- **Validación:** todas con JS OK (node --check), HTML balanceado, Desarrollo ≥10.000 palabras (GEN/FUN; INTRO es presentación; COM 10k-11k), día coherente en kicker/badge/finalizar, 0 fugas de rol. Simulacro: 70 preguntas = 70 feedbacks, opciones ~194 car (0 cortas), respuestas balanceadas.
+- **Carga plataforma:** registradas en `biblioteca/biblioteca.json` Y `plataforma/lib/biblioteca.json` (sincronizados), copiadas a `plataforma/public/seed-guias/`, plan plantilla `pgn-asesor-1as19` (22 guías por código) en `plataforma/lib/autocargarGuias.ts`.
+- **PENDIENTE (Julio):** merge del PR a main → deploy Vercel → en el panel admin del curso de Silvia darle "🔄 Rehacer" con el plan `pgn-asesor-1as19` → visitar `/api/admin/seed-guias` → recargar sin caché.
 
 ---
 
