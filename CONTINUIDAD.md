@@ -5,7 +5,22 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 22 de septiembre de 2026 — **NUEVO CURSO TERMINADO: Silvia Fernanda Cortés Vallejo — PGN Asesor 1AS-19 (Conv. 33-2026), 22 guías (Días 1-21 + simulacro) construidas, validadas y pusheadas. Rama `feat/curso-pgn-1as19-silvia-cortes`, pendiente merge a main + pasos de carga.**_
+_Última actualización: 22 de septiembre de 2026 — **NUEVO CURSO TERMINADO: Valentina Martínez Valenzuela — PGN Profesional Universitario 3PU-17 Funciones Mixtas (Conv. 144-2026), 22 guías (Días 1-21 + simulacro) construidas, validadas y pusheadas. Rama `feat/curso-pgn-3pu17-valentina-martinez`, pendiente merge a main + pasos de carga.**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 22 sep 2026 — NUEVO CURSO: Valentina Martínez · PGN Profesional Universitario 3PU-17 · Conv. 144-2026)
+
+**Contexto de negocio:** el usuario/cliente es **Julio César (fundador de Ascenso Público)**. La aspirante/estudiante de este curso es **Valentina Martínez Valenzuela** (valemartinez1942@hotmail.com).
+
+**🎓 Curso PGN Profesional Universitario 3PU-17 (Valentina Martínez) — COMPLETO ✅ (pendiente merge + carga)**
+- Cargo: **Profesional Universitario, código 3PU-17, Nivel Profesional**, Convocatoria **144-2026**, PGN. Dependencia: **Procuradurías Delegadas con Funciones Mixtas – Centros de Conciliación en Materia Civil y Comercial**, procesos **Preventivo, Intervención, Disciplinario y Conciliación**. Estudio: Derecho + tarjeta; 2 años exp. 57 plazas (Barranquilla, Bucaramanga, Medellín, Cali, Bogotá). Régimen ESPECIAL (NO CNSC).
+- **Rama:** `feat/curso-pgn-3pu17-valentina-martinez`. Spec: `referencias/_SPEC-CURSO-3PU17V-VALENTINA.md`. Plan plantilla: `pgn-profesional-3pu17-valentina`.
+- **Método:** reenfoque al rol **MIXTO** (previene, interviene, evalúa disciplinario y proyecta para el jefe, y **concilia extrajudicialmente en lo contencioso-administrativo**). Moldes: familia `-PU` (María Alejandra 3PU-17, mismo código/nivel) para INTRO/comportamentales/disciplinario/probatorio/intervención/contratación/preventiva; `-PU15` (nivel Profesional) para generales; `-1AS19` para gestión pública/constitucional; simulacro desde `SIM-PGN-3PU17-001`. Reenfoque frase por frase, sin find-replace ciego, 0 fugas verificadas con grep + word boundary.
+- **22 guías:** Día 1 INTRO-00-PGN-3PU17V · Días 2-4 GEN-01/02/03-PGN-3PU17V · Días 5-8 comportamentales 3PU17V-COM-01/02/03/04 · Días 9-20 funcionales (FUN-PGN, FUN-GP, FUN-CONST, FUN-DIS-01, FUN-DIS-02, FUN-MP intervención, **FUN-CONC Conciliación/MASC [NUEVA desde cero, Ley 2220/2022 + art. 161 CPACA]**, FUN-JUR/CPACA, FUN-PROB, FUN-CONT, FUN-ANTIC, FUN-PREV) · Día 21 **SIM-PGN-3PU17V-001** (50 funcionales + 20 comportamentales Likert, con 2 preguntas de conciliación y 2 de intervención). ENT reutilizada: **ENT-PGN-PU-01**.
+- **Validación:** todas con JS OK (node --check), HTML balanceado, Desarrollo ≥10.000 palabras (GEN/FUN 10.023–10.725), día coherente en kicker/badge/finalizar, 0 fugas. Simulacro: 70 preguntas, correctas balanceadas (12/13/12/13).
+- **Carga plataforma:** registradas en `biblioteca/biblioteca.json` Y `plataforma/lib/biblioteca.json` (sincronizados), copiadas a `plataforma/public/seed-guias/`, plan plantilla `pgn-profesional-3pu17-valentina` (22 guías por código) en `plataforma/lib/autocargarGuias.ts`.
+- **PENDIENTE (Julio):** merge del PR a main → deploy Vercel → en el panel admin del curso de Valentina darle "🔄 Rehacer" con el plan `pgn-profesional-3pu17-valentina` → visitar `/api/admin/seed-guias` → recargar sin caché.
 
 ---
 
