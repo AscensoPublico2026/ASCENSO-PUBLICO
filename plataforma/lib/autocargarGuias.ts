@@ -259,6 +259,7 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
 
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
+  "INTRO-00-PGN-4SP13": "guias/INTRO-00-PGN-4SP13-presentacion-curso.html",
   "FUN-DIS-TEC-01": "guias/FUN-DIS-TEC-01-procedimiento-disciplinario-tramite-secretarial.html",
   "INTRO-00": "guias/INTRO-00-presentacion-curso.html",
   "INTRO-00-PGN": "guias/INTRO-00-PGN-presentacion-curso-pgn.html",
