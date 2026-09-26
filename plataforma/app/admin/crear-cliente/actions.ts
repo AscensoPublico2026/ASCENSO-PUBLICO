@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
+import { correoCredencialesCliente } from "@/lib/email";
 
 export type CrearClienteResult = {
   ok: boolean;
@@ -75,6 +76,15 @@ export async function crearClienteManual(
     }
 
     if (!userId) return { ok: false, error: "No se pudo obtener el ID del usuario." };
+
+    // --- 1b. Enviar correo con usuario y contraseña de acceso ---
+    // Se envía siempre (cuenta nueva o contraseña reseteada a la genérica),
+    // para que el cliente tenga sus credenciales vigentes por correo.
+    try {
+      await correoCredencialesCliente(correo, nombre, password);
+    } catch (err) {
+      console.error("[crearClienteManual] Error enviando correo de credenciales:", err);
+    }
 
     // --- 2. Asegurar profile ---
     const { error: profErr } = await supabase.from("profiles").upsert(
