@@ -112,6 +112,32 @@ export async function correoConfirmacionCliente(to: string, nombre: string) {
 }
 
 /**
+ * Envía al CLIENTE su usuario (correo) y contraseña de acceso, cuando su
+ * cuenta se crea manualmente desde el panel admin (pago por transferencia,
+ * consignación, efectivo, etc. — no pasó por el checkout donde él mismo
+ * elige su contraseña). Todas las cuentas creadas por esta vía comparten
+ * la misma contraseña genérica; el correo lo invita a cambiarla si quiere.
+ */
+export async function correoCredencialesCliente(to: string, nombre: string, password: string) {
+  const url = `${SITE}/login`;
+  const primerNombre = (nombre || "").split(" ")[0] || "";
+  const html = plantilla({
+    titulo: `¡Bienvenido${primerNombre ? `, ${primerNombre}` : ""}! Ya tienes cuenta 🎉`,
+    cuerpo: `
+      <p style="margin:0 0 14px;">Ya creamos tu cuenta en <strong style="color:#0A2A5E;">Ascenso Público</strong>. Estos son tus datos de acceso:</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#FBF9F4;border-radius:12px;padding:4px;margin:0 0 14px;">
+        <tr><td style="padding:10px 14px;color:#5B6675;font-size:13px;width:110px;">Usuario</td><td style="padding:10px 14px;color:#0A2A5E;font-size:14px;font-weight:700;">${to}</td></tr>
+        <tr><td style="padding:10px 14px;color:#5B6675;font-size:13px;">Contraseña</td><td style="padding:10px 14px;color:#0A2A5E;font-size:14px;font-weight:700;">${password}</td></tr>
+      </table>
+      <p style="margin:0 0 14px;">Tu curso personalizado está <strong style="color:#0A2A5E;">en preparación</strong>. Te avisaremos por otro correo en cuanto esté listo para que empieces a estudiar.</p>
+      <p style="margin:0;">Por seguridad, puedes cambiar tu contraseña desde tu perfil en cualquier momento.</p>
+    `,
+    cta: { texto: "Iniciar sesión →", url },
+  });
+  await enviar(to, "🔑 Tu usuario y contraseña — Ascenso Público", html);
+}
+
+/**
  * Avisa al CLIENTE que su curso ya quedó listo.
  *  - disponibleAhora=true  → ya puede entrar a estudiar.
  *  - disponibleAhora=false → estará disponible a partir de `cuando` (las 24h).
