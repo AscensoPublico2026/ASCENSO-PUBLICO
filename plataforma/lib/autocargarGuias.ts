@@ -224,10 +224,43 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-PGN-3PU17V-001", dia: 21 },
     ],
   },
+
+  // Procuraduría General de la Nación — Secretario Procuraduría (4SP-13), Convocatoria 283-2026.
+  // Nivel Técnico · apoyo secretarial (trámite, notificaciones, archivo) — Carolina Rueda Rodríguez.
+  "pgn-secretario-4sp13": {
+    id: "pgn-secretario-4sp13",
+    nombre: "PGN · Secretario Procuraduría (4SP-13), Conv. 283-2026 — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-4SP13", dia: 1 },
+      { codigo: "ENT-PGN-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-4SP13", dia: 2 },
+      { codigo: "GEN-02-PGN-4SP13", dia: 3 },
+      { codigo: "GEN-03-PGN-4SP13", dia: 4 },
+      { codigo: "4SP13-COM-01", dia: 5 },
+      { codigo: "4SP13-COM-02", dia: 6 },
+      { codigo: "4SP13-COM-03", dia: 7 },
+      { codigo: "4SP13-COM-04", dia: 8 },
+      { codigo: "FUN-PGN-TEC-01", dia: 9 },
+      { codigo: "FUN-GP-TEC-01", dia: 10 },
+      { codigo: "FUN-CONST-TEC-01", dia: 11 },
+      { codigo: "FUN-MP-TEC-01", dia: 12 },
+      { codigo: "FUN-DIS-TEC-01", dia: 13 },
+      { codigo: "FUN-OFI-TEC-01", dia: 14 },
+      { codigo: "FUN-OFI-TEC-02", dia: 15 },
+      { codigo: "FUN-GDOC-TEC-01", dia: 16 },
+      { codigo: "FUN-GDOC-TEC-02", dia: 17 },
+      { codigo: "FUN-ATC-TEC-01", dia: 18 },
+      { codigo: "FUN-MIPG-TEC-01", dia: 19 },
+      { codigo: "FUN-TRANS-TEC-01", dia: 20 },
+      { codigo: "SIM-PGN-4SP13-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
+  "INTRO-00-PGN-4SP13": "guias/INTRO-00-PGN-4SP13-presentacion-curso.html",
+  "FUN-DIS-TEC-01": "guias/FUN-DIS-TEC-01-procedimiento-disciplinario-tramite-secretarial.html",
   "INTRO-00": "guias/INTRO-00-presentacion-curso.html",
   "INTRO-00-PGN": "guias/INTRO-00-PGN-presentacion-curso-pgn.html",
   "GEN-01": "guias/GEN-01-estado-funcion-publica.html",
