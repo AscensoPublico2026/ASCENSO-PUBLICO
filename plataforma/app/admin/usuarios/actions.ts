@@ -3,6 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { correoCredencialesCliente } from "@/lib/email";
+
+// Misma contraseña genérica usada en la creación manual de clientes
+// (admin/crear-cliente/actions.ts). Se centraliza aquí para reenviarla.
+const PASSWORD_GENERICA = "nuevoestudiante2026";
 
 /**
  * Actualiza el nombre visible de un usuario (en profiles y en Auth).
@@ -74,5 +79,29 @@ export async function rehabilitarUsuario(userId: string) {
   await requireAdmin();
   const supabase = createAdminClient();
   await supabase.auth.admin.updateUserById(userId, { ban_duration: "none" });
+  revalidatePath("/admin/usuarios");
+}
+
+/**
+ * Reenvía el correo de credenciales (usuario + contraseña genérica) a un
+ * cliente, sin crear ni tocar su curso. Además RESETEA su contraseña a la
+ * genérica ("nuevoestudiante2026"), para que el correo que recibe siempre
+ * sea válido para iniciar sesión (si el cliente ya la había cambiado por su
+ * cuenta, esto la reemplaza de nuevo por la genérica).
+ */
+export async function reenviarCredenciales(userId: string) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("correo, nombre")
+    .eq("id", userId)
+    .single();
+  if (error || !profile?.correo) throw new Error("No se encontró el correo de este usuario.");
+
+  await supabase.auth.admin.updateUserById(userId, { password: PASSWORD_GENERICA });
+  await correoCredencialesCliente(profile.correo, profile.nombre || "", PASSWORD_GENERICA);
+
   revalidatePath("/admin/usuarios");
 }

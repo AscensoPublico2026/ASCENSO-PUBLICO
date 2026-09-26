@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { inhabilitarUsuario, eliminarUsuario, actualizarNombreUsuario } from "./actions";
+import { inhabilitarUsuario, eliminarUsuario, actualizarNombreUsuario, reenviarCredenciales } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +59,16 @@ export default async function AdminUsuarios() {
                     <button className="btn btn-azul" style={{ width: "100%", padding: "8px", marginTop: 8, fontSize: ".8rem" }}>Guardar nombre</button>
                   </form>
                 </details>
+                {u.rol !== "admin" && (
+                  <form action={reenviarCredenciales.bind(null, u.id)}>
+                    <button
+                      title="Resetea su contraseña a la genérica y le reenvía el correo con usuario y contraseña"
+                      style={{ background: "none", border: "1px solid var(--azul-borde)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}
+                    >
+                      🔑 Reenviar credenciales
+                    </button>
+                  </form>
+                )}
                 {u.rol !== "admin" && (
                   <form action={eliminarUsuario.bind(null, u.id)}>
                     <button
