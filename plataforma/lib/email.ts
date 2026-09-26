@@ -11,17 +11,28 @@ const SITE = SITE_URL;
 const LOGO_URL = `${SITE}/brand/logo-gold-256.png`;
 const WHATSAPP = WHATSAPP_NUMERO;
 
-async function enviar(to: string | string[], subject: string, html: string) {
+/**
+ * Envía un correo. Por defecto, copia oculta (BCC) al admin en todos los
+ * correos que le llegan al CLIENTE, para poder validar que se entregó y que
+ * el diseño quedó bien. Se desactiva (bccAdmin=false) en los correos que ya
+ * van dirigidos al propio admin, para no duplicarlos.
+ */
+async function enviar(to: string | string[], subject: string, html: string, bccAdmin: boolean = true) {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     console.error("[email] RESEND_API_KEY no configurada");
     return;
   }
+  const admin = process.env.ADMIN_EMAIL;
+  const destinatarios = Array.isArray(to) ? to : [to];
+  const bcc = bccAdmin && admin && !destinatarios.map((d) => d.toLowerCase()).includes(admin.toLowerCase())
+    ? admin
+    : undefined;
   try {
     const res = await fetch(RESEND_URL, {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: FROM, to, subject, html }),
+      body: JSON.stringify({ from: FROM, to, subject, html, ...(bcc ? { bcc } : {}) }),
     });
     if (!res.ok) {
       const body = await res.text();
