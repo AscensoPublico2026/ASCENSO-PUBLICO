@@ -288,6 +288,42 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-PGN-4SP12-001", dia: 21 },
     ],
   },
+
+  // Procuraduría General de la Nación — Sustanciador (4SU-11), Convocatoria 288-2026.
+  // Nivel Técnico · apoya en la proyección de conceptos, providencias, solicitudes,
+  // constancias y recursos bajo supervisión del jefe de despacho (NO decide ni firma) —
+  // Yinit Yulieth Ursola Meza. A diferencia de Secretario Procuraduría (4SP-12/4SP-13),
+  // este cargo SÍ redacta borradores sustantivos, por lo que ninguna guía se comparte
+  // con esos cursos: las 21 piezas son propias de este plan (ver
+  // referencias/_SPEC-CURSO-4SU11-YINIT.md).
+  "pgn-sustanciador-4su11": {
+    id: "pgn-sustanciador-4su11",
+    nombre: "PGN · Sustanciador (4SU-11), Conv. 288-2026 — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-4SU11", dia: 1 },
+      { codigo: "ENT-PGN-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-4SU11", dia: 2 },
+      { codigo: "GEN-02-PGN-4SU11", dia: 3 },
+      { codigo: "GEN-03-PGN-4SU11", dia: 4 },
+      { codigo: "4SU11-COM-01", dia: 5 },
+      { codigo: "4SU11-COM-02", dia: 6 },
+      { codigo: "4SU11-COM-03", dia: 7 },
+      { codigo: "4SU11-COM-04", dia: 8 },
+      { codigo: "FUN-SUS-4SU11-01", dia: 9 },
+      { codigo: "FUN-SUS-4SU11-02", dia: 10 },
+      { codigo: "FUN-SUS-4SU11-03", dia: 11 },
+      { codigo: "FUN-JUR-4SU11-01", dia: 12 },
+      { codigo: "FUN-JUR-4SU11-02", dia: 13 },
+      { codigo: "FUN-CONC-4SU11-01", dia: 14 },
+      { codigo: "FUN-DIS-4SU11-01", dia: 15 },
+      { codigo: "FUN-DIS-4SU11-02", dia: 16 },
+      { codigo: "FUN-MP-4SU11-01", dia: 17 },
+      { codigo: "FUN-GDOC-4SU11-01", dia: 18 },
+      { codigo: "FUN-OFI-4SU11-01", dia: 19 },
+      { codigo: "FUN-ATC-4SU11-01", dia: 20 },
+      { codigo: "SIM-PGN-4SU11-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
