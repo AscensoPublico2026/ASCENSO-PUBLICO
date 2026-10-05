@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-GDOC-6CI04-02 · Copiado y Duplicación de Documentos con Control (Citador) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-GDOC-6CI04-02</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 14 · Funcional del cargo</div>
+  <h1>Copiado y Duplicación de Documentos con Control</h1>
+  <p class="header-sub">Tu función esencial n.º 6 como <strong>Citador</strong>: efectuar las labores de copiado y duplicación de documentos necesarios para anexarlos a cada proceso o asunto, llevando su respectivo control. Hoy aprendes cuándo y por qué se copia un documento, cómo se controla cada copia para que no se pierda ni se altere, y cómo cuidar la integridad de lo que reproduces en la <strong>Procuraduría General de la Nación</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 14 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Un sustanciador de tu dependencia te entrega un expediente y te pide: "necesito tres copias de estos quince folios para anexarlas a tres procesos distintos, y que quede claro cuál copia va para cada uno". Sacas las copias en la fotocopiadora de la oficina, pero a la media hora, mientras las organizas, te das cuenta de que no marcaste cuál conjunto de folios iba para cuál proceso, y las tres pilas de papel ya se ven idénticas sobre tu escritorio. Si las entregas mezcladas, podrías hacer que un documento termine en el expediente equivocado, lo que puede generar errores serios en procesos disciplinarios o administrativos. ¿Cómo evitas que esto pase? ¿Qué control debías llevar desde el principio?</p>
+    <p>Hoy profundizas tu función esencial n.º 6: <strong>efectuar las labores de copiado y duplicación de documentos necesarios para anexarlos a cada proceso o asunto indicado, llevando su respectivo control</strong>. No se trata solo de "saber usar una fotocopiadora": se trata de entender <mark>cuándo se necesita copiar, por qué, y cómo controlar cada copia</mark> para que ninguna se pierda, se mezcle o se altere en el camino.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Cuándo y por qué se necesita <strong>copiar o duplicar</strong> un documento para un proceso o asunto.</li>
+      <li>La diferencia entre <strong>copia simple, copia auténtica y copia certificada</strong>, y qué puede hacer el Citador frente a cada una.</li>
+      <li>Cómo se lleva el <strong>control de copias</strong>: qué se copió, para qué proceso, cuántas, y quién las recibió.</li>
+      <li>El <strong>cuidado de la integridad documental</strong> del original durante el proceso de copiado.</li>
+      <li>El uso correcto de <strong>equipos de fotocopiado y escaneo</strong>, con sus riesgos más comunes.</li>
+      <li>Cómo evitar <strong>pérdidas, mezclas o alteraciones</strong> de copias en procesos simultáneos.</li>
+      <li>La relación entre esta función y la <strong>reserva legal</strong> de ciertos documentos que puedes copiar.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos siete módulos prácticos, con tablas, ejemplos "En la práctica" en tu rol real de Citador, ejercicios resueltos y puntos de control. Al final tendrás casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro situacional.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>El copiado de documentos parece, a primera vista, una tarea menor: "apretar un botón en la fotocopiadora". Pero en el contexto de la Procuraduría, donde un mismo documento puede necesitar anexarse a varios procesos disciplinarios, administrativos o de otra índole al mismo tiempo, un error de control en el copiado puede tener consecuencias serias: un documento que termina en el expediente equivocado, una copia que se usa sin verificar que corresponde al original, o una pérdida de material reservado durante la reproducción. El examen de conocimientos evalúa justamente eso: si entiendes que copiar bien es más que fotocopiar, es <strong>controlar</strong>.</p></div>
+  <div class="mmap-t">🗺️ Por qué este día "pesa" tanto en el examen</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📊</span><h5>Función textual</h5><p>El manual exige "llevar su respectivo control", no solo "efectuar" el copiado.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧩</span><h5>Riesgo de mezcla</h5><p>Copias idénticas para procesos distintos son fáciles de confundir si no se controlan desde el inicio.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🔍</span><h5>Integridad del original</h5><p>El proceso de copiado no debe dañar ni alterar el documento original.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>La prueba va a poner escenarios donde debes decidir <strong>qué hacer antes, durante y después de copiar</strong>: verificar la instrucción, marcar o separar las copias desde el primer momento, cuidar el original, y entregar cada copia al proceso correcto con constancia de ese destino. Si memorizas ese ciclo completo, resuelves la mayoría de los casos.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría General de la Nación tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000). Su concurso <strong>NO lo administra la CNSC</strong>: lo adelanta la propia entidad. Los principios de integridad y control documental que verás hoy aplican a toda entidad pública, pero el proceso de selección y sus reglas particulares son los de la Procuraduría.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Copiado y Duplicación de Documentos en la práctica del Citador</h2>
+  <p>Siete módulos que te llevan de "sé fotocopiar" a "sé controlar lo que copio". Cada uno con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>Por qué se copian documentos en una dependencia como la Procuraduría</h3></div>
+    <div class="b-texto">
+      <p>Antes de aprender a controlar las copias, conviene entender para qué se copian realmente los documentos en el trabajo diario de una dependencia de la PGN. No se copia "por si acaso" ni para tener respaldo adicional sin motivo: se copia cuando un mismo documento <strong>debe formar parte de más de un expediente o proceso</strong>, o cuando debe entregarse a alguien sin desprenderse del original.</p>
+      <p>Piensa en un caso típico: un oficio con una prueba documental puede ser relevante para dos investigaciones distintas que se tramitan en dependencias diferentes. El original solo puede estar físicamente en un lugar, pero el contenido puede necesitarse en ambos expedientes. Ahí es donde entra tu función: reproducir el documento con fidelidad, para que cada proceso tenga su copia, sin que el expediente original se desarme ni se pierda su integridad.</p>
+      <div class="def-panel"><span class="def-label">Concepto clave</span><p><strong>Copiar o duplicar un documento</strong>, en tu función, es <mark>reproducir fielmente su contenido</mark> para que pueda anexarse a un proceso o asunto distinto del que contiene el original, sin alterar ni desprender el documento fuente de su expediente.</p></div>
+      <h4>Situaciones típicas en las que el Citador copia documentos</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación</th><th>Por qué se copia</th></tr>
+        <tr><td>Un mismo oficio debe anexarse a dos expedientes distintos.</td><td>El original solo puede estar en un expediente; el otro necesita una copia fiel.</td></tr>
+        <tr><td>Un ciudadano solicita una copia de un documento que presentó.</td><td>Se le entrega una reproducción, conservando el original en el archivo de la entidad.</td></tr>
+        <tr><td>Se requiere enviar un documento por correo y conservar respaldo en la dependencia.</td><td>Se copia el documento antes de despachar el original (o se despacha la copia según el procedimiento).</td></tr>
+        <tr><td>Un sustanciador necesita trabajar con un documento sin sacarlo del expediente original.</td><td>Se le entrega una copia para consulta, manteniendo el original resguardado.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> copiar nunca es un fin en sí mismo. Si un caso describe al Citador "sacando copias de todo, por si se necesitan después", sin una instrucción o necesidad concreta de un proceso, esa conducta es incorrecta: genera gasto innecesario de recursos y puede crear reproducciones sin control de documentos que no debían circular.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>📑 ¿El Citador decide cuándo se necesita una copia?</summary><div class="acc-body"><p>No decide la necesidad jurídica o procesal de la copia (eso lo determina quien tramita el proceso, como un sustanciador o el jefe de la dependencia); el Citador <strong>ejecuta</strong> la labor de copiado una vez que se le indica qué, cuánto y para qué se necesita.</p></div></details>
+        <details class="acc"><summary>🖨️ ¿Qué pasa si me piden copiar algo sin explicarme para qué proceso es?</summary><div class="acc-body"><p>Preguntas antes de proceder, porque el destino de cada copia es precisamente lo que después te permitirá controlarla bien. Copiar "a ciegas", sin saber para qué proceso es cada copia, es el origen de la mayoría de los errores de mezcla que verás en este día.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Entender el para qué antes de copiar</div><div class="practica-body"><p>Un compañero te entrega un documento y te pide "tres copias". Antes de empezar, le preguntas: <mark>"¿las tres son para el mismo proceso o cada una va a un expediente distinto?"</mark>. Esa pregunta, que toma solo unos segundos, es la que te permite organizar el control desde el inicio, en lugar de intentar reconstruirlo después con tres pilas de papel idénticas sobre el escritorio.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 1</div><div class="cp-q">¿Cuál es la razón correcta para hacer una copia de un documento en tu función como Citador?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">Para tener respaldo adicional de cualquier documento, por si acaso se necesita en el futuro.</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">Porque un proceso o asunto indicado lo necesita anexado, sin desprender el original de su expediente.</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">Porque la fotocopiadora estaba disponible y era buen momento para adelantar trabajo.</button>
+      </div><div class="cp-fb" id="cpfb1"><strong>Correcto: la segunda.</strong> Se copia cuando un proceso o asunto concreto lo requiere, para anexar el contenido sin desprender el original. Copiar "por si acaso" o por disponibilidad de equipo no es la razón correcta.</div></div>
+      <h4>El copiado como puente entre expedientes, no como acumulación de papel</h4>
+      <p>Vale la pena insistir en una idea: tu función de copiado existe para <strong>conectar</strong> procesos que necesitan el mismo contenido documental, no para acumular papel. Cada copia que produces tiene un destino concreto —un expediente, un proceso, una persona autorizada— y ese destino es, precisamente, lo que estructura todo el control que vas a aprender en los siguientes módulos. Si entiendes el copiado como "puente con destino definido" en lugar de "reproducción genérica", el resto de la función se vuelve mucho más fácil de aplicar correctamente.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> se copia un documento cuando un proceso o asunto concreto lo necesita anexado, sin desprender el original. El Citador ejecuta la copia bajo instrucción, conociendo siempre el destino de cada reproducción, nunca "por si acaso".</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>Tipos de copia: simple, auténtica y certificada</h3></div>
+    <div class="b-texto">
+      <p>No todas las copias tienen el mismo valor jurídico, y aunque esta distinción técnica la define la normativa procesal (no el Citador), es importante que la conozcas porque determina qué tan cuidadoso debes ser al producir cada tipo y qué puedes o no hacer frente a cada una.</p>
+      <div class="concepto"><div class="concepto-head">📗 Tres niveles de copia</div><div class="concepto-body">
+        <div><strong>Copia simple.</strong> Una reproducción sin autenticación especial, usada para consulta interna, anexar a un proceso como referencia o entregar información general.</div>
+        <div><strong>Copia auténtica.</strong> Una reproducción que, conforme al procedimiento establecido, tiene el mismo valor probatorio que el original porque se certifica su fidelidad siguiendo un trámite formal.</div>
+      </div></div>
+      <div class="def-panel"><span class="def-label">Concepto clave</span><p>La <strong>autenticación o certificación</strong> de una copia no la hace el Citador por su propia decisión: es un acto formal que realiza el funcionario competente (según el procedimiento interno de la entidad), quien da fe de que la copia corresponde fielmente al original. El Citador puede <mark>producir físicamente</mark> la copia, pero no es quien la autentica si ese trámite requiere la intervención de otro funcionario.</p></div>
+      <h4>Qué puede hacer el Citador frente a cada tipo</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Tipo de copia</th><th>Qué hace el Citador</th><th>Qué no decide el Citador</th></tr>
+        <tr><td>Simple</td><td>Reproduce el documento con fidelidad, siguiendo la instrucción recibida.</td><td>No decide si es suficiente para el proceso; eso lo determina quien lo solicitó.</td></tr>
+        <tr><td>Auténtica / certificada</td><td>Produce la reproducción física; puede llevarla a quien debe sellarla o firmarla.</td><td>No certifica ni autentica por su cuenta, aunque tenga a la mano un sello.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> si un caso describe al Citador "sellando" o "certificando" una copia como auténtica porque "se le hizo fácil" o porque "el funcionario competente no estaba", esa conducta es incorrecta: la autenticación exige la intervención de quien tiene esa competencia, no se improvisa.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🖋️ ¿Qué hago si me piden una copia "autenticada" y el funcionario competente no está?</summary><div class="acc-body"><p>Produces la reproducción física (la copia simple de base) y explicas que la autenticación requiere la firma o sello de quien tiene esa competencia; informas la situación para que se gestione cuando esa persona esté disponible, en lugar de improvisar el trámite.</p></div></details>
+        <details class="acc"><summary>📋 ¿La copia simple sirve para cualquier proceso?</summary><div class="acc-body"><p>No necesariamente; depende de lo que exija el procedimiento de cada proceso. El Citador no decide eso: produce la copia que le indican y, si tiene dudas sobre si se requiere autenticación, lo consulta antes de entregarla como si fuera suficiente.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Distinguir qué tipo de copia te están pidiendo</div><div class="practica-body"><p>Un compañero te pide "una copia" de un oficio sin especificar más. Antes de simplemente fotocopiarlo, preguntas si necesita ser <mark>autenticada</mark> (porque va a usarse como prueba formal en otra instancia) o si basta con una <strong>copia simple</strong> para consulta interna. Esa pregunta evita que entregues algo insuficiente para el uso que realmente se le dará.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 2</div><div class="cp-q">Te piden una copia "autenticada" de un documento para un proceso formal. ¿Qué es correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="1">Producir la reproducción física y gestionar que el funcionario competente realice la autenticación según el procedimiento.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Sellarla tú mismo con cualquier sello disponible en la oficina, para agilizar el trámite.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Entregar una copia simple, explicando que para efectos prácticos es exactamente lo mismo.</button>
+      </div><div class="cp-fb" id="cpfb2"><strong>Correcto: la primera.</strong> La autenticación corresponde a quien tiene esa competencia según el procedimiento; el Citador no la improvisa ni sustituye una copia auténtica por una simple sin ese trámite.</div></div>
+      <h4>Por qué esta distinción importa más de lo que parece</h4>
+      <p>Confundir una copia simple con una copia auténtica puede tener consecuencias procesales serias: un documento que se presenta como prueba sin la autenticación requerida puede ser rechazado o cuestionado en un proceso disciplinario o judicial, debilitando la actuación de la entidad. El Citador no necesita ser experto en derecho probatorio, pero sí necesita saber que existe esta distinción y que su labor —producir la reproducción física— no sustituye el trámite formal de autenticación cuando este se requiere. Reconocer el límite de lo que puede hacer frente a cada tipo de copia es, una vez más, parte esencial de su profesionalismo.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> copia simple (reproducción sin autenticación) vs. copia auténtica (certificada formalmente por el funcionario competente). El Citador produce la reproducción física en ambos casos, pero nunca autentica o certifica por su propia cuenta.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>El control de copias: qué, cuántas, para qué proceso y quién las recibe</h3></div>
+    <div class="b-texto">
+      <p>Llegamos al corazón de la función: <strong>"llevando su respectivo control"</strong>. Esta es la parte que distingue a un Citador que solo opera una fotocopiadora de uno que ejecuta correctamente su función esencial. Controlar las copias significa que, en todo momento, puedas responder con certeza: qué se copió, cuántas copias se hicieron, para qué proceso o asunto era cada una, y quién la recibió.</p>
+      <div class="def-panel"><span class="def-label">Concepto clave</span><p>El <strong>control de copias</strong> es el registro y la organización física que permite <mark>evitar que una copia se pierda, se mezcle con otra o se entregue al destino equivocado</mark>. No requiere un sistema complejo: requiere disciplina y un método simple aplicado siempre igual.</p></div>
+      <h4>Elementos mínimos de un buen control de copias</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Elemento</th><th>Qué asegura</th><th>Cómo se aplica en la práctica</th></tr>
+        <tr><td>Identificación del documento fuente</td><td>Saber exactamente qué original se copió.</td><td>Anotar o recordar el nombre/código del documento y su expediente de origen.</td></tr>
+        <tr><td>Número de copias</td><td>Saber cuántas reproducciones se hicieron en total.</td><td>Contar y verificar antes de separar las copias por destino.</td></tr>
+        <tr><td>Destino de cada copia</td><td>Saber a qué proceso o persona va cada una.</td><td>Marcar o separar físicamente cada copia con una nota clara de destino, apenas se produce.</td></tr>
+        <tr><td>Entrega y constancia</td><td>Saber quién recibió cada copia y cuándo.</td><td>Registrar la entrega siguiendo el procedimiento de la dependencia.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el momento crítico del control es <strong>inmediatamente después de producir las copias</strong>, antes de que se mezclen físicamente. Un caso que describe al Citador "sacando todas las copias primero y organizándolas después" sin marcarlas desde el principio describe precisamente el error que genera mezclas.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🗂️ ¿Cómo marco copias idénticas para que no se mezclen?</summary><div class="acc-body"><p>Usando lo que tenga tu dependencia establecido: una nota adhesiva temporal con el destino (que se retira al entregar, no al archivar, según el módulo 6 de la guía del Día 13), un clip de color distinto por destino, o simplemente separarlas físicamente en pilas distintas apenas salen de la máquina, sin dejarlas juntas "para organizar después".</p></div></details>
+        <details class="acc"><summary>🔢 ¿Qué hago si al contar las copias el número no coincide con lo pedido?</summary><div class="acc-body"><p>No completas el faltante "a ojo" ni asumes que "está bien así": vuelves a copiar lo que falte o reportas la inconsistencia antes de entregar nada, para no generar un error en el proceso que recibe una copia incompleta.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El caso de las tres copias para tres procesos</div><div class="practica-body"><p>Retomando la situación del inicio de esta guía: en vez de sacar las tres copias y organizarlas después, <mark>separas cada conjunto de copias apenas sale de la fotocopiadora</mark>, identificando con una nota temporal a qué proceso corresponde cada una. Solo cuando tienes las tres pilas claramente diferenciadas, las entregas, cada una a quien corresponde, y registras la entrega según el procedimiento de tu dependencia. Así ninguna copia termina en el expediente equivocado.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 3</div><div class="cp-q">Terminas de producir varias copias idénticas para procesos distintos. ¿Cuál es el momento correcto para identificar el destino de cada una?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="1">Inmediatamente después de producirlas, antes de que se mezclen físicamente entre sí.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Al final del día, cuando tengas más tiempo para organizar con calma todo lo acumulado.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Justo antes de entregarlas, confiando en la memoria para recordar cuál era cuál.</button>
+      </div><div class="cp-fb" id="cpfb3"><strong>Correcto: la primera.</strong> El control se establece de inmediato, apenas se producen las copias, para evitar que copias idénticas se mezclen antes de identificarse. Confiar en la memoria o postergar la identificación es el origen de los errores de mezcla.</div></div>
+      <h4>Por qué un error de control de copias es más grave de lo que parece</h4>
+      <p>Imagina que una copia destinada a un proceso disciplinario termina, por descuido, anexada a un proceso administrativo distinto. El error puede pasar inadvertido durante meses, hasta que alguien revisa el expediente y encuentra un documento que no corresponde, generando confusión sobre su origen, dudas sobre la integridad del expediente, y la necesidad de reconstruir qué pasó. En el peor de los casos, puede comprometer la validez de una actuación. Por eso el control de copias no es un formalismo burocrático: es la garantía de que cada proceso cuenta exactamente con la información que le corresponde, ni más ni menos, y de que esa información puede rastrearse con certeza hasta su origen.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el control de copias exige identificar documento fuente, número de copias, destino de cada una y constancia de entrega. El momento crítico es justo después de producir las copias, antes de que se mezclen.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>Cuidado de la integridad del documento original durante el copiado</h3></div>
+    <div class="b-texto">
+      <p>Copiar un documento implica, casi siempre, manipularlo: abrirlo, aplanarlo sobre un cristal de escáner o fotocopiadora, pasar sus hojas una a una. Cada uno de esos movimientos puede dañar el original si no se hace con cuidado, y el original —a diferencia de la copia— es insustituible.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>integridad documental</strong> en el proceso de copiado significa que el documento original <mark>debe salir del proceso exactamente igual a como entró</mark>: sin hojas dobladas, sin páginas fuera de orden, sin manchas de tóner, sin elementos faltantes.</p></div>
+      <h4>Riesgos comunes al copiar y cómo evitarlos</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Riesgo</th><th>Cómo ocurre</th><th>Cómo lo evitas</th></tr>
+        <tr><td>Documento mal alineado</td><td>Cerrar la tapa de la fotocopiadora con fuerza sobre documentos gruesos o encuadernados.</td><td>Usar la función de "libro" o escaneo manual si el documento no se abre completamente plano, sin forzar.</td></tr>
+        <tr><td>Pérdida de orden de las hojas</td><td>Separar las hojas del original para copiarlas una a una y no volver a ordenarlas igual.</td><td>Copiar en el mismo orden en que vienen, y verificar el orden al reintegrar el original a su expediente.</td></tr>
+        <tr><td>Manchas o residuos de tóner</td><td>Fallas del equipo o papel de mala calidad que deja residuos sobre el original.</td><td>Revisar el estado del equipo antes de usarlo con documentos originales importantes; limpiar el cristal si es necesario.</td></tr>
+        <tr><td>Atasco de papel en la máquina</td><td>Alimentar documentos originales en bandejas automáticas no diseñadas para papel delicado o grapado.</td><td>Copiar manualmente documentos antiguos, delicados o con grapas, sin usar el alimentador automático sin revisar antes.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> ante cualquier duda sobre si un documento original puede dañarse con un método de copiado (por ejemplo, un documento antiguo y frágil en un alimentador automático), la respuesta correcta siempre es el método <strong>más cuidadoso</strong>, aunque sea más lento, nunca el más rápido a costa de arriesgar el original.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🖨️ ¿Qué hago si el equipo se atasca con un documento original dentro?</summary><div class="acc-body"><p>Detienes el proceso de inmediato y, si es posible, apagas o pausas el equipo antes de intentar retirar el papel con fuerza. Retiras el documento con cuidado, revisando que no se haya dañado, y si tienes dudas sobre cómo hacerlo sin romperlo, buscas ayuda en lugar de forzarlo tú mismo.</p></div></details>
+        <details class="acc"><summary>📜 ¿Cómo copio un documento muy antiguo o frágil?</summary><div class="acc-body"><p>Con el método más cuidadoso disponible: normalmente copiando o escaneando manualmente, hoja por hoja, sin usar alimentadores automáticos ni forzar que el documento se abra completamente plano si eso implica riesgo de romperlo por el doblez o el encuadernado.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Un expediente grapado y voluminoso</div><div class="practica-body"><p>Te entregan un expediente grapado de varias hojas para copiar. En vez de intentar meterlo completo en el alimentador automático de la fotocopiadora (que podría atascarse o dañar las hojas), <mark>copias manualmente, hoja por hoja</mark>, verificando que cada una salga alineada y legible, y que al terminar el expediente quede exactamente en el mismo orden y estado en que lo recibiste.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 4</div><div class="cp-q">Debes copiar un documento antiguo y frágil, con las hojas algo quebradizas. ¿Qué método es el correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="0">Usar el alimentador automático de la fotocopiadora, porque es más rápido y ahorra tiempo.</button>
+        <button class="cp-opt" data-cp="4" data-ans="1">Copiar o escanear manualmente, hoja por hoja, con el mayor cuidado posible, aunque tome más tiempo.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Aplanar el documento con fuerza sobre el cristal para asegurar una copia nítida de una sola vez.</button>
+      </div><div class="cp-fb" id="cpfb4"><strong>Correcto: la segunda.</strong> Ante documentos frágiles, se prioriza siempre el método más cuidadoso, aunque sea más lento. Forzar el documento o usar alimentadores automáticos sin evaluar el riesgo puede dañarlo de forma irreparable.</div></div>
+      <h4>El original es irremplazable; la copia, no</h4>
+      <p>Esta es la lógica de fondo que debes tener siempre presente: si una copia sale mal (borrosa, mal alineada, incompleta), simplemente se repite el proceso y se produce una nueva. Pero si el <strong>original</strong> se daña, se pierde o se desordena durante el copiado, puede ser imposible de recuperar, porque es el único testimonio auténtico de esa actuación. Por eso, ante cualquier tensión entre "copiar más rápido" y "copiar con más cuidado", la decisión correcta siempre favorece la integridad del original sobre la velocidad del proceso.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el original debe salir del proceso de copiado exactamente como entró. Ante documentos frágiles, voluminosos o delicados, se prioriza siempre el método más cuidadoso, nunca el más rápido a costa del riesgo de dañar el original irremplazable.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>Uso correcto de equipos de fotocopiado y escaneo</h3></div>
+    <div class="b-texto">
+      <p>Más allá del cuidado con el documento, existe el cuidado con el <strong>equipo</strong> que usas. Fotocopiadoras y escáneres son herramientas de trabajo compartidas en la dependencia, y su uso correcto también forma parte de tu función, porque un equipo mal usado o descuidado afecta la calidad de todas las copias que produces, incluidas las de procesos importantes.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>uso correcto de equipos de reproducción documental</strong> incluye verificar la calidad de la copia antes de darla por buena, mantener el equipo limpio y en condiciones adecuadas, y reportar fallas en lugar de "forzar" el equipo para que funcione de todas formas.</p></div>
+      <h4>Buenas prácticas básicas con fotocopiadoras y escáneres</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Práctica</th><th>Por qué importa</th></tr>
+        <tr><td>Revisar la primera copia antes de hacer el resto del lote.</td><td>Detecta a tiempo problemas de calidad, alineación o configuración, antes de desperdiciar papel y tiempo repitiendo el error en todas las copias.</td></tr>
+        <tr><td>Verificar que el documento quede completo (todas las páginas, ambas caras si corresponde).</td><td>Una copia incompleta puede pasar inadvertida y causar que el proceso receptor trabaje con información parcial.</td></tr>
+        <tr><td>Reportar fallas del equipo (atascos recurrentes, manchas, mala calidad) en lugar de seguir usándolo así.</td><td>Un equipo defectuoso que se sigue usando puede dañar más documentos o producir copias de mala calidad de forma sistemática.</td></tr>
+        <tr><td>No sobrecargar bandejas o alimentadores con más hojas de las recomendadas.</td><td>Reduce atascos y el riesgo de que varias hojas se alimenten juntas, saltándose páginas en la copia.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> entregar un lote de copias sin haber verificado al menos la primera (por ejemplo, con media página en blanco por mala alineación del original) es un error típico. La verificación de calidad es parte integral del control de copias, no un paso opcional.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>📠 ¿Qué hago si noto que la fotocopiadora deja una línea o mancha en todas las copias?</summary><div class="acc-body"><p>Detienes el uso para ese lote si es posible usar otro equipo, y reportas la falla para que se revise técnicamente. No entregas copias con defectos visibles de calidad asumiendo que "se entiende igual", sobre todo si son para un proceso formal.</p></div></details>
+        <details class="acc"><summary>🔍 ¿Debo revisar cada copia del lote o solo la primera?</summary><div class="acc-body"><p>Revisar la primera te permite detectar errores sistemáticos (de alineación, configuración o calidad); aun así, conviene hacer una revisión rápida del lote completo antes de entregarlo, sobre todo contando que el número de copias y páginas sea el correcto.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La primera copia como prueba</div><div class="practica-body"><p>Antes de sacar diez copias completas de un expediente de quince folios, haces primero <mark>una copia de prueba de la primera página</mark>. Notas que sale con una sombra oscura en el borde: en vez de continuar así, revisas si el cristal del equipo está sucio, lo limpias si puedes, o reportas la falla y buscas otro equipo. Solo cuando la calidad es correcta, produces el lote completo.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 5</div><div class="cp-q">Notas que la fotocopiadora deja una sombra oscura recurrente en las copias. ¿Qué es lo correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="5" data-ans="0">Seguir copiando igual, ya que el contenido sigue siendo legible y lo importante es avanzar rápido.</button>
+        <button class="cp-opt" data-cp="5" data-ans="1">Detener el uso de ese equipo para el lote, intentar resolver la causa visible (como limpiar el cristal) o reportar la falla, y usar otro equipo si es necesario.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">Reducir el número de copias solicitadas para disimular el problema de calidad.</button>
+      </div><div class="cp-fb" id="cpfb5"><strong>Correcto: la segunda.</strong> Una falla de calidad recurrente se reporta y se resuelve antes de continuar; no se ignora ni se "disimula" reduciendo cantidades, porque el proceso receptor necesita copias de buena calidad.</div></div>
+      <h4>El equipo es tu herramienta, pero el resultado es tu responsabilidad</h4>
+      <p>Aunque no seas tú quien repare técnicamente una fotocopiadora o un escáner, sí eres responsable del resultado final que entregas: una copia ilegible, incompleta o de mala calidad, producida con un equipo que sabías defectuoso, sigue siendo un problema que recae sobre tu labor. Por eso verificar antes de entregar, y reportar fallas en lugar de "arreglártelas" con un equipo que no funciona bien, es tan parte de tu función como operar la máquina en sí.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> verifica la primera copia antes de producir el lote completo, revisa que cada copia esté completa, y reporta fallas de equipo en lugar de seguir usándolo defectuoso. El resultado final que entregas es tu responsabilidad, aunque el equipo no sea tuyo.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">6</div><h3>Reserva legal y confidencialidad en la reproducción de documentos</h3></div>
+    <div class="b-texto">
+      <p>Al igual que viste en la guía anterior sobre el manejo del archivo, el copiado de documentos en la Procuraduría puede implicar reproducir contenido sensible: expedientes disciplinarios, información personal de servidores investigados, o datos reservados por ley. Copiar un documento no cambia su nivel de reserva: la copia hereda exactamente la misma protección que el original.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Una <strong>copia de un documento reservado sigue siendo reservada</strong>. No se "abre" el acceso a la información por el simple hecho de reproducirla; la copia debe entregarse únicamente a quien esté autorizado para recibirla, siguiendo el mismo procedimiento que protegería al original.</p></div>
+      <h4>Buenas prácticas al copiar documentos sensibles</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación</th><th>Conducta correcta</th></tr>
+        <tr><td>Produces copias de un expediente disciplinario para dos despachos autorizados.</td><td>Entregas cada copia únicamente al despacho correspondiente, con la misma discreción que aplicarías al original.</td></tr>
+        <tr><td>Un tercero no autorizado está presente mientras copias un documento reservado.</td><td>Evitas que esa persona vea el contenido; si es posible, programas el copiado para un momento sin terceros presentes.</td></tr>
+        <tr><td>Produces copias de más por error.</td><td>No las descartas en la basura común sin más: las destruyes de forma segura o las entregas a quien deba disponer de ellas, según el procedimiento de tu dependencia.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> botar copias sobrantes de un documento reservado en la papelera común, sin ningún cuidado, es un error grave: cualquiera podría acceder a esa información. Las copias sobrantes de documentos sensibles se destruyen de forma segura o se entregan según el procedimiento establecido.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🗑️ ¿Qué hago con una copia que salió mal (borrosa, incompleta) de un documento reservado?</summary><div class="acc-body"><p>No la dejas en cualquier lugar ni la botas en una papelera común: la destruyes de forma que su contenido no pueda reconstruirse o leerse (por ejemplo, con una destructora de papel, si tu dependencia cuenta con una), o sigues el procedimiento específico que tenga establecido tu entidad para el descarte seguro de copias de información reservada.</p></div></details>
+        <details class="acc"><summary>👀 ¿Qué hago si alguien no autorizado ve por casualidad el contenido mientras copio?</summary><div class="acc-body"><p>Procuras, en la medida de lo posible, evitar que eso ocurra (por ejemplo, copiando en un momento o lugar con menos circulación de personas); si ya ocurrió, no es motivo para relajar el resto del control: sigues entregando la copia solo a quien está autorizado y mantienes tu propia discreción sobre lo que viste.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Copias sobrantes de un expediente disciplinario</div><div class="practica-body"><p>Al producir copias de un expediente disciplinario, te equivocas en la cantidad y terminas con dos copias sobrantes de una página sensible. En vez de botarlas en la papelera junto a otros papeles comunes, las <mark>destruyes de forma segura</mark> (por ejemplo, en la destructora de documentos de la oficina) o las entregas para su disposición según el procedimiento de tu dependencia. El cuidado con la reserva legal no termina cuando la copia "ya no se necesita": termina cuando se destruye con seguridad.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 6</div><div class="cp-q">Te quedan copias sobrantes de un documento con reserva legal, por un error de cálculo en la cantidad solicitada. ¿Qué haces con ellas?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="6" data-ans="0">Las botas en la papelera común de la oficina, ya que de todas formas son copias sobrantes sin uso.</button>
+        <button class="cp-opt" data-cp="6" data-ans="1">Las destruyes de forma segura o las entregas para su disposición, siguiendo el procedimiento establecido para información reservada.</button>
+        <button class="cp-opt" data-cp="6" data-ans="0">Las guardas en tu escritorio por si llegan a necesitarse después de todo.</button>
+      </div><div class="cp-fb" id="cpfb6"><strong>Correcto: la segunda.</strong> Las copias sobrantes de información reservada se destruyen de forma segura o se disponen según el procedimiento; no se botan en la basura común ni se guardan sin autorización ni propósito claro.</div></div>
+      <h4>La reserva no distingue entre original y copia</h4>
+      <p>Un error de razonamiento frecuente es pensar que la copia, al ser "solo una reproducción", tiene menos importancia que el original en materia de reserva. Es exactamente lo contrario: cada copia adicional de un documento reservado es, en la práctica, un punto adicional de riesgo de que esa información se divulgue indebidamente, simplemente porque existe en más de un lugar físico. Por eso, mientras más copias de un documento reservado se producen, mayor es la responsabilidad de controlarlas todas, desde que se crean hasta que se entregan o se destruyen.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> una copia hereda la misma reserva legal que el original. Se entrega solo a quien está autorizado, y las copias sobrantes de documentos sensibles se destruyen de forma segura, nunca se botan en la basura común ni se guardan sin propósito.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">7</div><h3>Evitar pérdidas y alteraciones cuando copias para procesos simultáneos</h3></div>
+    <div class="b-texto">
+      <p>Cerramos el día con la situación más exigente de esta función: cuando debes copiar documentos para <strong>varios procesos al mismo tiempo</strong>, con volumen alto y poco margen de tiempo. Es exactamente el escenario del caso con el que abrimos esta guía, y es uno de los más preguntados porque combina todos los riesgos anteriores en una sola tarea.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Trabajar con <strong>procesos simultáneos de copiado</strong> exige un método que evite tanto la <mark>pérdida</mark> (una copia que no llega a su destino) como la <mark>alteración</mark> (una copia que termina mezclada con documentos de otro proceso, generando contenido que no corresponde a ninguno de los dos).</p></div>
+      <h4>Método recomendado para manejar varios procesos a la vez</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Confirmar</h4><p>Verificar con quien solicita cada copia, cuántas y para qué proceso exacto es cada una.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Separar espacios</h4><p>Trabajar un proceso a la vez cuando sea posible, usando espacios físicos distintos para cada lote.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Marcar al instante</h4><p>Identificar cada lote con el destino, apenas sale de la máquina.</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Verificar antes de entregar</h4><p>Contar y confirmar que cada lote corresponde a su destino antes de separarse de él.</p></div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la tentación, bajo presión de tiempo, es "mezclar" tareas para ir más rápido: copiar todo de varios procesos a la vez sin separar. La prueba suele plantear exactamente esa presión para ver si optas por el método ordenado (aunque parezca más lento) o por el atajo riesgoso.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>⏱️ ¿Qué hago si tengo poco tiempo y varios procesos pidiendo copias a la vez?</summary><div class="acc-body"><p>Priorizas terminar un proceso completo (desde la copia hasta la entrega con constancia) antes de empezar el siguiente, en lugar de avanzar varios procesos a medias simultáneamente. Si la urgencia de uno es mayor, informas a los demás solicitantes el orden en que se atenderán, en lugar de mezclar todo para "avanzar en paralelo".</p></div></details>
+        <details class="acc"><summary>🧮 ¿Cómo verifico que no se mezclaron copias de dos procesos?</summary><div class="acc-body"><p>Antes de considerar terminada la tarea, revisas cada lote por separado: que el número de copias coincide con lo pedido, que el contenido corresponde al documento correcto, y que no hay hojas de otro proceso mezcladas por error.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Tres solicitudes de copia llegan casi al mismo tiempo</div><div class="practica-body"><p>En una misma mañana, tres compañeros de distintas áreas te piden copias de documentos distintos, con cierta urgencia cada uno. En vez de mezclar las tres tareas para "adelantar un poco de cada una", decides <mark>terminar completamente la primera solicitud</mark> —copiar, verificar, entregar con constancia— antes de empezar la segunda, informando a los demás que serán atendidos en orden. Ese método, aunque parezca menos "multitarea", es justo el que evita que termines con montones de copias sin identificar sobre tu escritorio.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 7</div><div class="cp-q">Tres procesos distintos te solicitan copias casi al mismo tiempo, con urgencia. ¿Cuál es el método más seguro para evitar mezclas?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="7" data-ans="0">Avanzar un poco en cada proceso de forma simultánea, para que ninguno se sienta desatendido.</button>
+        <button class="cp-opt" data-cp="7" data-ans="1">Completar un proceso entero (copiar, verificar, entregar) antes de iniciar el siguiente, informando el orden de atención.</button>
+        <button class="cp-opt" data-cp="7" data-ans="0">Copiar todo junto y clasificar las copias al final, cuando tengas un momento con más calma.</button>
+      </div><div class="cp-fb" id="cpfb7"><strong>Correcto: la segunda.</strong> Completar un proceso a la vez, de inicio a fin, es el método más seguro para evitar mezclas. Avanzar en paralelo o clasificar al final son precisamente las prácticas que generan errores de control.</div></div>
+      <h4>La disciplina del método, no la velocidad, es lo que te distingue</h4>
+      <p>Bajo presión, es natural sentir que "ir más rápido" es lo más importante. Pero en esta función, la velocidad sin método es contraproducente: un error de mezcla entre procesos puede tomar mucho más tiempo en corregirse después (rastrear qué pasó, disculparse, repetir el trabajo, y en el peor caso, lidiar con las consecuencias de un documento mal ubicado en un expediente) que el tiempo que se "ahorró" trabajando sin orden. Un Citador que domina esta función sabe que, precisamente en los momentos de más presión, es cuando el método ordenado importa más, no menos.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> ante varios procesos simultáneos, se confirma cada solicitud, se trabaja un proceso completo a la vez, se marca cada lote al instante y se verifica antes de entregar. El método ordenado, aunque parezca más lento, evita errores que cuestan mucho más tiempo corregir después.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>Copiar para despachar: la copia de control de correspondencia</h3></div>
+    <div class="b-texto">
+      <p>En guías anteriores aprendiste tu función de organizar, repartir y controlar la correspondencia de la dependencia. Esa función y la de hoy se cruzan en un punto muy concreto: antes de despachar un oficio original hacia su destinatario, es práctica habitual conservar una <strong>copia de control</strong> en la dependencia, precisamente para que quede respaldo de lo que se envió, sin tener que esperar a que vuelva una respuesta para saber qué se dijo.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>copia de control de correspondencia despachada</strong> es la reproducción que se conserva en el archivo de la dependencia al momento de enviar un documento original hacia afuera, para tener constancia exacta de lo que se envió, cuándo y a quién.</p></div>
+      <h4>Cómo se integra esta tarea con tu función de reparto de correspondencia</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Paso</th><th>Qué haces</th></tr>
+        <tr><td>1. Antes de despachar</td><td>Produces la copia de control del oficio firmado y radicado, antes o al momento de enviarlo.</td></tr>
+        <tr><td>2. Verificas</td><td>Confirmas que la copia sea legible y completa, igual que el original que se enviará.</td></tr>
+        <tr><td>3. Archivas</td><td>Guardas la copia en el archivo de gestión de la dependencia, en la serie de correspondencia despachada.</td></tr>
+        <tr><td>4. Despachas</td><td>Envías el original (por mensajero, correo físico o el medio que corresponda), siguiendo el procedimiento de correspondencia.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la copia de control se produce <strong>antes o al momento de despachar</strong>, no "después, si hay tiempo". Enviar el original sin haber sacado primero su copia de control deja a la dependencia sin respaldo inmediato de lo enviado.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>📬 ¿Qué pasa si olvido sacar la copia de control antes de despachar?</summary><div class="acc-body"><p>Informas la situación de inmediato, para que se busque una alternativa (por ejemplo, si existe una versión digital del oficio que pueda imprimirse como respaldo). No se "inventa" un respaldo distinto al contenido real que se envió; se reconoce el error y se soluciona con la información disponible más fiel posible.</p></div></details>
+        <details class="acc"><summary>🗳️ ¿La copia de control necesita ser autenticada?</summary><div class="acc-body"><p>Generalmente no, porque es un respaldo interno de la propia dependencia, no una prueba que se presenta externamente. Aun así, debe ser una reproducción fiel y completa, y se archiva siguiendo el mismo cuidado que cualquier otro documento del archivo de gestión.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Despachar con respaldo</div><div class="practica-body"><p>Tienes listo un oficio firmado para enviar a otra entidad. Antes de entregarlo al mensajero o de llevarlo tú mismo en una diligencia externa, <mark>sacas la copia de control</mark> y la archivas en la serie correspondiente de correspondencia despachada. Así, si después alguien pregunta "¿qué se envió exactamente y cuándo?", la dependencia tiene la respuesta inmediata, sin depender de que el destinatario confirme la recepción.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 8</div><div class="cp-q">¿En qué momento se debe producir la copia de control de un oficio que se va a despachar?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="8" data-ans="1">Antes o al momento de despachar el original, nunca después.</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">Después de que el destinatario confirme haber recibido el original.</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">Solo si el destinatario es una entidad externa a la Procuraduría.</button>
+      </div><div class="cp-fb" id="cpfb8"><strong>Correcto: la primera.</strong> La copia de control se produce antes o al momento de despachar, para que la dependencia tenga respaldo inmediato, sin depender de confirmaciones externas ni del tipo de destinatario.</div></div>
+      <h4>El respaldo que evita depender de la memoria o de terceros</h4>
+      <p>Sin una copia de control, la única forma de saber qué se envió exactamente sería confiar en la memoria de quien lo redactó, o esperar que el destinatario, en algún momento, haga referencia al contenido. Ambas opciones son frágiles. La copia de control convierte esa información en algo verificable de inmediato, en cualquier momento, sin depender de la buena memoria de nadie ni de la colaboración de un tercero externo a la entidad.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la copia de control de correspondencia despachada se produce antes o al momento del envío, se archiva en la serie correspondiente, y da a la dependencia respaldo inmediato de lo enviado, sin depender de terceros.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">9</div><h3>Escaneo y archivos digitales: control más allá del papel</h3></div>
+    <div class="b-texto">
+      <p>No toda duplicación de documentos termina en papel. Cada vez más dependencias escanean documentos para tenerlos disponibles digitalmente, y esta tarea también le puede corresponder al Citador como parte de su labor de copiado y duplicación, con sus propios riesgos de control.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Un <strong>archivo digital bien controlado</strong> debe permitir identificar, con solo ver su nombre y ubicación, de qué documento se trata, a qué proceso pertenece y cuándo se generó, de la misma forma en que una copia física bien controlada se identifica por su rótulo o separación física.</p></div>
+      <h4>Buenas prácticas al escanear y guardar archivos digitales</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Práctica</th><th>Por qué importa</th></tr>
+        <tr><td>Usar nombres de archivo claros y consistentes (siguiendo el formato de tu dependencia).</td><td>Permite identificar el documento sin tener que abrirlo, evitando confusiones entre archivos similares.</td></tr>
+        <tr><td>Guardar cada archivo en la carpeta digital correspondiente al proceso o serie, no en una carpeta genérica.</td><td>Evita que archivos de distintos procesos se mezclen en un mismo lugar sin distinción.</td></tr>
+        <tr><td>Verificar que el escaneo sea legible y completo antes de considerar terminada la tarea.</td><td>Un archivo digital borroso o con páginas faltantes es tan problemático como una copia física defectuosa.</td></tr>
+        <tr><td>No duplicar innecesariamente el mismo archivo en varias carpetas "por si acaso".</td><td>Genera confusión sobre cuál es la versión válida y dificulta el control de versiones.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> guardar un escaneo con un nombre genérico como "documento1.pdf" en el escritorio de la computadora, sin ubicarlo en la carpeta correspondiente al proceso, es el equivalente digital de dejar una copia física "sin identificar sobre el escritorio": genera el mismo riesgo de pérdida funcional.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>💻 ¿Qué formato de nombre de archivo debo usar?</summary><div class="acc-body"><p>El que tenga establecido tu dependencia o entidad (por ejemplo, con el código del proceso, la fecha y una descripción breve). Si no existe un formato establecido, consultas antes de inventar uno propio, para mantener la consistencia con lo que otros compañeros también guardan.</p></div></details>
+        <details class="acc"><summary>🔍 ¿Cómo verifico que un escaneo quedó completo?</summary><div class="acc-body"><p>Revisando que el número de páginas del archivo digital coincida con el número de hojas del documento físico, y que cada página sea legible, sin cortes ni zonas en blanco por mala alineación al escanear.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Escanear para un expediente digital</div><div class="practica-body"><p>Escaneas un oficio de cinco páginas para incorporarlo a un expediente digital. Antes de darlo por terminado, <mark>cuentas las páginas del archivo resultante</mark> y verificas que las cinco estén legibles y en el orden correcto. Guardas el archivo en la carpeta digital del proceso correspondiente, con el nombre siguiendo el formato de tu dependencia, en lugar de dejarlo con un nombre genérico en una carpeta temporal.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 9</div><div class="cp-q">Terminas de escanear un documento de varias páginas. ¿Qué debes verificar antes de considerar la tarea completa?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="9" data-ans="1">Que el número de páginas del archivo digital coincida con el documento físico y que todas sean legibles, guardándolo en la carpeta correcta con un nombre identificable.</button>
+        <button class="cp-opt" data-cp="9" data-ans="0">Solo que el archivo se haya guardado en algún lugar de la computadora, sin importar el nombre ni la carpeta.</button>
+        <button class="cp-opt" data-cp="9" data-ans="0">Que el tamaño del archivo en megabytes sea razonable, independientemente de su contenido.</button>
+      </div><div class="cp-fb" id="cpfb9"><strong>Correcto: la primera.</strong> Verificar páginas completas, legibilidad, carpeta correcta y nombre identificable es lo que da control real a un archivo digital, igual que el control físico de una copia en papel.</div></div>
+      <h4>El control digital exige la misma disciplina que el control físico</h4>
+      <p>Es tentador pensar que, al no existir papel de por medio, el riesgo de "perder" un archivo digital es menor. En realidad, un archivo mal nombrado o guardado en el lugar equivocado puede ser tan difícil de encontrar después como una copia física mal archivada, con el agravante de que un archivo digital puede duplicarse, sobrescribirse o eliminarse por error con mucha más facilidad que uno en papel. La misma disciplina de control que aplicas al copiado físico —identificar, ubicar correctamente, verificar antes de dar por terminada la tarea— aplica igual al mundo digital.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> un escaneo bien controlado tiene nombre identificable, está en la carpeta digital correcta, y se verifica completo y legible antes de considerarse terminado. El control digital exige la misma disciplina que el control de copias físicas.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">10</div><h3>Copias para diligencias externas: qué llevar y qué dejar resguardado</h3></div>
+    <div class="b-texto">
+      <p>Recordarás de una guía anterior que, como Citador, también haces diligencias externas: salir de la oficina para notificar, entregar o recoger documentos. En ese contexto surge una pregunta práctica de control: cuando sales con documentos relacionados con un proceso, ¿llevas el original o una copia? La respuesta depende de la naturaleza de la diligencia, pero el criterio de fondo siempre es el mismo: minimizar el riesgo sobre el original.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Cuando una diligencia externa <strong>no requiere entregar el original</strong> (por ejemplo, mostrar un documento para verificar un dato, o llevar una referencia de consulta), se usa una <strong>copia de trabajo</strong>, dejando el original resguardado en la dependencia.</p></div>
+      <h4>Cuándo usar copia y cuándo el original en una diligencia</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación</th><th>Qué llevas</th><th>Por qué</th></tr>
+        <tr><td>Notificar una decisión que debe entregarse formalmente.</td><td>El original (o la copia que el procedimiento exija entregar), según lo que indique la diligencia.</td><td>La notificación formal exige el documento que corresponde entregar según el procedimiento.</td></tr>
+        <tr><td>Verificar un dato con otra dependencia sin dejar nada físico.</td><td>Una copia de trabajo, dejando el original resguardado.</td><td>Minimiza el riesgo de pérdida o daño del original durante el desplazamiento.</td></tr>
+        <tr><td>Mostrar un documento de referencia sin que se quede en otra oficina.</td><td>Una copia, para no arriesgar el original en un traslado innecesario.</td><td>El original no necesita salir físicamente de la dependencia para cumplir ese propósito.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> ante la duda sobre si una diligencia requiere el original o basta con una copia, la conducta correcta es <strong>consultar antes de salir</strong>, nunca asumir por comodidad que "mejor llevo el original, así no tengo que volver por él".</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🧳 ¿Qué hago si durante la diligencia me piden el original y solo llevo copia?</summary><div class="acc-body"><p>Explicas que llevas una copia para ese propósito y que, si se requiere el original, debes gestionarlo según el procedimiento correspondiente (puede implicar volver por él o coordinar su entrega formal). No entregas ni dejas el original en otra dependencia sin la autorización y el procedimiento adecuados, aunque insistan en el momento.</p></div></details>
+        <details class="acc"><summary>🔒 ¿Cómo protejo las copias que llevo en una diligencia?</summary><div class="acc-body"><p>Con el mismo cuidado físico que aprendiste para los originales: evitando humedad, dobleces y manipulación brusca, y manteniendo la discreción si son copias de documentos reservados.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Verificar un dato sin arriesgar el original</div><div class="practica-body"><p>Te piden ir a otra dependencia para que un funcionario verifique visualmente un dato en un documento. En vez de llevar el original (que tendría que trasladarse y regresar, con el riesgo que eso implica), llevas una <mark>copia de trabajo</mark> clara y legible, suficiente para que se verifique lo necesario, dejando el original resguardado en el archivo de tu dependencia.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 10</div><div class="cp-q">Te envían a verificar un dato de un documento con otra dependencia, sin que se requiera entregar nada formalmente. ¿Qué es lo correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="10" data-ans="0">Llevar siempre el original, así evitas tener que volver por él si llegan a pedírtelo.</button>
+        <button class="cp-opt" data-cp="10" data-ans="1">Llevar una copia de trabajo clara y legible, dejando el original resguardado en la dependencia.</button>
+        <button class="cp-opt" data-cp="10" data-ans="0">No llevar ningún documento, y explicar de memoria el contenido si te lo preguntan.</button>
+      </div><div class="cp-fb" id="cpfb10"><strong>Correcto: la segunda.</strong> Cuando no se requiere entregar el original, se usa una copia de trabajo para minimizar el riesgo de pérdida o daño durante el desplazamiento, sin dejar de cumplir el propósito de la diligencia.</div></div>
+      <h4>Minimizar el riesgo del original, incluso fuera de la oficina</h4>
+      <p>El cuidado del original no termina en las paredes de la dependencia: se extiende a cada decisión que tomas sobre qué llevar contigo en una diligencia externa. Elegir una copia cuando es suficiente, en lugar del original "por si acaso lo piden", reduce de forma directa el número de situaciones en las que un documento irremplazable podría perderse, mojarse o dañarse fuera del control directo del archivo de la dependencia.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> en diligencias que no exigen entregar el original, se usa una copia de trabajo, dejando el original resguardado. Ante la duda sobre qué llevar, se consulta antes de salir, nunca se asume por comodidad.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">11</div><h3>Verificación final: cerrar bien cada tarea de copiado</h3></div>
+    <div class="b-texto">
+      <p>Cerramos el día con un módulo breve pero decisivo: el hábito de <strong>verificar el cierre</strong> de cada tarea de copiado antes de pasar a la siguiente. Muchos de los errores que viste a lo largo de esta guía —mezclas, pérdidas, entregas incompletas— se evitan con un último paso de revisión que toma apenas un minuto, pero que con frecuencia se omite por la prisa.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>verificación final de cierre</strong> es el último chequeo antes de considerar terminada una tarea de copiado: confirmar que cada copia llegó a su destino correcto, que quedó constancia de la entrega, que el original está de vuelta en su lugar, y que no quedaron copias sobrantes sin resolver.</p></div>
+      <h4>Lista de verificación final que puedes aplicar siempre</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Pregunta de cierre</th><th>Qué confirma</th></tr>
+        <tr><td>¿Cada copia llegó a quien correspondía?</td><td>Que no quedó ninguna copia sin entregar o entregada al destino equivocado.</td></tr>
+        <tr><td>¿Quedó constancia de cada entrega?</td><td>Que existe registro de quién recibió qué y cuándo, siguiendo el procedimiento establecido.</td></tr>
+        <tr><td>¿El original volvió a su lugar en el archivo, íntegro?</td><td>Que no quedó el original fuera de su expediente ni con algún daño sin reportar.</td></tr>
+        <tr><td>¿Hay copias sobrantes sin resolver?</td><td>Que ninguna copia de más quedó sin destruir o disponer correctamente, sobre todo si es información sensible.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> dar por "terminada" una tarea de copiado apenas se entrega la primera copia, sin verificar que todo el ciclo se cerró (constancia, original resguardado, sobrantes resueltos), es un error frecuente que la prueba evalúa con casos de apariencia inocente.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>⏳ ¿Vale la pena tomarse un minuto extra para verificar, si ya entregué todo?</summary><div class="acc-body"><p>Sí, siempre. Ese minuto de verificación es mucho más barato, en tiempo y en riesgo, que descubrir días después que una copia nunca llegó a su destino, o que el original quedó fuera de su expediente sin que nadie lo notara.</p></div></details>
+        <details class="acc"><summary>📋 ¿Debo dejar algún registro de que hice esta verificación final?</summary><div class="acc-body"><p>Si tu dependencia tiene un formato de control establecido (por ejemplo, una planilla de entregas), marcarlo como completo cumple esa función. Si no existe un formato formal, al menos revisas mentalmente la lista de verificación antes de considerar la tarea cerrada.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El cierre que evita sorpresas</div><div class="practica-body"><p>Terminas de entregar tres copias a tres procesos distintos. Antes de pasar a tu siguiente tarea, te tomas un minuto para repasar: <mark>¿las tres llegaron a su destino? ¿quedó constancia de cada una? ¿el expediente original ya está de vuelta en el archivo? ¿no quedó ninguna copia sobrante sobre el escritorio?</mark> Solo cuando puedes responder "sí" a las cuatro preguntas, consideras la tarea realmente cerrada.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 11</div><div class="cp-q">Acabas de entregar la última de varias copias que debías producir. ¿Qué haces antes de pasar a tu siguiente tarea?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="11" data-ans="1">Verificar que todas las copias llegaron a su destino, que hay constancia de entrega, que el original está de vuelta en su lugar, y que no quedaron sobrantes sin resolver.</button>
+        <button class="cp-opt" data-cp="11" data-ans="0">Pasar de inmediato a la siguiente tarea, ya que entregar la última copia significa que el trabajo está terminado.</button>
+        <button class="cp-opt" data-cp="11" data-ans="0">Preguntar a cada destinatario, varios días después, si recuerda haber recibido su copia correctamente.</button>
+      </div><div class="cp-fb" id="cpfb11"><strong>Correcto: la primera.</strong> Entregar la última copia no cierra automáticamente el ciclo: se verifica constancia, estado del original y ausencia de sobrantes antes de dar la tarea por completamente terminada.</div></div>
+      <h4>El hábito que distingue el trabajo completo del trabajo "casi" completo</h4>
+      <p>La diferencia entre un Citador que ejecuta esta función de forma sobresaliente y uno que simplemente "cumple" suele estar en este último paso, que nadie exige explícitamente pero que marca la diferencia cuando algo se revisa después. Verificar el cierre de cada tarea, de forma consistente, es lo que convierte una serie de acciones correctas e individuales (copiar bien, cuidar el original, controlar el destino) en un proceso realmente completo y confiable de principio a fin.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> antes de considerar cerrada una tarea de copiado, se verifica que todas las copias llegaron a su destino con constancia, que el original está de vuelta íntegro, y que no quedaron sobrantes sin resolver. Ese último minuto de verificación evita la mayoría de los errores de esta función.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">12</div><h3>Copiar bajo presión de términos legales, sin sacrificar el control</h3></div>
+    <div class="b-texto">
+      <p>En la Procuraduría, muchos documentos están sujetos a <strong>términos legales</strong>: plazos para notificar, para responder un recurso, para remitir un expediente. Cuando el copiado que necesitas hacer está ligado a uno de esos plazos próximos a vencer, la presión de tiempo es real y legítima. El reto de este último módulo es mostrar que la urgencia no justifica abandonar el control: existen formas de ser rápido sin perder el orden.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Un <strong>término legal</strong> es el plazo fijado por la norma o el procedimiento dentro del cual debe cumplirse una actuación (como notificar una decisión). Si el copiado de documentos es parte de esa actuación, debe hacerse a tiempo, pero <mark>sin que la premura elimine los pasos de control que evitan errores</mark>.</p></div>
+      <h4>Cómo ser rápido sin perder el control al copiar bajo presión de tiempo</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Estrategia</th><th>Cómo ayuda bajo presión de tiempo</th></tr>
+        <tr><td>Priorizar primero la tarea con el término más próximo a vencer.</td><td>Evita que, por atender varias cosas a la vez, la más urgente termine retrasada.</td></tr>
+        <tr><td>Simplificar sin omitir: marcar destino de inmediato, aunque sea con una nota rápida.</td><td>El control no tiene que ser lento, solo tiene que existir; una marca simple es suficiente si se hace en el momento correcto.</td></tr>
+        <tr><td>Pedir ayuda si el volumen de copiado excede lo que puedes manejar solo a tiempo.</td><td>Es mejor coordinar apoyo a tiempo que arriesgar errores de control por exceso de carga.</td></tr>
+        <tr><td>Comunicar de inmediato cualquier imprevisto (equipo dañado, documento frágil) que pueda retrasar el cumplimiento del término.</td><td>Permite que quien coordina el proceso tome decisiones a tiempo (como buscar otro equipo o ajustar el plan) en lugar de enterarse del retraso cuando ya es tarde.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> ante un término legal próximo a vencer, la respuesta correcta nunca es "omitir pasos de control para ganar tiempo" (como no verificar la copia, no marcar destino o no dejar constancia): es <strong>priorizar, simplificar sin omitir, y comunicar imprevistos a tiempo</strong>.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>⏰ ¿Qué hago si por el volumen de copiado no voy a alcanzar a cumplir el término?</summary><div class="acc-body"><p>Informas la situación con la mayor anticipación posible a tu jefe inmediato o a quien coordina el proceso, para que se busquen alternativas (apoyo adicional, ajuste de prioridades) antes de que venza el plazo, en lugar de simplemente intentarlo solo hasta el último momento y comunicar el problema cuando ya no hay tiempo de reacción.</p></div></details>
+        <details class="acc"><summary>🏃 ¿Es correcto saltarse la verificación de calidad si el tiempo es muy poco?</summary><div class="acc-body"><p>No. Una copia de mala calidad, entregada a tiempo pero ilegible o incompleta, puede terminar siendo tan problemática como entregarla tarde: el proceso receptor no puede usarla correctamente. La verificación rápida de la primera copia toma segundos y sigue siendo necesaria incluso bajo presión.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El término que vence esta tarde</div><div class="practica-body"><p>Te informan que la notificación de una decisión, que requiere varias copias, debe quedar lista antes de las 3:00 p.m. porque el término legal vence ese día. En vez de lanzarte a copiar todo de inmediato sin ningún orden, te tomas unos segundos para <mark>priorizar esta tarea por encima de otras pendientes menos urgentes</mark>, confirmas rápidamente los destinos de cada copia, y si notas que el volumen es mayor de lo que puedes manejar a tiempo tú solo, avisas de inmediato para conseguir apoyo, en lugar de esperar hasta las 2:45 p.m. para decir que no vas a alcanzar.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 12</div><div class="cp-q">Un término legal importante vence en pocas horas y el volumen de copiado es mayor al que puedes manejar solo a tiempo. ¿Qué es lo correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="12" data-ans="0">Intentarlo solo hasta el último momento posible, y avisar del problema únicamente si definitivamente no se alcanza a cumplir.</button>
+        <button class="cp-opt" data-cp="12" data-ans="1">Informar la situación de inmediato, con la mayor anticipación posible, para que se busque apoyo o se ajusten las prioridades antes de que el riesgo de incumplir el término sea inminente.</button>
+        <button class="cp-opt" data-cp="12" data-ans="0">Omitir la verificación de calidad y el marcado de destino de las copias, para ganar todo el tiempo posible.</button>
+      </div><div class="cp-fb" id="cpfb12"><strong>Correcto: la segunda.</strong> Ante un riesgo real de incumplir un término legal, se informa con anticipación para permitir una reacción a tiempo; omitir controles básicos para ganar velocidad genera un riesgo mayor que el que se pretende evitar.</div></div>
+      <h4>La urgencia legítima no es excusa para el descontrol</h4>
+      <p>Es importante cerrar esta guía con esta idea, porque la presión de un término legal es uno de los contextos más frecuentes en los que un servidor público, de buena fe, decide "saltarse pasos" pensando que la urgencia lo justifica. Pero un documento mal controlado, entregado a tiempo, puede generar exactamente el mismo problema —o uno peor— que un documento bien controlado entregado con algo de retraso que se comunicó a tiempo. La verdadera habilidad bajo presión no es "ir más rápido sin pensar", sino identificar qué pasos de control son realmente rápidos de aplicar (y por tanto nunca deben omitirse) y en qué momento pedir ayuda en lugar de intentarlo solo contra el reloj.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> bajo presión de un término legal, se prioriza la tarea más urgente, se simplifica el control sin omitirlo, se pide apoyo a tiempo si el volumen lo exige, y se comunican los imprevistos de inmediato. La urgencia nunca justifica eliminar los pasos básicos de control.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">13</div><h3>Coherencia entre copia física y copia digital de un mismo documento</h3></div>
+    <div class="b-texto">
+      <p>Un último escenario, cada vez más frecuente, cierra esta guía: cuando de un mismo documento existen, al mismo tiempo, una copia física (impresa) y una copia digital (escaneada), ambas destinadas a usarse. Mantener la coherencia entre las dos evita uno de los errores más confusos de detectar: que la versión física y la digital de "lo mismo" terminen siendo, en realidad, distintas.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Dos reproducciones (una física y una digital) de un mismo documento son <strong>coherentes</strong> cuando contienen exactamente el mismo contenido, en el mismo orden, sin que una tenga páginas, anotaciones o correcciones que la otra no tiene.</p></div>
+      <h4>Cómo se rompe la coherencia, sin que nadie lo note al principio</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación de riesgo</th><th>Qué puede pasar</th><th>Cómo lo evitas</th></tr>
+        <tr><td>Se corrige una copia física a mano, después de haber escaneado la versión anterior.</td><td>La versión digital queda desactualizada frente a la física corregida.</td><td>Si se corrige algo después de escanear, se vuelve a escanear la versión corregida, o se indica expresamente cuál es la vigente.</td></tr>
+        <tr><td>Se escanea una copia de trabajo (borrador) en lugar de la versión final firmada.</td><td>El archivo digital no corresponde al documento oficial realmente vigente.</td><td>Verificar siempre que lo que se escanea es la versión final, no un borrador previo.</td></tr>
+        <tr><td>Se pierde una página al escanear, pero la copia física sí la tenía completa.</td><td>Quien consulta solo el archivo digital cree que el documento tiene menos contenido del que realmente tiene.</td><td>Contar páginas al escanear (módulo 9) y comparar contra el documento físico de referencia.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> si un caso describe que "la copia digital y la física no coinciden" y pregunta qué se debe hacer, la respuesta correcta nunca es "usar la que sea más conveniente en el momento": es <strong>detectar la causa de la discrepancia y corregirla</strong>, dejando claro cuál versión es la vigente.</p></div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔄 ¿Qué hago si detecto que la copia digital y la física de un mismo documento no coinciden?</summary><div class="acc-body"><p>Lo reportas de inmediato a quien corresponda, sin decidir tú mismo cuál de las dos es "la correcta" si no tienes certeza. Si la causa es clara (por ejemplo, una corrección posterior al escaneo), se actualiza la versión digital para que coincida con la física vigente, o se indica expresamente cuál debe usarse.</p></div></details>
+        <details class="acc"><summary>📎 ¿Debo escanear cada vez que corrijo algo a mano en una copia física?</summary><div class="acc-body"><p>Si esa copia física corregida va a usarse como referencia junto con su versión digital, sí conviene actualizar el escaneo, para que ambas versiones sigan siendo coherentes entre sí y nadie trabaje por error con información desactualizada.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La corrección que casi se pierde entre versiones</div><div class="practica-body"><p>Escaneas un oficio para el expediente digital. Horas después, alguien corrige a mano un dato en la copia física porque se detectó un error. Antes de dar por cerrada la tarea del día, recuerdas que <mark>esa corrección también debe reflejarse en la versión digital</mark>, así que vuelves a escanear la página corregida y reemplazas el archivo anterior, dejando claro cuál es la versión vigente. Evitas así que, meses después, alguien consulte el archivo digital y trabaje con el dato equivocado que ya se había corregido en papel.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 13</div><div class="cp-q">Notas que la copia digital de un documento no coincide exactamente con su versión física, por una corrección posterior al escaneo. ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="13" data-ans="0">Usar la que tengas más a la mano en cada momento, ya que ambas contienen la información básica del documento.</button>
+        <button class="cp-opt" data-cp="13" data-ans="1">Actualizar la versión digital para que coincida con la física vigente, o reportar la discrepancia si no tienes certeza de cuál es la correcta.</button>
+        <button class="cp-opt" data-cp="13" data-ans="0">Eliminar la versión digital antigua sin reemplazarla, dejando solo la copia física como referencia desde ahora.</button>
+      </div><div class="cp-fb" id="cpfb13"><strong>Correcto: la segunda.</strong> Ante una discrepancia entre versiones, se actualiza la digital para que coincida con la física vigente, o se reporta si hay incertidumbre; no se decide "a conveniencia" ni se elimina sin dejar una versión digital disponible.</div></div>
+      <h4>Dos formatos, una sola verdad documental</h4>
+      <p>Tener un documento disponible tanto en físico como en digital es una ventaja de accesibilidad, no una invitación a que existan "dos versiones de la verdad". Tu función de copiado y duplicación, aplicada con el mismo criterio de control que has visto en toda esta guía, también se extiende a mantener esa coherencia: cualquiera que consulte el documento, sea en papel o en pantalla, debe encontrar exactamente el mismo contenido, en el mismo estado y con la misma vigencia.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> cuando un documento existe en copia física y digital, ambas deben ser coherentes entre sí. Ante cualquier discrepancia, se detecta la causa y se actualiza o reporta, nunca se decide "a conveniencia" cuál usar en cada momento.</p></div>
+    </div>
+  </div>
+
+  <div class="card"><p><strong>Cierre del Desarrollo.</strong> A lo largo de estos trece módulos recorriste tu función esencial n.º 6 de principio a fin: entendiste que se copia un documento cuando un proceso concreto lo necesita, nunca "por si acaso"; distinguiste copia simple de copia auténtica y el límite de lo que puedes certificar; dominaste los cuatro elementos del control de copias; aprendiste a cuidar la integridad física del original durante el copiado; adoptaste buenas prácticas en el uso de equipos de fotocopiado y escaneo; entendiste que la reserva legal de un documento se traslada íntegramente a sus copias; dominaste el método para manejar procesos simultáneos sin mezclas; y profundizaste en la copia de control de correspondencia despachada, el control de archivos digitales, el criterio para elegir copia u original en diligencias externas, y el hábito de verificación final que cierra cada tarea con seguridad. Cerraste, además, entendiendo que la coherencia entre una versión física y una digital del mismo documento es parte de ese mismo control, y que bajo la presión de un término legal la respuesta correcta nunca es sacrificar los pasos básicos de verificación, sino priorizar, simplificar sin omitir y pedir apoyo a tiempo. Copiar bien, con control, es una de las formas más concretas en que tu trabajo protege la integridad de los procesos de la Procuraduría, y es, en el fondo, un acto de cuidado hacia cada persona cuyo proceso depende de que esa información llegue completa, fiel y a tiempo a donde debe llegar.</p></div>
+
+  <div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"Toda copia tiene un destino conocido desde antes de producirla: qué se copia, cuántas, para quién, y con constancia de entrega. Sin eso, no hay control."</p></div></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Consulta directamente las normas y guías (se abren en una pestaña nueva):</p>
+    <ul class="lista">
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4275" target="_blank" rel="noopener">Ley 594 de 2000 — Ley General de Archivos</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1437_2011.html" target="_blank" rel="noopener">Ley 1437 de 2011 (CPACA) — procedimiento administrativo y valor de las copias</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia y acceso a la información pública</a></li>
+      <li><a href="https://www.procuraduria.gov.co/" target="_blank" rel="noopener">Procuraduría General de la Nación — portal institucional</a></li>
+      <li><a href="https://www.archivogeneral.gov.co/" target="_blank" rel="noopener">Archivo General de la Nación (AGN) — guías de gestión documental</a></li>
+    </ul>
+  </div>
+
+  <div class="advance-bar"><span class="advance-hint">Terminaste el Desarrollo. Afina el criterio con distinciones, casos y trampas.</span><button class="advance-btn" data-goto="3">Ver distinciones clave →</button></div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos de este día que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Copia simple</strong></td><td><strong>Copia auténtica/certificada</strong></td><td>Simple: reproducción sin trámite especial. Auténtica: certificada formalmente por el funcionario competente, con valor probatorio equivalente al original.</td></tr>
+    <tr><td><strong>Producir la copia física</strong></td><td><strong>Autenticar la copia</strong></td><td>Producir: tarea del Citador. Autenticar: acto formal de quien tiene esa competencia, nunca del Citador por su cuenta.</td></tr>
+    <tr><td><strong>Conservación preventiva del original</strong></td><td><strong>Control de las copias producidas</strong></td><td>Preventiva: cuidar que el original no se dañe durante el copiado. Control: asegurar que cada copia llegue a su destino correcto sin mezclarse ni perderse.</td></tr>
+    <tr><td><strong>Depurar copias sobrantes comunes</strong></td><td><strong>Destruir copias sobrantes de información reservada</strong></td><td>Comunes: se descartan normalmente. Reservadas: exigen destrucción segura o disposición según procedimiento específico.</td></tr>
+    <tr><td><strong>Verificar la primera copia</strong></td><td><strong>Entregar el lote completo</strong></td><td>Verificar primero: detecta errores de calidad antes de desperdiciar el lote. Entregar: solo después de confirmar calidad y cantidad correctas.</td></tr>
+    <tr><td><strong>Trabajar procesos uno a la vez</strong></td><td><strong>Avanzar varios procesos en paralelo sin terminarlos</strong></td><td>Uno a la vez: método seguro que evita mezclas. Paralelo sin cerrar: genera el riesgo de confundir copias entre procesos distintos.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: <strong>construye una frase con cada pareja</strong>. Por ejemplo: "Yo produzco la copia; la autenticación formal la hace quien tiene esa competencia". Si puedes decir la frase completa sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Citador de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · Tres copias, tres procesos, una confusión evitada</div><div class="caso-body">
+    <span class="label">Situación</span><p>Te piden tres copias de un mismo documento para tres procesos distintos. Produces las copias pero, al terminar, no recuerdas con certeza cuál pila corresponde a cuál proceso, porque todas son idénticas y las dejaste juntas sobre el escritorio.</p>
+    <span class="label">¿Qué se debe hacer?</span>
+    <div class="resp-correcta"><p>Antes de entregar cualquiera, se debe reconstruir con certeza (consultando de nuevo a quien solicitó cada copia si es necesario) cuál conjunto va para cada proceso, y en adelante, identificar cada lote inmediatamente después de producirlo, nunca después. No se entrega ninguna copia "al azar" asumiendo que probablemente es la correcta.</p></div>
+    <span class="label">Por qué</span><p>Entregar una copia al proceso equivocado por no haberla identificado a tiempo puede generar errores graves en los expedientes; ante la duda, se verifica antes de entregar, nunca se arriesga con una suposición.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · El documento antiguo y el alimentador automático</div><div class="caso-body">
+    <span class="label">Situación</span><p>Debes copiar un documento de varios años de antigüedad, con el papel algo quebradizo, y la fotocopiadora de la oficina tiene un alimentador automático que sería más rápido de usar.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>No usas el alimentador automático, que puede dañar un papel frágil. Copias manualmente, hoja por hoja, con el mayor cuidado posible, aunque tome más tiempo, priorizando la integridad del original sobre la velocidad del proceso.</p></div>
+    <span class="label">Por qué</span><p>El original es irremplazable; una copia que sale mal se puede repetir, pero un original dañado durante el copiado puede perderse para siempre.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · Copias sobrantes de un expediente reservado</div><div class="caso-body">
+    <span class="label">Situación</span><p>Al calcular mal la cantidad, produces dos copias de más de una página de un expediente disciplinario con reserva legal.</p>
+    <span class="label">¿Qué haces con esas copias sobrantes?</span>
+    <div class="resp-correcta"><p>No las botas en la papelera común ni las guardas sin propósito: las destruyes de forma segura (por ejemplo, con una destructora de papel) o las entregas para su disposición según el procedimiento establecido por tu dependencia para información reservada.</p></div>
+    <span class="label">Por qué</span><p>La reserva legal de un documento se traslada íntegramente a sus copias; descartarlas sin cuidado expondría información protegida a cualquiera que tuviera acceso a la basura común.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Copiar "por si acaso", sin instrucción ni proceso concreto</div><p>Genera reproducciones innecesarias de documentos que pueden incluso ser reservados, sin control ni propósito claro.</p></div>
+  <div class="box danger"><div class="box-title">❌ Autenticar o certificar una copia por cuenta propia</div><p>Esa competencia corresponde al funcionario autorizado según el procedimiento; el Citador no la asume aunque tenga a la mano un sello.</p></div>
+  <div class="box danger"><div class="box-title">❌ Identificar el destino de las copias después de producirlas, no antes</div><p>Copias idénticas que se dejan juntas "para organizar después" son el origen más frecuente de mezclas entre procesos.</p></div>
+  <div class="box danger"><div class="box-title">❌ Usar alimentadores automáticos con documentos frágiles o delicados</div><p>Arriesga dañar de forma irreparable un original que no puede reemplazarse, solo por ahorrar tiempo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Entregar copias sin verificar calidad y cantidad</div><p>Una copia incompleta o de mala calidad entregada sin revisión puede hacer que un proceso trabaje con información parcial o ilegible.</p></div>
+  <div class="box danger"><div class="box-title">❌ Botar copias sobrantes de documentos reservados en la basura común</div><p>La reserva legal se traslada a las copias; deben destruirse de forma segura o disponerse según procedimiento.</p></div>
+  <div class="box danger"><div class="box-title">❌ Avanzar varios procesos de copiado en paralelo sin cerrar ninguno</div><p>Aumenta el riesgo de mezclar copias entre procesos distintos; lo seguro es completar un proceso entero antes de iniciar el siguiente.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Pregunta el destino antes de copiar:</strong> para qué proceso es cada copia, antes de empezar a producirlas.</li>
+    <li><strong>Copia simple vs. auténtica:</strong> el Citador produce la reproducción física en ambos casos, pero jamás certifica por su cuenta.</li>
+    <li><strong>Identifica el destino de cada lote apenas sale de la máquina,</strong> nunca después de que se mezclen.</li>
+    <li><strong>Prioriza siempre el método más cuidadoso</strong> frente a documentos frágiles, voluminosos o delicados, aunque sea más lento.</li>
+    <li><strong>Verifica calidad y cantidad antes de entregar</strong>: la primera copia como prueba evita desperdiciar un lote completo.</li>
+    <li><strong>La reserva legal se traslada a las copias:</strong> se entregan solo a quien está autorizado y se destruyen con seguridad si sobran.</li>
+    <li><strong>Ante varios procesos a la vez:</strong> completa uno entero antes de empezar el siguiente; no mezcles tareas para "ir más rápido".</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"Si la copia la necesitan rápido, lo importante es la velocidad; el control se puede hacer después."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la urgencia parece justificar saltarse pasos.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el control debe establecerse desde el momento en que se producen las copias, no después, sin importar la urgencia.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> identificar el destino de cada copia de inmediato, incluso bajo presión de tiempo.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Como la copia solo se usará para consulta interna, no hace falta cuidar tanto el original al copiarlo."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> el uso "menor" de la copia parece restar importancia al proceso.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el cuidado del original no depende del uso que se dará a la copia; el original sigue siendo irremplazable en cualquier caso.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> cuidar siempre la integridad del original, sin importar para qué se destine la copia producida.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Las copias sobrantes de un documento reservado se pueden botar normalmente si ya cumplieron su función."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "ya cumplieron su función" suena a que pierden valor.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la reserva legal no desaparece porque la copia ya no se vaya a usar; el riesgo de divulgación persiste mientras exista la copia.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> destruir de forma segura o disponer según el procedimiento establecido para información reservada.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El Citador puede sellar una copia como 'auténtica' si confía en que corresponde fielmente al original."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la fidelidad de la copia parece ser lo único relevante.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la autenticación es un acto formal de competencia de otro funcionario, no depende de la confianza personal en la fidelidad de la copia.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> producir la copia y gestionar la autenticación con quien tiene esa competencia, según el procedimiento.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Por qué se copia</h4><p>Un proceso o asunto concreto lo necesita anexado, sin desprender el original de su expediente.</p></div>
+    <div class="resumen-item"><h4>Tipos de copia</h4><p>Simple (sin trámite especial) vs. auténtica (certificada formalmente por el competente).</p></div>
+    <div class="resumen-item"><h4>Control de copias</h4><p>Documento fuente, cantidad, destino de cada una y constancia de entrega.</p></div>
+    <div class="resumen-item"><h4>Integridad del original</h4><p>Debe salir del copiado exactamente como entró; se prioriza cuidado sobre velocidad.</p></div>
+    <div class="resumen-item"><h4>Equipos</h4><p>Verificar la primera copia, revisar calidad y cantidad, reportar fallas sin forzar el equipo.</p></div>
+    <div class="resumen-item"><h4>Reserva legal</h4><p>Se traslada íntegramente a las copias; sobrantes se destruyen de forma segura.</p></div>
+    <div class="resumen-item"><h4>Procesos simultáneos</h4><p>Completar uno a la vez; marcar destino de inmediato; verificar antes de entregar.</p></div>
+    <div class="resumen-item"><h4>Regla de oro</h4><p>Toda copia tiene un destino conocido desde antes de producirla.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Copia simple / auténtica</dt><dd>Reproducción sin trámite especial / reproducción certificada formalmente con valor probatorio del original.</dd>
+      <dt>Control de copias</dt><dd>Registro de qué se copió, cuántas, para qué proceso y quién las recibió.</dd>
+      <dt>Integridad documental</dt><dd>El original debe mantenerse exactamente igual tras el proceso de copiado.</dd>
+      <dt>Reserva legal de una copia</dt><dd>Protección de acceso que se traslada íntegramente del original a cada copia producida.</dd>
+      <dt>Procesos simultáneos</dt><dd>Varias solicitudes de copiado a la vez; se manejan completando un proceso entero antes de iniciar el siguiente.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Copiado y Duplicación de Documentos</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 14. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 14</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 14: Copiado y Duplicación de Documentos con Control. ¡Vas por muy buen camino, sigue así!');});
+const flashcards=[
+  {f:'¿Cuándo se debe copiar un documento según la función del Citador?',b:'Cuando un proceso o asunto concreto lo necesita anexado, sin desprender el original de su expediente; nunca "por si acaso".'},
+  {f:'¿Cuál es la diferencia entre copia simple y copia auténtica?',b:'Simple: reproducción sin trámite especial. Auténtica: certificada formalmente por el funcionario competente, con valor probatorio equivalente al original.'},
+  {f:'¿Puede el Citador autenticar una copia por su cuenta?',b:'No. La autenticación es un acto formal de quien tiene esa competencia según el procedimiento; el Citador solo produce la reproducción física.'},
+  {f:'¿Cuáles son los cuatro elementos del control de copias?',b:'Identificación del documento fuente, número de copias, destino de cada una, y constancia de entrega.'},
+  {f:'¿Cuál es el momento crítico para identificar el destino de copias idénticas?',b:'Inmediatamente después de producirlas, antes de que se mezclen físicamente entre sí.'},
+  {f:'¿Qué se prioriza al copiar un documento frágil o antiguo?',b:'El método más cuidadoso, aunque sea más lento; nunca la velocidad a costa de arriesgar el original irremplazable.'},
+  {f:'¿Qué se debe hacer antes de entregar un lote completo de copias?',b:'Verificar la primera copia (calidad) y el lote completo (cantidad y contenido correcto) antes de darlo por terminado.'},
+  {f:'¿Qué pasa con la reserva legal cuando se copia un documento reservado?',b:'Se traslada íntegramente a la copia; se entrega solo a quien está autorizado, igual que el original.'},
+  {f:'¿Qué se hace con copias sobrantes de un documento reservado?',b:'Se destruyen de forma segura o se disponen según el procedimiento establecido; nunca se botan en la basura común.'},
+  {f:'¿Cómo se maneja el copiado cuando varios procesos lo solicitan a la vez?',b:'Completando un proceso entero (copiar, verificar, entregar) antes de iniciar el siguiente, informando el orden de atención.'},
+  {f:'¿Qué se revisa antes de copiar un lote grande?',b:'Se hace primero una copia de prueba para verificar calidad, evitando desperdiciar el lote completo si hay un error de configuración o del equipo.'},
+  {f:'¿Qué frase resume toda la función 6 del Citador?',b:'"Toda copia tiene un destino conocido desde antes de producirla: qué se copia, cuántas, para quién, y con constancia de entrega."'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Razón y destino de las copias', ctx:'Eres Citador en una dependencia de la Procuraduría. Un compañero te entrega un documento y te pide "cinco copias, así nomás, para tener de respaldo guardadas por si luego se necesitan", sin mencionar ningún proceso específico que las requiera. No hay ninguna solicitud formal ni instrucción de un superior relacionada con esas copias.', q:'¿Cuál es tu actuación correcta frente a esta solicitud?', ops:['Sacar las cinco copias de inmediato, ya que cualquier solicitud de un compañero debe atenderse sin cuestionarla.','Preguntar para qué proceso o asunto concreto se necesitan esas copias antes de producirlas, ya que la función de copiado existe para anexar documentos a procesos indicados, no para acumular respaldos sin un destino claro.','Negarte por completo a hacer la copia, ya que ningún compañero puede solicitarte labores de copiado sin que sea tu jefe directo quien lo autorice.','Hacer solo una copia en lugar de cinco, como una forma de compromiso entre atender la solicitud y no generar un gasto excesivo de papel.'], correcta:1, expl:['Atender cualquier solicitud sin verificar su propósito puede generar reproducciones innecesarias de documentos, incluso sensibles, sin ningún control real.','Correcto. La función de copiado está ligada a procesos o asuntos concretos; antes de producir copias sin destino claro, se pregunta para qué se necesitan exactamente.','Negarte de forma tajante no es la respuesta correcta: el problema no es quién pide la copia, sino que no se ha explicado para qué proceso concreto se necesita.','Reducir arbitrariamente la cantidad no resuelve el problema de fondo: sigue sin conocerse el destino o la necesidad real de la copia.'] },
+  { nivel:'b', tema:'Integridad del original al copiar', ctx:'Te entregan un documento de hace más de una década, con el papel ya amarillento y algo quebradizo en los bordes, para que hagas dos copias que se anexarán a un proceso. La fotocopiadora de la oficina tiene un alimentador automático de documentos que permitiría hacer ambas copias en segundos, sin necesidad de levantar la tapa del equipo cada vez.', q:'¿Cuál es el método correcto para copiar este documento?', ops:['Usar el alimentador automático, ya que es la forma más eficiente y rápida de producir las dos copias solicitadas.','Copiar manualmente, colocando el documento con cuidado sobre el cristal del equipo hoja por hoja, aunque tome más tiempo que usar el alimentador automático.','Pedirle a otra persona que haga las copias, ya que un documento tan antiguo no debería manipularse en absoluto.','Fotografiar el documento con un teléfono celular en lugar de usar la fotocopiadora, para evitar cualquier contacto físico con el papel.'], correcta:1, expl:['El alimentador automático puede dañar un papel quebradizo, atascarse o rasgar las hojas; la eficiencia no debe priorizarse sobre la integridad de un original irremplazable.','Correcto. Ante un documento frágil, se prioriza siempre el método más cuidadoso disponible, en este caso copiar manualmente, aunque tome más tiempo.','El documento sí debe copiarse para cumplir con la solicitud del proceso; evitar manipularlo por completo no es una opción viable ni resuelve la necesidad planteada.','Usar un teléfono celular no sigue el procedimiento establecido de reproducción documental de la entidad y puede generar copias sin el control y la calidad requeridos.'] },
+  { nivel:'i', tema:'Reserva legal en las copias', ctx:'Te asignan producir dos copias de varios folios de un expediente disciplinario con reserva legal, una para cada uno de dos despachos que lo requieren dentro del mismo proceso. Al calcular las copias, por un error de conteo terminas con una copia adicional de una de las páginas, que ya no tiene ningún destino asignado. El bote de basura de la oficina está justo al lado de la fotocopiadora.', q:'¿Qué debes hacer con esa copia adicional sobrante?', ops:['Botarla en el bote de basura que está junto a la fotocopiadora, ya que es solo una página sobrante sin ningún uso definido.','Guardarla en un cajón de tu escritorio por si en algún momento resulta útil tenerla disponible.','Destruirla de forma segura (por ejemplo, con una destructora de papel) o entregarla para su disposición según el procedimiento establecido para información reservada, en lugar de descartarla en la basura común.','Entregarla a cualquiera de los dos despachos, para que decidan ellos qué hacer con la copia adicional.'], correcta:2, expl:['Botar en la basura común una copia de un documento con reserva legal expone esa información a cualquiera que tenga acceso a los residuos de la oficina.','Guardar una copia sobrante de un documento reservado sin autorización ni propósito claro genera un riesgo adicional de divulgación indebida con el tiempo.','Correcto. Las copias sobrantes de información reservada deben destruirse de forma segura o disponerse según el procedimiento establecido, nunca descartarse como basura común.','Entregar una copia sin un destino claramente definido para que "decidan otros" no sustituye el procedimiento correcto de destrucción segura o disposición formal.'] },
+  { nivel:'i', tema:'Control de copias para procesos simultáneos', ctx:'En una misma mañana, un sustanciador te pide dos copias de un documento para el proceso A, y poco después otro compañero te pide tres copias de un documento distinto para el proceso B. Decides producir primero las dos copias de A y, mientras la fotocopiadora termina ese trabajo, empiezas a colocar ya el documento de B en otra parte del equipo para ganar tiempo, de modo que ambos lotes de copias terminan saliendo casi al mismo tiempo y quedan juntos sobre la bandeja de salida.', q:'¿Qué riesgo principal genera esta forma de proceder, y cuál sería la conducta más segura?', ops:['No genera ningún riesgo relevante, ya que ambos procesos fueron atendidos y las copias de cada uno están completas.','Genera el riesgo de que las copias de los procesos A y B se mezclen al salir casi al mismo tiempo en la misma bandeja; lo más seguro es completar un proceso entero (incluida su entrega) antes de iniciar el siguiente.','El único riesgo es haber tardado un poco más en atender al segundo compañero, lo cual podría evitarse atendiendo ambas solicitudes exactamente al mismo tiempo en el futuro.','No hay riesgo si se cuenta el número total de copias en la bandeja al final, ya que lo importante es que la cantidad total coincida con lo solicitado por ambos compañeros.'], correcta:1, expl:['Que ambos procesos hayan sido atendidos no elimina el riesgo de que, al salir juntas en la misma bandeja, las copias de A y B se mezclen sin que se note a simple vista.','Correcto. Trabajar dos procesos de forma simultánea sin completarlos uno a la vez genera riesgo real de mezcla entre documentos de procesos distintos; lo seguro es cerrar un proceso completo antes de iniciar el otro.','El riesgo principal no es el tiempo de atención, sino la posible mezcla de documentos de procesos distintos, que puede generar errores graves en los expedientes.','Contar solo la cantidad total no permite verificar que cada copia corresponda al proceso correcto; se necesita identificar cada lote por su contenido y destino, no solo por su número.'] },
+  { nivel:'a', tema:'Copia simple vs. copia auténtica', ctx:'Un sustanciador te solicita una copia de un oficio para anexarla como prueba formal dentro de un proceso que exige, según el procedimiento interno de la dependencia, que las pruebas documentales aportadas sean copias auténticas. El funcionario competente para autenticar documentos en tu dependencia se encuentra de vacaciones esa semana completa, y el sustanciador insiste en que "con que quede igual al original basta, no hace falta tanto trámite para avanzar".', q:'¿Cuál es la actuación correcta en esta situación?', ops:['Producir una copia simple idéntica al original y entregarla como si fuera una copia auténtica, ya que el contenido es exactamente el mismo en ambos casos.','Sellar tú mismo la copia como "autenticada", usando algún sello disponible en la oficina, para no retrasar el proceso mientras el funcionario competente regresa de vacaciones.','Producir la copia física fiel al original, informar que la autenticación formal requiere la intervención del funcionario competente, y gestionar que ese trámite se realice en cuanto esté disponible, sin presentar la copia como auténtica mientras tanto.','Buscar a cualquier otro funcionario de la dependencia, sin esa competencia específica, para que firme la copia como autenticada, ya que la urgencia del proceso lo justifica.'], correcta:2, expl:['Una copia simple, aunque sea idéntica en contenido, no tiene el mismo valor probatorio que una copia auténtica si el procedimiento exige expresamente esta última; presentarla como tal sería incorrecto.','Autenticar por cuenta propia usando cualquier sello disponible no sustituye el acto formal de quien tiene la competencia específica para certificar la copia.','Correcto. Se produce la reproducción fiel y se gestiona la autenticación formal con quien tiene esa competencia en cuanto esté disponible; no se presenta una copia simple como si fuera auténtica para "ganar tiempo".','Buscar a un funcionario sin la competencia específica para que firme como si estuviera autorizado no resuelve el problema: la autenticación exige a la persona realmente competente, no a cualquiera disponible.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='↑';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
