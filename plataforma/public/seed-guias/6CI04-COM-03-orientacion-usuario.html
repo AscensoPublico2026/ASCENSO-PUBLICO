@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6CI04-COM-03 · Orientación al Usuario (Citador) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">6CI04-COM-03</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 7 · Competencias comportamentales</div>
+  <h1>Orientación al Usuario</h1>
+  <p class="header-sub">Como Citador, eres uno de los pocos servidores de la Procuraduría que el ciudadano ve directamente en la calle: entregas correspondencia, notificas decisiones, llevas y traes documentos. Hoy trabajas a fondo la <strong>Orientación al Usuario</strong> (Nivel B), la competencia que define cómo tratas a cada persona con la que te cruzas en tu ronda diaria, según el <strong>Decreto 815 de 2018</strong> y el Diccionario de Competencias de la PGN.</p>
+  <div class="badges"><span class="badge">📅 Día 7 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">🎯 Comportamental</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Hasta ahora trabajaste la responsabilidad, el cumplimiento de parámetros, la organización y el cuidado de los recursos: las competencias que te hacen un Citador riguroso y eficiente. Hoy trabajas la competencia que te hace <mark>humano frente al ciudadano</mark>: la <strong>Orientación al Usuario</strong>. Tu cargo tiene algo poco común entre los empleos administrativos: sales de la oficina y llegas directamente a la puerta de las personas, a sus casas, a sus trabajos, a notarías y juzgados. Para muchos ciudadanos, tú eres el único contacto humano y visible que tendrán con la Procuraduría en todo un proceso.</p>
+    <p>Hoy vas a dominar la <strong>Orientación al Usuario</strong> (Nivel B): qué significa poner a la persona en el centro de tu atención, qué atributos debe tener un buen servicio, cómo manejar situaciones difíciles en la entrega de una notificación, cómo atender con enfoque incluyente a personas en condición de discapacidad o de edad avanzada, y cómo todo esto se vive en tu rol específico de reparto, diligencia y notificación. Verás su marco en el <mark>Decreto 815 de 2018</mark>, cómo se evalúa en juicio situacional y cómo se traduce en tu día real.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es la <strong>Orientación al Usuario y al Ciudadano</strong> y sus conductas (Nivel B).</li>
+      <li>Los <strong>atributos</strong> de un buen servicio: digno, cálido, oportuno, confiable, efectivo, incluyente y empático.</li>
+      <li>Cómo manejar <strong>situaciones difíciles</strong> en una entrega o notificación.</li>
+      <li>El <strong>enfoque diferencial</strong> y la atención incluyente a personas con discapacidad o de edad avanzada.</li>
+      <li>Cómo comunicarte con <strong>lenguaje claro</strong>, sin tecnicismos innecesarios.</li>
+      <li>Cómo responder preguntas de <strong>juicio situacional</strong> sobre esta competencia.</li>
+      <li>Los <strong>errores</strong> de trato que hacen perder puntos y dañan la imagen de la entidad.</li>
+      <li>Cómo esta competencia <strong>se vive</strong> en el rol operativo del Citador de la PGN.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Ocho módulos con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro situacional.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>La Orientación al Usuario es una competencia <mark>común</mark> a todos los servidores públicos, pero en tu cargo tiene un peso especial: eres quien más contacto directo tiene con el ciudadano en la calle, muchas veces en momentos sensibles (recibir una notificación de una decisión que les afecta puede generar ansiedad, confusión o molestia). La prueba evalúa con <mark>juicio situacional</mark> cómo reaccionas ante ciudadanos confundidos, molestos, apurados o en condiciones especiales. Dominar esta competencia te permite identificar la respuesta que un buen servidor daría, incluso en escenarios tensos, y es clave para las <strong>39 plazas</strong> de Citador.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba evalúa esta competencia</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🚪</span><h5>Eres la cara visible</h5><p>El ciudadano forma su imagen de la Procuraduría a partir de cómo lo tratas en la puerta de su casa.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">❤️</span><h5>Pones a la persona en el centro</h5><p>Escuchas, explicas con claridad y resuelves lo que está en tus manos.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🤝</span><h5>Manejas situaciones difíciles</h5><p>Con calma, firmeza y respeto, sin ceder a presiones indebidas.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⭐</span><h5>Construyes confianza</h5><p>En el Estado y en la Procuraduría, un contacto a la vez.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p><strong>Orientación al Usuario = poner a la persona en el centro de tu atención: escucharla, tratarla con dignidad y calidez, explicarle con claridad lo que necesita saber, y resolver lo que esté en tus manos, aunque la respuesta no sea la que la persona esperaba</strong>. No es "decir sí a todo": es atender bien, siempre, sea cual sea el resultado del trámite.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>La Procuraduría tiene un <strong>régimen especial de carrera</strong> (Decreto Ley 262 de 2000); su concurso <strong>NO lo administra la CNSC</strong>. Se adelanta en el marco de la <strong>Convocatoria 90-2026</strong> (Resolución 212 de 2026) para el cargo de Citador, código y grado <strong>6CI-04</strong>. Las competencias se enmarcan en el <strong>Decreto 815 de 2018</strong> y en el Diccionario de Competencias de la PGN.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Desarrollo: orientación al usuario en el rol del Citador</h2>
+  <p class="lead">Ocho módulos que desarrollan a fondo la Orientación al Usuario (Nivel B), con teoría aplicada, tablas, ejemplos "En la práctica" en tu rol de reparto, diligencia y notificación, y ejercicios resueltos.</p>
+
+  <!-- MÓDULO 1 -->
+  <h3 class="modulo">Módulo 1 · Qué es la Orientación al Usuario y al Ciudadano</h3>
+  <p>La <strong>Orientación al Usuario y al Ciudadano</strong> es la competencia de <mark>poner a la persona en el centro</mark> de la atención: entenderla, tratarla con dignidad y calidez, y buscar resolverle lo que esté en tus manos, dentro de los procedimientos y la ley. Es una competencia <strong>común</strong> del Decreto 815 de 2018: se evalúa a todos los servidores públicos, sin importar su cargo o nivel, porque el Estado entiende que la calidad del servicio al ciudadano es responsabilidad de todos, desde el directivo hasta el servidor de nivel operativo que entrega la correspondencia en la puerta de una casa.</p>
+  <p>En tu cargo, esta competencia tiene una particularidad: casi ningún otro servidor de la Procuraduría tiene tanto contacto cara a cara, en terreno, con el ciudadano. Un profesional que proyecta una decisión rara vez ve al ciudadano; tú sí. Cuando entregas una notificación, el ciudadano puede estar nervioso, confundido, apurado o molesto, y la forma en que lo trates <mark>queda como su recuerdo de la Procuraduría</mark>, más allá de cualquier explicación institucional que reciba después. Por eso esta competencia, siendo común a todos, pesa de forma especial en tu labor diaria.</p>
+  <h4>Los atributos de un buen servicio</h4>
+  <p>Antes de entrar en el detalle de cada atributo, vale la pena subrayar que ninguno de ellos funciona bien de forma aislada: un servicio puede ser muy cálido pero poco efectivo (amabilidad sin resolver nada), o muy efectivo pero frío (resolver sin ningún trato humano). El estándar que exige la prueba, y el que de verdad construye confianza en el ciudadano, combina <mark>todos estos atributos a la vez</mark>, no uno solo en detrimento de los demás. Un buen servicio al ciudadano reúne varios atributos que conviene distinguir. Es <strong>digno</strong>: trata a la persona con respeto, sin humillarla ni hacerla sentir una molestia. Es <strong>cálido</strong>: con amabilidad genuina, no fingida ni mecánica. Es <strong>oportuno</strong>: en el tiempo adecuado, sin demoras innecesarias. Es <strong>confiable</strong>: la información que dé el servidor es correcta y verificable. Es <strong>efectivo</strong>: resuelve de verdad, no solo "atiende" sin resultado. Es <strong>incluyente</strong>: considera a personas con discapacidad, adultos mayores o en condiciones especiales. Y es <strong>empático</strong>: se pone en el lugar de la persona, entendiendo su situación. Un buen Citador no necesita tener todos estos atributos en su máximo nivel todo el tiempo, pero sí debe tenerlos presentes como el estándar al que aspira en cada entrega.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Atributo</th><th>Qué significa en tu ronda diaria</th></tr>
+    <tr><td>Digno</td><td>Tratar a la persona con respeto, sin prisa despectiva ni indiferencia</td></tr>
+    <tr><td>Cálido</td><td>Saludar, mirar a los ojos, usar un tono amable al entregar o explicar</td></tr>
+    <tr><td>Oportuno</td><td>Entregar y notificar dentro de los tiempos esperados</td></tr>
+    <tr><td>Confiable</td><td>Dar información correcta sobre el trámite, sin inventar ni adivinar</td></tr>
+    <tr><td>Efectivo</td><td>Resolver lo que esté en tus manos, no solo "pasar por ahí"</td></tr>
+    <tr><td>Incluyente</td><td>Adaptar la atención a personas con discapacidad o adultos mayores</td></tr>
+    <tr><td>Empático</td><td>Entender que recibir una notificación puede generar ansiedad en la persona</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Llegas a entregar una notificación y la persona se muestra visiblemente nerviosa al verte. En vez de limitarte a entregar el documento y marcharte de inmediato, te presentas con calma, explicas brevemente de qué se trata el procedimiento de entrega (sin opinar sobre el contenido de la decisión) y respondes con calidez las preguntas que estén en tu alcance. Esa actitud —<mark>digna, cálida y empática</mark>— es Orientación al Usuario en su forma más básica y más poderosa.</p>
+  </div></div>
+  <h4>Servir no es someterse</h4>
+  <p>Un malentendido frecuente es creer que "atender bien" significa decir que sí a todo lo que el ciudadano pida, incluso cuando contradice el procedimiento. No es así. La Orientación al Usuario no es <mark>sumisión</mark>: es tratar con respeto y buscar la mejor solución posible <strong>dentro de lo que la ley y el procedimiento permiten</strong>. Si un ciudadano te pide algo que no procede (por ejemplo, que le entregues una notificación destinada a otra persona), la conducta correcta no es ceder para "quedar bien": es explicar con amabilidad por qué no es posible y ofrecer la alternativa legítima que sí exista. Servir bien y cumplir el procedimiento no se contradicen: se complementan.</p>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>La respuesta correcta en juicio situacional de servicio casi nunca es "ceder a lo que el ciudadano pide, aunque contradiga el procedimiento", ni "negarse secamente sin explicación". Es la que <mark>explica con respeto y ofrece la alternativa legítima</mark>.</p></div>
+  <details class="acc"><summary>¿Qué hago si el ciudadano insiste mucho después de que le expliqué?</summary><div class="acc-body"><p>Mantener la calma y repetir la explicación con paciencia, sin perder la amabilidad ni ceder a la presión. Si la insistencia se vuelve agresiva o la situación se complica, puedes informar que trasladarás la inquietud a tu jefe inmediato o a la dependencia competente, pero <strong>no debes alterar el procedimiento</strong> solo porque la persona insiste. Firmeza y amabilidad no son incompatibles.</p></div></details>
+
+  <h4>La diferencia entre amabilidad genuina y amabilidad mecánica</h4>
+  <p>No toda sonrisa o frase cortés cumple realmente con el espíritu de esta competencia. Existe una diferencia perceptible, aunque difícil de definir con precisión, entre la <strong>amabilidad genuina</strong> (la que nace de prestar atención real a la persona frente a ti) y la <strong>amabilidad mecánica</strong> (frases hechas, repetidas sin ninguna conexión real con lo que la persona necesita en ese momento). Decir "que tenga buen día" de forma automática mientras entregas un documento sin mirar siquiera a la persona no es lo mismo que decirlo después de haber escuchado su situación y haberle dado una explicación clara. Las personas, aunque no lo verbalicen, perciben esta diferencia casi siempre, y es la amabilidad genuina la que realmente construye confianza en la institución.</p>
+  <p>Desarrollar amabilidad genuina no requiere un cambio de personalidad: requiere simplemente <mark>prestar atención real</mark> a cada persona, por breve que sea el contacto, en vez de ejecutar un guion mental de frases de cortesía mientras la mente está en otra parte (la siguiente dirección, la hora, el cansancio). Esa atención, sostenida segundo a segundo durante cada entrega, es la diferencia entre cumplir la forma de un buen servicio y realmente prestarlo.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Notas que, en algunas entregas, dices las frases correctas de cortesía casi sin pensar, mientras tu mente ya está en la siguiente dirección. Te das cuenta y, de forma deliberada, vuelves a prestar atención completa a la persona frente a ti en ese instante. Esa corrección consciente, repetida con el tiempo, es lo que convierte la amabilidad mecánica en amabilidad genuina.</p></div></div>
+
+  <h4>Del "trámite" a la persona: un cambio de mirada</h4>
+  <p>Una forma útil de entender esta competencia es dejar de ver cada entrega o notificación como un simple "trámite más" y empezar a verla como un <mark>encuentro con una persona concreta</mark>, que tiene su propia situación, sus propias preocupaciones y, muchas veces, poco conocimiento de cómo funcionan los procesos de la Procuraduría. Para ti puede ser la enésima notificación del día; para quien la recibe, puede ser un momento importante o incluso angustiante de su vida. Este cambio de mirada —de "una tarea más" a "una persona que me importa atender bien"— es, en el fondo, el corazón de la competencia.</p>
+  <p>Este cambio de mirada no significa involucrarte emocionalmente en cada caso ni perder la objetividad profesional. Significa simplemente recordar, entrega tras entrega, que detrás de cada dirección en tu planilla hay alguien que merece ser tratado con la misma consideración que tú querrías recibir si estuvieras en su lugar. Esa disciplina mental, sostenida incluso en el oficio número veinte del día, es lo que distingue a un Citador que realmente domina esta competencia de uno que solo cumple el mínimo.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Después de un día largo con muchas entregas, llegas a la última dirección cansado. En vez de apresurar la entrega con desgano, te tomas un momento para tratar a esta persona con la misma atención que a la primera del día. Esa <mark>consistencia</mark>, sin importar el cansancio, es la verdadera prueba de la competencia.</p></div></div>
+
+  <h4>Por qué esta competencia pesa más en tu cargo que en otros</h4>
+  <p>Vale la pena detenerse en una comparación que ayuda a entender la importancia real de esta competencia para un Citador. Un profesional que redacta conceptos jurídicos puede pasar semanas sin ver directamente a un ciudadano; su trabajo se mide por la calidad técnica de lo que produce. Tu trabajo, en cambio, se mide tanto por si la correspondencia llega correctamente como por <mark>cómo llega</mark>: con qué trato, con qué claridad, con qué respeto. Dos Citadores distintos, en dos dependencias distintas, pueden cumplir exactamente el mismo procedimiento de notificación, con la misma exactitud jurídica y el mismo rigor documental, y sin embargo dejar impresiones completamente distintas en la persona que recibió el documento, simplemente por la forma en que se comunicaron. Esa diferencia, invisible en cualquier informe de gestión y que ningún indicador institucional llega a capturar con precisión, es la que realmente construye o destruye, oficio por oficio, la reputación de la entidad ante cientos de ciudadanos distintos.</p>
+  <p>Esto no significa que el procedimiento importe menos que el trato: ambos importan, y ya viste en los días anteriores cuánto pesa el rigor y la responsabilidad. Lo que cambia es que, a diferencia de otros cargos, en el tuyo el <strong>procedimiento y el trato ocurren en el mismo instante, frente a la misma persona</strong>, sin ningún filtro institucional de por medio. Esa inmediatez es la que hace que la Orientación al Usuario, siendo una competencia común a todos los servidores, cobre un peso particular en la labor de un Citador.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Dos compañeros Citadores notifican, el mismo día, decisiones similares a dos personas distintas. Uno lo hace con prisa y sequedad; el otro, con calma y explicaciones claras. Jurídicamente, ambas notificaciones son igualmente válidas. Pero solo una de esas dos personas se queda con una impresión respetuosa de la Procuraduría. Esa diferencia, aunque no aparezca en ningún registro, es exactamente lo que esta competencia busca que entiendas.</p></div></div>
+
+  <div class="checkpoint" data-cp="1">
+    <div class="cp-q">✅ Punto de control 1</div>
+    <p>Un ciudadano te pide que le entregues una notificación destinada a otra persona, "para ahorrarle la molestia de volver". Lo correcto es:</p>
+    <div class="cp-op" data-ok="0">Entregarla, porque negarse sería un mal servicio al ciudadano.</div>
+    <div class="cp-op" data-ok="1">Explicar con respeto por qué no procede y ofrecer la alternativa que sí corresponda según el procedimiento.</div>
+    <div class="cp-op" data-ok="0">Negarte de forma seca, sin dar ninguna explicación.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 2 -->
+  <h3 class="modulo">Módulo 2 · Orientación al Usuario en Nivel B</h3>
+  <p>El Nivel B de esta competencia exige conductas concretas y sostenidas, no solo buena intención ocasional. Un Citador de Nivel B <strong>escucha activamente</strong> antes de actuar, <strong>explica con lenguaje claro</strong> lo que la persona necesita saber, identifica los <strong>momentos de verdad</strong> de cada interacción (el instante en que se forma la impresión sobre la entidad) y los cuida especialmente, y mantiene esta calidad de atención de forma <mark>consistente</mark>, no solo cuando está de buen humor o cuando alguien lo supervisa.</p>
+  <h4>Escucha activa: la base del buen servicio</h4>
+  <p>La <strong>escucha activa</strong> significa prestar atención completa a lo que la persona dice, sin interrumpir, sin apresurarse a responder antes de entender, y confirmando que comprendiste bien antes de actuar. En tu cargo, esto es clave cuando una persona tiene dudas sobre una notificación: antes de responder automáticamente, escuchas completa la pregunta, identificas qué le preocupa realmente (a veces la pregunta explícita no refleja la verdadera inquietud) y respondes a eso, no a lo que supusiste de entrada. Una técnica simple es <mark>parafrasear</mark>: repetir con tus propias palabras lo que entendiste, para confirmar antes de actuar. "Entiendo que le preocupa no saber qué debe hacer después de recibir esto, ¿es así?" evita malentendidos y demuestra que realmente escuchaste.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Sin escucha activa</th><th>Con escucha activa</th></tr>
+    <tr><td>Interrumpe o responde antes de que termine de hablar</td><td>Espera a que termine y confirma que entendió</td></tr>
+    <tr><td>Responde a lo que supone, no a lo que realmente preocupa</td><td>Parafrasea para confirmar la necesidad real</td></tr>
+    <tr><td>Da una respuesta genérica igual para todos</td><td>Ajusta la explicación a la situación concreta de la persona</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Al entregar una notificación, la persona empieza a hacer varias preguntas atropelladas, nerviosa. En vez de responder la primera que alcances a oír, la dejas terminar, y luego dices: "entiendo que le preocupa sobre todo saber cuánto tiempo tiene para responder, ¿correcto?". Confirmas antes de explicar. Esa <mark>escucha activa</mark> evita responder lo que no era la verdadera pregunta.</p>
+  </div></div>
+  <h4>Información clara: el lenguaje ciudadano</h4>
+  <p>Un buen servicio también exige <strong>explicar con lenguaje claro</strong>, sin tecnicismos innecesarios que confundan a quien no conoce los procedimientos de la entidad. Decir "esto es una notificación por aviso conforme al procedimiento subsidiario" puede ser preciso pero resulta confuso para alguien sin formación jurídica. Decir, en cambio, "este documento le informa una decisión; si tiene dudas sobre su contenido, puede consultar en la dependencia que lo emitió, cuyo contacto aparece aquí" es igualmente correcto, pero mucho más comprensible. El lenguaje claro no simplifica la verdad: la hace <mark>accesible</mark>.</p>
+  <h4>Los momentos de verdad en la atención</h4>
+  <p>Un <strong>momento de verdad</strong> es cualquier instante de contacto en el que el ciudadano forma (o cambia) su impresión sobre la entidad. En tu cargo, estos momentos son frecuentes: el instante en que llegas a la puerta, el tono con que te presentas, cómo explicas el motivo de tu visita, cómo respondes si la persona está confundida o molesta. Cada uno de estos instantes, aunque dure solo segundos, construye (o destruye) la percepción que la persona tendrá de la Procuraduría. Reconocerlos te permite poner atención especial justo donde más importa: el saludo inicial, la claridad de la explicación y la despedida.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Antes de tocar la puerta, recuerdas que el saludo inicial es un momento de verdad: te presentas con claridad, mencionando tu cargo y la entidad, y explicas brevemente el motivo de tu visita antes de proceder. Ese primer segundo bien manejado facilita todo lo que sigue.</p></div></div>
+
+  <h4>La consistencia del Nivel B frente a la variedad del día</h4>
+  <p>Un día de reparto típico te pone frente a decenas de personas distintas: jóvenes, adultos mayores, personas apuradas, personas tranquilas, personas que reciben la notificación con indiferencia y otras que la reciben con angustia. El Nivel B exige que la <mark>calidad del trato no dependa de con quién te toque</mark>: no es más cálido con quien te saluda primero y más frío con quien parece distante; no explica con más calma a quien parece "importante" y con prisa a quien no. Esta consistencia, sostenida entrega tras entrega sin discriminar según la impresión inicial que te genere la persona, es lo que distingue a un servidor de Nivel B de uno que simplemente "tiene buenos días" ocasionales.</p>
+  <p>La consistencia también se aplica a lo largo del tiempo: el trato del primer oficio de la mañana debe ser tan cuidado como el del último de la tarde, incluso con cansancio acumulado. Aquí conecta directamente con la organización del trabajo que estudiaste el día anterior: un Citador que planea bien su jornada, sin acumular todo el agotamiento para el final, tiene más capacidad real de sostener un buen trato durante todo el día. Las competencias comportamentales, aunque se estudien por separado, se apoyan unas en otras en la práctica diaria.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>En el oficio número dieciocho del día, con las piernas cansadas y ganas de terminar pronto, te das cuenta de que estás a punto de dar una explicación apresurada. Te detienes un segundo, respiras, y entregas la misma calidad de explicación que diste en el primer oficio de la mañana. Esa autoexigencia de consistencia, incluso cuando nadie más lo nota, es el verdadero Nivel B.</p></div></div>
+
+  <div class="checkpoint" data-cp="2">
+    <div class="cp-q">✅ Punto de control 2</div>
+    <p>Una persona hace varias preguntas nerviosas y atropelladas al recibir una notificación. La conducta correcta es:</p>
+    <div class="cp-op" data-ok="0">Responder rápido a la primera pregunta que se alcance a entender, para seguir con la ronda.</div>
+    <div class="cp-op" data-ok="1">Dejarla terminar, confirmar qué le preocupa realmente (parafraseando si es necesario) y responder a eso con lenguaje claro.</div>
+    <div class="cp-op" data-ok="0">Decirle que no tienes tiempo para explicaciones y que consulte directamente con la dependencia.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 3 -->
+  <h3 class="modulo">Módulo 3 · Manejo de situaciones difíciles con el ciudadano</h3>
+  <p>Este módulo aborda el terreno más exigente de la competencia: aquel en el que el buen trato no es simplemente "ser amable", sino sostener una actitud profesional y respetuosa incluso cuando la otra persona no la está siendo contigo. No todas las entregas son sencillas. A veces el ciudadano está molesto (porque no esperaba la notificación, porque discrepa con la decisión, porque tuvo que esperar), confundido, o incluso agresivo. El Nivel B exige manejar estas situaciones con <mark>calma, firmeza y respeto</mark>, sin responder a la agresión con agresión, pero también sin ceder a presiones indebidas solo para evitar el conflicto.</p>
+  <h4>Cuando el ciudadano pide algo que no procede</h4>
+  <p>Ya vimos que ceder a una petición indebida no es buen servicio. Pero hay una forma correcta de decir "no": <strong>validar la emoción, explicar el motivo y ofrecer la alternativa</strong>. Por ejemplo: "entiendo que preferiría no tener que volver, y lamento la molestia; sin embargo, el procedimiento exige entregar esto directamente al destinatario; si gusta, puedo dejarle anotado cómo proceder si él no puede estar presente". Esta fórmula —validar, explicar, ofrecer alternativa— funciona en casi cualquier situación de negativa justificada, y evita que el "no" se sienta como un rechazo personal.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Paso</th><th>Qué hacer</th></tr>
+    <tr><td>1. Validar</td><td>Reconocer la emoción o la molestia de la persona, sin desestimarla</td></tr>
+    <tr><td>2. Explicar</td><td>Decir con claridad y respeto por qué no se puede hacer lo que pide</td></tr>
+    <tr><td>3. Ofrecer alternativa</td><td>Proponer la opción legítima que sí exista para su situación</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Un ciudadano se molesta porque debe firmar una constancia de recibido y no quiere hacerlo. Validas su incomodidad ("entiendo que preferiría no firmar nada"), explicas el motivo ("la firma es solo la constancia de que recibió el documento, no implica que esté de acuerdo con su contenido") y, si aun así se niega, sigues el procedimiento establecido para esos casos (dejar constancia de la negativa, por ejemplo), sin forzar ni discutir más de lo necesario.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Ante una negativa justificada a una petición del ciudadano, la fórmula <strong>validar + explicar + ofrecer alternativa</strong> casi siempre identifica la respuesta correcta en la prueba.</p></div>
+  <details class="acc"><summary>¿Qué hago si el ciudadano se vuelve agresivo o amenazante?</summary><div class="acc-body"><p>Tu seguridad es la prioridad. Mantén la calma, no respondas con agresión, y si la situación se torna peligrosa, retírate del lugar y reporta lo ocurrido a tu jefe de inmediato, para que se evalúen las medidas necesarias. El servicio al ciudadano no exige exponerte a un riesgo físico o verbal grave.</p></div></details>
+
+  <h4>La inteligencia emocional en la atención</h4>
+  <p>Manejar bien estas situaciones exige un componente de <strong>inteligencia emocional</strong>: reconocer lo que la otra persona siente (frustración, miedo, confusión) y responder a eso antes de responder al contenido literal de lo que dice. Alguien que grita "¡esto es un abuso!" al recibir una notificación probablemente no está pidiendo un debate jurídico sobre la decisión: está expresando angustia o indignación. Responder con calma, reconociendo la emoción ("entiendo que esto le genera preocupación") antes de explicar el procedimiento, suele desescalar la tensión mucho más que responder de forma puramente técnica o defensiva.</p>
+  <h4>Prevenir el conflicto: anticiparse a la molestia</h4>
+  <p>Muchas situaciones difíciles pueden suavizarse si se anticipan. Explicar desde el inicio, con calma, qué es el documento y qué significa (sin opinar sobre su contenido) reduce la sorpresa y la reacción defensiva. Dar tiempo para que la persona procese la información, en vez de entregar y salir corriendo, también ayuda. Y mantener un tono sereno desde el primer contacto evita que la tensión se instale desde el inicio. La prevención, en el trato al ciudadano, vale tanto como saber reaccionar bien cuando el conflicto ya apareció.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Antes de entregar una notificación que probablemente generará sorpresa, te presentas con calma, explicas brevemente de qué se trata y das un momento para que la persona reaccione antes de pedir la firma de recibido. Esa pequeña pausa <mark>previene</mark> una reacción más tensa de la que se daría entregando y marchándote de inmediato.</p></div></div>
+
+  <h4>Qué hacer cuando la molestia es contra la decisión, no contra ti</h4>
+  <p>Conviene distinguir con claridad un punto que confunde a muchos servidores nuevos: cuando un ciudadano se molesta al recibir una notificación, casi siempre su molestia es contra la <strong>decisión</strong> o contra el <strong>proceso</strong> en general, no contra ti como persona, aunque tú seas quien está físicamente presente en ese momento. Entender esto te ayuda a no tomarte la reacción como un ataque personal y a no responder defensivamente. Tú eres, en ese instante, el representante visible de una decisión que no tomaste y de un proceso que no controlas; mantener esa distancia mental —"esto no es contra mí"— es lo que te permite responder con calma genuina en lugar de con una reacción emocional propia.</p>
+  <p>Esta distancia no significa indiferencia: puedes y debes ser empático con la persona, reconociendo que su reacción es comprensible dada su situación, sin necesitar defenderte a ti mismo de nada, porque no hay nada personal que defender. Esta claridad interna —"yo solo cumplo un procedimiento; su molestia no es sobre mí"— es, en la práctica, el ancla emocional que te permite sostener la calma incluso en los días más tensos de tu ronda.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Una persona te dice, molesta, "esto es un abuso de la Procuraduría". Internamente recuerdas que su molestia es con el proceso, no contigo, así que respondes con calma genuina: "entiendo su molestia; mi función es solo entregarle este documento, y le puedo indicar dónde puede presentar sus inquietudes sobre el proceso". No te defiendes de nada, porque no hay nada personal que defender, y esa claridad te permite mantener la serenidad.</p></div></div>
+
+  <div class="checkpoint" data-cp="3">
+    <div class="cp-q">✅ Punto de control 3</div>
+    <p>Un ciudadano reacciona con molestia e indignación al recibir una notificación. La conducta correcta es:</p>
+    <div class="cp-op" data-ok="0">Responderle de forma igualmente seca, ya que él fue el primero en mostrar mal trato.</div>
+    <div class="cp-op" data-ok="1">Mantener la calma, reconocer su reacción con respeto y explicar con claridad el procedimiento, sin tomarlo como algo personal.</div>
+    <div class="cp-op" data-ok="0">Retirarse de inmediato sin completar la entrega, para evitar cualquier roce.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 4 -->
+  <h3 class="modulo">Módulo 4 · Servicio incluyente y enfoque diferencial</h3>
+  <p>La Orientación al Usuario incluye un componente de <mark>inclusión</mark>: atender adecuadamente a personas con discapacidad, adultos mayores, personas con dificultades de lectura o comprensión, o en cualquier condición que requiera un trato diferenciado para garantizar que realmente reciban y entiendan lo que se les comunica. Este enfoque está respaldado por normas como la <strong>Ley 1618 de 2013</strong> sobre inclusión de personas con discapacidad, y refleja el principio de que la igualdad real a veces exige un <mark>trato diferente</mark>, no idéntico, para que todos accedan al mismo resultado.</p>
+  <h4>El fundamento normativo: por qué este trato no es opcional</h4>
+  <p>El enfoque diferencial que estudiamos en este módulo no es una recomendación simpática que cada servidor puede aplicar "si le nace": tiene respaldo en normas concretas. La <strong>Ley 1618 de 2013</strong> garantiza el pleno ejercicio de los derechos de las personas con discapacidad, incluyendo el acceso a servicios públicos en condiciones de igualdad real, lo que implica que las entidades y sus servidores deben hacer los ajustes razonables necesarios para que esa igualdad no quede solo en el papel. Para un Citador, cumplir esta norma no exige grandes inversiones ni procedimientos complejos: exige la disposición personal de ajustar el trato cuando la situación lo requiere, que es precisamente lo que hemos venido describiendo en este módulo.</p>
+  <p>Entender que existe este respaldo normativo ayuda a comprender por qué la prueba valora tanto estas conductas: no es solo "ser buena persona", es cumplir un mandato legal que busca que el Estado trate con equidad real a quienes históricamente han enfrentado más barreras para acceder a sus servicios. Visto así, cada ajuste que haces en tu ronda diaria —esperar un poco más, hablar más despacio, leer en voz alta— es una pequeña pero real aplicación del principio de igualdad que la Constitución y la ley consagran.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Al recordar que el trato diferencial que das a un adulto mayor o a una persona con discapacidad no es un favor personal sino la aplicación concreta de un derecho reconocido por la ley, entiendes con mayor claridad por qué estos ajustes son parte seria de tu trabajo, y no simples gestos de cortesía opcional.</p></div></div>
+
+  <h4>Barreras que hay que remover</h4>
+  <p>Las barreras para una persona con discapacidad o un adulto mayor no son solo físicas (escaleras, puertas angostas): también son de <strong>comunicación</strong> y de <strong>actitud</strong>. Hablar demasiado rápido o en voz muy baja a una persona mayor con dificultad auditiva, no dar tiempo suficiente para que alguien con movilidad reducida llegue a la puerta, o usar un lenguaje muy técnico con alguien que tiene baja escolaridad, son barreras que el Citador puede remover simplemente ajustando su forma de comunicarse y su paciencia, sin que esto implique ningún procedimiento especial ni costo adicional.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Situación</th><th>Ajuste recomendado</th></tr>
+    <tr><td>Persona mayor con dificultad auditiva</td><td>Hablar despacio, con claridad, de frente y sin prisa</td></tr>
+    <tr><td>Persona con movilidad reducida</td><td>Dar tiempo suficiente para llegar a la puerta, sin presionar</td></tr>
+    <tr><td>Persona con baja escolaridad</td><td>Explicar con palabras simples, sin tecnicismos ni abreviaturas</td></tr>
+    <tr><td>Persona con discapacidad visual</td><td>Describir verbalmente el documento y su contenido relevante</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Vas a entregar una notificación a una persona de edad avanzada que tarda en llegar a la puerta. En vez de mostrar impaciencia o tocar de forma insistente, esperas con calma el tiempo que necesite, y al hablarle lo haces despacio y con claridad, verificando que entendió. Ese ajuste simple es <mark>enfoque diferencial</mark> aplicado sin ningún procedimiento especial, solo con atención y paciencia.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>El trato preferente o diferenciado a personas con discapacidad o adultos mayores <strong>realiza la igualdad, no la viola</strong>. Las opciones que tratan a todos "exactamente igual, sin ningún ajuste" ante una necesidad evidente suelen ser incorrectas.</p></div>
+  <details class="acc"><summary>¿Dar prioridad a una persona mayor es injusto con los demás?</summary><div class="acc-body"><p>No. El trato preferente a quien lo necesita (por edad, discapacidad, embarazo, u otra condición reconocida) no es un favor arbitrario: es la forma en que la igualdad real se aplica cuando las personas parten de condiciones distintas. Tratar a todos exactamente igual, ignorando esas diferencias, a veces termina siendo más injusto que ajustarse a cada situación.</p></div></details>
+
+  <h4>La accesibilidad en concreto: canales y ajustes</h4>
+  <p>La accesibilidad no se limita al momento de la entrega: también importa <strong>qué información</strong> das y <strong>cómo</strong> la das. Si una persona no puede leer bien el documento por su condición visual, puedes leerle en voz alta la información esencial (sin opinar sobre el fondo de la decisión). Si alguien tiene dificultad para entender el procedimiento siguiente, puedes repetir la explicación con otras palabras, o indicarle un número de contacto donde puedan ayudarle con más calma. Ninguno de estos ajustes exige autorización especial: son parte natural de atender bien a cualquier persona, adaptando la forma sin cambiar el fondo del procedimiento.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Notas que la persona a la que entregas una notificación tiene dificultad para leer el documento. Le explicas verbalmente, con calma, la información esencial (qué es, qué pasos siguen) sin interpretar el fondo de la decisión, y le indicas el contacto de la dependencia para cualquier duda adicional. Ese ajuste simple garantiza que la persona realmente comprenda lo que recibió.</p></div></div>
+
+  <h4>La inclusión no es un procedimiento adicional, es una actitud</h4>
+  <p>Un temor frecuente entre quienes empiezan a trabajar con enfoque diferencial es pensar que necesitan un "protocolo especial" para cada condición, y que sin ese protocolo no sabrán cómo actuar. En la práctica, la mayoría de los ajustes que un Citador puede hacer no requieren ningún entrenamiento formal: son extensiones naturales de la paciencia, la observación y el sentido común. Si notas que alguien tiene dificultad para caminar, le das más tiempo. Si notas que alguien no entiende tu explicación, la repites con otras palabras. Si notas que alguien no puede leer, se lo explicas en voz alta. La clave no está en memorizar un protocolo para cada discapacidad posible, sino en desarrollar la <mark>atención genuina</mark> para notar la necesidad y la disposición para ajustarse a ella, sin que esto se sienta como una carga adicional a tu trabajo.</p>
+  <p>Esto no significa que no existan protocolos formales para casos más complejos, que tu dependencia pueda tener establecidos. Pero para la gran mayoría de las situaciones que encontrarás en tu ronda diaria, el enfoque diferencial se reduce a observar, preguntar si necesitan algo específico, y ajustar tu ritmo y tu lenguaje en consecuencia. Es una actitud de servicio, no un trámite burocrático adicional.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Al llegar a una dirección, notas que la persona usa una silla de ruedas y la puerta tiene un pequeño desnivel que le dificulta acercarse. En vez de simplemente esperar en la puerta a que ella se las arregle, te acercas unos pasos para facilitar la entrega, sin que esto requiera ningún protocolo especial: solo observación y disposición a ajustarte a la situación concreta.</p></div></div>
+
+  <div class="checkpoint" data-cp="4">
+    <div class="cp-q">✅ Punto de control 4</div>
+    <p>Vas a entregar una notificación a una persona con discapacidad visual que no puede leer el documento. Lo correcto es:</p>
+    <div class="cp-op" data-ok="0">Entregar el documento y marcharte, ya que tu función es solo entregar, no leer en voz alta.</div>
+    <div class="cp-op" data-ok="1">Explicarle verbalmente la información esencial del documento, sin opinar sobre su contenido, y orientarla sobre dónde puede obtener más ayuda.</div>
+    <div class="cp-op" data-ok="0">Negarte a entregar el documento hasta que consiga a alguien que le ayude a leerlo.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 5 -->
+  <h3 class="modulo">Módulo 5 · La orientación al usuario en la entrega y la notificación</h3>
+  <p>Después de ver los fundamentos generales y el manejo de situaciones difíciles e inclusivas, llevemos la competencia a los momentos concretos de tu manual de funciones, donde se vuelve tangible día a día. En la <strong>entrega de documentación</strong>, la orientación al usuario se expresa en el trato al recibir y al entregar: saludo, claridad, paciencia. En la <strong>notificación de decisiones</strong>, se expresa en cómo explicas el procedimiento sin opinar sobre el fondo de lo decidido, y en cómo manejas la reacción emocional que la noticia pueda generar. En las <strong>diligencias externas</strong>, se expresa en el trato a todas las personas con las que interactúas en el camino, no solo con el destinatario final: porteros, vecinos, personal de otras entidades.</p>
+  <h4>Tres funciones, un mismo hilo conductor</h4>
+  <p>Aunque la entrega de documentación, la notificación de decisiones y las diligencias externas son funciones distintas de tu manual, comparten un mismo hilo conductor en lo que respecta a la Orientación al Usuario: en todas ellas, hay una persona al otro lado que merece un trato digno, una explicación clara y la mejor solución posible dentro de lo que el procedimiento permite. Reconocer este hilo común te ayuda a no tratar cada función como un conjunto de reglas aisladas, sino como distintas aplicaciones de un mismo principio: la persona primero, siempre dentro del marco legal y procedimental que te corresponde seguir.</p>
+
+  <h4>Explicar sin opinar sobre el fondo</h4>
+  <p>Un límite importante en tu rol: puedes y debes explicar <strong>qué es</strong> el documento, cuál es el procedimiento y qué pasos siguen, pero <strong>no te corresponde opinar sobre si la decisión es correcta, justa o equivocada</strong>. Esa valoración no es tu función, y aventurarte a opinar puede generar falsas expectativas o malentendidos sobre un proceso que tú no decidiste ni conoces en profundidad. La orientación al usuario, en tu caso, se centra en el <mark>trato y en la claridad del procedimiento</mark>, no en comentar el contenido sustantivo de las decisiones que notificas.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Una persona te pregunta si crees que la decisión que le notificas es "justa". En vez de dar tu opinión personal, respondes con amabilidad que no te corresponde opinar sobre el fondo, pero que con gusto le explicas el procedimiento y los pasos siguientes, o le indicas a quién puede consultar sus inquietudes sobre el contenido. Ese límite claro, <mark>explicado con respeto</mark>, evita malentendidos sin sonar evasivo.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Las opciones donde el Citador "opina sobre si la decisión está bien o mal" son siempre incorrectas: ese no es su rol. Las correctas se centran en explicar el procedimiento con claridad y respeto.</p></div>
+  <details class="acc"><summary>¿Y si la persona insiste en que yo le diga qué hacer frente a la decisión?</summary><div class="acc-body"><p>Puedes orientarla sobre el <strong>procedimiento</strong> (plazos, a dónde dirigirse, qué pasos existen), pero no sobre el <strong>contenido jurídico</strong> de qué debería hacer frente a la decisión en sí, porque eso excede tu función y podría ser información incorrecta o incompleta. Lo correcto es orientarla hacia quien sí tiene esa competencia: la dependencia responsable o, si corresponde, asesoría jurídica.</p></div></details>
+
+  <h4>Cuando la decisión favorece a la persona: el servicio también cuenta</h4>
+  <p>Hasta aquí hemos hablado sobre todo de situaciones tensas, porque son las que más exigen de la competencia. Pero vale la pena recordar que no todas las notificaciones generan molestia: muchas veces la decisión favorece a la persona, o simplemente es neutra, y la reacción es de alivio o indiferencia. Incluso en esos casos, el buen trato sigue siendo igualmente importante: explicar con la misma claridad, confirmar la misma comprensión, cuidar el mismo saludo y despedida. No se trata de "esforzarse solo cuando hay tensión", sino de mantener el mismo estándar de servicio sin importar si la noticia es buena, mala o neutra. La competencia no se activa solo ante el conflicto: es un estándar constante.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Entregas una notificación que resulta favorable para la persona, quien se muestra aliviada y agradecida. Aun así, mantienes la misma atención y claridad que darías en cualquier otra entrega, explicando los siguientes pasos del procedimiento con el mismo cuidado que en un caso tenso. El buen servicio no depende de si la noticia es buena o mala.</p></div></div>
+
+  <h4>El trato con terceros durante una diligencia</h4>
+  <p>La orientación al usuario no se limita al destinatario final de una notificación: también incluye a todas las personas con las que te cruzas en el camino. El portero que te permite el acceso a un edificio, el vecino que te indica una dirección, el funcionario de otra entidad al que acudes para una diligencia conjunta: todos merecen el mismo trato digno y respetuoso. Además, cómo tratas a estas personas también construye la imagen de la Procuraduría, aunque no sean el destinatario directo de tu gestión.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Un portero te pide identificarte antes de dejarte pasar a entregar una notificación. En vez de mostrar fastidio por la demora, te identificas con amabilidad y explicas brevemente el motivo de tu visita. Ese trato respetuoso con alguien que no es el destinatario final también refleja la competencia.</p></div></div>
+
+  <h4>El silencio respetuoso: una herramienta subestimada</h4>
+  <p>No toda situación exige que digas algo. A veces, la mejor forma de servir a una persona que acaba de recibir una noticia difícil es simplemente <mark>darle un momento de silencio respetuoso</mark> antes de proceder con la constancia o la despedida, en vez de llenar ese silencio con explicaciones apresuradas o comentarios que no vienen a cuento. Un breve "tómese el tiempo que necesite" seguido de silencio paciente a menudo comunica más respeto que cualquier frase bien intencionada pero apresurada. Esta pausa no es "perder tiempo": es parte de tratar a la persona como lo que es, un ser humano procesando una información que le afecta, y no simplemente un paso más en tu ronda.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Al entregar una notificación, la persona se queda en silencio, visiblemente afectada. En vez de llenar el silencio con comentarios innecesarios, le dices con calma "tómese el tiempo que necesite" y esperas con paciencia antes de proceder con la constancia. Ese silencio respetuoso, bien manejado, es tan parte del buen servicio como cualquier explicación.</p></div></div>
+
+  <div class="checkpoint" data-cp="5">
+    <div class="cp-q">✅ Punto de control 5</div>
+    <p>Una persona te pregunta si la decisión que notificas te parece justa. Lo correcto es:</p>
+    <div class="cp-op" data-ok="0">Dar tu opinión personal sobre si la decisión te parece correcta o no.</div>
+    <div class="cp-op" data-ok="1">Explicar con respeto que no te corresponde opinar sobre el fondo, y orientarla sobre el procedimiento y a quién puede consultar sus inquietudes.</div>
+    <div class="cp-op" data-ok="0">Decirle que no sabes nada del tema y marcharte sin más explicación.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 6 -->
+  <h3 class="modulo">Módulo 6 · Comunicación clara y lenguaje ciudadano</h3>
+  <p>Volvamos con más profundidad sobre la <strong>comunicación clara</strong>, un hilo que ya apareció en módulos anteriores y que merece su propio espacio, porque es una de las conductas más evaluadas en juicio situacional. Comunicarse bien con el ciudadano exige adaptar el lenguaje a quien escucha: evitar siglas y tecnicismos sin explicar, usar oraciones cortas y directas, confirmar que la persona entendió antes de retirarte, y dar la información en el orden que más ayuda a comprender (primero lo esencial, después los detalles).</p>
+  <h4>Confirmar la comprensión antes de retirarte</h4>
+  <p>Un paso que muchos Citadores omiten, por apuro o costumbre, es <strong>confirmar que la persona entendió</strong> antes de marcharse. No basta con explicar; hay que verificar. Una pregunta simple como "¿le queda claro qué debe hacer con este documento, o tiene alguna duda?" cierra el ciclo de comunicación y evita que la persona se quede con información a medias, lo cual puede generar llamadas o reclamos posteriores que se habrían evitado con una confirmación de treinta segundos.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Después de explicar brevemente de qué se trata la notificación, antes de despedirte preguntas: "¿le quedó claro, o tiene alguna duda sobre esto?". La persona aprovecha para preguntar algo que no había entendido bien. Esa <mark>confirmación final</mark> evita que se vaya con información incompleta.</p>
+  </div></div>
+  <h4>Preguntas abiertas: una herramienta simple para entender mejor</h4>
+  <p>Una técnica sencilla para profundizar la escucha activa es usar <strong>preguntas abiertas</strong> en vez de solo preguntas cerradas. Preguntar "¿tiene alguna duda?" (cerrada, invita a un simple sí o no) suele generar menos información que preguntar "¿qué parte le gustaría que le explique con más detalle?" (abierta, invita a que la persona piense y comparta más). Las preguntas abiertas, usadas en el momento justo, ayudan a descubrir inquietudes que la persona no habría mencionado espontáneamente, y demuestran un interés genuino en que realmente comprenda, no solo en cumplir el formalismo de "haber preguntado".</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>En vez de solo preguntar "¿entendió?", preguntas "¿qué parte le gustaría que le aclare más?". La persona menciona una duda específica que no había verbalizado antes. Esa pregunta abierta te permitió descubrir algo que una pregunta cerrada probablemente habría dejado sin resolver.</p></div></div>
+
+  <h4>El tono y el lenguaje corporal también comunican</h4>
+  <p>La comunicación no es solo lo que dices: también es <strong>cómo lo dices</strong>. Un tono apurado o cortante, aunque las palabras sean técnicamente correctas, puede hacer sentir a la persona que es una molestia. Mirar a los ojos, mantener una postura abierta y hablar con calma transmiten respeto y disposición genuina a ayudar, mucho más allá de las palabras exactas que uses. En un cargo donde el contacto es breve pero frecuente, estos detalles no verbales pesan tanto como el contenido de lo que dices.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Aunque tienes prisa por continuar tu ronda, al llegar a una entrega bajas el ritmo, saludas con calma y mantienes un tono tranquilo mientras explicas. Esa pausa deliberada, aunque breve, comunica respeto de una forma que ninguna palabra por sí sola lograría.</p></div></div>
+
+  <h4>Comunicación escrita: la claridad también importa en la constancia</h4>
+  <p>La comunicación clara no se limita a lo que dices de palabra: también aplica a lo que escribes en una constancia o en una nota breve que dejas cuando el destinatario no está presente. Una anotación como "estuve aquí, 3:15pm, no había nadie" es menos útil que una más completa: "Se intentó notificar el día [fecha] a las 3:15pm; no se encontró a nadie en el domicilio; se deja este aviso". La segunda versión, aunque toma unos segundos más escribirla, permite que cualquier persona que la lea después entienda exactamente qué ocurrió, sin ambigüedad. La claridad escrita beneficia tanto al ciudadano que la lee como a los compañeros de la dependencia que después deben decidir el siguiente paso del trámite basándose en esa anotación.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Al no encontrar al destinatario, en vez de dejar una nota apresurada y ambigua, escribes con claridad la fecha, la hora y el motivo por el que no se pudo notificar, de forma que cualquiera que la lea después entienda exactamente la situación sin tener que llamarte a preguntar.</p></div></div>
+
+  <div class="checkpoint" data-cp="6">
+    <div class="cp-q">✅ Punto de control 6</div>
+    <p>Después de explicar una notificación, lo más apropiado antes de retirarte es:</p>
+    <div class="cp-op" data-ok="0">Marcharte de inmediato, ya que ya diste toda la información necesaria.</div>
+    <div class="cp-op" data-ok="1">Confirmar que la persona entendió, preguntando si tiene alguna duda antes de despedirte.</div>
+    <div class="cp-op" data-ok="0">Preguntar si está de acuerdo con la decisión antes de retirarte.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 7 -->
+  <h3 class="modulo">Módulo 7 · Eres la cara de la Procuraduría</h3>
+  <p>Cerramos el desarrollo con una mirada de conjunto sobre el lugar que ocupa tu cargo en la relación entre el Estado y el ciudadano. De todos los servidores de la entidad, el Citador es de los que más contacto físico y directo tiene con el ciudadano en su propio entorno: su casa, su trabajo, su barrio. Para muchas personas, <mark>tú serás el único rostro humano</mark> que asocien con la Procuraduría en todo un proceso. La imagen que se formen de la institución —seria, respetuosa, eficiente, o por el contrario fría, descuidada o prepotente— se construye en gran medida en esos minutos de contacto contigo, más que en cualquier comunicado oficial o página web.</p>
+  <h4>La reputación institucional se construye de abajo hacia arriba</h4>
+  <p>Suele pensarse que la reputación de una entidad pública se construye desde arriba: comunicados, campañas, decisiones de alto nivel. En realidad, para el ciudadano común, la reputación de la Procuraduría se construye sobre todo <mark>de abajo hacia arriba</mark>: a partir de cientos de pequeños contactos cotidianos con servidores como tú. Ninguna campaña de comunicación institucional puede compensar una mala experiencia de trato directo; y, al revés, un trato ejemplar en la puerta de una casa vale más, para esa persona, que cualquier comunicado oficial. Esta realidad convierte tu trabajo diario en algo mucho más importante de lo que su descripción operativa sugiere.</p>
+
+  <h4>El primer y el último contacto: tu impacto en la experiencia</h4>
+  <p>En psicología del servicio se habla de la importancia del <strong>primer y el último momento</strong> de una interacción: son los que más se recuerdan. El saludo inicial y la despedida final de tu visita quedan grabados con más fuerza que los minutos intermedios. Cuidar especialmente esos dos extremos —un saludo claro y respetuoso al llegar, una despedida cordial y la confirmación de que todo quedó claro al final— mejora desproporcionadamente la percepción general de toda la interacción, incluso si en el medio hubo algún momento de tensión por el contenido de la notificación.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Aunque la conversación central de una notificación fue algo tensa porque la persona no esperaba la decisión, cuidas especialmente la despedida: agradeces su tiempo, confirmas que no quedó ninguna duda pendiente y te retiras con cordialidad. Ese cierre amable <mark>suaviza la experiencia general</mark>, incluso después de un momento incómodo.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Las opciones que descuidan el saludo o la despedida ("entregar y salir corriendo sin más") suelen ser incorrectas, incluso si el resto de la gestión fue técnicamente correcta.</p></div>
+  <details class="acc"><summary>¿Vale la pena tanto cuidado si de todas formas la persona recibe una decisión que no le gusta?</summary><div class="acc-body"><p>Sí. El contenido de la decisión no está en tus manos, pero <strong>cómo se entrega sí lo está</strong>, y marca una diferencia real en cómo la persona procesa la noticia y en la imagen que se lleva de la entidad. Un trato digno no cambia la decisión, pero sí cambia la experiencia, y eso también es parte de la justicia del proceso.</p></div></details>
+
+  <h4>Coherencia: el servicio no depende de quién esté mirando</h4>
+  <p>Como viste con la responsabilidad, la calidad del servicio al ciudadano debe ser <mark>igual</mark> estés o no acompañado, lo vea o no tu jefe, sea la primera o la última entrega del día. Un Citador que trata bien solo cuando alguien lo supervisa no domina realmente la competencia: la actúa. La orientación al usuario genuina se sostiene sola, porque nace del respeto por las personas, no del temor a ser evaluado en ese momento preciso.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>En una entrega sin ningún testigo ni supervisión, tratas a la persona con la misma calidez y claridad que si tu jefe estuviera presente. Esa coherencia, sostenida sin que nadie la verifique, es la prueba real de que la competencia se ha vuelto parte de tu forma de ser servidor.</p></div></div>
+
+  <h4>Lo que el ciudadano recuerda no siempre es lo que tú recuerdas</h4>
+  <p>Es útil tener presente que, para ti, una entrega es una de muchas en tu día; para el ciudadano, puede ser un momento que recordará con detalle durante mucho tiempo, sobre todo si está relacionado con un proceso disciplinario o legal importante en su vida. Esta asimetría de importancia explica por qué cosas que a ti te parecen triviales (un tono algo brusco, una explicación apresurada) pueden quedar grabadas con fuerza en la memoria de la persona, mientras que para ti se pierden entre las veinte entregas del día. Tener presente esta asimetría te ayuda a no subestimar el peso de cada interacción individual, aunque para ti se repita constantemente.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Te recuerdas, antes de cada entrega, que aunque para ti es la entrega número quince del día, para esa persona puede ser un momento que recordará durante meses. Ese pequeño recordatorio mental te ayuda a mantener el mismo nivel de cuidado en cada interacción, sin que la repetición te vuelva mecánico o indiferente.</p></div></div>
+
+  <div class="checkpoint" data-cp="7">
+    <div class="cp-q">✅ Punto de control 7</div>
+    <p>Una notificación generó un momento de tensión porque la persona no esperaba la decisión. Lo correcto al despedirte es:</p>
+    <div class="cp-op" data-ok="0">Retirarte rápido sin decir nada más, para no prolongar la incomodidad.</div>
+    <div class="cp-op" data-ok="1">Cuidar la despedida: agradecer su tiempo, confirmar que no quedan dudas y retirarte con cordialidad.</div>
+    <div class="cp-op" data-ok="0">Disculparte repetidamente por la decisión, como si hubiera sido tu responsabilidad.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- MÓDULO 8 -->
+  <h3 class="modulo">Módulo 8 · Errores que cuestan y síntesis</h3>
+  <p>Cerramos el recorrido de hoy con un balance de lo que suele fallar y de la idea que sintetiza todo lo trabajado. Los errores más comunes en esta competencia son: la <mark>frialdad</mark> (tratar al ciudadano como un número más, sin calidez); la <mark>impaciencia</mark> (apurar o mostrar fastidio ante preguntas o dificultades de comprensión); la <mark>opinión indebida</mark> (comentar el fondo de una decisión que no te corresponde valorar); y la <mark>rigidez sin explicación</mark> (negarse a algo sin explicar por qué ni ofrecer alternativa). Todos ellos dañan la imagen de la entidad y, en la prueba, identifican casi siempre la opción incorrecta.</p>
+  <h4>La síntesis: servir a las personas, dentro y fuera de la oficina</h4>
+  <p>Si tuvieras que quedarte con una idea del día: <strong>la Orientación al Usuario es poner a la persona en el centro, tratarla con dignidad y claridad, y resolver lo que esté en tus manos, dentro del procedimiento</strong>. En tu cargo, esto se vive en la calle, en la puerta de las casas, frente a personas con emociones reales ante una notificación. El Citador que domina esta competencia construye, entrega tras entrega, la imagen que la ciudadanía tiene de la Procuraduría, un ladrillo de confianza a la vez, incluso cuando nadie lleva la cuenta de cuántas veces lo hizo bien.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Con el tiempo, notas que varias personas a las que has notificado antes te reconocen y te saludan con confianza en la calle, incluso después de haber recibido decisiones que no les gustaron. Esa confianza, aunque pequeña, es el resultado acumulado de tratar bien a cada persona, entrega tras entrega.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Reconoce los cuatro errores que la prueba castiga: <strong>frialdad, impaciencia, opinión indebida y rigidez sin explicación</strong>. La respuesta correcta siempre es la contraria: calidez, paciencia, límite claro sobre tu rol y explicación respetuosa.</p></div>
+  <details class="acc"><summary>¿Se puede aprender a tener buena orientación al usuario, o es un rasgo de personalidad?</summary><div class="acc-body"><p>Se aprende y se entrena, como cualquier otra competencia comportamental. Técnicas simples como la escucha activa, el parafraseo, la fórmula validar-explicar-ofrecer alternativa, y el cuidado del saludo y la despedida, se pueden practicar deliberadamente hasta volverse naturales, incluso para quien no es "naturalmente" extrovertido o cálido.</p></div></details>
+
+  <h4>No todo depende de ti, pero mucho sí</h4>
+  <p>Es importante cerrar este módulo con una precisión honesta: no todo en la experiencia del ciudadano depende de ti. El contenido de la decisión, el tiempo que tomó el proceso previo a tu llegada, la complejidad del trámite: ninguno de esos factores está en tus manos. Lo que sí está en tus manos, y es considerable, es <mark>cómo se vive ese último tramo del proceso</mark>: el instante en que la decisión, buena o mala, finalmente llega a la persona. Reconocer esta frontera entre lo que puedes y no puedes controlar te libera de una presión injusta (no eres responsable de que a alguien no le guste una decisión) y, al mismo tiempo, te hace plenamente responsable de la parte que sí es tuya: el trato humano en ese instante final.</p>
+
+  <h4>El efecto multiplicador de un buen trato</h4>
+  <p>Conviene dedicar un último módulo a mirar el efecto que tiene, a escala de todo un barrio o comunidad, el trato que cada Citador ofrece entrega tras entrega. Cada entrega bien manejada tiene un efecto que va más allá de esa persona: quien recibe un buen trato suele comentarlo con su familia o vecinos, construyendo poco a poco una percepción más favorable de la entidad en toda una comunidad. Lo contrario también ocurre: un trato brusco se comenta con la misma facilidad, y puede generar desconfianza generalizada hacia la Procuraduría en todo un sector. El Citador, sin proponérselo explícitamente, actúa como un multiplicador silencioso de la reputación institucional en cada barrio que visita.</p>
+  <h4>Lo que distingue a un Citador memorable, para bien</h4>
+  <p>Con el tiempo, quienes trabajan en contacto constante con el público desarrollan un cierto instinto para identificar, entre todos los servidores que han conocido, a aquellos pocos que recuerdan de forma especialmente positiva. Casi siempre, lo que distingue a esos servidores no es ningún gesto extraordinario ni ninguna solución mágica a problemas imposibles: es la <mark>suma constante de pequeños detalles de atención</mark> —la paciencia sostenida, la explicación clara, el respeto genuino, la disposición a ayudar dentro de lo posible— aplicados de forma consistente, entrega tras entrega, sin que el cansancio o la rutina los erosionen. Ser ese tipo de Citador no requiere un talento especial ni una personalidad particularmente extrovertida: requiere la decisión sostenida de aplicar, día tras día, entrega tras entrega, los principios sencillos que hemos desarrollado a lo largo de todo este módulo.</p>
+
+  <h4>Un decálogo de servicio para tu cargo</h4>
+  <p>Cerramos con un <strong>decálogo</strong> práctico: (1) saludo con respeto y me presento claramente; (2) escucho completo antes de responder; (3) explico con lenguaje claro, sin tecnicismos innecesarios; (4) no opino sobre el fondo de las decisiones que notifico; (5) ante una petición indebida, valido, explico y ofrezco alternativa; (6) ajusto mi trato a personas con discapacidad o adultos mayores, sin que esto requiera autorización especial; (7) confirmo que la persona entendió antes de retirarme; (8) cuido especialmente el saludo inicial y la despedida; (9) mantengo la misma calidad de trato esté o no acompañado; (10) si la situación se vuelve insegura, me retiro y reporto, priorizando mi seguridad.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Aplicas el decálogo en cada entrega, incluso en los días más cargados. Con el tiempo, estas conductas dejan de requerir esfuerzo consciente y se vuelven tu forma natural de tratar a cada persona que encuentras en tu ronda. Ese es el verdadero dominio de la competencia: cuando servir bien deja de ser una técnica aprendida para convertirse en tu manera genuina de representar a la Procuraduría ante cada ciudadano.</p></div></div>
+
+  <h4>Autoevaluarse con honestidad después de un mal momento</h4>
+  <p>Ningún Citador maneja perfectamente todas las interacciones todo el tiempo. Habrá días en que, por cansancio, por una mala noticia personal o por acumulación de presión, respondas con menos calidez de la que te gustaría, o se te escape un tono más cortante del debido. La competencia no exige perfección absoluta: exige la disposición de <mark>revisar con honestidad</mark> esos momentos y corregir el rumbo, en vez de justificarlos sistemáticamente ("es que esa persona era muy pesada") o repetirlos sin reflexión. Un Citador que se pregunta, al final de un día difícil, "¿hubo algún momento en que pude haber tratado mejor a alguien?" está entrenando activamente esta competencia, mucho más que uno que da por sentado que siempre actúa bien.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Al final de un día particularmente cargado, recuerdas que en una entrega respondiste con sequedad a una pregunta que merecía más paciencia. En vez de justificarlo por el cansancio, lo anotas mentalmente como algo a mejorar, y al día siguiente pones especial atención en no repetirlo. Esa autoevaluación honesta, sin autoindulgencia ni autocastigo excesivo, es parte del crecimiento real en esta competencia.</p></div></div>
+
+  <div class="checkpoint" data-cp="8">
+    <div class="cp-q">✅ Punto de control 8</div>
+    <p>¿Cuál de estas conductas contradice la Orientación al Usuario?</p>
+    <div class="cp-op" data-ok="1">Mostrar fastidio e impaciencia ante las preguntas de una persona mayor que tarda en entender el procedimiento.</div>
+    <div class="cp-op" data-ok="0">Escuchar completo, explicar con claridad y confirmar que la persona entendió antes de retirarse.</div>
+    <div class="cp-op" data-ok="0">Validar la molestia de una persona, explicar el procedimiento y ofrecer la alternativa legítima.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+
+  <!-- MÓDULO 9 -->
+  <h3 class="modulo">Módulo 9 · Orientar sin poder decidir: el límite claro del Citador</h3>
+  <p>Una de las situaciones más delicadas de la Orientación al Usuario en tu cargo surge cuando el ciudadano pide algo que <mark>no está dentro de tus funciones resolver</mark>: que le adelantes el sentido de una decisión, que le confirmes si un proceso le será favorable, que le expliques el fondo jurídico de un asunto, o que agilices un trámite "solo por esta vez". El Citador apoya en la organización y reparto de correspondencia, en las diligencias externas y en la notificación, pero <strong>no decide, no firma actos, no sustancia ni proyecta providencias</strong>. Orientar bien al usuario, en estos casos, significa saber decir con claridad y amabilidad qué sí puedes hacer (explicar el procedimiento, indicar el canal correcto, recibir una petición para que llegue a quien corresponde) y qué no te corresponde resolver, sin que esa limitación se sienta como un portazo.</p>
+  <h4>La diferencia entre "no puedo" y "no te voy a ayudar"</h4>
+  <p>El reto de Nivel B está en comunicar un límite de competencia sin que el ciudadano sienta que lo están ignorando. Decir simplemente "eso no me toca a mí" suena a desinterés, aunque sea técnicamente correcto. La forma adecuada combina tres elementos: reconocer la necesidad del ciudadano, explicar brevemente por qué esa decisión específica no está en tus manos, y <mark>orientarlo hacia quién sí puede resolverla</mark> o hacia el canal por el que su solicitud llegará a la persona competente. Esta forma de responder no resuelve el fondo del asunto, pero sí resuelve la experiencia del ciudadano: se va sabiendo qué sigue, en vez de irse con la sensación de que nadie lo escuchó.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Lo que pide el ciudadano</th><th>Respuesta correcta del Citador</th></tr>
+    <tr><td>"¿Cómo va a salir mi proceso?"</td><td>Explicar que esa valoración corresponde al funcionario sustanciador, no al Citador, y orientar sobre cómo consultar el estado</td></tr>
+    <tr><td>"Agilíceme esto, por favor, es urgente"</td><td>Explicar el procedimiento y los tiempos reales, sin prometer lo que no depende de ti</td></tr>
+    <tr><td>"¿Por qué se demora tanto?"</td><td>Explicar con honestidad lo que sabes del procedimiento general, sin inventar plazos ni justificaciones que no te corresponde dar</td></tr>
+    <tr><td>Pide hablar con quien decide</td><td>Indicar el canal o la dependencia correcta para esa solicitud, sin desviarla a donde no corresponde</td></tr>
+  </table></div>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body">
+    <p>Un ciudadano te pregunta, mientras le entregas una notificación, si el proceso en su contra "se va a archivar". No tienes esa información ni te corresponde opinar sobre el fondo. Le explicas con respeto que esa valoración la hace el funcionario a cargo del proceso, y le indicas cómo puede consultar el estado o radicar sus propios argumentos. Esa respuesta, honesta sobre tu límite y útil en la orientación, es exactamente lo que el Nivel B espera.</p>
+  </div></div>
+  <div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div><p>Cuidado con las opciones que te hacen "opinar sobre el fondo" de un proceso o "prometer" una agilidad que no depende de ti. La respuesta correcta siempre <strong>orienta sin decidir</strong> y nunca inventa información que no tienes.</p></div>
+  <details class="acc"><summary>¿Y si el ciudadano insiste mucho o se molesta porque no le resuelvo el fondo?</summary><div class="acc-body"><p>La insistencia del ciudadano no cambia tus funciones, pero sí exige más paciencia en la forma de explicar el límite. Repetir la misma explicación con calma, sin mostrarte irritado por la insistencia, y ofrecer la alternativa correcta (el canal, la dependencia, la forma de radicar una petición) es la conducta esperada. Si la situación se vuelve imposible de manejar solo con explicación, informar a tu jefe para que decida si se requiere su intervención directa también es parte de orientar bien, sin que eso signifique que fallaste en la atención.</p></div></details>
+
+  <h4>Orientar durante una diligencia externa: el usuario fuera de la oficina</h4>
+  <p>La Orientación al Usuario no ocurre solo en la ventanilla: ocurre también cuando estás en la calle, cumpliendo una diligencia o entregando una notificación directamente en una dirección. En ese contexto, el ciudadano puede hacerte preguntas con la guardia más baja que en una oficina formal, precisamente porque te percibe como alguien cercano. Esto no cambia tus límites de competencia, pero sí exige una atención especial a la forma: ser igual de claro, igual de respetuoso y <mark>igual de cuidadoso con la información</mark> que manejas, aunque el entorno sea menos formal que una oficina. Un Citador que, por estar "fuera de la oficina", baja la guardia y comenta de más sobre un proceso, está incumpliendo tanto la orientación al usuario como el cuidado de la información que vimos en otros módulos.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Entregas una notificación en el domicilio del ciudadano. Él te recibe con confianza y te pregunta detalles del proceso que no te corresponde comentar. Mantienes el mismo límite y la misma amabilidad que tendrías en la oficina: explicas lo que puedes explicar sobre el procedimiento de notificación en sí, y remites cualquier pregunta de fondo al canal correcto. La cercanía del entorno no cambia lo que sí o no te corresponde decir.</p></div></div>
+
+  <h4>Cuando el usuario no entiende por qué le llega una notificación</h4>
+  <p>Una situación frecuente en el rol de Citador es que la persona notificada no entienda de entrada por qué recibe esa comunicación, o reaccione con sorpresa o molestia al contenido. Orientar bien aquí no significa explicar el fondo jurídico de la decisión (eso no te corresponde), sino ayudar a que la persona entienda el <strong>procedimiento</strong>: qué es lo que se le está notificando en términos formales, qué significa firmar el recibido, qué derechos de información tiene sobre cómo conocer el documento completo, y a quién puede dirigirse si tiene preguntas sobre el contenido. Esa orientación procedimental, bien dada, reduce la ansiedad del momento sin que tengas que opinar sobre algo que no te corresponde.</p>
+  <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Notificas a una persona que reacciona con sorpresa porque no esperaba esa comunicación. En vez de limitarte a pedir la firma y retirarte, le explicas brevemente qué significa el acto de notificación, qué pasos siguen y dónde puede consultar el contenido completo si tiene dudas. Esa orientación procedimental, dada con calma, es la forma correcta de acompañar un momento que para el ciudadano puede ser tenso.</p></div></div>
+
+  <div class="checkpoint" data-cp="9">
+    <div class="cp-q">✅ Punto de control 9</div>
+    <p>Un ciudadano, al recibir una notificación, te pregunta insistentemente cómo cree usted que va a resolverse su proceso. La conducta correcta de Orientación al Usuario en Nivel B es:</p>
+    <div class="cp-op" data-ok="0">Darle tu opinión personal sobre el resultado probable, para que se sienta atendido.</div>
+    <div class="cp-op" data-ok="1">Explicar con respeto que esa valoración no corresponde al Citador sino al funcionario competente, y orientarlo sobre cómo consultar el estado o presentar sus argumentos.</div>
+    <div class="cp-op" data-ok="0">Decirle que no puedes ayudarle en nada y continuar con la entrega sin más explicación.</div>
+    <div class="cp-fb"></div>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="box key"><div class="box-title">🔑 Idea clave del día</div><p>La <strong>Orientación al Usuario (Nivel B)</strong> es poner a la persona en el centro: escucharla activamente, tratarla con dignidad y calidez, explicarle con lenguaje claro, ajustar el trato a su condición cuando lo necesite, y resolver lo que esté en tus manos dentro del procedimiento, aunque el resultado no sea el que esperaba. Ante una petición indebida: validar, explicar y ofrecer la alternativa legítima, nunca ceder al procedimiento ni negarse secamente. Ante el fondo de una decisión: explicar el procedimiento, nunca opinar sobre si es correcta. Ante una persona con discapacidad o de edad avanzada: ajustar el trato, porque eso realiza la igualdad, no la viola. Y ante cada entrega, recordar que tú eres, muchas veces, el único rostro humano que el ciudadano asocia con la Procuraduría en todo su proceso.</p></div>
+  <div class="box tips"><div class="box-title">💡 Tips para recordar</div>
+    <ul>
+      <li><strong>Orientación al Usuario (B):</strong> poner a la persona en el centro; escuchar, explicar con claridad, resolver lo posible.</li>
+      <li>Atributos del buen servicio: digno, cálido, oportuno, confiable, efectivo, incluyente y empático.</li>
+      <li>Ante una petición indebida: <strong>validar + explicar + ofrecer alternativa</strong>, nunca ceder ni negarse secamente.</li>
+      <li>Nunca opinar sobre el fondo de la decisión que notificas; sí explicar el procedimiento.</li>
+      <li>El trato preferente a personas con discapacidad o adultos mayores realiza la igualdad, no la viola.</li>
+      <li>Confirmar siempre que la persona entendió antes de retirarte.</li>
+      <li>Cuidar especialmente el saludo inicial y la despedida: son los momentos más recordados.</li>
+      <li>El buen servicio debe ser igual estés o no acompañado, lo vea o no tu jefe.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">⚡ Frase para recordar</div><p><strong>"Escucho, trato con dignidad y explico con claridad; si algo no procede, lo explico con respeto y ofrezco la alternativa que sí existe. Así, en cada puerta donde entrego o notifico, soy el rostro humano de la Procuraduría."</strong></p></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <ul class="lista">
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=86438" target="_blank" rel="noopener">Decreto 815 de 2018 — competencias laborales de los empleos públicos</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62866" target="_blank" rel="noopener">Decreto 1083 de 2015 — Único Reglamentario de Función Pública (competencias)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4499" target="_blank" rel="noopener">Decreto Ley 262 de 2000 — régimen especial de la PGN</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=53760" target="_blank" rel="noopener">Ley 1618 de 2013 — inclusión de personas con discapacidad</a></li>
+      <li><a href="https://www.procuraduria.gov.co/" target="_blank" rel="noopener">Procuraduría General de la Nación — sitio oficial</a></li>
+    </ul>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Ahora repasa las distinciones que confunde la prueba.</span><button class="advance-btn" data-goto="3">Ver distinciones →</button></div>
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>Las parejas de conceptos de este día que más se confunden, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Servir</strong></td><td><strong>Someterse</strong></td><td>Servir = tratar bien y resolver dentro del procedimiento. Someterse = ceder a lo indebido para "quedar bien".</td></tr>
+    <tr><td><strong>Explicar el procedimiento</strong></td><td><strong>Opinar sobre el fondo</strong></td><td>Explicar cómo funciona el trámite es tu función; opinar si la decisión es justa o no, no lo es.</td></tr>
+    <tr><td><strong>Trato preferente</strong></td><td><strong>Trato idéntico sin ajuste</strong></td><td>El trato preferente a quien lo necesita (discapacidad, edad) realiza la igualdad real; tratar a todos igual sin ajuste, a veces la viola.</td></tr>
+    <tr><td><strong>Validar la emoción</strong></td><td><strong>Ceder a la presión</strong></td><td>Reconocer que la persona está molesta no implica hacer lo que pide si no procede.</td></tr>
+    <tr><td><strong>Firmeza con respeto</strong></td><td><strong>Rigidez sin explicación</strong></td><td>Firmeza con respeto explica el porqué; la rigidez simplemente niega sin dar razones.</td></tr>
+    <tr><td><strong>Escucha activa</strong></td><td><strong>Responder apresurado</strong></td><td>Escuchar completo y confirmar antes de actuar evita responder a lo que no era la verdadera pregunta.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>Construye una frase con cada pareja: "sirvo sin someterme" o "explico el procedimiento, no opino del fondo". Si la dices sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Citador de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · La petición que no procede</div><div class="caso-body">
+    <span class="label">Situación</span><p>Una persona te pide que le entregues a ella una notificación destinada a un familiar que no está presente, "para que no tenga que volver". Te lo pide con insistencia y algo de molestia.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Aplicas la fórmula <mark>validar, explicar, ofrecer alternativa</mark>: reconoces su incomodidad, explicas con respeto que el procedimiento exige entregarla directamente al destinatario o dejar constancia si no está, y le indicas cómo proceder en ese caso según el procedimiento de la dependencia.</p></div>
+    <span class="label">Por qué</span><p>Ceder entregaría la notificación a quien no corresponde; negarse sin explicación sería un mal servicio. La fórmula combina ambas exigencias.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · La persona mayor que tarda en responder</div><div class="caso-body">
+    <span class="label">Situación</span><p>Vas a notificar a una persona de edad avanzada que tarda varios minutos en llegar a la puerta y, después, en comprender la explicación que le das sobre el documento.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Esperas con paciencia, <mark>ajustas tu ritmo y tu lenguaje</mark> (hablas más despacio, con frases simples) y confirmas que entendió antes de retirarte, sin mostrar impaciencia ni apurar el proceso.</p></div>
+    <span class="label">Por qué</span><p>El enfoque diferencial exige ajustar el trato a la condición de la persona; mostrar impaciencia contradice la Orientación al Usuario.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · La pregunta sobre el fondo de la decisión</div><div class="caso-body">
+    <span class="label">Situación</span><p>Al entregar una notificación, la persona te pregunta directamente si crees que la decisión que le notificas es justa o si ella debería "pelearla".</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Explicas con respeto que no te corresponde opinar sobre el fondo de la decisión, y la <mark>orientas hacia el procedimiento</mark>: plazos, a quién dirigirse, dónde puede consultar sus inquietudes sobre el contenido.</p></div>
+    <span class="label">Por qué</span><p>Opinar sobre el fondo excede tu rol y puede generar información incorrecta o falsas expectativas; orientar sobre el procedimiento es lo que sí te corresponde.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Tratar al ciudadano con frialdad o indiferencia</div><p>Entregar y marcharte sin ningún trato humano contradice el atributo "cálido" del buen servicio.</p></div>
+  <div class="box danger"><div class="box-title">❌ Mostrar impaciencia ante preguntas o dificultades</div><p>Apurar a una persona que necesita más tiempo (adultos mayores, confusión) contradice la paciencia y el enfoque diferencial.</p></div>
+  <div class="box danger"><div class="box-title">❌ Opinar sobre el fondo de la decisión</div><p>Comentar si la decisión te parece justa o no excede tu rol y puede generar información incorrecta.</p></div>
+  <div class="box danger"><div class="box-title">❌ Negarse sin explicación ante una petición indebida</div><p>Un "no" seco, sin validar ni explicar, es un mal servicio aunque la negativa sea correcta de fondo.</p></div>
+  <div class="box danger"><div class="box-title">❌ Ceder a presiones indebidas "para quedar bien"</div><p>Entregar a quien no corresponde o alterar el procedimiento por presión contradice el servicio real.</p></div>
+  <div class="box danger"><div class="box-title">❌ No confirmar si la persona entendió</div><p>Explicar y marcharse sin verificar comprensión deja a la persona con información a medias.</p></div>
+  <div class="box danger"><div class="box-title">❌ Tratar bien solo cuando hay supervisión</div><p>La calidad del servicio debe ser constante, estés o no acompañado.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>La frase maestra:</strong> pongo a la persona en el centro, la trato con dignidad y claridad, y resuelvo lo posible dentro del procedimiento.</li>
+    <li><strong>Ante petición indebida:</strong> validar + explicar + ofrecer alternativa.</li>
+    <li><strong>Nunca</strong> opines sobre el fondo de la decisión; solo explica el procedimiento.</li>
+    <li><strong>Enfoque diferencial:</strong> ajustar el trato a discapacidad o edad realiza la igualdad, no la viola.</li>
+    <li><strong>Escucha activa:</strong> escuchar completo y parafrasear antes de responder.</li>
+    <li><strong>Confirmar siempre</strong> que la persona entendió antes de retirarte.</li>
+    <li>Cuida el saludo inicial y la despedida: son los momentos que más se recuerdan.</li>
+    <li>El buen servicio es constante, estés o no acompañado.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"Lo mejor es entregar la notificación a quien me la pida, para no hacer esperar a nadie."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "parece buen servicio y evita una queja".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> entregar a quien no corresponde compromete la validez de la notificación.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> validar, explicar por qué no procede y ofrecer la alternativa legítima.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Si la persona pregunta si la decisión es justa, lo mejor es darle mi opinión honesta para generar confianza."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "parece honesto y cercano".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> opinar sobre el fondo excede tu rol y puede generar información incorrecta o falsas expectativas.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> explicar que no te corresponde opinar y orientar sobre el procedimiento.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Tratar a todos exactamente igual, sin ningún ajuste, es la forma más justa de atender."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "suena a no discriminar a nadie".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> ignorar necesidades reales (discapacidad, edad) puede dejar a esas personas en desventaja real.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> ajustar el trato según la necesidad, lo cual realiza la igualdad, no la viola.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Si el ciudadano se molesta, lo mejor es retirarse de inmediato sin completar la gestión, para evitar el conflicto."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "evita una confrontación".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> abandonar la gestión sin completar el procedimiento (salvo riesgo real de seguridad) deja la notificación sin resolver.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> mantener la calma, explicar con respeto y completar el procedimiento; retirarse solo si hay riesgo real para tu seguridad.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Orientación al Usuario (B)</h4><p>Poner a la persona en el centro; tratarla con dignidad, calidez y claridad, resolviendo lo posible dentro del procedimiento.</p></div>
+    <div class="resumen-item"><h4>Atributos del buen servicio</h4><p>Digno, cálido, oportuno, confiable, efectivo, incluyente y empático. Tratar bien Y resolver.</p></div>
+    <div class="resumen-item"><h4>Petición indebida</h4><p>Validar + explicar + ofrecer alternativa. Nunca ceder ni negarse sin explicación.</p></div>
+    <div class="resumen-item"><h4>El fondo de la decisión</h4><p>No corresponde opinar sobre si es justa; sí explicar el procedimiento y orientar.</p></div>
+    <div class="resumen-item"><h4>Enfoque diferencial</h4><p>Ajustar el trato a discapacidad, edad avanzada u otra condición. Realiza la igualdad, no la viola (Ley 1618/2013).</p></div>
+    <div class="resumen-item"><h4>Escucha activa</h4><p>Escuchar completo, parafrasear y confirmar antes de responder o actuar.</p></div>
+    <div class="resumen-item"><h4>Eres la cara de la entidad</h4><p>La imagen que el ciudadano se lleva de la Procuraduría se forma en tu trato, puerta a puerta.</p></div>
+    <div class="resumen-item"><h4>Coherencia</h4><p>El buen trato debe ser el mismo estés o no acompañado, lo vea o no tu jefe.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Orientación al Usuario y al Ciudadano</dt><dd>Poner a la persona en el centro de la atención, tratándola con dignidad y buscando resolver lo que esté en las manos del servidor (competencia común, Decreto 815/2018).</dd>
+      <dt>Momento de verdad</dt><dd>Instante de contacto en el que el ciudadano forma o cambia su impresión sobre la entidad.</dd>
+      <dt>Escucha activa</dt><dd>Prestar atención completa sin interrumpir, confirmando (parafraseando) lo entendido antes de actuar.</dd>
+      <dt>Enfoque diferencial</dt><dd>Ajustar el trato a condiciones particulares (discapacidad, edad) para garantizar un acceso real y equitativo.</dd>
+      <dt>Validar</dt><dd>Reconocer la emoción o situación de la persona sin necesariamente aceptar lo que pide.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Orientación al Usuario</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol de Citador, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el día. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar día</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.checkpoint').forEach(cp=>{const fb=cp.querySelector('.cp-fb');cp.querySelectorAll('.cp-op').forEach(op=>{op.addEventListener('click',function(){if(cp.dataset.done)return;cp.dataset.done='1';const ok=this.dataset.ok==='1';cp.querySelectorAll('.cp-op').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ok==='1')o.classList.add('cp-ok');});if(!ok)this.classList.add('cp-no');if(fb){fb.classList.add('show');fb.innerHTML=ok?'<strong>¡Correcto!</strong> Muy bien.':'<strong>Revisa.</strong> La opción correcta queda resaltada en verde.';}});});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert("✅ Has finalizado el Día 7: Orientación al Usuario. ¡Buen trabajo, sigue así!");});
+const flashcards=[{"f": "¿Qué es la Orientación al Usuario y al Ciudadano?", "b": "Poner a la persona en el centro de la atención: escucharla, tratarla con dignidad y calidez, explicarle con claridad y resolver lo que esté en tus manos dentro del procedimiento. Es una competencia común; tu manual la exige en Nivel B."}, {"f": "¿Cuáles son los atributos de un buen servicio?", "b": "Digno, cálido, oportuno, confiable, efectivo, incluyente y empático. Tratar bien y además resolver de verdad."}, {"f": "¿Qué haces ante una petición del ciudadano que no procede?", "b": "Aplicas la fórmula: validar la emoción, explicar con respeto por qué no procede, y ofrecer la alternativa legítima que sí exista."}, {"f": "¿Puedes opinar sobre si la decisión que notificas es justa?", "b": "No. Esa valoración no corresponde a tu rol. Puedes y debes explicar el procedimiento, pero no opinar sobre el fondo de la decisión."}, {"f": "¿Qué es el enfoque diferencial en tu atención?", "b": "Ajustar el trato a personas con discapacidad, adultos mayores u otras condiciones, para garantizar que realmente comprendan y accedan a lo que se les comunica. Realiza la igualdad, no la viola (Ley 1618 de 2013)."}, {"f": "¿Qué es la escucha activa?", "b": "Prestar atención completa sin interrumpir, y confirmar (parafraseando) lo que entendiste antes de responder o actuar."}, {"f": "¿Qué son los 'momentos de verdad'?", "b": "Los instantes de contacto en los que el ciudadano forma o cambia su impresión sobre la entidad: el saludo, la explicación, la despedida."}, {"f": "¿Por qué el saludo y la despedida son especialmente importantes?", "b": "Porque son los momentos que más se recuerdan de toda la interacción; cuidarlos mejora la percepción general, incluso si hubo tensión en el medio."}, {"f": "¿Qué haces si el ciudadano se vuelve agresivo o amenazante?", "b": "Priorizas tu seguridad: te retiras del lugar y reportas lo ocurrido a tu jefe. El servicio no exige exponerte a un riesgo físico o verbal grave."}, {"f": "¿Cómo se explica con lenguaje claro?", "b": "Evitando tecnicismos y siglas sin explicar, usando oraciones cortas y directas, y confirmando que la persona entendió antes de retirarte."}, {"f": "¿El buen trato depende de si hay alguien supervisando?", "b": "No. La calidad del servicio debe ser constante, estés o no acompañado, lo vea o no tu jefe. Es la coherencia que distingue al servidor genuino."}, {"f": "¿En qué se resume la Orientación al Usuario en tu cargo?", "b": "En ser, muchas veces, el único rostro humano que el ciudadano asocia con la Procuraduría en todo su proceso; tratarlo bien construye la confianza en la institución, contacto a contacto."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b", "tema": "Orientación al usuario — petición indebida", "ctx": "Eres Citador. Llegas a entregar una notificación y el destinatario no está presente; un vecino se ofrece amablemente a recibirla y entregársela después, 'para que no tenga que volver'.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Entregar la notificación al vecino, ya que se ofrece de buena voluntad y así se evita una segunda visita.", "Explicarle con amabilidad al vecino que el procedimiento exige entregarla directamente al destinatario o dejar constancia si no está, y agradecer su disposición a ayudar.", "Dejar la notificación bajo la puerta de la vivienda sin ninguna constancia y marcharte.", "Negarte a dar cualquier explicación al vecino y retirarte de inmediato sin decir nada."], "correcta": 1, "expl": ["Incorrecto. Entregar a quien no es el destinatario autorizado compromete la validez de la notificación.", "Correcto. Se explica con respeto el motivo, agradeciendo la disposición a ayudar, y se sigue el procedimiento establecido para destinatario ausente.", "Incorrecto. Dejar el documento sin ninguna constancia ni verificación no sigue el procedimiento y no es un buen servicio.", "Incorrecto. Negarse sin ninguna explicación, aunque la negativa de fondo sea correcta, es un mal servicio al usuario."]}, {"nivel": "b", "tema": "Orientación al usuario — enfoque diferencial", "ctx": "Vas a notificar una decisión a una persona de edad avanzada que tiene dificultad auditiva. Tarda en responder a tus llamados en la puerta y, cuando te escucha, pide que repitas varias veces la explicación.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Hablar más rápido y en voz alta para terminar pronto, ya que tienes otras diligencias pendientes.", "Hablar despacio, con claridad y de frente, repitiendo la explicación con paciencia las veces que sea necesario hasta confirmar que comprendió.", "Pedirle que busque a un familiar que te atienda en su lugar, ya que ella no entiende bien.", "Entregar el documento sin más explicación, ya que de todas formas ella no podrá seguir bien la conversación."], "correcta": 1, "expl": ["Incorrecto. Apurar o alzar la voz con impaciencia no es el ajuste adecuado y puede resultar irrespetuoso.", "Correcto. El enfoque diferencial exige paciencia y ajuste del ritmo y claridad de la comunicación, confirmando la comprensión.", "Incorrecto. Buscar a otra persona en lugar de la destinataria no es el procedimiento correcto, salvo que ella misma lo decida; la notificación debe hacerse a quien corresponde.", "Incorrecto. Entregar sin ninguna explicación deja a la persona sin comprender lo que recibió, lo cual contradice el servicio efectivo."]}, {"nivel": "i", "tema": "Orientación al usuario — límite de tu rol", "ctx": "Al entregar una notificación de una decisión disciplinaria, la persona te pregunta directamente: '¿usted qué cree, esta decisión es justa o debería yo reclamar?'.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Darle tu opinión honesta sobre si la decisión te parece correcta, para generar confianza y cercanía.", "Explicarle con respeto que no te corresponde opinar sobre el fondo de la decisión, y orientarla sobre el procedimiento y a quién puede dirigir sus inquietudes sobre el contenido.", "Decirle que no sabes nada del tema y que busque ayuda en otro lado, sin más explicación.", "Sugerirle que definitivamente reclame, porque así parece más empático con su situación."], "correcta": 1, "expl": ["Incorrecto. Opinar sobre el fondo de una decisión excede tu rol y puede generar información incorrecta o falsas expectativas.", "Correcto. Se traza el límite con respeto y se orienta hacia el procedimiento y la instancia competente para esas inquietudes.", "Incorrecto. Responder con evasión total, sin ninguna orientación, es un mal servicio aunque el límite de fondo sea correcto.", "Incorrecto. Sugerir una acción jurídica sin tener esa competencia también excede tu rol y puede inducir a la persona a error."]}, {"nivel": "i", "tema": "Orientación al usuario — manejo de molestia", "ctx": "Al recibir la notificación, una persona reacciona con indignación, elevando la voz y diciendo que 'esto es un atropello', aunque no te agrede ni te amenaza directamente.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Responderle en el mismo tono elevado, para que entienda que ese trato no es apropiado contigo.", "Mantener la calma, reconocer con respeto su reacción ('entiendo que esto le genera molestia'), y continuar explicando el procedimiento con serenidad, sin tomarlo como algo personal.", "Retirarte de inmediato sin completar la entrega ni dejar ninguna constancia, para evitar la situación.", "Decirle que se calme inmediatamente o no continuarás con la gestión."], "correcta": 1, "expl": ["Incorrecto. Responder con el mismo tono eleva el conflicto en vez de manejarlo con profesionalismo.", "Correcto. Validar la emoción con calma y continuar el procedimiento con serenidad es la conducta esperada ante una reacción de indignación sin riesgo real.", "Incorrecto. Retirarse sin completar la gestión, cuando no hay riesgo de seguridad real, deja la notificación sin resolver innecesariamente.", "Incorrecto. Exigir calma de forma imperativa puede sonar a amenaza o condición, en vez de a manejo empático de la situación."]}, {"nivel": "a", "tema": "Integración: servicio, límite de rol y procedimiento", "ctx": "Un ciudadano, visiblemente angustiado, te pide que le digas 'sinceramente' qué debería hacer frente a la notificación que acabas de entregarle, y además te pide que, por favor, le avises 'informalmente' si llega otra decisión antes de que se notifique de forma oficial, 'para estar preparado'.", "q": "¿Cuál es la actuación más apropiada?", "ops": ["Decirle con sinceridad qué harías tú en su lugar frente a la decisión, y aceptar avisarle informalmente si ves algo nuevo, para ayudarlo a estar tranquilo.", "Explicarle con respeto que no te corresponde orientarlo sobre qué hacer frente al fondo de la decisión ni adelantar información de otros procesos antes de su notificación oficial, y orientarlo hacia los canales correctos para sus inquietudes.", "Aceptar solo la segunda petición (avisarle informalmente), ya que parece un gesto de buena voluntad sin mayor riesgo.", "Negarte a ambas peticiones de forma brusca, sin explicar el motivo, para evitar cualquier compromiso."], "correcta": 1, "expl": ["Incorrecto. Opinar sobre el fondo y comprometerte a adelantar información no oficial excede tu rol y compromete la integridad del proceso de notificación.", "Correcto. Se traza el límite con respeto en ambos puntos y se orienta hacia los canales legítimos, sin opinar sobre el fondo ni adelantar información reservada.", "Incorrecto. Adelantar información de otra decisión antes de su notificación oficial vulnera el procedimiento y puede afectar derechos de terceros.", "Incorrecto. Negarse sin ninguna explicación, aunque el fondo de la negativa sea correcto, es un mal servicio al ciudadano."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

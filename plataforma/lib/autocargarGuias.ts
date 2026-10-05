@@ -324,6 +324,44 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-PGN-4SU11-001", dia: 21 },
     ],
   },
+
+  // Procuraduría General de la Nación — Citador (6CI-04), Convocatoria 90-2026.
+  // Nivel Asistencial/Operativo · apoyo operativo puro de correspondencia,
+  // notificación, diligencias externas y archivo básico (NO decide, NO firma,
+  // NO administra inventarios/almacén de bienes) — Ingrid Vanessa Angulo Prado.
+  // Competencias comportamentales distintas a todos los cargos previos
+  // (Responsabilidad C, Organización C, Orientación al Usuario B, Cumplimiento D,
+  // Gestión de Recursos D) y sin conocimientos esenciales comunes (ver
+  // referencias/_SPEC-CURSO-6CI04-INGRID.md). Ninguna guía se comparte con el
+  // curso de Auxiliar Administrativo (5AM-10): todas las piezas son propias.
+  "pgn-citador-6ci04": {
+    id: "pgn-citador-6ci04",
+    nombre: "PGN · Citador (6CI-04), Conv. 90-2026 — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-6CI04", dia: 1 },
+      { codigo: "ENT-PGN-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-6CI04", dia: 2 },
+      { codigo: "GEN-02-PGN-6CI04", dia: 3 },
+      { codigo: "GEN-03-PGN-6CI04", dia: 4 },
+      { codigo: "6CI04-COM-01", dia: 5 },
+      { codigo: "6CI04-COM-02", dia: 6 },
+      { codigo: "6CI04-COM-03", dia: 7 },
+      { codigo: "6CI04-COM-04", dia: 8 },
+      { codigo: "FUN-COR-6CI04-01", dia: 9 },
+      { codigo: "FUN-DIL-6CI04-01", dia: 10 },
+      { codigo: "FUN-NOT-6CI04-01", dia: 11 },
+      { codigo: "FUN-COR-6CI04-02", dia: 12 },
+      { codigo: "FUN-GDOC-6CI04-01", dia: 13 },
+      { codigo: "FUN-GDOC-6CI04-02", dia: 14 },
+      { codigo: "FUN-ENT-6CI04-01", dia: 15 },
+      { codigo: "FUN-SIS-6CI04-01", dia: 16 },
+      { codigo: "FUN-ATC-6CI04-01", dia: 17 },
+      { codigo: "FUN-PGN-6CI04-01", dia: 18 },
+      { codigo: "FUN-GDOC-6CI04-03", dia: 19 },
+      { codigo: "FUN-OFI-6CI04-01", dia: 20 },
+      { codigo: "SIM-PGN-6CI04-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
