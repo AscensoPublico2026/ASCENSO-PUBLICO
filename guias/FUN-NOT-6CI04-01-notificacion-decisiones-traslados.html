@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-NOT-6CI04-01 · Notificación de Decisiones y Traslados (Citador) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-NOT-6CI04-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 11 · Funcional del cargo</div>
+  <h1>Notificación de Decisiones y Traslados</h1>
+  <p class="header-sub">Una de las funciones de mayor responsabilidad del <strong>Citador</strong>: cómo se tramita la notificación de una decisión y su traslado, por qué la fecha exacta importa tanto, y cómo dejar constancia fiel de cada diligencia, siempre ejecutando bajo instrucciones, en la <strong>Procuraduría General de la Nación</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 11 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ Régimen PGN</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Te entregan un documento con instrucción expresa: "esto hay que notificarlo personalmente, y de la fecha exacta depende un término". No es un oficio cualquiera: es la comunicación formal de una decisión que afecta a una persona, y de tu diligencia depende que esa persona sepa, desde qué día exacto, que tiene un plazo para actuar. Llegas a la dirección y la persona está. Le explicas el propósito de tu visita, pero ella te dice: "yo no voy a firmar nada, llévese eso". ¿Qué haces? ¿Cómo dejas constancia de que sí la notificaste, si se niega a firmar? ¿Qué pasa con el término legal si ella insiste en que "nunca se entera de nada"? ¿Y si, en cambio, resulta que la persona ya no vive ahí?</p>
+    <p>Hoy vas a dominar la <mark>función número tres de tu manual</mark>: <em>"tramitar las diligencias de notificación de las decisiones y sus traslados de acuerdo con los procedimientos establecidos"</em>. Es, probablemente, la función de mayor responsabilidad jurídica entre las diez de tu cargo, porque de tu actuación depende, muchas veces, el inicio de un término legal. Pero también es una función con un límite muy claro: tú <strong>ejecutas la diligencia de notificación según instrucciones</strong>; no decides el contenido de la decisión que notificas, ni el procedimiento que se sigue después. Esa distinción es la columna vertebral de esta guía.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué significa <strong>notificar</strong> en el contexto administrativo y disciplinario de la Procuraduría, y en qué se diferencia de simplemente entregar correspondencia.</li>
+      <li>Las <strong>formas de notificación</strong>: personal, por aviso y electrónica, y cuándo se usa cada una.</li>
+      <li>Por qué la <strong>fecha exacta de la notificación</strong> es tan importante: de ella dependen términos legales que pueden decidir el destino de una actuación.</li>
+      <li>Cómo se <strong>deja constancia</strong> de una notificación, incluyendo los casos difíciles: negativa a firmar, ausencia del destinatario, dirección que ya no corresponde.</li>
+      <li>Qué pasa si <strong>no se puede notificar</strong>: los pasos siguientes según el procedimiento establecido.</li>
+      <li>Dónde termina exactamente tu función: ejecutas la diligencia según instrucciones; <strong>no decides el contenido de la decisión ni el procedimiento a seguir</strong>.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Primero verás por qué este tema es clave para tu prueba. Luego, en el Desarrollo, recorrerás módulos con teoría aplicada a tu cargo, tablas, ejemplos "En la práctica" ambientados en notificaciones reales de un Citador de la PGN, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro de juicio situacional.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>Abre de nuevo el manual de funciones del cargo <strong>Citador, código 6CI-04</strong> (Convocatoria 90-2026, Resolución No. 212 de 2026). La función esencial número tres dice: <mark>"Tramitar las diligencias de notificación de las decisiones y sus traslados de acuerdo con los procedimientos establecidos."</mark> Entre los conocimientos esenciales específicos del cargo aparece también <mark>"Procedimientos de archivo, notificación y correspondencia"</mark>. La notificación no es, entonces, un tema aislado: es una de las funciones centrales que justifica la existencia misma del cargo de Citador dentro de una entidad como la Procuraduría, que tramita constantemente actuaciones disciplinarias y administrativas donde los términos legales son decisivos.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba insiste tanto en este tema</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📌</span><h5>Es una función esencial explícita</h5><p>Aparece en el manual con un verbo claro: "tramitar".</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Tiene consecuencias jurídicas directas</h5><p>De la fecha de notificación dependen términos de recursos y de firmeza de decisiones.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧭</span><h5>Exige procedimiento estricto</h5><p>No es "entregar y listo": hay formas regladas y constancias específicas.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🎯</span><h5>Se presta a casos difíciles</h5><p>Negativas, ausencias, direcciones erradas: la prueba adora estos escenarios.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>La prueba no espera que seas un experto en derecho procesal, pero sí que entiendas la <mark>lógica y el peso</mark> de la notificación: que no es un simple "entregar un papel", que la fecha y la forma importan muchísimo, y que tu función es <strong>ejecutar con rigor</strong>, nunca decidir el fondo ni el procedimiento. Esta guía está construida con ejemplos y casos para entrenar exactamente ese criterio.</p></div></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>Recuerda que la Procuraduría tiene un régimen especial de carrera (Decreto Ley 262 y 263 de 2000) y que su concurso lo adelanta la propia entidad bajo la Convocatoria <strong>90-2026</strong> (Resolución No. 212 de 2026). El cargo de Citador (6CI-04) es de apoyo operativo puro: aun en un tema tan delicado como la notificación, tu función sigue siendo ejecutar la diligencia según procedimientos, nunca decidir sobre el fondo de la actuación disciplinaria o administrativa que la origina.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Notificación de Decisiones y Traslados para el Citador de la PGN</h2>
+  <p>Vamos a recorrer los módulos que necesitas dominar. Cada uno tiene teoría desarrollada, tablas, ejemplos "En la práctica" ambientados en tu cargo, ejercicios resueltos y puntos de control interactivos. La meta es que entiendas la lógica de la notificación lo suficiente para actuar con rigor en el terreno, sin necesidad de convertirte en experto jurídico.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>Qué es notificar y por qué es distinto de repartir correspondencia</h3></div>
+    <div class="b-texto">
+      <p><strong>Notificar</strong> es el acto mediante el cual se hace saber, de manera formal y siguiendo un procedimiento reglado, una decisión a la persona o personas a quienes esa decisión afecta o interesa. No es un simple acto de comunicación informal: es un acto jurídico que produce efectos, el más importante de los cuales es que, a partir de la fecha de notificación (o del momento que la ley defina), <strong>empiezan a correr términos</strong>: para interponer un recurso, para que la decisión quede en firme, para que se entienda surtida la actuación.</p>
+      <div class="def-panel"><span class="def-label">La diferencia que debes tener clarísima</span><p><strong>Repartir correspondencia</strong> (lo que viste en la guía del Día 9) es entregar un documento a su destinatario, con constancia simple, siguiendo criterios de prioridad. <strong>Notificar</strong> es, además de entregar (o comunicar por la vía que corresponda), <mark>cumplir con exactitud una forma legal</mark> cuyo objetivo es garantizar que la persona efectivamente conoció la decisión, porque de ese conocimiento depende el ejercicio de sus derechos (como recurrir la decisión) y la validez misma de la actuación.</p></div>
+      <h4>Por qué la notificación tiene tanto peso en la Procuraduría</h4>
+      <p>La Procuraduría General de la Nación tramita actuaciones disciplinarias, preventivas y de intervención en procesos judiciales. En el ámbito disciplinario, por ejemplo, las decisiones que se toman durante una investigación o un proceso (aperturas, pliegos de cargos, fallos, entre otras) deben notificarse a quienes tienen interés en ellas, porque solo así esas personas pueden ejercer su derecho de defensa y de contradicción dentro de los términos previstos. Una notificación mal hecha, con una fecha incorrecta o sin la forma exigida, puede viciar toda una actuación: el término para recurrir podría contarse mal, la decisión podría quedar en firme antes de tiempo, o la persona afectada podría alegar, con razón, que nunca se le dio la oportunidad real de conocer la decisión y defenderse.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Aspecto</th><th>Reparto de correspondencia</th><th>Notificación</th></tr>
+        <tr><td>Objetivo principal</td><td>Que el documento llegue a su destinatario.</td><td>Que la persona conozca formalmente una decisión, con efectos jurídicos.</td></tr>
+        <tr><td>Formalidad exigida</td><td>Constancia simple de entrega.</td><td>Procedimiento reglado según la forma de notificación (personal, aviso, electrónica).</td></tr>
+        <tr><td>Consecuencia de un error</td><td>Puede reponerse con un nuevo intento sin mayor complicación.</td><td>Puede afectar términos legales y la validez de toda una actuación.</td></tr>
+        <tr><td>Rol del Citador</td><td>Organiza, recoge y reparte según instrucciones.</td><td>Tramita la diligencia según procedimientos, con especial cuidado en fecha y forma.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> cuidado con las opciones que tratan la notificación como "lo mismo" que repartir un oficio cualquiera. La notificación <mark>siempre exige mayor rigor</mark>, especialmente en la identificación de quien recibe y en el registro preciso de la fecha y hora.</div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Reconocer que estás ante una notificación</div><div class="practica-body"><p>Te entregan un documento para hacerle llegar a una persona. Al revisarlo, ves que se trata de la comunicación de una decisión dentro de una actuación, de la cual depende un término para recurrir. Aunque nadie te lo diga con la palabra exacta "notificación", reconoces, por el contenido, que estás ante esa figura, y ajustas tu actuación: prestas atención especial a quién recibe, a la fecha y hora exactas, y al formato de constancia que corresponde.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 1</div><div class="cp-q">¿Cuál es la diferencia esencial entre repartir un oficio de rutina y notificar una decisión?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">Ninguna; ambos son, en esencia, entregar un papel a alguien.</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">La notificación, además de entregar o comunicar, exige cumplir una forma legal reglada porque de ella dependen términos y efectos jurídicos que afectan derechos.</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">Que la notificación siempre se hace por correo electrónico y el reparto siempre en papel.</button>
+      </div><div class="cp-fb" id="cpfb1"><strong>Correcto: la segunda.</strong> La notificación tiene un peso jurídico distinto al simple reparto: produce efectos sobre términos y derechos, por lo que exige un procedimiento más riguroso.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> notificar no es solo entregar: es hacer saber formalmente una decisión siguiendo una forma legal, de la cual dependen términos y derechos. Por eso exige mayor rigor que el reparto ordinario de correspondencia.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>Las formas de notificación: personal, por aviso y electrónica</h3></div>
+    <div class="b-texto">
+      <p>No existe una sola manera de notificar. El ordenamiento prevé distintas <strong>formas de notificación</strong>, cada una con su propio procedimiento, y es importante que entiendas la lógica general de cada una, aunque el detalle exacto de cuál aplica en cada caso lo determine el procedimiento de tu dependencia y la naturaleza de la decisión.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Forma</th><th>En qué consiste</th><th>Cuándo se usa típicamente</th></tr>
+        <tr><td><strong>Notificación personal</strong></td><td>Se busca directamente a la persona (o a quien esté autorizado) para hacerle saber la decisión, generalmente con lectura o entrega de una copia y la firma de una constancia.</td><td>Es la forma preferente cuando es posible ubicar a la persona.</td></tr>
+        <tr><td><strong>Notificación por aviso</strong></td><td>Cuando no fue posible notificar personalmente, se fija o se envía un aviso informando la decisión, siguiendo un procedimiento que incluye dejar constancia de esa fijación o envío.</td><td>Se usa cuando los intentos de notificación personal no tuvieron éxito, según el procedimiento aplicable.</td></tr>
+        <tr><td><strong>Notificación electrónica</strong></td><td>Se realiza a través de medios electrónicos (correo institucional, por ejemplo), cuando el procedimiento y las condiciones para esta modalidad lo permiten.</td><td>Cuando la entidad cuenta con los datos de contacto autorizados y el procedimiento lo contempla.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la <mark>notificación personal es, por regla general, la forma preferente</mark>: las demás formas suelen operar cuando la personal no fue posible, y siempre siguiendo el orden y las condiciones que establece el procedimiento aplicable a cada tipo de decisión. El Citador no elige libremente la forma: la sigue según la instrucción y el procedimiento.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🧑‍💼 ¿Quién decide cuál forma de notificación aplica en cada caso?</summary><div class="acc-body"><p>Esa decisión corresponde a quien dirige la actuación o al procedimiento establecido, no al Citador. Tu función es <strong>ejecutar la diligencia según la forma que te indiquen</strong>, aplicando con rigor el procedimiento propio de esa forma.</p></div></details>
+        <details class="acc"><summary>📧 ¿La notificación electrónica es siempre más simple?</summary><div class="acc-body"><p>No necesariamente. Exige condiciones específicas (medios autorizados, datos de contacto validados) y, aun siendo electrónica, requiere que quede constancia clara de cuándo se entiende realizada, porque de esa fecha también dependen términos.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Identificar la forma correcta según la instrucción</div><div class="practica-body"><p>Te entregan una notificación con instrucción expresa de que debe ser personal. Antes de salir, confirmas que entiendes el procedimiento de esa forma específica: necesitas identificar plenamente a quien recibe, dejar constancia de la fecha y hora exactas, y seguir el formato de acta o constancia que corresponde a la notificación personal, no el formato simple de un reparto ordinario.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 2</div><div class="cp-q">¿Quién decide qué forma de notificación aplica a una decisión concreta?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="0">El Citador, según lo que le resulte más rápido de ejecutar ese día.</button>
+        <button class="cp-opt" data-cp="2" data-ans="1">Quien dirige la actuación, conforme al procedimiento establecido; el Citador ejecuta la diligencia según esa instrucción.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">El destinatario de la decisión, según su preferencia personal.</button>
+      </div><div class="cp-fb" id="cpfb2"><strong>Correcto: la segunda.</strong> La forma de notificación la determina el procedimiento y quien dirige la actuación; el Citador ejecuta, no decide ni elige por conveniencia.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> existen formas de notificación personal, por aviso y electrónica, cada una con su propio procedimiento. La personal suele ser preferente; las demás operan según las condiciones del procedimiento aplicable. El Citador ejecuta la forma indicada, no la elige.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>Por qué la fecha de notificación es tan importante</h3></div>
+    <div class="b-texto">
+      <p>Si tuvieras que quedarte con una sola idea de toda esta guía, sería esta: <strong>la fecha (y muchas veces la hora) de la notificación es un dato con peso legal</strong>, porque de ella depende, generalmente, el momento desde el cual empiezan a correr los términos para que la persona notificada ejerza sus derechos (como interponer un recurso) o para que la decisión adquiera firmeza.</p>
+      <div class="def-panel"><span class="def-label">Por qué esto te importa como Citador</span><p>Un error en la fecha registrada —anotar un día distinto al real, o ser impreciso sobre si fue antes o después de cierta hora— <mark>no es un detalle menor de formato</mark>: puede alterar por completo el cálculo de un término legal, con consecuencias serias tanto para la persona notificada como para la validez de la actuación de la entidad.</p></div>
+      <h4>Qué debes registrar siempre con precisión</h4>
+      <ul class="lista">
+        <li><strong>Fecha exacta</strong> en que se practicó la notificación (día, mes y año).</li>
+        <li><strong>Hora</strong>, cuando el procedimiento o la naturaleza de la decisión lo exija.</li>
+        <li><strong>Lugar</strong> donde se practicó la diligencia.</li>
+        <li><strong>Identificación de quien recibió</strong> (el destinatario mismo, o quien esté autorizado según el procedimiento).</li>
+      </ul>
+      <div class="ojo"><b>Ojo en la prueba:</b> nunca es correcto "redondear" o "aproximar" una fecha de notificación ("fue por esos días, no recuerdo el exacto"). La prueba evalúa que entiendas que este dato <mark>debe quedar registrado con precisión en el momento mismo de la diligencia</mark>, no reconstruido después de memoria.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>⏱️ ¿Por qué a veces importa también la hora, no solo el día?</summary><div class="acc-body"><p>Porque en ciertos procedimientos los términos pueden contarse con una precisión que incluye el momento exacto dentro del día (por ejemplo, para determinar si una actuación ocurrió antes o después de cierto límite horario). Cuando el procedimiento o la instrucción lo exige, registrar la hora con precisión es tan importante como registrar la fecha.</p></div></details>
+        <details class="acc"><summary>📅 ¿Qué pasa si registro una fecha equivocada por error humano?</summary><div class="acc-body"><p>Reportas el error apenas lo detectas, para que se verifique y corrija cuanto antes, con la mayor transparencia posible. No se intenta "ajustar" el registro después para que coincida con lo que se cree correcto sin dejar evidencia clara de la corrección: eso compromete la credibilidad de toda la constancia.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Anotar la fecha en el momento exacto</div><div class="practica-body"><p>Practicas una notificación personal a las 3:47 p.m. de un martes. En el acta de notificación, anotas exactamente esa fecha y esa hora, sin aproximar ni dejarlo "para después". Ese dato preciso es el que permitirá calcular correctamente, días después, hasta cuándo tiene la persona para interponer un recurso frente a la decisión notificada.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 3</div><div class="cp-q">Terminas una notificación y, por las prisas, piensas anotar la fecha "más tarde, cuando tenga tiempo de revisar bien el formato". ¿Es correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="0">Sí, mientras se anote el mismo día, no importa el momento exacto en que se complete el registro.</button>
+        <button class="cp-opt" data-cp="3" data-ans="1">No, la fecha y hora deben registrarse con precisión en el momento mismo de la diligencia, no reconstruirse después de memoria.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Sí, siempre que se anote antes de que termine la semana.</button>
+      </div><div class="cp-fb" id="cpfb3"><strong>Correcto: la segunda.</strong> El registro preciso de fecha y hora debe hacerse en el momento mismo de la diligencia, porque de ese dato dependen términos legales exactos.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la fecha (y, cuando corresponde, la hora) de la notificación tiene peso legal directo: de ella dependen términos para recurrir y la firmeza de decisiones. Se registra con precisión en el momento mismo de la diligencia, nunca de memoria después.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>Cómo se deja constancia de una notificación</h3></div>
+    <div class="b-texto">
+      <p>La constancia de notificación es el documento (acta, formato o registro) que certifica que la diligencia se practicó, cómo, cuándo y con qué resultado. Es, en cierto sentido, una versión reforzada de la constancia de entrega que ya conoces del reparto ordinario, pero con exigencias adicionales propias de la figura.</p>
+      <div class="def-panel"><span class="def-label">Qué debe contener una constancia de notificación completa</span><p><mark>Identificación de la decisión notificada</mark> (de qué actuación se trata, en términos generales), <mark>identificación de quien recibió</mark> (nombre completo, documento de identidad si el procedimiento lo exige, o la relación con el destinatario si no fue él directamente), <mark>fecha y hora exactas</mark>, <mark>lugar</mark> de la diligencia, y <mark>la forma en que se practicó</mark> (personal, con las particularidades del caso, por ejemplo).</p></div>
+      <h4>Casos especiales de constancia</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación</th><th>Qué debe reflejar la constancia</th></tr>
+        <tr><td>La persona recibe y firma sin problema</td><td>Firma, fecha, hora, identificación completa.</td></tr>
+        <tr><td>La persona recibe pero se niega a firmar</td><td>Se deja constancia expresa de la negativa a firmar, detallando que sí recibió o se le hizo saber el contenido, con fecha y hora.</td></tr>
+        <tr><td>Recibe alguien autorizado distinto al destinatario</td><td>Identificación de quien recibió y su relación con el destinatario, siguiendo lo que permita el procedimiento para ese tipo de notificación.</td></tr>
+        <tr><td>No fue posible la notificación personal</td><td>Constancia detallada de los intentos realizados, como insumo para decidir si se acude a otra forma (por ejemplo, por aviso).</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la <strong>negativa a firmar no impide dejar la notificación por hecha</strong> en muchos procedimientos, siempre que se documente adecuadamente esa negativa: se deja constancia de que la persona fue debidamente informada o se le hizo entrega, y de que se negó a firmar, con la fecha y hora correspondientes. No firmar no significa, automáticamente, que la notificación "no ocurrió".</div>
+      <div class="acordeon">
+        <details class="acc"><summary>✍️ ¿Qué pasa si la persona recibe el documento pero se niega a firmar la constancia?</summary><div class="acc-body"><p>Se documenta la situación con precisión: se deja constancia de que la persona fue notificada (se le entregó o se le hizo conocer el contenido) y de que se negó a firmar, anotando fecha y hora. Esa constancia de la negativa, bien hecha, puede ser suficiente para sostener que la notificación se practicó, según el procedimiento aplicable.</p></div></details>
+        <details class="acc"><summary>🖊️ ¿Puede el Citador firmar "en nombre" de la persona que se niega?</summary><div class="acc-body"><p>No. Nunca se firma en nombre de otra persona ni se simula su firma. Lo correcto es que el propio Citador, como quien practica la diligencia, documente y suscriba su propia constancia de lo ocurrido, incluyendo la negativa.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La negativa del caso inicial</div><div class="practica-body"><p>Vuelves al caso del inicio: la persona te dice "yo no voy a firmar nada, llévese eso". Le explicas con calma el propósito de tu visita y le haces saber el contenido general de lo que debes notificar. Ante su negativa a firmar, documentas con precisión: nombre de la persona, fecha, hora, lugar, que se le hizo conocer el contenido, y que se negó expresamente a firmar la constancia. Esa documentación detallada, suscrita por ti como quien practicó la diligencia, es lo que sostiene que la notificación se practicó a pesar de la negativa.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 4</div><div class="cp-q">La persona notificada se niega rotundamente a firmar cualquier documento. ¿La notificación queda sin efecto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="0">Sí, sin firma no hay notificación válida en ningún caso.</button>
+        <button class="cp-opt" data-cp="4" data-ans="1">No necesariamente: se documenta con precisión la negativa (que fue informada, fecha, hora, lugar), y esa constancia puede sostener que la diligencia se practicó según el procedimiento aplicable.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Sí, y la única solución es que el Citador firme en representación de la persona para completar el trámite.</button>
+      </div><div class="cp-fb" id="cpfb4"><strong>Correcto: la segunda.</strong> La negativa a firmar no anula automáticamente la notificación si se documenta adecuadamente. El Citador nunca firma en nombre de otra persona.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la constancia de notificación debe identificar la decisión, a quien recibió, fecha, hora, lugar y forma. Ante una negativa a firmar, se documenta con precisión; nunca se firma en nombre de otra persona.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>Los traslados de decisiones: qué son y cómo se tramitan</h3></div>
+    <div class="b-texto">
+      <p>Tu manual habla de "notificación de las decisiones <strong>y sus traslados</strong>". El <strong>traslado</strong> es un concepto relacionado pero distinto: es el período o el acto mediante el cual, una vez notificada una decisión, se pone a disposición de la persona interesada (o de otra parte dentro de la actuación) la posibilidad de conocer y pronunciarse sobre ciertos elementos del expediente o de la decisión, dentro de un plazo determinado.</p>
+      <div class="def-panel"><span class="def-label">Cómo pensar la relación entre notificación y traslado</span><p>Muchas veces, la notificación de una decisión <mark>es el punto de partida</mark> de un traslado: una vez que la persona se notifica, se abre un período durante el cual puede ejercer ciertas actuaciones (presentar sus argumentos, aportar pruebas, interponer un recurso). El Citador participa de este engranaje tramitando tanto la notificación de la decisión como las diligencias relacionadas con que ese traslado se comunique y se gestione correctamente, siempre según las instrucciones y el procedimiento establecidos.</p></div>
+      <h4>Qué le corresponde al Citador en un traslado</h4>
+      <ul class="lista">
+        <li><strong>Tramitar la diligencia de comunicación</strong> correspondiente, siguiendo exactamente la instrucción recibida sobre a quién y cómo debe comunicarse.</li>
+        <li><strong>Registrar con precisión la fecha</strong> en que se practica esa diligencia, porque de ahí puede depender el cálculo del plazo del traslado.</li>
+        <li><strong>Dejar constancia</strong> de la diligencia, igual que en cualquier notificación.</li>
+      </ul>
+      <div class="ojo"><b>Ojo en la prueba:</b> el Citador <strong>no decide el contenido ni el alcance del traslado</strong> (eso corresponde a quien dirige la actuación, conforme al procedimiento); su función es tramitar con rigor la diligencia de comunicación correspondiente, exactamente como con cualquier notificación.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>📋 ¿El traslado es siempre un documento distinto al de la notificación de la decisión?</summary><div class="acc-body"><p>Puede variar según el procedimiento: en algunos casos, la misma diligencia de notificación de la decisión incluye la información sobre el traslado correspondiente (por ejemplo, informando que a partir de esa fecha corre un plazo); en otros, puede tratarse de una comunicación separada. El Citador sigue, en cualquier caso, la instrucción específica que recibe para cada diligencia.</p></div></details>
+        <details class="acc"><summary>⏳ ¿Por qué es tan importante la fecha también en los traslados?</summary><div class="acc-body"><p>Porque el plazo del traslado, igual que el término para recurrir una decisión, suele contarse a partir de una fecha cierta. Un registro impreciso de esa fecha puede generar la misma clase de problema que viste en el módulo anterior sobre la notificación de decisiones.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Tramitar la comunicación de un traslado</div><div class="practica-body"><p>Te encomiendan comunicar a una persona que, a partir de la notificación de una decisión, se le concede un plazo para presentar sus argumentos (un traslado). Tramitas esa diligencia con el mismo rigor que cualquier notificación: identificas correctamente a quien debe recibir la comunicación, registras con precisión la fecha y hora, y dejas la constancia correspondiente, siguiendo exactamente la instrucción recibida sobre el contenido y la forma de esa comunicación.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 5</div><div class="cp-q">¿Qué le corresponde al Citador en relación con un traslado derivado de una decisión notificada?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="5" data-ans="0">Decidir cuánto tiempo debe durar el traslado, según su propio criterio sobre la complejidad del caso.</button>
+        <button class="cp-opt" data-cp="5" data-ans="1">Tramitar con rigor la diligencia de comunicación correspondiente, registrando con precisión la fecha y dejando la constancia debida, según la instrucción recibida.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">Redactar el contenido del traslado, explicando a la persona qué argumentos debería presentar.</button>
+      </div><div class="cp-fb" id="cpfb5"><strong>Correcto: la segunda.</strong> El Citador tramita la diligencia de comunicación con rigor; no decide la duración del traslado ni redacta ni orienta sobre el contenido de lo que la persona debe presentar.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el traslado es el período posterior a una notificación durante el cual la persona puede pronunciarse sobre la decisión o el expediente. El Citador tramita la diligencia de comunicación correspondiente con el mismo rigor que cualquier notificación, sin decidir su contenido ni su alcance.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">6</div><h3>Qué pasa si no se puede notificar</h3></div>
+    <div class="b-texto">
+      <p>No siempre es posible notificar en el primer intento, o incluso en varios intentos. La persona puede haberse mudado, puede estar reiteradamente ausente, o la dirección puede ser incorrecta. Saber reaccionar con método ante estas situaciones es parte esencial de tu función.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Una <strong>diligencia negativa de notificación</strong> es aquella en la que, a pesar de haberse intentado correctamente, no fue posible notificar personalmente a la persona. Esto no significa que el proceso se detenga: generalmente, el procedimiento prevé pasos siguientes (como acudir a otra forma de notificación), pero esa decisión corresponde a quien dirige la actuación, no al Citador.</p></div>
+      <h4>Qué debe hacer el Citador ante una diligencia negativa</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Agotar los intentos indicados</h4><p>Cumples el número y la forma de intentos que te haya indicado el procedimiento.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Documentar cada intento</h4><p>Fecha, hora y resultado de cada visita o gestión realizada.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Verificar circunstancias relevantes</h4><p>Si hay indicios de cambio de dirección, ausencia prolongada, etc.</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Reportar la diligencia negativa</h4><p>Con el detalle completo de lo intentado y encontrado.</p></div>
+        <div class="flujo-paso"><span class="fp-n">5</span><h4>Esperar instrucción</h4><p>Sobre si se acude a otra forma de notificación u otro paso.</p></div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> ante una diligencia negativa, el Citador <mark>nunca decide por su cuenta</mark> pasar a otra forma de notificación (como fijar un aviso): eso lo determina quien dirige la actuación, conforme al procedimiento. El Citador reporta con el detalle necesario para que esa decisión se tome con buena información.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔁 ¿Cuántos intentos de notificación personal se deben hacer antes de reportar una diligencia negativa?</summary><div class="acc-body"><p>Depende del procedimiento establecido para cada tipo de decisión y de la instrucción recibida. El Citador cumple exactamente los intentos que se le indiquen, documentando cada uno, y no decide por iniciativa propia cuántos intentos son "suficientes".</p></div></details>
+        <details class="acc"><summary>🏠 ¿Qué hago si durante los intentos detecto indicios de que la persona ya no vive en esa dirección?</summary><div class="acc-body"><p>Documentas esos indicios con precisión (lo que observaste, lo que te informaron vecinos u otras personas del lugar, si aplica) y los incluyes en tu reporte, porque es información relevante para decidir el siguiente paso del procedimiento.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Agotar los intentos y reportar con detalle</div><div class="practica-body"><p>Intentas notificar personalmente en dos ocasiones distintas, en horarios diferentes, según te indicó el procedimiento, y en ambas la persona no se encuentra. Un vecino te comenta que "hace tiempo no la ve por ahí". Documentas cada intento con su fecha y hora, incluyes la observación del vecino como un dato relevante, y reportas la diligencia negativa con todo ese detalle, sin decidir tú mismo si se debe pasar a notificación por aviso.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 6</div><div class="cp-q">Después de dos intentos fallidos de notificación personal, ¿qué debe hacer el Citador?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="6" data-ans="0">Decidir por su cuenta fijar un aviso en la puerta de la vivienda, para agilizar el proceso.</button>
+        <button class="cp-opt" data-cp="6" data-ans="1">Reportar la diligencia negativa con el detalle completo de los intentos realizados, y esperar la instrucción de quien dirige la actuación sobre el siguiente paso.</button>
+        <button class="cp-opt" data-cp="6" data-ans="0">Dar por terminado el caso sin ningún reporte, asumiendo que ya se hizo lo posible.</button>
+      </div><div class="cp-fb" id="cpfb6"><strong>Correcto: la segunda.</strong> El Citador documenta y reporta con detalle; la decisión sobre el siguiente paso (como una notificación por aviso) corresponde a quien dirige la actuación.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> ante una diligencia negativa, se agotan los intentos indicados, se documenta cada uno con precisión, y se reporta con el detalle necesario, sin decidir por cuenta propia el siguiente paso del procedimiento.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">7</div><h3>Los límites del rol: ejecutar, no decidir</h3></div>
+    <div class="b-texto">
+      <p>Este módulo retoma, con más profundidad, la idea que ha recorrido toda la guía: el Citador <strong>ejecuta la diligencia de notificación según instrucciones</strong>, pero en ningún momento decide el contenido de la decisión que notifica, ni el procedimiento que se sigue antes o después de esa notificación.</p>
+      <div class="def-panel"><span class="def-label">Por qué este límite es tan importante en el contexto de la PGN</span><p>Las decisiones que se notifican en el ámbito disciplinario o administrativo de la Procuraduría son adoptadas por quienes tienen la competencia legal para hacerlo (como los funcionarios sustanciadores o quienes dirigen la actuación), <mark>nunca por el Citador</mark>. La redacción de providencias, conceptos o decisiones de fondo, así como la determinación del procedimiento aplicable, corresponde a otros roles. El Citador aporta algo igualmente valioso pero distinto: la ejecución rigurosa de la diligencia que hace posible que esa decisión produzca efectos conocidos y oponibles.</p></div>
+      <h4>Lo que sí y lo que no le corresponde al Citador</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Sí le corresponde</th><th>No le corresponde</th></tr>
+        <tr><td>Tramitar la diligencia de notificación según la forma indicada.</td><td>Decidir qué forma de notificación aplica a un caso.</td></tr>
+        <tr><td>Registrar con precisión fecha, hora y circunstancias de la diligencia.</td><td>Redactar o modificar el contenido de la decisión que se notifica.</td></tr>
+        <tr><td>Documentar con detalle una negativa, ausencia o diligencia negativa.</td><td>Decidir el siguiente paso procedimental ante una diligencia negativa.</td></tr>
+        <tr><td>Explicar con sencillez el propósito general de su visita.</td><td>Explicar o interpretar el contenido jurídico de la decisión.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> cualquier opción que muestre al Citador <strong>opinando sobre si la decisión es correcta</strong>, <strong>sugiriendo qué debería hacer la persona notificada</strong>, o <strong>decidiendo el procedimiento a seguir</strong> ante cualquier incidente de la notificación, es incorrecta. Su función, aun en esta tarea de alta responsabilidad, sigue siendo de <mark>apoyo operativo bajo instrucciones</mark>.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>⚖️ ¿El Citador puede opinar si considera que una decisión es injusta?</summary><div class="acc-body"><p>No le corresponde expresar esa opinión en el ejercicio de su función, ni mucho menos transmitirla a la persona notificada. Su función es ejecutar la diligencia con rigor; cualquier opinión personal sobre el fondo del asunto queda fuera del ámbito de su rol operativo.</p></div></details>
+        <details class="acc"><summary>🧑‍⚖️ ¿Qué pasa si la persona le pide consejo sobre si debe recurrir la decisión?</summary><div class="acc-body"><p>El Citador no da asesoría sobre ese tipo de decisiones: orienta a la persona, si es pertinente, hacia a quién puede dirigirse para obtener esa información (como una oficina de atención al usuario o el funcionario competente), sin opinar él mismo sobre la conveniencia de recurrir.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Mantenerse en el rol frente a una pregunta difícil</div><div class="practica-body"><p>La persona notificada, nerviosa, te pregunta: "¿usted qué cree, debería yo pelear esto?". No das tu opinión sobre la conveniencia de recurrir. Le explicas con respeto que tu función es la diligencia de notificación, y la orientas hacia la dependencia o el canal de atención al usuario donde puede obtener información sobre sus opciones, sin involucrarte en una recomendación personal sobre el fondo del asunto.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 7</div><div class="cp-q">La persona notificada te pregunta si, en tu opinión, la decisión que le acabas de notificar es justa. ¿Qué respondes?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="7" data-ans="0">Le doy mi opinión sincera, porque considero que eso ayuda a que la persona se sienta mejor atendida.</button>
+        <button class="cp-opt" data-cp="7" data-ans="1">Le explico con respeto que mi función es la diligencia de notificación, y la oriento hacia el canal correspondiente si necesita información adicional sobre la decisión.</button>
+        <button class="cp-opt" data-cp="7" data-ans="0">Le digo que no puedo responder nada en absoluto y me retiro de inmediato.</button>
+      </div><div class="cp-fb" id="cpfb7"><strong>Correcto: la segunda.</strong> El Citador no opina sobre el fondo de la decisión que notifica, pero tampoco deja a la persona sin ninguna orientación: la dirige hacia quien sí puede atender esa inquietud.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el Citador ejecuta la diligencia de notificación con rigor, pero nunca decide la forma aplicable, el contenido de la decisión, el procedimiento a seguir ante incidentes, ni opina sobre el fondo del asunto. Su aporte es la ejecución confiable, no la decisión.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>Seguridad, trato respetuoso y manejo de situaciones difíciles</h3></div>
+    <div class="b-texto">
+      <p>Notificar decisiones, especialmente en el ámbito disciplinario, puede generar reacciones emocionales fuertes en las personas: sorpresa, molestia, angustia, e incluso hostilidad hacia quien lleva la noticia, aunque el Citador no tenga ninguna responsabilidad sobre el contenido de lo que notifica. Saber manejar estas situaciones con serenidad es parte de tu función.</p>
+      <div class="def-panel"><span class="def-label">Por qué esto conecta con lo que ya viste</span><p>Recuerda la guía del Día 10 sobre seguridad en diligencias externas: notificar decisiones <mark>comparte ese mismo terreno de exposición en la calle</mark>, con un matiz adicional: la reacción emocional de la persona notificada puede ser más intensa que ante un simple reparto de correspondencia, por lo que el trato respetuoso y la prudencia se vuelven todavía más relevantes.</p></div>
+      <h4>Buenas prácticas frente a reacciones difíciles</h4>
+      <ul class="lista">
+        <li><strong>Mantener un tono calmado y respetuoso</strong> en todo momento, sin importar la reacción de la persona.</li>
+        <li><strong>No tomar la reacción como algo personal:</strong> la persona reacciona ante la decisión, no contra ti.</li>
+        <li><strong>No discutir ni defender el contenido de la decisión:</strong> no te corresponde justificarla ni debatirla.</li>
+        <li><strong>Priorizar tu seguridad</strong> si la situación escala más allá de una reacción emocional normal hacia un riesgo real; en ese caso, te retiras y reportas la situación.</li>
+      </ul>
+      <div class="ojo"><b>Ojo en la prueba:</b> frente a una reacción agresiva o amenazante que vaya más allá de la molestia comprensible, la respuesta correcta <mark>nunca es "insistir para completar la diligencia a toda costa"</mark>: se prioriza la seguridad, se retira si es necesario y se reporta la situación con precisión.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>😠 ¿Qué hago si la persona me culpa directamente a mí por la decisión?</summary><div class="acc-body"><p>Aclaras con calma que tu función es únicamente la diligencia de notificación, que la decisión fue adoptada por quien tiene la competencia para ello, y que no te corresponde su contenido. No te involucras en una discusión sobre si la decisión es correcta o no.</p></div></details>
+        <details class="acc"><summary>🚨 ¿Cuándo se considera que una situación amerita retirarse por seguridad?</summary><div class="acc-body"><p>Cuando la reacción deja de ser una expresión emocional comprensible (molestia, tristeza, incluso cierto enojo verbal) y se convierte en una amenaza real a tu integridad física o en un riesgo evidente de agresión. En ese punto, priorizas tu seguridad, te retiras del lugar y reportas la situación con el mayor detalle posible.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Mantener la calma ante una reacción fuerte</div><div class="practica-body"><p>Al notificar una decisión, la persona reacciona con enojo, elevando la voz y culpándote por "venir a arruinarle el día". Mantienes un tono calmado, aclaras con respeto que tu función es solo la diligencia de notificación y que la decisión no depende de ti, y completas el procedimiento (documentar la notificación) sin involucrarte en una discusión. Si la situación escalara a una amenaza real, te retirarías priorizando tu seguridad y reportarías lo ocurrido con precisión.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 8</div><div class="cp-q">La persona notificada, además de molestarse verbalmente, comienza a hacer gestos amenazantes hacia tu integridad física. ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="8" data-ans="0">Insistes en completar la diligencia de todas formas, porque ya iniciaste el procedimiento y no quieres dejarlo a medias.</button>
+        <button class="cp-opt" data-cp="8" data-ans="1">Priorizas tu seguridad, te retiras del lugar si es necesario, y reportas la situación con el mayor detalle posible a tu dependencia.</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">Respondes con el mismo tono para "defenderte" y continuar con la diligencia.</button>
+      </div><div class="cp-fb" id="cpfb8"><strong>Correcto: la segunda.</strong> Ante una amenaza real a tu integridad, la seguridad prevalece sobre completar la diligencia en ese momento. Se reporta la situación con precisión para que se decida el siguiente paso.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> las reacciones emocionales ante una notificación son comprensibles y se manejan con calma y respeto, sin involucrarse en el fondo del asunto. Ante una amenaza real, la seguridad personal prevalece sobre completar la diligencia.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">9</div><h3>Responsabilidad en el trámite de notificaciones</h3></div>
+    <div class="b-texto">
+      <p>Dado el peso jurídico de esta función, conviene cerrar con una mirada específica a la responsabilidad que acompaña el trámite de notificaciones, retomando la lógica que ya viste en guías anteriores pero aplicada a este contexto de mayor exigencia.</p>
+      <div class="def-panel"><span class="def-label">El criterio que se mantiene constante</span><p>La responsabilidad del Citador se mide, también aquí, por si <mark>actuó con diligencia, siguió el procedimiento y reportó la verdad</mark>, no por si el resultado final (lograr notificar en el primer intento, por ejemplo) dependió de circunstancias fuera de su control.</p></div>
+      <h4>Conductas que sí comprometen seriamente la responsabilidad</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Conducta</th><th>Por qué es especialmente grave en notificaciones</th></tr>
+        <tr><td>Registrar una fecha u hora falsa de notificación</td><td>Puede alterar directamente el cálculo de un término legal, afectando derechos de la persona notificada y la validez de la actuación.</td></tr>
+        <tr><td>Simular que se notificó cuando no fue así</td><td>Puede hacer que una decisión se considere en firme sin que la persona haya tenido oportunidad real de conocerla y defenderse.</td></tr>
+        <tr><td>Firmar en nombre de la persona notificada</td><td>Es una falsedad que compromete gravemente la validez de la diligencia.</td></tr>
+        <tr><td>Reportar con honestidad una diligencia negativa, tras agotar los intentos indicados</td><td>No genera responsabilidad: es precisamente la actuación correcta esperada del cargo.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> dado el peso jurídico de la notificación, cualquier opción que implique <mark>alterar, inventar o simular</mark> algún aspecto de la diligencia (fecha, firma, resultado) es considerada una de las faltas más graves que puede cometer un Citador, precisamente por las consecuencias que puede tener sobre los derechos de terceros y la validez de actuaciones oficiales.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🧾 ¿Por qué se insiste tanto en la honestidad del reporte en este tema específico?</summary><div class="acc-body"><p>Porque, a diferencia de un memorando de rutina, una notificación mal documentada o falseada puede tener efectos sobre derechos fundamentales de defensa de una persona y sobre la validez de decisiones disciplinarias o administrativas completas. El peso de la honestidad es directamente proporcional al peso jurídico de la función.</p></div></details>
+        <details class="acc"><summary>🔍 ¿Cómo se protege el Citador frente a un reclamo posterior sobre una notificación?</summary><div class="acc-body"><p>Con una constancia completa, precisa y honesta, hecha en el momento de la diligencia: fecha, hora, lugar, identificación de quien recibió (o la negativa debidamente documentada), y la forma exacta en que se practicó. Esa constancia, bien hecha desde el principio, es la mejor defensa ante cualquier cuestionamiento futuro.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Cerrar el caso del día con honestidad total</div><div class="practica-body"><p>Al final de la jornada del caso inicial, tu reporte refleja con exactitud lo ocurrido: la persona recibió la comunicación, se le hizo saber el contenido, y se negó a firmar, lo cual documentaste con fecha, hora y lugar precisos. No simulas que firmó, ni omites la negativa para "simplificar" el reporte. Esa honestidad, sumada al rigor con que seguiste el procedimiento, es lo que sostiene la validez de la notificación y te protege a ti mismo frente a cualquier cuestionamiento posterior.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 9</div><div class="cp-q">¿Cuál de las siguientes conductas compromete más seriamente la responsabilidad del Citador en una notificación?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="9" data-ans="0">Reportar con honestidad que, tras dos intentos según el procedimiento, no fue posible notificar personalmente.</button>
+        <button class="cp-opt" data-cp="9" data-ans="1">Registrar una fecha distinta a la real en la constancia de notificación, para que el reporte "cuadre mejor" con el cronograma esperado.</button>
+        <button class="cp-opt" data-cp="9" data-ans="0">Documentar con detalle una negativa a firmar, incluyendo fecha, hora y lugar exactos.</button>
+      </div><div class="cp-fb" id="cpfb9"><strong>Correcto: la segunda.</strong> Alterar la fecha real de una notificación es una de las conductas más graves posibles, porque compromete directamente el cálculo de términos legales y la validez de la actuación.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la responsabilidad en el trámite de notificaciones se mide por la diligencia, el rigor procedimental y la honestidad del reporte. Alterar, inventar o simular cualquier aspecto de la diligencia es una de las faltas más graves posibles, por el peso jurídico que tiene esta función.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">10</div><h3>Integración: el caso completo del día</h3></div>
+    <div class="b-texto">
+      <p>Cerremos uniendo todos los módulos en el caso con el que empezó esta guía: la notificación personal con instrucción expresa sobre un término importante, y la negativa a firmar.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Elemento del caso</th><th>Qué aplicas</th><th>Tu actuación correcta</th></tr>
+        <tr><td>Instrucción de notificar personalmente</td><td>Formas de notificación (módulo 2)</td><td>Sigues la forma indicada, sin decidir por tu cuenta una forma distinta.</td></tr>
+        <tr><td>Advertencia de que un término depende de la fecha</td><td>Importancia de la fecha (módulo 3)</td><td>Registras fecha y hora exactas en el momento mismo de la diligencia.</td></tr>
+        <tr><td>Negativa de la persona a firmar</td><td>Constancia de notificación (módulo 4)</td><td>Documentas con precisión la negativa, sin firmar en su nombre.</td></tr>
+        <tr><td>Posible reacción emocional de la persona</td><td>Trato respetuoso y seguridad (módulo 8)</td><td>Mantienes la calma, explicas el propósito general sin opinar sobre el fondo, priorizando tu seguridad si la situación escala.</td></tr>
+        <tr><td>Reporte final de la diligencia</td><td>Responsabilidad y honestidad (módulo 9)</td><td>Registras con exactitud lo ocurrido, incluyendo la negativa, sin simular ni alterar ningún dato.</td></tr>
+      </table></div>
+      <div class="destacado azul"><span class="dst-ic">🧠</span><div class="dst-body"><span class="dst-title">Lo que separa a un buen Citador de uno del montón en notificaciones</span><p>No es la rapidez para "cumplir el encargo": es el <strong>rigor en la fecha y la forma</strong>, la <strong>calma ante reacciones difíciles</strong>, y la <strong>honestidad absoluta en la constancia</strong>, incluso cuando el resultado no es el esperado. Ese criterio es exactamente lo que la prueba de conocimientos evalúa con sus casos de notificación.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 10</div><div class="cp-q">Terminas la diligencia del caso inicial: la persona se negó a firmar, pero sí recibió la comunicación del contenido. ¿Tu jornada se considera bien ejecutada?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="10" data-ans="0">No, porque sin firma de la persona la diligencia se considera un fracaso total.</button>
+        <button class="cp-opt" data-cp="10" data-ans="1">Sí, porque seguiste el procedimiento, registraste con precisión la fecha y hora, y documentaste honestamente la negativa, que es exactamente lo que se espera del cargo en esta situación.</button>
+        <button class="cp-opt" data-cp="10" data-ans="0">Solo si al día siguiente logras que la persona firme retroactivamente el documento.</button>
+      </div><div class="cp-fb" id="cpfb10"><strong>Correcto: la segunda.</strong> El rigor procedimental y la honestidad en el reporte, no la obtención de una firma a toda costa, son lo que determina una diligencia de notificación bien ejecutada.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> una notificación bien ejecutada combina forma correcta, fecha precisa, constancia honesta y trato respetuoso, incluso cuando el resultado incluye una negativa o una dificultad. El criterio y la honestidad, no la firma obtenida a toda costa, son lo que la prueba evalúa.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:30px 0 8px">🧮 Ejercicios prácticos resueltos</h3>
+  <p>Antes de cerrar, pon a prueba tu criterio con estos mini-casos. Lee, piensa tu respuesta y luego despliega la solución.</p>
+  <div class="acordeon">
+    <details class="acc"><summary>Ejercicio 1 — Llegas a notificar personalmente y la persona que abre la puerta dice ser "la hermana" del destinatario, quien no está en casa. ¿Qué haces?</summary><div class="acc-body"><p><strong>Solución:</strong> verificas si, según el procedimiento aplicable a esa notificación específica, está permitido entregar o comunicar a través de alguien distinto al destinatario directo (por ejemplo, una persona que convive con él). Si el procedimiento lo permite, documentas con precisión la identificación de quien recibió y su relación con el destinatario. Si no está permitido para ese tipo de notificación, documentas la ausencia y sigues el procedimiento de intentos correspondiente, sin asumir por tu cuenta que la hermana puede recibir válidamente.</p></div></details>
+    <details class="acc"><summary>Ejercicio 2 — Notificas correctamente, pero al revisar después notas que anotaste la fecha con un error de un día. ¿Qué haces?</summary><div class="acc-body"><p><strong>Solución:</strong> reportas el error apenas lo detectas, con la mayor transparencia posible, indicando cuál es la fecha correcta según tu registro real de memoria inmediata o cualquier otro respaldo (como un registro de salida de la sede). No se "ajusta" el documento sin dejar evidencia de la corrección: se informa para que se verifique y corrija según el procedimiento, dado el peso que tiene este dato.</p></div></details>
+    <details class="acc"><summary>Ejercicio 3 — La persona notificada te pide una copia de la decisión completa, además de lo que ya le entregaste. ¿Qué haces?</summary><div class="acc-body"><p><strong>Solución:</strong> le entregas lo que corresponde según la instrucción y el procedimiento de esa notificación específica. Si pide algo adicional que no estaba contemplado en tu encargo (por ejemplo, el expediente completo), la orientas hacia el canal correspondiente para solicitar esa información adicional, sin decidir tú mismo entregar algo que no te fue encomendado.</p></div></details>
+    <details class="acc"><summary>Ejercicio 4 — Durante una notificación, la persona te asegura que "eso ya lo sabía por otro medio, así que no hace falta que haga nada formal aquí". ¿Es correcto omitir el procedimiento por esa razón?</summary><div class="acc-body"><p><strong>Solución:</strong> no. El hecho de que la persona diga conocer la decisión por otro medio no sustituye el procedimiento formal de notificación, del cual dependen los términos legales oficiales. Se cumple la diligencia exactamente igual, documentando fecha, hora y forma, sin omitir ningún paso por esa afirmación.</p></div></details>
+    <details class="acc"><summary>Ejercicio 5 — Te asignan notificar a dos personas distintas sobre la misma decisión, en direcciones opuestas de la ciudad, el mismo día. ¿Cómo organizas la diligencia?</summary><div class="acc-body"><p><strong>Solución:</strong> aplicas lo aprendido en la guía del Día 10 sobre planificación de ruta, dando a ambas notificaciones la máxima prioridad por su naturaleza (no por ser "rutina"), organizando el recorrido de forma que ambas se cumplan dentro del día, y documentando cada una con el mismo rigor independiente, como si fueran diligencias separadas (que, en efecto, lo son).</p></div></details>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⭐</span><div class="dst-body"><span class="dst-title">Idea clave de todo el día</span><p>Notificar decisiones y tramitar sus traslados es la función de mayor peso jurídico del Citador: exige identificar correctamente la forma de notificación, registrar con precisión fecha y hora, documentar con honestidad cada resultado (incluyendo negativas y diligencias negativas), mantener la calma ante reacciones difíciles, y recordar siempre que se ejecuta según instrucciones, sin decidir el fondo ni el procedimiento.</p></div></div>
+
+  <div class="box info"><div class="box-title">🔁 Repaso final antes del simulacro</div><p>Antes de pasar a las flashcards y al simulacro, repasa mentalmente el recorrido completo: qué es notificar y en qué se diferencia de repartir correspondencia; las formas de notificación y quién decide cuál aplica; por qué la fecha es tan importante; cómo se deja constancia, incluyendo negativas; qué son los traslados y qué le corresponde al Citador en ellos; qué hacer ante una diligencia negativa; los límites exactos del rol; cómo manejar reacciones difíciles con seguridad; y qué responsabilidad real acompaña cada decisión. Si puedes explicar cada bloque con tus propias palabras, estás listo para el simulacro.</p></div>
+
+  <div class="box gold"><div class="box-title">🧰 Tips para grabar en la memoria</div>
+    <ul class="lista">
+      <li><strong>Función n.º 3 del manual:</strong> tramitar diligencias de notificación de decisiones y sus traslados, según procedimientos establecidos.</li>
+      <li><strong>Notificar ≠ repartir:</strong> la notificación tiene efectos jurídicos sobre términos; exige mayor rigor.</li>
+      <li><strong>Formas de notificación:</strong> personal (preferente), por aviso, electrónica; el Citador ejecuta la que le indiquen, no la elige.</li>
+      <li><strong>La fecha y hora son datos legales,</strong> no de formato: se registran con precisión en el momento de la diligencia.</li>
+      <li><strong>Negativa a firmar ≠ notificación sin efecto:</strong> se documenta con precisión; nunca se firma en nombre de otro.</li>
+      <li><strong>El Citador ejecuta, nunca decide</strong> la forma, el contenido ni el procedimiento a seguir ante incidentes.</li>
+    </ul>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"Una notificación no es un papel que se entrega: es una fecha que empieza a correr. Por eso se registra con exactitud, se documenta con honestidad, y nunca se decide por cuenta propia."</p></div></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Consulta directamente las fuentes institucionales y normativas (se abren en una pestaña nueva). Estas fuentes dan el marco general; el procedimiento concreto de cada actuación y dependencia siempre es tu instrucción inmediata:</p>
+    <ul class="lista">
+      <li><a href="https://www.procuraduria.gov.co/" target="_blank" rel="noopener">Procuraduría General de la Nación — portal institucional</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=5926" target="_blank" rel="noopener">Decreto Ley 262 de 2000 — Régimen especial de la Procuraduría General de la Nación</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1437_2011.html" target="_blank" rel="noopener">Ley 1437 de 2011 (CPACA) — Marco general de notificaciones en el procedimiento administrativo</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=96633" target="_blank" rel="noopener">Ley 1952 de 2019 — Código General Disciplinario (marco de actuaciones disciplinarias)</a></li>
+    </ul>
+  </div>
+
+  <div class="advance-bar"><span class="advance-hint">Terminaste el Desarrollo. Ahora afina el criterio con distinciones, casos y trampas.</span><button class="advance-btn" data-goto="3">Ver distinciones clave →</button></div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Notificación personal</strong></td><td><strong>Notificación por aviso</strong></td><td>Personal: se busca directamente a la persona. Por aviso: se usa cuando la personal no fue posible, siguiendo su propio procedimiento.</td></tr>
+    <tr><td><strong>Reparto de correspondencia</strong></td><td><strong>Notificación</strong></td><td>Reparto: constancia simple de entrega. Notificación: forma legal reglada de la cual dependen términos y efectos jurídicos.</td></tr>
+    <tr><td><strong>Negativa a firmar</strong></td><td><strong>Notificación sin efecto</strong></td><td>La negativa, bien documentada, no anula automáticamente la notificación; se sostiene con la constancia detallada de lo ocurrido.</td></tr>
+    <tr><td><strong>Diligencia negativa</strong></td><td><strong>Falla del Citador</strong></td><td>Una diligencia negativa bien documentada (tras agotar los intentos indicados) no es una falla; simular un resultado o alterar datos sí lo es.</td></tr>
+    <tr><td><strong>Notificación</strong></td><td><strong>Traslado</strong></td><td>Notificación: dar a conocer la decisión. Traslado: período posterior durante el cual la persona puede pronunciarse, derivado de esa notificación.</td></tr>
+    <tr><td><strong>Ejecutar la diligencia</strong></td><td><strong>Decidir el procedimiento</strong></td><td>El Citador siempre ejecuta según instrucciones; decidir la forma, el contenido o el siguiente paso corresponde a quien dirige la actuación.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>Construye una frase con cada pareja. Por ejemplo: "la notificación personal se busca directamente; la notificación por aviso entra cuando la personal no fue posible". Si puedes decirla sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Citador de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · El destinatario que exige ver "todo el expediente" antes de recibir</div><div class="caso-body">
+    <span class="label">Situación</span><p>Al practicar una notificación personal, la persona se niega a recibir hasta que le muestres "todo el expediente completo", algo que no llevas contigo ni te corresponde entregar en esa diligencia.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Le explicas con respeto que tu encargo es la notificación de la decisión específica que llevas, y que la consulta del expediente completo debe gestionarse por el canal correspondiente. Si persiste en no recibir, documentas la negativa con precisión (fecha, hora, lugar, motivo manifestado), sin acceder a exigencias que exceden tu encargo ni abandonar el procedimiento.</p></div>
+    <span class="label">Por qué</span><p>El Citador cumple el encargo específico que se le asignó; no le corresponde ampliar ni modificar el alcance de la diligencia por exigencia de la persona notificada.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · La notificación que debía ser electrónica pero el sistema falla</div><div class="caso-body">
+    <span class="label">Situación</span><p>Te indican que una notificación debe tramitarse por vía electrónica, pero al intentar gestionarla notas una falla técnica que impide completarla por ese medio en el momento previsto.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Reportas de inmediato la falla técnica a tu dependencia, documentando el intento y el problema encontrado, sin decidir por tu cuenta cambiar a otra forma de notificación. Esperas la instrucción sobre cómo proceder (reintentar, usar otra forma autorizada, u otra medida).</p></div>
+    <span class="label">Por qué</span><p>La forma de notificación no la cambia el Citador por iniciativa propia; se reporta el obstáculo y se sigue la instrucción correspondiente.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · Dos intentos de notificación y la persona llama furiosa a la sede</div><div class="caso-body">
+    <span class="label">Situación</span><p>Después de dos intentos de notificación personal sin éxito, documentados correctamente, la persona se entera por otro medio y llama molesta, acusando al Citador de "no haber hecho bien su trabajo".</p>
+    <span class="label">¿Qué se debe hacer con esa acusación?</span>
+    <div class="resp-correcta"><p>Se revisa el registro de los intentos: si están debidamente documentados (fechas, horas, circunstancias), la actuación del Citador fue correcta y diligente. La queja de la persona no cambia el hecho de que se siguió el procedimiento con rigor; corresponde informar, con base en esos registros, que los intentos se realizaron conforme a lo establecido.</p></div>
+    <span class="label">Por qué</span><p>La responsabilidad se mide por la diligencia y el registro correcto, no por la satisfacción de la persona notificada ni por el resultado final cuando este dependió de circunstancias ajenas (como no encontrarla en casa).</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Tratar la notificación como un reparto ordinario</div><p>La notificación exige rigor adicional en fecha, hora, identificación y forma de constancia; nunca se iguala al reparto simple.</p></div>
+  <div class="box danger"><div class="box-title">❌ Aproximar o reconstruir después la fecha y hora de la diligencia</div><p>Deben registrarse con precisión en el momento mismo de la notificación, nunca de memoria tiempo después.</p></div>
+  <div class="box danger"><div class="box-title">❌ Firmar en nombre de la persona notificada</div><p>Nunca se simula la firma de otra persona; se documenta la negativa con la propia constancia del Citador.</p></div>
+  <div class="box danger"><div class="box-title">❌ Decidir por cuenta propia cambiar la forma de notificación</div><p>Esa decisión corresponde a quien dirige la actuación; el Citador reporta obstáculos y espera instrucción.</p></div>
+  <div class="box danger"><div class="box-title">❌ Opinar sobre el contenido o la justicia de la decisión notificada</div><p>El Citador ejecuta la diligencia; no le corresponde opinar ni asesorar sobre el fondo del asunto.</p></div>
+  <div class="box danger"><div class="box-title">❌ Insistir en completar la diligencia ante una amenaza real a la seguridad</div><p>La seguridad personal prevalece siempre; se retira y reporta la situación.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Cuando dudes, elige la opción "con precisión en fecha/hora y reporte honesto".</strong> Las opciones que implican aproximar, simular o decidir por cuenta propia son las trampas.</li>
+    <li><strong>La fecha es un dato legal, no de formato.</strong> Cualquier opción que la trate como un detalle menor es incorrecta.</li>
+    <li><strong>La negativa a firmar no anula la notificación</strong> si se documenta bien; nunca se firma en nombre de otro.</li>
+    <li><strong>El Citador ejecuta, no decide</strong> la forma, el contenido, ni el procedimiento ante incidentes de la notificación.</li>
+    <li><strong>Seguridad y respeto, siempre.</strong> Ante amenaza real, se prioriza la seguridad; ante molestia comprensible, se mantiene la calma sin opinar sobre el fondo.</li>
+    <li><strong>Memoriza la función n.º 3 del manual casi textual:</strong> tramitar las diligencias de notificación de las decisiones y sus traslados según procedimientos establecidos.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"Si la persona se niega a firmar, la notificación no tiene ningún valor y no hace falta documentar nada más."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> sin firma parece que "no hay prueba" de nada.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> una constancia detallada de la negativa, con fecha y hora, puede sostener la notificación según el procedimiento aplicable.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> documentar con precisión la negativa, sin asumir que la diligencia "no pasó nada".</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Como la persona ya sabía de la decisión por otro medio, no es necesario cumplir todo el procedimiento formal de notificación."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> si ya lo sabe, parece innecesario repetir el trámite.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el conocimiento informal no sustituye el procedimiento formal del cual dependen los términos legales oficiales.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> cumplir el procedimiento completo igual, sin omitir pasos por esa afirmación.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Si la notificación personal falla dos veces, el Citador puede decidir fijar un aviso por su cuenta para agilizar."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> parece una solución lógica y rápida ante el fracaso de los intentos.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el cambio de forma de notificación lo decide quien dirige la actuación, no el Citador por iniciativa propia.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> reportar la diligencia negativa con detalle y esperar la instrucción correspondiente.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Si la persona pregunta si debería recurrir la decisión, lo más amable es darle una recomendación clara."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> parece un gesto de buena atención al usuario.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el Citador no asesora sobre el fondo del asunto ni sobre la conveniencia de recurrir una decisión.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> orientar hacia el canal competente, sin dar una recomendación personal sobre el fondo.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Función esencial n.º 3</h4><p>Tramitar las diligencias de notificación de decisiones y sus traslados, según procedimientos establecidos.</p></div>
+    <div class="resumen-item"><h4>Notificar vs. repartir</h4><p>La notificación tiene efectos jurídicos sobre términos legales; exige mayor rigor que el reparto ordinario.</p></div>
+    <div class="resumen-item"><h4>Formas de notificación</h4><p>Personal (preferente), por aviso, electrónica; el Citador ejecuta la forma indicada, no la elige.</p></div>
+    <div class="resumen-item"><h4>Fecha y hora</h4><p>Datos legales que se registran con precisión en el momento mismo de la diligencia.</p></div>
+    <div class="resumen-item"><h4>Constancia</h4><p>Identifica decisión, receptor, fecha, hora, lugar y forma; documenta negativas sin firmar en nombre de otro.</p></div>
+    <div class="resumen-item"><h4>Traslados</h4><p>Período posterior a la notificación; el Citador tramita la comunicación correspondiente con el mismo rigor.</p></div>
+    <div class="resumen-item"><h4>Diligencia negativa</h4><p>Se agotan los intentos indicados, se documenta cada uno, y se reporta sin decidir el siguiente paso.</p></div>
+    <div class="resumen-item"><h4>Límite del rol</h4><p>El Citador ejecuta según instrucciones; nunca decide la forma, el contenido ni el procedimiento.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Notificación</dt><dd>Acto formal de hacer saber una decisión, del cual dependen términos y efectos jurídicos.</dd>
+      <dt>Notificación personal</dt><dd>Forma preferente: se busca directamente a la persona para hacerle saber la decisión.</dd>
+      <dt>Notificación por aviso</dt><dd>Forma que se usa cuando la personal no fue posible, siguiendo su propio procedimiento.</dd>
+      <dt>Traslado</dt><dd>Período posterior a una notificación durante el cual la persona puede pronunciarse sobre la decisión o el expediente.</dd>
+      <dt>Diligencia negativa</dt><dd>Intento de notificación que, tras agotar los pasos indicados, no logra su objetivo; se documenta y reporta.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Notificación de Decisiones y Traslados</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la PGN: contextos largos, situados en tu rol, con opciones elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 11. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 11</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 11: Notificación de Decisiones y Traslados. ¡Vas por muy buen camino, sigue así!');});
+const flashcards=[
+  {f:'¿Cuál es la función esencial n.º 3 del manual del Citador?',b:'Tramitar las diligencias de notificación de las decisiones y sus traslados, de acuerdo con los procedimientos establecidos.'},
+  {f:'¿En qué se diferencia notificar de repartir correspondencia?',b:'La notificación es un acto formal reglado del cual dependen términos y efectos jurídicos; el reparto solo exige constancia simple de entrega.'},
+  {f:'¿Cuáles son las formas de notificación que debes conocer?',b:'Personal (preferente), por aviso (cuando la personal no fue posible) y electrónica (según condiciones del procedimiento).'},
+  {f:'¿Por qué es tan importante la fecha de notificación?',b:'Porque de ella dependen, generalmente, los términos para recurrir una decisión o su firmeza; debe registrarse con precisión en el momento mismo de la diligencia.'},
+  {f:'¿Qué se hace si la persona notificada se niega a firmar?',b:'Se documenta con precisión la negativa (fecha, hora, lugar, que se le hizo conocer el contenido); nunca se firma en su nombre.'},
+  {f:'¿Qué es un traslado en este contexto?',b:'El período posterior a una notificación durante el cual la persona puede pronunciarse sobre la decisión o el expediente, dentro de un plazo.'},
+  {f:'¿Qué debe hacer el Citador ante una diligencia negativa de notificación?',b:'Agotar los intentos indicados, documentar cada uno con precisión y reportar, sin decidir por cuenta propia el siguiente paso.'},
+  {f:'¿Puede el Citador decidir qué forma de notificación aplica a un caso?',b:'No. Esa decisión corresponde a quien dirige la actuación; el Citador ejecuta la forma que se le indique.'},
+  {f:'¿Qué debe hacer el Citador si la persona notificada reacciona con una amenaza real a su seguridad?',b:'Priorizar su seguridad, retirarse si es necesario y reportar la situación con precisión, sin insistir en completar la diligencia a toda costa.'},
+  {f:'¿Cómo se mide la responsabilidad del Citador en una notificación con resultado adverso?',b:'Por la diligencia, el rigor procedimental y la honestidad del reporte, no por si el resultado dependió de circunstancias ajenas a su control.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Diferencia entre notificar y repartir', ctx:'Eres Citador en una Procuraduría Regional. Te entregan dos documentos para la misma salida: un memorando de rutina para otra dependencia, y la comunicación formal de una decisión disciplinaria, de la cual depende un término para que la persona afectada pueda presentar un recurso. Un compañero te comenta: "al final los dos son solo papeles que hay que entregar, no te compliques".', q:'¿Es correcta la apreciación de tu compañero?', ops:['Sí, ambos documentos deben tratarse exactamente igual, ya que en los dos casos la tarea consiste en entregar un papel a alguien.','No, porque la comunicación de la decisión disciplinaria es una notificación: un acto formal del cual depende un término legal, que exige mayor rigor en fecha, hora, identificación de quien recibe y forma de constancia que un memorando de rutina.','Sí, pero solo porque ambos documentos van a oficinas distintas de la misma entidad.','No, pero únicamente porque la notificación siempre debe entregarse antes que cualquier otro documento, sin relación con su procedimiento propio.'], correcta:1, expl:['Tratar ambos documentos igual ignora que la notificación tiene un peso jurídico distinto, del cual depende un término legal para ejercer un derecho.','Correcto. La notificación de una decisión exige un procedimiento reforzado, por los efectos jurídicos que produce; un memorando de rutina no tiene esa misma exigencia.','La diferencia no depende de a qué oficina va cada documento, sino de la naturaleza jurídica de cada uno.','La prioridad de la notificación no depende de una regla absoluta de "siempre primero", sino de su naturaleza jurídica y el rigor que exige su propio procedimiento.'] },
+  { nivel:'b', tema:'Registro de fecha y hora', ctx:'Practicas una notificación personal a las 2:15 p.m. de un jueves. Terminada la diligencia, por la carga de trabajo del resto del día, piensas completar el acta de notificación con la fecha y hora "en la noche, cuando tengas un momento de calma para hacerlo con buena letra".', q:'¿Es correcta esta forma de proceder?', ops:['Sí, lo importante es que la fecha quede registrada ese mismo día, sin importar en qué momento exacto se complete el acta.','No, la fecha y hora deben registrarse con precisión en el momento mismo de la diligencia, no reconstruirse de memoria horas después, por el peso legal que tiene este dato.','Sí, siempre que al final del día se verifique con un compañero qué hora cree él que fue la diligencia.','No, pero solo porque las actas deben completarse siempre con letra clara, sin relación con el momento en que se registra la información.'], correcta:1, expl:['Completar el registro horas después, aunque sea el mismo día, introduce un riesgo real de error en un dato con peso legal directo.','Correcto. La fecha y hora deben registrarse en el momento mismo de la diligencia, precisamente porque de ellas depende el cálculo de términos legales.','La hora de una diligencia no se "verifica" después con la memoria de un tercero; se registra en el momento por quien la practica.','El problema de fondo no es la calidad de la letra, sino el momento en que se registra un dato legal tan sensible como la fecha y hora de notificación.'] },
+  { nivel:'i', tema:'Negativa a firmar y constancia', ctx:'Practicas una notificación personal y la persona, tras escuchar el propósito de tu visita, te dice de forma tajante: "yo no firmo nada, llévese eso de aquí", aunque sí permanece escuchando mientras le explicas el contenido general de la comunicación.', q:'¿Cuál es tu actuación correcta en este momento?', ops:['Considerar que, al no haber firma, la notificación no se practicó, y reportar simplemente que "no fue posible notificar".','Documentar con precisión que la persona fue informada del contenido y que se negó expresamente a firmar, anotando fecha, hora y lugar, de forma que la constancia sostenga que la diligencia se practicó según el procedimiento aplicable.','Firmar tú mismo el acta en nombre de la persona, consignando su nombre, para que el documento quede formalmente completo.','Insistir repetidamente en que firme, elevando el tono si es necesario, hasta lograr que acceda.'], correcta:1, expl:['Concluir que "no se practicó" ignora que una negativa bien documentada puede sostener la notificación según el procedimiento aplicable; además, sería impreciso reportarlo como si no hubiera ocurrido nada.','Correcto. La constancia detallada de la negativa, con fecha, hora y lugar, es la forma correcta de documentar esta situación sin asumir que la diligencia careció de efecto.','Firmar en nombre de otra persona es una falsedad grave que nunca es aceptable, sin importar la dificultad de la situación.','Insistir de forma agresiva no es una conducta apropiada; se documenta la negativa con respeto, sin forzar a la persona.'] },
+  { nivel:'i', tema:'Diligencia negativa y siguiente paso', ctx:'Te asignan notificar personalmente una decisión. En dos visitas, en horarios distintos según lo indicado por el procedimiento, no logras encontrar a la persona en la dirección registrada. Un vecino te comenta, sin mucha seguridad, que "cree que se mudó hace poco, pero no está seguro".', q:'¿Cuál es tu actuación correcta después de estos dos intentos?', ops:['Decidir por tu cuenta fijar un aviso en la puerta de esa dirección, ya que agotaste los intentos de notificación personal y quieres avanzar el proceso.','Documentar con detalle ambos intentos (fechas, horas, resultado) y la observación del vecino sobre un posible cambio de dirección, y reportar la diligencia negativa para que quien dirige la actuación decida el siguiente paso.','Dar por notificada a la persona, asumiendo que si se mudó "es su responsabilidad haber informado su nueva dirección".','Repetir los mismos dos intentos, en los mismos horarios, varias veces más, sin reportar nada hasta tener total certeza sobre la mudanza.'], correcta:1, expl:['Decidir por cuenta propia pasar a otra forma de notificación no corresponde al Citador; esa decisión la toma quien dirige la actuación, con base en el reporte completo.','Correcto. Documentar con detalle cada intento y la información relevante (como el posible cambio de dirección), y reportar la diligencia negativa, es la actuación esperada del cargo.','No se puede "dar por notificada" a una persona sin que la diligencia se haya practicado efectivamente; esa conclusión no le corresponde al Citador.','Repetir indefinidamente los mismos intentos sin reportar nada retrasa innecesariamente una decisión que depende de información que ya tienes disponible para reportar.'] },
+  { nivel:'a', tema:'Límites del rol y seguridad en notificaciones', ctx:'Notificas a una persona una decisión disciplinaria. La persona, visiblemente alterada, te pregunta primero si "en tu opinión" la decisión es justa, y al no obtener una respuesta que la satisfaga, comienza a elevar la voz y a acercarse de forma amenazante, dando golpes a objetos cercanos. No hay nadie más presente en el lugar.', q:'¿Cuál es la secuencia correcta de tu actuación?', ops:['Darle tu opinión sincera sobre la decisión para intentar calmarla, y luego continuar con la diligencia hasta completarla formalmente.','No opinar sobre el fondo de la decisión en ningún momento, explicando con calma que tu función es solo la diligencia; y, al escalar la situación hacia una amenaza real a tu seguridad, retirarte del lugar y reportar lo ocurrido con el mayor detalle posible.','Continuar con la diligencia sin decir nada, ignorando tanto la pregunta como la escalada de la situación, hasta lograr que la persona reciba el documento.','Responder con el mismo tono elevado para "imponer respeto" y conseguir que la persona se calme y acepte la notificación.'], correcta:1, expl:['Dar una opinión personal sobre el fondo de la decisión excede la función del Citador y, en este caso, tampoco resolvió la escalada de la situación.','Correcto. Se mantiene el límite del rol (no opinar sobre el fondo) y, ante una amenaza real a la seguridad, se prioriza retirarse y reportar, por encima de completar la diligencia en ese momento.','Ignorar una escalada real de riesgo para "completar la tarea" no es prudente ni corresponde al criterio de seguridad que se espera del cargo.','Responder con el mismo tono agresivo puede empeorar la situación y pone en mayor riesgo tanto al Citador como la validez de cualquier intento de notificación en ese momento.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2,3]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='↑';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
