@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
-import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC } from "@/lib/autocargarGuias";
+import { cargarGuiasAutomaticas, copiarPlanDesdeOPEC, infoConvocatoria } from "@/lib/autocargarGuias";
 import { correoCredencialesCliente } from "@/lib/email";
 
 export type CrearClienteResult = {
@@ -19,6 +19,8 @@ export type CrearClienteResult = {
 
 export type PlanOpecInfo = {
   existe: boolean;
+  /** true si la convocatoria elegida es de la Procuraduría (ahí no hay reutilización automática por OPEC). */
+  esPgn?: boolean;
   cargo?: string | null;
   convocatoria?: string | null;
   totalGuias?: number;
@@ -31,12 +33,18 @@ export type PlanOpecInfo = {
  * "Armado" = alguno de los cursos de ese OPEC tiene guías funcionales asignadas.
  * Lo usa el formulario para avisar "ya contamos con ese curso" al escribir el OPEC.
  */
-export async function consultarPlanPorOpec(opecRaw: string): Promise<PlanOpecInfo> {
+export async function consultarPlanPorOpec(opecRaw: string, convocatoriaId?: string | null): Promise<PlanOpecInfo> {
   await requireAdmin();
   const opec = (opecRaw || "").trim();
   if (opec.length < 2) return { existe: false };
 
   const supabase = createAdminClient();
+  // La reutilización automática por OPEC aplica SOLO a convocatorias de CNSC
+  // (todo lo que no sea Procuraduría). En Procuraduría se usa "Limpiar y rehacer".
+  if (convocatoriaId) {
+    const info = await infoConvocatoria(supabase, convocatoriaId);
+    if (info.esPgn) return { existe: false, esPgn: true };
+  }
   const { data: cursos } = await supabase
     .from("cursos")
     .select("id, cargo_nombre, convocatorias(nombre, entidad)")
@@ -200,7 +208,9 @@ export async function crearClienteManual(
     // --- 5. Auto-cargar guías ---
     // Primero intentar copiar plan de otro curso del mismo OPEC
     let copiadoPlan = false;
-    if (opec) {
+    // Solo CNSC: en Procuraduría no se copia automáticamente (se usa "Limpiar y rehacer").
+    const esPgnConv = convocatoria_id ? (await infoConvocatoria(supabase, convocatoria_id)).esPgn : false;
+    if (opec && !esPgnConv) {
       try {
         copiadoPlan = await copiarPlanDesdeOPEC(supabase, cursoId, opec);
       } catch { /* ignore */ }

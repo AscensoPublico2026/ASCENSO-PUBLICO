@@ -43,7 +43,7 @@ export function entidadCNSCDeConvocatoria(texto: string): { codigo: string; titu
 }
 
 /** Lee nombre/entidad de la convocatoria (por uuid) y dice si es PGN y cuál es su guía de entidad. */
-async function infoConvocatoria(supabase: SupabaseClient, convocatoriaId?: string | null) {
+export async function infoConvocatoria(supabase: SupabaseClient, convocatoriaId?: string | null) {
   let texto = (convocatoriaId || "").toString();
   if (convocatoriaId) {
     const { data } = await supabase.from("convocatorias").select("nombre, entidad").eq("id", convocatoriaId).maybeSingle();

@@ -42,13 +42,17 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
   const [planOpec, setPlanOpec] = useState<PlanOpecInfo | null>(null);
   const [consultando, setConsultando] = useState(false);
   const timerOpec = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const alCambiarOpec = (valor: string) => {
+  const opecRef = useRef("");
+  const convRef = useRef("");
+  const alCambiarOpec = (valor: string, conv: string = convRef.current) => {
+    opecRef.current = valor;
+    convRef.current = conv;
     if (timerOpec.current) clearTimeout(timerOpec.current);
     const v = valor.trim();
     if (v.length < 2) { setPlanOpec(null); setConsultando(false); return; }
     setConsultando(true);
     timerOpec.current = setTimeout(async () => {
-      try { setPlanOpec(await consultarPlanPorOpec(v)); }
+      try { setPlanOpec(await consultarPlanPorOpec(v, conv || null)); }
       catch { setPlanOpec(null); }
       finally { setConsultando(false); }
     }, 500);
@@ -267,6 +271,7 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
             id="convocatoria_id"
             name="convocatoria_id"
             style={{ ...inputStyle, cursor: "pointer" }}
+            onChange={(e) => alCambiarOpec(opecRef.current, e.target.value)}
           >
             <option value="">— Seleccionar convocatoria —</option>
             {convocatorias.map((c) => (
@@ -286,7 +291,7 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
               type="text"
               placeholder="Ej: 123456"
               style={inputStyle}
-              onChange={(e) => alCambiarOpec(e.target.value)}
+              onChange={(e) => alCambiarOpec(e.target.value, convRef.current)}
               autoComplete="off"
             />
           </div>
