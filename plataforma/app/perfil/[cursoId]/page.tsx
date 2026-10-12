@@ -85,6 +85,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
     // Si es el plan PGN Auxiliar y le faltan guías, completarlo automáticamente.
     const { asegurarPlanPGNAuxiliar } = await import("@/lib/autocargarGuias");
     await asegurarPlanPGNAuxiliar(admin, curso.id);
+    // Cursos de CNSC (no PGN): si perdieron el bloque base Días 1-8, se restaura.
+    const { restaurarBaseCNSC } = await import("@/lib/autocargarGuias");
+    await restaurarBaseCNSC(admin, curso.id);
   } catch (e) {
     // No bloquear la carga del perfil si el saneamiento/completado falla.
     console.error("[perfil] auto-saneamiento de guías:", e);

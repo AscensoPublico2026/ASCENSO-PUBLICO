@@ -644,11 +644,14 @@ export async function sanearGuiasGenericas(
 
   // ¿El curso tiene un plan PROPIO? Señales: una guía de entidad (ENT-…) o
   // alguna guía con sufijo -AUX (plan reenfocado por cargo).
+  // IMPORTANTE: solo aplica a cursos de la PROCURADURÍA (régimen especial). Los
+  // cursos de CNSC también pueden tener una guía "Conoce tu entidad" (ENT-DIAN-01,
+  // ENT-URT-01, ENT-HUH-01…) y NO deben perder sus guías genéricas Días 1-8.
   const tienePlanPropio = guias.some((g: any) => {
     const p = (g.archivo_path || "").toString();
-    return /(^|\/)ENT-/i.test(p) || /-AUX[-.]/i.test(p) || /-AUX\//i.test(p) || p.includes("-PGN-AUX");
+    return /PGN/i.test(p) || /-AUX[-.]/i.test(p) || /-AUX\//i.test(p);
   });
-  if (!tienePlanPropio) return 0; // curso genérico legítimo: no tocar.
+  if (!tienePlanPropio) return 0; // curso CNSC / genérico legítimo: no tocar.
 
   // Eliminar las genéricas sobrantes.
   const aEliminar = guias.filter((g: any) => g.archivo_path && RUTAS_GENERICAS.has(g.archivo_path));
@@ -723,6 +726,65 @@ export async function asegurarPlanPGNAuxiliar(
   const { error } = await supabase.from("guias_curso").insert(registros);
   if (error) {
     console.error("[asegurarPlanPGNAuxiliar] Error al completar el plan:", error.message);
+    return 0;
+  }
+  return registros.length;
+}
+
+
+/**
+ * RESTAURACIÓN del bloque base de los cursos de CNSC (todo lo que NO es PGN).
+ *
+ * Los cursos de CNSC se crean con: INTRO-00 (Día 1), GEN-01..03 (Días 2-4), las 4
+ * guías de su nivel (Días 5-8) y los bonus. Un saneamiento antiguo (que confundía
+ * "Conoce tu entidad" de CNSC con un plan de Procuraduría) las borró de algunos
+ * cursos. Esta función las repone, SIN duplicar, solo cuando al curso le falta
+ * todo el bloque base (ni INTRO-00 ni GEN-01 presentes) y no es de Procuraduría.
+ *
+ * @returns número de guías insertadas (0 si no aplica o ya estaba completo).
+ */
+export async function restaurarBaseCNSC(
+  supabase: SupabaseClient,
+  cursoId: string
+): Promise<number> {
+  const { data: curso } = await supabase
+    .from("cursos")
+    .select("id, nivel, convocatorias(nombre, entidad)")
+    .eq("id", cursoId)
+    .single();
+  if (!curso) return 0;
+
+  const conv: any = Array.isArray((curso as any).convocatorias) ? (curso as any).convocatorias[0] : (curso as any).convocatorias;
+  const textoConv = `${conv?.nombre || ""} ${conv?.entidad || ""}`.toLowerCase();
+  if (/procuradur/.test(textoConv)) return 0; // PGN: otro plan propio.
+
+  const { data: guias } = await supabase.from("guias_curso").select("archivo_path").eq("curso_id", cursoId);
+  const rutas = new Set<string>(((guias as any[]) || []).map((g) => (g.archivo_path || "").toString()).filter(Boolean));
+  if ([...rutas].some((r) => /PGN/i.test(r) || /-AUX[-.]/i.test(r))) return 0; // señales de plan PGN.
+
+  // Solo si falta TODO el bloque inicial (no tocar cursos donde el admin borró una guía suelta).
+  if (rutas.has(ARCHIVOS["INTRO-00"]) || rutas.has(ARCHIVOS["GEN-01"])) return 0;
+
+  const nivelNorm = ((curso as any).nivel || "").toString().toLowerCase().trim()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
+  const base = [INTRO_CNSC, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
+
+  const registros = base
+    .filter((g) => ARCHIVOS[g.codigo] && !rutas.has(ARCHIVOS[g.codigo]))
+    .map((g) => ({
+      curso_id: cursoId,
+      dia: g.dia,
+      titulo: g.titulo,
+      tipo: g.tipo,
+      orden: g.orden,
+      archivo_path: ARCHIVOS[g.codigo],
+    }));
+  if (registros.length === 0) return 0;
+
+  const { error } = await supabase.from("guias_curso").insert(registros);
+  if (error) {
+    console.error("[restaurarBaseCNSC] Error al restaurar:", error.message);
     return 0;
   }
   return registros.length;
