@@ -42,6 +42,21 @@ export function entidadCNSCDeConvocatoria(texto: string): { codigo: string; titu
   return null;
 }
 
+/**
+ * Guías ADICIONALES propias de una entidad CNSC (además de "Conoce tu entidad").
+ * DIAN: ponderaciones y puntaje (Día 1) + estrategia de tiempo y prueba de integridad (bonus).
+ */
+export function extrasDeEntidad(codigoEntidad?: string | null): Array<{ codigo: string; dia: number | null; titulo: string; tipo: string; orden: number }> {
+  if (codigoEntidad === "ENT-DIAN-01") {
+    return [
+      { codigo: "DIAN-PON-01", dia: 1, titulo: "Cómo se califica tu prueba: ponderaciones y puntaje", tipo: "general", orden: 2 },
+      { codigo: "DIAN-EST-01", dia: null, titulo: "Estrategia de tiempo y manejo de la prueba escrita (Bonus)", tipo: "bonus", orden: 102 },
+      { codigo: "DIAN-INT-01", dia: null, titulo: "Código de Integridad y prueba de integridad (Bonus)", tipo: "bonus", orden: 103 },
+    ];
+  }
+  return [];
+}
+
 /** Lee nombre/entidad de la convocatoria (por uuid) y dice si es PGN y cuál es su guía de entidad. */
 export async function infoConvocatoria(supabase: SupabaseClient, convocatoriaId?: string | null) {
   let texto = (convocatoriaId || "").toString();
@@ -423,6 +438,9 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
   "ENT-DIAN-01": "guias/ENT-DIAN-01-conoce-entidad-dian.html",
+  "DIAN-PON-01": "guias/DIAN-PON-01-ponderaciones-puntaje-prueba.html",
+  "DIAN-EST-01": "guias/DIAN-EST-01-estrategia-tiempo-prueba-escrita.html",
+  "DIAN-INT-01": "guias/DIAN-INT-01-codigo-integridad-prueba-integridad.html",
   "ENT-URT-01": "guias/ENT-URT-01-conoce-entidad-urt-asuntos-etnicos.html",
   "ENT-HUH-01": "guias/ENT-HUH-01-conoce-entidad-huhmp.html",
   "ENT-IDV-01": "guias/ENT-IDV-01-conoce-entidad-indervalle.html",
@@ -534,7 +552,8 @@ export async function cargarGuiasAutomaticas(
     ? [{ codigo: infoConv.entidad.codigo, dia: 1, titulo: infoConv.entidad.titulo, tipo: "general", orden: 1 }]
     : [];
   if (!infoConv.entidad) console.warn(`[autocargarGuias] La convocatoria "${infoConv.texto}" no tiene guía "Conoce tu entidad" en la biblioteca.`);
-  const todasLasGuias = [intro, ...entGuia, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
+  const extrasEnt = extrasDeEntidad(infoConv.entidad?.codigo);
+  const todasLasGuias = [intro, ...entGuia, ...extrasEnt.filter((g) => g.dia === 1), ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS, ...extrasEnt.filter((g) => g.dia === null)];
 
   // Preparar los registros para guias_curso
   const registros = todasLasGuias.map((g) => ({
@@ -818,7 +837,8 @@ export async function restaurarBaseCNSC(
   const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
   const ent = entidadCNSCDeConvocatoria(textoConv);
   const entGuia = ent ? [{ codigo: ent.codigo, dia: 1, titulo: ent.titulo, tipo: "general", orden: 1 }] : [];
-  const base = [INTRO_CNSC, ...entGuia, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
+  const extrasEnt = extrasDeEntidad(ent?.codigo);
+  const base = [INTRO_CNSC, ...entGuia, ...extrasEnt.filter((g) => g.dia === 1), ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS, ...extrasEnt.filter((g) => g.dia === null)];
 
   const registros = base
     .filter((g) => ARCHIVOS[g.codigo] && !rutas.has(ARCHIVOS[g.codigo]))
@@ -835,6 +855,53 @@ export async function restaurarBaseCNSC(
   const { error } = await supabase.from("guias_curso").insert(registros);
   if (error) {
     console.error("[restaurarBaseCNSC] Error al restaurar:", error.message);
+    return 0;
+  }
+  return registros.length;
+}
+
+
+/**
+ * Agrega a un curso CNSC las guías ADICIONALES de su entidad (hoy: DIAN →
+ * ponderaciones/puntaje en el Día 1 + estrategia de tiempo e integridad como bonus),
+ * sin duplicar. Se usa desde el endpoint admin para ponerse al día los cursos
+ * DIAN ya existentes; los cursos nuevos las reciben al crearse.
+ *
+ * @returns número de guías insertadas.
+ */
+export async function asegurarExtrasEntidad(
+  supabase: SupabaseClient,
+  cursoId: string
+): Promise<number> {
+  const { data: curso } = await supabase
+    .from("cursos")
+    .select("id, convocatorias(nombre, entidad)")
+    .eq("id", cursoId)
+    .single();
+  if (!curso) return 0;
+  const conv: any = Array.isArray((curso as any).convocatorias) ? (curso as any).convocatorias[0] : (curso as any).convocatorias;
+  const textoConv = `${conv?.nombre || ""} ${conv?.entidad || ""}`;
+  if (/procuradur/i.test(textoConv)) return 0;
+  const ent = entidadCNSCDeConvocatoria(textoConv);
+  const extras = extrasDeEntidad(ent?.codigo);
+  if (extras.length === 0) return 0;
+
+  const { data: guias } = await supabase.from("guias_curso").select("archivo_path").eq("curso_id", cursoId);
+  const rutas = new Set<string>(((guias as any[]) || []).map((g) => (g.archivo_path || "").toString()).filter(Boolean));
+  const registros = extras
+    .filter((g) => ARCHIVOS[g.codigo] && !rutas.has(ARCHIVOS[g.codigo]))
+    .map((g) => ({
+      curso_id: cursoId,
+      dia: g.dia,
+      titulo: g.titulo,
+      tipo: g.tipo,
+      orden: g.orden,
+      archivo_path: ARCHIVOS[g.codigo],
+    }));
+  if (registros.length === 0) return 0;
+  const { error } = await supabase.from("guias_curso").insert(registros);
+  if (error) {
+    console.error("[asegurarExtrasEntidad] Error:", error.message);
     return 0;
   }
   return registros.length;
