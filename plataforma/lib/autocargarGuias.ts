@@ -25,6 +25,34 @@ function esPGN(convocatoriaId: string | null | undefined): boolean {
   return CONVOCATORIAS_PGN.includes(norm) || norm.includes("procuraduria");
 }
 
+
+/**
+ * "Conoce tu entidad" (CNSC) según la convocatoria: busca por nombre/entidad.
+ * Devuelve el código ENT-* de la biblioteca o null si esa entidad no tiene guía.
+ */
+const ENTIDADES_CNSC: Array<{ patron: RegExp; codigo: string; titulo: string }> = [
+  { patron: /\bdian\b|impuestos y aduanas/i, codigo: "ENT-DIAN-01", titulo: "Conoce tu Entidad: DIAN" },
+  { patron: /\burt\b|restituci[oó]n de tierras/i, codigo: "ENT-URT-01", titulo: "Conoce tu Entidad: Unidad de Restitución de Tierras (URT)" },
+  { patron: /hospital|huh|hernando moncaleano/i, codigo: "ENT-HUH-01", titulo: "Conoce tu Entidad: Hospital Universitario Hernando Moncaleano Perdomo" },
+  { patron: /indervalle|inderval/i, codigo: "ENT-IDV-01", titulo: "Conoce tu Entidad: INDERVALLE" },
+];
+
+export function entidadCNSCDeConvocatoria(texto: string): { codigo: string; titulo: string } | null {
+  for (const e of ENTIDADES_CNSC) if (e.patron.test(texto)) return { codigo: e.codigo, titulo: e.titulo };
+  return null;
+}
+
+/** Lee nombre/entidad de la convocatoria (por uuid) y dice si es PGN y cuál es su guía de entidad. */
+async function infoConvocatoria(supabase: SupabaseClient, convocatoriaId?: string | null) {
+  let texto = (convocatoriaId || "").toString();
+  if (convocatoriaId) {
+    const { data } = await supabase.from("convocatorias").select("nombre, entidad").eq("id", convocatoriaId).maybeSingle();
+    if (data) texto = `${(data as any).nombre || ""} ${(data as any).entidad || ""}`;
+  }
+  const esPgn = /procuradur/i.test(texto) || esPGN(convocatoriaId);
+  return { texto, esPgn, entidad: esPgn ? null : entidadCNSCDeConvocatoria(texto) };
+}
+
 // Definición de las guías que se auto-cargan según el nivel
 const GUIAS_GENERALES = [
   { codigo: "GEN-01", dia: 2, titulo: "Estado y Función Pública", tipo: "general", orden: 2 },
@@ -394,6 +422,10 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
 
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
+  "ENT-DIAN-01": "guias/ENT-DIAN-01-conoce-entidad-dian.html",
+  "ENT-URT-01": "guias/ENT-URT-01-conoce-entidad-urt-asuntos-etnicos.html",
+  "ENT-HUH-01": "guias/ENT-HUH-01-conoce-entidad-huhmp.html",
+  "ENT-IDV-01": "guias/ENT-IDV-01-conoce-entidad-indervalle.html",
   "INTRO-00-PGN-4SP13": "guias/INTRO-00-PGN-4SP13-presentacion-curso.html",
   "FUN-DIS-TEC-01": "guias/FUN-DIS-TEC-01-procedimiento-disciplinario-tramite-secretarial.html",
   "INTRO-00": "guias/INTRO-00-presentacion-curso.html",
@@ -448,6 +480,16 @@ export async function cargarGuiasAutomaticas(
     return;
   }
 
+  // Convocatoria: ¿PGN (régimen especial) o CNSC? y, si es CNSC, su "Conoce tu entidad".
+  const infoConv = await infoConvocatoria(supabase, convocatoriaId);
+
+  // PROCURADURÍA: no se auto-cargan guías genéricas. Cada cargo tiene su plan propio:
+  // si ya existe, el admin usa "Limpiar y rehacer" con ese plan; si es nuevo, se construye.
+  if (infoConv.esPgn) {
+    console.warn(`[autocargarGuias] Curso ${cursoId} es de la Procuraduría: sin auto-carga (se arma con plan propio).`);
+    return;
+  }
+
   // --- PGN nivel asistencial: usar las guías propias -PGN-AUX (no las genéricas) ---
   // La Procuraduría (régimen especial) tiene guías reenfocadas al cargo Auxiliar
   // Administrativo. Si es PGN + asistencial, auto-cargamos las AUX correctas
@@ -482,11 +524,17 @@ export async function cargarGuiasAutomaticas(
   }
 
   // Elegir la guía de introducción según tipo de concurso
-  const intro = esPGN(convocatoriaId) ? INTRO_PGN : INTRO_CNSC;
+  const intro = INTRO_CNSC;
 
-  // Construir la lista de guías a insertar
+  // Construir la lista de guías a insertar:
+  // Día 1 = Introducción + "Conoce tu entidad" (si la convocatoria tiene), Días 2-4 generales,
+  // Días 5-8 por nivel, + bonus.
   const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
-  const todasLasGuias = [intro, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
+  const entGuia = infoConv.entidad
+    ? [{ codigo: infoConv.entidad.codigo, dia: 1, titulo: infoConv.entidad.titulo, tipo: "general", orden: 1 }]
+    : [];
+  if (!infoConv.entidad) console.warn(`[autocargarGuias] La convocatoria "${infoConv.texto}" no tiene guía "Conoce tu entidad" en la biblioteca.`);
+  const todasLasGuias = [intro, ...entGuia, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
 
   // Preparar los registros para guias_curso
   const registros = todasLasGuias.map((g) => ({
@@ -768,7 +816,9 @@ export async function restaurarBaseCNSC(
   const nivelNorm = ((curso as any).nivel || "").toString().toLowerCase().trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
-  const base = [INTRO_CNSC, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
+  const ent = entidadCNSCDeConvocatoria(textoConv);
+  const entGuia = ent ? [{ codigo: ent.codigo, dia: 1, titulo: ent.titulo, tipo: "general", orden: 1 }] : [];
+  const base = [INTRO_CNSC, ...entGuia, ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS];
 
   const registros = base
     .filter((g) => ARCHIVOS[g.codigo] && !rutas.has(ARCHIVOS[g.codigo]))
