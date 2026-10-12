@@ -12,7 +12,65 @@ export type CrearClienteResult = {
   userId?: string;
   cursoId?: string;
   correo?: string;
+  /** true si el curso se creó con el plan completo copiado de un curso previo del mismo OPEC. */
+  planCopiado?: boolean;
+  guiasCargadas?: number;
 };
+
+export type PlanOpecInfo = {
+  existe: boolean;
+  cargo?: string | null;
+  convocatoria?: string | null;
+  totalGuias?: number;
+  funcionales?: number;
+  tieneSimulacro?: boolean;
+};
+
+/**
+ * Consulta (solo admin) si ya existe un curso armado para este número OPEC.
+ * "Armado" = alguno de los cursos de ese OPEC tiene guías funcionales asignadas.
+ * Lo usa el formulario para avisar "ya contamos con ese curso" al escribir el OPEC.
+ */
+export async function consultarPlanPorOpec(opecRaw: string): Promise<PlanOpecInfo> {
+  await requireAdmin();
+  const opec = (opecRaw || "").trim();
+  if (opec.length < 2) return { existe: false };
+
+  const supabase = createAdminClient();
+  const { data: cursos } = await supabase
+    .from("cursos")
+    .select("id, cargo_nombre, convocatorias(nombre, entidad)")
+    .eq("opec", opec);
+  if (!cursos || cursos.length === 0) return { existe: false };
+
+  const { data: guias } = await supabase
+    .from("guias_curso")
+    .select("curso_id, tipo")
+    .in("curso_id", cursos.map((c: any) => c.id));
+
+  const porCurso: Record<string, any[]> = {};
+  (guias || []).forEach((g: any) => { (porCurso[g.curso_id] = porCurso[g.curso_id] || []).push(g); });
+
+  let mejorId: string | null = null;
+  let mejorFunc = 0;
+  for (const [id, arr] of Object.entries(porCurso)) {
+    const nf = arr.filter((g) => g.tipo === "funcional").length;
+    if (nf > mejorFunc) { mejorFunc = nf; mejorId = id; }
+  }
+  if (!mejorId) return { existe: false };
+
+  const curso: any = cursos.find((c: any) => c.id === mejorId);
+  const conv: any = Array.isArray(curso?.convocatorias) ? curso.convocatorias[0] : curso?.convocatorias;
+  const arr = porCurso[mejorId];
+  return {
+    existe: true,
+    cargo: curso?.cargo_nombre ?? null,
+    convocatoria: conv?.nombre ?? null,
+    totalGuias: arr.length,
+    funcionales: mejorFunc,
+    tieneSimulacro: arr.some((g) => g.tipo === "simulacro"),
+  };
+}
 
 /**
  * Crea un usuario (Auth + profile) y un curso con guías auto-cargadas.
@@ -173,7 +231,9 @@ export async function crearClienteManual(
     revalidatePath("/admin/usuarios");
     revalidatePath("/admin/pagos");
 
-    return { ok: true, userId, cursoId, correo };
+    const { count: totalGuias } = await supabase
+      .from("guias_curso").select("id", { count: "exact", head: true }).eq("curso_id", cursoId);
+    return { ok: true, userId, cursoId, correo, planCopiado: copiadoPlan, guiasCargadas: totalGuias ?? 0 };
   } catch (e: any) {
     return { ok: false, error: "Error inesperado: " + e.message };
   }

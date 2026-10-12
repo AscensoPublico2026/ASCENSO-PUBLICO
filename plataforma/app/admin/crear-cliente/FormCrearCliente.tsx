@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { crearClienteManual, type CrearClienteResult } from "./actions";
+import { crearClienteManual, consultarPlanPorOpec, type CrearClienteResult, type PlanOpecInfo } from "./actions";
 
 type Convocatoria = { id: string; nombre: string; entidad: string | null };
 
@@ -36,6 +37,23 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
     crearClienteManual,
     null
   );
+
+  // Aviso en vivo: ¿ya tenemos un curso armado para este OPEC?
+  const [planOpec, setPlanOpec] = useState<PlanOpecInfo | null>(null);
+  const [consultando, setConsultando] = useState(false);
+  const timerOpec = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const alCambiarOpec = (valor: string) => {
+    if (timerOpec.current) clearTimeout(timerOpec.current);
+    const v = valor.trim();
+    if (v.length < 2) { setPlanOpec(null); setConsultando(false); return; }
+    setConsultando(true);
+    timerOpec.current = setTimeout(async () => {
+      try { setPlanOpec(await consultarPlanPorOpec(v)); }
+      catch { setPlanOpec(null); }
+      finally { setConsultando(false); }
+    }, 500);
+  };
+  useEffect(() => () => { if (timerOpec.current) clearTimeout(timerOpec.current); }, []);
 
   const box: React.CSSProperties = {
     background: "#fff",
@@ -96,7 +114,11 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
                 nuevoestudiante2026
               </code>
             </div>
-            <div style={{ marginBottom: 4 }}><strong>ID Curso:</strong> {state.cursoId}</div>
+            <div style={{ marginBottom: 6 }}><strong>ID Curso:</strong> {state.cursoId}</div>
+            <div style={{ marginBottom: 4 }}>
+              <strong>Guías cargadas:</strong> {state.guiasCargadas ?? 0}
+              {state.planCopiado ? " — plan completo copiado de un curso ya existente para este OPEC ✅" : ""}
+            </div>
           </div>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a
@@ -264,6 +286,8 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
               type="text"
               placeholder="Ej: 123456"
               style={inputStyle}
+              onChange={(e) => alCambiarOpec(e.target.value)}
+              autoComplete="off"
             />
           </div>
           <div>
@@ -281,6 +305,18 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
             </select>
           </div>
         </div>
+
+        {consultando && (
+          <div style={{ marginBottom: 18, fontSize: ".85rem", color: "var(--texto-suave, #5B6675)" }}>Buscando si ya tenemos un curso para este OPEC…</div>
+        )}
+        {!consultando && planOpec?.existe && (
+          <div style={{ marginBottom: 18, padding: "14px 16px", borderRadius: 12, background: "#E8F6EE", border: "1px solid #BFE6CF", color: "#1A7A4A", fontSize: ".9rem", lineHeight: 1.5 }}>
+            <strong>✅ Ya contamos con este curso.</strong>
+            {planOpec.cargo ? <> {planOpec.cargo}{planOpec.convocatoria ? ` · ${planOpec.convocatoria}` : ""}.</> : null}
+            {" "}Tiene {planOpec.totalGuias} guías ({planOpec.funcionales} funcionales{planOpec.tieneSimulacro ? " + simulacro" : ""}).
+            Al crear el perfil se cargará <strong>completo automáticamente</strong>.
+          </div>
+        )}
 
         <div style={fieldGroup}>
           <label htmlFor="cargo_nombre" style={labelStyle}>Nombre del cargo</label>
