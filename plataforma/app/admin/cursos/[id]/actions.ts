@@ -294,7 +294,7 @@ export async function rehacerPlanPlantilla(cursoId: string, planId: string) {
   // Guías actuales del curso.
   const { data: actuales } = await supabase
     .from("guias_curso")
-    .select("id, archivo_path")
+    .select("id, archivo_path, tipo, dia, orden, titulo")
     .eq("curso_id", cursoId);
 
   // 1) Eliminar las que NO están en el plan (incluye las de archivo_path null/vacío).
@@ -314,6 +314,19 @@ export async function rehacerPlanPlantilla(cursoId: string, planId: string) {
     (g: any) => g.archivo_path && rutasPlan.has(g.archivo_path)
   );
   const yaPresentes = new Set(restantes.map((g: any) => g.archivo_path));
+
+  // 1b) Corregir tipo/día/orden/título de las que ya estaban pero con datos distintos al plan
+  //     (p. ej. quedaron como "general" por un registro erróneo del catálogo).
+  for (const item of plan.guias) {
+    const g = getGuiaCatalogo(item.codigo);
+    if (!g || !g.archivoPath || g.estado !== "publicada") continue;
+    const fila: any = restantes.find((r: any) => r.archivo_path === g.archivoPath);
+    if (!fila) continue;
+    const nuevo = { tipo: g.tipo, dia: item.dia, orden: item.orden ?? item.dia ?? 0, titulo: g.titulo };
+    if (fila.tipo !== nuevo.tipo || fila.dia !== nuevo.dia || fila.orden !== nuevo.orden || fila.titulo !== nuevo.titulo) {
+      await supabase.from("guias_curso").update(nuevo).eq("id", fila.id);
+    }
+  }
   const registros: any[] = [];
   for (const item of plan.guias) {
     const g = getGuiaCatalogo(item.codigo);
