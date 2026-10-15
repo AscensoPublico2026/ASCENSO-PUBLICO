@@ -12,7 +12,7 @@ _Última actualización del plan: 17 jun 2026_
 
 ## 0. PRE-REQUISITOS (hacer antes de probar)
 
-- [ ] **Mergear la rama `feature/landing-wpp`** a `main` → así producción tendrá el número WhatsApp nuevo (3170905177), la foto del hero y el mensaje sin el símbolo raro. _Hasta que no se mergee, producción sigue con el número viejo._
+- [ ] **Mergear la rama `feature/landing-wpp`** a `main` → así producción tendrá el número WhatsApp nuevo (3137551982), la foto del hero y el mensaje sin el símbolo raro. _Hasta que no se mergee, producción sigue con el número viejo._
 - [ ] Confirmar que **Wompi está en modo PRODUCCIÓN** (llave pública empieza por `pub_prod_`, no `pub_test_`). En sandbox NO se cobra dinero real.
 - [ ] Confirmar variables en Vercel: `ADMIN_EMAIL = ascensopublico@gmail.com`, `NEXT_PUBLIC_SITE_URL = https://ascensopublico.com`, `NEXT_PUBLIC_WOMPI_REDIRECT_URL = https://ascensopublico.com/activar`, `PRECIO_COP = 300000`.
 - [ ] Tener a mano: un correo de prueba real, una tarjeta/medio de pago real (para la prueba de compra), y un PDF cualquiera para el "manual de funciones".
@@ -33,7 +33,7 @@ _Última actualización del plan: 17 jun 2026_
 - [ ] Botón "Iniciar sesión" (navbar) → va a `/login`.
 - [ ] Botón "Quiero mi curso" (navbar) → va a `/comprar`.
 - [ ] Botón hero "Quiero mi curso personalizado" → va a `/comprar`.
-- [ ] Botón hero "💬 Asesoría por WhatsApp" → abre WhatsApp al **3170905177** con mensaje de asesoría.
+- [ ] Botón hero "💬 Asesoría por WhatsApp" → abre WhatsApp al **3137551982** con mensaje de asesoría.
 - [ ] Botón hero "Ver cómo funciona" → baja a la sección Cómo.
 
 ## A2. Landing — Secciones de contenido
@@ -57,7 +57,7 @@ _Última actualización del plan: 17 jun 2026_
 - [ ] Ir a `/convocatorias` (listado completo) carga y funciona.
 
 ## A4. Landing — Footer y elementos flotantes
-- [ ] **Botón flotante de WhatsApp** (esquina inferior derecha) → abre WhatsApp al 3170905177.
+- [ ] **Botón flotante de WhatsApp** (esquina inferior derecha) → abre WhatsApp al 3137551982.
 - [ ] En móvil, el botón flotante se ve como círculo (sin texto) y funciona.
 - [ ] Enlaces del footer: Política de privacidad → `/privacidad`.
 - [ ] Enlace del footer: Términos → `/terminos`.

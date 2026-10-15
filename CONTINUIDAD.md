@@ -199,7 +199,7 @@ Link para mergear: https://github.com/AscensoPublico2026/ASCENSO-PUBLICO/pull/ne
 - ✅ **Correo al cliente cuando se habilita el curso** (`correoCursoListo` en `lib/email.ts`), disparado en `marcarCursoListo` y `habilitarCursoAhora`. Si aún faltan las 12h, el correo indica la **hora exacta** de disponibilidad; si ya está disponible, invita a estudiar. No reenvía si ya estaba disponible.
 
 **Landing / UX:**
-- ✅ **WhatsApp** centralizado en `lib/contacto.ts` con **número oficial `573170905177`** y **redes** (`REDES`: TikTok/Instagram) enlazadas en el footer.
+- ✅ **WhatsApp** centralizado en `lib/contacto.ts` con **número oficial `573137551982`** y **redes** (`REDES`: TikTok/Instagram) enlazadas en el footer.
 - ✅ **Contador de cupos compartido:** landing y `/comprar` usan `ContadorCupos`; la fuente oficial es `configuracion_cupos`, editable en `/admin/configuracion`, y `plataforma/lib/cupos.ts` conserva `177/200` solo como fallback.
 - ✅ **Botones del nav** con texto nítido (no heredan el gris de los enlaces).
 - ✅ **Flujo "Cómo funciona"** reordenado al flujo real (datos+manual → pagar → armamos ruta → estudiar).

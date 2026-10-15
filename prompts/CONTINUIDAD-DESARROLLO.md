@@ -33,7 +33,7 @@ Lo que quiero ajustar/mejorar hoy es:
 - **Git:** ramas nuevas siempre; **nunca** push directo a `main`. Push con la herramienta `github_push_to_remote` (no `git push`). El usuario mergea desde GitHub con el **link de compare**.
 - **Sandbox:** sin acceso directo a Supabase/Wompi/Vercel; Kiro escribe código, el usuario configura los paneles externos. Si `main` local se ve desactualizado, usar `pull_repository` antes de ramificar.
 - **Marca:** navy `#0A2A5E` · crema `#FBF9F4` · oro `#E8A33D`. Tipos: Source Serif 4 + Plus Jakarta Sans.
-- **Contacto/redes:** todo sale de `plataforma/lib/contacto.ts` (WhatsApp `573170905177`, `REDES`). No hardcodear.
+- **Contacto/redes:** todo sale de `plataforma/lib/contacto.ts` (WhatsApp `573137551982`, `REDES`). No hardcodear.
 - **Reglas de producto:** precio $300.000 (`PRECIO_COP`, en centavos al cobrar); cupos de lanzamiento 177/200 (centralizados en `plataforma/lib/cupos.ts`); plan 21 días (20 estudio L-V + simulacro); el simulacro se desbloquea al terminar las guías del plan (bonus no cuenta); habilitación del curso a 12h o "Habilitar ahora" (envía correo).
 - **Verificación:** no se puede compilar localmente (sin node_modules/red). Validar leyendo el código con cuidado; el usuario prueba en producción tras desplegar.
 
