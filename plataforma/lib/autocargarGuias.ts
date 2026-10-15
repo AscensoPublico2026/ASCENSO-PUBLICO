@@ -118,7 +118,7 @@ const GUIAS_BONUS = [
  * solo la correspondencia código→día del plan. Para un cargo nuevo, se agrega
  * una entrada aquí con la lista de códigos y sus días.
  */
-export interface ItemPlanPlantilla { codigo: string; dia: number; orden?: number }
+export interface ItemPlanPlantilla { codigo: string; dia: number | null; orden?: number }
 export interface PlanPlantilla { id: string; nombre: string; guias: ItemPlanPlantilla[] }
 
 export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
