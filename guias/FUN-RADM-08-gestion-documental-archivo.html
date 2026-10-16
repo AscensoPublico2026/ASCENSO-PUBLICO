@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-RADM-08 · Gestión Documental y Archivo — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-RADM-08</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 16 · Funcional Específica · Gestión Documental</div>
+  <h1>Gestión Documental y Archivo</h1>
+  <p class="header-sub">La memoria y la prueba de la Entidad: qué es la gestión documental (Ley 594 de 2000), las Tablas de Retención Documental, el ciclo vital del documento, los archivos de gestión/central/histórico, los expedientes, la preservación y la base de la transparencia. Lo que un <strong>Gestor III (Nivel Profesional)</strong> conforma, aplica y preserva, sin eliminar ni alterar por fuera del procedimiento.</p>
+  <div class="badges"><span class="badge">📅 Día 16 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Es martes, 7:40 a. m. Llegas a la Subdirección de Recursos Físicos de la DIAN, en tu primera semana como Gestor III del proceso de Recursos Administrativos. Marcela, tu coordinadora, te entrega cuatro asuntos antes del almuerzo. El primero: la Dirección Seccional de Barranquilla reporta una filtración en la cubierta de su sede y pide "reparación urgente"; alguien ya habló con un contratista conocido para que "empiece hoy mismo y después legalizamos". El segundo: hay que dar de baja veinte computadores obsoletos y un vehículo del parque automotor, y un funcionario propone "regalarlos a una fundación para no complicarse". El tercero: una sede recibió, como pago de una obligación fiscal, un lote urbano, y nadie sabe quién debe asegurarlo, mantenerlo ni custodiarlo. El cuarto: la póliza que ampara los bienes muebles de tres seccionales vence el viernes y el corredor de seguros pregunta si "renovamos igual que el año pasado".</p>
+    <p>¿Se puede "empezar hoy y legalizar después"? ¿Un bien del Estado se "regala"? ¿Quién responde por un inmueble recibido en pago? ¿Qué significa que una póliza se renueve "igual"? Todas estas respuestas parten de unas mismas bases, y esas bases son las <mark>generalidades de los Recursos Administrativos</mark>: qué es este proceso dentro de la DIAN, qué bienes y servicios administra, con qué normas (presupuesto, contratación, bienes, seguros, ambiental), con qué principios actúa el servidor público y, sobre todo, qué te corresponde decidir a ti como Gestor III y qué no. Hoy construyes ese mapa.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es el <strong>proceso de Recursos Administrativos</strong> en la DIAN y cómo se ubica dentro de la estructura de la Entidad (Decreto 1742 de 2020).</li>
+      <li>El <strong>propósito y las funciones esenciales</strong> del empleo Gestor III del área administrativa y financiera, según el manual específico (Resolución 0067 de 2024).</li>
+      <li>Los <strong>cinco grandes frentes</strong> que administra el proceso: infraestructura física, bienes muebles e inmuebles, servicios generales y parque automotor, aseguramiento de bienes y gestión ambiental de sedes.</li>
+      <li>El <strong>mapa normativo</strong> del cargo: Constitución (función administrativa), Estatuto de Contratación (Ley 80 de 1993, Ley 1150 de 2007, Decreto 1082 de 2015), régimen de bienes del Estado, presupuesto y plan anual de adquisiciones.</li>
+      <li>El <strong>ciclo de la gestión administrativa</strong>: planear (PAA) → contratar → ejecutar y supervisar → recibir → administrar y mantener → dar de baja o enajenar.</li>
+      <li>Los <strong>principios de la función pública</strong> aplicados a lo administrativo (art. 209 C.P.): igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad.</li>
+      <li>La diferencia entre <strong>bien mueble e inmueble</strong>, entre <strong>baja y enajenación</strong>, y qué son los <strong>bienes recibidos en pago</strong> de obligaciones fiscales.</li>
+      <li>El <strong>aseguramiento de bienes</strong>: qué es un programa de seguros, qué ampara y por qué no se "renueva igual" sin análisis.</li>
+      <li>El <strong>rol del Gestor III</strong>: qué proyecta, gestiona y supervisa, y por qué no puede dispensar requisitos ni decidir lo que es de otro.</li>
+      <li>Ejercicios, casos aplicados a tu día a día y <strong>12 preguntas de simulacro</strong> de juicio situacional con tres opciones.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás ubicar cualquier asunto administrativo en su lugar correcto —qué bien o servicio es, qué norma lo rige, en qué fase del ciclo está y a quién le corresponde decidir— y tendrás la base para estudiar, en los días siguientes, la infraestructura física, la administración de bienes muebles e inmuebles, los servicios y el parque automotor, y la contratación estatal paso a paso.</p>
+  </div>
+</section>
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>"Generalidades de los Recursos Administrativos" es el <mark>cimiento</mark> de todo el bloque funcional de tu empleo. El manual específico del <strong>Gestor III del Nivel Profesional</strong> describe un cargo cuyo propósito es efectuar las acciones que demandan la proyección y el desarrollo de la infraestructura física de la Entidad, la administración de sus bienes muebles e inmuebles, la prestación de servicios generales, el transporte y parque automotor, el aseguramiento de bienes y la contratación necesaria para todo ello. No puedes dominar ninguna de esas funciones si antes no tienes claro <strong>qué es el proceso, qué administra, con qué normas y con qué límites</strong>. Esa es la foto completa que arma esta guía.</p>
+  <p>Recuerda cómo es la prueba: las competencias funcionales se evalúan con <strong>juicio situacional</strong> (un caso, un enunciado y tres opciones de respuesta, de las cuales solo una es la más apropiada), es una prueba <mark>eliminatoria</mark> y exige un puntaje mínimo aprobatorio. Además, en los ejes que se sustentan en leyes, decretos y otras normas solo se tienen en cuenta las que estén <strong>vigentes</strong> a la fecha de corte definida en la convocatoria. Por eso aquí no solo aprenderás qué dicen las normas, sino a razonar con los principios que las sostienen, que son los que permiten resolver un caso aunque no te sepas de memoria un artículo.</p>
+  <p>Para quien llega al cargo, estas generalidades importan por cuatro razones concretas:</p>
+  <ul class="lista">
+    <li>Tus funciones de <strong>infraestructura y bienes inmuebles</strong> exigen saber en qué fase está cada asunto (planeación, contratación, ejecución, recibo, mantenimiento, baja/enajenación) para no "saltarse" pasos que la ley impone.</li>
+    <li>Tus funciones de <strong>contratación</strong> (estudios previos, selección, perfeccionamiento, liquidación, garantías) se apoyan en el Estatuto de Contratación, que aquí se introduce y luego se profundiza en los Días 14 y 15.</li>
+    <li>Tus funciones de <strong>atención de trámites, PQRSDF y conceptos técnicos de alta complejidad</strong> requieren ubicar correctamente a qué proceso y a qué norma pertenece cada solicitud.</li>
+    <li>El <strong>comportamiento ético (nivel 4)</strong> se pone a prueba todos los días en el manejo de recursos públicos: saber qué te toca decidir y qué no es la mejor barrera contra la extralimitación, la omisión y el riesgo de corrupción.</li>
+  </ul>
+  <p>Las preguntas de esta guía en la prueba suelen ser <mark>situacionales</mark>: te presentan a alguien que propone un atajo ("empecemos la obra y legalizamos después", "regalemos los equipos de baja", "renovemos la póliza igual") y debes escoger la actuación más apropiada. Los distractores casi siempre contienen una parte correcta y un error sutil: invertir el orden de un trámite, aplicar una figura a un supuesto que no es, o decidir algo que le corresponde a otra instancia.</p>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con las guías anteriores y siguientes</div>
+    <p>En los Días 5 a 8 estudiaste tus competencias comportamentales y el alcance del cargo. Hoy entras al contenido técnico: esta guía es el mapa general del proceso. En el Día 10 y 11 profundizarás la <strong>infraestructura física</strong>; en el Día 12, la <strong>administración de bienes muebles e inmuebles</strong>; en el Día 13, los <strong>servicios y el parque automotor</strong>; y en los Días 14 y 15, la <strong>contratación estatal</strong> paso a paso. Todo lo que hoy ves como título, en los días siguientes lo abres en detalle.</p>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Gestión Documental y Archivo: la memoria de la Entidad</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, normas verificadas, ejemplos aplicados al trabajo de un Gestor III del área administrativa, ejercicios resueltos y checkpoints interactivos. La gestión documental es la administración de toda la información que la Entidad produce y recibe: es su memoria y la prueba de sus actuaciones. El manual asigna al Gestor III la "gestión documental" como una de sus funciones. Hoy verás qué es, cómo se rige (Ley 594 de 2000), qué son las Tablas de Retención Documental, el ciclo vital del documento, los archivos de gestión/central/histórico, y por qué un buen manejo documental protege a la Entidad y al servidor. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📚</span><h5>Qué es</h5><p>Gestión documental · Ley 594/2000</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🗂️</span><h5>TRD</h5><p>Tablas de Retención Documental</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔄</span><h5>Ciclo vital</h5><p>Gestión · central · histórico</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📥</span><h5>Procesos</h5><p>Producción, trámite, conservación</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🛡️</span><h5>Valor y rol</h5><p>Prueba · transparencia · qué decides</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Qué es la gestión documental y por qué importa</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>gestión documental</mark> es el conjunto de actividades para administrar de forma ordenada los documentos que la Entidad produce y recibe a lo largo de su ciclo de vida: desde que se crean o llegan, hasta que se conservan o eliminan. Se rige, en Colombia, por la <strong>Ley 594 de 2000</strong> (Ley General de Archivos) y sus normas reglamentarias.</p>
+</div>
+<div class="b-texto">
+  <p>Todo lo que hace una entidad pública deja documentos: contratos, actas, resoluciones, informes, correspondencia, expedientes. Esos documentos son la <strong>memoria</strong> de la Entidad y la <strong>prueba</strong> de sus actuaciones. Administrarlos bien no es un asunto "de archivo polvoriento": es garantizar que la Entidad pueda demostrar lo que hizo, responder a la ciudadanía y a los órganos de control, y conservar su historia. El manual asigna al Gestor III la "gestión documental", así que es parte de su función.</p>
+  <p>La gestión documental tiene tres grandes finalidades. La <strong>administrativa</strong>: que los documentos estén disponibles para la gestión diaria (encontrar rápido un contrato, un expediente). La <strong>probatoria y de control</strong>: que la Entidad pueda demostrar sus actuaciones ante auditorías, procesos judiciales o peticiones ciudadanas. Y la <strong>histórica y cultural</strong>: conservar el patrimonio documental que tiene valor para la memoria del país. Cada documento, según su valor, cumple una o varias de estas finalidades.</p>
+  <p>Un documento mal gestionado es un problema latente: un contrato que no se encuentra cuando el control lo pide, un expediente incompleto, una comunicación sin radicar cuya fecha nadie puede probar. Por el contrario, una gestión documental ordenada permite responder con solvencia cualquier requerimiento y demuestra una administración seria. Conecta directamente con la trazabilidad que recorre todo el cargo: lo que no está bien documentado y conservado, es como si no existiera para el control.</p>
+  <p>La gestión documental también es la base de la <strong>transparencia</strong>: la Ley 1712 de 2014 (transparencia y acceso a la información pública) obliga a las entidades a conservar y poner a disposición su información. Sin una buena gestión documental, no se puede cumplir ese derecho ciudadano. Así, administrar bien los documentos no es solo eficiencia interna: es un deber frente a la ciudadanía y al Estado de Derecho.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Finalidad</th><th>Qué permite</th></tr></thead>
+    <tbody>
+      <tr><td>Administrativa</td><td>Disponer de los documentos para la gestión diaria.</td></tr>
+      <tr><td>Probatoria y de control</td><td>Demostrar las actuaciones ante auditorías, jueces, peticiones.</td></tr>
+      <tr><td>Histórica y cultural</td><td>Conservar el patrimonio documental con valor para la memoria.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> la gestión documental no es un tema "secundario de archivo"; es la memoria y la prueba de la Entidad, y la base de la transparencia. Un documento mal gestionado es un riesgo probatorio y de control.</div>
+<div class="practica">
+  <div class="practica-head">🧩 En la práctica</div>
+  <div class="practica-body"><p>El control fiscal pide el expediente completo de una contratación de hace tres años. Si la gestión documental fue buena, el expediente está completo, ordenado y disponible, y la Entidad responde con solvencia. Si fue mala, faltan documentos, están dispersos o perdidos, y la ausencia de soporte se vuelve un hallazgo, aunque la contratación se haya hecho bien. El Gestor III que cuida la gestión documental protege a la Entidad justo en estos momentos.</p></div>
+</div>
+<div class="b-texto"><p>Conviene desterrar desde el principio la idea de que la gestión documental es "cosa de archivistas" ajena al Gestor III. Al contrario: quien maneja contratos, bienes, obras y servicios produce y custodia una enorme cantidad de documentos, y de su buen manejo depende poder demostrar cada actuación. La gestión documental no es un apéndice del cargo: es la cara trazable de todo lo que hace el proceso. Cada decisión de contratación, cada movimiento de un bien, cada intervención de infraestructura se prueba con documentos. Por eso el Gestor III que subestima la gestión documental subestima, en realidad, la trazabilidad de su propio trabajo, y se expone a no poder demostrar lo que hizo cuando el control lo pida.</p></div>
+<div class="b-texto"><p>Para la prueba, interioriza que la gestión documental se evalúa con la misma lógica de todo el cargo: procedimiento, no conveniencia; documentos del Estado, no del servidor; aplicar la norma (Ley 594, TRD), no improvisar. Cada caso de gestión documental se resuelve preguntándose qué dice la norma archivística y qué protege la naturaleza pública de los documentos. Con ese método, y recordando que los documentos son memoria y prueba, resuelves los casos sin memorizar artículos. La gestión documental, bien entendida, es una aplicación más de los principios que recorren todo el curso: legalidad, trazabilidad y protección del patrimonio (en este caso, documental) del Estado.</p></div>
+<div class="practica"><div class="practica-head">🧩 En la práctica (2)</div><div class="practica-body"><p>Un ciudadano presenta una petición solicitando copia de las actas de un comité administrativo de hace dos años. Si la gestión documental fue buena, las actas están en su expediente, organizadas y localizables, y se responde en el término legal. Si fue mala, hay que "buscarlas" entre papeles dispersos, y quizá no aparezcan, lo que lleva a una respuesta tardía o incompleta que vulnera el derecho de petición. El Gestor III que conforma bien sus expedientes puede responder las peticiones de información con oportunidad; el que no, convierte cada petición en una búsqueda angustiosa. La buena gestión documental es, en la práctica, lo que permite cumplir el derecho de petición.</p></div></div>
+<div class="b-texto"><p>Para ubicar bien el tema, conviene recordar su lugar en el conjunto del cargo: la gestión documental es transversal a todo lo que hace el Gestor III. Cuando contrata, produce el expediente contractual; cuando administra bienes, lleva su historial documental; cuando gestiona infraestructura, conforma los expedientes de obra; cuando atiende al ciudadano, maneja PQRSDF y acceso a la información. No es, por tanto, un tema aislado que se estudia por cumplir, sino la disciplina que hace trazable y demostrable cada una de las demás funciones. Dominarla es asegurar que todo el trabajo quede bien probado y disponible, que es, al final, lo que distingue una gestión que resiste el control de una que no.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>El marco normativo: la Ley 594 de 2000 y el AGN</h3></div>
+    <div class="b-texto">
+  <p>La gestión documental pública se rige por la <mark>Ley 594 de 2000</mark>, la Ley General de Archivos, que establece las reglas y principios de la función archivística del Estado. La complementan decretos y acuerdos (el Decreto 1080 de 2015, decreto único del sector cultura, y los acuerdos del Archivo General de la Nación), que desarrollan aspectos como las Tablas de Retención Documental.</p>
+  <p>El <strong>Archivo General de la Nación (AGN)</strong> es el ente rector de la política archivística: fija lineamientos, expide acuerdos, convalida instrumentos (como las TRD) y vela por el patrimonio documental. Las entidades deben seguir sus lineamientos. El AGN es, para la gestión documental, lo que Colombia Compra Eficiente es para la contratación: el ente rector que marca las reglas.</p>
+  <p>La Ley 594 consagra varios principios y obligaciones: la <strong>obligatoriedad de crear y conformar archivos</strong> en las entidades, la <strong>responsabilidad</strong> de los servidores por los documentos a su cargo, la obligatoriedad de las <strong>Tablas de Retención Documental</strong> (art. 24), y la protección del patrimonio documental. Un principio clave es que los documentos públicos son del Estado, no del servidor que los produjo: al retirarse, un funcionario no "se lleva" los documentos de su gestión, los entrega.</p>
+  <p>La gestión documental conecta con otras normas: la Ley 1712 de 2014 (transparencia), que obliga a conservar y publicar información; las normas de protección de datos personales (Ley 1581 de 2012), que regulan el manejo de datos sensibles en los documentos; y las normas de cada materia (contratación, por ejemplo) que exigen conservar ciertos documentos por plazos determinados. El Gestor III gestiona los documentos cumpliendo este marco integrado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Norma</th><th>Qué regula</th></tr></thead>
+    <tbody>
+      <tr><td>Ley 594 de 2000</td><td>Ley General de Archivos: función archivística del Estado.</td></tr>
+      <tr><td>Decreto 1080 de 2015</td><td>Decreto único del sector cultura; desarrolla la gestión documental.</td></tr>
+      <tr><td>Acuerdos del AGN</td><td>Lineamientos técnicos (TRD, expedientes, transferencias).</td></tr>
+      <tr><td>Ley 1712 de 2014</td><td>Transparencia y acceso a la información pública.</td></tr>
+      <tr><td>Ley 1581 de 2012</td><td>Protección de datos personales en los documentos.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="checkpoint">
+  <div class="cp-tag">✅ Checkpoint 1</div>
+  <div class="cp-q">Un funcionario que se retira quiere llevarse los expedientes y documentos de su gestión "porque él los produjo". ¿Es correcto?</div>
+  <div class="cp-opts">
+    <button class="cp-opt" data-cp="1" data-ans="0">Sí, si él los produjo son suyos y puede llevárselos.</button>
+    <button class="cp-opt" data-cp="1" data-ans="1">No: los documentos públicos son del Estado, no del servidor que los produjo; al retirarse debe entregarlos (hacer el empalme documental), no llevárselos. La Ley 594 lo establece.</button>
+    <button class="cp-opt" data-cp="1" data-ans="0">Puede llevarse copias de los que considere importantes para su hoja de vida.</button>
+  </div>
+  <div class="cp-fb" id="cpfb1"><strong>Los documentos públicos son del Estado.</strong> Un servidor no "se lleva" los documentos de su gestión al retirarse: los entrega (empalme documental). Son patrimonio de la Entidad, no propiedad de quien los produjo.</div>
+</div>
+<div class="b-texto"><p>Un principio de la Ley 594 que conviene interiorizar es que la función archivística es una responsabilidad de toda la entidad, no solo del área de archivo. Cada dependencia es responsable de los documentos que produce y custodia. Esto significa que el Gestor III no puede "delegar" toda la gestión documental en un archivista y desentenderse: es responsable de conformar y mantener bien los expedientes de su proceso. El área de archivo fija lineamientos, administra el archivo central y da soporte técnico, pero la conformación y el cuidado de los documentos en el archivo de gestión corresponde a cada dependencia. Entender esta responsabilidad compartida evita el error de pensar que "el archivo es problema de otros".</p></div>
+<div class="b-texto"><p>Vale la pena conocer que el Archivo General de la Nación expide periódicamente acuerdos que desarrollan aspectos técnicos de la gestión documental: la elaboración de las Tablas de Retención, la conformación de expedientes, las transferencias, el expediente electrónico. El Gestor III no necesita memorizar cada acuerdo, pero sí saber que existe un cuerpo normativo técnico que ordena cómo hacer las cosas, y que su entidad tiene instrumentos (TRD, cuadros de clasificación, programa de gestión documental) que aplican esos lineamientos. Consultar esos instrumentos de la propia entidad, en lugar de improvisar, es la actuación correcta: la gestión documental es técnica y reglada, no cuestión de criterio personal sobre cómo archivar.</p></div>
+<div class="b-texto"><p>Conviene tener presente que cada entidad concreta su gestión documental en instrumentos propios que desarrollan la Ley 594 y los acuerdos del AGN: el Programa de Gestión Documental (PGD), que planea cómo la entidad maneja sus documentos; las Tablas de Retención Documental; el cuadro de clasificación. El Gestor III no improvisa su manejo documental: se apoya en estos instrumentos de su entidad, que le dicen cómo clasificar, cuánto conservar y cómo disponer cada documento. Consultar y aplicar estos instrumentos, en lugar de archivar "como a uno le parezca", es la actuación correcta y profesional. La gestión documental es técnica y reglada, y la entidad provee las reglas concretas en sus instrumentos.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Las Tablas de Retención Documental (TRD)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las <mark>Tablas de Retención Documental (TRD)</mark> son el instrumento que define, para cada tipo de documento de cada dependencia, cuánto tiempo se conserva en cada fase del archivo y cuál es su disposición final. Son <strong>obligatorias</strong> para las entidades del Estado (art. 24 de la Ley 594 de 2000) y las convalida el AGN.</p>
+</div>
+<div class="b-texto">
+  <p>Las TRD responden tres preguntas sobre cada serie documental (conjunto de documentos del mismo tipo): ¿cuánto tiempo se conserva en el <strong>archivo de gestión</strong> (el de la oficina que lo produce)?, ¿cuánto en el <strong>archivo central</strong> (el que concentra lo que ya no se usa a diario)?, y ¿cuál es su <strong>disposición final</strong> (conservación total, eliminación, selección, o digitalización)? Así, cada documento tiene un "destino" predeterminado según su valor.</p>
+  <p>Las TRD evitan dos males opuestos. Por un lado, <strong>botar lo que debe conservarse</strong>: sin TRD, alguien podría eliminar documentos valiosos (una historia, una prueba). Por otro, <strong>acumular lo que ya puede eliminarse</strong>: sin TRD, las oficinas se llenan de papeles sin valor que estorban y encarecen el almacenamiento. La TRD pone orden: cada documento se conserva lo que debe, ni más ni menos.</p>
+  <p>La <strong>eliminación</strong> de documentos no es una decisión libre: solo se eliminan los documentos cuya TRD así lo prevé, cumplidos sus tiempos de retención, y mediante un procedimiento con acta y aprobación. Eliminar documentos por fuera de la TRD (porque "estorban" o "para hacer espacio") es una irregularidad grave, que puede destruir pruebas o patrimonio. El Gestor III vela por que la eliminación se haga solo conforme a la TRD y con el procedimiento.</p>
+  <p>El Gestor III, en el manejo documental de su proceso, aplica las TRD: organiza los documentos según las series definidas, respeta los tiempos de retención, y gestiona las transferencias (del archivo de gestión al central) y las eliminaciones (solo las previstas). No inventa plazos ni elimina por su cuenta: sigue la TRD, que es el instrumento técnico y obligatorio que ordena todo.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><h4>Archivo de gestión</h4><p>En la oficina que produce el documento</p></div>
+  <div class="flujo-paso"><span class="fp-n">2</span><h4>Transferencia</h4><p>Pasa al archivo central cumplido su tiempo</p></div>
+  <div class="flujo-paso"><span class="fp-n">3</span><h4>Archivo central</h4><p>Concentra lo que ya no se usa a diario</p></div>
+  <div class="flujo-paso"><span class="fp-n">4</span><h4>Disposición final</h4><p>Conservación, eliminación o selección (según TRD)</p></div>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> no se eliminan documentos "porque estorban" ni "para hacer espacio". Solo se eliminan los que la TRD prevé, cumplidos sus tiempos y con el procedimiento (acta, aprobación). Eliminar por fuera de la TRD es gravísimo.</div>
+<div class="b-texto"><p>Para la prueba, las TRD son un tema de alto rendimiento porque generan casos claros: la tentación de eliminar documentos "que estorban" o "para hacer espacio". La respuesta correcta siempre reivindica que la eliminación solo procede conforme a la TRD, cumplidos los tiempos de retención y con el procedimiento (acta, aprobación). Memoriza que no se elimina nada por fuera de la TRD, por mucho que estorbe. Y recuerda la doble función de la TRD: evita botar lo valioso y acumular lo inútil. Con ese entendimiento resuelves los casos de disposición documental: la TRD manda, no la conveniencia ni la falta de espacio.</p></div>
+<div class="b-texto"><p>Conviene distinguir las TRD de otros instrumentos archivísticos que aparecen en la gestión documental: el cuadro de clasificación documental (que organiza las series y subseries de toda la entidad) y las tablas de valoración documental (que se aplican a los fondos acumulados, es decir, a los documentos antiguos que no tenían TRD cuando se produjeron). No necesitas dominar cada uno para la prueba, pero sí saber que la gestión documental se apoya en instrumentos técnicos que ordenan la clasificación, la retención y la valoración de los documentos. Todos persiguen lo mismo: que cada documento esté clasificado, se conserve el tiempo debido y tenga una disposición final definida, de forma técnica y no arbitraria.</p></div>
+<div class="checkpoint"><div class="cp-tag">✅ Checkpoint 3</div><div class="cp-q">El archivo de gestión está lleno y un compañero propone eliminar las carpetas más antiguas "para hacer espacio, total ya nadie las consulta". ¿Qué respondes?</div><div class="cp-opts"><button class="cp-opt" data-cp="3" data-ans="0">Que sí, si ya nadie las consulta se pueden eliminar para liberar espacio.</button><button class="cp-opt" data-cp="3" data-ans="1">Que no se eliminan documentos por "hacer espacio": solo se elimina lo que la TRD prevé, cumplidos sus tiempos y con el procedimiento (acta, aprobación); lo que cumplió su tiempo en gestión se transfiere al archivo central, no se bota.</button><button class="cp-opt" data-cp="3" data-ans="0">Que se eliminen solo las que tengan más de cierta antigüedad, calculada a ojo.</button></div><div class="cp-fb" id="cpfb3"><strong>No se elimina por hacer espacio.</strong> Solo se elimina lo que la TRD prevé, cumplidos los tiempos y con procedimiento. Lo que cumplió su tiempo en gestión se transfiere al archivo central. Eliminar por fuera de la TRD es gravísimo, aunque "ya nadie las consulte".</div></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>El ciclo vital del documento y los tres archivos</h3></div>
+    <div class="b-texto">
+  <p>Todo documento tiene un <mark>ciclo vital</mark>: nace, se usa activamente, deja de usarse a diario pero conserva valor, y finalmente se conserva permanentemente o se elimina. A ese ciclo corresponden tres fases de archivo: el de <strong>gestión</strong>, el <strong>central</strong> y el <strong>histórico</strong>.</p>
+  <p>El <strong>archivo de gestión</strong> es el de la oficina que produce o tramita el documento: contiene los documentos de uso frecuente, los que están "vivos" en la gestión diaria. Aquí el documento se usa, se consulta, se completa. El <strong>archivo central</strong> concentra los documentos que ya no se usan a diario pero que deben conservarse por sus valores (administrativo, legal, fiscal); se transfieren desde los archivos de gestión según la TRD. El <strong>archivo histórico</strong> conserva permanentemente los documentos con valor histórico, científico o cultural, que son patrimonio.</p>
+  <p>El paso de una fase a otra se llama <strong>transferencia documental</strong>: del archivo de gestión al central, y del central al histórico (para los que tienen valor permanente) o a la eliminación (para los que la TRD prevé eliminar). Las transferencias se hacen según los tiempos de la TRD y con procedimientos que garantizan la trazabilidad (inventarios, actas). Así, el documento fluye ordenadamente por su ciclo de vida.</p>
+  <p>Entender este ciclo ayuda al Gestor III a organizar la documentación de su proceso: lo activo en el archivo de gestión, bien organizado para encontrarlo; lo que cumplió su tiempo activo, transferido al central; y lo histórico, preservado. Una oficina que no hace transferencias se congestiona (todo se acumula en el archivo de gestión); una que transfiere sin criterio puede perder documentos que aún necesita. La TRD y el ciclo vital dan el equilibrio.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Archivo</th><th>Qué contiene</th><th>Valor</th></tr></thead>
+    <tbody>
+      <tr><td>De gestión</td><td>Documentos de uso frecuente, "vivos"</td><td>Administrativo activo</td></tr>
+      <tr><td>Central</td><td>Lo que ya no se usa a diario pero debe conservarse</td><td>Administrativo, legal, fiscal</td></tr>
+      <tr><td>Histórico</td><td>Documentos con valor permanente</td><td>Histórico, científico, cultural</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica">
+  <div class="practica-head">🧩 En la práctica</div>
+  <div class="practica-body"><p>El archivo de gestión de tu proceso está congestionado: hay expedientes de contratos de hace años mezclados con los activos, y cuesta encontrar lo que se necesita. El Gestor III organiza: identifica según la TRD qué expedientes ya cumplieron su tiempo en gestión y los transfiere al archivo central (con su inventario y acta), dejando en gestión solo lo activo. Así la oficina se descongestiona, se encuentra rápido lo vigente, y lo transferido queda bien conservado y localizable en el central.</p></div>
+</div>
+<div class="b-texto"><p>Entender el ciclo vital ayuda a resolver un problema cotidiano: la congestión de los archivos de gestión. Las oficinas tienden a acumular todo "por si acaso", hasta que no se encuentra nada. La solución no es botar al azar (eso viola la TRD), sino transferir ordenadamente al archivo central lo que ya cumplió su tiempo en gestión, dejando activo solo lo vigente. Las transferencias periódicas, según la TRD, mantienen los archivos de gestión ágiles y conservan bien lo transferido. El Gestor III que gestiona las transferencias de su proceso evita tanto la congestión como la pérdida, logrando el equilibrio que da el ciclo vital bien aplicado.</p></div>
+<div class="b-texto"><p>Una buena práctica relacionada con el ciclo vital es el inventario documental: un registro de qué documentos y expedientes existen, dónde están y en qué estado. El inventario es a los documentos lo que el inventario de bienes es al patrimonio físico: la base del control. Permite saber qué se tiene, localizar rápidamente lo que se busca, y es indispensable para las transferencias y para el empalme al retirarse. El Gestor III que mantiene inventariada la documentación de su proceso tiene el control de su memoria documental; el que no, administra a ciegas y se expone a perder documentos. El inventario documental es, por eso, una herramienta básica que acompaña todo el ciclo vital.</p></div>
+<div class="b-texto"><p>Un último apunte sobre las transferencias: se hacen con un inventario documental que detalla lo que se transfiere, de modo que quede trazabilidad del paso de un archivo a otro. Así, un documento transferido al archivo central sigue siendo localizable (está en el inventario de la transferencia), y no "se pierde" al salir de la oficina. Las transferencias sin inventario son fuente de pérdidas: nadie sabe qué se transfirió ni dónde quedó. El Gestor III que gestiona las transferencias de su proceso las hace con inventario, garantizando que la documentación transferida siga bajo control y localizable. La trazabilidad acompaña al documento en cada paso de su ciclo vital.</p></div>
+<div class="b-texto"><p>El ciclo vital explica también por qué no todos los documentos terminan igual: unos se conservan permanentemente (los de valor histórico), otros se eliminan cumplido su tiempo (los que solo tenían valor administrativo temporal), y otros se seleccionan (se conserva una muestra). Esta diferenciación, definida en la TRD a partir de la valoración, es lo que evita tanto el colapso de los archivos (si todo se conservara para siempre) como la pérdida de la memoria (si todo se eliminara). El Gestor III entiende que cada documento tiene un destino según su valor, y que ese destino lo define la TRD, no la conveniencia ni la antigüedad calculada a ojo.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Los procesos de la gestión documental</h3></div>
+    <div class="b-texto">
+  <p>La gestión documental comprende varios <mark>procesos</mark> que cubren toda la vida del documento. Aunque los nombres técnicos pueden variar, los esenciales son: planeación, producción, gestión y trámite, organización, transferencia, disposición, preservación y valoración. El Gestor III no necesita ser archivista experto, pero sí conocer estos procesos para manejar bien la documentación de su área.</p>
+  <p>La <strong>producción</strong> es la creación de documentos (que deben hacerse bien: completos, firmados, con los datos necesarios). La <strong>recepción y trámite</strong> es la gestión de los documentos que llegan (radicación, distribución, respuesta). La <strong>organización</strong> es ordenar los documentos en expedientes y series según la TRD. La <strong>transferencia</strong> es el paso entre archivos. La <strong>disposición</strong> es la decisión final (conservar o eliminar). La <strong>preservación</strong> es garantizar que los documentos duren y sean legibles. La <strong>valoración</strong> determina los valores de los documentos para decidir su conservación.</p>
+  <p>La <strong>radicación</strong> merece mención especial porque conecta con la correspondencia (Día 13): cuando un documento entra o sale, se radica (se le asigna un número y una fecha). Esa fecha tiene efectos jurídicos: marca el inicio de términos (por ejemplo, para responder una petición). Por eso la radicación no es un trámite menor: da fecha cierta y trazabilidad a los documentos. Un documento sin radicar es un documento del que no se puede probar cuándo entró o salió.</p>
+  <p>La <strong>organización en expedientes</strong> es clave para el Gestor III: cada asunto (un contrato, un trámite) debe conformar un expediente ordenado, con sus documentos en orden, foliados (numerados) y completos. Un expediente bien conformado cuenta la historia completa de un asunto y es fácil de consultar; uno desordenado o incompleto es un problema. El Gestor III conforma y mantiene los expedientes de su proceso conforme a las reglas.</p>
+</div>
+<div class="iconrow">
+  <div class="ic-item"><span class="em">✍️</span><strong>Producción.</strong> Crear documentos bien hechos, completos y firmados.</div>
+  <div class="ic-item"><span class="em">📥</span><strong>Recepción y trámite.</strong> Radicar, distribuir, responder.</div>
+  <div class="ic-item"><span class="em">🗃️</span><strong>Organización.</strong> Expedientes y series según la TRD; foliación.</div>
+  <div class="ic-item"><span class="em">🔒</span><strong>Preservación.</strong> Que los documentos duren y sean legibles.</div>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> la radicación da fecha cierta y cuenta términos legales; no es un trámite menor. Y los expedientes deben estar completos, ordenados y foliados: un expediente desordenado o incompleto es un riesgo probatorio.</div>
+<div class="b-texto"><p>Un detalle operativo importante es la relación entre la gestión documental y la correspondencia (Día 13): la radicación es el punto donde ambas se encuentran. Todo documento que entra o sale se radica (número y fecha), y esa radicación lo incorpora al sistema de gestión documental y le da fecha cierta. Por eso la ventanilla de correspondencia y el archivo no son mundos separados, sino partes de un mismo sistema de gestión de la información. El Gestor III que entiende esta integración maneja coherentemente la correspondencia y el archivo, asegurando que todo documento quede radicado, trazado y conservado desde que entra o sale hasta su disposición final.</p></div>
+<div class="b-texto"><p>Un proceso que conviene conocer es la valoración documental: la determinación de los valores de los documentos (administrativo, legal, fiscal, contable, histórico) para decidir cuánto se conservan y cuál es su disposición final. La valoración es la base de las TRD: define qué tiene valor permanente (se conserva), qué puede eliminarse cumplido su tiempo, y qué se selecciona. Es un proceso técnico, generalmente a cargo de comités con participación del área de archivo, no una decisión individual. El Gestor III aplica los resultados de la valoración (plasmados en la TRD), pero no valora ni decide eliminaciones por su cuenta: eso corresponde a las instancias técnicas competentes.</p></div>
+<div class="ejercicio" style="background:#fff;border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:12px;padding:16px 18px;margin:16px 0;"><p style="font-weight:800;color:var(--azul);margin-bottom:6px;">✏️ Ejercicio</p><p>Llega un documento importante a tu oficina (una notificación con término). Un compañero lo deja sobre el escritorio "para radicarlo después, cuando haya tiempo". ¿Qué problema hay?</p><details class="acc" style="margin-top:8px;"><summary>Ver solución</summary><div class="acc-body"><p>No radicar de inmediato un documento con término es un riesgo: la radicación da fecha cierta y, a partir de ella, pueden correr términos legales. Un documento sin radicar cuya fecha de llegada no consta puede generar problemas (no se sabe cuándo empezó a correr el término para responder o actuar). Lo correcto es radicar los documentos al momento de recibirlos, especialmente los que tienen efectos de término. "Radicarlo después" es un descuido que puede costar un término vencido.</p></div></details></div>
+<div class="b-texto"><p>Un proceso que conviene destacar es la organización documental: ordenar los documentos dentro de cada expediente y los expedientes dentro de cada serie, siguiendo el cuadro de clasificación y la TRD. La organización es lo que permite encontrar: un archivo organizado responde en segundos, uno desorganizado obliga a buscar entre montañas de papeles. La organización no es estética, es funcionalidad: un documento que no se encuentra es, en la práctica, como si no existiera. El Gestor III que mantiene organizada la documentación de su proceso puede responder cualquier consulta o requerimiento con rapidez, mientras que el desorden convierte cada búsqueda en una pérdida de tiempo y en un riesgo de no encontrar lo que se necesita.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>El expediente: unidad clave del archivo</h3></div>
+    <div class="b-texto">
+  <p>El <mark>expediente</mark> es el conjunto de documentos relacionados con un mismo asunto, trámite o proceso, organizados en el orden en que se producen. Es la unidad fundamental del archivo: un contrato tiene su expediente, un trámite tiene el suyo, cada asunto se documenta en un expediente. Un buen manejo documental se mide, en buena parte, por la calidad de sus expedientes.</p>
+  <p>Un expediente bien conformado tiene: todos los documentos del asunto (completo), en orden (cronológico o lógico), foliados (numerados para evitar pérdidas o alteraciones), y sin duplicados innecesarios ni documentos ajenos. Cuenta la historia completa del asunto de principio a fin. Por el contrario, un expediente incompleto (le faltan documentos), desordenado (no se encuentra nada) o con documentos sueltos sin foliar, es un riesgo: no prueba bien lo actuado y puede prestarse a alteraciones.</p>
+  <p>Para el Gestor III, el expediente contractual (que vimos en los Días 14-15) es un ejemplo perfecto: estudios previos, proceso de selección, contrato, garantías, actas, informes, liquidación, todo en un expediente ordenado y foliado. Cuando el control revisa una contratación, revisa su expediente; si está completo y ordenado, la actuación se defiende sola. La conformación de expedientes es, por eso, una habilidad central del cargo.</p>
+  <p>Hoy muchos expedientes son <strong>electrónicos</strong> (expediente electrónico), gestionados en sistemas. Las reglas de fondo son las mismas (completo, ordenado, íntegro, trazable), pero en medio digital, con sus propias garantías de autenticidad e integridad. El SECOP II, por ejemplo, conforma el expediente electrónico de la contratación. El Gestor III maneja tanto expedientes físicos como electrónicos según corresponda, aplicando las reglas de conformación.</p>
+</div>
+<div class="ejercicio" style="background:#fff;border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:12px;padding:16px 18px;margin:16px 0;">
+  <p style="font-weight:800;color:var(--azul);margin-bottom:6px;">✏️ Ejercicio 1</p>
+  <p>El control pide un expediente contractual y notas que faltan varias actas de supervisión, que están sueltas en escritorios y carpetas de distintas personas, sin foliar. ¿Qué problema hay?</p>
+  <details class="acc" style="margin-top:8px;"><summary>Ver solución</summary><div class="acc-body"><p>El expediente está mal conformado: incompleto (faltan actas), disperso (documentos en varios lados) y sin foliar (riesgo de pérdida o alteración). Aunque el contrato se haya ejecutado bien, un expediente así no prueba la gestión y se vuelve un hallazgo. Lo correcto: conformar el expediente completo, en orden y foliado, reuniendo todos los documentos del asunto. Y, hacia adelante, mantener el expediente al día durante toda la vida del contrato, no "armarlo" cuando llega el control.</p></div></details>
+</div>
+<div class="b-texto"><p>Para la prueba, el expediente es protagonista, sobre todo el contractual, que ya conociste en los Días 14 y 15. Un patrón de casos es el expediente incompleto, disperso o desordenado que el control pide. La respuesta correcta siempre reivindica conformar expedientes completos, ordenados y foliados, mantenidos al día. Memoriza que el expediente es la unidad clave del archivo y la prueba de un asunto: un buen expediente defiende la gestión, uno malo la condena aunque se haya actuado bien. La calidad de los expedientes es, en buena medida, la calidad de la gestión documental del Gestor III.</p></div>
+<div class="b-texto"><p>Conviene recordar que la foliación (numerar las hojas del expediente) no es un capricho: garantiza la integridad del expediente, evita que se extraigan o inserten documentos sin que se note, y permite citar con precisión. Un expediente foliado es un expediente íntegro y verificable. Por eso la foliación es parte de la conformación adecuada de los expedientes, especialmente los físicos. En los electrónicos, la integridad se garantiza con otras técnicas (índices, firmas, metadatos), pero el objetivo es el mismo: que el expediente sea íntegro y verificable. El Gestor III folía o garantiza la integridad de sus expedientes según el soporte, porque un expediente alterable no prueba con certeza.</p></div>
+<div class="b-texto"><p>Para fijar la importancia del expediente, piensa en la diferencia entre tener los documentos de un contrato "regados" en varios computadores y correos, y tenerlos en un expediente único, ordenado y completo. En el primer caso, reconstruir la historia del contrato es difícil y se pierden piezas; en el segundo, cualquiera puede entender el asunto completo consultando el expediente. El expediente convierte un montón de documentos sueltos en una unidad con sentido, que cuenta una historia y prueba una gestión. Por eso conformar bien los expedientes es, quizá, la habilidad documental más importante del Gestor III, y la que más se nota cuando llega el control.</p></div>
+<div class="b-texto"><p>Para redondear, un expediente bien conformado responde solo a las preguntas del control: qué se hizo, cuándo, por qué, con qué soporte y con qué resultado. Si un auditor puede reconstruir toda la historia de un asunto leyendo su expediente, la gestión documental fue buena. Si tiene que preguntar, buscar en otros lados o quedarse con dudas, algo falló. Esta es la prueba definitiva de la calidad de un expediente: que cuente, por sí solo, la historia completa y verificable del asunto. El Gestor III conforma sus expedientes pensando en esa prueba, de modo que cada uno sea autosuficiente y defienda la gestión sin necesidad de explicaciones adicionales.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Preservación, soportes y documentos electrónicos</h3></div>
+    <div class="b-texto">
+  <p>De nada sirve conservar documentos si se deterioran o se vuelven ilegibles. La <mark>preservación</mark> garantiza que los documentos duren y sigan siendo consultables durante todo su tiempo de retención. Esto aplica tanto a los documentos físicos (papel) como a los electrónicos, cada uno con sus retos.</p>
+  <p>Los documentos <strong>físicos</strong> requieren condiciones adecuadas de almacenamiento: protección contra humedad, plagas, luz, deterioro; mobiliario y espacios apropiados (depósitos de archivo). Un archivo mal almacenado pierde documentos por deterioro, lo que puede destruir pruebas o patrimonio. El Gestor III vela por las condiciones de los archivos físicos de su proceso.</p>
+  <p>Los documentos <strong>electrónicos</strong> tienen otros retos: la obsolescencia tecnológica (formatos y soportes que dejan de leerse), la integridad (que no se alteren) y la autenticidad (que se pueda confiar en su origen). La preservación digital exige estrategias (migración de formatos, respaldos, firmas electrónicas) para que los documentos electrónicos sigan siendo legibles, íntegros y confiables a lo largo del tiempo. Un documento electrónico en un formato obsoleto es tan inaccesible como uno físico deteriorado.</p>
+  <p>El <strong>soporte</strong> (físico o electrónico) no cambia el valor del documento: un documento tiene el mismo valor legal esté en papel o en medio electrónico, si cumple los requisitos de autenticidad e integridad. La tendencia es hacia la gestión documental electrónica, que facilita el acceso, la búsqueda y la conservación, pero exige garantizar esas condiciones. El Gestor III gestiona documentos en ambos soportes, aplicando las reglas de preservación que correspondan.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Soporte</th><th>Retos de preservación</th></tr></thead>
+    <tbody>
+      <tr><td>Físico (papel)</td><td>Humedad, plagas, deterioro; requiere depósitos adecuados.</td></tr>
+      <tr><td>Electrónico</td><td>Obsolescencia de formatos, integridad, autenticidad; requiere migración y respaldos.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> el soporte no cambia el valor del documento (papel o electrónico valen igual si cumplen los requisitos). Pero cada soporte exige preservación: el físico contra deterioro, el electrónico contra obsolescencia y alteración.</div>
+<div class="b-texto"><p>La preservación tiene una dimensión que a veces se olvida: no basta con conservar el documento, hay que poder encontrarlo y leerlo cuando se necesite. Un documento conservado pero imposible de localizar (en una caja sin inventario) o ilegible (deteriorado, o en un formato digital obsoleto) es, en la práctica, como si no existiera. Por eso la preservación va de la mano de la organización (inventarios, descripción) y de la accesibilidad. El Gestor III vela por que los documentos de su proceso no solo se conserven, sino que sigan siendo localizables y legibles durante todo su tiempo de retención, porque de nada sirve conservar lo que luego no se puede consultar.</p></div>
+<div class="b-texto"><p>La preservación a largo plazo de los documentos electrónicos es uno de los grandes retos actuales de la gestión documental. A diferencia del papel, que puede durar siglos si se conserva bien, los documentos electrónicos enfrentan la obsolescencia acelerada de formatos, programas y soportes: un archivo de hace veinte años puede ser hoy ilegible si su formato quedó obsoleto. Por eso la preservación digital exige estrategias activas (migración periódica a formatos vigentes, respaldos redundantes, uso de formatos estándar y abiertos, metadatos que describan los documentos). El Gestor III que gestiona documentos electrónicos importantes debe tener presente este reto y apoyarse en las estrategias y sistemas de preservación digital de su entidad, para que lo electrónico no se pierda con el cambio tecnológico.</p></div>
+<div class="b-texto"><p>Un reto adicional de la preservación es el volumen: las entidades producen cantidades enormes de documentos, y no todo puede ni debe conservarse para siempre. Por eso la combinación de valoración (qué tiene valor permanente) y TRD (cuánto se conserva cada cosa) es tan importante: permite conservar lo valioso sin ahogarse en lo prescindible. Un archivo que crece sin criterio se vuelve inmanejable e impagable; uno gestionado con TRD conserva lo que debe y libera lo que no. El Gestor III contribuye a este equilibrio aplicando la TRD en su proceso: ni acumula todo indefinidamente ni elimina sin criterio, sino que sigue el destino que la TRD define para cada documento.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Gestión documental, transparencia y acceso a la información</h3></div>
+    <div class="b-texto">
+  <p>La gestión documental es la base del derecho de <mark>acceso a la información pública</mark> (Ley 1712 de 2014). Si la Entidad no conserva y organiza bien sus documentos, no puede cumplir el derecho de la ciudadanía a acceder a la información pública. Por eso una buena gestión documental es, a la vez, eficiencia interna y cumplimiento de un derecho fundamental.</p>
+  <p>La Ley de Transparencia obliga a las entidades a conservar su información, publicarla proactivamente (en sus sitios web) y entregarla cuando se solicita (acceso a solicitud). La información pública es, por regla general, accesible; las excepciones (información reservada o clasificada) son limitadas y deben justificarse. El Gestor III, en su manejo documental, contribuye a que la información del proceso esté disponible para cumplir estas obligaciones.</p>
+  <p>Hay una tensión que manejar: la transparencia (acceso) frente a la protección de <strong>datos personales</strong> (Ley 1581 de 2012) y la información reservada. No todo es público: los datos personales sensibles, cierta información reservada por ley, deben protegerse. El Gestor III, al entregar documentos o responder peticiones de información, distingue lo público (que se entrega) de lo reservado o los datos personales (que se protegen conforme a la ley), sin negar indebidamente el acceso ni exponer indebidamente datos protegidos.</p>
+  <p>Esto conecta con las PQRSDF (Día 9): muchas peticiones ciudadanas piden información o documentos, y responderlas bien depende de una buena gestión documental (encontrar lo pedido) y de aplicar correctamente las reglas de acceso (entregar lo público, proteger lo reservado). El Gestor III que maneja bien sus documentos puede responder las peticiones de información con oportunidad y corrección.</p>
+</div>
+<div class="checkpoint">
+  <div class="cp-tag">✅ Checkpoint 2</div>
+  <div class="cp-q">Un ciudadano pide, por acceso a la información, copia de unos contratos (información pública) que incluyen algunos datos personales de terceros. ¿Qué haces?</div>
+  <div class="cp-opts">
+    <button class="cp-opt" data-cp="2" data-ans="0">Negar todo el acceso, porque los documentos contienen datos personales.</button>
+    <button class="cp-opt" data-cp="2" data-ans="1">Entregar la información pública solicitada (los contratos son públicos), protegiendo los datos personales de terceros que deban reservarse (por ejemplo, anonimizándolos), de modo que se cumpla el acceso sin exponer indebidamente datos protegidos.</button>
+    <button class="cp-opt" data-cp="2" data-ans="0">Entregar todo tal cual, incluidos los datos personales, porque la transparencia obliga a dar toda la información.</button>
+  </div>
+  <div class="cp-fb" id="cpfb2"><strong>Entregar lo público protegiendo lo reservado.</strong> Los contratos son públicos y se entregan; los datos personales de terceros que deban protegerse se reservan (anonimizan). Ni se niega todo el acceso (los contratos son públicos), ni se exponen datos personales protegidos.</div>
+</div>
+<div class="b-texto"><p>La tensión entre transparencia y protección de datos es un tema delicado que la prueba puede evaluar. La regla general es el acceso (la información pública es accesible); las excepciones (información reservada o clasificada, datos personales) son limitadas y deben fundamentarse. El error en ambos extremos es grave: negar acceso a lo que es público (viola la transparencia) o exponer datos personales o información reservada que debía protegerse (viola la protección de datos o la reserva). El Gestor III aplica el criterio correcto: entregar lo público, proteger lo que la ley reserva, siempre con fundamento, sin negar indebidamente ni exponer indebidamente.</p></div>
+<div class="b-texto"><p>La Ley de Transparencia introdujo además la obligación de publicación proactiva: las entidades deben publicar cierta información en sus sitios web sin necesidad de que nadie la solicite (organigramas, presupuesto, contratación, planes). Esto conecta con la gestión documental porque esa información debe estar producida, organizada y disponible para poder publicarse. Una buena gestión documental facilita la transparencia proactiva; una mala la hace imposible. El Gestor III contribuye a que la información de su proceso (como la contratación, que es pública) esté disponible y actualizada para su publicación. Así, la gestión documental y la transparencia se refuerzan mutuamente: documentos bien gestionados permiten una entidad transparente.</p></div>
+<div class="ojo"><b>Ojo en la prueba:</b> la regla es el acceso (lo público se entrega); las excepciones (reserva, datos personales) son limitadas y se fundamentan. Ni negar lo público "por si acaso", ni entregar datos personales protegidos. El criterio correcto distingue lo público de lo reservado con fundamento legal.</div>
+<div class="b-texto"><p>Conviene cerrar el tema del acceso recordando que la transparencia es la regla y el secreto la excepción en una democracia. La información pública pertenece, en última instancia, a la ciudadanía, que tiene derecho a saber cómo actúa el Estado y cómo se gastan los recursos. Las reservas (seguridad, datos personales, cierta información protegida por ley) existen para proteger bienes jurídicos concretos, no para ocultar la gestión al escrutinio público. El Gestor III que maneja estas reglas con equilibrio honra ese derecho ciudadano: entrega lo público con diligencia y protege solo lo que la ley reserva, con fundamento. Negar el acceso por comodidad o para evitar el control sería contrario al espíritu de la transparencia.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>La responsabilidad por los documentos</h3></div>
+    <div class="b-texto">
+  <p>La Ley 594 establece la <mark>responsabilidad</mark> de los servidores públicos por los documentos a su cargo. Esto significa que quien tiene documentos bajo su custodia responde por su conservación, organización e integridad. Perder, alterar, ocultar o destruir indebidamente documentos públicos genera responsabilidad disciplinaria, fiscal y hasta penal.</p>
+  <p>Algunas conductas especialmente graves: la <strong>destrucción no autorizada</strong> de documentos (eliminar por fuera de la TRD), la <strong>alteración</strong> de documentos (cambiar su contenido), la <strong>ocultación</strong> (esconder documentos para evitar el control o impedir el acceso), y la <strong>sustracción</strong> (llevarse documentos públicos). Todas atentan contra la memoria y la prueba de la Entidad, y contra la transparencia; por eso la ley las sanciona con severidad.</p>
+  <p>El servidor que se retira debe hacer el <strong>empalme documental</strong>: entregar, mediante inventario, los documentos y expedientes a su cargo a quien lo reemplaza o a quien corresponda. No "se lleva" los documentos ni los deja en desorden. El empalme garantiza la continuidad: quien llega recibe la documentación organizada y puede continuar la gestión. Un mal empalme (documentos perdidos, desorganizados) deja a la Entidad sin memoria de lo actuado.</p>
+  <p>El Gestor III, por las funciones que maneja (contratos, bienes, infraestructura), custodia muchos documentos importantes. Su responsabilidad es conservarlos, organizarlos en expedientes, protegerlos y, al retirarse o cambiar de función, entregarlos por inventario. Esta responsabilidad documental es parte integral del cuidado de los recursos públicos: los documentos son también patrimonio de la Entidad.</p>
+</div>
+<div class="box danger"><div class="box-title">🚫 Conductas gravemente sancionadas</div>
+  <ul class="lista">
+    <li><strong>Destruir</strong> documentos por fuera de la TRD y su procedimiento.</li>
+    <li><strong>Alterar</strong> el contenido de documentos.</li>
+    <li><strong>Ocultar</strong> documentos para evitar el control o el acceso.</li>
+    <li><strong>Sustraer</strong> (llevarse) documentos públicos.</li>
+  </ul>
+</div>
+<div class="b-texto"><p>La responsabilidad por los documentos conecta con una idea de fondo: los documentos públicos no son del servidor, son del Estado, y a través de él, de la ciudadanía. Esto explica por qué conductas como destruir, alterar u ocultar documentos se sancionan con severidad: atentan contra un patrimonio común y contra el derecho de la ciudadanía a conocer la actuación pública. El Gestor III que custodia documentos los cuida como lo que son: bienes públicos y memoria colectiva. Y al retirarse, los entrega por inventario, garantizando que la Entidad conserve su memoria. Esta conciencia de que los documentos son públicos y colectivos da el peso adecuado a la responsabilidad documental.</p></div>
+<div class="b-texto"><p>El empalme documental al retirarse o cambiar de función merece un énfasis práctico: se hace mediante un inventario de entrega que detalla qué documentos y expedientes se entregan, su estado y su ubicación. Quien recibe verifica contra ese inventario. Así, la responsabilidad se traslada de forma clara y la Entidad conserva la continuidad de su memoria. Un empalme sin inventario (entregar "todo revuelto" sin detallar) es fuente de pérdidas y de problemas: nadie sabe qué había ni qué falta. El Gestor III que hace un buen empalme documental protege la memoria de la Entidad y deja clara su propia gestión, cerrando con orden su paso por el cargo o la función.</p></div>
+<div class="b-texto"><p>Conviene recordar que la responsabilidad documental también protege al propio servidor. Cuando un Gestor III conserva bien sus documentos y expedientes, tiene con qué demostrar que actuó correctamente si alguna vez se cuestiona su gestión. Los documentos no solo prueban lo que hizo la Entidad: prueban lo que hizo (o no) cada servidor. Por eso cuidar la documentación propia es una forma de autoprotección: ante una investigación o auditoría, el servidor diligente que conservó sus soportes puede defenderse; el que no los tiene queda expuesto. La disciplina documental es, al final, también una defensa personal frente a cualquier cuestionamiento futuro.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Gestión documental electrónica y modernización</h3></div>
+    <div class="b-texto">
+  <p>La gestión documental avanza hacia lo <mark>electrónico</mark>: expedientes electrónicos, sistemas de gestión documental, firmas electrónicas, radicación digital. Esta modernización facilita el acceso, la búsqueda, la conservación y la transparencia, pero exige garantizar la autenticidad, integridad y preservación de los documentos digitales a lo largo del tiempo.</p>
+  <p>El <strong>expediente electrónico</strong> reúne, en medio digital, todos los documentos de un asunto, con garantías de que son auténticos (se sabe quién los produjo), íntegros (no se alteraron) y disponibles. El SECOP II, por ejemplo, conforma el expediente electrónico de la contratación. La ventaja es enorme: acceso remoto, búsqueda instantánea, no hay papeles que se pierdan o deterioren. El reto es la preservación digital a largo plazo.</p>
+  <p>La <strong>firma electrónica y digital</strong> permite suscribir documentos sin papel, con validez jurídica. Esto agiliza los trámites, pero exige garantizar la identidad del firmante y la integridad del documento. El Gestor III que gestiona documentos electrónicos verifica que cumplan estas condiciones de validez. Un documento electrónico bien gestionado tiene el mismo valor que uno físico.</p>
+  <p>La modernización documental conecta con el gobierno digital y con la eficiencia: menos papel, procesos más ágiles, mejor acceso ciudadano. Pero no basta con "digitalizar": hay que gestionar lo electrónico con las mismas reglas de fondo (TRD, ciclo vital, expedientes, preservación), adaptadas al medio digital. El Gestor III aplica estas reglas tanto en lo físico como en lo electrónico, según el sistema de su entidad.</p>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> digitalizar no es solo "escanear": la gestión documental electrónica aplica las mismas reglas de fondo (TRD, ciclo vital, expedientes, preservación), con garantías digitales de autenticidad e integridad. Y un documento electrónico válido tiene el mismo valor que uno físico.</div>
+<div class="b-texto"><p>La modernización documental no elimina los principios, los traslada al medio digital. Un error frecuente es creer que "digitalizar" (escanear papeles) es hacer gestión documental electrónica; no lo es. La gestión documental electrónica aplica las TRD, el ciclo vital, la conformación de expedientes y la preservación, pero en medio digital, con garantías de autenticidad e integridad. Un montón de archivos escaneados sin organizar, sin TRD y sin garantías no es mejor que un archivo físico desordenado. El Gestor III que gestiona documentos electrónicos aplica las mismas reglas de fondo, aprovechando las ventajas del medio digital (acceso, búsqueda) sin perder el rigor archivístico.</p></div>
+<div class="b-texto"><p>Para la prueba, los casos de gestión documental electrónica suelen evaluar si el Gestor III aplica las reglas de fondo al medio digital, en lugar de tratar lo digital como "menos serio" o lo físico como "lo único válido". Recuerda: el soporte no cambia el valor; un documento electrónico válido (auténtico, íntegro) vale igual que uno físico. Y la gestión electrónica exige TRD, expedientes y preservación como la física. Un error típico es manejar lo electrónico sin orden (archivos sueltos sin clasificar) creyendo que "está en el computador y ya"; eso no es gestión documental. La respuesta correcta aplica el rigor archivístico también en lo digital.</p></div>
+<div class="practica"><div class="practica-head">🧩 En la práctica</div><div class="practica-body"><p>Tu entidad implementa un sistema de gestión documental electrónica y expediente electrónico. El Gestor III no trata esto como "escanear y guardar": aplica las mismas reglas de fondo (clasificar según la TRD, conformar expedientes electrónicos completos y ordenados, garantizar autenticidad e integridad, prever la preservación digital). Así, la gestión electrónica aprovecha las ventajas del medio (acceso remoto, búsqueda rápida, no hay papeles que se pierdan) sin perder el rigor archivístico. Digitalizar bien es gestionar documentos electrónicos con el mismo rigor que los físicos, no simplemente acumular archivos sueltos en un computador.</p></div></div>
+<div class="b-texto"><p>Un beneficio concreto de la gestión documental electrónica bien hecha es la capacidad de respuesta: cuando los documentos están digitalizados, clasificados y en expedientes electrónicos, responder una petición de información o un requerimiento del control toma minutos, no días. La búsqueda es instantánea, el acceso es remoto, no hay papeles que se extravíen. Esta agilidad mejora el servicio al ciudadano y la eficiencia interna. Pero, se insiste, solo se logra si lo electrónico se gestiona con rigor archivístico; un repositorio digital desordenado es tan inútil como un archivo físico caótico. El Gestor III aprovecha la tecnología aplicándole las reglas de la buena gestión documental.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>La gestión documental en el proceso de Recursos Administrativos</h3></div>
+    <div class="b-texto">
+  <p>En el proceso de Recursos Administrativos, la gestión documental es intensa: cada contrato, cada bien, cada obra, cada servicio genera documentos que hay que conformar en expedientes y conservar. El Gestor III es, en buena medida, un <mark>gestor de expedientes</mark>: contractuales, de bienes, de infraestructura, de servicios.</p>
+  <p>El <strong>expediente contractual</strong> es el más exigente: reúne toda la vida del contrato (Días 14-15). El <strong>expediente del bien o del inmueble</strong> reúne su historia (ingreso, inventario, mantenimientos, baja, destino final). El <strong>expediente de un siniestro</strong> reúne lo relacionado con un hecho (reporte, soportes, reclamación al seguro). Todos deben estar completos, ordenados, foliados y conservados según la TRD. La calidad de estos expedientes es la calidad de la trazabilidad del proceso.</p>
+  <p>La gestión documental del proceso también incluye la <strong>correspondencia</strong> (Día 13): radicar lo que entra y sale, con fecha cierta, y conservarlo. Y las <strong>respuestas a peticiones</strong>: conservar lo que se respondió, con constancia. Todo esto conforma la memoria del proceso, que permite responder a controles, peticiones y controversias con solvencia.</p>
+  <p>Una buena práctica del Gestor III es mantener los expedientes <strong>al día durante toda la gestión</strong>, no "armarlos" cuando llega el control. Un expediente que se construye sobre la marcha (cada documento se archiva cuando se produce) está siempre completo y ordenado; uno que se intenta reconstruir después, buscando papeles dispersos, queda incompleto y genera hallazgos. La disciplina documental cotidiana es la que hace fácil responder cualquier requerimiento.</p>
+</div>
+<div class="ejercicio" style="background:#fff;border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:12px;padding:16px 18px;margin:16px 0;">
+  <p style="font-weight:800;color:var(--azul);margin-bottom:6px;">✏️ Ejercicio 2</p>
+  <p>Un compañero propone "no complicarse archivando documento por documento" y en cambio "guardar todo junto y organizarlo cuando alguien lo pida". ¿Es buena práctica?</p>
+  <details class="acc" style="margin-top:8px;"><summary>Ver solución</summary><div class="acc-body"><p>No. "Organizar cuando alguien lo pida" lleva a expedientes incompletos y desordenados, porque reconstruir después es difícil y se pierden documentos. La buena práctica es conformar los expedientes al día, archivando cada documento en su expediente cuando se produce, de modo que siempre estén completos y ordenados. La disciplina documental cotidiana evita las crisis cuando llega el control, y es parte de la trazabilidad que protege a la Entidad y al servidor.</p></div></details>
+</div>
+<div class="b-texto"><p>Conviene subrayar que la calidad documental del proceso de Recursos Administrativos tiene un impacto directo en la defensa de la Entidad ante el control. Este proceso maneja contratación, bienes e infraestructura, que son de los asuntos más auditados. Un proceso con expedientes impecables responde a cualquier auditoría con solvencia; uno con documentación deficiente acumula hallazgos aunque haya actuado bien. Por eso la disciplina documental no es un lujo ni una carga: es, para este proceso en particular, una necesidad estratégica. El Gestor III que mantiene al día los expedientes de contratación, bienes e infraestructura blinda al proceso frente al control y protege su propia responsabilidad.</p></div>
+<div class="b-texto"><p>Un apunte final sobre los expedientes del proceso: conviene que cada tipo de expediente (contractual, de bien, de siniestro) siga una estructura consistente, de modo que cualquiera que lo consulte encuentre los documentos en un orden previsible. La estandarización de los expedientes facilita su conformación, su consulta y su control. El Gestor III que adopta estructuras consistentes para sus expedientes trabaja más eficientemente y entrega expedientes que cualquier auditor o sucesor puede entender sin dificultad. La consistencia documental es, además, señal de una gestión madura y ordenada, que inspira confianza en el control.</p></div>
+<div class="b-texto"><p>Una buena práctica transversal es que el Gestor III, al iniciar cada asunto (un contrato, la administración de un bien, una obra), abra desde el principio su expediente y vaya archivando en él cada documento conforme se produce. Así, el expediente crece ordenadamente a lo largo del asunto y está siempre completo. Esta práctica —abrir el expediente al inicio y alimentarlo sobre la marcha— es la que distingue una gestión documental impecable de una que vive reconstruyendo expedientes a última hora. Es una disciplina sencilla pero poderosa, que convierte la gestión documental de una carga en una rutina natural que acompaña cada asunto de principio a fin.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Errores frecuentes en la gestión documental</h3></div>
+    <div class="b-texto">
+  <p>La gestión documental tiene errores típicos que conviene evitar y reconocer en los casos. El primero: <mark>eliminar documentos por fuera de la TRD</mark> ("estorban", "para hacer espacio"). Solo se elimina lo que la TRD prevé, con procedimiento. El segundo: <strong>expedientes incompletos o desordenados</strong>, que no prueban la gestión. El tercero: <strong>no radicar</strong> la correspondencia, perdiendo la fecha cierta.</p>
+  <p>El cuarto: <strong>llevarse o no entregar documentos</strong> al retirarse (los documentos son del Estado). El quinto: <strong>no preservar</strong> (archivos físicos deteriorados, documentos electrónicos obsoletos o sin respaldo). El sexto: <strong>negar indebidamente el acceso</strong> a información pública, o al contrario, <strong>exponer datos personales</strong> protegidos. Todos estos errores afectan la memoria, la prueba, la transparencia o los derechos, y pueden generar responsabilidad.</p>
+  <p>La raíz de la mayoría de estos errores es ver la gestión documental como un trámite secundario y no como lo que es: la memoria y la prueba de la Entidad y la base de la transparencia. El Gestor III que entiende la importancia de los documentos los gestiona con el rigor que merecen, evitando estos errores y reconociéndolos cuando otros los proponen.</p>
+  <p>La mejor prevención, de nuevo, es la disciplina: aplicar la TRD, conformar expedientes al día, radicar, preservar, entregar por inventario, y aplicar bien las reglas de acceso. Una gestión documental ordenada no es una carga: es lo que permite a la Entidad funcionar con memoria, responder al control, cumplir la transparencia y protegerse. El Gestor III que la cuida protege a la Entidad y a sí mismo.</p>
+</div>
+<div class="box danger"><div class="box-title">🚫 Los errores que debes evitar</div>
+  <ul class="lista">
+    <li><strong>Eliminar documentos</strong> por fuera de la TRD y su procedimiento.</li>
+    <li><strong>Expedientes incompletos o desordenados</strong> que no prueban la gestión.</li>
+    <li><strong>No radicar</strong> la correspondencia (se pierde la fecha cierta).</li>
+    <li><strong>Llevarse o no entregar</strong> documentos al retirarse.</li>
+    <li><strong>Negar acceso a lo público</strong> o <strong>exponer datos personales</strong> protegidos.</li>
+  </ul>
+</div>
+<div class="b-texto"><p>Para la prueba, los errores de gestión documental suelen presentarse como "soluciones prácticas": eliminar para hacer espacio, no archivar al día, llevarse documentos, negar o exponer información. La respuesta correcta siempre reivindica el procedimiento archivístico (TRD, expedientes al día, radicación, reglas de acceso) y la naturaleza pública de los documentos. Memoriza que ningún atajo justifica eliminar fuera de la TRD, dejar expedientes incompletos o manejar mal el acceso a la información. Y recuerda tu rol: aplicar las reglas, no inventarlas ni saltarlas; aprobar TRD y decidir eliminaciones corresponde a las instancias competentes, tú las aplicas.</p></div>
+<div class="b-texto"><p>Conviene cerrar los errores con una reflexión sobre su gravedad: la destrucción, alteración u ocultamiento de documentos no son faltas menores, sino conductas que pueden constituir delitos y que atentan contra la transparencia y la memoria pública. Un servidor que destruye un documento para ocultar una irregularidad, o que altera un expediente para cambiar la historia de un asunto, comete una falta gravísima. Por eso el Gestor III no solo evita estos errores, sino que, si detecta que alguien pretende cometerlos, lo advierte y lo rechaza, dejando constancia. La integridad documental es una expresión de la integridad del servidor: proteger los documentos es proteger la verdad de lo actuado.</p></div>
+<div class="b-texto"><p>Un error adicional, más sutil, es la desidia documental: no destruir ni ocultar activamente, sino simplemente descuidar los documentos (no archivarlos, no organizarlos, dejarlos deteriorar). Aunque no haya mala intención, el resultado es igual de dañino: se pierde la memoria y la prueba. La ley impone un deber activo de conservación y organización, no basta con "no destruir". El Gestor III cumple ese deber activo: archiva al día, organiza, preserva. La buena gestión documental no es solo abstenerse de conductas graves, sino gestionar activamente los documentos con el cuidado que merecen. La desidia, aunque menos visible que la destrucción, también genera responsabilidad.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El rol del Gestor III en la gestión documental</h3></div>
+    <div class="b-texto">
+  <p>Cerramos con tu frontera de competencia. En la gestión documental, tú <strong>produces documentos bien hechos, conformas y mantienes los expedientes de tu proceso, aplicas la TRD, radicas y tramitas la correspondencia, gestionas las transferencias y la preservación, y respondes las peticiones de información aplicando las reglas de acceso</strong>. No eres tú quien decide eliminar documentos por fuera de la TRD, ni quien aprueba las TRD (eso es del AGN y las instancias de la entidad), ni quien reserva información sin fundamento legal.</p>
+  <p>El equilibrio de siempre: ni extralimitación (eliminar documentos, reservar información sin fundamento) ni omisión (no conformar expedientes, no radicar, no preservar, no entregar al retirarse). El buen Gestor III mantiene la memoria y la prueba de su proceso impecables, lo que protege a la Entidad y a sí mismo, y permite cumplir la transparencia.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>✅ Lo que SÍ te corresponde</th><th>🚫 Lo que NO te corresponde</th></tr></thead>
+    <tbody>
+      <tr><td>Conformar y mantener expedientes completos, ordenados, foliados</td><td>Eliminar documentos por fuera de la TRD</td></tr>
+      <tr><td>Aplicar la TRD; gestionar transferencias y preservación</td><td>Inventar plazos de retención o disposición</td></tr>
+      <tr><td>Radicar y tramitar la correspondencia con fecha cierta</td><td>Alterar, ocultar o sustraer documentos</td></tr>
+      <tr><td>Responder peticiones aplicando las reglas de acceso</td><td>Negar acceso a lo público o exponer datos protegidos</td></tr>
+      <tr><td>Entregar por inventario al retirarse (empalme documental)</td><td>Llevarse documentos públicos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="idea"><span class="idea-ic">💡</span><p><strong>Regla de oro:</strong> los documentos son del Estado, son su memoria y su prueba. Se conforman en expedientes al día, se conservan según la TRD, no se eliminan ni alteran por fuera del procedimiento, y se entregan por inventario. Lo bien documentado protege; lo mal documentado es un hallazgo.</p></div>
+<div class="destacado oro"><span class="dst-ic">🧠</span><div class="dst-body"><span class="dst-title">Idea clave del día</span><p>La gestión documental (Ley 594 de 2000) es la administración de la memoria y la prueba de la Entidad. Los documentos siguen un ciclo vital (archivos de gestión, central, histórico), se conservan según las Tablas de Retención Documental (obligatorias), se organizan en expedientes completos y ordenados, y se preservan (físicos y electrónicos). Es la base de la transparencia. Los documentos son del Estado: no se eliminan por fuera de la TRD, no se alteran ni ocultan, y se entregan por inventario. Tú conformas, aplicas la TRD y preservas; aprobar TRD y decidir eliminaciones es de las instancias competentes.</p></div></div>
+<div class="box gold"><div class="box-title">💡 Tips para memorizar</div>
+  <ul class="lista">
+    <li><strong>Ley 594 de 2000:</strong> Ley General de Archivos; AGN es el ente rector.</li>
+    <li><strong>TRD:</strong> obligatorias; definen retención y disposición; no se elimina por fuera de ellas.</li>
+    <li><strong>3 archivos:</strong> gestión → central → histórico (ciclo vital).</li>
+    <li><strong>Expediente:</strong> completo, ordenado, foliado; conformado al día.</li>
+    <li><strong>Los documentos son del Estado:</strong> no se llevan, se entregan por inventario.</li>
+  </ul>
+</div>
+<div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"El documento es la memoria y la prueba de la Entidad: se conforma al día, se conserva según la TRD, no se elimina ni se lleva por fuera del procedimiento."</p></div></div>
+<div class="fuentes">
+  <div class="box-title">📚 Fuentes oficiales para profundizar</div>
+  <p>Consulta siempre la versión vigente de cada norma. Enlaces oficiales:</p>
+  <ul class="lista">
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4275" target="_blank" rel="noopener">Ley 594 de 2000 — Ley General de Archivos</a></li>
+    <li><a href="https://normativa.archivogeneral.gov.co/" target="_blank" rel="noopener">Archivo General de la Nación (AGN) — normatividad</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=76833" target="_blank" rel="noopener">Decreto 1080 de 2015 — sector cultura (gestión documental)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882" target="_blank" rel="noopener">Ley 1712 de 2014 — transparencia y acceso a la información</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981" target="_blank" rel="noopener">Ley 1581 de 2012 — protección de datos personales</a></li>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">Portal oficial de la DIAN</a></li>
+  </ul>
+</div>
+<div class="b-texto"><p>Como síntesis, la gestión documental es la disciplina de conservar ordenadamente la memoria y la prueba de la Entidad, y es transversal a todo el trabajo del Gestor III: cada función que ejerce (contratar, administrar bienes, gestionar infraestructura y servicios) produce documentos que hay que conformar, conservar y, en su momento, disponer conforme a la TRD. Dominar la gestión documental no es un conocimiento aislado, sino el complemento que hace trazable y defendible todo lo demás. Un Gestor III que gestiona bien sus documentos puede demostrar todo lo que hizo, cumplir la transparencia, responder al control y entregar una memoria ordenada a quien lo suceda. Esa es, al final, la contribución de una buena gestión documental: que la Entidad no pierda su memoria ni su capacidad de probar lo que hizo.</p></div>
+<div class="b-texto"><p>Para la prueba, recuerda que la gestión documental se conecta con casi todos los demás temas del cargo: la contratación (expediente contractual), los bienes (expediente del bien), la infraestructura (expedientes de obra), los servicios (contratos y correspondencia), la atención al ciudadano (PQRSDF y acceso a la información), la transparencia. Por eso dominarla potencia tu desempeño en todos los frentes. Un caso de la prueba puede combinar la gestión documental con cualquiera de esos temas (por ejemplo, un expediente contractual incompleto, o una petición de acceso a documentos de bienes). Reconocer la dimensión documental de cada asunto, y aplicar las reglas archivísticas, es parte de resolver bien esos casos integrados.</p></div>
+<div class="b-texto"><p>Al cerrar el día, vale recordar que la gestión documental, aunque a veces se perciba como la más "administrativa" y menos vistosa de las funciones, es en realidad la que garantiza que todo lo demás quede probado y disponible. Sin ella, la mejor contratación, la mejor administración de bienes y la mejor gestión de infraestructura quedarían sin respaldo demostrable. Por eso el Gestor III que cuida sus documentos no hace un trabajo secundario: cuida la memoria, la prueba y la transparencia de su proceso. Esa labor silenciosa es la que permite que la Entidad rinda cuentas, responda al control y conserve su historia. Dominar la gestión documental es, por tanto, dominar el arte de dejar bien probado todo lo que se hace.</p></div>
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>Parejas de conceptos que la prueba usa para armar distractores en la gestión documental.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Archivo de gestión</td><td>Archivo central</td><td>Gestión: documentos activos en la oficina. Central: lo que ya no se usa a diario pero debe conservarse.</td></tr><tr><td>Transferencia</td><td>Eliminación</td><td>Transferencia: pasa el documento a otro archivo. Eliminación: lo destruye (solo si la TRD lo prevé, con procedimiento).</td></tr><tr><td>TRD</td><td>Decisión libre</td><td>La TRD define retención y disposición; no se decide a criterio personal qué conservar o eliminar.</td></tr><tr><td>Documento físico</td><td>Documento electrónico</td><td>Mismo valor si cumplen autenticidad e integridad; distintos retos de preservación.</td></tr><tr><td>Expediente completo</td><td>Documentos sueltos</td><td>El expediente ordenado y foliado prueba un asunto; los documentos dispersos no.</td></tr><tr><td>Radicar</td><td>Archivar sin fecha</td><td>Radicar da fecha cierta (cuenta términos legales); sin radicar no se prueba cuándo entró o salió.</td></tr><tr><td>Información pública</td><td>Información reservada</td><td>La pública se entrega; la reservada (datos personales, reserva legal) se protege con fundamento.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> si una opción confunde transferir con eliminar, o decide eliminar por fuera de la TRD, o trata un expediente incompleto como suficiente, es el distractor.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · Eliminar "para hacer espacio"</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El archivo está lleno y se propone eliminar las carpetas antiguas "porque ya nadie las consulta".</p>
+      <span class="label">Análisis</span>
+      <p>Solo se elimina lo que la TRD prevé, cumplidos los tiempos y con procedimiento (acta, aprobación). Lo que cumplió su tiempo en gestión se transfiere, no se bota.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> no eliminar por fuera de la TRD; transferir al archivo central lo que cumplió su tiempo en gestión y eliminar solo lo que la TRD autorice, con procedimiento.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El funcionario que se lleva los documentos</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un funcionario que se retira quiere llevarse los expedientes de su gestión "porque él los produjo".</p>
+      <span class="label">Análisis</span>
+      <p>Los documentos públicos son del Estado, no del servidor. Al retirarse debe entregarlos por inventario (empalme documental), no llevárselos.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> no permitir que se lleve los documentos; realizar el empalme documental entregando por inventario los expedientes a quien corresponda.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · El expediente incompleto</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El control pide un expediente contractual y faltan actas, que están dispersas y sin foliar.</p>
+      <span class="label">Análisis</span>
+      <p>Un expediente incompleto, disperso y sin foliar no prueba la gestión y se vuelve un hallazgo, aunque el contrato se haya hecho bien.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> conformar el expediente completo, ordenado y foliado, reuniendo todos los documentos; y mantenerlo al día en adelante, no armarlo cuando llega el control.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Eliminar por fuera de la TRD</div><p>"Para hacer espacio" o "porque estorban". Solo se elimina lo que la TRD prevé, con procedimiento.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Expedientes incompletos o desordenados</div><p>No prueban la gestión; se vuelven hallazgos aunque se haya actuado bien.</p></div>
+  <div class="box danger"><div class="box-title">🚫 No radicar la correspondencia</div><p>Se pierde la fecha cierta y la posibilidad de probar cuándo entró o salió un documento.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Llevarse o no entregar documentos</div><p>Los documentos son del Estado; al retirarse se entregan por inventario.</p></div>
+  <div class="box danger"><div class="box-title">🚫 No preservar</div><p>Archivos físicos deteriorados o documentos electrónicos obsoletos o sin respaldo.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Negar acceso a lo público o exponer datos protegidos</div><p>Ambos extremos son errores: lo público se entrega, lo reservado se protege con fundamento.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p><strong>Ley 594 de 2000:</strong> Ley General de Archivos; el AGN es el ente rector.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p><strong>TRD obligatorias:</strong> definen retención y disposición; no se elimina por fuera de ellas.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p><strong>Ciclo vital:</strong> archivo de gestión → central → histórico (o eliminación según TRD).</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p><strong>Expediente:</strong> completo, ordenado, foliado y conformado al día.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p><strong>Los documentos son del Estado:</strong> no se llevan, se entregan por inventario.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "El archivo está lleno; eliminemos lo antiguo para hacer espacio."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: libera espacio que hace falta.</div>
+      <div class="t-row malo">🔴 La trampa: se eliminan documentos por fuera de la TRD, destruyendo posible prueba o patrimonio.</div>
+      <div class="t-row bueno">🟢 Lo correcto: aplicar la TRD: transferir lo que cumplió su tiempo y eliminar solo lo autorizado, con procedimiento.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "Yo produje estos documentos, así que puedo llevármelos al irme."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: parece justo que se los lleve quien los hizo.</div>
+      <div class="t-row malo">🔴 La trampa: los documentos públicos son del Estado, no del servidor que los produjo.</div>
+      <div class="t-row bueno">🟢 Lo correcto: entregarlos por inventario (empalme documental); no se los lleva.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "Respondamos la petición, pero mejor no entreguemos nada que tenga datos de terceros."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: parece prudente por los datos personales.</div>
+      <div class="t-row malo">🔴 La trampa: negar acceso a información pública por "si acaso" viola el derecho de acceso.</div>
+      <div class="t-row bueno">🟢 Lo correcto: entregar lo público protegiendo (anonimizando) solo los datos personales que deban reservarse.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>📚 Qué es</h4><p>Administración de la memoria y la prueba de la Entidad (Ley 594 de 2000); base de la transparencia.</p></div>
+    <div class="resumen-item"><h4>🗂️ TRD</h4><p>Obligatorias; definen retención y disposición. No se elimina por fuera de ellas.</p></div>
+    <div class="resumen-item"><h4>🔄 Ciclo vital</h4><p>Archivo de gestión → central → histórico; transferencias según la TRD.</p></div>
+    <div class="resumen-item"><h4>📁 Expediente</h4><p>Completo, ordenado, foliado; conformado al día; unidad clave del archivo.</p></div>
+    <div class="resumen-item"><h4>🔒 Preservación</h4><p>Físicos (contra deterioro) y electrónicos (contra obsolescencia y alteración).</p></div>
+    <div class="resumen-item"><h4>🔎 Transparencia</h4><p>Base del acceso a la información (Ley 1712/2014); entregar lo público, proteger lo reservado.</p></div>
+    <div class="resumen-item"><h4>👤 Responsabilidad</h4><p>Los documentos son del Estado; no se destruyen, alteran ni llevan; se entregan por inventario.</p></div>
+    <div class="resumen-item"><h4>🧭 Tu rol</h4><p>Conformas, aplicas la TRD y preservas; aprobar TRD y decidir eliminaciones es de las instancias competentes.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Gestión documental</dt><dd>Administración ordenada de los documentos a lo largo de su ciclo de vida (Ley 594 de 2000).</dd>
+      <dt>TRD</dt><dd>Tablas de Retención Documental: definen cuánto se conserva cada serie y su disposición final.</dd>
+      <dt>Ciclo vital</dt><dd>Fases del documento: archivo de gestión, central e histórico.</dd>
+      <dt>Expediente</dt><dd>Conjunto de documentos de un mismo asunto, organizados, completos y foliados.</dd>
+      <dt>Transferencia</dt><dd>Paso de los documentos de un archivo a otro según la TRD, con inventario.</dd>
+      <dt>Radicación</dt><dd>Asignación de número y fecha a un documento; da fecha cierta y cuenta términos.</dd>
+      <dt>AGN</dt><dd>Archivo General de la Nación: ente rector de la política archivística.</dd>
+      <dt>Empalme documental</dt><dd>Entrega por inventario de los documentos a cargo al retirarse o cambiar de función.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Gestión Documental y Archivo</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">4 Intermedias</span><span class="tag a">4 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 16. Mañana: FUN-RADM-09, MIPG, buen gobierno e integridad.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 16 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 16</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué es la gestión documental y para qué sirve?","b": "La administración ordenada de los documentos que la Entidad produce y recibe, a lo largo de su ciclo de vida (Ley 594 de 2000). Sirve para la gestión diaria, para probar las actuaciones ante el control y la ciudadanía, y para conservar el patrimonio documental. Es la memoria y la prueba de la Entidad, y la base de la transparencia."},{"f": "¿Qué norma rige la gestión documental y cuál es el ente rector?","b": "La Ley 594 de 2000 (Ley General de Archivos), con decretos y acuerdos que la desarrollan. El ente rector es el Archivo General de la Nación (AGN), que fija lineamientos, expide acuerdos y convalida instrumentos como las TRD."},{"f": "¿Qué son las Tablas de Retención Documental (TRD)?","b": "El instrumento que define, para cada serie documental, cuánto se conserva en el archivo de gestión y en el central, y cuál es su disposición final (conservación, eliminación, selección). Son obligatorias (art. 24 Ley 594) y las convalida el AGN. No se elimina ni se conserva nada por fuera de la TRD."},{"f": "¿Cuáles son las fases del ciclo vital del documento?","b": "Archivo de gestión (documentos activos en la oficina), archivo central (lo que ya no se usa a diario pero debe conservarse) y archivo histórico (documentos con valor permanente). El paso entre fases es la transferencia documental, según la TRD."},{"f": "¿Qué es un expediente y cómo debe estar conformado?","b": "El conjunto de documentos de un mismo asunto, organizados en orden. Debe estar completo (todos los documentos), ordenado, foliado (numerado) y sin documentos ajenos. Un expediente bien conformado prueba la gestión; uno incompleto o desordenado es un riesgo probatorio."},{"f": "¿Cuándo y cómo se pueden eliminar documentos?","b": "Solo se eliminan los documentos que la TRD prevé eliminar, cumplidos sus tiempos de retención, y mediante un procedimiento con acta y aprobación. Eliminar documentos por fuera de la TRD (porque \"estorban\" o \"para hacer espacio\") es una irregularidad grave."},{"f": "¿De quién son los documentos públicos?","b": "Del Estado, no del servidor que los produjo. Al retirarse o cambiar de función, el servidor entrega los documentos por inventario (empalme documental); no se los lleva. Llevarse, destruir, alterar u ocultar documentos públicos genera responsabilidad disciplinaria, fiscal y penal."},{"f": "¿Por qué importa la radicación?","b": "Porque da fecha cierta a los documentos que entran o salen: a partir de ella corren términos legales (por ejemplo, para responder una petición). Un documento sin radicar es un documento del que no se puede probar cuándo entró o salió. La radicación no es un trámite menor."},{"f": "¿Cómo se relaciona la gestión documental con la transparencia?","b": "Es su base: sin conservar y organizar bien los documentos, no se puede cumplir el derecho de acceso a la información pública (Ley 1712 de 2014). La regla es el acceso a lo público; las excepciones (reserva, datos personales) son limitadas y se fundamentan."},{"f": "¿Cambia el valor de un documento según su soporte (físico o electrónico)?","b": "No. Un documento tiene el mismo valor en papel o en medio electrónico, si cumple los requisitos de autenticidad e integridad. Cada soporte exige su preservación: el físico contra el deterioro, el electrónico contra la obsolescencia de formatos y la alteración."},{"f": "¿Qué conductas documentales se sancionan con severidad?","b": "Destruir documentos por fuera de la TRD, alterar su contenido, ocultarlos para evitar el control o el acceso, y sustraerlos (llevárselos). Todas atentan contra la memoria, la prueba y la transparencia; pueden constituir faltas disciplinarias graves y delitos."},{"f": "¿Cuál es el rol del Gestor III en la gestión documental?","b": "Produce documentos bien hechos, conforma y mantiene los expedientes de su proceso, aplica la TRD, radica y tramita la correspondencia, gestiona transferencias y preservación, y responde peticiones aplicando las reglas de acceso. No elimina por fuera de la TRD, ni aprueba las TRD, ni reserva información sin fundamento: aplica las reglas y escala lo que corresponde."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Eliminación conforme a la TRD","ctx": "Eres Gestor III del área administrativa de la DIAN. El archivo de gestión de tu proceso está congestionado y un compañero propone: \"Eliminemos las carpetas más antiguas para hacer espacio, total ya nadie las consulta y están estorbando\". Entre esas carpetas hay expedientes de contratación de años anteriores. No se ha verificado qué dice la Tabla de Retención Documental para esos documentos.","q": "Ante la propuesta de eliminar carpetas antiguas para hacer espacio, ¿cuál es la actuación correcta?","ops": ["Eliminar las carpetas más antiguas para liberar espacio, ya que si nadie las consulta están estorbando y se puede aprovechar mejor el lugar.","No eliminar por fuera de la TRD: verificar qué prevé la Tabla de Retención para esos documentos; transferir al archivo central lo que cumplió su tiempo en gestión y eliminar únicamente lo que la TRD autorice, cumplidos los tiempos y con el procedimiento (acta, aprobación).","Eliminar solo las carpetas que tengan más de cierta cantidad de años, calculada a criterio propio, para quedarse del lado seguro."],"correcta": 1,"expl": ["Incorrecto: eliminar por fuera de la TRD destruye posible prueba o patrimonio; 'estorban' o 'nadie las consulta' no autoriza eliminar.","✔ Solo se elimina lo que la TRD prevé, cumplidos los tiempos y con procedimiento; lo demás se transfiere al archivo central. La TRD manda, no la falta de espacio.","Incorrecto: no se eliminan documentos según un criterio de antigüedad calculado a ojo; los plazos los define la TRD, no el funcionario."]},{"nivel": "b","tema": "Los documentos son del Estado","ctx": "Eres Gestor III. Un funcionario de tu área se retira y anuncia que se llevará las carpetas y expedientes que manejó durante su gestión, 'porque él los produjo y le sirven para su hoja de vida y futuros trabajos'. Entre esos documentos hay expedientes de contratos y de bienes del proceso.","q": "Ante la intención del funcionario de llevarse los documentos de su gestión, ¿cuál es la actuación correcta?","ops": ["Permitir que se lleve los documentos que él produjo, ya que son fruto de su trabajo, o al menos dejarle sacar copias de los que considere útiles para su hoja de vida.","Explicar que los documentos públicos son del Estado, no del servidor que los produjo, y que al retirarse debe entregarlos por inventario (empalme documental) a quien corresponda; no puede llevárselos ni sustraerlos.","Permitir que se lleve los originales dejando fotocopias en la Entidad, como punto intermedio entre su interés y el de la Entidad."],"correcta": 1,"expl": ["Incorrecto: los documentos públicos no son del servidor aunque los haya producido; llevárselos (incluso copias de información reservada) es irregular.","✔ Los documentos públicos son del Estado; al retirarse se entregan por inventario (empalme documental). El servidor no se los lleva.","Incorrecto: llevarse los originales y dejar fotocopias es al revés de lo correcto; los originales se quedan en la Entidad, que es su propietaria."]},{"nivel": "b","tema": "Conformación del expediente","ctx": "Eres Gestor III y el control interno pide el expediente de un contrato que gestionaste. Al reunirlo, notas que faltan varias actas de supervisión, que algunos documentos están sueltos en carpetas de distintas personas y en correos, y que nada está foliado. El contrato, en la práctica, se ejecutó bien.","q": "Ante el expediente incompleto y disperso que pide el control, ¿cuál es la actuación correcta y qué aprendizaje deja?","ops": ["Entregar lo que se tenga a la mano y explicar verbalmente que el resto 'existe pero está disperso', confiando en que el control entienda que el contrato se ejecutó bien.","Conformar el expediente completo (reunir todos los documentos del asunto), ordenarlo y foliarlo antes de entregarlo; y adoptar la práctica de mantener los expedientes al día durante toda la gestión, no armarlos cuando llega el control.","Elaborar ahora, con fecha actual, las actas de supervisión que faltan, 'reconstruyendo' lo que se hizo, para que el expediente luzca completo ante el control."],"correcta": 1,"expl": ["Incorrecto: entregar un expediente incompleto y disperso no prueba la gestión; para el control, la ausencia de soportes es un hallazgo, por bien que se haya ejecutado.","✔ Se conforma el expediente completo, ordenado y foliado, y se adopta la disciplina de mantenerlo al día. La buena conformación del expediente prueba la gestión.","Incorrecto: 'reconstruir' actas con fecha actual simulando que se hicieron en su momento sería falsear documentos, una irregularidad adicional. Se reúne lo que realmente existe y se corrige la práctica hacia adelante."]},{"nivel": "b","tema": "Radicación y fecha cierta","ctx": "Eres Gestor III. Llega a tu oficina una notificación importante con un término legal para actuar. Un compañero la deja sobre un escritorio diciendo 'la radicamos después, cuando haya tiempo, que ahora estamos ocupados'. Pasan dos días sin radicarla.","q": "Ante el documento con término que no se radicó al llegar, ¿cuál es la actuación correcta?","ops": ["Radicarla cuando haya tiempo, ya que lo importante es el contenido del documento y no tanto la fecha en que se registre formalmente su llegada.","Radicar los documentos al momento de recibirlos, especialmente los que tienen término, porque la radicación da fecha cierta y a partir de ella corren los términos legales; no radicar a tiempo puede generar problemas con el cómputo del término.","Anotar la fecha real de llegada en una hoja aparte y radicarla oficialmente más adelante con esa fecha retroactiva, para no perder el registro mientras tanto."],"correcta": 1,"expl": ["Incorrecto: la fecha de radicación no es un detalle; de ella dependen los términos legales. No radicar a tiempo es un descuido con consecuencias.","✔ Los documentos se radican al recibirlos, sobre todo los que tienen término: la radicación da fecha cierta y a partir de ella corren los plazos. No radicar a tiempo arriesga el cómputo del término.","Incorrecto: registrar la fecha 'aparte' y radicar retroactivamente genera inconsistencias y problemas probatorios; la radicación debe hacerse al momento de la recepción."]},{"nivel": "i","tema": "Transferencia vs. eliminación","ctx": "Eres Gestor III y debes descongestionar el archivo de gestión, que tiene mezclados expedientes activos con expedientes de asuntos ya concluidos hace años. Un compañero sugiere 'botar los concluidos para hacer espacio y quedarnos solo con lo activo'. La TRD indica que esos expedientes concluidos deben conservarse más tiempo en el archivo central antes de cualquier disposición final.","q": "Para descongestionar el archivo de gestión con los expedientes ya concluidos, ¿cuál es la actuación correcta?","ops": ["Botar los expedientes concluidos para quedarse solo con lo activo, ya que los asuntos ya terminaron y el espacio hace falta para lo vigente.","Transferir al archivo central los expedientes que, según la TRD, cumplieron su tiempo en el archivo de gestión, con su inventario, dejando en gestión solo lo activo; no botarlos, porque la TRD indica que deben conservarse más tiempo en el central.","Digitalizar los expedientes concluidos y luego botar los originales en papel de inmediato, para liberar todo el espacio físico sin perder el contenido."],"correcta": 1,"expl": ["Incorrecto: botar expedientes que la TRD indica conservar es eliminar por fuera de la TRD, una irregularidad grave; descongestionar no es botar.","✔ Se transfieren al archivo central los expedientes que cumplieron su tiempo en gestión, con inventario, conservándolos el tiempo que indica la TRD. Así se descongestiona sin destruir.","Incorrecto: digitalizar y botar los originales de inmediato no procede sin cumplir los requisitos de la norma para la eliminación de originales (que exige procedimiento y, según el caso, conservar el soporte original); no es una vía libre para botar papel."]},{"nivel": "i","tema": "Transparencia y datos personales","ctx": "Eres Gestor III y recibes una petición de acceso a la información: un ciudadano pide copia de varios contratos de tu proceso (información pública). Al revisarlos, notas que contienen algunos datos personales de terceros (como datos de contacto de personas naturales). Un compañero sugiere negar toda la petición 'para no exponer datos personales y evitarnos problemas'.","q": "Ante la petición de acceso a contratos que contienen algunos datos personales de terceros, ¿cuál es la actuación correcta?","ops": ["Negar toda la petición, ya que los documentos contienen datos personales y es más seguro no entregar nada para evitar problemas de protección de datos.","Entregar la información pública solicitada (los contratos son públicos), protegiendo los datos personales de terceros que deban reservarse (por ejemplo anonimizándolos), de modo que se cumpla el derecho de acceso sin exponer indebidamente datos protegidos.","Entregar todos los contratos tal cual, con los datos personales incluidos, porque la transparencia obliga a dar toda la información pública sin excepciones."],"correcta": 1,"expl": ["Incorrecto: negar todo el acceso a información pública por 'si acaso' viola el derecho de acceso; la regla es el acceso, no la negación.","✔ Se entrega lo público (los contratos) protegiendo (anonimizando) los datos personales de terceros que deban reservarse. Se cumple el acceso sin exponer datos protegidos.","Incorrecto: entregar los datos personales de terceros sin protegerlos viola la protección de datos; la transparencia no obliga a exponer datos personales que deben reservarse."]},{"nivel": "i","tema": "Preservación de documentos electrónicos","ctx": "Eres Gestor III. Tu entidad guarda importantes expedientes electrónicos en un formato de archivo que, según el área de tecnología, está quedando obsoleto y en un único servidor sin respaldo. Un compañero dice que 'mientras estén en el computador, están seguros, no hay que hacer nada más'.","q": "Ante los expedientes electrónicos en formato obsoleto y sin respaldo, ¿cuál es la actuación correcta?","ops": ["No hacer nada, ya que mientras los archivos estén guardados en el servidor de la entidad se consideran seguros y disponibles.","Gestionar, con el área de tecnología, estrategias de preservación digital (migración a un formato vigente y respaldos redundantes), porque los documentos electrónicos enfrentan la obsolescencia de formatos y la pérdida por fallas; preservar lo electrónico exige acciones activas, no solo 'tenerlo en el computador'.","Imprimir todos los expedientes electrónicos en papel y conservar solo el papel, para no depender de la tecnología que puede fallar."],"correcta": 1,"expl": ["Incorrecto: 'estar en el computador' no garantiza la preservación; un formato obsoleto puede volverse ilegible y un único servidor sin respaldo puede fallar y perderlo todo.","✔ La preservación digital exige acciones activas: migración a formatos vigentes y respaldos redundantes. Preservar lo electrónico no es solo guardarlo, es gestionarlo contra la obsolescencia y la pérdida.","Incorrecto: imprimir todo en papel y descartar lo electrónico no es la solución (pierde las ventajas del medio digital y puede no ser válido según el caso); lo correcto es preservar adecuadamente lo electrónico."]},{"nivel": "i","tema": "Mantener el expediente al día","ctx": "Eres Gestor III y empiezas a gestionar un nuevo contrato. Un compañero te aconseja 'no complicarte archivando documento por documento; mejor guarda todo junto en una carpeta y lo organizas en un expediente cuando alguien lo pida o cuando termine el contrato'.","q": "Ante el consejo de 'organizar el expediente al final o cuando lo pidan', ¿cuál es la práctica correcta?","ops": ["Seguir el consejo y guardar todo junto, organizándolo en expediente solo cuando el contrato termine o cuando el control lo solicite, para no perder tiempo archivando sobre la marcha.","Abrir el expediente del contrato desde el inicio e ir archivando en él cada documento conforme se produce, de modo que el expediente esté siempre completo y ordenado; mantener los expedientes al día, no reconstruirlos a última hora.","Llevar un archivo digital personal con los documentos más importantes y dejar el expediente oficial para armarlo al final con lo que haya quedado."],"correcta": 1,"expl": ["Incorrecto: 'organizar al final' lleva a expedientes incompletos y desordenados, porque reconstruir después es difícil y se pierden documentos.","✔ Se abre el expediente al inicio y se alimenta sobre la marcha; así está siempre completo y ordenado. Mantener los expedientes al día es la disciplina correcta.","Incorrecto: un archivo personal paralelo no es el expediente oficial y puede llevar a que el oficial quede incompleto; el expediente oficial se conforma y mantiene al día desde el inicio."]},{"nivel": "a","tema": "Destrucción u ocultamiento de documentos","ctx": "Eres Gestor III. Detectas que un documento de un expediente evidencia un error cometido en un trámite. Un compañero, nervioso, te sugiere 'hacer desaparecer ese documento del expediente para que no se vea el error cuando venga la auditoría, al fin y al cabo nadie lo echará de menos'.","q": "Ante la sugerencia de eliminar del expediente el documento que evidencia un error, ¿cuál es la actuación correcta?","ops": ["Retirar discretamente el documento del expediente, ya que evidencia un error y es mejor que no lo vea la auditoría para evitar problemas al área.","Negarse rotundamente: alterar u ocultar documentos de un expediente es una conducta gravísima que puede constituir delito y vulnera la integridad del expediente; el documento debe permanecer, y si hubo un error, se maneja por los cauces correctos (corregirlo, informarlo), con transparencia.","Hacer una copia del expediente sin ese documento para mostrarla a la auditoría, conservando el original completo aparte, como forma de 'presentar lo mejor' sin destruir nada."],"correcta": 1,"expl": ["Incorrecto: retirar u ocultar un documento del expediente es alterar la prueba y la memoria, una conducta gravísima que puede constituir delito.","✔ No se altera ni oculta ningún documento: la integridad del expediente es inviolable. Un error se maneja con transparencia (corrigiéndolo, informándolo), no ocultándolo. El Gestor III se niega y, si hay presión, deja constancia.","Incorrecto: presentar una copia 'depurada' a la auditoría es igualmente engañar al control ocultando información; el expediente que se entrega debe ser el íntegro."]},{"nivel": "a","tema": "Empalme documental","ctx": "Eres Gestor III y cambias de dependencia dentro de la Entidad. Debes entregar los expedientes y documentos que tenías a cargo a quien te reemplaza. Por el afán del cambio, un compañero sugiere 'entregar todo revuelto en cajas y que el que llegue se las arregle para organizarlo, total ya no es tu problema'.","q": "Ante la entrega de los documentos a tu cargo al cambiar de función, ¿cuál es la actuación correcta?","ops": ["Entregar todo en cajas sin inventario para no demorar el cambio, confiando en que quien llega organice lo que reciba, ya que tú ya no seguirás en esa función.","Realizar el empalme documental mediante un inventario de entrega que detalle qué documentos y expedientes se entregan, su estado y ubicación, de modo que quien recibe verifique contra ese inventario y la Entidad conserve la continuidad y trazabilidad de su memoria.","Quedarte con copias de todo 'por si acaso' y entregar los originales sin inventario, para tener respaldo personal de tu gestión anterior."],"correcta": 1,"expl": ["Incorrecto: entregar 'todo revuelto' sin inventario es fuente de pérdidas y problemas; nadie sabría qué había ni qué falta. El empalme es una responsabilidad, no un trámite para despachar.","✔ El empalme documental se hace con un inventario de entrega que detalla lo entregado, su estado y ubicación, y quien recibe verifica. Así se conserva la continuidad y la trazabilidad.","Incorrecto: quedarse con copias de documentos públicos 'por si acaso' puede ser una sustracción indebida de información; lo correcto es entregar por inventario, no llevarse copias."]},{"nivel": "a","tema": "Gestión documental electrónica con rigor","ctx": "Eres Gestor III. La Entidad implementa un sistema de gestión documental electrónica. Un compañero propone 'simplemente escanear todos los papeles y guardarlos en una carpeta compartida, sin complicarse con clasificaciones ni TRD, porque al estar en digital ya es gestión documental electrónica moderna'.","q": "Ante la propuesta de 'escanear y guardar todo junto' como gestión documental electrónica, ¿cuál es la actuación correcta?","ops": ["Aceptar la propuesta, ya que digitalizar los documentos y guardarlos en una carpeta compartida es, en esencia, gestión documental electrónica y moderniza el archivo.","Aplicar al medio electrónico las mismas reglas de fondo de la gestión documental (clasificar según la TRD, conformar expedientes electrónicos completos y ordenados, garantizar autenticidad e integridad, prever la preservación digital), porque digitalizar sin orden ni rigor no es gestión documental, solo un montón de archivos sueltos.","Escanear solo los documentos más importantes y dejar el resto en papel, para ahorrar esfuerzo de digitalización y clasificación."],"correcta": 1,"expl": ["Incorrecto: 'escanear y guardar todo junto' sin clasificación ni TRD no es gestión documental electrónica; es un repositorio desordenado tan inútil como un archivo físico caótico.","✔ La gestión documental electrónica aplica las mismas reglas de fondo (TRD, expedientes, autenticidad, preservación) al medio digital. Digitalizar con rigor es lo correcto, no acumular archivos sueltos.","Incorrecto: la solución no es escanear 'solo lo importante' y dejar el resto en papel sin criterio; la gestión documental, en el soporte que sea, aplica a todos los documentos según su valor y la TRD."]},{"nivel": "a","tema": "Negativa indebida de acceso","ctx": "Eres Gestor III. Un ciudadano solicita, por acceso a la información, documentos de un proceso administrativo que son información pública. Un directivo, incómodo con la solicitud, te pide responder que 'esa información es reservada y no se puede entregar', aunque no existe ninguna causal legal de reserva que aplique a esos documentos.","q": "Ante la instrucción de negar el acceso invocando una reserva inexistente, ¿cuál es la actuación correcta?","ops": ["Responder que la información es reservada y negar el acceso, siguiendo la instrucción del directivo, para evitar un conflicto con él.","Explicar que la información es pública y debe entregarse, ya que no existe una causal legal de reserva que aplique; proyectar la respuesta que entrega la información (protegiendo, si los hubiera, datos personales puntuales), y dejar constancia; negar el acceso sin fundamento legal viola el derecho de acceso y expone a responsabilidad.","Dilatar la respuesta hasta que venza el término, para que el ciudadano desista, y así no entregar ni negar formalmente la información."],"correcta": 1,"expl": ["Incorrecto: negar el acceso invocando una reserva inexistente viola el derecho de acceso a la información pública y expone a responsabilidad, aunque lo pida un directivo.","✔ La información pública se entrega; no existe una reserva que aplique. Se proyecta la respuesta que entrega la información (protegiendo datos personales puntuales si los hay) y se deja constancia. La reserva debe tener fundamento legal.","Incorrecto: dilatar la respuesta hasta que venza el término para que el ciudadano desista también vulnera el derecho de petición y de acceso; la respuesta debe darse en término y conforme a la ley."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
