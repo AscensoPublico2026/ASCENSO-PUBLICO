@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-RADM-11 · Herramientas Informáticas e Informes de Gestión — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-RADM-11</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 19 · Funcional Específica · Recursos Administrativos</div></div>
+  <h1>Herramientas Informáticas e Informes de Gestión</h1>
+  <p class="header-sub">Ofimática, sistemas de información, informes e indicadores: cómo el <strong>Gestor III</strong> convierte datos en decisiones y rinde cuentas con transparencia.</p>
+  <div class="badges"><span class="badge">📅 Día 19 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Es martes, 7:40 a. m. Llegas a la Subdirección de Recursos Físicos de la DIAN, en tu primera semana como Gestor III del proceso de Recursos Administrativos. Marcela, tu coordinadora, te entrega cuatro asuntos antes del almuerzo. El primero: la Dirección Seccional de Barranquilla reporta una filtración en la cubierta de su sede y pide "reparación urgente"; alguien ya habló con un contratista conocido para que "empiece hoy mismo y después legalizamos". El segundo: hay que dar de baja veinte computadores obsoletos y un vehículo del parque automotor, y un funcionario propone "regalarlos a una fundación para no complicarse". El tercero: una sede recibió, como pago de una obligación fiscal, un lote urbano, y nadie sabe quién debe asegurarlo, mantenerlo ni custodiarlo. El cuarto: la póliza que ampara los bienes muebles de tres seccionales vence el viernes y el corredor de seguros pregunta si "renovamos igual que el año pasado".</p>
+    <p>¿Se puede "empezar hoy y legalizar después"? ¿Un bien del Estado se "regala"? ¿Quién responde por un inmueble recibido en pago? ¿Qué significa que una póliza se renueve "igual"? Todas estas respuestas parten de unas mismas bases, y esas bases son las <mark>generalidades de los Recursos Administrativos</mark>: qué es este proceso dentro de la DIAN, qué bienes y servicios administra, con qué normas (presupuesto, contratación, bienes, seguros, ambiental), con qué principios actúa el servidor público y, sobre todo, qué te corresponde decidir a ti como Gestor III y qué no. Hoy construyes ese mapa.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es el <strong>proceso de Recursos Administrativos</strong> en la DIAN y cómo se ubica dentro de la estructura de la Entidad (Decreto 1742 de 2020).</li>
+      <li>El <strong>propósito y las funciones esenciales</strong> del empleo Gestor III del área administrativa y financiera, según el manual específico (Resolución 0067 de 2024).</li>
+      <li>Los <strong>cinco grandes frentes</strong> que administra el proceso: infraestructura física, bienes muebles e inmuebles, servicios generales y parque automotor, aseguramiento de bienes y gestión ambiental de sedes.</li>
+      <li>El <strong>mapa normativo</strong> del cargo: Constitución (función administrativa), Estatuto de Contratación (Ley 80 de 1993, Ley 1150 de 2007, Decreto 1082 de 2015), régimen de bienes del Estado, presupuesto y plan anual de adquisiciones.</li>
+      <li>El <strong>ciclo de la gestión administrativa</strong>: planear (PAA) → contratar → ejecutar y supervisar → recibir → administrar y mantener → dar de baja o enajenar.</li>
+      <li>Los <strong>principios de la función pública</strong> aplicados a lo administrativo (art. 209 C.P.): igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad.</li>
+      <li>La diferencia entre <strong>bien mueble e inmueble</strong>, entre <strong>baja y enajenación</strong>, y qué son los <strong>bienes recibidos en pago</strong> de obligaciones fiscales.</li>
+      <li>El <strong>aseguramiento de bienes</strong>: qué es un programa de seguros, qué ampara y por qué no se "renueva igual" sin análisis.</li>
+      <li>El <strong>rol del Gestor III</strong>: qué proyecta, gestiona y supervisa, y por qué no puede dispensar requisitos ni decidir lo que es de otro.</li>
+      <li>Ejercicios, casos aplicados a tu día a día y <strong>12 preguntas de simulacro</strong> de juicio situacional con tres opciones.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás ubicar cualquier asunto administrativo en su lugar correcto —qué bien o servicio es, qué norma lo rige, en qué fase del ciclo está y a quién le corresponde decidir— y tendrás la base para estudiar, en los días siguientes, la infraestructura física, la administración de bienes muebles e inmuebles, los servicios y el parque automotor, y la contratación estatal paso a paso.</p>
+  </div>
+</section>
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>"Generalidades de los Recursos Administrativos" es el <mark>cimiento</mark> de todo el bloque funcional de tu empleo. El manual específico del <strong>Gestor III del Nivel Profesional</strong> describe un cargo cuyo propósito es efectuar las acciones que demandan la proyección y el desarrollo de la infraestructura física de la Entidad, la administración de sus bienes muebles e inmuebles, la prestación de servicios generales, el transporte y parque automotor, el aseguramiento de bienes y la contratación necesaria para todo ello. No puedes dominar ninguna de esas funciones si antes no tienes claro <strong>qué es el proceso, qué administra, con qué normas y con qué límites</strong>. Esa es la foto completa que arma esta guía.</p>
+  <p>Recuerda cómo es la prueba: las competencias funcionales se evalúan con <strong>juicio situacional</strong> (un caso, un enunciado y tres opciones de respuesta, de las cuales solo una es la más apropiada), es una prueba <mark>eliminatoria</mark> y exige un puntaje mínimo aprobatorio. Además, en los ejes que se sustentan en leyes, decretos y otras normas solo se tienen en cuenta las que estén <strong>vigentes</strong> a la fecha de corte definida en la convocatoria. Por eso aquí no solo aprenderás qué dicen las normas, sino a razonar con los principios que las sostienen, que son los que permiten resolver un caso aunque no te sepas de memoria un artículo.</p>
+  <p>Para quien llega al cargo, estas generalidades importan por cuatro razones concretas:</p>
+  <ul class="lista">
+    <li>Tus funciones de <strong>infraestructura y bienes inmuebles</strong> exigen saber en qué fase está cada asunto (planeación, contratación, ejecución, recibo, mantenimiento, baja/enajenación) para no "saltarse" pasos que la ley impone.</li>
+    <li>Tus funciones de <strong>contratación</strong> (estudios previos, selección, perfeccionamiento, liquidación, garantías) se apoyan en el Estatuto de Contratación, que aquí se introduce y luego se profundiza en los Días 14 y 15.</li>
+    <li>Tus funciones de <strong>atención de trámites, PQRSDF y conceptos técnicos de alta complejidad</strong> requieren ubicar correctamente a qué proceso y a qué norma pertenece cada solicitud.</li>
+    <li>El <strong>comportamiento ético (nivel 4)</strong> se pone a prueba todos los días en el manejo de recursos públicos: saber qué te toca decidir y qué no es la mejor barrera contra la extralimitación, la omisión y el riesgo de corrupción.</li>
+  </ul>
+  <p>Las preguntas de esta guía en la prueba suelen ser <mark>situacionales</mark>: te presentan a alguien que propone un atajo ("empecemos la obra y legalizamos después", "regalemos los equipos de baja", "renovemos la póliza igual") y debes escoger la actuación más apropiada. Los distractores casi siempre contienen una parte correcta y un error sutil: invertir el orden de un trámite, aplicar una figura a un supuesto que no es, o decidir algo que le corresponde a otra instancia.</p>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con las guías anteriores y siguientes</div>
+    <p>En los Días 5 a 8 estudiaste tus competencias comportamentales y el alcance del cargo. Hoy entras al contenido técnico: esta guía es el mapa general del proceso. En el Día 10 y 11 profundizarás la <strong>infraestructura física</strong>; en el Día 12, la <strong>administración de bienes muebles e inmuebles</strong>; en el Día 13, los <strong>servicios y el parque automotor</strong>; y en los Días 14 y 15, la <strong>contratación estatal</strong> paso a paso. Todo lo que hoy ves como título, en los días siguientes lo abres en detalle.</p>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Herramientas Informáticas e Informes de Gestión</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Gestor III del área administrativa, ejercicios resueltos y checkpoints interactivos. Las herramientas informáticas y los informes de gestión son el soporte diario del cargo: el Gestor III planea, ejecuta y controla recursos administrativos (infraestructura, bienes, servicios, contratación), y todo ese trabajo se registra, se procesa y se reporta con herramientas ofimáticas, sistemas de información y tableros. El manual del Gestor III incluye las herramientas informáticas entre los conocimientos exigidos, porque ningún proceso administrativo moderno se gestiona a mano. Hoy verás el manejo profesional de hojas de cálculo, procesadores de texto y presentaciones; los sistemas de información del Estado y de la DIAN; la elaboración de informes de gestión y de indicadores; el tratamiento y la seguridad de la información; y la rendición de cuentas basada en datos. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, no solo sabrás usar las herramientas, sino cómo convertir datos en información útil para decidir y rendir cuentas con rigor.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">💻</span><h5>Ofimática</h5><p>Hojas de cálculo · texto · presentaciones</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🗄</span><h5>Sistemas</h5><p>Información del Estado y la DIAN</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📊</span><h5>Informes</h5><p>Gestión, indicadores, tableros</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔐</span><h5>Seguridad</h5><p>Datos, respaldo, confidencialidad</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧭</span><h5>Tu rol</h5><p>Convertir datos en decisiones y cuentas</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Por qué un Gestor III necesita herramientas informáticas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las <mark>herramientas informáticas</mark> son los programas y sistemas que permiten crear, procesar, almacenar, comunicar y analizar información de manera digital. Para el Gestor III son el soporte de todo su trabajo: con ellas planea la infraestructura, controla los bienes, administra los contratos y rinde cuentas. El manual las incluye como conocimiento exigido porque la gestión administrativa moderna es, en lo cotidiano, gestión con herramientas digitales.</p>
+</div>
+<div class="b-texto">
+  <p>Imagina un día cualquiera del Gestor III: revisa el estado de un contrato de obra en un sistema, actualiza el inventario de bienes en una hoja de cálculo, redacta un informe para su jefe en un procesador de texto, prepara una presentación para una reunión de seguimiento y responde un correo con un soporte adjunto. Ninguna de esas tareas se hace a mano: todas pasan por herramientas informáticas. Dominarlas no es un lujo técnico, es la condición para hacer el trabajo con rapidez, orden y sin errores.</p>
+  <p>La diferencia entre un servidor que apenas sabe abrir un archivo y uno que domina las herramientas es enorme en productividad y calidad. El primero copia datos a mano, comete errores de digitación, pierde información y tarda horas en un informe. El segundo usa fórmulas, plantillas y filtros, automatiza lo repetitivo, reduce errores y entrega en minutos lo que al otro le toma un día. En un área que maneja muchos datos (bienes, contratos, pagos, mantenimientos), esa diferencia se nota todos los días.</p>
+  <p>Las herramientas informáticas se agrupan en varias familias que verás en esta guía. Las <strong>herramientas de ofimática</strong> (procesador de texto, hoja de cálculo, presentaciones, correo) para el trabajo documental cotidiano. Los <strong>sistemas de información</strong> institucionales (del Estado y de la DIAN) para los procesos reglados. Las <strong>herramientas de análisis y reporte</strong> (tableros, indicadores) para convertir datos en información. Y las <strong>herramientas de comunicación y colaboración</strong> para el trabajo en equipo y a distancia.</p>
+  <p>Conviene aclarar que el objetivo del día no es convertirte en programador ni en técnico de sistemas. El Gestor III no desarrolla software: lo usa. Lo que la prueba y el cargo exigen es un uso <strong>competente y responsable</strong> de las herramientas: saber qué herramienta sirve para qué, usarla bien, cuidar la información y aprovecharla para decidir y rendir cuentas. Ese es el enfoque de hoy.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Familia de herramienta</th><th>Para qué sirve</th><th>Ejemplo en el cargo</th></tr></thead>
+    <tbody>
+      <tr><td>Ofimática</td><td>Trabajo documental cotidiano</td><td>Redactar un informe, llevar un inventario</td></tr>
+      <tr><td>Sistemas de información</td><td>Procesos institucionales reglados</td><td>Registrar un contrato, consultar un bien</td></tr>
+      <tr><td>Análisis y reporte</td><td>Convertir datos en información</td><td>Tablero de indicadores de mantenimiento</td></tr>
+      <tr><td>Comunicación y colaboración</td><td>Trabajo en equipo y a distancia</td><td>Correo, reuniones y documentos compartidos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El jefe le pide al Gestor III un reporte del estado de los diez contratos de mantenimiento vigentes. En lugar de escribir uno por uno, el Gestor consulta el sistema de contratación, exporta los datos a una hoja de cálculo, aplica filtros y fórmulas para calcular el porcentaje de avance y el saldo, arma una tabla resumen y la pega en un informe con tres párrafos de análisis. Lo que podría haber tardado medio día, lo entrega en una hora, sin errores de suma. Esa es la ventaja de usar las herramientas con criterio.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>Para el Gestor III, dominar las herramientas informáticas significa, sobre todo:</p>
+  <div class="cp-op" data-op="a">a) Aprender a programar software a la medida del área.</div>
+  <div class="cp-op" data-op="b">b) Usarlas de forma competente y responsable para trabajar mejor, cuidar la información y rendir cuentas.</div>
+  <div class="cp-op" data-op="c">c) Reemplazar al personal de la oficina de sistemas de la entidad.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Vale la pena insistir en un cambio de mentalidad: durante años, mucha gestión pública se llevó en papel, con archivos físicos y cuentas hechas a mano. Ese modelo era lento, propenso a errores y difícil de controlar. La transformación digital del Estado no es una moda: responde a la necesidad de gestionar más recursos, con más control y más transparencia, en menos tiempo. El Gestor III que resiste lo digital se queda atrás; el que lo abraza multiplica su capacidad. No se trata de amar la tecnología, sino de entender que hoy es la forma natural de hacer bien el trabajo administrativo.</p><p>También conviene tener una actitud de aprendizaje continuo. Las herramientas cambian, se actualizan, aparecen funciones nuevas. El servidor competente no espera a que lo capaciten para todo: explora, pregunta, aprovecha los tutoriales y le pierde el miedo a las herramientas. No hace falta ser un genio informático; basta con la disposición a aprender y la disciplina de usar bien lo que ya se tiene. Un Gestor III que domina a fondo una hoja de cálculo rinde más que uno que apenas la usa como una tabla bonita.</p></div>
+<div class="b-texto"><p>En síntesis de este primer módulo: la competencia digital dejó de ser un plus para convertirse en una condición del ejercicio profesional en el Estado. El Gestor III que la cultiva no solo cumple el requisito del manual, sino que gana autonomía, velocidad y confiabilidad en su trabajo diario. Cada hora invertida en dominar mejor una herramienta se devuelve multiplicada en informes más rápidos, menos errores y decisiones mejor fundadas. Esa es la razón de fondo por la que este tema cierra el bloque funcional del curso.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Hojas de cálculo: la herramienta clave del área administrativa</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>hoja de cálculo</mark> (Excel, Calc, Google Sheets) es un programa que organiza datos en filas y columnas y permite calcular, filtrar, ordenar y graficar. Es, probablemente, la herramienta más usada por el Gestor III, porque gran parte de su trabajo consiste en manejar listas de datos: inventarios, contratos, pagos, mantenimientos, consumos.</p>
+</div>
+<div class="b-texto">
+  <p>La hoja de cálculo organiza la información en una cuadrícula: las <strong>filas</strong> (horizontales, numeradas) y las <strong>columnas</strong> (verticales, con letras); su intersección es una <strong>celda</strong>, identificada por su coordenada (por ejemplo, B5). En las celdas se escriben datos (textos, números, fechas) o <strong>fórmulas</strong> que calculan a partir de otras celdas. Esa estructura simple permite manejar desde una lista de diez bienes hasta un inventario de miles de ítems.</p>
+  <p>La potencia de la hoja de cálculo está en las fórmulas y funciones. Con <strong>SUMA</strong> se totaliza una columna de valores; con <strong>PROMEDIO</strong> se calcula una media; con <strong>CONTAR</strong> y <strong>CONTAR.SI</strong> se cuentan elementos según condiciones; con <strong>SI</strong> se toman decisiones lógicas (por ejemplo, marcar "vencido" o "vigente"); con <strong>BUSCARV</strong> o <strong>BUSCARX</strong> se cruzan datos entre tablas. Estas funciones convierten una lista estática en una herramienta viva que se actualiza sola.</p>
+  <p>Igual de importante que calcular es <strong>organizar y explorar</strong> los datos. Los <strong>filtros</strong> permiten ver solo lo que interesa (por ejemplo, solo los contratos vencidos). El <strong>ordenamiento</strong> organiza por fecha, valor o nombre. Las <strong>tablas dinámicas</strong> resumen grandes volúmenes de datos en segundos (cuántos bienes hay por dependencia, cuánto se gastó por mes). Y los <strong>gráficos</strong> traducen números en imágenes que se entienden de un vistazo.</p>
+  <p>Para el Gestor III, la hoja de cálculo es la herramienta de control por excelencia: un buen tablero en Excel le permite saber, en cualquier momento, cuántos contratos tiene, cuánto ha ejecutado, qué mantenimientos están pendientes y qué bienes hay en cada sede. La regla de oro es que la hoja debe estar <strong>limpia, actualizada y verificada</strong>: una hoja con datos viejos o con fórmulas rotas es peor que no tener hoja, porque induce a error.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Función</th><th>Qué hace</th><th>Uso típico en el cargo</th></tr></thead>
+    <tbody>
+      <tr><td>SUMA / PROMEDIO</td><td>Totaliza o promedia valores</td><td>Total ejecutado de contratos</td></tr>
+      <tr><td>CONTAR.SI</td><td>Cuenta según una condición</td><td>Cuántos bienes están "de baja"</td></tr>
+      <tr><td>SI</td><td>Decisión lógica</td><td>Marcar "vencido" según la fecha</td></tr>
+      <tr><td>BUSCARV / BUSCARX</td><td>Cruza datos entre tablas</td><td>Traer el proveedor por número de contrato</td></tr>
+      <tr><td>Tabla dinámica</td><td>Resume grandes volúmenes</td><td>Gasto por dependencia y por mes</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III lleva el control de 80 mantenimientos del año en una hoja de cálculo. Con una columna de fecha programada y la función SI, marca automáticamente cuáles están "por vencer". Con una tabla dinámica, resume cuántos mantenimientos hay por sede y su costo total. Cuando el jefe pregunta por el estado, no tiene que contar a mano: el tablero ya lo muestra, actualizado y sin errores.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>El Gestor III necesita cruzar dos tablas para traer el nombre del proveedor a partir del número de contrato. La función más adecuada es:</p>
+  <div class="cp-op" data-op="a">a) PROMEDIO, porque calcula una media de valores.</div>
+  <div class="cp-op" data-op="b">b) CONTAR, porque cuenta elementos de una lista.</div>
+  <div class="cp-op" data-op="c">c) BUSCARV o BUSCARX, porque buscan un dato en otra tabla a partir de una clave.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un error frecuente con las hojas de cálculo es construirlas de forma desordenada: datos mezclados con textos, celdas combinadas por todos lados, colores sin sentido, fórmulas escritas sobre los datos. Una hoja así se vuelve imposible de mantener y es fuente de errores. La buena práctica es separar claramente los datos (una fila por registro, una columna por atributo, sin celdas combinadas en la zona de datos) de los cálculos y los reportes. Una hoja limpia y bien estructurada se puede filtrar, ordenar y resumir; una hoja desordenada solo se puede mirar con resignación.</p><p>Otra práctica valiosa es documentar y proteger la hoja. Cuando una hoja tiene fórmulas importantes, conviene bloquear las celdas de fórmula para que nadie las borre por accidente, dejar una nota de qué significa cada columna, y conservar una versión maestra. En el área administrativa, donde una hoja de inventario o de contratos puede ser consultada por varias personas, estas precauciones evitan que un clic equivocado dañe horas de trabajo. La hoja de cálculo es poderosa, pero también frágil: un dato borrado sin querer puede desencadenar un error en cadena si no se cuida.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Procesadores de texto: documentos formales bien hechos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>procesador de texto</mark> (Word, Writer, Google Docs) es la herramienta para crear documentos escritos: oficios, informes, memorandos, actas, estudios previos, respuestas a PQRSF. Buena parte del trabajo del Gestor III es documental, y un documento bien estructurado comunica mejor y transmite profesionalismo.</p>
+</div>
+<div class="b-texto">
+  <p>Un documento oficial no es un texto cualquiera: tiene una estructura, un formato y unas exigencias de claridad. El procesador de texto permite dar esa forma con herramientas que conviene dominar: los <strong>estilos</strong> (títulos, subtítulos, cuerpo) que dan jerarquía y permiten generar una tabla de contenido automática; las <strong>plantillas</strong> institucionales que aseguran que todos los oficios se vean igual; la <strong>numeración y viñetas</strong> para listas ordenadas; y las <strong>tablas</strong> para presentar datos.</p>
+  <p>La redacción administrativa tiene reglas propias. El lenguaje debe ser <strong>claro, preciso y respetuoso</strong>: frases cortas, sin tecnicismos innecesarios, sin ambigüedad. Un oficio bien redactado dice qué se pide o informa, con qué fundamento y qué se espera, sin rodeos. El Gestor III que escribe con claridad evita reprocesos, malentendidos y reclamos; el que escribe de forma enredada genera confusión y pierde tiempo aclarando.</p>
+  <p>Hay funciones del procesador que ahorran mucho trabajo y que conviene usar: el <strong>control de cambios</strong> para revisar un documento en equipo viendo qué modificó cada quien; los <strong>comentarios</strong> para hacer observaciones sin alterar el texto; la <strong>combinación de correspondencia</strong> para generar muchos documentos iguales con datos distintos (por ejemplo, cien certificaciones con nombres diferentes); y la exportación a <strong>PDF</strong> para enviar el documento en un formato que no se pueda alterar y que se vea igual en cualquier equipo.</p>
+  <p>Para el Gestor III, el documento es la cara de su trabajo. Un informe bien estructurado, con títulos claros, tablas ordenadas y redacción precisa, comunica competencia. Uno desordenado, con errores y sin formato, resta credibilidad por más que el contenido sea bueno. La forma importa: en la administración pública, el documento es la prueba de lo actuado, y debe estar a la altura.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Herramienta del procesador</th><th>Para qué sirve</th></tr></thead>
+    <tbody>
+      <tr><td>Estilos y tabla de contenido</td><td>Dar jerarquía y navegar documentos largos</td></tr>
+      <tr><td>Plantillas institucionales</td><td>Uniformar el formato de los documentos</td></tr>
+      <tr><td>Control de cambios y comentarios</td><td>Revisar en equipo sin perder versiones</td></tr>
+      <tr><td>Combinación de correspondencia</td><td>Generar muchos documentos con datos distintos</td></tr>
+      <tr><td>Exportar a PDF</td><td>Enviar en formato fijo e inalterable</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III debe emitir 60 certificaciones de bienes a cargo, una por funcionario, todas iguales salvo el nombre y el cargo. En lugar de escribir 60 documentos, arma una plantilla con los campos variables y usa la combinación de correspondencia con una lista en hoja de cálculo. En diez minutos tiene las 60 certificaciones generadas, exportadas a PDF y listas para firma, sin un solo error de copiar y pegar.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El Gestor III envía un informe final por correo y quiere que se vea igual en cualquier equipo y que nadie lo altere por accidente. Lo adecuado es:</p>
+  <div class="cp-op" data-op="a">a) Exportarlo a PDF antes de enviarlo.</div>
+  <div class="cp-op" data-op="b">b) Enviarlo en el formato editable del procesador sin más.</div>
+  <div class="cp-op" data-op="c">c) Enviar solo una foto de la pantalla del documento.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La redacción administrativa merece una mención aparte porque es donde muchos servidores fallan sin darse cuenta. Documentos con párrafos interminables, lenguaje rebuscado, siglas sin explicar y conclusiones escondidas son el pan de cada día en muchas oficinas. El resultado es que el lector no entiende, pregunta, y el trabajo se duplica. Escribir bien en la administración pública es un acto de respeto por el lector y de eficiencia: un documento claro se lee una vez y se entiende. El Gestor III que cultiva una escritura clara ahorra tiempo propio y ajeno.</p><p>Hay reglas prácticas que ayudan: empezar por lo importante (no hacer esperar al lector hasta el último párrafo), usar frases cortas, una idea por párrafo, títulos que guíen, y revisar antes de enviar. Un truco útil es leer el documento en voz alta: si uno se enreda al leerlo, el lector también se enredará. Otro es preguntarse, ante cada párrafo, si aporta algo: lo que no aporta, sobra. El procesador de texto da las herramientas de formato, pero la claridad la pone quien escribe. Forma y fondo deben ir juntos.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Presentaciones y comunicación visual</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las <mark>presentaciones</mark> (PowerPoint, Impress, Google Slides) sirven para exponer información ante un público: un comité, el jefe, una reunión de seguimiento, una rendición de cuentas. Una buena presentación no repite el informe: lo resume en mensajes claros y apoyos visuales que facilitan la comprensión y la decisión.</p>
+</div>
+<div class="b-texto">
+  <p>El error más común al presentar es llenar las diapositivas de texto y leerlas. Una diapositiva no es un documento: es un apoyo visual. La regla es <strong>pocas ideas, bien visibles</strong>: un mensaje por diapositiva, frases cortas, datos clave resaltados, un gráfico que hable por sí solo. El presentador explica de viva voz; la diapositiva solo refuerza. El público que lee no escucha, y el que escucha no lee: por eso la diapositiva debe ser mínima.</p>
+  <p>Para el Gestor III, presentar bien tiene un valor concreto: cuando expone el avance de un plan de mantenimiento o el estado de la ejecución contractual ante un comité, una presentación clara le ayuda a que las decisiones se tomen rápido y bien. Un buen gráfico de avance, una tabla resumen y tres conclusiones ordenadas comunican más que diez diapositivas cargadas de texto que nadie alcanza a leer.</p>
+  <p>La comunicación visual va más allá de las diapositivas. Saber elegir el <strong>gráfico correcto</strong> es clave: barras para comparar, líneas para tendencias en el tiempo, circular para participaciones, tabla cuando el dato exacto importa. Un gráfico mal elegido confunde; uno bien elegido ilumina. También importan los <strong>tableros visuales</strong> (dashboards) que muestran indicadores con semáforos (verde, amarillo, rojo) para que el estado se entienda de un vistazo.</p>
+  <p>En toda comunicación visual, la honestidad del dato es innegociable. Un gráfico puede engañar si se manipula la escala o se recorta el eje para exagerar o disimular. El servidor íntegro presenta los datos tal cual son, incluso los malos: si un indicador va en rojo, se muestra en rojo y se explica el plan para corregirlo. Esconder un mal resultado con un gráfico tramposo es una falta a la transparencia que, además, tarde o temprano se descubre.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de gráfico</th><th>Cuándo usarlo</th></tr></thead>
+    <tbody>
+      <tr><td>Barras</td><td>Comparar cantidades entre categorías</td></tr>
+      <tr><td>Líneas</td><td>Mostrar una tendencia en el tiempo</td></tr>
+      <tr><td>Circular</td><td>Mostrar participación sobre un total</td></tr>
+      <tr><td>Tabla</td><td>Cuando el dato exacto es lo importante</td></tr>
+      <tr><td>Tablero con semáforos</td><td>Mostrar estado de indicadores de un vistazo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>En el comité mensual, el Gestor III debe reportar el avance de la obra de adecuación de una sede. Prepara tres diapositivas: una con un gráfico de barras del avance físico contra el programado, otra con un semáforo del presupuesto ejecutado, y una con dos conclusiones y una alerta. El comité entiende el estado en dos minutos y decide autorizar un ajuste. La presentación clara hizo posible una decisión rápida.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>El Gestor III va a presentar el avance de un plan ante un comité. Lo correcto es:</p>
+  <div class="cp-op" data-op="a">a) Llenar las diapositivas con todo el texto del informe y leerlas.</div>
+  <div class="cp-op" data-op="b">b) Resumir en pocas ideas con apoyos visuales claros y explicar de viva voz.</div>
+  <div class="cp-op" data-op="c">c) Ajustar la escala de los gráficos para que el avance parezca mejor.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un principio útil para presentar es pensar siempre en el público y en la decisión que se busca. ¿Quién va a ver la presentación? ¿Qué necesita saber? ¿Qué se quiere que decida o entienda? Una presentación para un comité técnico puede tener más detalle; una para directivos debe ir al grano con lo estratégico. Adaptar el mensaje al público es lo que distingue a quien comunica con propósito de quien solo vuelca información. El Gestor III que prepara presentaciones pensadas para su audiencia logra que las reuniones sean productivas y que las decisiones salgan.</p><p>Conviene también cuidar el cierre. Muchas presentaciones mueren en datos sin llegar a una conclusión. Toda exposición de gestión debería terminar con un mensaje claro: el estado en una frase, las alertas si las hay, y la recomendación o la decisión que se pide. Si después de una presentación el público no sabe qué se concluyó ni qué sigue, la presentación falló por más bonita que fuera. El Gestor III termina siempre con claridad sobre qué se decidió y quién hace qué.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Correo electrónico y herramientas de colaboración</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>correo electrónico institucional</mark> y las herramientas de colaboración (calendarios, reuniones virtuales, documentos compartidos, mensajería) son el sistema nervioso de la comunicación en la entidad. El Gestor III coordina con proveedores, supervisores, otras dependencias y su jefe; hacerlo con orden y profesionalismo evita errores y deja constancia.</p>
+</div>
+<div class="b-texto">
+  <p>El correo institucional no es un chat informal: es un canal oficial y, muchas veces, una prueba. Un correo bien escrito tiene un <strong>asunto claro</strong> (que diga de qué se trata), un saludo, un mensaje preciso, los adjuntos correctos y una despedida. El Gestor III debe cuidar a quién copia (los destinatarios correctos, sin inundar de copias a quien no corresponde), conservar los correos importantes y responder en un plazo razonable.</p>
+  <p>Las herramientas de colaboración han transformado el trabajo. El <strong>calendario compartido</strong> permite coordinar reuniones sin cadenas interminables de correos. Las <strong>reuniones virtuales</strong> ahorran desplazamientos entre sedes. Los <strong>documentos compartidos</strong> permiten que varias personas trabajen sobre el mismo archivo sin enviarse versiones por correo (evitando el caos de "informe_final_v3_definitivo_corregido"). La <strong>mensajería institucional</strong> agiliza las consultas rápidas.</p>
+  <p>Estas herramientas exigen disciplina. Un calendario compartido solo sirve si todos lo mantienen al día. Un documento compartido requiere acordar quién edita y quién revisa. Una reunión virtual debe tener agenda, hora de inicio y fin, y un acta de lo decidido. El Gestor III que usa bien estas herramientas coordina proyectos complejos (una obra, un plan de mantenimiento) con varios actores sin perder el hilo.</p>
+  <p>Hay también reglas de prudencia. No se deben enviar por correo datos sensibles sin protección; no se usan canales personales (WhatsApp privado, correo personal) para asuntos oficiales que deben quedar en los canales institucionales; y se cuida la seguridad (no abrir adjuntos sospechosos, no reenviar cadenas). El correo oficial deja rastro, y ese rastro puede ser revisado: por eso se escribe siempre pensando que lo que se envía es parte del expediente.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Herramienta</th><th>Buen uso</th><th>Mal uso a evitar</th></tr></thead>
+    <tbody>
+      <tr><td>Correo institucional</td><td>Asunto claro, destinatarios correctos, archivar</td><td>Copiar a todos sin criterio, no responder</td></tr>
+      <tr><td>Calendario compartido</td><td>Mantenerlo al día, coordinar reuniones</td><td>No actualizar disponibilidad</td></tr>
+      <tr><td>Documentos compartidos</td><td>Trabajo simultáneo, una sola versión</td><td>Multiplicar copias por correo</td></tr>
+      <tr><td>Reuniones virtuales</td><td>Agenda, acta, horario</td><td>Reuniones sin rumbo ni registro</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III coordina una adecuación que involucra a tres dependencias y dos proveedores. En vez de una maraña de correos, crea un documento compartido con el cronograma y las responsabilidades, agenda una reunión virtual semanal en el calendario común y deja un acta breve de cada sesión. Todos ven el mismo estado actualizado, y cuando surge una duda sobre lo acordado, el acta lo resuelve sin discusión.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Un proveedor le escribe al Gestor III por un asunto del contrato usando su correo personal de gmail. Lo correcto es:</p>
+  <div class="cp-op" data-op="a">a) Responderle por el mismo correo personal para agilizar.</div>
+  <div class="cp-op" data-op="b">b) Ignorar el mensaje porque no llegó por el canal correcto.</div>
+  <div class="cp-op" data-op="c">c) Encauzar el asunto por los canales institucionales oficiales, que dejan constancia en el expediente.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>El uso del correo institucional merece un recordatorio sobre la cultura de la respuesta. En la administración, muchos trámites se frenan porque un correo no se responde a tiempo. El Gestor III debe cultivar el hábito de responder en un plazo razonable, aunque sea para acusar recibo y decir cuándo dará la respuesta de fondo. El silencio administrativo genera reprocesos, reclamos y mala imagen. Un correo bien gestionado es, muchas veces, la diferencia entre un proceso que fluye y uno que se atasca.</p><p>Con las herramientas de colaboración hay que evitar un riesgo moderno: la saturación. Demasiadas reuniones virtuales, demasiados chats, demasiadas notificaciones pueden volverse ruido que impide trabajar. El uso inteligente implica reservar franjas para concentrarse, convocar reuniones solo cuando aportan, y usar los documentos compartidos para no tener que reunirse por todo. La tecnología de colaboración sirve para trabajar mejor, no para vivir en reuniones. El Gestor III que la usa con criterio protege su tiempo y el de los demás.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Sistemas de información del Estado</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>sistemas de información del Estado</mark> son plataformas digitales oficiales donde se gestionan procesos reglados y se consolida información pública. El Gestor III interactúa con varios de ellos en su trabajo: SECOP para contratación, SIGEP para hojas de vida y bienes, sistemas de gestión documental, entre otros. No son opcionales: usarlos es obligatorio.</p>
+</div>
+<div class="b-texto">
+  <p>El Estado colombiano ha digitalizado buena parte de su gestión en sistemas de uso obligatorio. El <strong>SECOP</strong> (Sistema Electrónico de Contratación Pública), administrado por Colombia Compra Eficiente, es donde se publican y gestionan los procesos contractuales; el SECOP II es transaccional (toda la contratación se hace en línea). El <strong>SIGEP</strong> (Sistema de Información y Gestión del Empleo Público) consolida las hojas de vida de los servidores y la declaración de bienes y rentas. Hay además sistemas de <strong>gestión documental</strong>, de <strong>peticiones (PQRSF)</strong> y de <strong>presupuesto</strong> (como el SIIF Nación, para la ejecución presupuestal).</p>
+  <p>Para el Gestor III, el SECOP es el sistema más relevante por su relación con la contratación (Días 14-15). Allí se publican los documentos del proceso, se reciben ofertas, se adjudica y se gestiona la ejecución. La publicación oportuna en el SECOP no es un trámite: es una obligación de transparencia, y su incumplimiento genera responsabilidad. El Gestor que apoya la contratación debe conocer el flujo del SECOP y cumplir los plazos de publicación.</p>
+  <p>Estos sistemas tienen una lógica común: son la <strong>fuente oficial</strong> de la información y, muchas veces, la única vía válida para hacer el trámite. Lo que no está en el sistema, para efectos oficiales, muchas veces "no existe": un contrato no publicado en el SECOP, una hoja de vida no cargada en el SIGEP. Por eso el Gestor III debe registrar la información completa y a tiempo, no como un deber burocrático, sino porque el sistema es el que da validez y publicidad al acto.</p>
+  <p>El uso de estos sistemas exige responsabilidad con las credenciales y los datos. Cada servidor accede con su usuario, responde por lo que hace con él y no debe compartir su clave. La información que registra compromete a la entidad y queda con su huella. Un registro errado o incompleto puede frenar un proceso o generar una observación de los órganos de control. La regla es: registrar bien, a tiempo y con soporte.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Sistema</th><th>Para qué sirve</th><th>Relevancia para el Gestor III</th></tr></thead>
+    <tbody>
+      <tr><td>SECOP II</td><td>Contratación pública en línea</td><td>Alta: publica y gestiona contratos</td></tr>
+      <tr><td>SIGEP</td><td>Hojas de vida y bienes y rentas</td><td>Media: hoja de vida y declaración</td></tr>
+      <tr><td>SIIF Nación</td><td>Ejecución presupuestal</td><td>Media: seguimiento a la ejecución</td></tr>
+      <tr><td>Gestión documental</td><td>Radicación y trámite de documentos</td><td>Alta: soporte del trabajo diario</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III apoya la adjudicación de un contrato de servicios generales. Debe asegurarse de que todos los documentos del proceso queden publicados en el SECOP II dentro de los plazos: estudios previos, invitación, actas de evaluación, contrato. Un día descubre que un acta no se publicó a tiempo. En lugar de disimularlo, lo reporta, lo publica de inmediato y deja constancia de la causa. La transparencia del sistema no admite vacíos.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>El sistema oficial donde se gestiona y publica la contratación pública en línea es:</p>
+  <div class="cp-op" data-op="a">a) El SECOP II (Sistema Electrónico de Contratación Pública).</div>
+  <div class="cp-op" data-op="b">b) El SIGEP, que es solo para hojas de vida.</div>
+  <div class="cp-op" data-op="c">c) Una hoja de cálculo interna del área.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un punto importante es entender que estos sistemas no son del Gestor III ni de la entidad «para su comodidad», sino instrumentos de la política pública de gobierno y de transparencia. El SECOP, por ejemplo, existe para que la contratación sea pública y vigilable por cualquier ciudadano y por los órganos de control. Cuando el Gestor III publica a tiempo y completo, no está haciéndole un favor al sistema: está cumpliendo la ley y permitiendo el control social. Entender ese sentido evita verlos como una carga y ayuda a usarlos con el compromiso que merecen.</p><p>También es clave la interoperabilidad: cada vez más, los sistemas del Estado se conectan entre sí y con los de las entidades, para que el dato se registre una vez y se reutilice. Esto reduce la doble digitación y los errores, pero exige que el dato se registre bien en el origen, porque un error se propaga a todos los sistemas conectados. El Gestor III debe ser consciente de que lo que registra no se queda en su pantalla: alimenta un ecosistema de información del que dependen decisiones y reportes de toda la entidad e incluso de otras.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Sistemas y herramientas propios de la DIAN</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La DIAN, como entidad grande y tecnificada, opera con <mark>sistemas de información propios</mark> para sus procesos misionales y de apoyo. Aunque el Gestor III del área administrativa no maneja los sistemas tributarios de fondo, sí interactúa con herramientas internas de gestión, y debe entender el entorno tecnológico de su entidad y su marco de servicio al ciudadano en línea.</p>
+</div>
+<div class="b-texto">
+  <p>La DIAN presta servicios digitales a millones de ciudadanos: el portal de servicios en línea, la factura electrónica, los sistemas de declaración y pago. Estos son sistemas misionales (tributarios y aduaneros) que maneja el personal del área correspondiente. El Gestor III del área administrativa no opera esos sistemas de fondo, pero sí debe conocer que la entidad es intensiva en tecnología y que su trabajo de apoyo (infraestructura, servicios, contratación) sostiene, en parte, esa operación tecnológica: por ejemplo, contratar el mantenimiento de la infraestructura física donde se alojan los servicios.</p>
+  <p>En su día a día, el Gestor III usa herramientas internas de gestión: sistemas de <strong>correspondencia y gestión documental</strong>, de <strong>solicitudes de servicios administrativos</strong> (mantenimientos, suministros), de <strong>inventarios</strong> de bienes, y los sistemas de <strong>planeación y seguimiento</strong> institucional. Cada entidad adapta o adquiere estas herramientas; lo importante es que el Gestor las use conforme a los procedimientos internos y que mantenga la información actualizada.</p>
+  <p>El Gestor III también debe entender el enfoque de <strong>gobierno digital</strong> que rige a toda la administración (Política de Gobierno Digital, parte del MIPG visto en el Día 17). Esta política busca que el Estado preste servicios en línea, use los datos para decidir, y sea seguro y accesible digitalmente. El área administrativa aporta a ese enfoque cuando digitaliza sus procesos, cuida la infraestructura tecnológica y promueve el uso responsable de las herramientas.</p>
+  <p>Un punto clave es la articulación con la <strong>oficina o área de tecnología</strong> de la entidad. El Gestor III no resuelve problemas técnicos (una caída de red, una falla de servidor): eso corresponde al área de sistemas. Su papel es usar bien las herramientas, reportar las fallas por los canales correctos y, cuando administra contratos de tecnología o de infraestructura asociada, coordinar de cerca con los técnicos. Saber dónde termina su rol y dónde empieza el del especialista evita errores.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Ámbito</th><th>Quién lo maneja</th><th>Rol del Gestor III administrativo</th></tr></thead>
+    <tbody>
+      <tr><td>Sistemas tributarios y aduaneros</td><td>Áreas misionales</td><td>No los opera; da soporte administrativo</td></tr>
+      <tr><td>Gestión documental e inventarios</td><td>Área administrativa</td><td>Los usa y mantiene actualizados</td></tr>
+      <tr><td>Infraestructura tecnológica</td><td>Área de tecnología</td><td>Coordina contratos y soporte físico</td></tr>
+      <tr><td>Gobierno digital</td><td>Toda la entidad (MIPG)</td><td>Digitaliza sus procesos y aporta</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Falla el aire acondicionado del centro de datos de una sede y hay riesgo para los servidores informáticos. El Gestor III no repara nada técnico: activa de inmediato el contrato de mantenimiento, coordina con el área de tecnología para proteger los equipos y registra el incidente. Entiende que su rol administrativo (garantizar el servicio y la infraestructura) es clave para que la operación tecnológica no se detenga.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>Se cae la red de una sede y los funcionarios no pueden trabajar. El Gestor III administrativo debe:</p>
+  <div class="cp-op" data-op="a">a) Intentar reparar él mismo los equipos y la red.</div>
+  <div class="cp-op" data-op="b">b) Reportar la falla por los canales correctos al área de tecnología y apoyar con lo administrativo que corresponda.</div>
+  <div class="cp-op" data-op="c">c) Esperar a que alguien más se dé cuenta del problema.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Es útil que el Gestor III distinga tres planos tecnológicos de su entidad para no confundir roles. El plano misional (los sistemas tributarios y aduaneros con los que la DIAN presta sus servicios), el plano de apoyo administrativo (los sistemas de gestión documental, inventarios, servicios) y el plano de infraestructura tecnológica (redes, servidores, equipos). El Gestor III administrativo vive en el plano de apoyo, se relaciona con el misional de forma indirecta y da soporte físico y contractual al de infraestructura. Tener claro este mapa evita que asuma tareas que no le corresponden o que descuide las que sí.</p><p>Vale recordar que la DIAN es una de las entidades con mayor exigencia tecnológica del país, por el volumen de información y de ciudadanos que atiende. Esa magnitud hace que la gestión administrativa de soporte (contratar mantenimiento de infraestructura, garantizar servicios, administrar bienes tecnológicos) sea especialmente crítica: una falla administrativa puede afectar la operación de servicios que usan millones de personas. El Gestor III debe dimensionar la responsabilidad de su rol de apoyo dentro de una entidad de esa escala.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Informes de gestión: para qué sirven y cómo se hacen</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>informe de gestión</mark> es un documento que da cuenta de lo realizado en un período: qué se hizo, con qué recursos, qué resultados se lograron y qué queda pendiente. Es una de las responsabilidades centrales del Gestor III: informar sobre el avance de los planes, la ejecución de los contratos y el estado de los recursos administrativos a su cargo.</p>
+</div>
+<div class="b-texto">
+  <p>El informe de gestión cumple varias funciones. Sirve para <strong>rendir cuentas</strong> (mostrar qué se hizo con los recursos), para <strong>controlar</strong> (comparar lo planeado con lo ejecutado y detectar desviaciones), para <strong>decidir</strong> (dar al jefe la información que necesita para actuar) y para <strong>dejar memoria</strong> (que quede registro de la gestión). Un buen informe no es un trámite: es una herramienta de gestión y de transparencia.</p>
+  <p>La estructura de un informe de gestión suele seguir un orden lógico. Un <strong>encabezado</strong> (período, área, responsable); una <strong>introducción</strong> breve sobre el objeto del informe; el <strong>desarrollo</strong> con lo realizado, organizado por temas o planes, apoyado en datos y tablas; los <strong>resultados e indicadores</strong> (lo logrado frente a lo propuesto); las <strong>dificultades y acciones de mejora</strong>; y las <strong>conclusiones y recomendaciones</strong>. Esta estructura ayuda a que el lector encuentre rápido lo que busca.</p>
+  <p>Un buen informe se apoya en <strong>datos verificables</strong>, no en afirmaciones vagas. No basta decir "se avanzó mucho en mantenimiento": hay que decir "se ejecutaron 48 de 50 mantenimientos programados (96%), con una inversión de X, quedando 2 pendientes por causa Y". El dato concreto, respaldado en los registros, da credibilidad. El informe que solo tiene adjetivos y ningún número no informa: opina.</p>
+  <p>La redacción del informe debe ser <strong>clara, honesta y orientada a la acción</strong>. Clara, para que cualquiera lo entienda. Honesta, porque debe mostrar también lo que no salió bien (ocultar las dificultades es una falta a la transparencia y, además, impide corregir). Orientada a la acción, porque debe terminar diciendo qué se recomienda hacer. El Gestor III que informa con rigor y honestidad construye confianza; el que maquilla los resultados la destruye cuando se descubre la realidad.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><div><strong>Recolectar datos</strong><p>Reunir la información de los registros y sistemas</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">2</span><div><strong>Procesar y analizar</strong><p>Calcular indicadores, comparar con lo planeado</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">3</span><div><strong>Redactar</strong><p>Estructurar el informe con datos y conclusiones</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">4</span><div><strong>Revisar y entregar</strong><p>Verificar, firmar y enviar a quien corresponde</p></div></div>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III debe presentar el informe trimestral del plan de mantenimiento. Reúne los datos del sistema, calcula el porcentaje de ejecución (92%), identifica que dos mantenimientos se atrasaron por falta de repuestos, y redacta un informe con la tabla de avance, el gráfico, la explicación honesta del atraso y la recomendación de ajustar el plan de compras. El jefe recibe un panorama claro y decide con base en datos.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Un informe de gestión de calidad se caracteriza, sobre todo, por:</p>
+  <div class="cp-op" data-op="a">a) Usar muchos adjetivos para destacar lo bien que se trabajó.</div>
+  <div class="cp-op" data-op="b">b) Ocultar las dificultades para no dar mala imagen del área.</div>
+  <div class="cp-op" data-op="c">c) Apoyarse en datos verificables y mostrar honestamente logros y dificultades.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene distinguir el informe de gestión de otros tipos de informes que el Gestor III puede producir. El informe de gestión da cuenta de un período y unos resultados; el informe técnico analiza un asunto específico (por ejemplo, el estado de una infraestructura); el informe de supervisión da cuenta de la ejecución de un contrato; el reporte a órganos de control responde a un requerimiento. Cada uno tiene su propósito y su formato, pero todos comparten exigencias comunes: datos verificables, claridad, honestidad y oportunidad. Saber qué tipo de informe se pide evita entregar lo que no es.</p><p>Un consejo práctico es construir el informe durante el período, no al final. Si el Gestor III va registrando lo relevante mes a mes (lo ejecutado, las dificultades, las decisiones), al llegar la fecha del informe solo consolida. El que deja todo para el final tiene que reconstruir la memoria, pierde información y entrega un informe pobre. La disciplina del registro continuo es lo que permite informes de calidad sin sufrimiento. El informe es la cosecha de un buen registro durante todo el año.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Indicadores de gestión: medir para mejorar</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>indicador de gestión</mark> es una medida que expresa, con un número, el desempeño de un proceso o el avance hacia una meta. "Lo que no se mide no se puede mejorar": los indicadores permiten al Gestor III saber si su trabajo avanza bien, detectar problemas a tiempo y rendir cuentas con objetividad.</p>
+</div>
+<div class="b-texto">
+  <p>Un indicador se construye con una <strong>fórmula</strong> que relaciona datos. Por ejemplo, el indicador de ejecución del plan de mantenimiento es "mantenimientos ejecutados ÷ mantenimientos programados × 100". El resultado (un porcentaje) dice, de un vistazo, cómo va el proceso. Un buen indicador tiene nombre, fórmula, meta (el valor que se quiere alcanzar), frecuencia de medición y responsable. Sin meta, el indicador no dice si el resultado es bueno o malo.</p>
+  <p>Los indicadores se clasifican según lo que miden. Los de <strong>eficacia</strong> miden si se lograron los resultados (¿se hizo lo que se debía?). Los de <strong>eficiencia</strong> miden si se lograron con un buen uso de los recursos (¿se hizo con el menor costo o tiempo?). Los de <strong>efectividad</strong> combinan ambos. Para el área administrativa son útiles indicadores como el porcentaje de ejecución presupuestal, el cumplimiento del plan de mantenimiento, el tiempo promedio de atención de solicitudes o el porcentaje de bienes inventariados.</p>
+  <p>Un indicador solo sirve si se usa para <strong>actuar</strong>. Medir por medir no mejora nada. El valor del indicador está en compararlo con la meta y, cuando hay desviación, analizar la causa y tomar acción. Si el cumplimiento del plan va en 70% cuando debería ir en 90%, el indicador enciende una alerta; el Gestor III indaga por qué (falta de recursos, demoras de un proveedor) y corrige. El indicador es un termómetro: su utilidad está en lo que se hace con la fiebre que detecta.</p>
+  <p>Los indicadores deben ser <strong>pocos, relevantes y confiables</strong>. Tener cincuenta indicadores que nadie mira es inútil; mejor cinco bien elegidos que de verdad reflejen lo importante y se revisen de forma periódica. Y deben ser confiables: si el dato que los alimenta está mal, el indicador engaña. Por eso la calidad de los registros (la hoja de cálculo limpia, el sistema actualizado) es la base de un buen indicador. Dato malo, indicador inútil.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Indicador</th><th>Fórmula</th><th>Qué mide</th></tr></thead>
+    <tbody>
+      <tr><td>Ejecución del plan de mantenimiento</td><td>Ejecutados ÷ programados × 100</td><td>Eficacia</td></tr>
+      <tr><td>Ejecución presupuestal</td><td>Ejecutado ÷ asignado × 100</td><td>Eficacia financiera</td></tr>
+      <tr><td>Tiempo de atención de solicitudes</td><td>Promedio de días por solicitud</td><td>Eficiencia</td></tr>
+      <tr><td>Bienes inventariados</td><td>Inventariados ÷ total × 100</td><td>Cobertura del control</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III revisa su tablero y ve que el indicador de tiempo de atención de solicitudes de mantenimiento subió de 3 a 7 días. El número enciende la alerta. Investiga y descubre que un proveedor clave se demora en responder. Con ese dato, recomienda al jefe activar un segundo proveedor. Dos meses después, el indicador vuelve a 3 días. El indicador no solo midió: sirvió para actuar y mejorar.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Para que un indicador de gestión sea útil, además de la fórmula necesita, sobre todo:</p>
+  <div class="cp-op" data-op="a">a) Una meta que permita saber si el resultado es bueno o malo, y que se use para tomar acción.</div>
+  <div class="cp-op" data-op="b">b) Que haya muchos indicadores, mientras más mejor.</div>
+  <div class="cp-op" data-op="c">c) Que el número se vea alto, sin importar de dónde salga el dato.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un riesgo frecuente con los indicadores es el «efecto perverso»: cuando la gente trabaja para que el indicador se vea bien, en lugar de para lograr el resultado real. Por ejemplo, cerrar solicitudes rápido sin resolverlas de fondo para mejorar el tiempo promedio. El indicador mejora, pero el servicio empeora. El Gestor III debe cuidar que los indicadores midan lo que de verdad importa y que no inviten a hacer trampa. Un buen sistema de indicadores combina varios que se equilibran entre sí, para que no se pueda mejorar uno a costa de dañar otro.</p><p>También importa comunicar los indicadores con contexto. Un número solo puede engañar: «ejecución del 70%» es malo si la meta era 90% a esa fecha, pero puede ser bueno si el plan apenas arranca. Por eso el indicador siempre debe presentarse con su meta, su tendencia y una breve interpretación. El Gestor III que presenta indicadores desnudos, sin contexto, puede inducir a decisiones equivocadas; el que los acompaña de análisis convierte el número en conocimiento útil para quien decide.</p></div>
+<div class="b-texto"><p>Como regla de cierre, recuerda que el mejor indicador es el que alguien mira y usa. Un tablero vivo, revisado en cada comité y conectado con decisiones, vale más que el sistema de indicadores más sofisticado que duerme en un archivo. El Gestor III debe lograr que sus indicadores sean parte de la conversación de gestión del área, no un requisito que se llena para cumplir. Medir, mirar, interpretar y actuar: ese es el ciclo que convierte los datos en mejora real.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Tratamiento y calidad de los datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>datos</mark> son la materia prima de la información: registros, cifras, fechas, nombres. Su <strong>calidad</strong> determina la calidad de todo lo que se construye sobre ellos (informes, indicadores, decisiones). El Gestor III debe cuidar que los datos que maneja sean completos, exactos, actualizados y consistentes, porque un dato malo contamina todo lo demás.</p>
+</div>
+<div class="b-texto">
+  <p>Hay una regla clásica en informática: "entra basura, sale basura". Si los datos que alimentan una hoja de cálculo o un sistema están errados, incompletos o desactualizados, el informe y los indicadores que salen de ellos serán inútiles o engañosos, por bonitos que se vean. Por eso el primer deber de quien maneja información es cuidar la <strong>calidad del dato</strong> en el origen: registrar bien, verificar, no dejar campos vacíos, usar los formatos correctos.</p>
+  <p>La calidad del dato tiene dimensiones concretas. La <strong>completitud</strong> (que no falten datos). La <strong>exactitud</strong> (que el dato corresponda a la realidad). La <strong>consistencia</strong> (que el mismo dato no aparezca distinto en dos lugares). La <strong>actualidad</strong> (que esté al día). Y la <strong>unicidad</strong> (que no haya duplicados). Una base de bienes con ítems duplicados, placas mal escritas y ubicaciones viejas no sirve para controlar: hay que depurarla.</p>
+  <p>El Gestor III debe adoptar buenas prácticas de manejo de datos. Usar <strong>formatos y plantillas estándar</strong> para que todos registren igual; <strong>validar</strong> los datos al ingresarlos (que una fecha sea una fecha, que un valor no sea negativo); <strong>depurar</strong> periódicamente (eliminar duplicados, corregir errores); y mantener una <strong>única fuente de verdad</strong> (evitar tener cinco versiones de la misma lista en distintos computadores). Estas prácticas, simples pero disciplinadas, hacen la diferencia entre datos confiables y un caos.</p>
+  <p>Hay una conexión directa entre calidad del dato y transparencia (Día 18). Cuando un órgano de control o un ciudadano pide información, la entidad debe entregar datos confiables. Si los datos están mal, la entidad queda mal y puede incurrir en inexactitudes que generan observaciones. El Gestor III que cuida la calidad del dato no solo trabaja mejor: protege a su entidad y sostiene la confianza pública en la información que se reporta.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión del dato</th><th>Qué significa</th><th>Ejemplo de falla</th></tr></thead>
+    <tbody>
+      <tr><td>Completitud</td><td>No faltan datos</td><td>Bien sin ubicación registrada</td></tr>
+      <tr><td>Exactitud</td><td>Corresponde a la realidad</td><td>Placa del vehículo mal escrita</td></tr>
+      <tr><td>Consistencia</td><td>No se contradice en dos lugares</td><td>Dos valores distintos del mismo contrato</td></tr>
+      <tr><td>Actualidad</td><td>Está al día</td><td>Inventario del año pasado</td></tr>
+      <tr><td>Unicidad</td><td>Sin duplicados</td><td>El mismo bien registrado dos veces</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III va a reportar el inventario de bienes y, antes de hacerlo, lo depura: encuentra 12 ítems duplicados, 5 con placa mal escrita y 30 con ubicación desactualizada. Los corrige contra los soportes y verifica. El informe que entrega refleja la realidad. Un mes después, cuando control interno audita, los datos cuadran. La disciplina en la calidad del dato evitó un hallazgo.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>La frase "entra basura, sale basura" aplicada a los datos significa que:</p>
+  <div class="cp-op" data-op="a">a) Los datos no importan mientras el informe se vea bien presentado.</div>
+  <div class="cp-op" data-op="b">b) Si los datos de origen están mal, los informes e indicadores también estarán mal, por buenos que se vean.</div>
+  <div class="cp-op" data-op="c">c) Conviene borrar todos los datos periódicamente para empezar de cero.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La depuración de datos, aunque suene tediosa, es una de las labores más valiosas que puede hacer el Gestor III con la información a su cargo. Una base depurada es un activo: permite reportar en minutos, responder requerimientos sin susto y tomar decisiones confiables. Una base sucia es una bomba de tiempo: tarde o temprano produce un error, un reporte equivocado o un hallazgo. Dedicar tiempo periódico a limpiar, verificar contra soportes y eliminar duplicados no es tiempo perdido: es inversión en confiabilidad. La calidad del dato se construye con mantenimiento constante, no de una sola vez.</p><p>Conviene también definir responsabilidades claras sobre los datos: quién registra, quién verifica, quién actualiza. Cuando «todos y nadie» son responsables de una base, nadie la cuida y se degrada. El Gestor III, como profesional del nivel, suele ser el responsable de la calidad de la información de su área, y debe asumir ese rol con criterio: establecer reglas de registro, revisar periódicamente y exigir soportes. La calidad del dato no es un accidente: es el resultado de una gestión deliberada de la información.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Seguridad de la información y protección de datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>seguridad de la información</mark> busca proteger los datos y sistemas frente a pérdidas, accesos no autorizados y alteraciones. El Gestor III maneja información sensible (contratos, datos de proveedores, datos personales de funcionarios) y debe cuidarla. La protección de datos personales está regulada por la Ley 1581 de 2012.</p>
+</div>
+<div class="b-texto">
+  <p>La seguridad de la información se sostiene en tres pilares. La <strong>confidencialidad</strong> (que solo acceda quien está autorizado); la <strong>integridad</strong> (que el dato no se altere sin control); y la <strong>disponibilidad</strong> (que la información esté accesible cuando se necesita). Una falla en cualquiera de los tres es un problema: un dato filtrado, un dato alterado o un dato que se perdió. El Gestor III contribuye a los tres con prácticas cotidianas.</p>
+  <p>Las buenas prácticas de seguridad están al alcance de cualquier servidor. Usar <strong>contraseñas fuertes</strong> y no compartirlas; bloquear el equipo al ausentarse; no abrir <strong>adjuntos o enlaces sospechosos</strong> (la principal puerta de los ataques); hacer <strong>copias de respaldo</strong> de la información importante; no guardar información institucional en dispositivos personales no autorizados; y reportar de inmediato cualquier incidente (un equipo perdido, un correo raro). La seguridad es, en gran parte, una cuestión de hábitos.</p>
+  <p>La <strong>copia de respaldo</strong> (backup) merece atención especial. Perder un archivo clave por un daño del equipo, un borrado accidental o un ataque puede costar semanas de trabajo. La regla es respaldar la información importante de forma periódica y en un lugar seguro (los servidores institucionales, no solo el disco del computador personal). El Gestor III que no respalda juega a la ruleta: tarde o temprano pierde algo valioso.</p>
+  <p>La <strong>protección de datos personales</strong> (Ley 1581 de 2012) exige un cuidado particular. Los datos personales de funcionarios, proveedores o ciudadanos (cédula, dirección, datos de contacto, datos de salud) solo pueden tratarse para las finalidades autorizadas, con las debidas garantías, y no pueden divulgarse sin fundamento. El Gestor III que maneja bases con datos personales debe protegerlas: no compartirlas por fuera de lo necesario, no dejarlas expuestas, y tratarlas con la reserva que la ley impone. Como se vio en el Día 18, la transparencia tiene como límite la protección de los datos personales.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Pilar</th><th>Qué protege</th><th>Buena práctica del Gestor III</th></tr></thead>
+    <tbody>
+      <tr><td>Confidencialidad</td><td>Que solo acceda el autorizado</td><td>Contraseñas fuertes, no compartir clave</td></tr>
+      <tr><td>Integridad</td><td>Que el dato no se altere</td><td>Control de versiones y accesos</td></tr>
+      <tr><td>Disponibilidad</td><td>Que esté cuando se necesita</td><td>Copias de respaldo periódicas</td></tr>
+      <tr><td>Datos personales</td><td>La intimidad de las personas</td><td>Tratar con reserva (Ley 1581/2012)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III recibe un correo que parece de un proveedor con un enlace para "actualizar datos bancarios". Algo no cuadra: el remitente es raro y el enlace es extraño. En lugar de hacer clic, verifica por el canal oficial con el proveedor real y reporta el correo al área de tecnología. Era un intento de fraude (phishing). Su prudencia evitó que la entidad cayera en una estafa y que se comprometiera información.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>El Gestor III maneja una base con datos personales de funcionarios. Conforme a la Ley 1581 de 2012, debe:</p>
+  <div class="cp-op" data-op="a">a) Compartirla libremente, porque es información de la entidad.</div>
+  <div class="cp-op" data-op="b">b) Publicarla completa en internet por transparencia.</div>
+  <div class="cp-op" data-op="c">c) Tratarla con reserva, usarla solo para fines autorizados y protegerla de accesos indebidos.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La seguridad de la información suele fallar no por ataques sofisticados, sino por descuidos cotidianos: una clave compartida, un computador sin bloquear, un USB perdido, un correo abierto sin pensar. Por eso la primera línea de defensa es la cultura: servidores conscientes que incorporan hábitos seguros. El Gestor III debe predicar con el ejemplo y promover esa cultura en su equipo, porque la cadena de seguridad es tan fuerte como su eslabón más débil. De nada sirven los mejores sistemas si alguien deja la clave anotada en un papel pegado al monitor.</p><p>Es importante distinguir entre la seguridad que corresponde al área de tecnología (firewalls, antivirus, infraestructura segura) y la que corresponde a cada servidor (hábitos, cuidado de credenciales, prudencia). El Gestor III no monta la defensa técnica, pero es parte esencial de ella con su comportamiento. Y cuando administra contratos o infraestructura relacionada con la seguridad de la información, debe coordinar estrechamente con el área de tecnología para que los requerimientos de seguridad queden bien contratados y atendidos. La seguridad es responsabilidad compartida.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Rendición de cuentas basada en datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>rendición de cuentas</mark> (vista en el Día 17) se potencia cuando se apoya en datos e informes bien hechos. Las herramientas informáticas permiten que el Gestor III dé cuenta de su gestión con cifras verificables, tableros claros y evidencia, no con promesas vagas. Informar con datos es informar con transparencia.</p>
+</div>
+<div class="b-texto">
+  <p>Rendir cuentas significa explicar, de forma clara y verificable, qué se hizo con los recursos y las responsabilidades confiadas. Cuando esa explicación se apoya en datos, gana fuerza: no es lo mismo decir "gestionamos bien el mantenimiento" que mostrar "ejecutamos el 95% del plan, atendimos 320 solicitudes con un tiempo promedio de 3 días, con una inversión de X, y aquí están los soportes". El dato convierte la rendición en algo auditable y creíble.</p>
+  <p>Las herramientas informáticas hacen posible esta rendición basada en evidencia. La hoja de cálculo consolida los datos; los indicadores los resumen; los gráficos los comunican; los sistemas (SECOP, gestión documental) guardan los soportes. El Gestor III que mantiene sus datos ordenados a lo largo del año no sufre cuando llega la hora de rendir cuentas: solo consolida lo que ya tiene. El que improvisa al final, en cambio, se enreda y entrega información de mala calidad.</p>
+  <p>La rendición de cuentas se da en varios escenarios. Internos: informes al jefe, a control interno, a comités. Externos: a los órganos de control (Contraloría, Procuraduría), a la ciudadanía (audiencias públicas, portal de transparencia). En todos, el Gestor III aporta la información de su área. La calidad de esa información (completa, exacta, oportuna) determina la calidad de la rendición de cuentas de la entidad entera.</p>
+  <p>La rendición de cuentas basada en datos es, en el fondo, una práctica de <strong>integridad</strong>. Quien rinde cuentas con datos verdaderos, mostrando logros y también lo pendiente, construye confianza. Quien maquilla cifras, oculta lo malo o entrega datos que no cuadran, destruye esa confianza y se expone a hallazgos. El Gestor III íntegro entiende que los datos no son para quedar bien, sino para decir la verdad de la gestión y mejorarla.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Sin datos</th><th>Con datos (lo correcto)</th></tr></thead>
+    <tbody>
+      <tr><td>"Se gestionó bien el mantenimiento"</td><td>"Se ejecutó el 95% del plan, 320 solicitudes, 3 días promedio"</td></tr>
+      <tr><td>"Ejecutamos casi todo el presupuesto"</td><td>"Ejecución del 97%, con detalle por rubro y soportes"</td></tr>
+      <tr><td>"Tenemos los bienes controlados"</td><td>"100% inventariado, con conciliación y acta de verificación"</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Llega la audiencia pública de rendición de cuentas y el jefe le pide al Gestor III el aporte del área administrativa. Como mantuvo sus tableros al día todo el año, en una tarde consolida: porcentaje de ejecución, solicitudes atendidas, estado del inventario, contratos ejecutados, con sus gráficos y soportes. La entidad rinde cuentas con datos sólidos. La disciplina de todo el año se paga el día de la rendición.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>La rendición de cuentas basada en datos es superior porque:</p>
+  <div class="cp-op" data-op="a">a) Es verificable y creíble: muestra cifras y soportes en vez de afirmaciones vagas.</div>
+  <div class="cp-op" data-op="b">b) Permite exagerar los logros ajustando los gráficos.</div>
+  <div class="cp-op" data-op="c">c) Evita tener que mostrar lo que no salió bien.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un matiz valioso: la rendición de cuentas no es solo el evento anual de la audiencia pública. Es una actitud permanente de dar razón de lo que se hace. El Gestor III rinde cuentas cuando responde un informe al jefe, cuando atiende una auditoría, cuando contesta una petición ciudadana con datos, cuando deja sus actos documentados y publicados. La audiencia anual es la punta visible de una cultura de rendición de cuentas que debe estar presente todo el tiempo. Quien vive esa cultura no teme el escrutinio: lo tiene incorporado en su forma de trabajar.</p><p>También conviene recordar que la rendición de cuentas con datos tiene un efecto virtuoso sobre la propia gestión. Cuando uno sabe que tendrá que mostrar cifras verificables, trabaja con más cuidado, registra mejor y se autoexige. El solo hecho de medir y tener que reportar mejora el desempeño. Por eso la rendición de cuentas basada en datos no es solo una obligación de transparencia: es un motor de mejora continua. El Gestor III que la asume con ese espíritu convierte una exigencia en una herramienta para hacer mejor su trabajo.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El rol del Gestor III frente a las herramientas y los informes</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>rol del Gestor III</mark> frente a las herramientas informáticas y los informes no es el de un técnico, sino el de un profesional que las usa con criterio para planear, controlar y rendir cuentas de los recursos administrativos. Es quien convierte datos en información, e información en decisiones y transparencia.</p>
+</div>
+<div class="b-texto">
+  <p>El Gestor III es, ante todo, un <strong>usuario competente</strong> de las herramientas: domina la ofimática, usa bien los sistemas institucionales y produce informes e indicadores de calidad. No necesita ser experto en informática, pero sí debe moverse con soltura en el entorno digital de su cargo. En un área que maneja muchos datos, esa competencia marca la diferencia entre un trabajo ágil y confiable y uno lento y lleno de errores.</p>
+  <p>Es también un <strong>gestor de información</strong>: cuida la calidad de los datos, mantiene sus registros al día, protege la información sensible y la convierte en indicadores e informes que sirven para decidir. Entiende que la información es un activo de la entidad y que su buen manejo es parte de su responsabilidad profesional. No deja la información en el desorden: la organiza, la depura y la aprovecha.</p>
+  <p>Por su nivel profesional, el Gestor III <strong>analiza y recomienda</strong>, no solo registra. Mira los indicadores, interpreta las desviaciones, detecta problemas y propone soluciones. Un auxiliar llena la hoja; el Gestor III la lee, entiende qué dice y actúa. Esa capacidad de análisis es lo que la DIAN espera de un profesional del nivel: que transforme los datos en criterio y en mejores decisiones.</p>
+  <p>Finalmente, el Gestor III es un <strong>garante de transparencia</strong> a través de la información: produce informes honestos, rinde cuentas con datos verdaderos, publica lo que debe publicarse y protege lo que debe protegerse. Las herramientas informáticas, en sus manos, no son solo instrumentos de trabajo: son instrumentos de integridad. Con ellas hace su trabajo visible, verificable y confiable, que es, al final, lo que el servicio público exige y lo que esta guía busca que domines.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Faceta del rol</th><th>Qué hace el Gestor III</th></tr></thead>
+    <tbody>
+      <tr><td>Usuario competente</td><td>Domina ofimática y sistemas institucionales</td></tr>
+      <tr><td>Gestor de información</td><td>Cuida la calidad y seguridad de los datos</td></tr>
+      <tr><td>Analista</td><td>Interpreta indicadores y recomienda acciones</td></tr>
+      <tr><td>Garante de transparencia</td><td>Informa y rinde cuentas con datos honestos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>A lo largo de un año, el Gestor III mantiene sus tableros al día, produce informes mensuales con datos sólidos, detecta a tiempo dos desviaciones y las corrige, protege la información del área y rinde cuentas con cifras verificables. No es el técnico de sistemas ni el que repara los equipos: es el profesional que usa las herramientas para que los recursos administrativos de la DIAN se gestionen con eficiencia, control y transparencia. Ese es el rol que la prueba evalúa.</p>
+</div>
+<div class="destacado"><div class="dst-body"><span class="dst-title">💡 Idea clave del día</span>
+  <p>Las herramientas informáticas y los informes no son un tema "de sistemas": son el soporte del trabajo del Gestor III. Quien domina la ofimática, usa bien los sistemas, cuida la calidad y seguridad de los datos, y rinde cuentas con información honesta, trabaja mejor y con más transparencia. El dato bien manejado es la base de la buena gestión.</p>
+</div></div>
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips para recordar</div>
+  <ul>
+    <li>El Gestor III <strong>usa</strong> las herramientas con criterio; no es técnico de sistemas.</li>
+    <li>"Entra basura, sale basura": la calidad del informe depende de la calidad del dato.</li>
+    <li>Un indicador necesita <strong>meta</strong> y debe usarse para actuar, no solo para medir.</li>
+    <li>Un informe de calidad se apoya en datos verificables y es honesto con las dificultades.</li>
+    <li>Seguridad: contraseñas fuertes, respaldos, cuidado con adjuntos, reserva de datos personales (Ley 1581/2012).</li>
+    <li>El SECOP II es el sistema oficial de la contratación pública en línea.</li>
+  </ul>
+</div>
+<div class="frase-recordar">⚡ "Los datos no son para quedar bien: son para decir la verdad de la gestión y mejorarla."</div>
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank" rel="noopener">Ley 1581 de 2012 — Protección de datos personales</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1712_2014.html" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia y acceso a la información pública</a></li>
+    <li><a href="https://www.colombiacompra.gov.co/secop/secop-ii" target="_blank" rel="noopener">Colombia Compra Eficiente — SECOP II</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/sigep" target="_blank" rel="noopener">Función Pública — SIGEP</a></li>
+    <li><a href="https://gobiernodigital.mintic.gov.co/" target="_blank" rel="noopener">MinTIC — Política de Gobierno Digital</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG (Gestión de la información)</a></li>
+  </ul>
+</div>
+<div class="b-texto"><p>Para cerrar, vale subrayar que todo lo visto hoy se articula con el resto del curso. Las herramientas y los informes son el soporte transversal de la infraestructura (Días 10-11), los bienes (Día 12), los servicios (Día 13), la contratación (Días 14-15), la gestión documental (Día 16), el MIPG (Día 17) y la transparencia (Día 18). No hay proceso administrativo que no se gestione con datos, se controle con indicadores y se reporte en informes. Dominar este día es dominar la herramienta que sostiene todos los demás temas del cargo.</p><p>El perfil que la DIAN busca en un Gestor III del área administrativa integra todo esto: un profesional que planea y ejecuta recursos, que los controla con información confiable, que rinde cuentas con transparencia y que usa la tecnología como aliada de la buena gestión. No es el técnico de sistemas ni el digitador: es el profesional que, con criterio, convierte datos en decisiones y gestión en resultados verificables. Si terminas el curso dominando también esta dimensión, estarás listo no solo para la prueba, sino para ejercer el cargo con la solvencia que el servicio público merece.</p></div>
+<div class="b-texto"><p>Con esto cierras el recorrido funcional del cargo. Has pasado de la infraestructura y los bienes a los servicios, la contratación, la gestión documental, el modelo de gestión, la transparencia y, hoy, las herramientas e informes que sostienen todo. El siguiente paso del curso es el repaso integrador, que amarra estos hilos, y luego el simulacro final. Llegas a esta altura con una visión completa de lo que significa gestionar recursos administrativos en la DIAN con eficiencia, control, integridad y transparencia apoyadas en información confiable.</p></div>
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay términos y herramientas que se parecen pero cumplen funciones distintas. Confundirlos en la prueba o en el trabajo lleva a usar la herramienta equivocada o a reportar mal. Estudia estas distinciones hasta que te queden claras.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Dato</td><td>Información</td><td>El dato es un registro crudo (un número, un nombre); la información es el dato procesado y con sentido para decidir.</td></tr><tr><td>Eficacia</td><td>Eficiencia</td><td>La eficacia mide si se logró el resultado; la eficiencia, si se logró con buen uso de los recursos.</td></tr><tr><td>Transparencia activa</td><td>Transparencia pasiva</td><td>La activa publica sin que lo pidan; la pasiva entrega cuando el ciudadano lo solicita.</td></tr><tr><td>Hoja de cálculo</td><td>Procesador de texto</td><td>La hoja calcula y analiza datos en filas y columnas; el procesador crea documentos escritos.</td></tr><tr><td>SECOP</td><td>SIGEP</td><td>El SECOP gestiona la contratación pública; el SIGEP, las hojas de vida y la declaración de bienes.</td></tr><tr><td>Confidencialidad</td><td>Disponibilidad</td><td>La confidencialidad limita el acceso al autorizado; la disponibilidad asegura que la información esté cuando se necesita.</td></tr><tr><td>Indicador sin meta</td><td>Indicador con meta</td><td>Sin meta, el número no dice si es bueno o malo; con meta, permite evaluar y actuar.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando la pregunta mezcle 'dato' con 'información' o 'eficacia' con 'eficiencia', lee con cuidado: la respuesta correcta suele depender de distinguir con precisión esos pares.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · El informe sin datos</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El jefe le pide al Gestor III el informe trimestral del plan de mantenimiento. El Gestor escribe tres párrafos diciendo que 'se avanzó mucho' y que 'todo va bien', sin una sola cifra. El jefe lo devuelve pidiendo datos concretos.</p>
+      <span class="label">Análisis</span>
+      <p>Un informe de gestión debe apoyarse en datos verificables (porcentaje de ejecución, número de mantenimientos, inversión), no en adjetivos. Sin datos, el informe no informa: opina.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Rehacer el informe con la tabla de avance, el porcentaje de ejecución, las dificultades concretas y la recomendación, todo respaldado en los registros del sistema.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El correo sospechoso</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Gestor III recibe un correo que parece de un proveedor pidiendo 'actualizar los datos bancarios' con un enlace extraño. El remitente es raro.</p>
+      <span class="label">Análisis</span>
+      <p>Es un posible fraude (phishing). No se debe hacer clic ni entregar información por un canal no verificado; hay que confirmar por el canal oficial y reportar.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> No abrir el enlace, verificar con el proveedor por el canal institucional oficial, reportar el correo al área de tecnología y no modificar ningún dato sin confirmación.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · La base de datos sucia</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Antes de reportar el inventario, el Gestor III detecta ítems duplicados, placas mal escritas y ubicaciones desactualizadas en la base de bienes.</p>
+      <span class="label">Análisis</span>
+      <p>Reportar con datos sucios produce un informe engañoso y expone a hallazgos. 'Entra basura, sale basura': hay que depurar antes de reportar.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Depurar la base contra los soportes (eliminar duplicados, corregir placas, actualizar ubicaciones), verificar, y solo entonces generar el reporte con datos confiables.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · El indicador que empeoró</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El indicador de tiempo de atención de solicitudes subió de 3 a 7 días. El Gestor III podría dejarlo pasar o maquillar el reporte.</p>
+      <span class="label">Análisis</span>
+      <p>El indicador es una alerta para actuar, no un número para disimular. Hay que analizar la causa y tomar acción, y reportar con honestidad.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Investigar la causa (demora de un proveedor), recomendar activar un segundo proveedor, reportar el dato real con la explicación y el plan de mejora.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Llevar las hojas de cálculo desordenadas</div><p>Mezclar datos, textos y cálculos, con celdas combinadas, hace la hoja inmanejable y fuente de errores. Separa datos, cálculos y reportes, y protege las fórmulas.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Informar con adjetivos y sin datos</div><p>Decir 'se avanzó mucho' no informa. Todo informe de gestión debe apoyarse en cifras verificables y mostrar también lo pendiente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Usar canales personales para asuntos oficiales</div><p>Tratar asuntos del cargo por WhatsApp o correo personal deja la gestión sin rastro oficial. Usa siempre los canales institucionales.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Descuidar la calidad del dato</div><p>'Entra basura, sale basura': un dato errado contamina informes e indicadores. Cuida la calidad en el origen y depura periódicamente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Compartir claves o descuidar la seguridad</div><p>Compartir contraseñas, no bloquear el equipo o abrir adjuntos sospechosos abre la puerta a incidentes. La seguridad empieza en los hábitos de cada uno.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Manipular gráficos o maquillar indicadores</div><p>Ajustar escalas o esconder lo malo para quedar bien es una falta a la transparencia y se descubre. Presenta los datos como son.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>El Gestor III <strong>usa</strong> las herramientas con criterio; no es técnico de sistemas ni programador.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>'Entra basura, sale basura': la calidad del informe depende de la calidad del dato de origen.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Un indicador necesita <strong>meta</strong> y debe usarse para actuar; medir por medir no mejora nada.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Un informe de calidad se apoya en datos verificables y es honesto con las dificultades.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>El SECOP II es el sistema oficial de la contratación pública en línea; publicar a tiempo es un deber de transparencia.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>Seguridad: contraseñas fuertes, respaldos, cuidado con adjuntos y reserva de datos personales (Ley 1581 de 2012).</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La pregunta sugiere que el Gestor III debe resolver una falla técnica de red o equipos.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que un profesional 'debe saber de todo' y arreglar el problema.</div>
+      <div class="t-row malo">🔴 La trampa: Asumir tareas del área de tecnología que no le corresponden.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Reportar la falla por el canal correcto al área de tecnología y apoyar con lo administrativo (activar contratos, coordinar).</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone mejorar el indicador cerrando solicitudes rápido sin resolverlas.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece bueno porque el tiempo promedio baja y el indicador luce mejor.</div>
+      <div class="t-row malo">🔴 La trampa: Es el 'efecto perverso': se maquilla el número a costa del servicio real.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Mejorar el resultado real (resolver de fondo) y reportar el indicador con honestidad y contexto.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a compartir una base con datos personales 'porque es información de la entidad'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que, al ser institucional, se puede divulgar sin problema.</div>
+      <div class="t-row malo">🔴 La trampa: Viola la Ley 1581 de 2012 de protección de datos personales.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Tratar los datos personales con reserva, usarlos solo para fines autorizados y protegerlos de accesos indebidos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Las herramientas son soporte, no fin</h4><p>La ofimática, los sistemas y los informes sostienen todo el trabajo del Gestor III; se usan con criterio para planear, controlar y rendir cuentas.</p></div>
+    <div class="resumen-item"><h4>La calidad del dato es la base</h4><p>'Entra basura, sale basura': informes e indicadores solo son confiables si los datos de origen son completos, exactos y actuales.</p></div>
+    <div class="resumen-item"><h4>Los indicadores miden para actuar</h4><p>Un indicador con meta enciende alertas y guía decisiones; medir sin actuar no sirve.</p></div>
+    <div class="resumen-item"><h4>Informar y rendir cuentas con datos</h4><p>El informe de calidad es honesto y verificable; la rendición de cuentas basada en datos es transparencia en acción.</p></div>
+    <div class="resumen-item"><h4>Seguridad y protección de datos</h4><p>Confidencialidad, integridad y disponibilidad; respaldos, prudencia y reserva de los datos personales (Ley 1581/2012).</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Herramienta informática</dt><dd>Programa o sistema para crear, procesar, almacenar y analizar información de forma digital.</dd>
+      <dt>Hoja de cálculo</dt><dd>Programa que organiza datos en filas y columnas y permite calcular, filtrar y graficar.</dd>
+      <dt>SECOP II</dt><dd>Sistema Electrónico de Contratación Pública, transaccional, donde se gestiona la contratación en línea.</dd>
+      <dt>Indicador de gestión</dt><dd>Medida que expresa con un número el desempeño de un proceso o el avance hacia una meta.</dd>
+      <dt>Informe de gestión</dt><dd>Documento que da cuenta de lo realizado en un período, con datos, resultados y recomendaciones.</dd>
+      <dt>Calidad del dato</dt><dd>Grado en que un dato es completo, exacto, consistente, actual y único.</dd>
+      <dt>Seguridad de la información</dt><dd>Protección de los datos y sistemas en confidencialidad, integridad y disponibilidad.</dd>
+      <dt>Backup</dt><dd>Copia de respaldo de la información para recuperarla ante pérdidas o daños.</dd>
+      <dt>Ley 1581 de 2012</dt><dd>Ley de protección de datos personales en Colombia.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Herramientas Informáticas e Informes de Gestión</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">4 Intermedias</span><span class="tag a">4 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 19. Continúa con el repaso integrador del Día 20.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 19 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 19</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué significa dominar las herramientas informáticas para el Gestor III?","b": "Usarlas de forma competente y responsable para trabajar mejor, cuidar la información y rendir cuentas. No es programar ni reemplazar al área de sistemas: es usar con criterio la ofimática, los sistemas institucionales y los informes."},{"f": "¿Cuál es la herramienta clave del área administrativa y por qué?","b": "La hoja de cálculo (Excel, Calc, Sheets): organiza datos en filas y columnas y permite calcular, filtrar, ordenar, resumir (tablas dinámicas) y graficar. El Gestor III maneja listas de bienes, contratos, pagos y mantenimientos."},{"f": "¿Qué función usar para traer un dato de otra tabla a partir de una clave?","b": "BUSCARV o BUSCARX. Por ejemplo, traer el nombre del proveedor a partir del número de contrato. SUMA/PROMEDIO totalizan, CONTAR.SI cuenta según condición, SI toma decisiones lógicas."},{"f": "¿Por qué exportar un documento a PDF antes de enviarlo?","b": "Porque se ve igual en cualquier equipo y no se puede alterar por accidente. Es el formato adecuado para enviar informes y documentos finales que deben conservar su forma."},{"f": "¿Cuál es la regla de oro al hacer una presentación?","b": "Pocas ideas bien visibles: un mensaje por diapositiva, apoyos visuales claros, y explicar de viva voz. La diapositiva es apoyo, no un documento para leer. Y nunca manipular los gráficos."},{"f": "¿Qué es el SECOP II y por qué importa?","b": "Es el Sistema Electrónico de Contratación Pública, transaccional: toda la contratación se gestiona y publica en línea. Publicar a tiempo y completo es un deber de transparencia, no un trámite."},{"f": "¿Cuál es el rol del Gestor III administrativo ante una falla técnica (red, equipos)?","b": "Reportarla por el canal correcto al área de tecnología y apoyar con lo administrativo (activar contratos, coordinar). No repara equipos ni reemplaza al área de sistemas."},{"f": "¿Qué caracteriza a un buen informe de gestión?","b": "Se apoya en datos verificables (no adjetivos), tiene estructura clara, muestra honestamente logros y dificultades, y termina con conclusiones y recomendaciones orientadas a la acción."},{"f": "¿Qué necesita un indicador de gestión además de la fórmula?","b": "Una meta (para saber si el resultado es bueno o malo) y uso: debe servir para actuar ante las desviaciones. Pocos, relevantes y confiables; alimentados por datos de calidad."},{"f": "¿Qué significa 'entra basura, sale basura' en datos?","b": "Si los datos de origen están mal (incompletos, inexactos, desactualizados, duplicados), los informes e indicadores también estarán mal, por buenos que se vean. Hay que cuidar y depurar el dato."},{"f": "¿Cuáles son los tres pilares de la seguridad de la información?","b": "Confidencialidad (solo accede el autorizado), integridad (el dato no se altera sin control) y disponibilidad (está cuando se necesita). Se cuidan con claves fuertes, respaldos y prudencia."},{"f": "¿Qué exige la Ley 1581 de 2012 sobre datos personales?","b": "Tratar los datos personales (de funcionarios, proveedores, ciudadanos) solo para fines autorizados, con reserva y garantías, sin divulgarlos indebidamente. Es el límite de la transparencia."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Herramientas informáticas y rol del Gestor III","ctx": "Eres Gestor III del área administrativa de la DIAN. En una reunión de inducción, un compañero nuevo comenta que, como el cargo es profesional, se espera que el Gestor 'sepa programar sistemas a la medida del área' y que 'resuelva él mismo los problemas técnicos de los equipos'. Otro compañero replica que eso no es así, pero no logra explicar bien cuál es entonces el papel del Gestor frente a las herramientas informáticas. El jefe te pide que aclares el punto para evitar confusiones sobre lo que exige el cargo.","q": "¿Cuál es el papel del Gestor III frente a las herramientas informáticas?","ops": ["Desarrollar software a la medida del área y asumir el soporte técnico de equipos y redes, porque un profesional debe dominar todos los aspectos informáticos de su dependencia.","Usar las herramientas de forma competente y responsable para planear, controlar y rendir cuentas de los recursos, cuidando la información, sin reemplazar al área de tecnología ni programar sistemas.","Limitarse a digitar lo que le indiquen, sin analizar ni interpretar la información, ya que el análisis corresponde exclusivamente a los directivos de la Entidad."],"correcta": 1,"expl": "El Gestor III es un usuario competente de las herramientas: las usa con criterio para gestionar recursos, cuida la información y produce informes e indicadores. No programa software ni hace soporte técnico (eso es del área de tecnología), pero tampoco es un simple digitador: por su nivel, analiza y recomienda."},{"nivel": "b","tema": "Hojas de cálculo","ctx": "Eres Gestor III del área administrativa de la DIAN. Llevas el control de 80 mantenimientos del año en una hoja de cálculo con columnas de fecha programada, estado y costo. El jefe te pide, para el comité de mañana, saber cuántos mantenimientos hay por sede y cuál es el costo total de cada una. Un auxiliar propone contar a mano, sede por sede, revisando fila por fila, lo que tomaría toda la tarde y es propenso a errores de conteo.","q": "¿Cuál es la forma más adecuada y confiable de obtener ese resumen?","ops": ["Contar manualmente fila por fila, porque así se revisa cada registro con cuidado y se evita depender de funciones que podrían fallar.","Usar una tabla dinámica (o funciones como SUMAR.SI y CONTAR.SI) para resumir automáticamente los mantenimientos y costos por sede, en segundos y sin errores de conteo.","Enviar la hoja completa al jefe sin resumir, para que él mismo saque las cuentas que necesite en el comité."],"correcta": 1,"expl": "Las tablas dinámicas y las funciones condicionales (SUMAR.SI, CONTAR.SI) resumen grandes volúmenes de datos en segundos y sin errores. Contar a mano es lento y propenso a fallos; enviar la hoja cruda sin resumir no responde lo que se pidió. La hoja de cálculo es la herramienta de control del área."},{"nivel": "b","tema": "Documentos y PDF","ctx": "Eres Gestor III del área administrativa de la DIAN. Terminaste el informe final de ejecución de un contrato y debes enviarlo por correo al supervisor y a la oficina jurídica. Te preocupa que, al abrirlo en otros equipos, el formato se desacomode (tablas descuadradas, letras cambiadas) y que alguien modifique el texto por accidente al revisarlo. Un compañero te dice que lo envíes como esté en el formato editable; otro sugiere mandar solo una foto de pantalla del documento.","q": "¿Cuál es la mejor forma de enviar el informe final?","ops": ["Enviarlo en el formato editable del procesador tal como está, porque así cada quien puede ajustarlo si lo necesita.","Enviar únicamente una foto de la pantalla del documento, para que no se pueda modificar de ninguna manera.","Exportarlo a PDF antes de enviarlo, para que se vea igual en cualquier equipo, conserve el formato y no se altere por accidente."],"correcta": 2,"expl": "El PDF conserva el formato idéntico en cualquier equipo y evita alteraciones accidentales: es el formato adecuado para documentos finales. El editable se puede desacomodar y modificar; una foto de pantalla es de baja calidad, no permite buscar ni copiar texto y luce poco profesional."},{"nivel": "b","tema": "Seguridad de la información","ctx": "Eres Gestor III del área administrativa de la DIAN. Recibes un correo que aparenta venir de un proveedor con el que tienes un contrato vigente. El mensaje pide 'actualizar urgentemente los datos bancarios' haciendo clic en un enlace, y advierte que si no lo haces 'se suspenderá el pago'. Al mirar con atención, el correo del remitente tiene una dirección rara, el enlace no corresponde al dominio del proveedor y hay errores de redacción. Sientes presión porque menciona un pago urgente.","q": "¿Cuál es la actuación correcta?","ops": ["Hacer clic en el enlace y actualizar los datos bancarios de inmediato, para que no se suspenda el pago al proveedor.","No hacer clic ni entregar información; verificar con el proveedor por el canal institucional oficial y reportar el correo al área de tecnología como posible fraude (phishing).","Reenviar el correo a todo el equipo para avisar, y luego seguir las instrucciones del enlace si varios confirman que parece del proveedor."],"correcta": 1,"expl": "Es un intento de fraude (phishing): remitente y enlace sospechosos, presión por urgencia. Nunca se debe hacer clic ni entregar datos por un canal no verificado; hay que confirmar por el canal oficial y reportar al área de tecnología. Reenviarlo y seguir instrucciones multiplica el riesgo."},{"nivel": "i","tema": "Informes de gestión","ctx": "Eres Gestor III del área administrativa de la DIAN. El jefe te solicita el informe trimestral del plan de mantenimiento para presentarlo ante el comité directivo. Redactas un texto de tres párrafos en el que afirmas que 'se avanzó notablemente', que 'el equipo trabajó con gran compromiso' y que 'los resultados fueron muy satisfactorios', sin incluir cifras ni tablas. El jefe lo lee y te comenta que, aunque está bien escrito, no le sirve para el comité porque no puede responder cuánto se ejecutó ni qué quedó pendiente.","q": "¿Cómo debes corregir el informe?","ops": ["Agregar más adjetivos y frases de reconocimiento al equipo, para transmitir con más fuerza el buen desempeño del área.","Rehacerlo con datos verificables: porcentaje de ejecución del plan, número de mantenimientos realizados y pendientes, inversión, dificultades concretas y recomendaciones, apoyado en tablas y gráficos.","Dejarlo como está y explicarle verbalmente al jefe los detalles en el comité, sin modificar el documento escrito."],"correcta": 1,"expl": "Un informe de gestión debe apoyarse en datos verificables, no en adjetivos. Hay que mostrar cuánto se ejecutó, qué quedó pendiente y por qué, con tablas y recomendaciones. Más adjetivos no informan; confiar solo en lo verbal deja al comité sin soporte escrito y auditable."},{"nivel": "i","tema": "Indicadores de gestión","ctx": "Eres Gestor III del área administrativa de la DIAN. Revisas el tablero del área y observas que el indicador de tiempo promedio de atención de solicitudes de mantenimiento subió de 3 a 7 días en el último mes. El dato enciende una alerta. Un compañero te sugiere que, para que el indicador 'vuelva a verse bien' en el próximo reporte, cierres las solicitudes rápidamente aunque no estén resueltas de fondo, y que presentes el número sin mayor explicación para no llamar la atención.","q": "¿Cuál es la actuación correcta frente al indicador?","ops": ["Cerrar las solicitudes rápido aunque no estén resueltas, para que el tiempo promedio baje y el indicador luzca mejor en el reporte.","Investigar la causa real del aumento (por ejemplo, demora de un proveedor), tomar acción para corregirla y reportar el indicador con honestidad y su contexto.","Dejar de medir ese indicador por un tiempo, para que el mal resultado no aparezca en los reportes mientras se normaliza la situación."],"correcta": 1,"expl": "El indicador es una alerta para actuar, no un número para maquillar. Cerrar solicitudes sin resolver es el 'efecto perverso': mejora el número a costa del servicio real. Dejar de medir oculta el problema. Lo correcto es indagar la causa, corregir y reportar con honestidad y contexto."},{"nivel": "i","tema": "Sistemas de información del Estado","ctx": "Eres Gestor III del área administrativa de la DIAN y apoyas la contratación de un servicio de aseo para varias sedes. Durante la ejecución del proceso adviertes que un acta de evaluación no se publicó en el SECOP II dentro del plazo, por un descuido del equipo. Un compañero propone 'dejarlo así y no publicarla, total ya pasó el tiempo y nadie se dará cuenta', mientras que otro sugiere publicarla ahora dejando constancia de lo ocurrido.","q": "¿Cuál es la actuación correcta?","ops": ["No publicar el acta, ya que el plazo venció y hacerlo tarde solo evidenciaría el error del equipo ante los órganos de control.","Publicar el acta de inmediato en el SECOP II, dejando constancia de la causa del retraso, porque la publicidad de la contratación es un deber de transparencia que no admite vacíos.","Publicar el acta con una fecha anterior para que parezca que se hizo a tiempo y así no quede registro del retraso."],"correcta": 1,"expl": "La publicación en el SECOP es un deber de transparencia; lo que no se publica, para efectos oficiales, es como si no existiera. No publicar oculta información; alterar la fecha es una conducta irregular y fraudulenta. Lo correcto es publicar de inmediato dejando constancia de la causa."},{"nivel": "i","tema": "Protección de datos personales","ctx": "Eres Gestor III del área administrativa de la DIAN y mantienes una base con los datos personales de los funcionarios (cédula, dirección, teléfono, datos de contacto) para la asignación de bienes y carnés. Una persona ajena al proceso te pide que le envíes esa base completa 'porque total es información de la Entidad'. Además, estás preparando el portal de transparencia y dudas si deberías publicar esa base para demostrar que el área es muy transparente.","q": "Conforme a la Ley 1581 de 2012, ¿cómo debes actuar?","ops": ["Enviar la base completa a quien la pida y publicarla en el portal de transparencia, ya que es información de la Entidad y la transparencia exige máxima publicidad de todo.","Tratar los datos personales con reserva, usarlos solo para los fines autorizados y no divulgarlos indebidamente; la protección de datos personales es un límite legítimo de la transparencia.","Entregar la base solo si la persona firma un documento en el que se compromete a no usarla mal, sin verificar si tiene relación con el proceso."],"correcta": 1,"expl": "La Ley 1581 de 2012 protege los datos personales: solo pueden tratarse para fines autorizados, con reserva, sin divulgación indebida. La transparencia (Ley 1712/2014) tiene como límite expreso la protección de datos personales. Entregar o publicar la base completa violaría la ley."},{"nivel": "a","tema": "Calidad del dato","ctx": "Eres Gestor III del área administrativa de la DIAN. Debes reportar el inventario de bienes de tres sedes a control interno. Al revisar la base antes de reportar, detectas 12 ítems duplicados, 5 vehículos con la placa mal escrita y unos 30 bienes con la ubicación desactualizada respecto de traslados recientes. El plazo es ajustado y un compañero te dice que reportes 'tal como está la base' para cumplir a tiempo, y que 'después se corrige'. Sabes que control interno auditará los datos.","q": "¿Cuál es la actuación correcta?","ops": ["Reportar la base tal como está para cumplir el plazo, ya que lo importante es entregar a tiempo y las correcciones se pueden hacer después.","Depurar la base contra los soportes (eliminar duplicados, corregir placas, actualizar ubicaciones) y verificarla antes de reportar, aun pidiendo una prórroga razonable si es necesaria, para entregar datos confiables.","Reportar solo los bienes que están bien y omitir del informe los que tienen inconsistencias, para que la base reportada luzca impecable."],"correcta": 1,"expl": "'Entra basura, sale basura': reportar datos sucios produce un informe engañoso y expone a hallazgos en la auditoría. Omitir bienes falsea el inventario. Lo correcto es depurar contra los soportes y verificar antes de reportar; si el tiempo no alcanza, se gestiona una prórroga, pero no se reportan datos errados."},{"nivel": "a","tema": "Rendición de cuentas con datos","ctx": "Eres Gestor III del área administrativa de la DIAN. Se acerca la audiencia pública de rendición de cuentas y el jefe te pide el aporte del área administrativa. Uno de los resultados del año no fue bueno: el plan de mantenimiento solo llegó al 78% por demoras de un proveedor. Un compañero sugiere 'no mencionar ese dato y hablar solo de lo positivo', e incluso ajustar el gráfico de avance recortando el eje para que el 78% 'se vea más alto'. Te preocupa quedar mal, pero también sabes que la ciudadanía y los órganos de control pueden verificar.","q": "¿Cómo debes preparar el aporte del área a la rendición de cuentas?","ops": ["Omitir el resultado del 78% y presentar solo los logros, ajustando el gráfico para que el avance se vea más alto y el área quede bien ante la ciudadanía.","Presentar los datos reales, incluido el 78% con su explicación (demoras del proveedor) y las acciones de mejora, sin manipular gráficos, porque la rendición de cuentas exige información verificable y honesta.","Presentar los datos generales sin detalle, para que nadie pueda calcular el porcentaje exacto de cumplimiento del plan de mantenimiento."],"correcta": 1,"expl": "La rendición de cuentas basada en datos exige honestidad y verificabilidad: se muestran los logros y también lo que no salió bien, con su explicación y plan de mejora. Omitir o manipular gráficos es una falta a la transparencia que, además, la ciudadanía y los órganos de control pueden descubrir."},{"nivel": "a","tema": "Seguridad, respaldo y canales oficiales","ctx": "Eres Gestor III del área administrativa de la DIAN y coordinas un proyecto de adecuación de una sede con información sensible (presupuestos, ofertas, datos de proveedores). Para 'trabajar más cómodo', un integrante del equipo propone llevar toda la información en una memoria USB personal, compartir una sola clave de usuario entre varios para agilizar, y coordinar los asuntos del contrato por un grupo de WhatsApp personal. No se han hecho copias de respaldo de los archivos clave, que solo están en el computador de un funcionario.","q": "¿Cuál es la actuación correcta en materia de seguridad y manejo de la información?","ops": ["Aceptar la propuesta del equipo, porque trabajar con la USB personal, una clave compartida y WhatsApp agiliza la coordinación del proyecto.","Rechazar esas prácticas: usar los sistemas institucionales con credenciales individuales y no compartidas, encauzar el asunto por canales oficiales que dejan constancia, y asegurar copias de respaldo de los archivos clave.","Permitir la clave compartida y el WhatsApp, pero conservar la información en la USB personal como única copia para tenerla siempre a la mano."],"correcta": 1,"expl": "Las propuestas violan buenas prácticas de seguridad: credenciales individuales y no compartidas, información en sistemas institucionales (no en USB personal como única copia), canales oficiales que dejan constancia, y respaldos de los archivos clave. La comodidad no justifica exponer información sensible."},{"nivel": "a","tema": "Análisis de información y apoyo a la decisión","ctx": "Eres Gestor III del área administrativa de la DIAN. El jefe te entrega una hoja de cálculo con el detalle de 150 contratos del año y te pide 'algo útil para decidir' antes del comité, sin más indicaciones. La hoja tiene columnas de valor, ejecutado, saldo, fechas y proveedor, pero está en crudo. Dispones de poco tiempo. Un compañero te dice que simplemente imprimas las 150 filas y las lleves al comité; otro, que hagas un resumen con indicadores y hallazgos.","q": "¿Cuál es la mejor forma de aportar valor con esa información?","ops": ["Imprimir las 150 filas tal como están y llevarlas al comité, para que cada directivo revise el detalle que le interese.","Procesar los datos para generar indicadores y un resumen (porcentaje de ejecución, contratos por vencer, saldos relevantes), con un par de gráficos y hallazgos claros que apoyen la decisión del comité.","Llevar solo el valor total de los 150 contratos, sin análisis ni desglose, porque es la cifra más sencilla de explicar."],"correcta": 1,"expl": "El valor del Gestor III del nivel profesional está en convertir datos en información útil para decidir: indicadores, resumen, hallazgos y gráficos claros. Imprimir 150 filas en crudo no aporta análisis; dar solo el total omite lo relevante (ejecución, vencimientos, saldos). Analizar y sintetizar es su rol."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
