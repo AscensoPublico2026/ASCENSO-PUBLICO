@@ -555,6 +555,7 @@ const ARCHIVOS: Record<string, string> = {
   "FUN-RADM-11": "guias/FUN-RADM-11-herramientas-informaticas-informes-gestion.html",
   "FUN-RADM-12": "guias/FUN-RADM-12-repaso-integrador.html",
   "SIM-DIAN-GIII-001": "simulacro/SIM-DIAN-GIII-001.html",
+  "SIM-DIAN-001": "simulacro/SIM-DIAN-001.html",
   "DIAN-ADU-COM-01": "guias/DIAN-ADU-COM-01-comportamiento-etico-adaptabilidad.html",
   "DIAN-ADU-COM-02": "guias/DIAN-ADU-COM-02-comunicacion-trabajo-equipo.html",
   "DIAN-ADU-COM-03": "guias/DIAN-ADU-COM-03-orientacion-logro-usuario.html",
