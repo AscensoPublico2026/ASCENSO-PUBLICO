@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-04 · Gestión de información estratégica y gobernanza de datos — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-04</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 12 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>Gestión de información estratégica y gobernanza de datos</h1>
+  <p class="header-sub">El corazón del cargo de <strong>Analista I</strong>: tratar la información como un activo que se gobierna con reglas, calidad, metadatos, clasificación y trazabilidad.</p>
+  <div class="badges"><span class="badge">📅 Día 12 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones relacionadas con los datos. Primero, debes consolidar tres archivos de seccionales en uno solo, pero cada uno trae los nombres y las fechas en formatos distintos. Segundo, un compañero te pide que 'ajustes a mano' una cifra que, según él, 'está mal y ya'. Tercero, te entregan una base externa sin saber de dónde salió ni de qué fecha es. Y cuarto, un ciudadano pide por derecho de petición el detalle de las declaraciones de una empresa.</p>
+    <p>¿Cómo consolidas sin dañar los datos originales? ¿Puedes cambiar una cifra porque un compañero lo dice? ¿Usas una base cuyo origen no conoces? ¿Esa información tributaria se entrega o es reservada? Todas estas respuestas parten de un mismo conocimiento: la <mark>gestión de información estratégica y la gobernanza de datos</mark>. El manual define el propósito de tu cargo alrededor de aprovechar la información para que la DIAN decida mejor. Hoy aprenderás a tratar los datos como lo que son: un activo público que se administra con reglas, calidad y trazabilidad.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Por qué la información es un <strong>activo estratégico</strong> y las cuatro propiedades que le dan valor.</li>
+      <li>Qué es la <strong>gobernanza de datos</strong> y en qué se distingue de la gestión de datos.</li>
+      <li>El <strong>ciclo de vida del dato</strong>, la <strong>calidad</strong> (exactitud, completitud, unicidad...) y los <strong>metadatos</strong>.</li>
+      <li>La <strong>clasificación</strong> de la información (pública, clasificada, reservada) según la Ley 1712.</li>
+      <li>La <strong>interoperabilidad</strong>, la <strong>consolidación</strong> y la <strong>trazabilidad</strong> del trabajo.</li>
+      <li>La <strong>protección de datos personales</strong>, los <strong>roles</strong> de gobernanza y tu papel como gestor del activo.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender por qué los datos son un activo →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>El manual de funciones del Analista I define el propósito del cargo en torno a la <mark>gestión de información estratégica</mark> de la entidad: consolidar, organizar y aprovechar la información para apoyar la conformación de perfiles de riesgo y la producción de estadísticas para la política económica. La gobernanza de datos es, por tanto, el corazón de tu trabajo y un tema central de la prueba.</p>
+    <p>La DIAN toma decisiones de miles de millones de pesos a partir de datos. Si esos datos están duplicados, incompletos o mal consolidados, las decisiones se desvían. Por eso necesitas entender que la información es un activo que se cuida con reglas (gobernanza), que tiene un ciclo de vida, que debe ser de calidad y estar bien documentado, y que su clasificación (pública, clasificada o reservada) define qué se entrega y qué se protege.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean dilemas sobre los datos: una cifra que alguien quiere cambiar a mano, una base de origen dudoso, una solicitud de información reservada, un consolidado que no cuadra. La respuesta correcta casi siempre se deriva de respetar la gobernanza (no decidir por cuenta propia), cuidar la calidad y la trazabilidad, y proteger lo reservado. Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que proponen 'arreglar un dato a mano' sin reportar, usar bases de origen desconocido, entregar información tributaria individual o saltarse la trazabilidad por rapidez. La respuesta suele estar en respetar las reglas de gobernanza, cuidar la calidad y proteger lo reservado.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Gestión de información estratégica y gobernanza de datos</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. El manual define el propósito del cargo en torno a la <mark>gestión de información estratégica</mark> de la entidad: consolidar, organizar y aprovechar la información para que la DIAN cumpla su misión y tome mejores decisiones. Hoy verás qué es la información estratégica y por qué es un activo, en qué consiste la gobernanza de datos (las reglas para que los datos sean confiables y bien usados), el ciclo de vida del dato (de la captación al uso), los conceptos de calidad, metadatos e interoperabilidad, y el rol del Analista como gestor responsable de ese activo. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, entenderás que los datos no son un subproducto, sino un activo estratégico que hay que gobernar con reglas, y cuál es tu papel en ese gobierno.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">💎</span><h5>Activo</h5><p>La información como recurso estratégico</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📐</span><h5>Gobernanza</h5><p>Reglas para datos confiables</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔄</span><h5>Ciclo del dato</h5><p>Captar, procesar, usar, conservar</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">✔</span><h5>Calidad</h5><p>Datos exactos, completos, útiles</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧭</span><h5>Tu rol</h5><p>Gestor responsable del activo</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>La información como activo estratégico</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>información estratégica</mark> es aquella que tiene valor para que la organización cumpla su misión y tome decisiones. En la DIAN, la información es uno de sus activos más valiosos: con ella recauda, controla, perfila riesgos y decide. El Analista I es, por su cargo, un gestor de ese activo.</p>
+</div>
+<div class="b-texto">
+  <p>En las organizaciones modernas, la información dejó de ser un subproducto administrativo para convertirse en un <strong>activo estratégico</strong>, es decir, un recurso valioso que, bien gestionado, genera ventaja y buenas decisiones. En la DIAN esto es especialmente cierto: su capacidad para recaudar, controlar la evasión, perfilar riesgos y diseñar política fiscal depende directamente de la calidad y el aprovechamiento de su información. Sin información confiable, la entidad sería ciega.</p>
+  <p>Hablar de la información como "activo" tiene implicaciones concretas. Un activo se cuida, se protege, se mantiene y se aprovecha; no se descuida ni se desperdicia. Pensar así cambia la actitud del Analista: no está "llenando bases de datos" ni "moviendo archivos", está custodiando y potenciando un recurso valioso de la entidad y del Estado. Esta mentalidad —la información como activo— es el punto de partida de la gestión estratégica de información.</p>
+  <p>¿Qué hace "estratégica" a una información? Que sirva para los fines clave de la organización: en la DIAN, para recaudar mejor, controlar el incumplimiento y decidir la política. No toda la información es igualmente estratégica; parte de la tarea del gestor es identificar cuál es la información crítica (la que de verdad mueve las decisiones) y darle el cuidado prioritario. El Analista aprende a distinguir lo estratégico de lo accesorio.</p>
+  <p>El manual del Analista I lo pone en el centro: su propósito es "la gestión de información estratégica de la entidad". No es un cargo periférico de digitación: es un cargo cuya razón de ser es cuidar y aprovechar el activo informacional de la DIAN. Entender esto le da peso y propósito a su labor: cada dato bien gestionado es un aporte al valor de uno de los recursos más importantes de la entidad. La información, bien gobernada, vale tanto como el dinero que ayuda a recaudar.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Visión de la información</th><th>Actitud que genera</th></tr></thead>
+    <tbody>
+      <tr><td>Como subproducto (vieja)</td><td>Se descuida, se desperdicia</td></tr>
+      <tr><td>Como activo estratégico (correcta)</td><td>Se cuida, protege, mantiene y aprovecha</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I identifica que cierta base de datos es crítica para los perfiles de riesgo de toda la seccional. En lugar de tratarla como "un archivo más", la cuida con prioridad: vela por su calidad, su respaldo y su reserva. Entender que esa información es un activo estratégico lo lleva a protegerla como lo que es: un recurso valioso del que dependen decisiones importantes.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>Que la información sea un 'activo estratégico' para la DIAN significa que:</p>
+  <div class="cp-op" data-op="a">a) Es un subproducto administrativo sin mayor valor que puede descuidarse.</div>
+  <div class="cp-op" data-op="b">b) Es un recurso valioso que hay que cuidar, proteger, mantener y aprovechar, porque de ella dependen la recaudación, el control y las decisiones.</div>
+  <div class="cp-op" data-op="c">c) Solo tiene valor la información que esté impresa en papel.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Por qué «activo» y no «insumo»</h4>
+    <p>Cuando la DIAN afirma que la información es un activo, usa la palabra en su sentido contable y económico más estricto: algo que tiene valor, que se puede medir, que se deteriora si no se cuida y que, bien administrado, produce retornos. Para un Analista I esto no es un adorno retórico. Significa que los datos de recaudo, de importaciones, de declaraciones y de operaciones cambiarias que usted toca a diario son patrimonio público, igual que un edificio o un vehículo oficial, y que su descuido tiene consecuencias reales: una base mal consolidada puede desviar una decisión de política tributaria de millones de pesos.</p>
+    <p>El valor de la información depende de cuatro propiedades que usted debe custodiar en cada tarea: que esté <mark>disponible</mark> cuando se necesita, que sea <mark>íntegra</mark> (nadie la alteró indebidamente), que sea <mark>confidencial</mark> frente a quien no debe verla y que sea <mark>oportuna</mark>. Si una sola de ellas falla, el activo pierde valor. Una cifra correcta que llega tarde a la Dirección de Gestión de Ingresos vale tanto como una cifra equivocada.</p>
+    <div class="practica"><h5>En la práctica</h5><p>A usted le piden un consolidado de recaudo por seccional para una reunión de las 8 a. m. Tiene los datos íntegros y confidenciales, pero el archivo quedó en un equipo apagado al que no tiene acceso remoto. La información existe, pero no está disponible en el momento que vale. Ese es exactamente el tipo de falla que la gobernanza de datos busca evitar con reglas de acceso y respaldo.</p></div>
+
+
+    <h4>Un ejercicio mental para la prueba</h4>
+    <p>Cuando en el examen le presenten un caso sobre información, acostúmbrese a preguntarse por las cuatro propiedades: ¿está disponible, íntegra, confidencial y oportuna? La opción correcta casi siempre es la que protege la propiedad amenazada sin sacrificar las otras. Un distractor típico «resuelve» la urgencia (oportunidad) saltándose la confidencialidad o la integridad; ese atajo es justamente lo que el verificador quiere que usted descarte.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Qué es la gobernanza de datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>gobernanza de datos</mark> es el conjunto de políticas, roles, reglas y procesos que una organización adopta para asegurar que sus datos sean confiables, estén protegidos y se usen bien. Es el "gobierno" del activo informacional: define quién responde por qué, cómo se cuida la calidad y cómo se usan los datos.</p>
+</div>
+<div class="b-texto">
+  <p>Si la información es un activo, necesita ser <strong>gobernada</strong>: no puede quedar al libre albedrío de cada quien. La gobernanza de datos es, precisamente, el marco de reglas y responsabilidades que asegura que los datos de la organización sean de calidad, estén seguros, se usen para los fines correctos y respeten la normativa (como la protección de datos personales). Es el equivalente, para los datos, de lo que son las reglas de buena administración para los recursos físicos.</p>
+  <p>La gobernanza de datos responde preguntas clave: ¿quién es responsable de cada conjunto de datos? ¿Qué reglas de calidad deben cumplir? ¿Quién puede acceder a qué y para qué? ¿Cómo se clasifican (público, reservado, personal)? ¿Cómo se conservan y cuándo se eliminan? Al responder esto con políticas claras, la organización evita el caos de datos (cada quien con su versión, sin responsables, sin control) y logra que la información sea confiable y bien usada.</p>
+  <p>La gobernanza de datos es un trabajo de la organización, no de una sola persona, pero cada servidor tiene un papel en ella. El Analista I, como gestor de información, es un actor central: aplica las reglas de gobernanza en su trabajo diario (cuida la calidad, respeta la clasificación y los accesos, documenta el origen de los datos). Aunque no define las políticas de gobernanza (eso corresponde a instancias superiores), es quien las hace realidad en el manejo concreto de los datos.</p>
+  <p>Para el Analista, entender la gobernanza de datos le da un marco que da sentido a muchas prácticas que de otro modo parecerían burocráticas: por qué hay que clasificar la información, por qué cada dato debe tener un responsable, por qué se documenta el origen, por qué se controla el acceso. No son trabas: son las reglas que hacen que el activo informacional sea confiable y seguro. Un Analista que entiende la gobernanza no ve esas reglas como estorbo, sino como lo que hace valioso y confiable su trabajo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La gobernanza de datos responde</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td>¿Quién responde por cada dato?</td><td>Asignar responsabilidad (evitar el "de todos y de nadie")</td></tr>
+      <tr><td>¿Qué calidad deben tener?</td><td>Datos confiables para decidir</td></tr>
+      <tr><td>¿Quién accede y para qué?</td><td>Seguridad y reserva</td></tr>
+      <tr><td>¿Cómo se clasifican y conservan?</td><td>Orden, protección y disposición correcta</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I recibe un conjunto de datos sin saber quién lo produjo, con qué criterios ni qué clasificación tiene. En vez de usarlo a ciegas, aplica la lógica de gobernanza: averigua el origen y el responsable, verifica la calidad y confirma si tiene reserva. Gracias a ese enfoque, usa los datos con confianza y conforme a las reglas. La gobernanza no lo frenó: le dio la seguridad de estar usando bien el activo.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>La gobernanza de datos es:</p>
+  <div class="cp-op" data-op="a">a) Un software que ordena automáticamente los archivos.</div>
+  <div class="cp-op" data-op="b">b) La prohibición de usar datos en la entidad.</div>
+  <div class="cp-op" data-op="c">c) El conjunto de políticas, roles, reglas y procesos que aseguran que los datos sean confiables, estén protegidos y se usen bien.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Gobierno de datos frente a gestión de datos</h4>
+    <p>Es frecuente confundir dos términos que la literatura técnica separa con cuidado. La <mark>gobernanza</mark> (o gobierno) de datos define el «qué» y el «quién»: qué reglas rigen, quién decide, quién responde, qué políticas se aplican. La <mark>gestión</mark> de datos ejecuta el «cómo»: cargar, limpiar, consolidar, respaldar. El Analista I vive sobre todo en la gestión, pero obedece a la gobernanza; por eso debe conocer las políticas aunque no las dicte.</p>
+    <p>La gobernanza aporta tres cosas que a un técnico le cambian el día a día: reglas claras (para no improvisar), responsables identificados (para saber a quién preguntar) y trazabilidad (para demostrar lo que se hizo). Sin gobernanza, cada analista inventa su propio método, los archivos se multiplican sin control y nadie sabe cuál es la versión buena. Con gobernanza, hay una única fuente de verdad y un camino documentado.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Un compañero le pide que «ajuste a mano» un dato en el consolidado porque, según él, «está mal y ya». La gobernanza de datos le dice que usted no decide unilateralmente: debe reportar la inconsistencia al responsable del dato (data owner), dejar registro y esperar la corrección formal. Cambiarlo por su cuenta rompe la integridad y la trazabilidad del activo.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>El ciclo de vida del dato</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>ciclo de vida del dato</mark> describe las etapas por las que pasa un dato: captación, almacenamiento, procesamiento, uso, conservación y disposición final. Gestionar bien cada etapa asegura que el dato sea confiable y útil a lo largo de toda su vida. El Analista I interviene en varias de estas etapas.</p>
+</div>
+<div class="b-texto">
+  <p>Un dato no es algo estático: tiene una vida, desde que se capta hasta que se elimina o se conserva históricamente. Entender ese ciclo ayuda al Analista a cuidar la calidad en cada punto. Las etapas típicas son: <strong>captación</strong> (el dato ingresa, de una declaración, un reporte, un sistema), <strong>almacenamiento</strong> (se guarda en una base de datos), <strong>procesamiento</strong> (se cruza, se consolida, se transforma), <strong>uso</strong> (se analiza, se produce información, se decide), <strong>conservación</strong> (se guarda mientras se necesita) y <strong>disposición final</strong> (se elimina o se archiva según las reglas).</p>
+  <p>La clave es que la calidad del dato puede ganarse o perderse en cada etapa. Si se capta mal (un error de digitación), el dato nace defectuoso. Si se procesa mal (un cruce equivocado), se corrompe. Si se conserva más de lo debido o se elimina antes de tiempo, se incumplen las reglas. El Analista interviene especialmente en el procesamiento y el uso, pero debe velar por la calidad en todo el ciclo, porque un error en cualquier etapa afecta el resultado final.</p>
+  <p>El ciclo de vida del dato se conecta con otros temas del curso. La <strong>gestión documental</strong> (que verás más adelante) aplica una lógica similar a los documentos (producción, trámite, conservación, disposición). La <strong>calidad del dato</strong> se cuida a lo largo del ciclo. La <strong>seguridad</strong> protege el dato en todas las etapas. Y la <strong>trazabilidad</strong> permite saber qué pasó con el dato en cada punto. El ciclo es el hilo que organiza todas estas prácticas.</p>
+  <p>Para el Analista I, pensar en términos de ciclo de vida le da una visión completa del dato. No lo ve solo en el momento en que lo usa, sino que entiende de dónde viene (captación) y a dónde va (conservación/disposición). Esa visión le permite detectar problemas de origen, cuidar la calidad en su etapa, y asegurar que el dato se conserve y disponga conforme a las reglas. Un Analista que domina el ciclo de vida gestiona el dato con una perspectiva integral, no fragmentada.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><div><strong>Captación</strong><p>El dato ingresa (declaración, reporte, sistema)</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">2</span><div><strong>Procesamiento</strong><p>Se consolida, cruza y transforma</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">3</span><div><strong>Uso</strong><p>Se analiza y produce información para decidir</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">4</span><div><strong>Conservación/disposición</strong><p>Se guarda o se elimina según las reglas</p></div></div>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I detecta que una estadística sale mal y, en vez de solo corregir el resultado, rastrea el ciclo del dato: descubre que el error venía de la captación (un dato mal ingresado en el origen). Lo reporta para que se corrija en la fuente, no solo en su reporte. Pensar en el ciclo de vida le permitió atacar la causa, no solo el síntoma.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El ciclo de vida del dato (captación, procesamiento, uso, conservación, disposición) es útil porque:</p>
+  <div class="cp-op" data-op="a">a) Permite cuidar la calidad en cada etapa y rastrear el origen de los problemas, con una visión integral del dato.</div>
+  <div class="cp-op" data-op="b">b) Obliga a eliminar todos los datos al final de cada día.</div>
+  <div class="cp-op" data-op="c">c) Solo importa el momento en que el dato se usa, no su origen ni su destino.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Las etapas que más fallan</h4>
+    <p>De las seis etapas del ciclo de vida del dato, las que más errores concentran en la operación real son la <mark>captura</mark> y el <mark>archivo/eliminación</mark>. En la captura, porque el error que entra ahí contamina todo lo que sigue («basura entra, basura sale»). En el archivo y la eliminación, porque se suele descuidar: se guardan datos que debieron eliminarse por vencimiento de su finalidad, o se borran datos que la ley obligaba a conservar.</p>
+    <p>Para el Analista I conviene memorizar el orden y una pregunta de control por etapa: captura (¿la fuente es confiable?), almacenamiento (¿está respaldado?), uso (¿quién accede y para qué?), compartición (¿con autorización?), archivo (¿cuánto debe conservarse?) y eliminación (¿se destruyó de forma segura?). Esa lista mental convierte una definición de examen en una herramienta de trabajo.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Le entregan un listado de contribuyentes extraído de una fuente externa no verificada para cruzarlo con la base oficial. Antes de usarlo, usted está en la etapa de captura: su deber es validar el origen y documentar de dónde salió. Si lo carga sin verificar y resulta corrupto, el error se propagará a todos los cruces posteriores.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Calidad de datos: la condición de todo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>calidad de datos</mark> es la condición para que toda la gestión de información sirva. Un dato de calidad es completo, exacto, consistente, actual y único. Sin calidad, la gobernanza, las estadísticas y los perfiles de riesgo fallan. El Analista I es responsable directo de la calidad de los datos que maneja.</p>
+</div>
+<div class="b-texto">
+  <p>Ya hemos insistido en la regla "entra basura, sale basura", y es porque la calidad de datos es, literalmente, la condición de todo lo demás. Se puede tener la mejor gobernanza, los mejores sistemas y los mejores analistas, pero si los datos son malos, los resultados serán malos. Por eso la calidad no es una etapa más: es una exigencia transversal que atraviesa toda la gestión de información y que el Analista debe cuidar permanentemente.</p>
+  <p>Las dimensiones de la calidad, que el Analista debe conocer y verificar, son: la <strong>completitud</strong> (que no falten datos), la <strong>exactitud</strong> (que correspondan a la realidad), la <strong>consistencia</strong> (que no se contradigan entre sí), la <strong>actualidad</strong> (que estén al día), la <strong>unicidad</strong> (que no haya duplicados) y la <strong>validez</strong> (que cumplan el formato y las reglas, como un NIT con los dígitos correctos). Un dato que falla en cualquiera de estas dimensiones contamina todo lo que se construye sobre él.</p>
+  <p>Gestionar la calidad implica prácticas concretas: <strong>validar</strong> los datos al ingresarlos o recibirlos (reglas que rechazan lo inválido), <strong>perfilar</strong> los datos (analizarlos para detectar anomalías), <strong>depurar</strong> (corregir, eliminar duplicados, estandarizar), y <strong>monitorear</strong> la calidad en el tiempo. El Analista aplica estas prácticas antes de usar los datos para cualquier fin, porque sabe que es más barato prevenir un error que corregir una decisión equivocada que se tomó con datos malos.</p>
+  <p>Para el Analista I, la calidad de datos es una de sus responsabilidades más importantes y una de las que más valor aporta. Es, en buena medida, el "filtro final" antes de que la información se use para decidir: su control de calidad puede corregir errores acumulados a lo largo de todo el ciclo. Un Analista que entrega datos de calidad hace posible decisiones acertadas; uno que entrega datos sucios induce a errores que pueden perjudicar a la entidad o a los ciudadanos. La calidad es su sello profesional.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión de calidad</th><th>Qué verifica el Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Completitud</td><td>Que no falten datos</td></tr>
+      <tr><td>Exactitud</td><td>Que correspondan a la realidad</td></tr>
+      <tr><td>Consistencia</td><td>Que no se contradigan entre fuentes</td></tr>
+      <tr><td>Actualidad</td><td>Que estén al día</td></tr>
+      <tr><td>Unicidad / validez</td><td>Sin duplicados; con formato correcto</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Antes de entregar un conjunto de datos para un perfil de riesgo, el Analista I los perfila: detecta un 8% de registros con la identificación inválida y varios duplicados. Los depura contra los soportes. El conjunto final es confiable. Si hubiera entregado los datos sin ese control de calidad, el perfil habría tenido falsos positivos que perjudicarían a contribuyentes cumplidos. Su control fue el filtro que protegió la decisión.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>La calidad de datos es importante, sobre todo, porque:</p>
+  <div class="cp-op" data-op="a">a) Hace que las bases ocupen menos espacio.</div>
+  <div class="cp-op" data-op="b">b) Es la condición para que toda la gestión de información sirva: sin datos de calidad, la gobernanza, las estadísticas y los perfiles fallan.</div>
+  <div class="cp-op" data-op="c">c) Solo importa cuando lo exige una auditoría externa.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Las dimensiones de la calidad, una por una</h4>
+    <p>La calidad de datos no es una sensación: se descompone en dimensiones medibles. <mark>Exactitud</mark> (el dato refleja la realidad), <mark>completitud</mark> (no faltan campos obligatorios), <mark>consistencia</mark> (no se contradice entre bases), <mark>unicidad</mark> (no hay duplicados), <mark>vigencia</mark> (está actualizado) y <mark>validez</mark> (cumple el formato y las reglas, por ejemplo que un NIT tenga los dígitos correctos).</p>
+    <p>Un Analista I no necesita software sofisticado para empezar a cuidarlas: un filtro para detectar vacíos, una fórmula para hallar duplicados por NIT y una verificación de formato ya cubren buena parte del riesgo. Lo importante es entender que una base «grande» no es sinónimo de base «buena»: diez mil registros con un 15% de duplicados valen menos que ocho mil registros limpios y verificados.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Al revisar una base de 20.000 registros encuentra que 1.800 comparten el mismo NIT con nombres distintos. Está ante una falla de unicidad y probablemente de exactitud. Antes de consolidar, debe marcar esos registros, reportarlos y no inflar los totales contándolos como contribuyentes diferentes, porque distorsionaría cualquier estadística posterior.</p></div>
+
+
+    <h4>Medir la calidad con un indicador simple</h4>
+    <p>Un truco profesional es expresar la calidad como porcentaje: si de 10.000 registros 400 tienen campos obligatorios vacíos, su completitud es del 96%. Reportar «la base tiene 96% de completitud y 2% de duplicados» comunica muchísimo más que decir «está más o menos bien». Convertir la calidad en un número permite fijar metas, comparar entregas y demostrar mejora, y es exactamente el tipo de criterio técnico que distingue a un Analista I preparado.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Metadatos: los datos sobre los datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>metadatos</mark> son "datos sobre los datos": información que describe un dato o un conjunto de datos (su origen, fecha, significado, formato, responsable). Son esenciales para entender, encontrar, confiar en y usar bien la información. El Analista I los usa y los genera al documentar su trabajo.</p>
+</div>
+<div class="b-texto">
+  <p>Un dato sin contexto puede ser inútil o incluso peligroso. ¿Qué significa exactamente esta cifra? ¿De cuándo es? ¿De dónde salió? ¿Cómo se calculó? Las respuestas a estas preguntas son los <strong>metadatos</strong>: los datos que describen a otros datos. Por ejemplo, para una estadística de recaudo, los metadatos serían el período que cubre, la fuente, la fecha de corte, la metodología usada, el responsable. Sin esos metadatos, la cifra es un número suelto en el que no se puede confiar del todo.</p>
+  <p>Los metadatos cumplen funciones importantes en la gestión de información. Permiten <strong>entender</strong> el dato (qué significa, qué incluye y qué no); <strong>encontrarlo</strong> (buscar por sus características); <strong>confiar</strong> en él (saber su origen y su calidad); y <strong>usarlo bien</strong> (conocer sus límites, su vigencia). En conjuntos de datos grandes, los metadatos son indispensables: sin ellos, una base enorme es un mar de números sin sentido.</p>
+  <p>El Analista I usa metadatos (cuando recibe datos, necesita conocer sus metadatos para usarlos bien) y los genera (cuando produce información, debe documentar sus metadatos: de dónde salió, cómo la construyó, qué período cubre, su metodología). Esta documentación no es un trámite: es lo que hace que la información sea confiable, reproducible y auditable. Un dato sin metadatos es como un medicamento sin etiqueta: no se sabe qué es ni cómo usarlo.</p>
+  <p>Para el Analista, generar buenos metadatos es parte de su profesionalismo. Cuando entrega una estadística o un conjunto de datos acompañado de su documentación (fuente, fecha, metodología, responsable, limitaciones), permite que otros la usen con confianza y la verifiquen. Cuando entrega datos "pelados", sin contexto, siembra dudas y errores. La diferencia entre un dato confiable y uno sospechoso suele estar, precisamente, en sus metadatos. Documentar es, en la gestión de información, una forma de responsabilidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Metadato</th><th>Qué describe</th><th>Para qué sirve</th></tr></thead>
+    <tbody>
+      <tr><td>Origen / fuente</td><td>De dónde salió el dato</td><td>Confiar y trazar</td></tr>
+      <tr><td>Fecha / período</td><td>De cuándo es</td><td>Saber su vigencia</td></tr>
+      <tr><td>Significado / definición</td><td>Qué representa exactamente</td><td>Interpretarlo bien</td></tr>
+      <tr><td>Metodología</td><td>Cómo se construyó</td><td>Reproducir y validar</td></tr>
+      <tr><td>Responsable</td><td>Quién lo produjo</td><td>Rendir cuentas</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I entrega una estadística acompañada de su ficha de metadatos: período, fuente, fecha de corte, metodología y advertencias (datos preliminares). Meses después, alguien necesita usar esa cifra y, gracias a los metadatos, entiende exactamente qué representa y cómo se hizo. Si la hubiera entregado "pelada", habría generado confusión. Documentar los metadatos hizo su información confiable y reutilizable.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Los metadatos son:</p>
+  <div class="cp-op" data-op="a">a) Datos secretos que no se pueden mostrar.</div>
+  <div class="cp-op" data-op="b">b) Copias de respaldo de los datos.</div>
+  <div class="cp-op" data-op="c">c) 'Datos sobre los datos': describen origen, fecha, significado, metodología y responsable, y permiten entender, encontrar, confiar y usar bien la información.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Metadatos que salvan el trabajo</h4>
+    <p>Los metadatos parecen un tecnicismo hasta el día en que alguien pregunta «¿de cuándo es este archivo y de dónde salió?» y nadie sabe responder. Describir un conjunto de datos con su fecha de corte, su fuente, su responsable, su periodicidad y el significado de cada columna (el llamado diccionario de datos) es lo que permite que otra persona —o usted mismo seis meses después— entienda y reutilice la información sin volver a empezar.</p>
+    <p>Hay tres tipos útiles de recordar: metadatos <mark>descriptivos</mark> (qué es y de qué trata), <mark>estructurales</mark> (cómo está organizado, qué significa cada campo) y <mark>administrativos</mark> (quién lo creó, cuándo, con qué permisos y por cuánto tiempo se conserva). Un buen archivo de trabajo en la DIAN no es solo la tabla: es la tabla más sus metadatos.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Recibe «Consolidado_final_v2_definitivo_REAL.xlsx» sin ninguna nota. No sabe la fecha de corte ni la fuente. Ese nombre caótico es precisamente el síntoma de ausencia de metadatos. La solución profesional es nombrar con convención (área_tema_AAAAMMDD) y agregar una hoja «ficha» con fuente, corte y responsable.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Clasificación de la información</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>clasificación de la información</mark> consiste en etiquetar cada dato según su nivel de acceso: pública, clasificada o reservada. Es una regla básica de gobernanza que determina quién puede conocer qué. El Analista I debe saber clasificar correctamente para no divulgar lo reservado ni negar lo público.</p>
+</div>
+<div class="b-texto">
+  <p>No toda la información tiene el mismo nivel de acceso. La <strong>Ley 1712 de 2014</strong> (de transparencia y acceso a la información, que verás a fondo más adelante) y las normas de protección de datos establecen categorías: la información <strong>pública</strong> (que, por regla general, puede conocer cualquiera), la <strong>clasificada</strong> (cuyo acceso se restringe para proteger derechos de personas, como los datos personales) y la <strong>reservada</strong> (cuyo acceso se restringe por razones legales específicas, como la seguridad o, en el caso tributario, la reserva de la información de los contribuyentes).</p>
+  <p>Para el Analista I, clasificar bien la información es una regla de gobernanza esencial, porque determina qué puede hacer con cada dato. La información tributaria de los contribuyentes, como vimos, tiene reserva: no se divulga. Los datos personales están clasificados: se protegen. La información sobre la organización y la gestión de la entidad suele ser pública. Confundir estas categorías lleva a dos errores opuestos y graves: divulgar lo que debía protegerse, o negar lo que debía entregarse.</p>
+  <p>La clasificación tiene consecuencias prácticas en el manejo diario: qué información se puede compartir y con quién, qué se puede publicar, qué requiere controles de acceso especiales, qué se puede entregar ante una solicitud ciudadana y qué debe reservarse. El Analista, que maneja mucha información de distintas categorías, debe tener presente la clasificación de cada conjunto de datos para actuar correctamente en cada caso.</p>
+  <p>Para el Analista, la regla práctica es: ante cualquier dato, preguntarse primero de qué categoría es. Si es reservado o personal, protegerlo (no divulgar, controlar el acceso). Si es público, no negarlo sin fundamento. Y ante la duda, consultar y optar por la prudencia (proteger), porque es más grave filtrar lo reservado que demorar la entrega de lo público mientras se verifica. La clasificación bien aplicada es lo que permite equilibrar la transparencia (entregar lo público) con la protección (reservar lo que corresponde).</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Categoría</th><th>Acceso</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Pública</td><td>Cualquiera, por regla general</td><td>Organización de la entidad</td></tr>
+      <tr><td>Clasificada</td><td>Restringida por derechos de terceros</td><td>Datos personales</td></tr>
+      <tr><td>Reservada</td><td>Restringida por causal legal</td><td>Información tributaria de contribuyentes</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I va a compartir un conjunto de datos con otra dependencia. Antes, clasifica la información: identifica que incluye datos reservados (tributarios) y personales. Entrega solo lo que corresponde al fin autorizado y reserva lo demás. Al clasificar correctamente, evita tanto filtrar información reservada como negar lo que sí podía compartirse. La clasificación le dio la regla para actuar bien.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Clasificar la información (pública, clasificada, reservada) sirve para:</p>
+  <div class="cp-op" data-op="a">a) Determinar quién puede acceder a qué, evitando tanto divulgar lo reservado como negar lo público.</div>
+  <div class="cp-op" data-op="b">b) Hacer que los datos se vean más ordenados, sin efecto real.</div>
+  <div class="cp-op" data-op="c">c) Eliminar la información que no se use con frecuencia.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La clasificación según la Ley 1712</h4>
+    <p>La Ley 1712 de 2014 (Transparencia y Acceso a la Información Pública) obliga a clasificar la información en tres categorías que el Analista I debe distinguir sin dudar: <mark>pública</mark> (se puede y se debe divulgar), <mark>clasificada</mark> (su acceso se restringe para proteger derechos de particulares, como datos personales) y <mark>reservada</mark> (su acceso se restringe para proteger intereses públicos, como la seguridad o una investigación en curso).</p>
+    <p>La información tributaria individual de un contribuyente está amparada por la reserva del artículo 583 del Estatuto Tributario: no es pública. Confundir una categoría con otra puede llevar a una divulgación indebida (falta disciplinaria grave) o, al revés, a negar información que por ley es pública. Por eso la clasificación no es trámite: es la frontera entre lo que se entrega y lo que se protege.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Un ciudadano pide por derecho de petición «el detalle de las declaraciones de renta de una empresa de la competencia». Usted debe reconocer que eso es información reservada por el Estatuto Tributario y que no se entrega, explicando el fundamento legal, en lugar de procesar la solicitud como si fuera información pública.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Interoperabilidad: datos que se conectan</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>interoperabilidad</mark> es la capacidad de que distintos sistemas y entidades intercambien y usen datos entre sí de forma segura y confiable. Permite cruzar información de múltiples fuentes para un mejor control. El Analista I habilita la interoperabilidad cuidando la calidad y la identificación de sus datos.</p>
+</div>
+<div class="b-texto">
+  <p>El Estado moderno busca que sus entidades no trabajen como islas, sino que sus sistemas puedan <strong>intercambiar datos</strong> entre sí de forma segura. Eso es la interoperabilidad. Para la DIAN, la interoperabilidad es muy potente: le permite cruzar su información con la de otras entidades (registros públicos, seguridad social, otras bases) para tener una visión más completa de los contribuyentes y detectar incumplimientos que, con los datos de una sola fuente, serían invisibles.</p>
+  <p>La interoperabilidad tiene un enorme valor para el control. Si la DIAN puede cruzar sus datos con los de registros de propiedad, por ejemplo, puede detectar patrimonio no declarado; si los cruza con la seguridad social, puede verificar ingresos. Cada fuente añade una pieza del rompecabezas. Pero este poder exige condiciones: que los datos sean de calidad, que la identificación sea confiable (la llave, el documento o el NIT), y que se protejan la seguridad y los datos personales al intercambiarlos.</p>
+  <p>Aquí aparece el aporte concreto del Analista I: al cuidar la <strong>calidad</strong> y la <strong>identificación</strong> de sus datos, está habilitando la interoperabilidad. Datos limpios y bien identificados son los que pueden cruzarse de forma confiable con otras fuentes; datos sucios o mal identificados producen cruces fallidos. Aunque el Analista no diseña los mecanismos de interoperabilidad (eso es de tecnología y de las políticas de Estado), su trabajo de calidad es la condición que la hace posible.</p>
+  <p>La interoperabilidad también plantea responsabilidades. Cuando los datos se comparten entre entidades, la protección de datos personales y la seguridad deben mantenerse: no se puede intercambiar todo sin control. El Analista debe tener presente que compartir datos no elimina los deberes de reserva y protección: la información sigue estando sujeta a sus reglas, aunque viaje a otra entidad. La interoperabilidad bien hecha combina el poder del cruce con el respeto de las reglas de gobernanza.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La interoperabilidad permite</th><th>Pero exige</th></tr></thead>
+    <tbody>
+      <tr><td>Cruzar datos de múltiples fuentes</td><td>Calidad de los datos</td></tr>
+      <tr><td>Detectar incumplimientos ocultos</td><td>Identificación confiable (llave)</td></tr>
+      <tr><td>Una visión integral del contribuyente</td><td>Seguridad y protección de datos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>La DIAN va a cruzar sus datos con los de otra entidad para detectar inconsistencias. El Analista I se asegura de que la identificación de los contribuyentes en su base esté impecable, porque sabe que el cruce se hará por ese campo. Gracias a esa calidad, el cruce funciona y revela patrimonio no declarado. Su cuidado de la identificación fue, sin que muchos lo notaran, lo que hizo posible la interoperabilidad.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>La interoperabilidad (que los sistemas y entidades intercambien datos) exige, entre otras cosas:</p>
+  <div class="cp-op" data-op="a">a) Eliminar la protección de datos personales para poder compartir todo libremente.</div>
+  <div class="cp-op" data-op="b">b) Datos de calidad, identificación confiable y mantener la seguridad y la protección de datos al intercambiarlos.</div>
+  <div class="cp-op" data-op="c">c) Que cada entidad trabaje aislada sin compartir información con las demás.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Estándares que hacen posible conectar datos</h4>
+    <p>La interoperabilidad no ocurre por magia: se apoya en estándares. Que dos bases usen el mismo identificador (el NIT como llave), los mismos formatos de fecha, las mismas unidades y los mismos catálogos (por ejemplo, la misma codificación de seccionales o de países) es lo que permite cruzarlas. Cuando cada sistema usa su propio código para «Bogotá», el cruce falla y aparecen registros huérfanos.</p>
+    <p>Colombia tiene un Marco de Interoperabilidad del Estado que busca que las entidades compartan información de forma segura y estandarizada. Para el Analista I el mensaje práctico es: antes de cruzar dos fuentes, verifique que la llave común exista y esté limpia en ambas; un 2% de NIT mal digitados puede hacer que miles de registros no «casen» y se pierdan en el cruce.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Debe cruzar la base de importadores con la de declarantes de renta usando el NIT. En una base el NIT trae el dígito de verificación y en la otra no. Si no homologa ese formato primero, el cruce dará muchísimos «no encontrados» falsos. Estandarizar la llave antes de cruzar es parte esencial de su trabajo.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Consolidación de información: el trabajo central</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>consolidación de información</mark> —reunir, integrar y organizar datos de distintas fuentes en un conjunto coherente— es una de las labores centrales del Analista I, según su manual. Consolidar bien exige calidad, criterio y método, para que el resultado sea confiable y útil.</p>
+</div>
+<div class="b-texto">
+  <p>El manual del Analista I menciona expresamente "participar en la consolidación de información" y "brindar soporte técnico en la consolidación de la información que aportan las dependencias". Consolidar es reunir datos que vienen de distintas fuentes (declaraciones, exógena, aduanas, otras dependencias) e integrarlos en un conjunto coherente que permita analizar y decidir. Es, en buena medida, el corazón del trabajo del Analista.</p>
+  <p>Consolidar bien no es simplemente "juntar" datos: exige método. Primero, entender qué se quiere lograr (el fin de la consolidación). Segundo, identificar las fuentes y su calidad. Tercero, estandarizar los datos para que sean comparables (mismos formatos, misma identificación). Cuarto, integrarlos (cruzarlos por la llave). Quinto, depurar el resultado (eliminar duplicados, resolver inconsistencias). Y sexto, documentar lo hecho (metadatos). Cada paso mal hecho compromete el resultado.</p>
+  <p>Los riesgos de una mala consolidación son concretos: datos duplicados que inflan las cifras, registros que no cruzan por identificación sucia, inconsistencias no resueltas que producen conclusiones falsas, o mezcla de información de distinta naturaleza o clasificación. El Analista que consolida con método y criterio evita estos riesgos; el que "junta datos" sin cuidado produce un resultado que parece información pero que, en realidad, induce a error.</p>
+  <p>La consolidación es donde convergen todas las competencias de la gestión de información: la calidad, la identificación, la clasificación, los metadatos, el criterio. Por eso es el trabajo central del Analista y el que mejor muestra su valor. Una buena consolidación convierte datos dispersos en información integrada y confiable que permite ver lo que antes era invisible (como las inconsistencias entre ámbitos). Un Analista que consolida bien es un activo para la entidad.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><div><strong>Definir el fin</strong><p>Para qué se consolida</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">2</span><div><strong>Fuentes y calidad</strong><p>Identificar y verificar los datos</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">3</span><div><strong>Estandarizar e integrar</strong><p>Mismos formatos; cruzar por la llave</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">4</span><div><strong>Depurar y documentar</strong><p>Resolver inconsistencias; metadatos</p></div></div>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I debe consolidar información de tres dependencias para un perfil de riesgo. En vez de "pegar" las tres bases, sigue el método: verifica la calidad de cada una, las estandariza, las cruza por el NIT, depura duplicados e inconsistencias, y documenta lo hecho. El resultado es un conjunto integrado y confiable. Una consolidación hecha sin método habría producido una mezcla engañosa; con método, produjo información valiosa.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Consolidar bien la información exige:</p>
+  <div class="cp-op" data-op="a">a) Simplemente juntar o 'pegar' las bases de datos tal como vienen, sin más.</div>
+  <div class="cp-op" data-op="b">b) Eliminar las fuentes que generen dudas para que el resultado se vea limpio.</div>
+  <div class="cp-op" data-op="c">c) Un método: definir el fin, verificar la calidad de las fuentes, estandarizar, integrar por la llave, depurar y documentar.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Consolidar sin destruir el dato original</h4>
+    <p>Consolidar es reunir datos de varias fuentes en una sola vista coherente, y es probablemente la tarea más repetida de un Analista I. La regla de oro es no tocar nunca las fuentes originales: se trabaja sobre copias, se documenta cada transformación y se conserva la trazabilidad para poder reconstruir cómo se llegó al resultado. Un consolidado del que no se sabe cómo se hizo no es confiable, por más bonito que luzca.</p>
+    <p>Un buen flujo de consolidación tiene pasos claros: recibir y verificar las fuentes, estandarizar llaves y formatos, depurar duplicados y vacíos, cruzar, validar totales de control (que las sumas cuadren con las fuentes) y, por último, documentar. El paso que casi nadie hace y que distingue al analista profesional es el penúltimo: validar con una cifra de control que el consolidado no perdió ni infló registros.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Tras consolidar tres archivos de seccionales, el total de su base da 48.120 registros, pero la suma de las tres fuentes era 49.000. Esa diferencia de 880 es una alarma: probablemente perdió registros en un cruce mal hecho. Un analista con criterio no entrega hasta encontrar la causa del descuadre.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Trazabilidad y documentación del trabajo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>trazabilidad</mark> del trabajo de información —documentar de dónde salió cada dato, qué se hizo con él y cómo— es parte de la gobernanza y una exigencia del manual ("aplicar controles y acciones de trazabilidad"). Hace la información confiable, auditable y defendible.</p>
+</div>
+<div class="b-texto">
+  <p>Un principio de oro en la gestión de información: lo que no está documentado, no es confiable. La <strong>trazabilidad</strong> consiste en poder reconstruir el origen y el recorrido de cada dato: de qué fuente salió, cuándo, quién lo procesó, qué transformaciones sufrió, con qué criterios. El manual del Analista I lo exige expresamente: "aplicar controles y acciones de trazabilidad sobre la documentación y soportes de los Sistemas de Gestión".</p>
+  <p>La trazabilidad cumple varias funciones. Hace la información <strong>confiable</strong> (se sabe de dónde viene y cómo se hizo). La hace <strong>auditable</strong> (un control puede verificar el proceso). La hace <strong>defendible</strong> (ante una duda o un recurso, se puede sustentar). Y la hace <strong>reproducible</strong> (otro puede rehacer el análisis y obtener lo mismo). Sin trazabilidad, una cifra es un acto de fe; con ella, es un resultado verificable.</p>
+  <p>Para el Analista, la trazabilidad se concreta en hábitos: documentar las fuentes de los datos, registrar los criterios de los cruces, conservar los soportes, anotar las transformaciones y las decisiones tomadas. No es trabajo "extra": es parte del trabajo bien hecho. Un análisis sin trazabilidad está incompleto, por más brillante que sea el resultado, porque no se puede verificar ni defender.</p>
+  <p>La trazabilidad conecta con el debido proceso (Día 9) y con la seguridad (Día 11): la información que soporta actuaciones debe ser trazable para respetar el derecho de defensa, y los registros de quién hizo qué protegen y controlan. Para el Analista, la trazabilidad es, a la vez, una exigencia de su manual, una buena práctica profesional y una protección propia. El Analista que deja todo trazado trabaja tranquilo: su trabajo resiste cualquier revisión.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La trazabilidad hace la información</th><th>Por qué importa</th></tr></thead>
+    <tbody>
+      <tr><td>Confiable</td><td>Se conoce su origen y proceso</td></tr>
+      <tr><td>Auditable</td><td>El control puede verificarla</td></tr>
+      <tr><td>Defendible</td><td>Se puede sustentar ante dudas</td></tr>
+      <tr><td>Reproducible</td><td>Otro puede rehacerla y confirmarla</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Meses después de entregar una consolidación, surge una duda sobre una de sus cifras. Como el Analista I documentó la trazabilidad (fuentes, criterios, transformaciones), puede reconstruir exactamente cómo se obtuvo esa cifra y despejar la duda en minutos. Un compañero que no documentó una consolidación similar no pudo explicar su resultado y tuvo que rehacerlo todo. La trazabilidad fue la diferencia entre defender el trabajo y perderlo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Documentar la trazabilidad del trabajo de información (fuentes, criterios, transformaciones):</p>
+  <div class="cp-op" data-op="a">a) Es parte del trabajo bien hecho: hace la información confiable, auditable, defendible y reproducible, y además protege al Analista.</div>
+  <div class="cp-op" data-op="b">b) Es trabajo extra inútil que solo quita tiempo.</div>
+  <div class="cp-op" data-op="c">c) Solo se hace si lo pide expresamente una auditoría.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Trazabilidad: su mejor defensa</h4>
+    <p>La trazabilidad es la capacidad de reconstruir qué se hizo, quién lo hizo, cuándo y con qué datos. Para un servidor público no es solo buena práctica técnica: es su respaldo frente a cualquier revisión, auditoría o investigación. El que documenta puede demostrar que actuó bien; el que no, queda a merced de la memoria y la interpretación de otros.</p>
+    <p>Documentar no exige herramientas caras: una bitácora con la fecha, la fuente, las transformaciones aplicadas y el responsable ya construye trazabilidad. La diferencia entre «yo creo que lo saqué del sistema en marzo» y «el 14 de marzo cargué el archivo X de la fuente Y, apliqué estos filtros y validé con esta cifra de control» es la diferencia entre un técnico vulnerable y uno profesional.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Seis meses después de un informe, Control Interno pregunta cómo obtuvo cierta cifra. Si llevó bitácora, en minutos muestra la fuente, el corte y las transformaciones. Si no, tendrá que rehacer todo bajo presión y aun así no podrá garantizar que llegará al mismo número. La trazabilidad le ahorra ese riesgo.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Del dato a la decisión: analítica básica</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>analítica</mark> es el proceso de examinar los datos para extraer conclusiones útiles. El Analista I aplica analítica básica: describe, compara, detecta patrones e inconsistencias, y convierte datos en hallazgos que apoyan decisiones. Es el paso que da valor a la información.</p>
+</div>
+<div class="b-texto">
+  <p>Consolidar datos de calidad es necesario, pero el valor final está en <strong>analizarlos</strong>: examinarlos para extraer conclusiones que sirvan para decidir. La analítica básica que aplica el Analista incluye describir los datos (totales, promedios, distribuciones), compararlos (entre períodos, entre grupos, con referencias), detectar patrones (tendencias, concentraciones) y, sobre todo para la DIAN, detectar <strong>inconsistencias</strong> (lo que no cuadra y sugiere un posible incumplimiento).</p>
+  <p>Para la gestión de riesgo de la DIAN, la detección de inconsistencias es la analítica más valiosa. Comparar lo que un contribuyente declara con lo que reportan terceros, con lo que importó, con lo que movió en divisas; detectar quién se sale de los patrones normales de su sector; identificar operaciones anómalas. Todo eso es analítica aplicada al control. El Analista no decide fiscalizar, pero su analítica es la que señala dónde mirar.</p>
+  <p>La analítica exige criterio, no solo cálculo. Una cifra o una correlación pueden engañar si no se interpretan en contexto: una caída de recaudo puede deberse a una reforma, no a más evasión (como vimos); una inconsistencia puede ser un error de datos, no un fraude. Por eso el Analista combina la técnica (calcular, comparar) con el juicio (interpretar, contextualizar, descartar falsos positivos). La analítica sin criterio produce conclusiones falsas con apariencia de rigor.</p>
+  <p>Para el Analista I, la analítica básica es donde su trabajo se vuelve estratégico: es el momento en que los datos, ya consolidados y de calidad, se convierten en <strong>hallazgos</strong> que apoyan decisiones. Un Analista que solo consolida entrega materia prima; uno que además analiza entrega valor. Por su nivel técnico, no se le exige analítica avanzada (modelos complejos), pero sí la capacidad de describir, comparar y detectar inconsistencias con criterio, que es, en la práctica, lo que más aporta al control y a la política.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de analítica básica</th><th>Qué hace</th><th>Uso en la DIAN</th></tr></thead>
+    <tbody>
+      <tr><td>Descriptiva</td><td>Totales, promedios, distribuciones</td><td>Estadísticas de recaudo</td></tr>
+      <tr><td>Comparativa</td><td>Entre períodos o grupos</td><td>Evolución del cumplimiento</td></tr>
+      <tr><td>Detección de patrones</td><td>Tendencias, concentraciones</td><td>Comportamiento por sector</td></tr>
+      <tr><td>Detección de inconsistencias</td><td>Lo que no cuadra</td><td>Señales de riesgo de incumplimiento</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I analiza los datos de un sector y detecta que un grupo de empresas declara ingresos muy por debajo del promedio del sector pese a tener indicadores de actividad altos. Es un patrón anómalo. Antes de reportarlo, verifica que no sea un error de datos. Confirmada la anomalía, la consolida como hallazgo para el perfil de riesgo. Su analítica con criterio convirtió un conjunto de datos en una señal útil para el control.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>La analítica que aplica el Analista I:</p>
+  <div class="cp-op" data-op="a">a) Es solo calcular cifras, sin necesidad de interpretarlas ni contextualizarlas.</div>
+  <div class="cp-op" data-op="b">b) Combina técnica (describir, comparar, detectar inconsistencias) con criterio (interpretar, contextualizar, descartar falsos positivos) para convertir datos en hallazgos útiles.</div>
+  <div class="cp-op" data-op="c">c) Consiste en decidir directamente a quién fiscalizar y sancionar.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>De la tabla al hallazgo</h4>
+    <p>La analítica básica que se espera de un Analista I no es ciencia de datos avanzada: es saber resumir, comparar y detectar patrones con herramientas sencillas. Totales, promedios, variaciones porcentuales, participaciones y tablas dinámicas permiten pasar de «tengo una base enorme» a «esto es lo que la base está diciendo». El valor no está en el dato crudo sino en el hallazgo que usted extrae de él.</p>
+    <p>Un error frecuente es confundir correlación con causa, o leer una variación sin contexto. Que el recaudo de una seccional suba 30% no significa por sí solo que haya más cumplimiento: puede ser un cambio de normativa, un gran contribuyente que se trasladó o un error de carga. El analista responsable acompaña cada cifra llamativa con una pregunta antes de convertirla en conclusión.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Detecta que un municipio duplicó su recaudo de un mes a otro. Antes de reportarlo como «mejora en el cumplimiento», verifica si hubo un pago extraordinario de un solo contribuyente o un error de doble carga. Esa verificación evita que una conclusión apresurada llegue a un informe oficial.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Protección de datos en la gestión de información</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>protección de datos personales</mark> (Ley 1581 de 2012) y la reserva son límites permanentes de la gestión de información. Toda la potencia de consolidar, cruzar y analizar datos debe ejercerse respetando estos límites. El Analista I gestiona el activo informacional sin vulnerar los derechos de las personas.</p>
+</div>
+<div class="b-texto">
+  <p>La gestión de información tiene un enorme poder: consolidar, cruzar y analizar datos permite ver mucho sobre las personas y las empresas. Ese poder debe ejercerse dentro de límites, porque detrás de los datos hay derechos. La <strong>protección de datos personales</strong> (Ley 1581 de 2012, que desarrolla el habeas data del art. 15) y la <strong>reserva</strong> de cierta información son los límites que el Analista debe respetar siempre, por potente que sea la analítica que pueda hacer.</p>
+  <p>Estos límites se concretan en principios ya vistos, ahora aplicados a la gestión estratégica: la <strong>finalidad</strong> (los datos se usan solo para los fines autorizados, no para cualquier análisis que se ocurra); la <strong>reserva</strong> (no se divulga lo protegido); la <strong>seguridad</strong> (se protege el activo); la <strong>proporcionalidad</strong> (no se recoge ni se cruza más de lo necesario para el fin). El Analista con criterio sabe que "poder cruzar un dato" no significa "deber cruzarlo": debe haber una finalidad legítima.</p>
+  <p>Hay una tensión que el buen gestor de información maneja bien: entre el valor del cruce de datos (que es enorme para el control) y la protección de los derechos. No se resuelve renunciando a uno de los dos: se resuelve ejerciendo la gestión de información con potencia pero dentro de los límites. La DIAN puede y debe cruzar datos para controlar la evasión, pero respetando la finalidad, la reserva y la seguridad. El Analista es quien, en la práctica, mantiene ese equilibrio.</p>
+  <p>Para el Analista I, tener siempre presentes estos límites es parte de la madurez profesional. Un Analista técnicamente hábil pero sin conciencia de los límites es un riesgo: su destreza para cruzar y analizar datos, mal usada, puede vulnerar derechos a escala masiva. Uno que combina la destreza con el respeto de los límites es, en cambio, un gestor confiable del activo informacional. La protección de datos no frena la gestión de información: la hace legítima y sostenible.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Principio (límite)</th><th>Qué exige al gestionar información</th></tr></thead>
+    <tbody>
+      <tr><td>Finalidad</td><td>Usar y cruzar datos solo para fines autorizados</td></tr>
+      <tr><td>Reserva</td><td>No divulgar lo protegido o reservado</td></tr>
+      <tr><td>Seguridad</td><td>Proteger el activo frente a accesos indebidos</td></tr>
+      <tr><td>Proporcionalidad</td><td>No recoger ni cruzar más de lo necesario</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I podría técnicamente cruzar una base de datos personales con otra para un análisis que le parece interesante, pero que no tiene una finalidad autorizada clara. Se detiene: "poder hacerlo" no es "deber hacerlo". Verifica que haya una finalidad legítima antes de proceder. Al respetar el principio de finalidad, ejerce su destreza técnica dentro de los límites que protegen los derechos de las personas.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>En la gestión de información, que el Analista 'pueda' técnicamente cruzar unos datos significa que:</p>
+  <div class="cp-op" data-op="a">a) Debe cruzarlos siempre, porque la capacidad técnica lo autoriza.</div>
+  <div class="cp-op" data-op="b">b) Los límites de protección de datos no aplican si el cruce es útil.</div>
+  <div class="cp-op" data-op="c">c) 'Poder hacerlo' no es 'deber hacerlo': debe haber una finalidad legítima y autorizada, respetando la reserva, la seguridad y la proporcionalidad.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Tratar datos personales con responsabilidad</h4>
+    <p>Buena parte de la información que maneja la DIAN contiene datos personales (nombres, cédulas, direcciones, ingresos), protegidos por la Ley 1581 de 2012. El Analista I es, en términos de esa ley, parte del aparato que trata esos datos, y por eso le aplican principios como finalidad (usarlos solo para lo autorizado), acceso restringido, seguridad y confidencialidad, que se mantiene aun después de terminar el vínculo laboral.</p>
+    <p>La regla práctica más importante es la de <mark>mínimo necesario</mark>: acceder solo a los datos que su tarea requiere y no más. Descargar una base completa de contribuyentes «por si acaso», dejarla en un equipo personal o compartirla por un canal no autorizado son conductas que vulneran la ley y comprometen disciplinariamente al servidor, incluso si nunca hubo intención de hacer daño.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Necesita el ingreso declarado de 200 contribuyentes de una seccional para un cruce. Descargar la base nacional completa «para no pedirla otra vez» viola el principio de mínimo necesario. Lo correcto es solicitar o extraer únicamente el subconjunto que su tarea requiere.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Roles en la gobernanza: quién hace qué</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La gobernanza de datos distribuye <mark>roles y responsabilidades</mark>: quién define las políticas, quién responde por cada conjunto de datos, quién los administra técnicamente, quién los usa. El Analista I ocupa un rol operativo clave en la gestión y el cuidado de los datos.</p>
+</div>
+<div class="b-texto">
+  <p>Para que la gobernanza funcione, cada quien debe saber su rol. En términos generales, existen: quienes <strong>definen las políticas</strong> de datos (instancias directivas y de gobierno de la información); los <strong>responsables (o dueños) de los datos</strong>, que responden por un conjunto específico (su calidad, su uso correcto); los <strong>custodios técnicos</strong> (el área de tecnología, que administra la infraestructura donde viven los datos); y los <strong>usuarios y gestores</strong> de la información, que la consolidan, analizan y usan. El Analista I está, sobre todo, en este último grupo.</p>
+  <p>El rol del Analista en la gobernanza es operativo pero esencial: es quien, en el día a día, hace realidad las políticas de datos. Cuida la calidad, respeta la clasificación y los accesos, documenta la trazabilidad y los metadatos, consolida y analiza conforme a las reglas. Sin un buen trabajo operativo como el suyo, las mejores políticas de gobernanza quedan en el papel. La gobernanza se juega, en gran medida, en cómo cada gestor maneja los datos.</p>
+  <p>Entender los roles ayuda al Analista a saber a quién acudir y qué le corresponde. Si hay una duda sobre una política de datos, acude a quien la define; si un conjunto de datos necesita un responsable claro, lo escala; si hay un problema técnico con la infraestructura, acude al custodio técnico (tecnología). Y en lo suyo —la gestión operativa de la información— responde con rigor. Conocer el mapa de roles evita que asuma lo que no le toca o que deje sin atender lo que sí.</p>
+  <p>Para el Analista I, verse como parte de un sistema de gobernanza le da perspectiva: no gestiona datos en el vacío, sino dentro de un marco de roles y reglas que buscan que el activo informacional sea confiable y bien usado. Su rol operativo es la base sobre la que se sostiene todo lo demás. Un Analista que entiende y respeta este marco contribuye a una buena gobernanza; uno que actúa por su cuenta, sin referencia a los roles y las reglas, la debilita, por bien intencionado que sea.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Rol en la gobernanza</th><th>Responsabilidad</th></tr></thead>
+    <tbody>
+      <tr><td>Define políticas</td><td>Instancias de gobierno de la información</td></tr>
+      <tr><td>Responsable del dato</td><td>Responde por un conjunto (calidad, uso)</td></tr>
+      <tr><td>Custodio técnico</td><td>Área de tecnología (infraestructura)</td></tr>
+      <tr><td>Gestor/usuario (Analista I)</td><td>Consolida, analiza y cuida los datos en la operación</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I detecta que un conjunto de datos crítico no tiene un responsable claro, lo que genera descuidos en su calidad. En vez de asumir él una responsabilidad que no le corresponde definir, lo escala a la instancia adecuada para que se asigne un responsable. Conocer el mapa de roles de gobernanza le permitió resolver el problema por la vía correcta, sin extralimitarse ni desentenderse.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>El rol del Analista I en la gobernanza de datos es, principalmente:</p>
+  <div class="cp-op" data-op="a">a) Definir las políticas de datos de toda la entidad.</div>
+  <div class="cp-op" data-op="b">b) Operativo y esencial: consolidar, analizar y cuidar los datos conforme a las reglas, haciendo realidad las políticas en el día a día.</div>
+  <div class="cp-op" data-op="c">c) Administrar la infraestructura tecnológica donde viven los datos.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Quién es quién en la gobernanza</h4>
+    <p>La gobernanza de datos reparte responsabilidades en roles que conviene reconocer. El <mark>data owner</mark> (dueño del dato) decide sobre un conjunto de datos y responde por él; el <mark>data steward</mark> (custodio o administrador) cuida su calidad y aplica las reglas en el día a día; el <mark>usuario</mark> consume la información para su trabajo. El Analista I suele actuar como steward y como usuario, y debe saber cuándo escalar una decisión al owner.</p>
+    <p>Entender estos roles evita dos errores opuestos: tomar decisiones que no le corresponden (cambiar reglas o divulgar datos por cuenta propia) y, al revés, paralizarse esperando autorización para tareas que sí son de su competencia. La madurez del técnico está en reconocer la frontera: ejecuta y cuida la calidad, pero las decisiones sobre acceso, divulgación o cambios de política las eleva a quien corresponde.</p>
+    <div class="practica"><h5>En la práctica</h5><p>Un área externa le pide acceso directo a una base que usted administra. Como steward, usted no autoriza ese acceso por su cuenta: canaliza la solicitud al data owner, que es quien decide, y mientras tanto no comparte nada. Así respeta la cadena de responsabilidad.</p></div>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El rol del Analista I como gestor del activo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>rol del Analista I</mark> se sintetiza como el de un gestor responsable del activo informacional: alguien que consolida, cuida la calidad, clasifica, documenta, analiza y protege los datos, dentro de un marco de gobernanza, para convertir la información en valor para la DIAN.</p>
+</div>
+<div class="b-texto">
+  <p>Todo lo visto converge en una síntesis del rol. El Analista I es un <strong>gestor del activo informacional</strong>: la información estratégica de la DIAN pasa por sus manos y él es responsable de cuidarla y potenciarla. No define las políticas de gobernanza ni administra la infraestructura, pero es quien, en la operación, hace que el activo sea confiable, esté protegido y se aproveche. Es un rol técnico de alta responsabilidad.</p>
+  <p>Las facetas de ese rol son las que recorrimos: ver la información como activo; aplicar las reglas de gobernanza; cuidar el ciclo de vida y la calidad del dato; generar y usar metadatos; clasificar correctamente; habilitar la interoperabilidad con datos limpios; consolidar con método; dejar trazabilidad; analizar con criterio; respetar la protección de datos; y conocer su lugar en el mapa de roles. No son tareas sueltas: son las dimensiones de una gestión responsable y profesional de la información.</p>
+  <p>Este rol da un propósito claro a un trabajo que podría parecer árido. El Analista no "maneja datos" por manejarlos: convierte la información en valor para que la DIAN recaude mejor, controle la evasión y decida con fundamento. Cada conjunto de datos bien gestionado es un aporte a la capacidad de la entidad para cumplir su misión. En ese sentido, el Analista es un creador de valor a partir de la información, no un simple operario.</p>
+  <p>Cierras este cuarto día funcional entendiendo el núcleo de tu cargo: la gestión estratégica de la información y la gobernanza de datos. Los temas que siguen —las estadísticas, los perfiles de riesgo, la auditoría— son aplicaciones concretas de esta gestión. El Analista I que domina esta base trabaja con una visión integral: sabe que los datos son un activo, que deben gobernarse con reglas, y que su trabajo convierte la información en valor. Esa es la esencia profesional del cargo que estás preparando.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Faceta del rol</th><th>Qué hace el Analista I</th></tr></thead>
+    <tbody>
+      <tr><td>Ve la información como activo</td><td>La cuida, protege y aprovecha</td></tr>
+      <tr><td>Aplica la gobernanza</td><td>Calidad, clasificación, accesos, metadatos</td></tr>
+      <tr><td>Consolida y analiza</td><td>Con método y criterio, deja trazabilidad</td></tr>
+      <tr><td>Protege los derechos</td><td>Respeta reserva y datos personales</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>A Syndy le confían la gestión de un activo de información clave para los perfiles de riesgo. Lo trata como lo que es: cuida su calidad, lo clasifica, documenta su trazabilidad, lo consolida con método, lo analiza con criterio y protege los datos personales que contiene. Convierte ese activo en información valiosa para el control. Ese es exactamente el rol de gestor del activo informacional que su cargo exige.</p>
+</div>
+<div class="destacado"><div class="dst-body"><span class="dst-title">💡 Idea clave del día</span>
+  <p>La información es un activo estratégico de la DIAN que hay que gobernar con reglas: calidad, clasificación, accesos, metadatos, trazabilidad y protección de datos. El Analista I es el gestor operativo de ese activo, quien convierte la información en valor para la entidad respetando los derechos.</p>
+</div></div>
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips para recordar</div>
+  <ul>
+    <li>La información es un <strong>activo estratégico</strong>: se cuida, protege, mantiene y aprovecha.</li>
+    <li><strong>Gobernanza de datos</strong> = políticas, roles y reglas para que los datos sean confiables y bien usados.</li>
+    <li>Cuida el <strong>ciclo de vida del dato</strong> y la <strong>calidad</strong> (completo, exacto, consistente, actual, único).</li>
+    <li><strong>Metadatos</strong> = datos sobre los datos (origen, fecha, metodología): hacen confiable la información.</li>
+    <li>Clasifica: <strong>pública, clasificada, reservada</strong>; ni divulgues lo reservado ni niegues lo público.</li>
+    <li>"Poder cruzar un dato" no es "deber cruzarlo": respeta la <strong>finalidad</strong> y la protección de datos.</li>
+  </ul>
+</div>
+<div class="frase-recordar">⚡ "Los datos son un activo: los gobierno con reglas y los convierto en valor, sin vulnerar los derechos de nadie."</div>
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1712_2014.html" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia y acceso a la información</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank" rel="noopener">Ley 1581 de 2012 — Protección de datos personales</a></li>
+    <li><a href="https://gobiernodigital.mintic.gov.co/" target="_blank" rel="noopener">MinTIC — Gobierno Digital y gobernanza de datos</a></li>
+    <li><a href="https://www.dane.gov.co/" target="_blank" rel="noopener">DANE — buenas prácticas de datos y estadística</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG (política de información)</a></li>
+  </ul>
+</div>
+
+    <h4>El Analista I como guardián cotidiano del activo</h4>
+    <p>Todo lo anterior se resume en una idea: el Analista I es el guardián cotidiano del activo información. No dicta las políticas, pero es quien, con cada archivo que nombra bien, cada fuente que verifica, cada bitácora que lleva y cada dato personal que protege, hace que la gobernanza deje de ser un documento y se vuelva realidad. La calidad del sistema tributario descansa, en gran medida, en la disciplina de miles de gestos técnicos como esos.</p>
+    <p>Si debe quedarse con una sola frase para la prueba y para el trabajo, que sea esta: la información pública vale tanto como el cuidado con que se la trata. Un analista que verifica, documenta, protege y escala cuando debe no solo aprueba un examen: sostiene la confianza del Estado en sus propios datos.</p>
+    <div class="practica"><h5>En la práctica</h5><p>En su primer mes, en vez de acumular archivos sueltos, usted crea una carpeta con convención de nombres, una bitácora y una ficha de metadatos por cada base. Parece un detalle, pero cuando llega una auditoría o un nuevo compañero, ese orden demuestra que entendió que la información es un activo que se administra, no papeles que se apilan.</p></div>
+
+
+    <h4>Cómo se ve esto en una pregunta situacional</h4>
+    <p>Las preguntas comportamentales y situacionales de la DIAN suelen poner al Analista I ante una tensión entre rapidez y rigor, o entre complacer a un compañero y respetar una regla de datos. La respuesta más apropiada nunca es la que rompe la trazabilidad, divulga lo reservado o altera un dato sin autorización, por más razonable que suene el motivo. Interiorice que el cuidado del activo de información está por encima de la conveniencia del momento.</p>
+
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque definen cómo se gobiernan y usan los datos con responsabilidad.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Gobernanza de datos</td><td>Gestión de datos</td><td>La gobernanza define el 'qué' y el 'quién' (reglas, responsables, políticas); la gestión ejecuta el 'cómo' (cargar, limpiar, consolidar).</td></tr><tr><td>Dato</td><td>Información</td><td>El dato es el registro crudo; la información es el dato procesado, con contexto y útil para decidir.</td></tr><tr><td>Información pública</td><td>Información reservada</td><td>La pública se puede y debe divulgar; la reservada se restringe para proteger un interés público (como una investigación).</td></tr><tr><td>Información clasificada</td><td>Información reservada</td><td>La clasificada protege derechos de particulares (datos personales); la reservada protege intereses públicos.</td></tr><tr><td>Metadato</td><td>Dato</td><td>El metadato describe al dato (fuente, fecha, significado); el dato es el contenido en sí.</td></tr><tr><td>Data owner (dueño)</td><td>Data steward (custodio)</td><td>El owner decide sobre el dato y responde por él; el steward cuida su calidad y aplica las reglas en el día a día.</td></tr><tr><td>Consolidar</td><td>Modificar la fuente</td><td>Consolidar reúne copias de varias fuentes en una vista coherente; nunca se alteran los datos originales.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta sugiera 'ajustar un dato a mano sin reportar', 'usar una base de origen desconocido' o 'entregar información tributaria individual', desconfía: rompe la gobernanza, la calidad o la reserva.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · La consolidación que no cuadra</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista I consolida tres archivos de seccionales; la suma de las fuentes era 49.000 registros pero el consolidado da 48.120. El plazo para entregar es ajustado.</p>
+      <span class="label">Análisis</span>
+      <p>Esa diferencia de 880 registros es una alarma: probablemente se perdieron registros en un cruce mal hecho por llaves sucias. Entregar sin resolverlo propagaría el error.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Validar con la cifra de control, revisar la estandarización de las llaves (NIT) y corregir antes de entregar; gestionar prórroga si el tiempo no alcanza. No entregar un consolidado descuadrado.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El 'ajuste a mano'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero le pide al Analista que cambie una cifra en el consolidado porque, según él, 'está mal y ya'. Insiste en que es rápido y nadie se dará cuenta.</p>
+      <span class="label">Análisis</span>
+      <p>La gobernanza indica que el Analista no decide unilateralmente sobre un dato: cambiarlo a mano rompe integridad y trazabilidad, y el responsable del dato (owner) es quien corrige.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Reportar la inconsistencia al responsable del dato, dejar registro de la observación y esperar la corrección formal; no alterar el dato por cuenta propia.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · La base de origen desconocido</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Le entregan 'Consolidado_final_v2_definitivo.xlsx' sin fecha de corte, sin fuente y sin diccionario. Debe cruzarlo con la base oficial para un perfil de riesgo.</p>
+      <span class="label">Análisis</span>
+      <p>Usar una base sin metadatos ni origen verificado contamina todo lo que siga: no se sabe si está vigente, completa ni de dónde salió. La etapa de captura exige verificar la fuente.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Antes de usarla, solicitar o reconstruir sus metadatos (fuente, corte, responsable), verificar el origen y documentarlo; si no es posible verificarla, no utilizarla para una decisión oficial.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · La información reservada solicitada</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un ciudadano pide por derecho de petición 'el detalle de las declaraciones de renta de una empresa competidora'. El plazo de respuesta corre y presionan por entregar.</p>
+      <span class="label">Análisis</span>
+      <p>La información tributaria individual está amparada por la reserva del artículo 583 del Estatuto Tributario: no es pública. Entregarla sería una falta disciplinaria grave.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Reconocer que es información reservada, no entregar el detalle y responder explicando el fundamento legal de la reserva, canalizando la petición según el procedimiento.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Creer que una base 'grande' es una base 'buena'</div><p>Diez mil registros con 15% de duplicados valen menos que ocho mil limpios. El tamaño no es calidad; mide exactitud, completitud y unicidad antes de usar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Modificar un dato a mano sin reportar</div><p>Cambiar una cifra por cuenta propia rompe la integridad y la trazabilidad; el dato lo corrige su responsable (owner) por el canal formal, dejando registro.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Trabajar sin metadatos</div><p>Sin fecha de corte, fuente ni diccionario, nadie (ni usted mismo meses después) sabe qué es el archivo. Nombra con convención y agrega una ficha de metadatos.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Cruzar sin estandarizar la llave</div><p>Si el NIT trae dígito de verificación en una base y en otra no, el cruce dará miles de 'no encontrados' falsos. Homologa la llave antes de cruzar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Descargar más datos de los necesarios</div><p>Violar el principio de 'mínimo necesario' (bajar la base nacional 'por si acaso') vulnera la Ley 1581 y compromete disciplinariamente, aun sin intención de dañar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confundir correlación con causa</div><p>Que un recaudo suba 30% no prueba 'más cumplimiento'; puede ser un gran contribuyente o un error de carga. Acompaña cada cifra llamativa con una verificación.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p><strong>Gobernanza</strong> = reglas, responsables y trazabilidad; <strong>gestión</strong> = cargar, limpiar, consolidar.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>La información vale si es <strong>disponible, íntegra, confidencial y oportuna</strong>: protege las cuatro.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Nunca toques la <strong>fuente original</strong>: trabaja sobre copias y documenta cada transformación.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Valida el consolidado con una <strong>cifra de control</strong>: que las sumas cuadren con las fuentes.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Clasifica bien: <strong>pública, clasificada o reservada</strong>; la tributaria individual es reservada (art. 583 ET).</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>Principio de <strong>mínimo necesario</strong>: accede solo a los datos que tu tarea requiere (Ley 1581/2012).</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone cambiar un dato 'a mano' porque un compañero dice que está mal.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece ágil y colaborativo resolver rápido la inconsistencia.</div>
+      <div class="t-row malo">🔴 La trampa: Rompe integridad y trazabilidad; el Analista no decide unilateralmente sobre el dato.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Reportar al responsable del dato (owner), dejar registro y esperar la corrección formal.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a usar una base de origen desconocido 'porque ya la tiene a la mano' y el plazo corre.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente aprovechar un archivo disponible para cumplir el plazo.</div>
+      <div class="t-row malo">🔴 La trampa: Sin metadatos ni fuente verificada, contamina todos los cruces posteriores (basura entra, basura sale).</div>
+      <div class="t-row bueno">🟢 Lo correcto: Verificar el origen y los metadatos antes de usarla; si no se puede, no utilizarla para una decisión oficial.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere entregar el detalle de declaraciones de un tercero ante un derecho de petición.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que responder rápido y 'dar la información' es lo transparente.</div>
+      <div class="t-row malo">🔴 La trampa: La información tributaria individual es reservada (art. 583 ET); entregarla es falta grave.</div>
+      <div class="t-row bueno">🟢 Lo correcto: No entregar el detalle y responder explicando el fundamento legal de la reserva.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>La información como activo</h4><p>Es patrimonio público con valor; vale si está disponible, íntegra, confidencial y oportuna.</p></div>
+    <div class="resumen-item"><h4>Gobernanza de datos</h4><p>Reglas, responsables y trazabilidad para que los datos sean confiables y bien usados.</p></div>
+    <div class="resumen-item"><h4>Ciclo de vida y calidad</h4><p>Captar, almacenar, usar, compartir, archivar y eliminar; con exactitud, completitud y unicidad.</p></div>
+    <div class="resumen-item"><h4>Clasificación y protección</h4><p>Pública, clasificada o reservada; la tributaria individual es reservada; mínimo necesario con datos personales.</p></div>
+    <div class="resumen-item"><h4>El rol del Analista</h4><p>Gestor y custodio del activo: verifica, documenta, protege y escala las decisiones que no le competen.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Gobernanza de datos</dt><dd>Conjunto de reglas, políticas y responsables que aseguran que los datos sean confiables y bien usados.</dd>
+      <dt>Activo de información</dt><dd>Datos que tienen valor para la entidad y se administran como patrimonio público.</dd>
+      <dt>Ciclo de vida del dato</dt><dd>Etapas del dato: captura, almacenamiento, uso, compartición, archivo y eliminación.</dd>
+      <dt>Calidad de datos</dt><dd>Grado de exactitud, completitud, consistencia, unicidad, vigencia y validez de los datos.</dd>
+      <dt>Metadato</dt><dd>Dato que describe a otro dato: fuente, fecha de corte, responsable, significado de cada campo.</dd>
+      <dt>Interoperabilidad</dt><dd>Capacidad de que distintos sistemas intercambien y usen datos mediante estándares comunes.</dd>
+      <dt>Data owner / data steward</dt><dd>Dueño que decide y responde por un dato / custodio que cuida su calidad y aplica las reglas.</dd>
+      <dt>Trazabilidad</dt><dd>Capacidad de reconstruir qué se hizo, quién, cuándo y con qué datos; respalda al servidor honesto.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Gestión de información estratégica y gobernanza de datos</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 12. Continúa con el Día 13: Estadísticas y estudios económicos.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 12 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 12</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Por qué se dice que la información es un 'activo' en la DIAN?","b": "Porque tiene valor, se puede medir, se deteriora si no se cuida y, bien administrada, produce retornos. Es patrimonio público igual que un edificio o un vehículo: su descuido tiene consecuencias reales en las decisiones de política tributaria."},{"f": "¿Qué cuatro propiedades le dan valor a la información?","b": "Disponibilidad (está cuando se necesita), integridad (nadie la alteró indebidamente), confidencialidad (protegida de quien no debe verla) y oportunidad (llega a tiempo). Si una sola falla, el activo pierde valor."},{"f": "¿Qué diferencia hay entre gobernanza y gestión de datos?","b": "La gobernanza define el 'qué' y el 'quién' (reglas, responsables, políticas); la gestión ejecuta el 'cómo' (cargar, limpiar, consolidar, respaldar). El Analista I vive en la gestión, pero obedece a la gobernanza."},{"f": "¿Cuáles son las etapas del ciclo de vida del dato?","b": "Captura, almacenamiento, uso, compartición, archivo y eliminación. Las que más errores concentran son la captura (basura entra, basura sale) y el archivo/eliminación (conservar lo que debió borrarse o borrar lo que la ley obligaba a guardar)."},{"f": "¿Cuáles son las dimensiones de la calidad de datos?","b": "Exactitud, completitud, consistencia, unicidad (sin duplicados), vigencia y validez (cumple formato y reglas, como el NIT bien formado). Una base grande no es sinónimo de base buena."},{"f": "¿Qué son los metadatos y qué tipos hay?","b": "Son los 'datos sobre los datos': fuente, fecha de corte, responsable, significado de cada campo. Hay descriptivos (qué es), estructurales (cómo se organiza) y administrativos (quién lo creó y por cuánto se conserva)."},{"f": "¿Cómo clasifica la Ley 1712 de 2014 la información pública?","b": "En pública (se puede y debe divulgar), clasificada (se restringe para proteger derechos de particulares, como datos personales) y reservada (se restringe para proteger intereses públicos, como una investigación)."},{"f": "¿Es pública la información tributaria individual de un contribuyente?","b": "No. Está amparada por la reserva del artículo 583 del Estatuto Tributario. Entregar el detalle de las declaraciones de una persona o empresa sería una falta disciplinaria grave."},{"f": "¿Qué es la interoperabilidad y de qué depende?","b": "Es la capacidad de que distintos sistemas intercambien y usen datos. Depende de estándares comunes: misma llave (el NIT), mismos formatos de fecha, mismos catálogos. Sin estándares, el cruce falla y aparecen registros huérfanos."},{"f": "¿Cuál es la regla de oro al consolidar información?","b": "No tocar nunca las fuentes originales: se trabaja sobre copias, se documenta cada transformación y se valida con una cifra de control que las sumas cuadren con las fuentes. Un consolidado del que no se sabe cómo se hizo no es confiable."},{"f": "¿Qué es la trazabilidad y por qué protege al Analista?","b": "Es la capacidad de reconstruir qué se hizo, quién, cuándo y con qué datos. El que documenta puede demostrar que actuó bien ante una auditoría; el que no, queda a merced de la memoria. Una bitácora sencilla ya construye trazabilidad."},{"f": "¿Qué es el principio de 'mínimo necesario' con datos personales?","b": "Acceder solo a los datos que la tarea requiere y no más (Ley 1581 de 2012). Descargar una base completa 'por si acaso' o dejarla en un equipo personal vulnera la ley y compromete disciplinariamente al servidor, aun sin intención de dañar."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "La información como activo","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un practicante que te apoya cree que las bases de datos de recaudo, importaciones y declaraciones que manejas 'son solo archivos de trabajo que se pueden rehacer en cualquier momento' y que, por eso, no pasa nada si se pierden o se descuidan. Tú quieres explicarle por qué la DIAN considera la información un activo estratégico y qué implica eso para el cuidado diario de los datos.","q": "¿Cuál es la explicación correcta de por qué la información es un 'activo' en la DIAN?","ops": ["Son solo archivos de trabajo sin mayor importancia: como siempre se pueden volver a generar desde los sistemas, no hace falta cuidarlos, respaldarlos ni documentarlos, y su pérdida no tiene consecuencia alguna para la entidad.","Es patrimonio público con valor que se deteriora si no se cuida: una base mal consolidada o perdida puede desviar decisiones de política tributaria de millones de pesos, por lo que debe custodiarse igual que cualquier otro bien de la entidad.","Es un activo solo en sentido figurado y decorativo, sin ninguna consecuencia práctica, de modo que hablar de 'cuidar los datos' es apenas una frase institucional que no cambia en nada la forma de trabajar del día a día."],"correcta": 1,"expl": "La información es patrimonio público con valor real: su descuido desvía decisiones de millones (B). No son archivos desechables que 'siempre se rehacen' sin consecuencia (A), ni es una frase decorativa sin efecto práctico (C). Por eso se custodia, respalda y documenta."},{"nivel": "b","tema": "Gobernanza frente a gestión de datos","ctx": "Eres Analista I de la DIAN y un compañero nuevo usa como sinónimos 'gobernanza de datos' y 'gestión de datos'. Te dice que, como tú cargas, limpias y consolidas los archivos todos los días, entonces eres quien 'dicta las reglas y las políticas de datos del área'. Tú quieres aclararle la diferencia, porque define hasta dónde llega tu rol.","q": "¿Cuál es la distinción correcta entre gobernanza y gestión de datos?","ops": ["Son exactamente lo mismo: como el Analista ejecuta las tareas diarias con los datos, también es quien define las reglas, las políticas y los responsables, de modo que no existe ninguna diferencia entre gobernar y gestionar los datos.","La gobernanza define el 'qué' y el 'quién' (reglas, políticas, responsables) y la gestión ejecuta el 'cómo' (cargar, limpiar, consolidar, respaldar); el Analista vive sobre todo en la gestión, pero obedece a las políticas que fija la gobernanza.","La gobernanza es un trámite meramente formal sin efecto en el trabajo técnico, de manera que el Analista puede ignorar por completo las políticas de datos y definir cada día su propio método según le resulte más cómodo."],"correcta": 1,"expl": "La gobernanza fija el 'qué/quién' (reglas, responsables) y la gestión ejecuta el 'cómo' (B). El Analista ejecuta y obedece la gobernanza, pero no la dicta (A); y la gobernanza no es un trámite ignorable (C): le da reglas, responsables y trazabilidad a su trabajo."},{"nivel": "b","tema": "Clasificación de la información","ctx": "Eres Analista I de la DIAN y llega un derecho de petición de un ciudadano que pide 'el detalle de las declaraciones de renta de una empresa', diciendo que 'como la DIAN es una entidad pública, toda su información es pública y debe entregársele'. Un compañero te comenta que 'si lo pide por derecho de petición, toca entregárselo tal cual'. Tú conoces la clasificación de la información y la reserva tributaria.","q": "¿Cuál es la actuación correcta frente a esa solicitud?","ops": ["Entregar el detalle de las declaraciones solicitado, ya que la DIAN es una entidad pública y, por tanto, toda la información que maneja es pública y debe ser divulgada a cualquier ciudadano que la pida por derecho de petición.","Reconocer que la información tributaria individual es reservada por el artículo 583 del Estatuto Tributario; no entregar el detalle y responder la petición explicando el fundamento legal de la reserva, sin tratar esa información como si fuera pública.","Entregar la información pero solo una parte, elegida al azar por ti, confiando en que entregar 'algo' satisface el derecho de petición sin comprometer del todo la reserva, aunque no exista un criterio legal que respalde esa entrega parcial."],"correcta": 1,"expl": "La información tributaria individual es reservada (art. 583 ET): no toda la información de una entidad pública es pública (A). Tampoco se entrega una parte al azar sin fundamento (C). Se niega el detalle y se responde explicando la reserva: así se protege el activo y se respeta la Ley 1712."},{"nivel": "b","tema": "Calidad de datos","ctx": "Eres Analista I de la DIAN y vas a usar una base de 20.000 registros para producir una estadística. Un compañero te felicita porque 'es una base enorme, así que seguro es muy buena y confiable'. Al revisarla, detectas que unos 1.800 registros comparten el mismo NIT con nombres distintos (duplicados) y que varios campos obligatorios están vacíos. Él insiste en que 'con tantos registros, esos detalles no importan'.","q": "¿Cuál es la valoración y la actuación correcta sobre esa base?","ops": ["Como la base es muy grande, puede considerarse de buena calidad y usarse tal cual para la estadística, porque el gran número de registros compensa por sí solo los duplicados y los campos vacíos que pudiera tener.","El tamaño no es sinónimo de calidad: hay fallas de unicidad (duplicados por NIT) y de completitud (campos vacíos); hay que marcar y depurar esos registros antes de consolidar, para no inflar los totales ni distorsionar la estadística.","Eliminar sin verificar los 20.000 registros y empezar de cero con otra base cualquiera, dado que si tiene duplicados y vacíos ya no sirve absolutamente nada de ella y lo más rápido es descartarla por completo."],"correcta": 1,"expl": "Una base grande no es una base buena (A): aquí hay fallas de unicidad y completitud. Tampoco se descarta todo sin verificar (C), que pierde información útil. Se marcan y depuran los registros problemáticos antes de consolidar, para no distorsionar la estadística."},{"nivel": "i","tema": "El 'ajuste a mano' y la gobernanza","ctx": "Eres Analista I de la DIAN y terminas un consolidado para una reunión directiva. Un compañero revisa una cifra y te dice que 'está mal y ya', y te pide que la 'ajustes a mano' directamente en el archivo final porque 'es rápido, nadie se dará cuenta y así salimos del paso'. No te muestra ningún soporte de por qué la cifra estaría equivocada. Tú conoces las reglas de gobernanza de datos sobre quién decide sobre un dato.","q": "¿Cuál es la actuación correcta ante esa petición?","ops": ["Cambiar la cifra a mano en el archivo final tal como te lo pide el compañero, ya que él asegura que está mal y es más rápido ajustarla directamente que iniciar cualquier verificación o reporte formal de la inconsistencia.","Reportar la inconsistencia al responsable del dato (owner) por el canal formal, dejar registro de la observación y esperar la corrección verificada, sin alterar tú mismo el dato, porque hacerlo rompería la integridad y la trazabilidad del consolidado.","Borrar por completo esa cifra del consolidado para evitar el problema, de modo que la reunión directiva trabaje sin ese dato, dando por hecho que es preferible no mostrar ninguna cifra antes que verificar si la actual es correcta."],"correcta": 1,"expl": "La gobernanza indica que el Analista no decide unilateralmente sobre un dato: ajustarlo a mano sin soporte (A) rompe integridad y trazabilidad. Borrarlo sin verificar (C) también deteriora el consolidado. Se reporta al responsable del dato, se deja registro y se espera la corrección formal."},{"nivel": "i","tema": "Base de origen desconocido","ctx": "Eres Analista I de la DIAN y debes cruzar una base con la información oficial para apoyar un perfil de riesgo. Te entregan un archivo llamado 'Consolidado_final_v2_definitivo_REAL.xlsx' sin ninguna nota: no trae fecha de corte, ni fuente, ni diccionario de datos. El plazo corre y un compañero te apura: 'úsala ya, que para eso te la pasaron'. Tú sabes qué significa la ausencia de metadatos y en qué etapa del ciclo del dato estás.","q": "¿Cuál es la actuación correcta antes de usar ese archivo?","ops": ["Usar el archivo de inmediato para el cruce, dado que te lo entregaron para eso y el plazo corre; la falta de fecha, fuente y diccionario no es relevante mientras el archivo abra y tenga datos para procesar.","Antes de usarlo, verificar y reconstruir sus metadatos (fuente, fecha de corte, responsable), confirmar su origen y documentarlo; si no es posible verificar de dónde salió ni su vigencia, no utilizarlo como insumo de una decisión oficial.","Renombrar el archivo con un nombre más ordenado y usarlo tal cual, confiando en que con solo cambiarle el nombre ya queda confiable, sin necesidad de averiguar su fuente, su fecha de corte ni el significado de sus campos."],"correcta": 1,"expl": "La ausencia de metadatos es precisamente la señal de riesgo: no se sabe si está vigente ni de dónde salió. Usarla así (A) contamina el cruce ('basura entra, basura sale'); renombrarla (C) no la vuelve confiable. Se verifica origen y metadatos antes de usarla; si no se puede, no se usa para una decisión oficial."},{"nivel": "i","tema": "Estandarizar la llave antes de cruzar","ctx": "Eres Analista I de la DIAN y debes cruzar la base de importadores con la de declarantes de renta usando el NIT como llave. Al revisar, notas que en una base el NIT trae el dígito de verificación y en la otra no, y que hay diferencias de formato en algunas fechas y códigos de ciudad. Un compañero te dice que 'corras el cruce ya, que el NIT es el NIT y el sistema los va a emparejar igual'. Tú sabes de qué depende la interoperabilidad.","q": "¿Cuál es la actuación correcta antes de ejecutar el cruce?","ops": ["Ejecutar el cruce de inmediato sin homologar nada, confiando en que el sistema empareja los NIT aunque uno traiga dígito de verificación y el otro no, ya que al final se trata del mismo número de identificación.","Estandarizar primero la llave y los formatos (homologar el NIT, las fechas y los códigos de ciudad en ambas bases) y luego ejecutar el cruce, porque sin esa homologación aparecerán miles de 'no encontrados' falsos y registros huérfanos.","Cruzar por el nombre del contribuyente en lugar del NIT, para evitar el problema del dígito de verificación, aunque los nombres estén escritos de formas distintas en cada base y eso genere emparejamientos equivocados entre personas diferentes."],"correcta": 1,"expl": "La interoperabilidad depende de estándares: si la llave no está homologada, el cruce da 'no encontrados' falsos (A). Cruzar por nombre (C) es aún peor, porque los nombres varían y emparejan a personas distintas. Se estandariza la llave y los formatos antes de cruzar."},{"nivel": "i","tema": "Mínimo necesario con datos personales","ctx": "Eres Analista I de la DIAN y necesitas el ingreso declarado de 200 contribuyentes de una seccional para un cruce puntual. Tienes acceso a la base nacional completa de contribuyentes. Un compañero te sugiere que 'descargues la base nacional entera y la dejes guardada en tu equipo, así la tienes a la mano para la próxima y no la vuelves a pedir'. Tú conoces el principio de 'mínimo necesario' de la Ley 1581 de 2012.","q": "¿Cuál es la actuación correcta para obtener los datos que necesitas?","ops": ["Descargar la base nacional completa de contribuyentes y guardarla en tu equipo para tenerla disponible en el futuro, ya que así evitas volver a solicitarla y agilizas los próximos trabajos que puedan requerir esos datos.","Extraer o solicitar únicamente el subconjunto que tu tarea requiere (los 200 contribuyentes de esa seccional), conforme al principio de mínimo necesario, sin descargar ni almacenar más datos personales de los que la tarea justifica.","Descargar la base nacional completa pero prometiéndote a ti mismo que solo mirarás los 200 registros que necesitas, confiando en que, mientras no consultes el resto, tener almacenada toda la base no genera ningún riesgo ni responsabilidad."],"correcta": 1,"expl": "El principio de mínimo necesario exige acceder solo a los datos que la tarea requiere: descargar la base nacional 'por si acaso' (A) la viola y compromete disciplinariamente. Guardarla 'prometiendo no mirarla' (C) igual constituye un almacenamiento indebido. Se extrae solo el subconjunto necesario."},{"nivel": "i","tema": "Validar el consolidado con cifra de control","ctx": "Eres Analista I de la DIAN y consolidas tres archivos de seccionales en una sola base. La suma de los registros de las tres fuentes era 49.000, pero tu consolidado final arroja 48.120 registros. El plazo de entrega es ajustado y un compañero te dice que 'entregues así, que 880 registros de diferencia es poco y seguramente son duplicados que el proceso quitó'. Tú sabes para qué sirve una cifra de control en la consolidación.","q": "¿Cuál es la actuación correcta ante esa diferencia?","ops": ["Entregar el consolidado tal cual con los 48.120 registros, dando por sentado que los 880 faltantes eran duplicados que el proceso eliminó correctamente, sin revisar la causa de la diferencia, para no retrasar la entrega.","Tratar la diferencia como una alarma, revisar la causa (probable pérdida de registros por llaves sucias o cruces mal hechos) y no entregar hasta explicar el descuadre; si el tiempo no alcanza, gestionar una prórroga razonable.","Agregar 880 registros ficticios al consolidado para que el total cuadre con las 49.000 de las fuentes, de modo que la cifra de control dé exacta, aunque esos registros adicionales no correspondan a datos reales de ninguna seccional."],"correcta": 1,"expl": "La cifra de control sirve justamente para detectar descuadres: una diferencia de 880 es una alarma de posible pérdida de registros, no algo que se asuma como 'duplicados' sin verificar (A). Y jamás se inventan registros para cuadrar (C), lo que corrompe la base. Se investiga la causa antes de entregar."},{"nivel": "a","tema": "Caso integrador: roles de gobernanza","ctx": "Eres Analista I de la DIAN y actúas como custodio (data steward) de una base que administras en tu día a día. Un área externa te escribe pidiéndote que le des acceso directo y permanente a esa base 'para que ellos la consulten cuando quieran, sin tener que pedírtela cada vez'. Te presionan diciendo que 'tú la manejas, así que tú puedes autorizarlo de una'. Tú conoces la diferencia entre el rol de custodio (steward) y el de dueño del dato (owner).","q": "¿Cuál es la actuación correcta frente a esa solicitud de acceso?","ops": ["Autorizar de una vez el acceso directo y permanente del área externa a la base, ya que tú la administras en el día a día y, por manejarla, puedes conceder los permisos de acceso que otras áreas te soliciten.","Reconocer que, como custodio (steward), tú cuidas la calidad y aplicas las reglas, pero la decisión de dar acceso corresponde al dueño del dato (owner): canalizar la solicitud hacia él y, mientras no haya autorización, no otorgar ningún acceso.","Negarte de plano a cualquier trámite y no hacer nada con la solicitud, dando por hecho que como el acceso no lo decides tú, lo correcto es ignorar por completo la petición sin siquiera encauzarla hacia quien sí puede decidir."],"correcta": 1,"expl": "El steward cuida la calidad y aplica reglas, pero no decide sobre accesos: eso es del data owner. Autorizar por cuenta propia (A) es extralimitarse; pero ignorar la solicitud sin encauzarla (C) es el error opuesto. Lo correcto es canalizarla al owner y no dar acceso hasta que él decida."},{"nivel": "a","tema": "Caso integrador: correlación, causa y rigor","ctx": "Eres Analista I de la DIAN y, al procesar los datos de recaudo, detectas que un municipio duplicó su recaudo de un mes a otro. Un compañero, entusiasmado, te dice que reportes de inmediato en el informe que 'hubo una gran mejora en el cumplimiento tributario de ese municipio', porque 'los datos lo muestran claramente'. Tú sabes que una variación llamativa puede tener varias causas y que no debes confundir una cifra con su interpretación.","q": "¿Cuál es la actuación correcta antes de incluir esa conclusión en el informe?","ops": ["Reportar de inmediato en el informe que hubo una gran mejora en el cumplimiento tributario del municipio, ya que el recaudo se duplicó y esa cifra, por sí sola, demuestra de forma concluyente que la causa fue un mejor cumplimiento.","Verificar primero la causa de la variación (por ejemplo, un pago extraordinario de un solo gran contribuyente, un traslado o un error de doble carga) antes de atribuirla a 'mejor cumplimiento', acompañando la cifra llamativa con esa comprobación.","Ocultar la variación en el informe para no generar interpretaciones apresuradas, de modo que la cifra no aparezca, dando por hecho que lo más prudente es no mostrar los datos que podrían prestarse a más de una lectura."],"correcta": 1,"expl": "No se confunde correlación con causa: una duplicación del recaudo puede deberse a un gran contribuyente o a un error de carga, no necesariamente a 'más cumplimiento' (A). Pero tampoco se oculta el dato (C). Lo profesional es verificar la causa antes de convertir la cifra en una conclusión del informe."},{"nivel": "a","tema": "Caso integrador: calidad, trazabilidad y reserva","ctx": "Eres Analista I de la DIAN y debes consolidar, desde varias fuentes, una base de datos de calidad que servirá de insumo para apoyar un perfil de riesgo tributario. El plazo es ajustado. Te enfrentas a varias tentaciones a la vez: usar una fuente externa cuyo origen no pudiste verificar, no llevar bitácora de las transformaciones 'para ir más rápido', y guardar una copia de la base (que contiene datos personales) en tu equipo personal 'por comodidad'. Un compañero te dice que 'con tal de entregar a tiempo, no te compliques'.","q": "¿Cuál es la actuación correcta que combina gobernanza, trazabilidad y protección de datos?","ops": ["Tomar los atajos para cumplir el plazo: usar la fuente sin verificar, no llevar bitácora y guardar la copia con datos personales en tu equipo personal, ya que entregar a tiempo es la prioridad y el perfil de riesgo depende de que llegue el insumo.","Usar solo fuentes de origen verificado, llevar bitácora de cada transformación (trazabilidad), no sacar copias con datos personales a tu equipo personal (mínimo necesario y seguridad) y, si el tiempo no alcanza para hacerlo bien, gestionar una prórroga razonable.","Usar la fuente sin verificar pero advirtiendo en una nota que 'podría no ser confiable', omitir la bitácora y guardar la copia en tu equipo personal solo por esta vez, como una solución intermedia entre el rigor y el cumplimiento del plazo."],"correcta": 1,"expl": "El insumo alimentará un perfil de riesgo, así que la calidad, la trazabilidad y la protección de datos son innegociables. Los atajos (A) y la 'solución intermedia' (C) comprometen el perfil y vulneran la Ley 1581. Se usan fuentes verificadas, se documenta, no se sacan copias con datos personales y, si falta tiempo, se gestiona prórroga."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
