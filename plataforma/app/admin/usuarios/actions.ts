@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
-import { correoCredencialesCliente } from "@/lib/email";
+import { correoCredencialesCliente, correoCursoListo } from "@/lib/email";
 
 // Misma contraseña genérica usada en la creación manual de clientes
 // (admin/crear-cliente/actions.ts). Se centraliza aquí para reenviarla.
@@ -20,6 +20,121 @@ export async function actualizarNombreUsuario(userId: string, formData: FormData
   const supabase = createAdminClient();
   await supabase.from("profiles").update({ nombre }).eq("id", userId);
   try { await supabase.auth.admin.updateUserById(userId, { user_metadata: { nombre } }); } catch { /* ignore */ }
+  revalidatePath("/admin/usuarios");
+}
+
+// Valida un correo electrónico de forma simple (hay algo antes y después de @, y un punto en el dominio).
+function esCorreoValido(correo: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+}
+
+/**
+ * Actualiza el CORREO de un usuario. El correo vive en DOS lugares y ambos
+ * deben quedar consistentes para que el usuario pueda iniciar sesión con el
+ * nuevo correo:
+ *   - profiles.correo  (lo que se muestra en la plataforma)
+ *   - auth.users.email (la credencial real de inicio de sesión)
+ * Se normaliza a minúsculas, igual que en el resto del sistema.
+ */
+export async function actualizarCorreoUsuario(userId: string, formData: FormData) {
+  await requireAdmin();
+  const correo = String(formData.get("correo") || "").trim().toLowerCase();
+  if (!correo) throw new Error("El correo no puede estar vacío.");
+  if (!esCorreoValido(correo)) throw new Error("El correo no tiene un formato válido.");
+  const supabase = createAdminClient();
+
+  // 1) Auth (login): confirmar el correo para que quede usable de inmediato.
+  const { error: authErr } = await supabase.auth.admin.updateUserById(userId, {
+    email: correo,
+    email_confirm: true,
+  });
+  if (authErr) {
+    // Caso típico: el correo ya está en uso por otra cuenta.
+    throw new Error(`No se pudo actualizar el correo de acceso: ${authErr.message}`);
+  }
+  // 2) profiles (lo que ve la plataforma).
+  await supabase.from("profiles").update({ correo }).eq("id", userId);
+
+  revalidatePath("/admin/usuarios");
+}
+
+/**
+ * Actualiza el CELULAR de un usuario (solo en profiles; Auth no lo usa para
+ * el login en esta plataforma).
+ */
+export async function actualizarCelularUsuario(userId: string, formData: FormData) {
+  await requireAdmin();
+  const celular = String(formData.get("celular") || "").trim();
+  const supabase = createAdminClient();
+  await supabase.from("profiles").update({ celular: celular || null }).eq("id", userId);
+  revalidatePath("/admin/usuarios");
+}
+
+/**
+ * Edita TODOS los datos del perfil de una sola vez: nombre, correo y celular.
+ * Mantiene la consistencia del correo entre profiles y Auth. Solo actualiza
+ * el correo en Auth si realmente cambió, para no reenviar confirmaciones
+ * innecesarias.
+ */
+export async function actualizarPerfilUsuario(userId: string, formData: FormData) {
+  await requireAdmin();
+  const nombre = String(formData.get("nombre") || "").trim();
+  const correo = String(formData.get("correo") || "").trim().toLowerCase();
+  const celular = String(formData.get("celular") || "").trim();
+  if (!nombre) throw new Error("El nombre no puede estar vacío.");
+  if (!correo) throw new Error("El correo no puede estar vacío.");
+  if (!esCorreoValido(correo)) throw new Error("El correo no tiene un formato válido.");
+
+  const supabase = createAdminClient();
+
+  // ¿Cambió el correo respecto del actual? Solo tocar Auth si cambió.
+  const { data: actual } = await supabase.from("profiles").select("correo").eq("id", userId).single();
+  const correoCambio = (actual?.correo || "").trim().toLowerCase() !== correo;
+
+  if (correoCambio) {
+    const { error: authErr } = await supabase.auth.admin.updateUserById(userId, {
+      email: correo,
+      email_confirm: true,
+    });
+    if (authErr) throw new Error(`No se pudo actualizar el correo de acceso: ${authErr.message}`);
+  }
+  try { await supabase.auth.admin.updateUserById(userId, { user_metadata: { nombre } }); } catch { /* ignore */ }
+
+  await supabase.from("profiles").update({ nombre, correo, celular: celular || null }).eq("id", userId);
+
+  revalidatePath("/admin/usuarios");
+}
+
+/**
+ * Reenvía al usuario la notificación de "tu curso ya está disponible" al
+ * correo que tenga registrado en ese momento. Útil cuando se le corrigió el
+ * correo (el primer aviso llegó a un correo equivocado) o cuando el cliente
+ * dice que no le llegó. Fuerza el reenvío aunque el curso ya estuviera
+ * disponible (a diferencia del aviso automático al habilitar el curso).
+ */
+export async function reenviarNotificacionCurso(userId: string) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("correo, nombre")
+    .eq("id", userId)
+    .single();
+  if (error || !profile?.correo) throw new Error("No se encontró el correo de este usuario.");
+
+  // ¿Tiene ya un curso disponible? Si lo tiene, avisamos "disponible ahora".
+  const { data: curso } = await supabase
+    .from("cursos")
+    .select("estado")
+    .eq("usuario_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const disponibleAhora = curso?.estado === "disponible";
+
+  await correoCursoListo(profile.correo, profile.nombre || "", disponibleAhora);
+
   revalidatePath("/admin/usuarios");
 }
 

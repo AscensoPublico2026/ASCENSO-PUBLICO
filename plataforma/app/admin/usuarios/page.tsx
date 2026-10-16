@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { inhabilitarUsuario, eliminarUsuario, actualizarNombreUsuario, reenviarCredenciales } from "./actions";
+import { inhabilitarUsuario, eliminarUsuario, actualizarPerfilUsuario, reenviarCredenciales, reenviarNotificacionCurso } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -53,10 +53,16 @@ export default async function AdminUsuarios() {
               {/* Acciones */}
               <div style={{ display: "flex", gap: 8, flexShrink: 0, alignItems: "center" }}>
                 <details style={{ position: "relative" }}>
-                  <summary style={{ listStyle: "none", cursor: "pointer", border: "1px solid var(--gris-borde)", borderRadius: 8, padding: "6px 12px", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}>✎ Nombre</summary>
-                  <form action={actualizarNombreUsuario.bind(null, u.id)} style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 5, background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 10, padding: 12, boxShadow: "0 8px 24px rgba(10,42,94,.15)", width: 240 }}>
-                    <input name="nombre" defaultValue={u.nombre || ""} placeholder="Nombre completo" style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".85rem" }} />
-                    <button className="btn btn-azul" style={{ width: "100%", padding: "8px", marginTop: 8, fontSize: ".8rem" }}>Guardar nombre</button>
+                  <summary style={{ listStyle: "none", cursor: "pointer", border: "1px solid var(--gris-borde)", borderRadius: 8, padding: "6px 12px", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}>✎ Editar perfil</summary>
+                  <form action={actualizarPerfilUsuario.bind(null, u.id)} style={{ position: "absolute", right: 0, top: "calc(100% + 6px)", zIndex: 5, background: "#fff", border: "1px solid var(--gris-borde)", borderRadius: 10, padding: 14, boxShadow: "0 8px 24px rgba(10,42,94,.15)", width: 280 }}>
+                    <label style={{ display: "block", fontSize: ".7rem", fontWeight: 700, color: "var(--texto-suave)", marginBottom: 3 }}>Nombre completo</label>
+                    <input name="nombre" defaultValue={u.nombre || ""} placeholder="Nombre completo" style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".85rem", marginBottom: 10 }} />
+                    <label style={{ display: "block", fontSize: ".7rem", fontWeight: 700, color: "var(--texto-suave)", marginBottom: 3 }}>Correo (acceso)</label>
+                    <input name="correo" type="email" defaultValue={u.correo || ""} placeholder="correo@ejemplo.com" style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".85rem", marginBottom: 10 }} />
+                    <label style={{ display: "block", fontSize: ".7rem", fontWeight: 700, color: "var(--texto-suave)", marginBottom: 3 }}>Celular</label>
+                    <input name="celular" defaultValue={u.celular || ""} placeholder="Celular" style={{ width: "100%", padding: "8px 10px", borderRadius: 8, border: "1px solid var(--gris-borde)", fontFamily: "inherit", fontSize: ".85rem", marginBottom: 4 }} />
+                    <p style={{ fontSize: ".66rem", color: "var(--texto-suave)", margin: "4px 0 10px", lineHeight: 1.4 }}>Al cambiar el correo, también cambia el usuario con el que inicia sesión.</p>
+                    <button className="btn btn-azul" style={{ width: "100%", padding: "8px", fontSize: ".8rem" }}>Guardar cambios</button>
                   </form>
                 </details>
                 {u.rol !== "admin" && (
@@ -66,6 +72,16 @@ export default async function AdminUsuarios() {
                       style={{ background: "none", border: "1px solid var(--azul-borde)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}
                     >
                       🔑 Reenviar credenciales
+                    </button>
+                  </form>
+                )}
+                {u.rol !== "admin" && (
+                  <form action={reenviarNotificacionCurso.bind(null, u.id)}>
+                    <button
+                      title="Reenvía al correo actual la notificación de que su curso está listo/disponible (útil si se corrigió el correo o no le llegó)"
+                      style={{ background: "none", border: "1px solid var(--azul-borde)", borderRadius: 8, padding: "6px 12px", cursor: "pointer", fontFamily: "inherit", fontSize: ".78rem", color: "var(--azul)", fontWeight: 700 }}
+                    >
+                      📧 Reenviar notificación
                     </button>
                   </form>
                 )}
