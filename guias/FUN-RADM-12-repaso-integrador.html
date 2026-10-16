@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-RADM-12 · Repaso Integrador del Bloque Funcional — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-RADM-12</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 20 · Funcional Específica · Recursos Administrativos</div></div>
+  <h1>Repaso Integrador del Bloque Funcional</h1>
+  <p class="header-sub">Integra y afianza todo lo visto en los Días 9 a 19: cómo se conectan los temas del cargo y cómo resolver casos aplicando los principios del <strong>Gestor III</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 20 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Es martes, 7:40 a. m. Llegas a la Subdirección de Recursos Físicos de la DIAN, en tu primera semana como Gestor III del proceso de Recursos Administrativos. Marcela, tu coordinadora, te entrega cuatro asuntos antes del almuerzo. El primero: la Dirección Seccional de Barranquilla reporta una filtración en la cubierta de su sede y pide "reparación urgente"; alguien ya habló con un contratista conocido para que "empiece hoy mismo y después legalizamos". El segundo: hay que dar de baja veinte computadores obsoletos y un vehículo del parque automotor, y un funcionario propone "regalarlos a una fundación para no complicarse". El tercero: una sede recibió, como pago de una obligación fiscal, un lote urbano, y nadie sabe quién debe asegurarlo, mantenerlo ni custodiarlo. El cuarto: la póliza que ampara los bienes muebles de tres seccionales vence el viernes y el corredor de seguros pregunta si "renovamos igual que el año pasado".</p>
+    <p>¿Se puede "empezar hoy y legalizar después"? ¿Un bien del Estado se "regala"? ¿Quién responde por un inmueble recibido en pago? ¿Qué significa que una póliza se renueve "igual"? Todas estas respuestas parten de unas mismas bases, y esas bases son las <mark>generalidades de los Recursos Administrativos</mark>: qué es este proceso dentro de la DIAN, qué bienes y servicios administra, con qué normas (presupuesto, contratación, bienes, seguros, ambiental), con qué principios actúa el servidor público y, sobre todo, qué te corresponde decidir a ti como Gestor III y qué no. Hoy construyes ese mapa.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es el <strong>proceso de Recursos Administrativos</strong> en la DIAN y cómo se ubica dentro de la estructura de la Entidad (Decreto 1742 de 2020).</li>
+      <li>El <strong>propósito y las funciones esenciales</strong> del empleo Gestor III del área administrativa y financiera, según el manual específico (Resolución 0067 de 2024).</li>
+      <li>Los <strong>cinco grandes frentes</strong> que administra el proceso: infraestructura física, bienes muebles e inmuebles, servicios generales y parque automotor, aseguramiento de bienes y gestión ambiental de sedes.</li>
+      <li>El <strong>mapa normativo</strong> del cargo: Constitución (función administrativa), Estatuto de Contratación (Ley 80 de 1993, Ley 1150 de 2007, Decreto 1082 de 2015), régimen de bienes del Estado, presupuesto y plan anual de adquisiciones.</li>
+      <li>El <strong>ciclo de la gestión administrativa</strong>: planear (PAA) → contratar → ejecutar y supervisar → recibir → administrar y mantener → dar de baja o enajenar.</li>
+      <li>Los <strong>principios de la función pública</strong> aplicados a lo administrativo (art. 209 C.P.): igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad.</li>
+      <li>La diferencia entre <strong>bien mueble e inmueble</strong>, entre <strong>baja y enajenación</strong>, y qué son los <strong>bienes recibidos en pago</strong> de obligaciones fiscales.</li>
+      <li>El <strong>aseguramiento de bienes</strong>: qué es un programa de seguros, qué ampara y por qué no se "renueva igual" sin análisis.</li>
+      <li>El <strong>rol del Gestor III</strong>: qué proyecta, gestiona y supervisa, y por qué no puede dispensar requisitos ni decidir lo que es de otro.</li>
+      <li>Ejercicios, casos aplicados a tu día a día y <strong>12 preguntas de simulacro</strong> de juicio situacional con tres opciones.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás ubicar cualquier asunto administrativo en su lugar correcto —qué bien o servicio es, qué norma lo rige, en qué fase del ciclo está y a quién le corresponde decidir— y tendrás la base para estudiar, en los días siguientes, la infraestructura física, la administración de bienes muebles e inmuebles, los servicios y el parque automotor, y la contratación estatal paso a paso.</p>
+  </div>
+</section>
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>"Generalidades de los Recursos Administrativos" es el <mark>cimiento</mark> de todo el bloque funcional de tu empleo. El manual específico del <strong>Gestor III del Nivel Profesional</strong> describe un cargo cuyo propósito es efectuar las acciones que demandan la proyección y el desarrollo de la infraestructura física de la Entidad, la administración de sus bienes muebles e inmuebles, la prestación de servicios generales, el transporte y parque automotor, el aseguramiento de bienes y la contratación necesaria para todo ello. No puedes dominar ninguna de esas funciones si antes no tienes claro <strong>qué es el proceso, qué administra, con qué normas y con qué límites</strong>. Esa es la foto completa que arma esta guía.</p>
+  <p>Recuerda cómo es la prueba: las competencias funcionales se evalúan con <strong>juicio situacional</strong> (un caso, un enunciado y tres opciones de respuesta, de las cuales solo una es la más apropiada), es una prueba <mark>eliminatoria</mark> y exige un puntaje mínimo aprobatorio. Además, en los ejes que se sustentan en leyes, decretos y otras normas solo se tienen en cuenta las que estén <strong>vigentes</strong> a la fecha de corte definida en la convocatoria. Por eso aquí no solo aprenderás qué dicen las normas, sino a razonar con los principios que las sostienen, que son los que permiten resolver un caso aunque no te sepas de memoria un artículo.</p>
+  <p>Para quien llega al cargo, estas generalidades importan por cuatro razones concretas:</p>
+  <ul class="lista">
+    <li>Tus funciones de <strong>infraestructura y bienes inmuebles</strong> exigen saber en qué fase está cada asunto (planeación, contratación, ejecución, recibo, mantenimiento, baja/enajenación) para no "saltarse" pasos que la ley impone.</li>
+    <li>Tus funciones de <strong>contratación</strong> (estudios previos, selección, perfeccionamiento, liquidación, garantías) se apoyan en el Estatuto de Contratación, que aquí se introduce y luego se profundiza en los Días 14 y 15.</li>
+    <li>Tus funciones de <strong>atención de trámites, PQRSDF y conceptos técnicos de alta complejidad</strong> requieren ubicar correctamente a qué proceso y a qué norma pertenece cada solicitud.</li>
+    <li>El <strong>comportamiento ético (nivel 4)</strong> se pone a prueba todos los días en el manejo de recursos públicos: saber qué te toca decidir y qué no es la mejor barrera contra la extralimitación, la omisión y el riesgo de corrupción.</li>
+  </ul>
+  <p>Las preguntas de esta guía en la prueba suelen ser <mark>situacionales</mark>: te presentan a alguien que propone un atajo ("empecemos la obra y legalizamos después", "regalemos los equipos de baja", "renovemos la póliza igual") y debes escoger la actuación más apropiada. Los distractores casi siempre contienen una parte correcta y un error sutil: invertir el orden de un trámite, aplicar una figura a un supuesto que no es, o decidir algo que le corresponde a otra instancia.</p>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con las guías anteriores y siguientes</div>
+    <p>En los Días 5 a 8 estudiaste tus competencias comportamentales y el alcance del cargo. Hoy entras al contenido técnico: esta guía es el mapa general del proceso. En el Día 10 y 11 profundizarás la <strong>infraestructura física</strong>; en el Día 12, la <strong>administración de bienes muebles e inmuebles</strong>; en el Día 13, los <strong>servicios y el parque automotor</strong>; y en los Días 14 y 15, la <strong>contratación estatal</strong> paso a paso. Todo lo que hoy ves como título, en los días siguientes lo abres en detalle.</p>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Repaso Integrador del Bloque Funcional</h2>
+  <p>Llegaste al último día funcional del curso. Esta sección no introduce temas nuevos: integra, conecta y afianza todo lo que viste en los Días 9 a 19 sobre los recursos administrativos de la DIAN. El Gestor III no maneja cada tema por separado: en su día real, la infraestructura, los bienes, los servicios, la contratación, el archivo, el modelo de gestión, la transparencia y las herramientas se cruzan todo el tiempo. Hoy verás cómo encajan unos con otros, repasarás las normas y conceptos clave de cada tema, resolverás casos integradores que mezclan varios asuntos a la vez (como pasa en la realidad y en la prueba) y consolidarás la visión completa del cargo. Resuelve los checkpoints antes de abrir la explicación; cada módulo repasa un tema y lo conecta con los demás. Al terminar, tendrás un mapa mental completo de la función administrativa del Gestor III, listo para el simulacro final del Día 21 y, sobre todo, para ejercer el cargo con solvencia. Este repaso es tu oportunidad de amarrar los cabos sueltos y llegar a la prueba con todo en su lugar.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual del bloque funcional</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🏗</span><h5>Infraestructura</h5><p>Días 10-11 · obras y espacios</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📦</span><h5>Bienes y servicios</h5><p>Días 12-13 · inventario y operación</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📄</span><h5>Contratación y archivo</h5><p>Días 14-16 · adquirir y documentar</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧭</span><h5>MIPG y transparencia</h5><p>Días 17-18 · gestión e integridad</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">💻</span><h5>Herramientas</h5><p>Día 19 · datos e informes</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>El cargo en una mirada: qué es y qué hace el Gestor III</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>Gestor III del área administrativa</mark> de la DIAN es un servidor del nivel profesional cuyo propósito es apoyar la proyección, el desarrollo y la gestión de los recursos administrativos: infraestructura física, bienes, servicios, contratación y la información que soporta todo ello. No es un cargo misional (tributario o aduanero): es un cargo de apoyo que hace posible que la entidad opere.</p>
+</div>
+<div class="b-texto">
+  <p>Antes de repasar tema por tema, conviene recuperar la visión de conjunto. El Gestor III vive en el área administrativa y financiera, en la línea de recursos físicos y servicios. Su trabajo consiste en que la DIAN tenga sedes adecuadas, bienes controlados, servicios funcionando, contratos bien manejados, documentos organizados y procesos gestionados con integridad. Todo lo que viste en el curso son piezas de esa misma función: sostener la operación de la entidad desde lo administrativo.</p>
+  <p>Es clave recordar el nivel del cargo. El Gestor III es <strong>profesional</strong>: no solo ejecuta tareas, sino que planea, analiza, propone y decide dentro de su competencia. Esta diferencia con los niveles técnico o asistencial atraviesa todo el curso: donde un auxiliar registra, el Gestor III analiza; donde un técnico apoya, el Gestor III interviene con criterio. La prueba evalúa justamente ese criterio profesional aplicado a situaciones reales.</p>
+  <p>El manual de funciones del cargo reúne los conocimientos que viste: la Constitución y el marco de lo público, el CPACA y el servicio al ciudadano, la contratación estatal, la gestión documental, el MIPG, la transparencia, las herramientas informáticas y, como ejes propios, la administración de infraestructura, de servicios y las generalidades de los recursos administrativos. Cada día del bloque funcional desarrolló uno de esos conocimientos.</p>
+  <p>La utilidad de empezar por esta mirada de conjunto es no perderse en los detalles. En la prueba, muchas preguntas no son sobre un solo tema aislado, sino sobre situaciones donde el Gestor III debe actuar integrando varios. Quien tiene clara la visión global del cargo responde mejor que quien memorizó datos sueltos. Hoy vas a afianzar esa visión global, repasando cada pieza y, sobre todo, cómo se conectan.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión del cargo</th><th>Qué abarca</th><th>Días del curso</th></tr></thead>
+    <tbody>
+      <tr><td>Recursos físicos</td><td>Infraestructura, bienes, servicios, parque automotor</td><td>Días 9-13</td></tr>
+      <tr><td>Adquisición y soporte</td><td>Contratación estatal y gestión documental</td><td>Días 14-16</td></tr>
+      <tr><td>Gestión e integridad</td><td>MIPG, buen gobierno, transparencia</td><td>Días 17-18</td></tr>
+      <tr><td>Información</td><td>Herramientas informáticas e informes</td><td>Día 19</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>En un día cualquiera, el Gestor III revisa el avance de una obra (infraestructura), autoriza un mantenimiento (servicios), publica un documento en el SECOP (contratación), archiva el acta (gestión documental) y reporta el indicador al jefe (herramientas). Todo en la misma jornada. Esa integración natural de los temas es la esencia del cargo, y es lo que este repaso busca que domines.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>El Gestor III del área administrativa de la DIAN es, ante todo:</p>
+  <div class="cp-op" data-op="a">a) Un cargo misional que liquida impuestos y controla la operación aduanera.</div>
+  <div class="cp-op" data-op="b">b) Un cargo profesional de apoyo que gestiona los recursos administrativos para que la entidad opere.</div>
+  <div class="cp-op" data-op="c">c) Un cargo técnico que solo registra datos sin analizar ni decidir.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Vale la pena insistir en algo que a veces se pierde de vista: aunque el Gestor III administrativo no sea un cargo misional, su trabajo es indispensable. Sin sedes adecuadas, sin servicios funcionando, sin bienes controlados y sin contratos bien manejados, la DIAN simplemente no podría recaudar ni atender a la ciudadanía. El área administrativa es la columna vertebral invisible de la entidad. Quien ejerce este cargo con excelencia contribuye, de forma directa aunque silenciosa, a que una entidad que maneja recursos vitales para el país funcione. Esa es la dignidad del cargo y la razón para ejercerlo con el máximo rigor.</p><p>También conviene recordar que el nivel profesional implica autonomía y, con ella, responsabilidad. El Gestor III toma decisiones dentro de su competencia y responde por ellas. No puede escudarse en que 'le dijeron que lo hiciera' si la orden era contraria a la norma, ni delegar su criterio en otros. Esa responsabilidad profesional es lo que distingue al cargo y lo que la prueba evalúa cuando plantea situaciones donde la salida fácil choca con la salida correcta.</p></div>
+<div class="b-texto"><p>Para enmarcar el repaso, recuerda la estructura del aprendizaje del curso: primero vimos lo general (los recursos administrativos y su ciclo), luego cada recurso concreto (infraestructura, bienes, servicios), después cómo se adquiere y documenta (contratación, archivo), enseguida el marco de gestión e integridad (MIPG, transparencia) y, por último, el soporte de información (herramientas e informes). Esa secuencia no es casual: va de lo amplio a lo específico y luego al marco que lo envuelve todo. Tener presente ese orden te ayuda a ubicar cualquier tema en su lugar y a entender por qué se estudia lo que se estudia.</p></div>
+<div class="b-texto"><p>Antes de entrar al repaso tema por tema, fija esta idea: el curso te ha dado un oficio, no una lista de datos. Un oficio es un saber hacer que se aplica con criterio a situaciones cambiantes. El Gestor III no responde de memoria: razona desde lo que entiende del cargo. Este repaso busca consolidar ese razonamiento, no reemplazarlo por fórmulas. Si al terminar sientes que puedes explicar con tus palabras qué hace el cargo y por qué, y resolver un caso nuevo aplicando principios, entonces el curso cumplió su propósito y estás realmente preparado.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Repaso: generalidades de los recursos administrativos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>recursos administrativos</mark> son el conjunto de bienes, servicios, infraestructura e información que una entidad necesita para funcionar. Su gestión abarca un ciclo: planear qué se necesita, adquirirlo, administrarlo, mantenerlo y darlo de baja. El Gestor III participa en todo ese ciclo con criterio de eficiencia, legalidad y transparencia.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 9 viste que la gestión de recursos administrativos no es improvisada: sigue principios y un ciclo de vida. Los principios de la función administrativa (eficacia, economía, celeridad, imparcialidad, publicidad, moralidad) guían cada actuación. Y el ciclo (planear, adquirir, usar, mantener, dar de baja) ordena el trabajo. Todo recurso, sea un edificio o un computador, pasa por ese ciclo, y el Gestor III lo acompaña.</p>
+  <p>La <strong>planeación</strong> es el inicio de todo: identificar qué se necesita, cuánto, para qué y con qué presupuesto. Una buena planeación evita compras innecesarias, carencias y urgencias mal manejadas. El Plan Anual de Adquisiciones (PAA) es la herramienta que materializa esta planeación: allí se define qué va a adquirir la entidad en el año. El Gestor III aporta a su construcción y lo usa como guía.</p>
+  <p>La gestión de recursos se rige por un principio fundamental: los recursos son <strong>públicos y escasos</strong>, y deben usarse con responsabilidad. Cada peso gastado, cada bien adquirido, cada contrato firmado debe justificarse en una necesidad real y manejarse con cuidado. Esta conciencia del recurso público atraviesa todo el curso: en la contratación, en el manejo de bienes, en los servicios. El Gestor III es un custodio de recursos ajenos (de la ciudadanía).</p>
+  <p>Este módulo es la base conceptual sobre la que se apoyan todos los demás. Infraestructura, bienes, servicios y contratación son, en el fondo, manifestaciones de la gestión de recursos administrativos. Tener claro el ciclo y los principios ayuda a entender por qué cada tema se maneja como se maneja: no son reglas arbitrarias, sino la aplicación de una lógica de buena administración de lo público.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Fase del ciclo</th><th>Qué implica</th><th>Herramienta clave</th></tr></thead>
+    <tbody>
+      <tr><td>Planear</td><td>Identificar necesidades y presupuesto</td><td>Plan Anual de Adquisiciones</td></tr>
+      <tr><td>Adquirir</td><td>Contratar el bien o servicio</td><td>Contratación estatal (SECOP)</td></tr>
+      <tr><td>Usar y mantener</td><td>Operar y conservar el recurso</td><td>Inventario, planes de mantenimiento</td></tr>
+      <tr><td>Dar de baja</td><td>Retirar lo que ya no sirve</td><td>Procedimiento de baja de bienes</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El área necesita renovar los equipos de cómputo de una sede. El Gestor III no los compra de un día para otro: lo planea (lo incluye en el PAA), lo adquiere (por contratación), los registra en el inventario, vela por su mantenimiento y, al final de su vida útil, gestiona la baja. Ese recorrido es el ciclo de los recursos administrativos aplicado a un caso concreto.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>La herramienta que materializa la planeación de lo que la entidad va a adquirir en el año es:</p>
+  <div class="cp-op" data-op="a">a) El Plan Anual de Adquisiciones (PAA).</div>
+  <div class="cp-op" data-op="b">b) El inventario de bienes de baja.</div>
+  <div class="cp-op" data-op="c">c) El acta de liquidación de un contrato ya terminado.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un punto que conecta todo el ciclo de recursos es la trazabilidad: cada fase deja un rastro documental que permite saber qué se decidió, por qué y quién respondió. La planeación deja el PAA y los estudios; la adquisición, el contrato; el uso, el inventario; el mantenimiento, las órdenes de servicio; la baja, el acto administrativo. Esa trazabilidad no es burocracia: es lo que permite controlar, auditar y rendir cuentas. El Gestor III que entiende el ciclo como una cadena documentada trabaja ordenado y a prueba de auditorías; el que lo vive como tareas sueltas deja huecos que tarde o temprano se le vuelven problemas.</p></div>
+<div class="b-texto"><p>Es útil recordar también que la gestión de recursos administrativos no vive aislada del presupuesto. Todo lo que se planea y adquiere depende de una asignación presupuestal, y el Gestor III debe moverse con conciencia de ello: no se puede comprometer lo que no está presupuestado, y la ejecución debe seguir las reglas del gasto público. El seguimiento a la ejecución presupuestal (cuánto se ha comprometido y pagado frente a lo asignado) es parte del control que el cargo ejerce. Esta conexión entre recursos y presupuesto explica por qué la planeación es tan importante: planear mal el gasto deja al área sin recursos a mitad de año o con saldos sin ejecutar al final, ambas situaciones indeseables.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Repaso: infraestructura física</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>infraestructura física</mark> son las sedes, edificios y espacios donde la DIAN opera y atiende al ciudadano. Gestionarla implica planear, construir o adecuar, mantener y garantizar que los espacios sean seguros, accesibles y funcionales. Es uno de los ejes propios del cargo, según el manual.</p>
+</div>
+<div class="b-texto">
+  <p>En los Días 10 y 11 viste que la infraestructura no se gestiona sola: requiere planeación de necesidades, estudios técnicos, contratación de obras y adecuaciones, supervisión de su ejecución y mantenimiento posterior. El Gestor III acompaña ese ciclo, coordinando con áreas técnicas (arquitectura, ingeniería) y cumpliendo las normas de construcción, seguridad y accesibilidad. Una sede bien gestionada protege a los funcionarios y da un buen servicio al ciudadano.</p>
+  <p>La infraestructura conecta con varios temas del curso. Con la <strong>contratación</strong> (las obras y adecuaciones se contratan). Con los <strong>bienes</strong> (los edificios son bienes inmuebles que se administran). Con los <strong>servicios</strong> (el mantenimiento de la infraestructura es un servicio). Con la <strong>seguridad</strong> (los espacios deben cumplir normas de seguridad humana). Esta red de conexiones muestra por qué el repaso integrador es tan útil: ningún tema vive aislado.</p>
+  <p>Un concepto clave que viste es la diferencia entre <strong>mantenimiento preventivo y correctivo</strong>. El preventivo se hace antes de que algo falle (revisiones programadas), es más barato y evita emergencias. El correctivo repara lo que ya falló, es más caro y suele llegar con urgencia. El Gestor III que planea el mantenimiento preventivo ahorra dinero y problemas; el que solo apaga incendios con mantenimiento correctivo gasta más y vive en crisis.</p>
+  <p>La accesibilidad merece recordarse. La infraestructura pública debe permitir el acceso de personas con discapacidad y de toda la ciudadanía en condiciones de igualdad. No es un detalle: es un mandato legal y un deber de inclusión. El Gestor III vela por que las adecuaciones y construcciones cumplan estos criterios, porque una sede inaccesible excluye a parte de la ciudadanía a la que la DIAN debe servir.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Aspecto</th><th>Preventivo</th><th>Correctivo</th></tr></thead>
+    <tbody>
+      <tr><td>Cuándo se hace</td><td>Antes de la falla, programado</td><td>Después de la falla, por urgencia</td></tr>
+      <tr><td>Costo</td><td>Menor</td><td>Mayor</td></tr>
+      <tr><td>Efecto</td><td>Evita emergencias</td><td>Repara daños ya ocurridos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III programa la revisión semestral de los ascensores y las instalaciones eléctricas de una sede (preventivo). Gracias a eso, se detecta a tiempo un desgaste y se repara sin que nadie quede atrapado ni haya un corto. El vecino que solo repara cuando algo falla, en cambio, tuvo que atender una emergencia costosa. El preventivo demostró su valor.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El mantenimiento preventivo, frente al correctivo, se caracteriza por:</p>
+  <div class="cp-op" data-op="a">a) Ser más caro y hacerse siempre por urgencia.</div>
+  <div class="cp-op" data-op="b">b) Reparar lo que ya se dañó, sin anticiparse.</div>
+  <div class="cp-op" data-op="c">c) Hacerse de forma programada antes de la falla, a menor costo y evitando emergencias.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La infraestructura también tiene una dimensión que no siempre se nota: la ambiental y la de sostenibilidad. Las adecuaciones y el mantenimiento de las sedes deben considerar el uso eficiente de la energía y el agua, el manejo de residuos y, cuando aplica, la gestión ambiental que el manual del cargo menciona. Una entidad moderna no solo quiere sedes funcionales, sino sostenibles. El Gestor III que incorpora este criterio en la gestión de la infraestructura va un paso adelante y responde a una exigencia creciente del Estado y de la ciudadanía.</p></div>
+<div class="b-texto"><p>La infraestructura también conecta con la seguridad de las personas, un tema que no admite concesiones. Las sedes deben cumplir normas de seguridad humana: salidas de emergencia, señalización, sistemas contra incendios, condiciones sismorresistentes. El Gestor III que gestiona infraestructura vela por que esos requisitos se cumplan, porque de ellos depende la vida de funcionarios y ciudadanos. Una obra puede verse bien y, sin embargo, ser insegura si descuidó estos aspectos. Por eso la supervisión técnica y el cumplimiento normativo en infraestructura no son formalismos: son garantías de que los espacios públicos protegen a quienes los usan.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Repaso: administración de bienes</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>administración de bienes</mark> abarca el control de los bienes muebles (equipos, muebles, vehículos) e inmuebles (edificios, terrenos) de la entidad: su registro, asignación, uso, conservación, inventario y baja. El Gestor III responde por que los bienes públicos estén identificados, controlados y bien usados.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 12 viste que cada bien de la entidad debe estar registrado, con un responsable asignado, y someterse a inventario periódico. El <strong>inventario</strong> es la herramienta central: la lista completa y actualizada de los bienes, dónde están y quién responde por ellos. Sin inventario confiable, los bienes se pierden, se duplican o nadie responde por ellos. El Gestor III mantiene ese inventario al día, lo que conecta directamente con la calidad del dato que viste en el Día 19.</p>
+  <p>La <strong>baja de bienes</strong> es un procedimiento reglado: cuando un bien cumple su vida útil, se daña sin reparación posible o queda obsoleto, se retira del servicio y del inventario mediante un acto formal. No se puede simplemente botar un bien público ni regalarlo: hay un procedimiento (concepto técnico, acto administrativo, destino final conforme a la norma). El Gestor III conoce y aplica ese procedimiento, porque un bien dado de baja mal puede generar responsabilidad.</p>
+  <p>Los bienes conectan con casi todos los temas. Con la <strong>infraestructura</strong> (los inmuebles son bienes). Con los <strong>servicios</strong> (el parque automotor son bienes que requieren servicio). Con la <strong>contratación</strong> (los bienes se adquieren por contrato). Con la <strong>transparencia</strong> (el manejo de bienes públicos es vigilado). Con las <strong>herramientas</strong> (el inventario se lleva en sistemas y hojas de cálculo). El bien público es un hilo que recorre todo el cargo.</p>
+  <p>Hay un principio ético de fondo: los bienes son públicos, no del funcionario que los usa. Un computador, un vehículo o una oficina asignados no son propiedad de quien los usa: son del Estado, y deben usarse para fines del servicio, cuidarse y devolverse. El uso indebido de un bien público (para fines personales, por ejemplo) es una falta. El Gestor III custodia bienes ajenos y debe dar ejemplo de buen uso.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de bien</th><th>Ejemplos</th><th>Control principal</th></tr></thead>
+    <tbody>
+      <tr><td>Mueble</td><td>Equipos, muebles, vehículos</td><td>Inventario con responsable</td></tr>
+      <tr><td>Inmueble</td><td>Edificios, terrenos</td><td>Registro, administración, seguros</td></tr>
+      <tr><td>Bien de baja</td><td>Obsoleto, dañado, cumplió vida útil</td><td>Procedimiento formal de baja</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III realiza el inventario anual y detecta diez computadores obsoletos que ya no sirven. No los bota sin más: solicita el concepto técnico, tramita el acto administrativo de baja y gestiona el destino final conforme a la norma (por ejemplo, disposición de residuos electrónicos). El bien sale del inventario de forma legal y documentada, sin dejar cabos sueltos.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>Un bien público obsoleto que ya no sirve debe:</p>
+  <div class="cp-op" data-op="a">a) Botarse o regalarse de inmediato para liberar espacio.</div>
+  <div class="cp-op" data-op="b">b) Retirarse mediante el procedimiento formal de baja (concepto técnico, acto administrativo, destino conforme a la norma).</div>
+  <div class="cp-op" data-op="c">c) Dejarse indefinidamente en el inventario aunque no sirva.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene recordar que el manejo de bienes tiene un fuerte componente de responsabilidad personal. Cuando a un funcionario se le asigna un bien, firma su recibo y responde por su cuidado y devolución. El Gestor III, además de responder por los bienes a su cargo, suele coordinar el inventario de toda el área, lo que lo convierte en un punto de control clave. Un inventario descuidado no es solo un problema administrativo: puede derivar en responsabilidad fiscal si hay pérdida de bienes públicos. Por eso el inventario periódico, la conciliación con los soportes y la claridad sobre quién responde por cada bien son prácticas que protegen tanto los recursos como al propio servidor.</p></div>
+<div class="b-texto"><p>Conviene no perder de vista que el control de bienes es también un asunto de confianza pública. Cuando la ciudadanía sabe que los bienes del Estado están identificados, inventariados y bien cuidados, confía en que sus recursos se manejan con seriedad. Un escándalo por bienes perdidos, vehículos mal usados o inmuebles abandonados erosiona esa confianza. El Gestor III, al mantener un control riguroso de los bienes, no solo cumple una función técnica: sostiene la confianza en que lo público se administra con responsabilidad. Esa es una dimensión que da sentido y dignidad a una labor que podría parecer meramente operativa.</p></div>
+<div class="b-texto"><p>En síntesis de este tema: el bien público exige registro, responsable, uso correcto, conservación y una baja debidamente tramitada. Quien domina ese ciclo protege el patrimonio del Estado y se protege a sí mismo de responsabilidades. El inventario confiable es, al final, la mejor evidencia de que el área administra sus bienes con seriedad.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Repaso: servicios generales y parque automotor</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>servicios generales</mark> (aseo, vigilancia, cafetería, mantenimiento) y el <mark>parque automotor</mark> (los vehículos de la entidad) son el soporte operativo diario. El Gestor III planea, contrata y supervisa estos servicios para que la entidad funcione sin interrupciones y con seguridad.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 13 viste que estos servicios, aunque parezcan menores, son críticos: una sede sin aseo, sin vigilancia o sin agua no puede operar ni atender bien. Muchos de estos servicios se contratan (aseo, vigilancia), lo que conecta con la contratación. Y una vez contratados, requieren <strong>supervisión</strong>: verificar que el contratista cumpla (que el aseo se haga, que la vigilancia esté presente). El Gestor III como supervisor es el garante de que el servicio contratado realmente se preste.</p>
+  <p>El <strong>parque automotor</strong> tiene exigencias propias que repasaste: los vehículos oficiales deben tener el SOAT vigente, la revisión técnico-mecánica al día, mantenimiento periódico, y usarse solo para fines oficiales. El control del combustible, del kilometraje y del uso es clave para prevenir el uso indebido. Un vehículo oficial usado para fines personales es una falta; el Gestor III vela por el uso correcto.</p>
+  <p>Estos servicios ilustran bien el rol del Gestor III como <strong>supervisor de contratos</strong>, un papel transversal. Supervisar no es firmar las cuentas sin mirar: es verificar que lo contratado se cumpla, dejar constancia, exigir las correcciones y responder por el buen uso de los recursos. Una supervisión descuidada puede derivar en responsabilidad. La supervisión conecta este tema con la contratación (Días 14-15) y con la transparencia (Día 18).</p>
+  <p>La continuidad del servicio es un valor en sí mismo. El Gestor III debe anticipar que un contrato de aseo o vigilancia no se interrumpa al vencerse (gestionar a tiempo la renovación o el nuevo proceso), porque un día sin vigilancia es un riesgo de seguridad, y un día sin aseo afecta la operación y la imagen. La planeación oportuna de estos servicios evita vacíos que paralizan o ponen en riesgo a la entidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Servicio</th><th>Riesgo si falla</th><th>Rol del Gestor III</th></tr></thead>
+    <tbody>
+      <tr><td>Vigilancia</td><td>Inseguridad de personas y bienes</td><td>Contratar, supervisar, evitar vacíos</td></tr>
+      <tr><td>Aseo</td><td>Insalubridad, mala imagen</td><td>Supervisar cumplimiento del contrato</td></tr>
+      <tr><td>Parque automotor</td><td>Accidentes, uso indebido</td><td>SOAT, revisión, mantenimiento, control de uso</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El contrato de vigilancia de una sede vence en un mes. El Gestor III no espera al último día: gestiona con anticipación el nuevo proceso para que no haya ni un solo día sin vigilancia. Además, supervisa que el servicio actual se preste bien (los vigilantes presentes, los relevos cumplidos) y deja constancia. Así garantiza la seguridad sin interrupciones.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Supervisar un contrato de servicios generales significa, sobre todo:</p>
+  <div class="cp-op" data-op="a">a) Verificar que el contratista cumpla lo pactado, dejar constancia y exigir correcciones, respondiendo por el buen uso de los recursos.</div>
+  <div class="cp-op" data-op="b">b) Firmar las cuentas de cobro sin verificar, para agilizar el pago al contratista.</div>
+  <div class="cp-op" data-op="c">c) Dejar que el contratista se autorregule, ya que él sabe cómo hacer su trabajo.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Los servicios generales enseñan una lección valiosa sobre la gestión pública: lo cotidiano y aparentemente simple puede ser lo más crítico. Nadie nota el aseo o la vigilancia cuando funcionan, pero su ausencia paraliza y pone en riesgo. El Gestor III debe darle a estos servicios la atención que merecen, sin menospreciarlos por rutinarios. La anticipación es su mejor herramienta: planear las renovaciones con tiempo, tener listos los procesos antes de que venzan los contratos, y supervisar con constancia. La diferencia entre un área que funciona y una que vive en crisis suele estar, precisamente, en cómo se gestionan estos servicios de soporte.</p></div>
+<div class="b-texto"><p>Un aprendizaje transversal de los servicios y el parque automotor es la importancia del control del uso de los recursos. Vehículos, combustible, servicios: todos pueden ser objeto de uso indebido si no hay control. El Gestor III establece y aplica controles razonables (bitácoras de uso, autorizaciones, verificación de consumos) que previenen el abuso sin entorpecer la operación. Ese equilibrio entre control y agilidad es una marca del buen gestor: ni tan laxo que todo se preste al abuso, ni tan rígido que paralice el trabajo. El control existe para proteger el recurso público, no para obstaculizar el servicio.</p></div>
+<div class="b-texto"><p>En síntesis de este tema: los servicios generales y el parque automotor son soporte crítico que exige planeación anticipada, supervisión constante y control del uso. Su gestión discreta pero rigurosa es, muchas veces, lo que marca la diferencia entre un área que opera sin sobresaltos y una que vive apagando incendios.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Repaso: contratación estatal</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>contratación estatal</mark> es el conjunto de reglas por las que el Estado adquiere bienes, obras y servicios. Se rige por la Ley 80 de 1993, la Ley 1150 de 2007 y el Decreto 1082 de 2015, y por los principios de transparencia, economía, responsabilidad y selección objetiva. Es uno de los temas más importantes del cargo.</p>
+</div>
+<div class="b-texto">
+  <p>En los Días 14 y 15 viste el corazón de la gestión administrativa: cómo el Estado contrata. La contratación tiene etapas (planeación, selección, contratación, ejecución, liquidación) y modalidades de selección (licitación, selección abreviada, concurso de méritos, mínima cuantía, contratación directa), cada una para ciertos casos. Elegir la modalidad correcta según el objeto y la cuantía es una decisión clave: usar la equivocada vicia el proceso.</p>
+  <p>Los <strong>principios</strong> de la contratación son su brújula. La <strong>transparencia</strong> (procesos públicos, reglas claras, publicación en el SECOP). La <strong>economía</strong> (eficiencia, austeridad, trámites simplificados). La <strong>responsabilidad</strong> (cada quien responde por sus actuaciones). La <strong>selección objetiva</strong> (se elige la mejor oferta según criterios objetivos, no por favoritismo). Estos principios conectan la contratación con la transparencia (Día 18) y la integridad (Día 17) de forma directa.</p>
+  <p>La <strong>etapa de planeación</strong> es decisiva, aunque suele subestimarse. Antes de contratar, hay que hacer los estudios previos: definir bien qué se necesita, el valor estimado, las condiciones, los riesgos. Una mala planeación lleva a contratos problemáticos (objetos mal definidos, precios irreales, adiciones interminables). El Gestor III que planea bien la contratación evita la mayoría de los problemas que aparecen después.</p>
+  <p>La contratación es, además, el terreno donde más se juega la integridad. Es donde circula el dinero público y donde hay mayor riesgo de corrupción (direccionamiento de pliegos, sobrecostos, favorecimientos). Por eso las reglas son estrictas y el control es intenso. El Gestor III que apoya la contratación debe conocer las reglas y aplicarlas con rectitud: un proceso contractual bien hecho es la mejor prueba de buena gestión; uno amañado, la fuente más común de sanciones.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Modalidad</th><th>Cuándo se usa (en general)</th></tr></thead>
+    <tbody>
+      <tr><td>Licitación pública</td><td>Contratos de mayor cuantía, regla general</td></tr>
+      <tr><td>Selección abreviada</td><td>Bienes de características uniformes, menor cuantía</td></tr>
+      <tr><td>Concurso de méritos</td><td>Consultoría y servicios intelectuales</td></tr>
+      <tr><td>Mínima cuantía</td><td>Contratos de muy baja cuantía</td></tr>
+      <tr><td>Contratación directa</td><td>Casos excepcionales previstos en la ley</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El área necesita contratar la consultoría para el diseño de una adecuación. El Gestor III sabe que, por tratarse de un servicio intelectual especializado, la modalidad adecuada es el concurso de méritos, no la licitación ni la mínima cuantía. Elegir bien la modalidad desde el inicio asegura que el proceso sea legal y que se seleccione al consultor idóneo por sus méritos.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>La selección objetiva en la contratación estatal significa que:</p>
+  <div class="cp-op" data-op="a">a) Se elige al contratista conocido o recomendado para agilizar.</div>
+  <div class="cp-op" data-op="b">b) La entidad puede escoger a quien quiera sin justificar.</div>
+  <div class="cp-op" data-op="c">c) Se elige la mejor oferta según criterios objetivos previamente definidos, sin favoritismos.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La contratación merece un repaso especial sobre su lógica profunda, no solo sobre sus reglas. Detrás de cada norma de contratación hay un propósito: garantizar que el dinero público se use bien, que se elija la mejor oferta y que todo sea transparente y vigilable. Cuando el Gestor III entiende ese propósito, no aplica las reglas de memoria, sino con criterio: sabe por qué se publica en el SECOP, por qué hay modalidades distintas, por qué los estudios previos importan. Esa comprensión profunda es lo que le permite resolver situaciones que no están escritas al pie de la letra en ningún manual, aplicando el espíritu de la contratación pública.</p></div>
+<div class="b-texto"><p>Como reflexión de este tema, la contratación concentra buena parte del valor y del riesgo del cargo: por ella pasa el dinero público y en ella se juega la integridad. Dominarla no es memorizar artículos, sino comprender su lógica (planear bien, seleccionar objetivamente, ejecutar y supervisar con rigor, liquidar sin cabos sueltos) y aplicarla con rectitud frente a las presiones. El Gestor III que entiende esto convierte la contratación en una fortaleza de su gestión y no en su mayor fuente de problemas.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Repaso: ejecución, supervisión y liquidación</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Firmar el contrato no es el final: luego vienen la <mark>ejecución</mark> (el contratista cumple lo pactado), la <mark>supervisión o interventoría</mark> (la entidad verifica el cumplimiento) y la <mark>liquidación</mark> (el balance final del contrato). El Gestor III suele actuar como supervisor, un rol de gran responsabilidad.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 15 profundizaste en lo que pasa después de la firma. La <strong>supervisión</strong> es la vigilancia del cumplimiento del contrato por parte de la entidad; la <strong>interventoría</strong> es lo mismo pero cuando se contrata a un tercero especializado para vigilar (en contratos complejos). El supervisor verifica que el contratista cumpla en calidad, cantidad y tiempo, autoriza pagos solo contra cumplimiento real, y deja constancia de todo. Es un rol crítico: una supervisión negligente genera responsabilidad.</p>
+  <p>Durante la ejecución pueden surgir situaciones que viste: <strong>adiciones</strong> (aumentar el valor, con límites legales), <strong>prórrogas</strong> (ampliar el plazo), <strong>modificaciones</strong>, e incluso incumplimientos que llevan a <strong>multas</strong> o a la declaratoria de incumplimiento. El supervisor detecta estas situaciones a tiempo y actúa conforme a la norma. No puede, por ejemplo, dejar pasar un incumplimiento ni autorizar pagos por algo no ejecutado.</p>
+  <p>La <strong>liquidación</strong> es el cierre: el balance final donde se verifica que todo se cumplió, se hacen los ajustes, se definen los saldos y las partes se declaran a paz y salvo. No todos los contratos se liquidan, pero los de tracto sucesivo y los de obra, sí. Una liquidación bien hecha cierra el contrato sin dejar cabos sueltos; una mal hecha o no hecha puede dejar obligaciones pendientes y problemas futuros.</p>
+  <p>Este módulo refuerza el rol del Gestor III como garante del recurso público durante toda la vida del contrato. La contratación no se gana con la firma, sino con la buena ejecución: un contrato bien adjudicado pero mal supervisado puede terminar en despilfarro o en obra inservible. El supervisor atento, que verifica y deja constancia, protege los recursos y a sí mismo frente a eventuales responsabilidades. La supervisión es donde la teoría de la contratación se hace realidad.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><div><strong>Ejecución</strong><p>El contratista cumple lo pactado</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">2</span><div><strong>Supervisión</strong><p>La entidad verifica y deja constancia</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">3</span><div><strong>Pago</strong><p>Solo contra cumplimiento real</p></div></div>
+  <div class="flujo-flecha">↓</div>
+  <div class="flujo-paso"><span class="fp-n">4</span><div><strong>Liquidación</strong><p>Balance final y paz y salvo</p></div></div>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III supervisa un contrato de adecuación. El contratista pide el pago del 100%, pero al verificar en obra, el Gestor constata que falta el 15% del trabajo. No autoriza el pago total: certifica solo lo ejecutado, deja constancia escrita de lo pendiente y exige la terminación. Su diligencia evita pagar por algo no hecho y protege los recursos públicos.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>El supervisor de un contrato debe autorizar los pagos:</p>
+  <div class="cp-op" data-op="a">a) Solo contra el cumplimiento real verificado, dejando constancia de lo ejecutado.</div>
+  <div class="cp-op" data-op="b">b) Cuando el contratista lo solicite, sin necesidad de verificar la ejecución.</div>
+  <div class="cp-op" data-op="c">c) Por el total desde el inicio, para darle liquidez al contratista.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La supervisión es, quizás, la responsabilidad más subestimada y a la vez más riesgosa del cargo. Muchos problemas de la contratación pública no están en la adjudicación, sino en la ejecución mal vigilada: obras que no se terminan, servicios que no se prestan, pagos autorizados sin verificar. El supervisor que firma sin mirar se expone a responsabilidad disciplinaria, fiscal y hasta penal. Por eso el Gestor III debe asumir la supervisión con seriedad: verificar en terreno, exigir soportes, dejar constancia escrita y no autorizar nada que no se haya cumplido de verdad. La supervisión diligente es, al mismo tiempo, protección del recurso público y protección del propio servidor.</p></div>
+<div class="b-texto"><p>Vale la pena cerrar el repaso de contratación con una advertencia sobre las señales de alarma que el Gestor III debe reconocer: pliegos hechos a la medida de un proveedor, plazos imposibles para todos menos para uno, requisitos innecesarios que descartan competencia, adiciones sucesivas que terminan duplicando el valor, o presiones para adjudicar a un favorito. Reconocer estas señales es parte del criterio profesional. Ante ellas, el servidor íntegro no participa, deja constancia y, si corresponde, reporta. La contratación es el terreno donde más se pone a prueba la integridad del cargo, y donde el conocimiento de las reglas debe ir siempre acompañado de la firmeza para aplicarlas.</p></div>
+<div class="b-texto"><p>En síntesis: la contratación no termina con la firma ni con la adjudicación, sino con la buena ejecución verificada y la liquidación bien hecha. El Gestor III acompaña todo ese recorrido con criterio y constancia, sabiendo que cada etapa mal manejada se paga después. La diligencia a lo largo de toda la vida del contrato es lo que convierte una buena adjudicación en un buen resultado.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Repaso: gestión documental y archivo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>gestión documental</mark> es el manejo organizado de los documentos de la entidad a lo largo de su ciclo de vida, regulado por la Ley 594 de 2000 (Ley General de Archivos). Un buen archivo es la memoria de la entidad y la base de la transparencia: lo que no está documentado, no se puede probar ni consultar.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 16 viste que los documentos públicos no se manejan al azar: tienen un ciclo (producción, trámite, conservación, disposición final) y se organizan con herramientas como las Tablas de Retención Documental (TRD), que definen cuánto tiempo se conserva cada documento y qué se hace con él al final (eliminar o conservar históricamente). El Gestor III produce y maneja muchos documentos (contratos, actas, informes) y debe archivarlos conforme a estas reglas.</p>
+  <p>La gestión documental es el <strong>tejido conectivo</strong> de todo el cargo. Cada actuación administrativa deja un documento: el contrato (Días 14-15), el acta de baja de un bien (Día 12), el informe de gestión (Día 19), la respuesta a una petición (servicio al ciudadano). Todos esos documentos deben archivarse bien para poder consultarlos, responder requerimientos y rendir cuentas. Un buen archivo hace posible la transparencia (Día 18): no se puede entregar lo que no se encuentra.</p>
+  <p>El principio de fondo es que el documento público es <strong>prueba de lo actuado</strong> y <strong>patrimonio de la entidad</strong>, no propiedad del funcionario. Un servidor no puede llevarse, destruir ni ocultar documentos públicos: eso es una falta grave. El archivo garantiza que la memoria institucional sobreviva a los cambios de personal: cuando un funcionario se va, los documentos quedan, y el que llega puede continuar.</p>
+  <p>La gestión documental moderna es cada vez más <strong>digital</strong>, lo que conecta con las herramientas del Día 19: sistemas de gestión documental electrónica, firmas digitales, expedientes electrónicos. Pero las reglas de fondo (organización, conservación, retención) son las mismas, sea en papel o digital. El Gestor III debe manejar ambos mundos y entender que la gestión documental no es un trámite burocrático, sino la base de la memoria, la prueba y la transparencia de la entidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Fase del ciclo documental</th><th>Qué implica</th></tr></thead>
+    <tbody>
+      <tr><td>Producción</td><td>Creación del documento (oficio, contrato, acta)</td></tr>
+      <tr><td>Trámite</td><td>Recorrido del documento mientras se usa</td></tr>
+      <tr><td>Conservación</td><td>Archivo según la Tabla de Retención</td></tr>
+      <tr><td>Disposición final</td><td>Eliminación o conservación histórica</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un ciudadano pide, por derecho de acceso, copia de un contrato de hace dos años. Gracias a que el Gestor III archivó bien el expediente conforme a la TRD, lo encuentra en minutos y lo entrega. Si el archivo hubiera estado en desorden, la entidad no habría podido responder a tiempo, incumpliendo el derecho de acceso. El buen archivo hizo posible la transparencia.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Un documento público, para el Gestor III, es:</p>
+  <div class="cp-op" data-op="a">a) Propiedad del funcionario que lo produjo, que puede llevárselo al retirarse.</div>
+  <div class="cp-op" data-op="b">b) Prueba de lo actuado y patrimonio de la entidad, que debe archivarse conforme a la Ley 594 de 2000.</div>
+  <div class="cp-op" data-op="c">c) Un papel sin mayor importancia que se puede destruir cuando estorba.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La gestión documental revela una verdad incómoda de la administración pública: el buen trabajo mal documentado se vuelve invisible y, peor, indefendible. Si un Gestor III hizo todo bien pero no dejó constancia, ante una auditoría o un reclamo no tendrá cómo probarlo. Por eso el hábito de documentar y archivar bien no es una carga adicional al trabajo: es parte esencial del trabajo. En un cargo que maneja recursos y que será auditado, la frase que conviene recordar es que lo que no está documentado, no se hizo. El archivo ordenado es el seguro del servidor diligente.</p></div>
+<div class="b-texto"><p>Para cerrar el repaso de gestión documental, recuerda que el archivo conecta el pasado con el futuro de la entidad: conserva la memoria de lo actuado y hace posible que quien llegue después continúe sin partir de cero. En un cargo donde el personal cambia, el archivo es la continuidad institucional. El Gestor III que archiva bien le hace un favor no solo a la auditoría de hoy, sino al funcionario de mañana y a la ciudadanía que algún día consultará esa información. Documentar bien es un acto de responsabilidad con el tiempo.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Repaso: MIPG, buen gobierno e integridad</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>MIPG</mark> (Modelo Integrado de Planeación y Gestión) es el marco que organiza la gestión de las entidades públicas en dimensiones y políticas, para que operen con calidad, eficiencia e integridad. El Código de Integridad y los valores del servicio público orientan la conducta del servidor. Es el "cómo" de la buena gestión.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 17 viste que la gestión pública no se improvisa: se organiza con un modelo. El MIPG tiene dimensiones (talento humano, direccionamiento estratégico, gestión para resultados, evaluación, información, control interno) y políticas que las desarrollan. El Gestor III no dirige el MIPG, pero su trabajo se enmarca en él: cuando planea, documenta, usa indicadores o rinde cuentas, está aplicando el modelo. El MIPG da sentido de conjunto a todo lo que viste.</p>
+  <p>El <strong>Código de Integridad</strong> y los valores del servicio público (honestidad, respeto, compromiso, diligencia, justicia) son el corazón ético del cargo. No son adornos: son la guía de conducta en las situaciones difíciles que la prueba evalúa. Cuando aparece una presión para favorecer a alguien, para disimular un error o para usar mal un recurso, los valores dan la respuesta. El Gestor III íntegro actúa conforme a estos valores incluso cuando nadie lo ve.</p>
+  <p>El <strong>control interno</strong> es otra pieza clave que repasaste. No es solo la oficina de control interno: es un sistema del que todos son parte, para asegurar que las cosas se hagan bien. Los <strong>autocontroles</strong> (verificar el propio trabajo), los procedimientos y los puntos de control previenen errores y fraudes. El Gestor III que incorpora el autocontrol comete menos errores y detecta los problemas a tiempo, antes de que escalen.</p>
+  <p>Este módulo conecta con todo el bloque de gestión. La integridad se juega en la contratación (Días 14-15), en el manejo de bienes (Día 12), en la transparencia (Día 18) y en los informes honestos (Día 19). El MIPG y los valores no son un tema aparte: son la forma correcta de hacer todo lo demás. Un Gestor III técnicamente competente pero sin integridad es un riesgo; uno competente e íntegro es el perfil que la DIAN y la ciudadanía necesitan.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Valor del servicio público</th><th>Qué significa en el cargo</th></tr></thead>
+    <tbody>
+      <tr><td>Honestidad</td><td>Manejar los recursos con rectitud, sin provecho propio</td></tr>
+      <tr><td>Diligencia</td><td>Cumplir las funciones con cuidado y a tiempo</td></tr>
+      <tr><td>Respeto</td><td>Trato digno a ciudadanos y compañeros</td></tr>
+      <tr><td>Compromiso</td><td>Entregarse al servicio del interés general</td></tr>
+      <tr><td>Justicia</td><td>Dar a cada quien lo que le corresponde, sin favoritismos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un contratista le ofrece al Gestor III un "detalle" para agilizar un pago. El Gestor no duda: rechaza el ofrecimiento, deja constancia y reporta la situación. No necesitó consultar un manual en ese momento: los valores de honestidad e integridad le dieron la respuesta de inmediato. Esa es la utilidad de tener los valores incorporados, no solo memorizados.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>El autocontrol, como parte del control interno, consiste en:</p>
+  <div class="cp-op" data-op="a">a) Esperar a que la oficina de control interno revise todo el trabajo.</div>
+  <div class="cp-op" data-op="b">b) Confiar en que si hay un error, alguien más lo detectará.</div>
+  <div class="cp-op" data-op="c">c) Que cada servidor verifique su propio trabajo para prevenir errores y detectarlos a tiempo.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>El MIPG y la integridad tienen una relación que conviene subrayar: el modelo organiza el 'cómo' técnico, pero sin integridad el mejor modelo falla. Se pueden tener procedimientos impecables y, aun así, un servidor deshonesto encuentra cómo hacer daño. Por eso la integridad no es una dimensión más del modelo: es su condición de posibilidad. El Gestor III debe entender que ningún sistema de gestión, por sofisticado que sea, reemplaza la rectitud de las personas. La prueba lo sabe, y por eso tantas preguntas ponen al candidato ante dilemas éticos: quiere ver no solo si conoce los procedimientos, sino si tiene el carácter para aplicarlos cuando aparece la tentación de desviarse.</p></div>
+<div class="b-texto"><p>En síntesis: el MIPG organiza el cómo de la buena gestión y los valores dan el carácter para aplicarlo. Competencia sin integridad es un riesgo; integridad sin competencia es insuficiente. El Gestor III ideal reúne ambas, y por eso la prueba evalúa tanto el conocimiento como el criterio ético ante situaciones difíciles.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Repaso: transparencia y lucha contra la corrupción</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>transparencia</mark> (Ley 1712 de 2014) y la <mark>lucha contra la corrupción</mark> (Ley 1474 de 2011) exigen que la actuación pública sea visible, verificable y honesta. Para el Gestor III, que maneja recursos, son un deber permanente: trabajar a la vista, publicar lo que debe publicarse y actuar con rectitud.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 18 viste que la transparencia tiene dos caras: la activa (publicar sin que lo pidan) y la pasiva (responder las solicitudes de acceso). Y que la lucha contra la corrupción se apoya en el Estatuto Anticorrupción, en los tres tipos de responsabilidad (disciplinaria, fiscal, penal) y en la prevención. Para un cargo que maneja contratación y bienes, estos temas no son teóricos: son el marco de riesgo y de deber de su trabajo diario.</p>
+  <p>La transparencia es la <strong>culminación</strong> de muchos temas del curso. Se apoya en el buen archivo (Día 16: no se entrega lo que no se encuentra), en la publicación de la contratación (Días 14-15: el SECOP), en los informes honestos (Día 19: rendir cuentas con datos verdaderos) y en la integridad (Día 17). Es el hilo que conecta todo con la confianza ciudadana: cada actuación transparente la fortalece; cada opacidad la erosiona.</p>
+  <p>Los <strong>tres tipos de responsabilidad</strong> merecen recordarse porque delimitan el riesgo. La <strong>disciplinaria</strong> (por faltas a los deberes, la sanciona la Procuraduría o la propia entidad). La <strong>fiscal</strong> (por daño al patrimonio público, la determina la Contraloría). La <strong>penal</strong> (por delitos, la investiga la Fiscalía). Una misma conducta puede generar las tres a la vez. El Gestor III que maneja recursos debe conocer este mapa de responsabilidades para dimensionar la importancia de hacer bien su trabajo.</p>
+  <p>El mensaje central del Día 18 fue que la transparencia, lejos de ser una carga, es la mejor aliada del servidor honesto: quien trabaja a la vista, publica lo que debe y documenta todo, tiene cómo demostrar que actuó bien. La lucha contra la corrupción empieza por hacer bien, a la vista y con rectitud, el propio trabajo cotidiano. El Gestor III es, por el lugar que ocupa, una pieza clave de esa lucha desde lo administrativo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de responsabilidad</th><th>Por qué</th><th>Quién la determina</th></tr></thead>
+    <tbody>
+      <tr><td>Disciplinaria</td><td>Faltas a los deberes del servidor</td><td>Procuraduría / entidad</td></tr>
+      <tr><td>Fiscal</td><td>Daño al patrimonio público</td><td>Contraloría</td></tr>
+      <tr><td>Penal</td><td>Delitos contra la administración</td><td>Fiscalía / jueces</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Gestor III descubre un error propio en la supervisión de un contrato: autorizó un pago con un soporte incompleto. En lugar de ocultarlo, lo reporta, gestiona la corrección y documenta todo. Al ser transparente y diligente, demuestra buena fe y corrige a tiempo. Ocultarlo habría sido mucho peor: habría sumado una falta a un error. La transparencia lo protegió.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>El daño al patrimonio público por el manejo indebido de recursos genera, principalmente, responsabilidad:</p>
+  <div class="cp-op" data-op="a">a) Solo penal, investigada por la Procuraduría.</div>
+  <div class="cp-op" data-op="b">b) Fiscal, determinada por la Contraloría (sin perjuicio de la disciplinaria y penal que puedan concurrir).</div>
+  <div class="cp-op" data-op="c">c) Ninguna, porque los errores administrativos no generan responsabilidad.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un matiz importante sobre la transparencia es que no se opone a la protección de ciertos datos. Transparencia no significa publicarlo todo sin filtro: significa publicar lo que debe ser público y proteger lo que la ley reserva (datos personales, información clasificada o reservada por razones legítimas). El Gestor III debe manejar ese equilibrio con criterio: ser máximamente transparente con la información pública y, a la vez, cuidadoso con la que debe protegerse. Confundir transparencia con divulgar datos personales sería tan erróneo como usar la reserva para ocultar lo que debería ser público. El buen criterio distingue uno de otro.</p></div>
+<div class="b-texto"><p>La transparencia, bien entendida, también es una forma de eficiencia. Cuando los procesos son claros y la información está disponible, se evitan reprocesos, se responden más rápido las solicitudes y se reduce la desconfianza que genera trabas. Una entidad opaca gasta energía ocultando y justificando; una transparente la invierte en hacer. El Gestor III que trabaja de forma transparente desde el inicio (publicando a tiempo, documentando, respondiendo con datos) no solo cumple un deber: facilita su propio trabajo y el de la entidad. La transparencia deja de verse como carga cuando se descubre que, a la larga, hace la gestión más fluida.</p></div>
+<div class="b-texto"><p>En síntesis de este tema: la transparencia y la lucha contra la corrupción no son una materia aparte, sino la forma correcta de hacer todo lo demás. Para un cargo que maneja recursos, trabajar a la vista, publicar lo debido, documentar y actuar con rectitud es, a la vez, un deber legal y la mejor protección del propio servidor.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Repaso: herramientas informáticas e informes</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las <mark>herramientas informáticas</mark> (ofimática, sistemas de información) y los <mark>informes de gestión</mark> son el soporte transversal del cargo: con ellos el Gestor III planea, controla y rinde cuentas. Convierte datos en información, e información en decisiones y transparencia. Es el tema que sostiene a todos los demás.</p>
+</div>
+<div class="b-texto">
+  <p>En el Día 19 viste que ningún proceso administrativo moderno se gestiona sin herramientas: la hoja de cálculo para controlar, el procesador para documentar, los sistemas (SECOP, SIGEP) para los trámites reglados, los informes e indicadores para rendir cuentas. El Gestor III es un usuario competente de todo esto, no un técnico de sistemas. Y, por su nivel, no solo registra datos: los analiza, los interpreta y recomienda.</p>
+  <p>El principio clave que repasaste es "<strong>entra basura, sale basura</strong>": la calidad de los informes e indicadores depende de la calidad de los datos. Por eso el Gestor III cuida el dato en el origen, depura las bases y mantiene la información al día. Este cuidado conecta con el manejo de bienes (el inventario), con la contratación (los datos de los contratos) y con la transparencia (los datos que se reportan deben ser confiables).</p>
+  <p>Los <strong>informes y los indicadores</strong> son el instrumento de la rendición de cuentas basada en datos. Un informe de calidad es honesto (muestra logros y dificultades), verificable (se apoya en cifras) y orientado a la acción (recomienda). Un indicador útil tiene meta y se usa para actuar, no solo para medir. Estos instrumentos cierran el círculo del cargo: lo que se planea y ejecuta se mide, se reporta y se somete al escrutinio.</p>
+  <p>La <strong>seguridad de la información</strong> y la protección de datos personales (Ley 1581 de 2012) completan el tema. El Gestor III protege la información sensible con hábitos simples (claves fuertes, respaldos, prudencia) y trata los datos personales con reserva. En una entidad tan tecnificada como la DIAN, el buen manejo de la información es parte esencial de la responsabilidad del cargo. Las herramientas, bien usadas, son instrumentos de eficiencia y de integridad a la vez.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Instrumento</th><th>Para qué</th><th>Conexión con otros temas</th></tr></thead>
+    <tbody>
+      <tr><td>Hoja de cálculo</td><td>Controlar y analizar datos</td><td>Inventario de bienes, contratos</td></tr>
+      <tr><td>Sistemas (SECOP, SIGEP)</td><td>Trámites reglados</td><td>Contratación, hojas de vida</td></tr>
+      <tr><td>Informes e indicadores</td><td>Rendir cuentas con datos</td><td>Transparencia, MIPG</td></tr>
+      <tr><td>Seguridad y datos personales</td><td>Proteger la información</td><td>Transparencia (límites), integridad</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Para el comité, el Gestor III consolida en una hoja de cálculo los datos de contratos, bienes y mantenimientos; calcula los indicadores de ejecución; arma un informe honesto con gráficos y recomendaciones; y protege los datos personales que maneja. En una sola tarea integró herramientas, contratación, bienes, indicadores, transparencia y seguridad. Así se ve el cargo en la realidad: todo conectado.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>La frase "entra basura, sale basura" aplicada al trabajo del Gestor III recuerda que:</p>
+  <div class="cp-op" data-op="a">a) La calidad de los informes e indicadores depende de la calidad de los datos de origen, que hay que cuidar y depurar.</div>
+  <div class="cp-op" data-op="b">b) Los datos no importan mientras el informe se vea bien presentado.</div>
+  <div class="cp-op" data-op="c">c) Conviene borrar los datos cada cierto tiempo para empezar de cero.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Sobre las herramientas, conviene cerrar con una idea que las pone en su lugar: son medios, no fines. El objetivo no es tener el tablero más bonito ni dominar todas las funciones de una hoja de cálculo, sino usar esas capacidades para gestionar mejor, decidir con datos y rendir cuentas con transparencia. Un Gestor III puede ser un experto técnico en herramientas y, aun así, un mal gestor si no pone esa habilidad al servicio de una buena administración. La competencia digital vale por lo que permite lograr: eficiencia, control e integridad en el manejo de los recursos. Esa es la medida de su utilidad.</p></div>
+<div class="b-texto"><p>En síntesis: las herramientas y los informes son el soporte transversal que permite planear, controlar y rendir cuentas con datos confiables. El Gestor III las usa con criterio profesional, cuida la calidad y la seguridad de la información, y las pone al servicio de una gestión eficiente y transparente, no como un fin en sí mismas.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Cómo se integran todos los temas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los temas del curso no son compartimentos separados: forman un <mark>sistema integrado</mark>. En la realidad del cargo y en la prueba, una sola situación suele involucrar varios a la vez. Dominar el cargo es entender cómo se conectan y actuar con esa visión de conjunto, no tema por tema.</p>
+</div>
+<div class="b-texto">
+  <p>Piensa en el ciclo de un recurso para ver la integración. Una necesidad se <strong>planea</strong> (generalidades, PAA); se <strong>adquiere</strong> por <strong>contratación</strong> (Días 14-15); durante la ejecución se <strong>supervisa</strong> (Día 15); lo adquirido se registra como <strong>bien</strong> o se incorpora a la <strong>infraestructura</strong> o a los <strong>servicios</strong> (Días 10-13); todo genera <strong>documentos</strong> que se archivan (Día 16); se maneja con <strong>integridad</strong> en el marco del <strong>MIPG</strong> (Día 17); se publica con <strong>transparencia</strong> (Día 18); y se controla y reporta con <strong>herramientas e informes</strong> (Día 19). Un solo recurso recorre casi todo el curso.</p>
+  <p>Las <strong>preguntas integradoras</strong> de la prueba reflejan esto. Un caso puede plantear, por ejemplo, un contrato de mantenimiento (contratación) de un bien (bienes) de una sede (infraestructura), con un supervisor que debe actuar con integridad (MIPG) y transparencia (Día 18), dejando constancia documental (archivo) y reportando datos (herramientas). Para responder bien hay que ver todas las capas, no solo una. El repaso integrador te entrena justamente en esa mirada.</p>
+  <p>Hay <strong>principios transversales</strong> que atraviesan todos los temas y que conviene tener siempre presentes: la legalidad (actuar conforme a la norma), la eficiencia (buen uso de recursos escasos), la transparencia (trabajar a la vista), la integridad (rectitud), la documentación (dejar constancia) y el servicio (el fin es servir a la ciudadanía). Ante cualquier situación, estos principios orientan la respuesta correcta, sea cual sea el tema específico.</p>
+  <p>La ventaja de pensar de forma integrada es doble. En la <strong>prueba</strong>, permite responder casos complejos sin perderse, porque se reconocen todas las dimensiones en juego. En el <strong>trabajo real</strong>, permite actuar con criterio profesional ante situaciones que no vienen etiquetadas por tema. La realidad no avisa "esto es contratación" o "esto es transparencia": llega mezclada, y el buen Gestor III la desenreda aplicando el conjunto de lo que sabe. Esa es la madurez profesional que el curso busca.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Principio transversal</th><th>Se aplica en</th></tr></thead>
+    <tbody>
+      <tr><td>Legalidad</td><td>Todos los temas: actuar conforme a la norma</td></tr>
+      <tr><td>Eficiencia</td><td>Planeación, contratación, servicios, bienes</td></tr>
+      <tr><td>Transparencia</td><td>Contratación, archivo, informes, publicación</td></tr>
+      <tr><td>Integridad</td><td>Manejo de recursos, supervisión, decisiones</td></tr>
+      <tr><td>Documentación</td><td>Toda actuación deja constancia</td></tr>
+      <tr><td>Servicio</td><td>El fin último: servir a la ciudadanía</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Llega un caso: un proveedor presiona para que se le pague por una obra incompleta de adecuación de una sede, ofreciendo un "incentivo". El Gestor III lo resuelve integrando todo: no paga lo no ejecutado (supervisión), rechaza el ofrecimiento (integridad), deja constancia escrita (documentación), actúa conforme a la norma contractual (legalidad) y reporta la situación (transparencia). Una sola situación, todos los temas en juego.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>La principal ventaja de pensar los temas del cargo de forma integrada es:</p>
+  <div class="cp-op" data-op="a">a) Poder olvidar los detalles de cada tema específico.</div>
+  <div class="cp-op" data-op="b">b) Resolver casos complejos (de la prueba y de la realidad) reconociendo todas las dimensiones en juego y los principios transversales.</div>
+  <div class="cp-op" data-op="c">c) Responder cualquier pregunta con un solo tema, sin importar su contenido.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>La integración de los temas tiene una consecuencia práctica para estudiar: más que memorizar datos aislados de cada día, conviene construir un mapa mental de cómo se conectan. Quien entiende que la contratación alimenta los bienes, que los bienes se controlan con herramientas, que todo se documenta y se publica con transparencia, retiene mejor y responde mejor que quien tiene una lista desarticulada de normas. El repaso integrador que hiciste hoy es, precisamente, ese ejercicio de armar el mapa. Llévalo contigo al simulacro: ante cada caso, ubícalo en el mapa y las conexiones te mostrarán la respuesta.</p></div>
+<div class="b-texto"><p>Para fijar la idea de integración, piensa en los principios transversales como un filtro que se aplica a cualquier situación. Antes de decidir, el Gestor III se pregunta: ¿esto es legal?, ¿usa bien los recursos?, ¿resiste la luz pública?, ¿es íntegro?, ¿queda documentado?, ¿sirve a la ciudadanía? Si una actuación falla en cualquiera de esos filtros, probablemente no es la correcta. Este método simple, aplicado con disciplina, resuelve la mayoría de los dilemas de la prueba y del trabajo real, porque reduce la complejidad de cada caso a un conjunto de preguntas claras cuya respuesta orienta siempre hacia la actuación debida.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El perfil completo del Gestor III y la recta final</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>perfil del Gestor III</mark> que la DIAN busca integra competencia técnica, criterio profesional e integridad: un servidor que gestiona los recursos administrativos con eficiencia, legalidad y transparencia, que documenta y rinde cuentas, y que pone todo al servicio de la ciudadanía. Este repaso cierra la preparación funcional del curso.</p>
+</div>
+<div class="b-texto">
+  <p>Al terminar el bloque funcional, el Gestor III ideal reúne varias cualidades. Es <strong>competente</strong>: conoce la normativa (contratación, archivo, transparencia) y las herramientas. Tiene <strong>criterio</strong>: no solo ejecuta, analiza, decide y recomienda como corresponde a su nivel profesional. Es <strong>íntegro</strong>: maneja recursos ajenos con rectitud. Y es <strong>orientado al servicio</strong>: entiende que su trabajo administrativo, aunque no sea misional, hace posible que la DIAN sirva a la ciudadanía.</p>
+  <p>La prueba evalúa justamente ese perfil. No busca memoristas de artículos, sino profesionales que apliquen criterio a situaciones reales. Por eso las preguntas de juicio situacional presentan dilemas donde hay presiones, distractores y varias opciones plausibles. La clave para responderlas es la que viste todo el curso: identificar el tema (o los temas) en juego, aplicar la norma y los principios, y elegir la actuación legal, íntegra y transparente. No la más cómoda ni la que evita el conflicto: la correcta.</p>
+  <p>Para la recta final, algunos consejos de método. Repasa este bloque integrador para tener el mapa completo. En el simulacro del Día 21, lee cada caso completo antes de responder (el dato decisivo suele estar en el contexto). Desconfía de las opciones que proponen ocultar, disimular, favorecer o saltarse la norma: casi nunca son correctas. Y ante la duda, pregúntate qué haría un servidor íntegro y diligente: esa suele ser la respuesta.</p>
+  <p>Cierras aquí la preparación funcional de un curso diseñado para que llegues a la prueba con dominio real, no con datos sueltos. Has recorrido la infraestructura, los bienes, los servicios, la contratación, el archivo, el modelo de gestión, la transparencia y las herramientas, y hoy los has integrado en una visión de conjunto. Con esta base, el simulacro del Día 21 será la oportunidad de poner a prueba todo lo aprendido. Vas listo: confía en tu preparación, lee con calma y aplica el criterio profesional que has construido. Mucho éxito en la recta final.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Cualidad del perfil</th><th>Qué aporta al cargo</th></tr></thead>
+    <tbody>
+      <tr><td>Competencia</td><td>Conoce la normativa y las herramientas</td></tr>
+      <tr><td>Criterio</td><td>Analiza, decide y recomienda (nivel profesional)</td></tr>
+      <tr><td>Integridad</td><td>Maneja recursos ajenos con rectitud</td></tr>
+      <tr><td>Servicio</td><td>Su trabajo hace posible servir a la ciudadanía</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>En la prueba aparece un caso donde un superior presiona para adjudicar un contrato a un proveedor determinado "porque es de confianza". El Gestor III preparado reconoce el tema (selección objetiva), el principio en juego (transparencia e integridad) y la respuesta correcta: la selección debe ser objetiva, conforme a los criterios del proceso, sin favoritismos. No cede a la presión. Todo el curso lo preparó para ese momento.</p>
+</div>
+<div class="destacado"><div class="dst-body"><span class="dst-title">💡 Idea clave del día</span>
+  <p>El cargo no es una suma de temas sueltos, sino un sistema integrado. El Gestor III competente, con criterio e íntegro, gestiona los recursos administrativos aplicando a cada situación la norma y los principios transversales (legalidad, eficiencia, transparencia, integridad, documentación, servicio). Esa visión de conjunto es lo que te prepara para el simulacro y para el cargo.</p>
+</div></div>
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips para la recta final</div>
+  <ul>
+    <li>El cargo es <strong>profesional y de apoyo</strong>: gestiona recursos administrativos, no es misional (tributario/aduanero).</li>
+    <li>Los temas se <strong>integran</strong>: una situación suele involucrar varios a la vez.</li>
+    <li>Principios transversales: <strong>legalidad, eficiencia, transparencia, integridad, documentación, servicio</strong>.</li>
+    <li>Lee cada caso completo: el <strong>dato decisivo</strong> suele estar en el contexto.</li>
+    <li>Desconfía de opciones que propongan <strong>ocultar, disimular, favorecer o saltarse la norma</strong>.</li>
+    <li>Ante la duda: ¿qué haría un <strong>servidor íntegro y diligente</strong>? Esa suele ser la respuesta.</li>
+  </ul>
+</div>
+<div class="frase-recordar">⚡ "No la opción más cómoda ni la que evita el conflicto: siempre la actuación legal, íntegra y transparente."</div>
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_0080_1993.html" target="_blank" rel="noopener">Ley 80 de 1993 — Estatuto General de Contratación</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1150_2007.html" target="_blank" rel="noopener">Ley 1150 de 2007 — Reforma a la contratación</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_0594_2000.html" target="_blank" rel="noopener">Ley 594 de 2000 — Ley General de Archivos</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1474_2011.html" target="_blank" rel="noopener">Ley 1474 de 2011 — Estatuto Anticorrupción</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1712_2014.html" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia y acceso a la información</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG</a></li>
+    <li><a href="https://www.colombiacompra.gov.co/" target="_blank" rel="noopener">Colombia Compra Eficiente</a></li>
+  </ul>
+</div>
+<div class="b-texto"><p>Un último consejo para la recta final, sobre la actitud. La preparación que hiciste a lo largo del curso es sólida; ahora toca confiar en ella y manejar bien la prueba. No te dejes llevar por la presión del tiempo ni por el nerviosismo: lee cada caso con calma, identifica el dato clave, descarta las opciones claramente incorrectas y elige con criterio. Si una pregunta te confunde, recuerda los principios transversales y la figura del servidor íntegro y diligente. Has recorrido un camino completo de preparación; el día de la prueba es el momento de cosechar ese trabajo. Entra con seguridad, no con miedo: sabes más de lo que crees, y este repaso lo ha dejado todo en su lugar.</p></div>
+<div class="b-texto"><p>Como reflexión de cierre del bloque funcional, vale recordar por qué este tipo de cargo importa para el país. Una administración pública que gestiona bien sus recursos, que contrata con transparencia, que cuida sus bienes y rinde cuentas, es una administración en la que la ciudadanía puede confiar. Cada Gestor III que ejerce con rigor e integridad suma a esa confianza; cada uno que se desvía la resta. Al prepararte para este cargo no estás solo buscando aprobar una prueba: te estás preparando para ser parte de la solución, para administrar lo público como merece ser administrado. Ese sentido de propósito es, al final, el mejor combustible para la recta final y para el ejercicio del cargo.</p></div>
+<div class="b-texto"><p>Con este repaso integrador cierras la preparación funcional. Lo que sigue es el simulacro final del Día 21, donde pondrás a prueba todo lo aprendido con preguntas que replican la prueba real. Llegas con el mapa completo del cargo y con el método para resolver cualquier caso: identificar los temas en juego, aplicar la norma y los principios transversales, y elegir siempre la actuación legal, íntegra y transparente. Estás listo.</p></div>
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>El repaso integrador exige tener claras, de una vez, las distinciones de todo el bloque funcional. Estas son las que más se confunden y las que más aparecen en la prueba. Repásalas hasta que no tengas dudas.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Mantenimiento preventivo</td><td>Mantenimiento correctivo</td><td>El preventivo se hace antes de la falla, programado y más barato; el correctivo repara lo ya dañado, por urgencia y más caro.</td></tr><tr><td>Bien mueble</td><td>Bien inmueble</td><td>El mueble se traslada (equipos, vehículos); el inmueble no (edificios, terrenos).</td></tr><tr><td>Supervisión</td><td>Interventoría</td><td>La supervisión la hace la entidad; la interventoría, un tercero contratado para vigilar contratos complejos.</td></tr><tr><td>Selección objetiva</td><td>Favoritismo</td><td>La selección objetiva elige la mejor oferta por criterios definidos; el favoritismo elige por conveniencia personal (prohibido).</td></tr><tr><td>Responsabilidad fiscal</td><td>Responsabilidad disciplinaria</td><td>La fiscal es por daño al patrimonio (Contraloría); la disciplinaria, por faltas a los deberes (Procuraduría/entidad).</td></tr><tr><td>Transparencia activa</td><td>Transparencia pasiva</td><td>La activa publica sin que lo pidan; la pasiva responde las solicitudes de acceso del ciudadano.</td></tr><tr><td>Dato</td><td>Información</td><td>El dato es el registro crudo; la información es el dato procesado y con sentido para decidir.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Muchas preguntas integradoras mezclan varios de estos pares en un mismo caso. Lee despacio e identifica qué distinción está en juego antes de elegir.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · El pago de la obra incompleta</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Eres Gestor III y supervisas un contrato de adecuación de una sede. El contratista exige el pago total, pero al verificar en obra falta cerca del 15% del trabajo. Además, te insinúa un 'reconocimiento' si agilizas el pago completo.</p>
+      <span class="label">Análisis</span>
+      <p>El caso integra supervisión (verificar antes de pagar), integridad (rechazar el ofrecimiento) y documentación (dejar constancia). No se paga lo no ejecutado y no se aceptan dádivas.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Certificar y autorizar solo el pago de lo realmente ejecutado, rechazar el ofrecimiento dejando constancia escrita, exigir la terminación de la obra y reportar la situación conforme a la norma.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El bien que ya no sirve</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante el inventario anual detectas equipos de cómputo obsoletos e inservibles. Un compañero propone 'regalarlos a quien los quiera' para liberar espacio rápido.</p>
+      <span class="label">Análisis</span>
+      <p>El caso integra manejo de bienes (baja reglada) y legalidad. Un bien público no se regala ni se bota sin procedimiento: hay que dar de baja formalmente.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Tramitar la baja conforme al procedimiento (concepto técnico, acto administrativo, destino final según la norma, por ejemplo disposición de residuos electrónicos), documentando todo el proceso.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · La solicitud de acceso a contratos</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un ciudadano pide copia de los contratos de aseo y vigilancia de una sede. Un compañero sugiere negar 'porque son documentos internos'.</p>
+      <span class="label">Análisis</span>
+      <p>El caso integra transparencia pasiva (derecho de acceso), archivo (encontrar el expediente) y protección de datos (reservar lo que corresponda). Los contratos son públicos.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Entregar la información pública solicitada (los contratos estatales son públicos y están en buena parte en el SECOP), protegiendo los datos personales de terceros que deban reservarse, dentro del plazo legal.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · La presión del superior</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un superior te presiona para favorecer a un proveedor 'de confianza' en un proceso contractual, pasando por alto los criterios de evaluación.</p>
+      <span class="label">Análisis</span>
+      <p>El caso integra selección objetiva, integridad frente a presiones y transparencia. La selección debe ser objetiva, sin favoritismos, aunque la presión venga de arriba.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> No ceder a la presión: aplicar los criterios de selección objetiva del proceso, dejar constancia, y si la presión persiste o se formaliza una orden irregular, reportarla por los canales correspondientes.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Estudiar los temas como compartimentos aislados</div><p>En la prueba y en la realidad los temas se integran. Estudia cómo se conectan: una situación suele involucrar contratación, bienes, transparencia e integridad a la vez.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Elegir la opción más cómoda ante un dilema</div><p>Las opciones que proponen ocultar, disimular, favorecer o saltarse la norma casi nunca son correctas. La respuesta es la actuación legal, íntegra y transparente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Responder sin leer el caso completo</div><p>El dato decisivo suele estar en el contexto. Lee todo el caso (escenario, presiones, distractores) antes de mirar las opciones.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confundir transparencia con publicarlo todo</div><p>Transparencia es publicar lo público y proteger lo reservado (datos personales). No es divulgar información que la ley protege.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Pagar o certificar sin verificar</div><p>En supervisión, autorizar pagos sin verificar la ejecución genera responsabilidad. Siempre se paga contra cumplimiento real verificado.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Memorizar artículos sin entender su lógica</div><p>La prueba evalúa criterio, no memoria literal. Comprender el porqué de las normas permite resolver casos que no están escritos al pie de la letra.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>El cargo es <strong>profesional y de apoyo</strong>: gestiona recursos administrativos, no es misional (tributario/aduanero).</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>Los temas se <strong>integran</strong>: una situación suele involucrar varios a la vez.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Principios transversales: <strong>legalidad, eficiencia, transparencia, integridad, documentación, servicio</strong>.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Filtro de decisión: ¿es legal?, ¿usa bien los recursos?, ¿resiste la luz pública?, ¿es íntegro?, ¿queda documentado?, ¿sirve a la ciudadanía?</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Lee cada caso completo: el <strong>dato decisivo</strong> suele estar en el contexto.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>Ante la duda: ¿qué haría un <strong>servidor íntegro y diligente</strong>? Esa suele ser la respuesta correcta.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone pagar la totalidad de un contrato aunque falte parte de la ejecución, para 'no entorpecer' al contratista.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece colaborativo y ágil ayudar al contratista con liquidez.</div>
+      <div class="t-row malo">🔴 La trampa: El supervisor no puede autorizar pagos por algo no ejecutado: genera responsabilidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Certificar y pagar solo lo realmente ejecutado, verificando y dejando constancia de lo pendiente.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere negar una solicitud de acceso a contratos 'porque son internos de la Entidad'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece prudente proteger la información de la Entidad.</div>
+      <div class="t-row malo">🔴 La trampa: Los contratos estatales son públicos; negar el acceso viola la Ley 1712 de 2014.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Entregar la información pública solicitada dentro del plazo, reservando solo los datos personales que corresponda.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a favorecer a un proveedor 'de confianza' por indicación de un superior.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que obedecer al superior es lo correcto y evita conflictos.</div>
+      <div class="t-row malo">🔴 La trampa: Viola la selección objetiva; una orden irregular no exime de responsabilidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Aplicar los criterios objetivos del proceso, dejar constancia y reportar la presión si persiste.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>El cargo es un sistema integrado</h4><p>Infraestructura, bienes, servicios, contratación, archivo, MIPG, transparencia y herramientas se conectan; el cargo se domina viéndolos juntos.</p></div>
+    <div class="resumen-item"><h4>Principios transversales</h4><p>Legalidad, eficiencia, transparencia, integridad, documentación y servicio orientan la respuesta correcta en cualquier tema.</p></div>
+    <div class="resumen-item"><h4>Perfil esperado</h4><p>Competencia técnica, criterio profesional e integridad, al servicio de la ciudadanía.</p></div>
+    <div class="resumen-item"><h4>Método para los casos</h4><p>Identificar los temas en juego, aplicar norma y principios, y elegir la actuación legal, íntegra y transparente.</p></div>
+    <div class="resumen-item"><h4>Recta final</h4><p>Leer el caso completo, descartar las opciones que ocultan o favorecen, y decidir como un servidor íntegro y diligente.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Recursos administrativos</dt><dd>Bienes, servicios, infraestructura e información que la entidad necesita para funcionar.</dd>
+      <dt>Plan Anual de Adquisiciones</dt><dd>Herramienta donde se planea lo que la entidad va a adquirir en el año.</dd>
+      <dt>Supervisión</dt><dd>Vigilancia del cumplimiento de un contrato por parte de la entidad.</dd>
+      <dt>Selección objetiva</dt><dd>Elección de la mejor oferta según criterios objetivos, sin favoritismos.</dd>
+      <dt>Tabla de Retención Documental</dt><dd>Instrumento que define cuánto se conserva cada documento y su disposición final.</dd>
+      <dt>MIPG</dt><dd>Modelo Integrado de Planeación y Gestión; marco de la gestión pública.</dd>
+      <dt>Responsabilidad fiscal</dt><dd>La que surge por daño al patrimonio público; la determina la Contraloría.</dd>
+      <dt>Principios transversales</dt><dd>Legalidad, eficiencia, transparencia, integridad, documentación y servicio.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Repaso Integrador del Bloque Funcional</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">4 Intermedias</span><span class="tag a">4 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 20. Continúa con el simulacro final del Día 21.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 20 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 20</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué es, en una frase, el Gestor III del área administrativa de la DIAN?","b": "Un cargo profesional de apoyo que gestiona los recursos administrativos (infraestructura, bienes, servicios, contratación, información) para que la entidad opere. No es misional (tributario/aduanero); planea, analiza y decide con criterio."},{"f": "¿Cuál es el ciclo de los recursos administrativos?","b": "Planear (PAA) → adquirir (contratación) → usar y mantener (inventario, mantenimiento) → dar de baja (procedimiento formal). El Gestor III acompaña todo el ciclo con eficiencia, legalidad y transparencia."},{"f": "Preventivo vs. correctivo, ¿cuál conviene y por qué?","b": "El preventivo: se hace antes de la falla, de forma programada, es más barato y evita emergencias. El correctivo repara lo ya dañado, por urgencia y más caro."},{"f": "¿Cómo se retira un bien público que ya no sirve?","b": "Mediante el procedimiento formal de baja: concepto técnico, acto administrativo y destino final conforme a la norma. Nunca se bota ni se regala sin trámite; el bien es público."},{"f": "¿Qué significa supervisar un contrato?","b": "Verificar que el contratista cumpla en calidad, cantidad y tiempo; autorizar pagos solo contra cumplimiento real verificado; y dejar constancia. Una supervisión negligente genera responsabilidad."},{"f": "¿Qué es la selección objetiva en contratación?","b": "Elegir la mejor oferta según criterios objetivos previamente definidos, sin favoritismos. Es uno de los principios de la contratación estatal (Ley 80/1993, 1150/2007, Decreto 1082/2015)."},{"f": "¿Por qué importa la gestión documental?","b": "Porque el documento es prueba de lo actuado y patrimonio de la entidad (Ley 594/2000). Un buen archivo es la base de la transparencia: no se puede entregar ni probar lo que no se encuentra."},{"f": "¿Qué aportan el MIPG y los valores al cargo?","b": "El MIPG organiza el 'cómo' técnico de la buena gestión; los valores (honestidad, diligencia, respeto, compromiso, justicia) dan el carácter ético. Competencia e integridad deben ir juntas."},{"f": "¿Cuáles son los tres tipos de responsabilidad del servidor?","b": "Disciplinaria (faltas a los deberes; Procuraduría/entidad), fiscal (daño al patrimonio; Contraloría) y penal (delitos; Fiscalía/jueces). Una conducta puede generar las tres a la vez."},{"f": "¿Qué recuerda la frase 'entra basura, sale basura'?","b": "Que la calidad de los informes e indicadores depende de la calidad de los datos de origen. Hay que cuidar y depurar el dato; un dato errado contamina todo lo que se construye sobre él."},{"f": "¿Cuáles son los principios transversales del cargo?","b": "Legalidad, eficiencia, transparencia, integridad, documentación y servicio. Orientan la respuesta correcta en cualquier tema y situación."},{"f": "¿Cuál es el método para resolver un caso en la prueba?","b": "Leer el caso completo (el dato clave está en el contexto), identificar los temas en juego, aplicar la norma y los principios transversales, descartar las opciones que ocultan/favorecen, y elegir la actuación legal, íntegra y transparente."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Naturaleza del cargo","ctx": "Eres Gestor III del área administrativa de la DIAN. En una conversación de pasillo, un funcionario nuevo asegura que, como trabaja en la DIAN, su labor principal será liquidar impuestos y controlar la operación aduanera, y que lo administrativo 'es secundario'. Tú, que gestionas infraestructura, bienes, servicios y contratación, le explicas en qué consiste realmente tu cargo y por qué es importante para la entidad, sin menospreciar las áreas misionales.","q": "¿Cuál es la descripción correcta del cargo de Gestor III del área administrativa?","ops": ["Es un cargo misional dedicado a liquidar tributos y controlar mercancías, igual que las dependencias de impuestos y aduanas.","Es un cargo profesional de apoyo que gestiona los recursos administrativos (infraestructura, bienes, servicios, contratación, información) para que la entidad pueda operar y cumplir su misión.","Es un cargo técnico que solo digita datos y hace tareas operativas, sin analizar ni tomar decisiones."],"correcta": 1,"expl": "El Gestor III del área administrativa es un cargo profesional de apoyo: gestiona los recursos administrativos que hacen posible la operación de la DIAN. No es misional (no liquida impuestos ni controla aduanas), pero tampoco es meramente operativo: por su nivel, planea, analiza y decide con criterio."},{"nivel": "b","tema": "Ciclo de los recursos y planeación","ctx": "Eres Gestor III del área administrativa de la DIAN. A mitad de año, una dependencia solicita con urgencia la compra de varios equipos que 'olvidaron' pedir y que no estaban previstos. Un compañero sugiere comprarlos de inmediato por fuera de toda planeación 'porque son necesarios'. Tú sabes que la gestión de recursos sigue un ciclo que empieza por la planeación y que las adquisiciones deben estar previstas.","q": "¿Cuál es la forma correcta de abordar la situación?","ops": ["Comprar los equipos de inmediato sin ningún trámite de planeación, ya que la necesidad justifica saltarse el procedimiento.","Encauzar la necesidad por el procedimiento correcto: verificar disponibilidad presupuestal, ajustar el Plan Anual de Adquisiciones si procede y adquirir por la modalidad de contratación que corresponda.","Negar cualquier compra por el resto del año, porque no estaba en el plan inicial y ya no se puede modificar nada."],"correcta": 1,"expl": "La gestión de recursos sigue un ciclo que empieza por la planeación. Una necesidad sobrevenida no justifica saltarse el procedimiento ni comprometer recursos sin disponibilidad; tampoco se niega de plano. Lo correcto es encauzarla: verificar presupuesto, ajustar el PAA si procede y contratar por la modalidad adecuada."},{"nivel": "b","tema": "Infraestructura y mantenimiento","ctx": "Eres Gestor III del área administrativa de la DIAN. El jefe te pide proponer cómo manejar el mantenimiento de las instalaciones (ascensores, aire acondicionado, red eléctrica) de una sede. Un compañero opina que lo más económico es 'esperar a que algo se dañe para repararlo, así no se gasta de más'. Tú recuerdas la diferencia entre mantenimiento preventivo y correctivo.","q": "¿Qué enfoque de mantenimiento debes recomendar principalmente?","ops": ["El mantenimiento preventivo, con revisiones programadas antes de que ocurran las fallas, que es más barato a la larga y evita emergencias y riesgos.","El mantenimiento correctivo exclusivamente, reparando solo cuando algo ya se dañó, porque así no se invierte hasta que sea estrictamente necesario.","No hacer mantenimiento, ya que las instalaciones nuevas no requieren ningún cuidado durante varios años."],"correcta": 0,"expl": "El mantenimiento preventivo (programado, antes de la falla) es más barato a la larga y evita emergencias y riesgos para las personas. Esperar a que todo se dañe (solo correctivo) resulta más caro y peligroso. No hacer mantenimiento es negligente. El preventivo debe ser el enfoque principal, complementado con el correctivo cuando sea inevitable."},{"nivel": "b","tema": "Manejo de bienes","ctx": "Eres Gestor III del área administrativa de la DIAN. En el inventario anual detectas quince equipos de cómputo obsoletos que ya no funcionan y ocupan espacio. Un compañero propone 'sacarlos a la basura este fin de semana' para despejar la bodega rápido; otro sugiere repartirlos entre los funcionarios que los quieran para su casa.","q": "¿Cuál es la actuación correcta con esos bienes?","ops": ["Botarlos a la basura cuanto antes, ya que no sirven y solo ocupan espacio en la bodega.","Repartirlos entre los funcionarios que los deseen, porque de todos modos la entidad ya no los va a usar.","Tramitar la baja de los bienes conforme al procedimiento (concepto técnico, acto administrativo y destino final según la norma), documentando el proceso."],"correcta": 2,"expl": "Los bienes públicos no se botan ni se reparten sin trámite: hay un procedimiento formal de baja (concepto técnico, acto administrativo, destino final conforme a la norma, como la disposición de residuos electrónicos). Botarlos o regalarlos sin procedimiento es irregular y puede generar responsabilidad fiscal."},{"nivel": "i","tema": "Servicios generales y continuidad","ctx": "Eres Gestor III del área administrativa de la DIAN. El contrato de vigilancia de una sede vence en tres semanas y aún no se ha iniciado el proceso para el nuevo. Un compañero dice que 'no hay afán, que se puede dejar un par de días sin vigilancia mientras se contrata de nuevo'. Tú sabes que un solo día sin vigilancia es un riesgo de seguridad para personas y bienes.","q": "¿Cómo debes actuar frente al vencimiento del contrato de vigilancia?","ops": ["Esperar a que venza el contrato y luego iniciar el nuevo proceso, aceptando que habrá unos días sin servicio.","Gestionar con la debida anticipación el nuevo proceso (o la prórroga que proceda) para que no haya ni un solo día sin vigilancia, garantizando la continuidad del servicio.","Suspender indefinidamente la vigilancia para ahorrar recursos mientras se decide qué hacer."],"correcta": 1,"expl": "La continuidad de servicios críticos como la vigilancia es esencial: un día sin servicio es un riesgo de seguridad. El Gestor III debe anticiparse y gestionar a tiempo el nuevo proceso o la prórroga que proceda, para que no haya vacíos. Dejar días sin vigilancia o suspenderla es negligente y peligroso."},{"nivel": "i","tema": "Supervisión de contratos","ctx": "Eres Gestor III del área administrativa de la DIAN y supervisas un contrato de adecuación de una sede. El contratista presenta la cuenta de cobro por el 100% del valor y te pide que la apruebes 'para no demorar el pago'. Al revisar en obra, constatas que falta aproximadamente el 20% del trabajo. El contratista insiste en que 'lo que falta lo termina la próxima semana, pero necesita el pago completo ya'.","q": "¿Cuál es la actuación correcta como supervisor?","ops": ["Aprobar el pago del 100% confiando en la palabra del contratista de que terminará la próxima semana, para no demorar el flujo de caja.","Certificar y autorizar únicamente el pago de lo efectivamente ejecutado, dejando constancia escrita de lo pendiente y condicionando el saldo a la terminación verificada.","Negar todo pago hasta que la obra esté 100% terminada, aunque gran parte ya esté ejecutada y recibida a satisfacción."],"correcta": 1,"expl": "El supervisor autoriza pagos solo contra el cumplimiento real verificado. No puede pagar el 100% por un 80% ejecutado (genera responsabilidad), ni confiar solo en promesas. Tampoco debe negar el pago de lo ya ejecutado a satisfacción. Lo correcto es certificar y pagar lo ejecutado, documentar lo pendiente y condicionar el saldo a su terminación."},{"nivel": "i","tema": "Transparencia y acceso a la información","ctx": "Eres Gestor III del área administrativa de la DIAN. Un ciudadano presenta una solicitud de acceso a la información pidiendo copia de los contratos de aseo y vigilancia de una sede de los últimos dos años, con sus actas de supervisión. Un compañero sugiere negar la solicitud 'porque esos son documentos internos de la Entidad y no hay por qué entregarlos'. Tú recuerdas la Ley 1712 de 2014 y el principio de máxima publicidad.","q": "¿Cuál es la actuación correcta ante la solicitud?","ops": ["Negar la solicitud, ya que los contratos y actas son documentos internos de la Entidad que no corresponde entregar a los ciudadanos.","Entregar la información pública solicitada (los contratos estatales son públicos y, en buena parte, están en el SECOP), protegiendo los datos personales de terceros que deban reservarse, dentro del plazo legal.","Entregar toda la información sin ningún filtro, incluyendo los datos personales de los trabajadores del contratista, para mostrar la máxima transparencia posible."],"correcta": 1,"expl": "Los contratos estatales son públicos (principio de máxima publicidad, Ley 1712/2014) y están en gran parte en el SECOP. Negar el acceso es ilegal. Pero la transparencia tiene como límite la protección de datos personales (Ley 1581/2012): se entrega la información pública reservando los datos personales de terceros que corresponda."},{"nivel": "i","tema": "Integridad y selección objetiva","ctx": "Eres Gestor III del área administrativa de la DIAN y apoyas un proceso de contratación. Un superior jerárquico te presiona para que ajustes la evaluación a favor de un proveedor 'de su entera confianza', sugiriéndote que 'modifiques algún detalle' para que ese oferente quede mejor posicionado, aunque no sea la mejor oferta según los criterios del pliego. Te dice que 'así se maneja esto' y que no habrá problema.","q": "¿Cuál es la actuación correcta?","ops": ["Ajustar la evaluación como pide el superior, porque es una orden de un jerárquico y obedecer evita conflictos y problemas laborales.","Aplicar los criterios objetivos del pliego sin alterarlos, dejar constancia de lo actuado y, si la presión persiste o se formaliza una orden irregular, reportarla por los canales correspondientes.","Renunciar a participar en el proceso en silencio, sin dejar ninguna constancia ni informar la situación a nadie."],"correcta": 1,"expl": "La selección objetiva prohíbe el favoritismo: se elige la mejor oferta según los criterios definidos. Una orden irregular de un superior no exime de responsabilidad al servidor que la ejecuta. Lo correcto es aplicar los criterios sin alterarlos, dejar constancia y reportar la presión. Ceder viola la ley; retirarse en silencio deja avanzar la irregularidad."},{"nivel": "a","tema": "Caso integrador: contratación, bienes e integridad","ctx": "Eres Gestor III del área administrativa de la DIAN. Supervisas un contrato de suministro de mobiliario para una sede. Al recibir, detectas que el contratista entregó 90 de los 100 escritorios pactados y que 10 llegaron con defectos. Además, el contratista te ofrece 'invitarte a almorzar y darte un detalle' si recibes todo como conforme y apruebas el pago completo, prometiendo 'arreglar lo que falte después'. El plazo de recibo está por vencer y sientes presión.","q": "¿Cuál es la actuación correcta que integra supervisión, manejo de bienes e integridad?","ops": ["Recibir todo como conforme y aprobar el pago completo aceptando el ofrecimiento, ya que el contratista promete corregir después y así se evita el vencimiento del plazo.","Recibir y registrar en el inventario solo los bienes efectivamente entregados y en buen estado, rechazar los defectuosos y los faltantes, no aprobar el pago de lo no cumplido, rechazar el ofrecimiento dejando constancia, y requerir formalmente al contratista.","Rechazar la totalidad de la entrega, incluidos los 90 escritorios en buen estado, para presionar al contratista a cumplir el 100% de una vez."],"correcta": 1,"expl": "El caso integra varios temas: supervisión (recibir solo lo cumplido, no pagar lo no entregado), manejo de bienes (registrar en inventario lo recibido en buen estado) e integridad (rechazar el ofrecimiento y dejar constancia). Aceptar la dádiva es una falta grave; rechazar lo que sí cumple sería desproporcionado. Lo correcto es recibir lo conforme, requerir lo pendiente y reportar."},{"nivel": "a","tema": "Caso integrador: documentación, transparencia y datos","ctx": "Eres Gestor III del área administrativa de la DIAN. Control interno solicita, para una auditoría, los soportes de la ejecución de tres contratos de mantenimiento y un reporte de los bienes asociados. Al revisar, encuentras que parte del archivo del año está desorganizado y que la base de bienes tiene datos desactualizados y algunos duplicados. Un compañero sugiere 'entregar lo que haya como esté y rápido' para cumplir el plazo, aunque los datos no cuadren.","q": "¿Cómo debes preparar la respuesta a control interno?","ops": ["Entregar los soportes y el reporte tal como están, aunque el archivo esté desorganizado y la base de bienes tenga datos errados, con tal de cumplir el plazo.","Organizar y verificar los soportes conforme al archivo, depurar la base de bienes contra los documentos (corregir duplicados y actualizar datos), y entregar información completa y confiable, gestionando una prórroga razonable si el tiempo no alcanza.","Entregar solo los contratos y bienes que están bien documentados y omitir los demás, para que todo lo reportado luzca impecable ante la auditoría."],"correcta": 1,"expl": "El caso integra gestión documental (soportes organizados), calidad del dato ('entra basura, sale basura') y transparencia (información confiable para el control). Entregar datos errados induce a error y expone a hallazgos; omitir contratos falsea la realidad. Lo correcto es organizar, depurar y verificar antes de entregar, pidiendo prórroga si es necesaria."},{"nivel": "a","tema": "Caso integrador: principios transversales","ctx": "Eres Gestor III del área administrativa de la DIAN. Se presenta una emergencia: una tubería se rompió e inundó parte de una sede, dañando equipos y documentos, y hay riesgo para la operación. Varias decisiones se cruzan: hay que reparar urgente (infraestructura), evaluar los bienes afectados (manejo de bienes), posiblemente contratar de forma expedita (contratación), proteger y recuperar documentos (archivo) y reportar lo ocurrido (transparencia e informes). La presión de resolver rápido es alta.","q": "¿Qué enfoque debes seguir para actuar correctamente en medio de la emergencia?","ops": ["Resolver todo sobre la marcha sin dejar registros ni seguir procedimientos, porque en una emergencia 'lo urgente justifica cualquier medio'.","Atender la urgencia aplicando los principios transversales: actuar conforme a la norma (incluida la contratación de urgencia donde proceda), usar bien los recursos, documentar cada decisión, evaluar y registrar los bienes afectados, proteger los documentos y reportar la situación con transparencia.","Esperar a recibir instrucciones detalladas por escrito para cada paso antes de hacer nada, aunque la inundación siga causando daños mientras tanto."],"correcta": 1,"expl": "La emergencia no suspende los principios transversales (legalidad, eficiencia, documentación, transparencia): los aplica bajo presión. Se actúa con agilidad pero conforme a la norma (p. ej., las figuras de urgencia en contratación donde procedan), documentando cada decisión y reportando. Ni se improvisa sin registros ni se paraliza esperando instrucciones mientras el daño avanza."},{"nivel": "a","tema": "Perfil del cargo y criterio profesional","ctx": "Eres Gestor III del área administrativa de la DIAN y estás preparándote para la prueba. Reflexionas sobre qué busca evaluar el concurso en las preguntas de juicio situacional, que suelen presentar dilemas con presiones, varias opciones plausibles y la tentación de tomar la salida más cómoda. Un compañero cree que basta con memorizar artículos de las leyes para responder bien; otro piensa que lo clave es el criterio para aplicar esas normas a situaciones reales.","q": "¿Qué evalúa principalmente la prueba de juicio situacional y cómo conviene enfrentarla?","ops": ["La memoria literal de los artículos de las leyes, de modo que basta con aprenderlos de memoria para responder cualquier caso.","El criterio profesional para aplicar las normas y los principios a situaciones reales: hay que leer el caso completo, identificar los temas en juego y elegir la actuación legal, íntegra y transparente, no la más cómoda.","La rapidez para responder, de modo que conviene contestar de inmediato sin leer todo el caso para ahorrar tiempo."],"correcta": 1,"expl": "La prueba de juicio situacional evalúa el criterio profesional, no la memoria literal: pone al candidato ante dilemas reales con presiones y distractores. La forma correcta de enfrentarla es leer el caso completo (el dato clave está en el contexto), identificar los temas en juego, aplicar norma y principios, y elegir la actuación legal, íntegra y transparente."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
