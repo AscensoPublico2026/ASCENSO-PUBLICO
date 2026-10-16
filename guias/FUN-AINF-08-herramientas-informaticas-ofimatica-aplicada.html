@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-08 · Herramientas informáticas y ofimática aplicada — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-08</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 16 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>Herramientas informáticas y ofimática aplicada</h1>
+  <p class="header-sub">Usar con criterio la hoja de cálculo, el texto, las presentaciones y el correo: depurar, cruzar, resumir, comunicar y proteger, sin confiar ciegamente en la herramienta.</p>
+  <div class="badges"><span class="badge">📅 Día 16 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones con las herramientas de la oficina. Primero, debes resumir una base de 50.000 registros por seccional e impuesto. Segundo, una función de búsqueda te devuelve cientos de 'no encontrados' al cruzar por NIT. Tercero, debes enviar una base a otra área y dudas si mandarla en PDF o en otro formato. Y cuarto, un compañero te pide tu clave 'un momento' para avanzar con un archivo.</p>
+    <p>¿Cómo resumes miles de registros en segundos? ¿Por qué fallan los cruces y qué revisas primero? ¿Qué formato elegir para enviar datos sin que se dañen? ¿Prestas tu clave? Todas estas respuestas parten de un mismo conocimiento: el manejo con criterio de las <mark>herramientas informáticas y ofimáticas</mark>. El manual las incluye entre los conocimientos del cargo. Hoy aprenderás a usar la hoja de cálculo, el texto, las presentaciones y el correo como lo que son: instrumentos que multiplican a un buen analista, nunca que lo reemplazan.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Cómo organizar, <strong>filtrar y ordenar</strong> datos en una hoja de cálculo sin descuadrarlos.</li>
+      <li>Cómo <strong>depurar</strong> (duplicados, vacíos, formatos) y usar <strong>fórmulas básicas</strong> con verificación.</li>
+      <li>Las <strong>búsquedas</strong> para cruzar y las <strong>tablas dinámicas</strong> para resumir en segundos.</li>
+      <li>El manejo de <strong>formatos</strong> (xlsx, csv, PDF), el procesador de texto y las presentaciones.</li>
+      <li>El <strong>correo</strong> responsable, la <strong>seguridad</strong> (claves, bloqueo) y las copias de respaldo.</li>
+      <li>El <strong>criterio</strong> para no confiar ciegamente en la herramienta: el perfil de usuario experto y responsable.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender la ofimática como herramienta →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>El manual de funciones del Analista I incluye el manejo de <mark>herramientas ofimáticas y de información</mark> entre los conocimientos a evaluar. Y no es un detalle: buena parte de la jornada del cargo transcurre usando la hoja de cálculo, el procesador de texto, las presentaciones y el correo. Dominarlas con criterio es, por tanto, central para la prueba y para el día a día.</p>
+    <p>Necesitas saber organizar, depurar, filtrar, cruzar y resumir datos con eficiencia; comunicar resultados con claridad y honestidad; manejar los formatos sin perder información; y proteger la información con buenas prácticas de seguridad. Pero, sobre todo, necesitas usar las herramientas con criterio: no confiar ciegamente en lo que arrojan, porque calculan lo que se les indica, aunque esté mal.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean estos dilemas: confiar ciegamente en un resultado raro, entregar datos en PDF, compartir la clave, ordenar una sola columna descuadrando la tabla, o presentar con escalas tramposas. La respuesta correcta casi siempre se deriva de usar la herramienta con criterio (depurar, verificar), con honestidad (comunicar sin engañar) y con seguridad (proteger la información). Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que proponen confiar ciegamente en el resultado de la herramienta, compartir la clave, enviar datos en PDF, ordenar una sola columna sin el resto, o presentar con gráficos tramposos. La respuesta suele estar en depurar y verificar (criterio), comunicar con honestidad y proteger la información (seguridad).</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Herramientas informáticas y ofimática aplicada</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. El manual incluye entre los conocimientos del cargo el manejo de <mark>herramientas ofimáticas</mark> y de información. Hoy verás, sin tecnicismos de programación, cómo usar con criterio una hoja de cálculo (filtros, ordenar, buscar duplicados, tablas dinámicas, fórmulas de búsqueda), el procesador de texto y las presentaciones; cómo manejar formatos y bases de datos sencillas; el correo y la comunicación digital responsable; la seguridad y las copias de respaldo; y, sobre todo, el criterio para no confiar ciegamente en la herramienta. Todo ambientado en el trabajo real del Analista con datos tributarios. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, sabrás usar las herramientas ofimáticas como lo que son: instrumentos que multiplican a un buen analista, no que lo reemplazan.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📑</span><h5>Hoja de cálculo</h5><p>Filtrar, ordenar, cruzar</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📊</span><h5>Resumir</h5><p>Tablas dinámicas, fórmulas</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📝</span><h5>Comunicar</h5><p>Texto, presentaciones, correo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔐</span><h5>Proteger</h5><p>Seguridad y respaldo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧭</span><h5>Con criterio</h5><p>La herramienta no reemplaza el juicio</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>La ofimática como herramienta del Analista</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>ofimática</mark> es el conjunto de programas de oficina (hoja de cálculo, procesador de texto, presentaciones, correo) que permiten producir, procesar y comunicar información. Para el Analista I son herramientas de trabajo diarias: no un fin en sí mismas, sino instrumentos para gestionar datos y comunicar resultados con calidad.</p>
+</div>
+<div class="b-texto">
+  <p>El trabajo del Analista I con información se apoya en un conjunto de herramientas ofimáticas que conviene dominar con soltura. La más importante para quien gestiona datos es la <strong>hoja de cálculo</strong>, donde se organizan, filtran, cruzan y resumen los datos. A su lado están el <strong>procesador de texto</strong> (para informes y documentos), las <strong>presentaciones</strong> (para comunicar resultados) y el <strong>correo</strong> (para la comunicación oficial). Cada una tiene su propósito y su buen uso.</p>
+  <p>El manual del cargo menciona el manejo de herramientas ofimáticas y de información entre los conocimientos a evaluar, y no es un detalle: buena parte de la jornada de un Analista transcurre usando estas herramientas. Dominarlas con criterio marca la diferencia entre un trabajo lento y propenso a errores y uno ágil y confiable. No se trata de ser experto en programación, sino de usar bien lo que la oficina pone a disposición.</p>
+  <p>Hay una idea que debe guiar todo el tema: las herramientas <strong>multiplican</strong> al buen analista, pero no lo reemplazan. Una hoja de cálculo hace cálculos impecables, pero no sabe si la pregunta era la correcta ni si los datos estaban sucios; una presentación puede verse muy bien y comunicar un error. La herramienta amplifica tanto el acierto como el descuido del que la usa. Por eso el criterio humano sigue siendo lo decisivo.</p>
+  <p>Para el Analista I, el objetivo de este tema no es memorizar menús, sino entender qué permite hacer cada herramienta y, sobre todo, cómo usarla con responsabilidad: con datos depurados, con verificación de los resultados y con buenas prácticas de seguridad. Un dominio sólido de la ofimática, puesto al servicio del criterio, convierte al Analista en alguien capaz de procesar grandes volúmenes de información con rapidez y confiabilidad, que es justamente lo que el cargo exige.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Herramienta</th><th>Para qué sirve al Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Hoja de cálculo</td><td>Organizar, filtrar, cruzar y resumir datos</td></tr>
+      <tr><td>Procesador de texto</td><td>Redactar informes y documentos</td></tr>
+      <tr><td>Presentaciones</td><td>Comunicar resultados con claridad</td></tr>
+      <tr><td>Correo</td><td>Comunicación oficial y envío de información</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero cree que 'saber ofimática es saber dónde está cada botón'. Le explicas que lo importante no es memorizar menús, sino usar las herramientas con criterio: depurar antes de calcular, verificar los resultados y comunicar con claridad. La herramienta multiplica tu trabajo, pero el acierto —o el error— lo pones tú. Esa mentalidad es la que de verdad distingue a un buen analista.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>Respecto a las herramientas ofimáticas, lo más correcto es entender que:</p>
+  <div class="cp-op" data-op="a">a) Reemplazan por completo el criterio del analista: basta con que la herramienta calcule.</div>
+  <div class="cp-op" data-op="b">b) Multiplican el trabajo del analista, pero no reemplazan su criterio: amplifican tanto el acierto como el descuido.</div>
+  <div class="cp-op" data-op="c">c) Solo sirven para hacer el trabajo más lento y complicado.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La nube y el trabajo colaborativo</h4>
+    <p>Las herramientas ofimáticas modernas incorporan cada vez más el trabajo en la nube y la colaboración: varios usuarios editando un mismo documento, archivos accesibles desde distintos equipos, control de versiones automático. Para el Analista, esto trae ventajas (no perder trabajo, colaborar sin enviarse mil copias por correo) pero también responsabilidades nuevas: saber quién puede acceder a qué, no exponer información reservada en espacios compartidos indebidos y respetar las políticas de la entidad sobre dónde se guarda la información.</p>
+    <p>El principio que ordena todo esto es el mismo de siempre: la comodidad de la herramienta no puede pasar por encima de la seguridad y la reserva. Guardar una base con datos tributarios en un espacio personal en la nube «porque es más fácil» puede ser una filtración. El Analista aprovecha las ventajas de la colaboración, pero dentro de los canales y las reglas institucionales, nunca sacando la información a servicios no autorizados.</p>
+
+
+    <h4>Ejercicio resuelto: de una base cruda a un informe</h4>
+    <p>Veamos el ciclo completo con un ejercicio. Le entregan una base de declaraciones de una seccional y le piden un informe breve del recaudo por impuesto. Paso a paso: primero organiza la tabla (una columna por campo, una fila por registro); depura (resalta y quita duplicados por NIT, corrige montos imposibles); resume con una tabla dinámica que agrupe por impuesto; verifica que el gran total cuadre con la base; crea un gráfico de barras honesto (eje desde cero, fuente rotulada); y redacta un informe claro con el hallazgo principal.</p>
+    <p>El resultado no es una pila de datos, sino un entregable útil producido con eficiencia y confiabilidad. Cada herramienta cumplió su papel —organizar, depurar, resumir, visualizar, comunicar— y en cada paso el criterio del Analista guió y verificó. Este recorrido ilustra cómo la ofimática, bien usada, convierte una base cruda en información para decidir, que es exactamente lo que el cargo espera del Analista I.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>La hoja de cálculo: organizar los datos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Una <mark>hoja de cálculo</mark> organiza datos en filas y columnas. Cada <mark>columna</mark> es un campo (NIT, nombre, monto) y cada <mark>fila</mark> es un registro. Una buena organización —una columna por campo, un registro por fila, encabezados claros, sin celdas combinadas en los datos— es la base de todo trabajo posterior: filtrar, ordenar, cruzar o resumir.</p>
+</div>
+<div class="b-texto">
+  <p>Antes de calcular nada, hay que organizar bien. La estructura ideal de una tabla de datos en una hoja de cálculo es sencilla pero estricta: cada <strong>columna</strong> representa un único campo (una columna para el NIT, otra para el nombre, otra para el monto), y cada <strong>fila</strong> representa un registro completo. Los encabezados deben ser claros y estar en una sola fila. Esta estructura «limpia» es la que permite que todas las funciones de la hoja —filtros, ordenamientos, fórmulas, tablas dinámicas— funcionen bien.</p>
+  <p>Los errores de organización se pagan caro después. Mezclar dos datos en una misma columna (nombre y NIT juntos), usar celdas combinadas dentro del rango de datos, dejar filas o columnas vacías en medio, o poner totales intercalados entre los registros rompe la lógica de la tabla y hace que los filtros y cálculos fallen o den resultados equivocados. Una tabla desordenada puede obligar a horas de limpieza que un diseño correcto habría evitado.</p>
+  <p>Un principio útil es separar los <strong>datos</strong> de los <strong>cálculos</strong> y de la <strong>presentación</strong>. Los datos crudos van en una tabla limpia; los resúmenes y cálculos, en otra área u hoja; y la presentación bonita (con formatos, colores, totales) en una capa aparte. Así, los datos se mantienen manipulables y los cálculos no se enredan con el formato. Mezclar todo en una sola hoja decorada es cómodo al principio pero caótico después.</p>
+  <p>Para el Analista I, acostumbrarse a esta disciplina de organización es una inversión que rinde en cada tarea. Una tabla bien estructurada se filtra, se cruza y se resume sin tropiezos; una mal estructurada convierte cada operación en una pelea. Dedicar unos minutos a organizar correctamente los datos antes de trabajar no es perder tiempo: es la condición para que todo lo demás —filtros, duplicados, tablas dinámicas— funcione de forma confiable.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Buena organización</th><th>Mala organización (evitar)</th></tr></thead>
+    <tbody>
+      <tr><td>Una columna por campo</td><td>Dos datos en una misma columna</td></tr>
+      <tr><td>Un registro por fila</td><td>Celdas combinadas en los datos</td></tr>
+      <tr><td>Encabezados claros en una fila</td><td>Totales intercalados entre registros</td></tr>
+      <tr><td>Datos separados de cálculos</td><td>Todo mezclado y decorado en una hoja</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Recibes una hoja donde el nombre y el NIT están en la misma columna, con totales intercalados entre las filas. Antes de poder filtrar o cruzar, la reorganizas: separas nombre y NIT en columnas distintas, quitas los totales de en medio y dejas una tabla limpia con una fila por registro. Esos minutos de orden te ahorran horas de errores en los cálculos posteriores.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>La estructura correcta de una tabla de datos en una hoja de cálculo es:</p>
+  <div class="cp-op" data-op="a">a) Una columna por cada campo y un registro por fila, con encabezados claros y sin totales intercalados entre los datos.</div>
+  <div class="cp-op" data-op="b">b) Varios datos mezclados en una misma columna y totales intercalados entre las filas.</div>
+  <div class="cp-op" data-op="c">c) Todo combinado y decorado en una sola hoja, sin separar datos de cálculos.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Nombrar y versionar los archivos</h4>
+    <p>Una práctica que parece menor pero evita grandes dolores de cabeza es nombrar bien los archivos y controlar sus versiones. Nombres como «Consolidado_final_v2_definitivo_REAL.xlsx» son el síntoma de un desorden que tarde o temprano produce errores: trabajar sobre una versión vieja, entregar la equivocada, no saber cuál es la buena. Una convención sencilla —área, tema y fecha en formato AAAAMMDD— y una ubicación ordenada hacen que cualquiera (incluido uno mismo meses después) encuentre y reconozca el archivo correcto.</p>
+    <p>Este orden conecta con la gobernanza de datos vista en días anteriores: los archivos de trabajo también son parte del activo de información y merecen método. Un Analista ordenado en sus archivos pierde menos tiempo, comete menos errores de versión y deja un rastro más claro de su trabajo. La ofimática no es solo saber usar las funciones de los programas; también es tener la disciplina de organizar lo que se produce con ellas.</p>
+
+
+    <h4>El orden como forma de rigor</h4>
+    <p>Detrás de todas las prácticas de este módulo hay una idea común: el orden es una forma de rigor. Una tabla bien estructurada, archivos bien nombrados, cálculos separados de los datos y una capa de presentación aparte no son manías estéticas; son las condiciones para que el trabajo sea rápido, verificable y libre de errores silenciosos. El Analista ordenado trabaja mejor no porque sea más meticuloso por gusto, sino porque el orden previene justamente los errores que más cuesta detectar después.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Filtrar y ordenar: encontrar lo que importa</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p><mark>Filtrar</mark> es mostrar solo las filas que cumplen una condición (por ejemplo, los contribuyentes de una seccional); <mark>ordenar</mark> es reorganizar las filas por un criterio (de mayor a menor monto). Son las operaciones más básicas y útiles para explorar una base y encontrar lo relevante sin perderse en miles de registros.</p>
+</div>
+<div class="b-texto">
+  <p>Cuando una base tiene miles de registros, mirarla entera es inútil. Los <strong>filtros</strong> permiten mostrar solo lo que cumple una condición: los contribuyentes de cierta seccional, los montos superiores a un valor, los registros con un campo vacío. Filtrar es como hacerle una pregunta a la base y ver solo las filas que responden. Es la herramienta de exploración más inmediata y una de las que más tiempo ahorra.</p>
+  <p><strong>Ordenar</strong> reorganiza las filas según un criterio: de mayor a menor monto, alfabéticamente por nombre, por fecha. Ordenar ayuda a ver los extremos (los mayores, los menores), a detectar patrones y a preparar los datos para otros análisis. Combinar filtro y orden —por ejemplo, filtrar una seccional y luego ordenar sus contribuyentes por monto— permite responder preguntas concretas en segundos.</p>
+  <p>Hay un cuidado importante al ordenar: hacerlo sobre toda la tabla, no sobre una sola columna. Si se ordena una columna sin arrastrar las demás, se descuadran los registros (el monto de uno queda junto al nombre de otro), corrompiendo los datos de forma silenciosa y peligrosa. Las herramientas suelen advertirlo, pero el Analista debe tener el reflejo de ordenar siempre la tabla completa para no romper la correspondencia entre los campos de cada fila.</p>
+  <p>Para el Analista I, filtrar y ordenar son el pan de cada día. Permiten explorar una base desconocida, aislar un subconjunto para analizar, encontrar los casos extremos y preparar los datos para cruces o resúmenes. Dominar estas operaciones básicas, y usarlas con el cuidado de no descuadrar la tabla, es la puerta de entrada a un manejo ágil y confiable de la información, sobre el que se construyen las técnicas más avanzadas.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Operación</th><th>Qué hace</th><th>Cuidado</th></tr></thead>
+    <tbody>
+      <tr><td>Filtrar</td><td>Muestra solo las filas que cumplen una condición</td><td>Recordar quitar el filtro al terminar</td></tr>
+      <tr><td>Ordenar</td><td>Reorganiza las filas por un criterio</td><td>Ordenar toda la tabla, no una sola columna</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Te piden los diez contribuyentes de mayor recaudo de una seccional. Filtras la base por esa seccional y luego ordenas de mayor a menor por el monto, cuidando de ordenar toda la tabla. En segundos tienes la respuesta. Si hubieras ordenado solo la columna del monto sin las demás, habrías descuadrado los nombres; por eso ordenas siempre la tabla completa.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>Al ordenar una tabla de datos por una columna, el cuidado esencial es:</p>
+  <div class="cp-op" data-op="a">a) Ordenar únicamente esa columna, dejando las demás como están.</div>
+  <div class="cp-op" data-op="b">b) Borrar las demás columnas para que no estorben al ordenar.</div>
+  <div class="cp-op" data-op="c">c) Ordenar toda la tabla a la vez, para no descuadrar la correspondencia entre los campos de cada fila.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La celda como unidad y los tipos de dato</h4>
+    <p>Conviene entender la hoja de cálculo desde su unidad mínima: la celda. Cada celda contiene un dato con un tipo (número, texto, fecha), y ese tipo determina qué se puede hacer con ella. Un número guardado como texto no se suma; una fecha mal interpretada desordena una serie. Muchos errores de cálculo nacen de celdas cuyo tipo no es el que parece: un NIT que el programa trató como número y le quitó ceros iniciales, o cifras importadas como texto que las fórmulas ignoran.</p>
+    <p>Para el Analista, una verificación útil al recibir una base es revisar que cada columna tenga el tipo de dato correcto: los montos como números, las fechas como fechas, los identificadores como texto si conviene preservar su formato. Este chequeo, sencillo pero a menudo omitido, previene cálculos que fallan de forma silenciosa y es parte de la depuración que debe preceder a todo análisis serio.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Detectar duplicados y errores</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La hoja de cálculo ayuda a <mark>depurar</mark>: detectar duplicados (registros repetidos, p. ej. por NIT), valores vacíos, formatos incorrectos y valores imposibles. Son funciones sencillas (resaltar duplicados, contar vacíos, validar formatos) que previenen que una base sucia distorsione cualquier cálculo. Depurar es el paso previo e imprescindible a todo análisis.</p>
+</div>
+<div class="b-texto">
+  <p>Como se ha repetido a lo largo del curso, «entra basura, sale basura»: ningún cálculo es mejor que los datos de los que sale. La hoja de cálculo ofrece herramientas simples pero potentes para depurar antes de analizar. La detección de <strong>duplicados</strong> —resaltar o contar registros repetidos por una llave como el NIT— evita inflar totales y conteos. Es uno de los primeros chequeos que el Analista debe hacer sobre cualquier base.</p>
+  <p>Otros chequeos esenciales son la detección de <strong>valores vacíos</strong> (campos obligatorios sin llenar, que pueden sesgar un promedio), de <strong>formatos incorrectos</strong> (un NIT con menos dígitos de los debidos, una fecha mal escrita) y de <strong>valores imposibles</strong> (montos negativos donde no caben, cifras absurdamente grandes). Con filtros, formato condicional y funciones de conteo, estos problemas se identifican en minutos, antes de que contaminen un cálculo.</p>
+  <p>La depuración no consiste solo en detectar, sino en decidir con criterio qué hacer con lo detectado. Un duplicado real se elimina; un valor imposible se corrige o se excluye documentándolo; un dato faltante se trata según su naturaleza, sin inventar valores. La herramienta encuentra los problemas, pero el Analista decide cómo resolverlos, y deja constancia de lo que hizo para que el resultado sea trazable y defendible.</p>
+  <p>Para el Analista I, convertir la depuración en un hábito automático es una de las marcas de profesionalismo. Antes de filtrar para un reporte, antes de cruzar para un perfil, antes de calcular una estadística, el reflejo debe ser: ¿revisé duplicados, vacíos, formatos y valores imposibles? Ese chequeo rutinario, que toma minutos, es lo que separa un trabajo confiable de uno que puede estar construido sobre datos sucios sin que nadie lo note.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Problema</th><th>Cómo detectarlo</th><th>Qué hacer</th></tr></thead>
+    <tbody>
+      <tr><td>Duplicados</td><td>Resaltar/contar repetidos por NIT</td><td>Eliminar los reales, documentando</td></tr>
+      <tr><td>Vacíos</td><td>Contar celdas en blanco</td><td>Tratar según su naturaleza, no inventar</td></tr>
+      <tr><td>Formatos incorrectos</td><td>Validar longitud/formato (NIT, fecha)</td><td>Corregir contra el soporte</td></tr>
+      <tr><td>Valores imposibles</td><td>Filtrar negativos o extremos</td><td>Corregir o excluir documentando</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Antes de calcular un total, resaltas los duplicados por NIT (encuentras 150), cuentas los campos vacíos y filtras los montos negativos imposibles. Decides con criterio: eliminas los duplicados reales, corriges los negativos contra el soporte y documentas cada ajuste. El total depurado difiere del de la base sucia. Ese chequeo de minutos evitó entregar una cifra equivocada.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>Antes de calcular sobre una base, usar la hoja de cálculo para detectar duplicados, vacíos y valores imposibles es:</p>
+  <div class="cp-op" data-op="a">a) Una pérdida de tiempo, porque la herramienta corrige todo sola al calcular.</div>
+  <div class="cp-op" data-op="b">b) Un paso imprescindible de depuración, porque 'entra basura, sale basura' y esos problemas distorsionan cualquier cálculo.</div>
+  <div class="cp-op" data-op="c">c) Innecesario, porque cuantos más registros tenga la base, más confiable es sin importar su calidad.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Filtros avanzados y vistas temporales</h4>
+    <p>Además del filtro simple, las hojas de cálculo permiten filtros por varios criterios a la vez (una seccional y además montos sobre cierto valor) y vistas que no alteran los datos. Un cuidado práctico es recordar que un filtro oculta filas pero no las borra: si se copia o se calcula sobre una tabla filtrada sin tenerlo en cuenta, pueden quedarse datos fuera o incluirse ocultos sin querer. Por eso, al terminar un análisis con filtros, conviene quitarlos y confirmar que se trabajó sobre el conjunto correcto.</p>
+    <p>El Analista que domina los filtros los usa para explorar con agilidad, pero mantiene siempre claro qué está viendo: ¿toda la base o solo un subconjunto filtrado? Esa conciencia evita el error, sorprendentemente común, de sacar conclusiones de una vista filtrada creyendo que se mira el total, o de enviar un archivo con un filtro activo que oculta parte de la información al destinatario.</p>
+
+
+    <h4>Quitar el filtro antes de entregar</h4>
+    <p>Un descuido frecuente que vale la pena remarcar: entregar o compartir un archivo con un filtro aún activo. El destinatario puede no notar que está viendo solo una parte de los datos, y sacar conclusiones equivocadas sobre un universo recortado. El hábito correcto es, al terminar de explorar con filtros, quitarlos y confirmar que el archivo que se entrega muestra el conjunto completo que corresponde. Es un detalle pequeño con consecuencias grandes en la interpretación.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Fórmulas y funciones básicas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las <mark>fórmulas</mark> permiten calcular automáticamente: sumar, promediar, contar, contar según una condición. Funciones como SUMA, PROMEDIO, CONTAR, CONTAR.SI y SI resuelven la mayoría de las necesidades del Analista. La clave no es memorizarlas todas, sino entender qué hace cada una y verificar que el resultado tenga sentido.</p>
+</div>
+<div class="b-texto">
+  <p>El poder de la hoja de cálculo está en las <strong>fórmulas</strong>: cálculos que se actualizan solos cuando cambian los datos. Las más usadas por un Analista son las básicas: SUMA (totalizar), PROMEDIO (media), CONTAR (cuántos datos hay), CONTAR.SI (cuántos cumplen una condición) y SI (devolver un resultado u otro según una condición). Con ese puñado de funciones se resuelve buena parte del trabajo diario de resumen y clasificación.</p>
+  <p>La gran ventaja de las fórmulas sobre el cálculo manual es doble: son <strong>rápidas</strong> y, si los datos están bien, <strong>exactas</strong>; y se <strong>recalculan</strong> automáticamente si cambian los datos. Esto evita el error humano de sumar a mano miles de cifras y permite rehacer un análisis en segundos cuando llega una base actualizada. Pero esa misma automatización esconde un riesgo: si la fórmula apunta a un rango equivocado, el error se propaga silenciosamente.</p>
+  <p>De ahí la regla de oro: <strong>verificar que el resultado tenga sentido</strong>. Una fórmula que da un total absurdamente alto o bajo, un promedio imposible o un conteo que no cuadra con lo esperado es una señal de que algo falló: un rango mal seleccionado, un dato de texto donde debía haber un número, celdas vacías contadas como cero. El Analista no confía ciegamente en el número que arroja la fórmula: lo contrasta con lo que razonablemente esperaría.</p>
+  <p>Para el Analista I, el dominio de las fórmulas básicas, combinado con el hábito de verificar, es una herramienta formidable. No necesita ser un experto en funciones avanzadas: con las básicas bien usadas y verificadas resuelve la mayoría de sus tareas con rapidez y confiabilidad. Lo importante no es la cantidad de funciones que conozca, sino el criterio con que las aplica y la disciplina con que comprueba que lo que calcularon tiene sentido.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Función</th><th>Qué calcula</th></tr></thead>
+    <tbody>
+      <tr><td>SUMA</td><td>Totaliza un rango de números</td></tr>
+      <tr><td>PROMEDIO</td><td>La media de un rango</td></tr>
+      <tr><td>CONTAR / CONTAR.SI</td><td>Cuántos datos hay / cuántos cumplen una condición</td></tr>
+      <tr><td>SI</td><td>Devuelve un resultado u otro según una condición</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Usas SUMA para totalizar el recaudo de una seccional y el resultado te parece demasiado alto. En vez de entregarlo, revisas: la fórmula estaba sumando también una fila de totales que ya existía, duplicando parte del valor. Corriges el rango y el total cuadra. Verificar que el resultado tuviera sentido te salvó de reportar una cifra inflada.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Al usar una fórmula que arroja un resultado, la regla de oro del Analista es:</p>
+  <div class="cp-op" data-op="a">a) Verificar que el resultado tenga sentido (contrastarlo con lo esperado), porque un rango mal elegido propaga el error silenciosamente.</div>
+  <div class="cp-op" data-op="b">b) Confiar ciegamente en el número, porque las fórmulas nunca se equivocan.</div>
+  <div class="cp-op" data-op="c">c) Memorizar todas las funciones avanzadas antes de poder usar una SUMA.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Validación de datos en la captura</h4>
+    <p>Las hojas de cálculo permiten poner reglas de validación en la propia captura: restringir una celda a números dentro de un rango, a una lista de valores permitidos o a un formato de fecha. Esto previene errores desde el origen, que es siempre más barato que corregirlos después. Si una columna de seccional solo admite los nombres de una lista, nadie escribirá 'Bogotá' de tres formas distintas; si un monto solo admite positivos, no entrarán negativos imposibles.</p>
+    <p>Para el Analista, usar la validación de datos cuando prepara una plantilla de captura es una forma proactiva de cuidar la calidad. En lugar de depurar errores que ya entraron, los impide de entrada. No siempre controla cómo se capturan los datos que recibe, pero cuando sí puede influir en el diseño de un formato, la validación es una herramienta valiosa para que la base nazca limpia.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Búsquedas y cruces con fórmulas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las funciones de <mark>búsqueda</mark> (como BUSCARV o similares) permiten traer datos de una tabla a otra usando una llave común (el NIT). Son la forma de <mark>cruzar</mark> información en una hoja de cálculo: por ejemplo, traer a la base de declaraciones el dato reportado por terceros. La llave debe estar limpia y homologada para que el cruce funcione.</p>
+</div>
+<div class="b-texto">
+  <p>Una de las tareas más valiosas que permite la hoja de cálculo es <strong>cruzar</strong> dos tablas: traer información de una a otra usando un identificador común. Las funciones de búsqueda (del tipo BUSCARV, BUSCARX o similares) hacen justamente eso: «para cada NIT de esta tabla, tráeme el dato que le corresponde en aquella otra». Así se pueden unir, por ejemplo, las declaraciones de un contribuyente con lo que terceros reportaron sobre él, para compararlos.</p>
+  <p>El cruce con fórmulas es el reflejo, en una hoja de cálculo, de los cruces de información que vimos en el tema de perfiles de riesgo. Y comparte con ellos el mismo punto crítico: la <strong>llave</strong>. Si el NIT está mal digitado, tiene espacios, o en una tabla trae el dígito de verificación y en otra no, la búsqueda no encontrará la coincidencia y devolverá un «no encontrado» falso. Por eso, antes de cruzar, hay que limpiar y homologar la llave en ambas tablas.</p>
+  <p>Un error frecuente es interpretar mal los resultados «no encontrados». Cuando una búsqueda devuelve error para muchos registros, la causa suele ser la llave sucia, no que esos contribuyentes «no existan» en la otra tabla. Confundir un problema técnico de la llave con una conclusión de negocio («estos no tienen información reportada») lleva a errores graves. El Analista investiga primero si los «no encontrados» se deben a la calidad de la llave antes de sacar conclusiones.</p>
+  <p>Para el Analista I, dominar las búsquedas es lo que le permite hacer cruces útiles sin depender siempre de herramientas más complejas. Con una función de búsqueda bien usada —y una llave limpia— puede comparar declaraciones con exógena, verificar si un contribuyente está en una lista, o completar una base con datos de otra. Es, en la práctica, una de las habilidades ofimáticas de mayor valor para el análisis de información tributaria.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Para qué sirve la búsqueda</th><th>Ejemplo</th><th>Requisito</th></tr></thead>
+    <tbody>
+      <tr><td>Traer un dato de otra tabla</td><td>Añadir a las declaraciones lo reportado por terceros</td><td>Llave (NIT) limpia y homologada</td></tr>
+      <tr><td>Verificar si existe en una lista</td><td>Si un contribuyente está en cierto listado</td><td>Mismo formato de la llave</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Usas una función de búsqueda por NIT para traer a la base de declaraciones lo reportado por terceros, y aparecen cientos de 'no encontrados'. En vez de concluir que 'esos no tienen información', revisas la llave: en una tabla el NIT trae el dígito de verificación y en la otra no. Homologas el formato y los cruces aparecen. El problema era técnico, no de negocio.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Si una función de búsqueda por NIT devuelve muchos 'no encontrados', lo primero que debe hacer el Analista es:</p>
+  <div class="cp-op" data-op="a">a) Concluir que esos contribuyentes no existen en la otra tabla y reportarlo así.</div>
+  <div class="cp-op" data-op="b">b) Borrar todos los registros con error para que el cruce quede limpio.</div>
+  <div class="cp-op" data-op="c">c) Revisar si la llave (NIT) está sucia o con formatos distintos entre las tablas, porque suele ser un problema técnico, no una conclusión de negocio.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Referencias relativas y absolutas: un error típico</h4>
+    <p>Un tropiezo clásico al copiar fórmulas es no entender las referencias relativas y absolutas. Cuando se copia una fórmula hacia abajo, las referencias se desplazan (relativas), lo cual suele ser lo deseado; pero si una fórmula debe apuntar siempre a una misma celda (por ejemplo, un factor fijo), hay que «anclarla» (referencia absoluta) para que no se corra al copiar. No distinguir esto produce errores silenciosos: fórmulas que, al copiarse, empiezan a apuntar a celdas equivocadas y arrojan resultados que parecen válidos pero no lo son.</p>
+    <p>No se trata de que el Analista memorice tecnicismos, sino de que tenga la alerta encendida: cuando copia una fórmula y los resultados dejan de tener sentido fila a fila, debe sospechar de las referencias. Este es un ejemplo perfecto del principio del tema: la herramienta hizo exactamente lo que se le indicó (desplazar la referencia), aunque no era lo que se quería. La verificación de que el resultado tiene sentido vuelve a ser el salvavidas.</p>
+
+
+    <h4>Fórmulas encadenadas y la trazabilidad del cálculo</h4>
+    <p>A medida que los análisis se complican, las fórmulas suelen encadenarse: una celda calcula a partir de otras que, a su vez, dependen de otras. Esto es potente, pero puede volverse opaco: si una celda del principio de la cadena está mal, el error se arrastra hasta el final sin que sea evidente dónde se originó. Por eso conviene mantener los cálculos ordenados y, cuando algo no cuadra, revisar la cadena paso a paso hasta hallar el eslabón defectuoso, en lugar de parchear el resultado final.</p>
+    <p>Una buena práctica es documentar los cálculos complejos: una nota que explique qué hace cada bloque de fórmulas. Esa documentación, igual que la bitácora de depuración vista antes, da trazabilidad: permite que otro —o uno mismo tiempo después— entienda y verifique cómo se llegó al resultado. Un cálculo encadenado sin explicación es una caja negra difícil de auditar; uno documentado es un trabajo transparente y defendible.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Tablas dinámicas: resumir en segundos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Una <mark>tabla dinámica</mark> resume grandes volúmenes de datos en segundos: agrupa por categorías y calcula totales, promedios o conteos (por ejemplo, el recaudo total por seccional y por impuesto). Es, probablemente, la herramienta más potente de la hoja de cálculo para el análisis, y una de las más valiosas para el Analista.</p>
+</div>
+<div class="b-texto">
+  <p>Si hubiera que elegir una sola función avanzada que todo Analista debería dominar, sería la <strong>tabla dinámica</strong>. Permite tomar una base de miles de registros y resumirla instantáneamente: agrupar por una categoría (seccional, impuesto, mes) y calcular totales, promedios o conteos para cada grupo. Lo que a mano tomaría horas —sumar el recaudo de cada seccional, por ejemplo— la tabla dinámica lo hace en segundos y se reorganiza con solo arrastrar campos.</p>
+  <p>Su potencia está en la <strong>flexibilidad</strong>: con la misma base se pueden responder muchas preguntas distintas con solo cambiar cómo se agrupa. ¿Recaudo por seccional? ¿Por impuesto? ¿Por seccional y luego por impuesto? ¿Promedio en vez de total? Todo sin tocar los datos originales. Esta capacidad de «girar» los datos para verlos desde distintos ángulos es lo que da a la tabla dinámica su nombre y su enorme utilidad para explorar y resumir información.</p>
+  <p>Como toda herramienta potente, exige cuidado. Una tabla dinámica construida sobre datos sucios resume basura con elegancia: si hay duplicados, el total estará inflado; si la categoría está mal escrita (dos variantes de «Bogotá»), los agrupará por separado. Además, hay que verificar que esté agrupando lo que uno cree y que los totales cuadren con los de la base. La tabla dinámica no exime de depurar ni de verificar; al contrario, hace más importante hacerlo bien.</p>
+  <p>Para el Analista I, la tabla dinámica es la herramienta que convierte una base enorme en respuestas útiles. Con ella produce en minutos los resúmenes que alimentan informes y perfiles: recaudo por seccional, participaciones por sector, conteos por categoría. Dominarla —sobre datos previamente depurados y verificando los resultados— multiplica enormemente su capacidad de análisis y es, sin duda, una de las competencias ofimáticas más valiosas para el cargo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La tabla dinámica permite</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Agrupar por categoría</td><td>Recaudo total por seccional</td></tr>
+      <tr><td>Calcular total, promedio o conteo</td><td>Promedio declarado por sector</td></tr>
+      <tr><td>Cruzar dos categorías</td><td>Recaudo por seccional y por impuesto</td></tr>
+      <tr><td>Reorganizar sin tocar los datos</td><td>Cambiar la vista arrastrando campos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Te piden el recaudo por seccional e impuesto de una base de 50.000 registros. En vez de sumar a mano, depuras la base (duplicados, nombres de seccional homologados) y creas una tabla dinámica que agrupa por seccional e impuesto. En segundos tienes el resumen, y verificas que el gran total cuadre con la base. Lo que habría sido horas de trabajo se resuelve con una herramienta bien usada.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>Una tabla dinámica construida sobre una base con duplicados y nombres de categoría mal escritos:</p>
+  <div class="cp-op" data-op="a">a) Corrige esos problemas automáticamente, así que no hace falta depurar antes.</div>
+  <div class="cp-op" data-op="b">b) Resumirá esos errores con elegancia (totales inflados, categorías separadas), por lo que hay que depurar y verificar antes de confiar en ella.</div>
+  <div class="cp-op" data-op="c">c) Siempre es confiable, porque las tablas dinámicas nunca se equivocan.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Cruzar en una hoja vs. en una base de datos</h4>
+    <p>Vale la pena ubicar las posibilidades y los límites de la hoja de cálculo para cruzar información. Para volúmenes moderados y análisis puntuales, una función de búsqueda resuelve muy bien. Pero cuando los volúmenes son enormes o los cruces muy complejos y repetitivos, las herramientas de bases de datos son más adecuadas, porque están diseñadas para eso. El Analista no necesita ser experto en bases de datos, pero sí reconocer cuándo una tarea excede lo razonable para una hoja de cálculo y conviene apoyarse en herramientas o áreas especializadas.</p>
+    <p>Reconocer ese límite es también criterio profesional. Forzar una hoja de cálculo a manejar millones de registros con decenas de búsquedas anidadas suele terminar en archivos lentos, propensos a errores y difíciles de verificar. Saber cuándo la hoja es la herramienta correcta y cuándo no lo es evita trabajo frágil y orienta hacia la solución adecuada, coordinando con el área de tecnología cuando la escala lo amerita.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Formatos de archivo y compatibilidad</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La información viaja en distintos <mark>formatos</mark>: hoja de cálculo (xlsx), texto separado (csv), documento (docx), PDF. Cada uno sirve para algo: el csv para intercambiar datos entre sistemas, el PDF para un documento final que no debe modificarse. Elegir y manejar bien los formatos evita pérdidas de datos y problemas de compatibilidad.</p>
+</div>
+<div class="b-texto">
+  <p>Los datos no siempre llegan ni salen en el mismo formato, y entender las diferencias evita dolores de cabeza. El formato de <strong>hoja de cálculo</strong> (xlsx y similares) conserva fórmulas y formato, y es ideal para trabajar. El <strong>csv</strong> (valores separados por comas) es un formato de texto plano, universal, que sirve para intercambiar datos entre sistemas distintos: es liviano y lo lee casi cualquier programa, pero no guarda fórmulas ni formato.</p>
+  <p>El <strong>PDF</strong> cumple un propósito distinto: es para documentos finales que no deben modificarse y que deben verse igual en cualquier dispositivo. Un informe que se envía oficialmente suele ir en PDF, no en un formato editable, para preservar su integridad. En cambio, enviar datos para que otro los procese en PDF es un error común y frustrante: el PDF no está hecho para extraer datos, y hacerlo suele ser engorroso y propenso a errores.</p>
+  <p>El manejo de formatos esconde riesgos de <strong>pérdida de datos</strong>. Guardar una hoja con fórmulas como csv pierde las fórmulas (quedan solo los valores); abrir un csv con un programa mal configurado puede desordenar las columnas o malinterpretar los números (un NIT largo convertido a notación científica, ceros iniciales que desaparecen). El Analista debe conocer estos riesgos para elegir el formato adecuado a cada propósito y verificar que los datos sobrevivan intactos a la conversión.</p>
+  <p>Para el Analista I, manejar bien los formatos es parte de la competencia ofimática. Significa elegir el formato correcto según el fin (xlsx para trabajar, csv para intercambiar datos, PDF para un documento final), anticipar los problemas de compatibilidad y verificar siempre que la información no se haya alterado al convertir. Un descuido con los formatos puede corromper una base entera o hacer ilegible un dato clave como el NIT; conocerlos protege la integridad de la información.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Formato</th><th>Para qué sirve</th><th>Cuidado</th></tr></thead>
+    <tbody>
+      <tr><td>xlsx (hoja de cálculo)</td><td>Trabajar con datos y fórmulas</td><td>Formato de trabajo, no para envío final</td></tr>
+      <tr><td>csv (texto separado)</td><td>Intercambiar datos entre sistemas</td><td>No guarda fórmulas; cuidado con NIT y ceros</td></tr>
+      <tr><td>PDF</td><td>Documento final que no debe modificarse</td><td>No sirve para enviar datos a procesar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Debes enviar a otra área una base para que la procesen. En vez de mandarla en PDF (donde no podrían extraer los datos), la envías en csv o xlsx. Antes, verificas que al guardar en csv los NIT largos no se hayan convertido a notación científica ni hayan perdido los ceros iniciales. Elegir el formato correcto y verificar la conversión evita que la base llegue inservible.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Para enviar datos a otra área para que los procese, el formato adecuado es:</p>
+  <div class="cp-op" data-op="a">a) Un formato de datos como csv o xlsx (verificando que no se alteren NIT ni ceros), no un PDF, porque del PDF es engorroso extraer datos.</div>
+  <div class="cp-op" data-op="b">b) Siempre un PDF, porque es el único formato seguro para cualquier propósito.</div>
+  <div class="cp-op" data-op="c">c) Una imagen (foto de la pantalla), para que se vea exactamente igual.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Gráficos a partir de los resúmenes</h4>
+    <p>Una vez resumidos los datos con una tabla dinámica, el paso natural es visualizarlos con un gráfico que comunique el hallazgo. Aquí se aplican las reglas vistas en el tema de estadísticas: barras para comparar categorías, líneas para evolución en el tiempo, ejes que parten de cero, rótulos de fuente y período. La hoja de cálculo facilita crear estos gráficos directamente desde el resumen, lo que agiliza el paso del dato al mensaje.</p>
+    <p>El riesgo es que la facilidad de generar gráficos lleve a abusar de ellos o a crear piezas engañosas sin darse cuenta: un gráfico con eje truncado, demasiadas series superpuestas o un tipo inadecuado para los datos. El Analista usa la herramienta para visualizar con honestidad, no para impresionar; un buen gráfico aclara el resumen, uno malo lo distorsiona. Dominar la creación de gráficos, con el criterio estadístico ya aprendido, cierra el ciclo del análisis con una comunicación visual confiable.</p>
+
+
+    <h4>Verificar el total de control de la tabla dinámica</h4>
+    <p>Un chequeo rápido tras crear una tabla dinámica es comparar su gran total con el total de la base original. Si coinciden, es buena señal de que no se perdieron ni duplicaron registros al resumir; si no, hay que investigar antes de confiar en el resumen. Esta verificación de cifra de control, sencilla y de segundos, atrapa muchos errores silenciosos y debería ser un reflejo del Analista cada vez que resume datos.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>El procesador de texto y las presentaciones</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>procesador de texto</mark> sirve para redactar informes y documentos claros y bien estructurados; las <mark>presentaciones</mark>, para comunicar resultados de forma visual y concisa. En ambos, la regla es la misma que en los datos: claridad y honestidad. Un documento ordenado y una presentación sobria comunican mejor que el exceso de adornos.</p>
+</div>
+<div class="b-texto">
+  <p>No todo el trabajo del Analista es manejar datos; también debe <strong>comunicar</strong> lo que encuentra, y ahí entran el procesador de texto y las presentaciones. Un informe bien hecho usa una estructura clara (títulos, secciones, párrafos ordenados), un lenguaje preciso y los recursos del procesador (estilos, numeración, tablas) para facilitar la lectura. Un documento desordenado, aunque tenga buena información, dificulta que el lector capte el mensaje.</p>
+  <p>Las <strong>presentaciones</strong> sirven para comunicar resultados de forma visual y concisa, normalmente como apoyo a una exposición. Su regla de oro es «menos es más»: pocas ideas por diapositiva, textos breves, gráficos claros. Una presentación recargada de texto, animaciones y colores distrae del mensaje; una sobria y bien organizada lo refuerza. El objetivo no es impresionar, sino que la audiencia entienda y recuerde lo esencial.</p>
+  <p>En ambas herramientas reaparece un principio central del curso: la <strong>honestidad</strong>. Un informe no debe exagerar logros ni esconder problemas con redacción ambigua; una presentación no debe usar gráficos con escalas tramposas ni títulos engañosos para dirigir la conclusión. Comunicar bien no es «vender» una idea a toda costa, sino transmitir la información con fidelidad para que el otro decida con criterio. La forma no debe traicionar al contenido.</p>
+  <p>Para el Analista I, saber comunicar es tan importante como saber analizar. De poco sirve un análisis impecable si el informe es confuso o la presentación, ilegible. Dominar el procesador de texto para producir documentos claros y las presentaciones para comunicar lo esencial con honestidad completa el ciclo del trabajo con información: del dato crudo al hallazgo, y del hallazgo a una comunicación que permita a otros entender y actuar. Esa capacidad de cerrar el círculo es parte del valor del cargo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Herramienta</th><th>Regla de buen uso</th></tr></thead>
+    <tbody>
+      <tr><td>Procesador de texto</td><td>Estructura clara, lenguaje preciso, sin ambigüedad</td></tr>
+      <tr><td>Presentaciones</td><td>'Menos es más': pocas ideas, textos breves, gráficos claros</td></tr>
+      <tr><td>Ambas</td><td>Honestidad: no exagerar ni engañar con la forma</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Debes presentar los resultados de un análisis a la Dirección. En vez de llenar las diapositivas de texto y animaciones, pones una idea clave por diapositiva, un gráfico honesto (eje desde cero, fuente rotulada) y un mensaje claro. El informe de respaldo lo redactas con estructura ordenada y lenguaje preciso. La Dirección entiende en minutos lo esencial, porque comunicaste para informar, no para impresionar.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>La regla de oro de una buena presentación de resultados es:</p>
+  <div class="cp-op" data-op="a">a) Cuanto más texto, animaciones y colores por diapositiva, mejor comunica.</div>
+  <div class="cp-op" data-op="b">b) Usar gráficos con escalas tramposas para que los resultados impresionen más.</div>
+  <div class="cp-op" data-op="c">c) 'Menos es más': pocas ideas por diapositiva, textos breves y gráficos honestos, para comunicar con claridad sin engañar.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La codificación de caracteres en los csv</h4>
+    <p>Un problema técnico habitual al intercambiar archivos csv es la codificación de caracteres: las tildes y las eñes pueden verse como símbolos extraños si el archivo se guarda en una codificación y se abre en otra. Para una entidad que maneja nombres en español, esto puede corromper nombres de contribuyentes o de ciudades. El Analista debe estar atento a que, al convertir o abrir un csv, los caracteres especiales se conserven correctamente, eligiendo la codificación adecuada y verificando el resultado tras la conversión.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Correo y comunicación digital responsable</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>correo</mark> es el canal oficial de comunicación escrita en la entidad. Usarlo con responsabilidad implica: verificar el destinatario antes de enviar (sobre todo con información sensible), ser claro y profesional, no reenviar información reservada por canales inseguros, y desconfiar de correos sospechosos (phishing). Un correo mal enviado puede filtrar información o causar un malentendido serio.</p>
+</div>
+<div class="b-texto">
+  <p>El correo electrónico es, para el Analista, mucho más que una herramienta de mensajes: es un canal oficial que deja constancia y por el que, con frecuencia, viaja información sensible. Su uso responsable empieza por un cuidado básico pero crítico: <strong>verificar el destinatario</strong> antes de enviar. Un error tan simple como elegir mal un nombre en el autocompletado puede enviar datos reservados a la persona equivocada, con consecuencias graves. La prudencia al adjuntar y enviar es irrenunciable.</p>
+  <p>La comunicación por correo debe ser <strong>clara y profesional</strong>: un asunto que describa el contenido, un mensaje conciso y cortés, y los adjuntos correctos. Como el correo deja registro, lo que se escribe puede ser revisado después; esto es una razón más para cuidar el tono y el contenido. Un correo oficial representa a la entidad y al servidor que lo firma.</p>
+  <p>La <strong>seguridad</strong> en el correo es doble. Por un lado, no enviar información reservada por canales inseguros ni a destinatarios no autorizados: la reserva tributaria no se suspende porque sea «más cómodo» mandar algo por correo personal. Por otro, desconfiar de los correos entrantes sospechosos: el <strong>phishing</strong> —correos falsos que piden credenciales o buscan que se abra un archivo malicioso— es una de las principales puertas de entrada de ataques. Ante un correo extraño que pide la clave o insta a abrir un enlace urgente, la regla es no hacerlo y verificar por el canal oficial.</p>
+  <p>Para el Analista I, el correo responsable es una competencia cotidiana con alto impacto. Un adjunto con datos reservados enviado al destinatario equivocado, una clave entregada a un phishing, o un correo imprudente pueden causar una filtración o un incidente de seguridad. En cambio, un uso cuidadoso —verificar destinatarios, proteger lo reservado, desconfiar de lo sospechoso— protege la información y la reputación de la entidad. La tecnología de comunicación es poderosa, y por eso exige responsabilidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Práctica responsable</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Verificar el destinatario</td><td>Un error envía datos reservados a quien no debe</td></tr>
+      <tr><td>Ser claro y profesional</td><td>El correo representa a la entidad y deja constancia</td></tr>
+      <tr><td>No enviar lo reservado por canales inseguros</td><td>La reserva no se suspende por comodidad</td></tr>
+      <tr><td>Desconfiar del phishing</td><td>Es la principal puerta de ataques</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Vas a enviar por correo un archivo con datos reservados a un área interna. Antes de dar 'enviar', verificas cuidadosamente el destinatario (el autocompletado había sugerido un nombre parecido pero equivocado) y confirmas que el canal es el autorizado. Ese segundo de verificación evita filtrar datos reservados a la persona equivocada. Y cuando llega un correo 'urgente' pidiendo tu clave, no lo abres: lo reportas como posible phishing.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>Antes de enviar por correo un archivo con información reservada, el cuidado esencial es:</p>
+  <div class="cp-op" data-op="a">a) Enviarlo rápido a varios destinatarios para que seguro llegue a alguien correcto.</div>
+  <div class="cp-op" data-op="b">b) Verificar cuidadosamente el destinatario y que el canal sea el autorizado, porque un error enviaría datos reservados a quien no debe.</div>
+  <div class="cp-op" data-op="c">c) Adjuntarlo sin revisar, confiando en que el autocompletado del correo nunca se equivoca.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Plantillas y reutilización del trabajo</h4>
+    <p>Un rasgo del analista eficiente es no reinventar la rueda cada vez. Cuando una tarea se repite —un informe mensual, un formato de reporte—, conviene construir una plantilla bien hecha y reutilizarla, en lugar de empezar de cero cada período. Una plantilla con la estructura, las fórmulas y los formatos ya definidos ahorra tiempo, reduce errores y da consistencia a los entregables. El Analista invierte una vez en hacerla bien y cosecha el beneficio en cada repetición.</p>
+    <p>Eso sí, reutilizar una plantilla exige el mismo cuidado de verificación: actualizar los datos, revisar que las fórmulas apunten a los rangos nuevos y confirmar que el resultado tiene sentido para el período actual. Una plantilla mal actualizada puede arrastrar datos o referencias del mes anterior sin que se note. Bien usada, sin embargo, la reutilización es una de las formas más claras en que el dominio de las herramientas se traduce en eficiencia real.</p>
+
+
+    <h4>Adaptar el nivel del mensaje a la audiencia</h4>
+    <p>Comunicar bien no es solo ordenar bonito: es adaptar el mensaje a quien lo recibe. Un informe técnico para un par especializado puede incluir detalles de método; una presentación para la Dirección debe ir al grano, con los hallazgos clave y sus implicaciones, sin abrumar con tecnicismos. El Analista que sabe leer a su audiencia elige qué resaltar, cuánto detalle incluir y qué lenguaje usar, de modo que el mensaje llegue y sea útil para quien debe decidir.</p>
+    <p>Este criterio comunicativo completa el perfil del usuario experto. De poco sirve un análisis impecable si se presenta de una forma que la audiencia no puede aprovechar. Saber traducir un trabajo técnico a un mensaje claro y pertinente para el receptor —sin perder rigor ni caer en la simplificación engañosa— es una habilidad tan valiosa como el manejo de las fórmulas, y una de las que más distingue a un buen analista.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Seguridad, contraseñas y copias de respaldo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El buen uso de las herramientas incluye la <mark>seguridad</mark>: contraseñas robustas e individuales que no se comparten, bloquear el equipo al ausentarse, y hacer <mark>copias de respaldo</mark> del trabajo en los repositorios institucionales, para no depender de una sola copia local. Son hábitos sencillos que protegen la información y el trabajo del Analista.</p>
+</div>
+<div class="b-texto">
+  <p>Las mejores herramientas no sirven de nada si se descuida la seguridad, y buena parte de esa seguridad depende de hábitos sencillos del usuario. Las <strong>contraseñas</strong> deben ser robustas (difíciles de adivinar), individuales (cada quien la suya) y confidenciales (no se comparten ni se anotan a la vista). Compartir la clave «para que un compañero avance» o dejarla pegada en el monitor anula cualquier protección técnica y compromete el acceso a información reservada.</p>
+  <p>Un hábito básico y muy descuidado es <strong>bloquear el equipo</strong> al ausentarse, aunque sea un momento. Un computador desatendido y desbloqueado es una puerta abierta a la información: cualquiera puede consultar, copiar o alterar datos en nombre del usuario, que quedará como responsable por la trazabilidad. Bloquear la sesión al levantarse es un gesto de segundos que cierra esa puerta.</p>
+  <p>Las <strong>copias de respaldo</strong> protegen contra la pérdida del trabajo. Depender de una única copia en el disco local es arriesgado: un daño del equipo borra semanas de trabajo. La práctica correcta es respaldar periódicamente en los repositorios institucionales previstos, de modo que la información se pueda recuperar si el equipo falla. El Analista no diseña la infraestructura de respaldo —eso es de tecnología—, pero sí debe tener el hábito de no dejar su trabajo en una sola copia vulnerable.</p>
+  <p>Para el Analista I, estos hábitos de seguridad son parte inseparable del buen uso de las herramientas. De nada sirve dominar las fórmulas y las tablas dinámicas si luego se comparte la clave, se deja el equipo abierto o se pierde el trabajo por no respaldar. La seguridad no es una tarea separada y aparte: es la forma responsable de usar las mismas herramientas de cada día, y una condición para proteger la información sensible que el cargo maneja.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Hábito de seguridad</th><th>Qué protege</th></tr></thead>
+    <tbody>
+      <tr><td>Contraseña robusta, individual y secreta</td><td>El acceso a la información reservada</td></tr>
+      <tr><td>Bloquear el equipo al ausentarse</td><td>Evita accesos indebidos en nombre del usuario</td></tr>
+      <tr><td>Copias de respaldo institucionales</td><td>Evita perder el trabajo si el equipo falla</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero te pide tu clave 'un momento, para avanzar con un archivo'. Te niegas y le explicas que las claves son individuales y que puede usar la suya. Antes de ir a una reunión, bloqueas tu equipo. Y al terminar una consolidación importante, la respaldas en el repositorio institucional en vez de dejarla solo en tu disco. Tres hábitos sencillos que protegen la información y tu trabajo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>Frente a la seguridad en el uso de las herramientas, la práctica correcta es:</p>
+  <div class="cp-op" data-op="a">a) Contraseñas robustas, individuales y secretas; bloquear el equipo al ausentarse; y respaldar el trabajo en los repositorios institucionales.</div>
+  <div class="cp-op" data-op="b">b) Compartir la clave con los compañeros para agilizar y dejar el equipo abierto para no perder tiempo.</div>
+  <div class="cp-op" data-op="c">c) Guardar todo el trabajo únicamente en el disco local, sin ninguna copia de respaldo.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La firma, el tono y la huella del correo</h4>
+    <p>Conviene recordar que todo correo oficial deja una huella permanente y representa a la entidad. Esto tiene dos implicaciones prácticas. La primera es el tono: un correo redactado con prisa o con un tono inadecuado queda registrado y puede malinterpretarse o incluso ser revisado más adelante; por eso vale la pena releer antes de enviar. La segunda es la responsabilidad: lo que se afirma en un correo compromete a quien lo firma, de modo que no conviene aseverar datos sin verificar ni adjuntar información sin confirmar que es la correcta.</p>
+    <p>Para el Analista, el correo es, en cierto sentido, un documento más, con el mismo nivel de cuidado que un informe. Un correo claro, verificado y profesional fortalece la confianza; uno descuidado puede generar malentendidos, filtrar información o dejar una mala impresión difícil de borrar. Tratar cada correo con la seriedad de una comunicación oficial —porque lo es— es parte del profesionalismo del cargo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>No confiar ciegamente en la herramienta</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La herramienta hace lo que se le indica, no lo que se quería: si el rango está mal, la fórmula está equivocada o los datos están sucios, dará un resultado impecablemente <mark>erróneo</mark>. El Analista aporta el <mark>criterio</mark>: define bien la operación, verifica que el resultado tenga sentido y no acepta un número solo porque lo arrojó el programa.</p>
+</div>
+<div class="b-texto">
+  <p>Hay una tentación peligrosa al usar herramientas potentes: creer que, como el programa es sofisticado, su resultado es necesariamente correcto. Es un error de raíz. La herramienta ejecuta exactamente lo que se le indica, con total precisión, aunque lo que se le indicó esté mal. Una fórmula con el rango equivocado, una tabla dinámica sobre datos sucios o una búsqueda con la llave mal homologada producen resultados impecablemente presentados y completamente erróneos.</p>
+  <p>Por eso el valor del Analista no está en operar la herramienta —eso lo hace cualquiera—, sino en el <strong>criterio</strong> que pone antes y después. Antes: definir bien la pregunta, depurar los datos, elegir la operación correcta. Después: verificar que el resultado tenga sentido, contrastarlo con lo esperado, revisar los casos raros. El criterio humano es la capa de inteligencia que la herramienta no tiene y que convierte un cálculo en un resultado confiable.</p>
+  <p>Esta idea conecta con lo visto sobre los sistemas de información y los perfiles de riesgo: no confiar ciegamente en lo que arroja la máquina. Un sistema puede clasificar mal, una fórmula puede apuntar al rango equivocado, un cruce puede fallar por la llave. En todos los casos, la actitud correcta no es aceptar el resultado porque «lo dijo el computador», sino verificarlo con criterio. La tecnología amplifica la capacidad, pero no sustituye el juicio.</p>
+  <p>Para el Analista I, interiorizar esta idea es quizás la lección más importante del tema. Dominar las herramientas es necesario, pero insuficiente: lo decisivo es usarlas con criterio, con desconfianza sana hacia los resultados y con el hábito de verificar. Un analista que verifica atrapa los errores antes de que lleguen a un informe; uno que confía ciegamente los propaga. En un trabajo donde las cifras alimentan decisiones, esa diferencia de actitud es lo que define la confiabilidad del profesional.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La herramienta...</th><th>El Analista aporta...</th></tr></thead>
+    <tbody>
+      <tr><td>Calcula lo que se le indica, con precisión</td><td>Define bien qué calcular y con qué datos</td></tr>
+      <tr><td>No sabe si la pregunta o los datos están mal</td><td>Depura, verifica y aplica criterio</td></tr>
+      <tr><td>Presenta errores con elegancia</td><td>Contrasta el resultado con lo esperado</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Una tabla dinámica te arroja un recaudo por seccional, y una de ellas muestra una cifra que no tiene sentido (demasiado alta). En vez de reportarla porque 'lo dijo la herramienta', investigas: había un duplicado masivo en esa seccional. Lo corriges y recalculas. Tu criterio —desconfiar de un resultado raro y verificarlo— atrapó un error que, de otro modo, habría llegado al informe.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>Ante un resultado que una herramienta arroja pero que parece no tener sentido, el Analista debe:</p>
+  <div class="cp-op" data-op="a">a) Aceptarlo y reportarlo tal cual, porque si lo calculó la herramienta debe estar bien.</div>
+  <div class="cp-op" data-op="b">b) Desconfiar y verificarlo (revisar el rango, los datos, la fórmula), porque la herramienta calcula lo que se le indica, aunque esté mal.</div>
+  <div class="cp-op" data-op="c">c) Borrar la herramienta y hacer todo a mano para siempre.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La seguridad física y el 'hombro que mira'</h4>
+    <p>La seguridad de la información no es solo digital; también es física y del entorno. Dejar documentos sensibles impresos sobre el escritorio, hablar de datos reservados en voz alta en un lugar público, o permitir que alguien lea la pantalla por encima del hombro (el llamado «shoulder surfing») son fugas tan reales como un archivo mal enviado. El Analista que maneja información reservada cuida también estos detalles del entorno: guarda lo impreso, controla quién puede ver su pantalla y es discreto al hablar de su trabajo.</p>
+    <p>Estos cuidados completan la idea de que la seguridad es, sobre todo, un conjunto de hábitos. Las herramientas y los sistemas aportan protecciones técnicas, pero la cadena es tan fuerte como su eslabón más débil, que suele ser el comportamiento cotidiano del usuario. Un Analista consciente de que la información que maneja es valiosa y reservada incorpora estos hábitos con naturalidad, porque entiende que protegerla es parte esencial de su responsabilidad.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El Analista I como usuario experto y responsable</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El perfil que busca el cargo es el de un <mark>usuario experto y responsable</mark> de las herramientas: domina la ofimática para procesar y comunicar información con eficiencia, pero siempre con criterio (depura, verifica), con honestidad (comunica sin engañar) y con seguridad (protege la información). La herramienta multiplica a ese analista; nunca lo reemplaza.</p>
+</div>
+<div class="b-texto">
+  <p>Al cerrar el tema, conviene unir sus hilos en un perfil. El Analista I que el cargo necesita no es un simple operador de programas ni, en el otro extremo, alguien que desconfía tanto que no aprovecha las herramientas. Es un <strong>usuario experto y responsable</strong>: domina la hoja de cálculo, el procesador de texto, las presentaciones y el correo lo suficiente para trabajar con eficiencia, y los usa siempre con criterio, honestidad y seguridad.</p>
+  <p>La <strong>eficiencia</strong> viene del dominio técnico: saber filtrar, ordenar, depurar, cruzar con búsquedas, resumir con tablas dinámicas, comunicar con documentos y presentaciones claros. Ese dominio permite procesar grandes volúmenes de información con rapidez. Pero la eficiencia sin las otras cualidades es peligrosa: un analista rápido que no verifica propaga errores con rapidez. Por eso el dominio técnico es condición necesaria, pero no suficiente.</p>
+  <p>Las cualidades que completan el perfil son tres. El <strong>criterio</strong>: depurar antes de calcular y verificar que los resultados tengan sentido, sin confiar ciegamente en la herramienta. La <strong>honestidad</strong>: comunicar los resultados con fidelidad, sin exagerar ni engañar con la forma. Y la <strong>seguridad</strong>: proteger la información con contraseñas, bloqueo del equipo, respaldos y prudencia en el correo. Estas tres cualidades convierten el dominio técnico en un uso profesional y confiable.</p>
+  <p>Si tuvieras que quedarte con una sola idea, que sea esta: la herramienta multiplica al buen analista, pero nunca lo reemplaza. Un Analista I con dominio técnico, criterio, honestidad y hábitos de seguridad convierte la ofimática en un instrumento poderoso al servicio de un trabajo confiable. Ese es el perfil que la prueba busca y que el cargo necesita: alguien que usa la tecnología con maestría, pero que pone siempre, por encima de ella, su propio juicio y su responsabilidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Cualidad del usuario experto</th><th>Cómo se manifiesta</th></tr></thead>
+    <tbody>
+      <tr><td>Eficiencia</td><td>Domina filtros, cruces, tablas dinámicas, comunicación</td></tr>
+      <tr><td>Criterio</td><td>Depura y verifica; no confía ciegamente</td></tr>
+      <tr><td>Honestidad</td><td>Comunica sin exagerar ni engañar</td></tr>
+      <tr><td>Seguridad</td><td>Protege la información (claves, respaldo, correo)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>En una tarea típica, usas tablas dinámicas para resumir con eficiencia, pero depuras antes y verificas después (criterio); comunicas los resultados en un informe claro y honesto (honestidad); y proteges el archivo con buenas prácticas de seguridad. Las cuatro cualidades juntas convierten tu manejo de la ofimática en un trabajo confiable. Esa es la marca del usuario experto y responsable que el cargo busca.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 13</div>
+  <p>El perfil de 'usuario experto y responsable' de las herramientas que busca el cargo combina:</p>
+  <div class="cp-op" data-op="a">a) Solo velocidad para operar programas, sin importar la calidad ni la seguridad.</div>
+  <div class="cp-op" data-op="b">b) Desconfianza total que impide aprovechar cualquier herramienta.</div>
+  <div class="cp-op" data-op="c">c) Eficiencia técnica junto con criterio (depurar y verificar), honestidad al comunicar y seguridad al proteger la información.</div>
+  <div class="cp-fb"></div>
+</div>
+
+<div class="destacado">
+  <div class="destacado-t">💡 Idea clave para recordar</div>
+  <p>La herramienta <strong>multiplica al buen analista, pero no lo reemplaza</strong>: calcula con precisión lo que se le indica, aunque esté mal. Por eso: depura antes (duplicados, vacíos, formatos), verifica que el resultado tenga sentido, cuida la llave al cruzar, comunica con honestidad y protege la información (claves, bloqueo, respaldo, correo). Dominio técnico + criterio + honestidad + seguridad = usuario experto y responsable.</p>
+</div>
+
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips finales para tu prueba</div>
+  <ul>
+    <li>Antes de calcular, <strong>depura</strong>: duplicados, vacíos, formatos y valores imposibles.</li>
+    <li>Al cruzar con búsquedas, muchos 'no encontrados' suelen ser por la <strong>llave sucia</strong>, no por ausencia real.</li>
+    <li>Las <strong>tablas dinámicas</strong> resumen rápido, pero sobre datos sucios resumen basura con elegancia: depura y verifica.</li>
+    <li>Envía datos en <strong>csv/xlsx</strong> (no PDF) y verifica que no se alteren NIT ni ceros; el PDF es para documentos finales.</li>
+    <li>Desconfía de las opciones que proponen <strong>compartir la clave</strong>, confiar ciegamente en la herramienta o presentar con escalas tramposas.</li>
+  </ul>
+</div>
+
+<div class="frase-recordar">⚡ La herramienta calcula lo que le dices, no lo que querías: depura antes, verifica después y nunca confíes a ciegas.</div>
+
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN — Portal institucional y servicios en línea</a></li>
+    <li><a href="https://gobiernodigital.mintic.gov.co/" target="_blank" rel="noopener">MinTIC — Política de Gobierno Digital</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981" target="_blank" rel="noopener">Ley 1581 de 2012 — Protección de datos personales</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62516" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia y acceso a la información</a></li>
+  </ul>
+</div>
+
+    <h4>La humildad de verificar</h4>
+    <p>Hay una actitud que resume el buen uso de las herramientas: la humildad de verificar siempre, incluso lo propio. El analista experimentado no es el que confía en que nunca se equivoca, sino el que da por hecho que puede equivocarse y por eso revisa. Verificar que un total cuadra, que un cruce no perdió registros, que una fórmula apunta a donde debe, no es desconfianza excesiva: es profesionalismo. Los errores atrapados en la verificación son errores que no llegaron a un informe ni a una decisión.</p>
+    <p>Esta humildad es, paradójicamente, señal de experiencia. Quien más sabe de herramientas suele ser quien más verifica, porque conoce de primera mano cuántas formas hay de que un resultado salga mal sin que se note. El Analista I que incorpora el hábito de la verificación como algo natural —no como una carga— es el que produce trabajo en el que la entidad puede confiar, y ese es, al final, el mayor valor que puede aportar.</p>
+
+  </div>
+
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos y prácticas que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque de ellos depende usar las herramientas con eficiencia y sin errores.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Filtrar</td><td>Ordenar</td><td>Filtrar muestra solo las filas que cumplen una condición; ordenar reorganiza todas las filas por un criterio (siempre la tabla completa).</td></tr><tr><td>Fórmula</td><td>Valor</td><td>La fórmula calcula automáticamente y se recalcula al cambiar los datos; el valor es un dato fijo. Al guardar como csv, las fórmulas se pierden.</td></tr><tr><td>Tabla dinámica</td><td>Tabla normal</td><td>La tabla dinámica resume (agrupa y calcula) grandes volúmenes en segundos; la normal solo contiene los datos crudos.</td></tr><tr><td>xlsx</td><td>csv</td><td>El xlsx guarda fórmulas y formato (para trabajar); el csv es texto plano para intercambiar datos entre sistemas (no guarda fórmulas).</td></tr><tr><td>csv / xlsx (enviar datos)</td><td>PDF (documento final)</td><td>Para enviar datos a procesar se usa csv o xlsx; el PDF es para documentos finales que no deben modificarse (del PDF es engorroso extraer datos).</td></tr><tr><td>La herramienta</td><td>El criterio del Analista</td><td>La herramienta calcula lo que se le indica, aunque esté mal; el criterio define bien la operación y verifica que el resultado tenga sentido.</td></tr><tr><td>Depurar</td><td>Calcular</td><td>Depurar (quitar duplicados, vacíos, imposibles) es el paso previo imprescindible; calcular sobre datos sin depurar propaga la basura.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta proponga confiar ciegamente en un resultado, compartir la clave, enviar datos en PDF u ordenar una sola columna, desconfía: rompe el criterio, la seguridad o la integridad de los datos.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · Resumir 50.000 registros</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Le piden al Analista I el recaudo por seccional e impuesto de una base de 50.000 registros, para una reunión próxima. Un compañero propone sumar seccional por seccional a mano para 'no complicarse con cosas raras'.</p>
+      <span class="label">Análisis</span>
+      <p>Sumar a mano 50.000 registros es lento y propenso a errores; la tabla dinámica resume eso en segundos. Pero exige depurar antes (duplicados, nombres de seccional homologados) y verificar el total.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Depurar la base, crear una tabla dinámica que agrupe por seccional e impuesto, verificar que el gran total cuadre con la base y entregar el resumen; usar la herramienta adecuada en vez de sumar a mano.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · Los 'no encontrados' del cruce</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista cruza dos tablas por NIT con una función de búsqueda y aparecen cientos de 'no encontrados'. Un compañero concluye de inmediato que 'esos contribuyentes no tienen información reportada'.</p>
+      <span class="label">Análisis</span>
+      <p>Muchos 'no encontrados' suelen deberse a una llave sucia (NIT mal digitados, con o sin dígito de verificación), no a que esos contribuyentes no existan. Es un problema técnico, no una conclusión de negocio.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Revisar y homologar la llave (NIT) en ambas tablas antes de concluir nada; una vez limpia, rehacer el cruce. No reportar los 'no encontrados' como ausencia real de información sin verificar la causa.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · El formato para enviar datos</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista debe enviar una base a otra área para que la procesen. Un compañero le dice que la mande en PDF 'porque se ve más ordenada y oficial'. El plazo corre.</p>
+      <span class="label">Análisis</span>
+      <p>Del PDF es engorroso extraer datos: si lo que necesita el área es procesar la información, el PDF la obliga a redigitar o a extraer con errores. Para datos a procesar se usa csv o xlsx.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Enviar la base en csv o xlsx (no PDF), verificando que al convertir no se alteren los NIT (notación científica, ceros iniciales) ni los caracteres especiales; reservar el PDF para documentos finales que no deben modificarse.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · La clave prestada</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero le pide al Analista su usuario y contraseña 'un momento, para avanzar con un archivo mientras el suyo está ocupado'. Insiste en que 'es rápido y de confianza'.</p>
+      <span class="label">Análisis</span>
+      <p>Las contraseñas son individuales y personales; compartirlas anula la seguridad y la trazabilidad (lo que el otro haga quedará a nombre del Analista). Es una mala práctica que compromete información reservada.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Negarse a compartir la clave y explicar que es individual; sugerir que el compañero use su propia cuenta. Mantener la contraseña secreta y bloquear el equipo al ausentarse.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Confiar ciegamente en el resultado de la herramienta</div><p>La herramienta calcula lo que se le indica, aunque el rango o los datos estén mal: da resultados impecablemente erróneos. Verifica que el resultado tenga sentido.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Calcular sobre datos sin depurar</div><p>'Entra basura, sale basura': duplicados, vacíos y valores imposibles distorsionan cualquier cálculo o tabla dinámica. Depura antes de analizar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Ordenar una sola columna sin el resto</div><p>Descuadra la correspondencia entre los campos de cada fila y corrompe los datos de forma silenciosa. Ordena siempre la tabla completa.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Concluir que los 'no encontrados' de un cruce no existen</div><p>Suele ser un problema de llave sucia (NIT con/sin dígito de verificación), no una ausencia real. Revisa y homologa la llave antes de concluir.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Enviar datos para procesar en PDF</div><p>Del PDF es engorroso extraer datos; obliga a redigitar o a errores. Para datos a procesar usa csv o xlsx; el PDF es para documentos finales.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Compartir la clave o no bloquear el equipo</div><p>Las contraseñas son individuales; compartirlas o dejar el equipo abierto anula la seguridad y la trazabilidad. Protege tus credenciales y respalda tu trabajo.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>Antes de calcular, <strong>depura</strong>: duplicados, vacíos, formatos y valores imposibles.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>Ordena <strong>siempre la tabla completa</strong>, nunca una sola columna.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Muchos 'no encontrados' en un cruce = <strong>llave (NIT) sucia</strong>, no ausencia real.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>La <strong>tabla dinámica</strong> resume en segundos, pero verifica que su gran total cuadre con la base.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Para enviar datos usa <strong>csv/xlsx</strong> (no PDF); verifica NIT, ceros y tildes al convertir.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>No confíes ciegamente: <strong>verifica</strong> que el resultado tenga sentido; no compartas la clave.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone reportar un resultado raro de la herramienta 'porque lo calculó el programa'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente confiar en una herramienta sofisticada.</div>
+      <div class="t-row malo">🔴 La trampa: La herramienta calcula lo que se le indica, aunque el rango o los datos estén mal; puede dar errores impecables.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Desconfiar del resultado raro, revisar rango/datos/fórmula y corregir antes de reportar.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción concluye que los 'no encontrados' de un cruce por NIT son contribuyentes sin información.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece una conclusión directa de lo que arrojó el cruce.</div>
+      <div class="t-row malo">🔴 La trampa: Suele ser un problema técnico de llave sucia (NIT con/sin dígito de verificación), no una ausencia real.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Revisar y homologar la llave antes de concluir, y rehacer el cruce con el NIT limpio.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere compartir la clave con un compañero para 'agilizar'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece colaborativo y rápido prestar la clave un momento.</div>
+      <div class="t-row malo">🔴 La trampa: Las claves son individuales; compartirlas anula la seguridad y la trazabilidad (todo queda a nombre del Analista).</div>
+      <div class="t-row bueno">🟢 Lo correcto: Negarse, sugerir que use su propia cuenta y mantener la contraseña secreta.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Organizar y explorar</h4><p>Tabla limpia (una columna por campo, una fila por registro); filtrar y ordenar (toda la tabla) para encontrar lo relevante.</p></div>
+    <div class="resumen-item"><h4>Depurar y calcular</h4><p>Quitar duplicados, vacíos e imposibles antes de calcular; usar fórmulas básicas y verificar que el resultado tenga sentido.</p></div>
+    <div class="resumen-item"><h4>Cruzar y resumir</h4><p>Búsquedas por una llave limpia (los 'no encontrados' suelen ser llave sucia); tablas dinámicas para resumir en segundos, verificando el total.</p></div>
+    <div class="resumen-item"><h4>Comunicar y manejar formatos</h4><p>Informes claros y presentaciones sobrias y honestas; csv/xlsx para datos, PDF para documentos finales.</p></div>
+    <div class="resumen-item"><h4>Seguridad y criterio</h4><p>Claves individuales, bloqueo del equipo, respaldo; y, sobre todo, no confiar ciegamente en la herramienta: el criterio del Analista verifica.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Ofimática</dt><dd>Conjunto de programas de oficina (hoja de cálculo, texto, presentaciones, correo) para producir y comunicar información.</dd>
+      <dt>Hoja de cálculo</dt><dd>Herramienta que organiza datos en filas y columnas y permite filtrar, ordenar, cruzar, resumir y calcular.</dd>
+      <dt>Filtro</dt><dd>Función que muestra solo las filas que cumplen una condición, sin borrar las demás.</dd>
+      <dt>Fórmula</dt><dd>Cálculo automático que se recalcula al cambiar los datos (SUMA, PROMEDIO, CONTAR.SI, SI...).</dd>
+      <dt>Función de búsqueda</dt><dd>Fórmula que trae un dato de otra tabla usando una llave común (el NIT); base del cruce en una hoja.</dd>
+      <dt>Tabla dinámica</dt><dd>Herramienta que agrupa y resume grandes volúmenes de datos (totales, promedios, conteos) en segundos.</dd>
+      <dt>csv</dt><dd>Formato de texto plano para intercambiar datos entre sistemas; no guarda fórmulas ni formato.</dd>
+      <dt>Phishing</dt><dd>Correo o mensaje falso que busca robar credenciales o que se abra un archivo malicioso.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Herramientas informáticas y ofimática aplicada</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 16. Continúa con el Día 17: Gestión documental, controles y trazabilidad.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 16 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 16</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué idea debe guiar el uso de las herramientas ofimáticas?","b": "Que multiplican al buen analista pero no lo reemplazan: amplifican tanto el acierto como el descuido. La herramienta calcula lo que se le indica, aunque esté mal; el criterio humano sigue siendo lo decisivo."},{"f": "¿Cuál es la estructura correcta de una tabla de datos?","b": "Una columna por cada campo, un registro por fila, encabezados claros en una sola fila, sin celdas combinadas en los datos ni totales intercalados. Conviene separar los datos de los cálculos y de la presentación."},{"f": "¿Qué cuidado hay al ordenar una tabla por una columna?","b": "Ordenar siempre la tabla completa, no una sola columna. Si se ordena una columna sin arrastrar las demás, se descuadra la correspondencia entre los campos de cada fila y se corrompen los datos silenciosamente."},{"f": "¿Por qué depurar antes de calcular?","b": "Porque 'entra basura, sale basura': duplicados, valores vacíos, formatos incorrectos y valores imposibles distorsionan cualquier cálculo o tabla dinámica, por impecable que sea la operación. La depuración es el paso previo imprescindible."},{"f": "¿Cuál es la regla de oro al usar fórmulas?","b": "Verificar que el resultado tenga sentido (contrastarlo con lo esperado). La fórmula se recalcula sola y es rápida, pero si apunta a un rango equivocado propaga el error. No se confía ciegamente en el número que arroja."},{"f": "¿Qué hacer si una búsqueda (BUSCARV) da muchos 'no encontrados'?","b": "Revisar primero si la llave (el NIT) está sucia o con formatos distintos entre las tablas (con o sin dígito de verificación, espacios). Suele ser un problema técnico de la llave, no que esos contribuyentes no existan."},{"f": "¿Qué es una tabla dinámica y qué cuidado exige?","b": "Es la herramienta que resume grandes volúmenes en segundos (agrupa por categoría y calcula totales, promedios o conteos). Exige depurar antes (si no, resume basura con elegancia) y verificar que su gran total cuadre con la base."},{"f": "¿Qué formato usar para enviar datos a procesar y cuál para un documento final?","b": "Para enviar datos a procesar, csv o xlsx (verificando que no se alteren NIT ni ceros ni tildes). Para un documento final que no debe modificarse, PDF. Enviar datos a procesar en PDF es un error (es engorroso extraerlos)."},{"f": "¿Cuál es la regla de oro de una presentación de resultados?","b": "'Menos es más': pocas ideas por diapositiva, textos breves, gráficos honestos (eje desde cero, fuente rotulada). Comunicar para informar, no para impresionar; sin escalas tramposas ni títulos engañosos."},{"f": "¿Qué cuidado esencial hay al enviar un correo con información reservada?","b": "Verificar cuidadosamente el destinatario (el autocompletado puede sugerir un nombre parecido equivocado) y que el canal sea el autorizado, porque un error enviaría datos reservados a quien no debe. Y desconfiar de correos sospechosos (phishing)."},{"f": "¿Cuáles son buenos hábitos de seguridad en el uso de las herramientas?","b": "Contraseñas robustas, individuales y secretas (no compartirlas); bloquear el equipo al ausentarse; y hacer copias de respaldo en los repositorios institucionales para no depender de una sola copia local."},{"f": "¿Por qué no hay que confiar ciegamente en la herramienta?","b": "Porque ejecuta con precisión lo que se le indica, aunque lo indicado esté mal (rango equivocado, datos sucios, llave mal homologada): produce resultados impecablemente erróneos. El Analista aporta el criterio: define bien y verifica que el resultado tenga sentido."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "La herramienta no reemplaza el criterio","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un practicante que te apoya cree que, como la hoja de cálculo es un programa sofisticado, cualquier resultado que arroje es necesariamente correcto, y propone entregar las cifras 'tal cual salgan, sin revisar, porque el programa no se equivoca'. Tú conoces el papel real de la herramienta.","q": "¿Cuál es la explicación correcta sobre el papel de la herramienta?","ops": ["El practicante tiene razón: como la hoja de cálculo es sofisticada, cualquier resultado que arroje es correcto y puede entregarse sin revisar, porque el programa nunca se equivoca.","La herramienta ejecuta con precisión lo que se le indica, aunque lo indicado esté mal (un rango equivocado, datos sucios): puede dar resultados impecablemente erróneos. Por eso el Analista define bien la operación y verifica que el resultado tenga sentido.","La herramienta es tan poco confiable que lo mejor es no usarla nunca y hacer todos los cálculos a mano, para evitar cualquier posibilidad de error en los resultados."],"correcta": 1,"expl": "La herramienta calcula lo que se le indica, aunque esté mal: puede dar resultados impecablemente erróneos (A es falso). Pero eso no obliga a renunciar a ella (C). Lo correcto es usarla aportando criterio: definir bien la operación y verificar que el resultado tenga sentido."},{"nivel": "b","tema": "Ordenar la tabla completa","ctx": "Eres Analista I de la DIAN y debes ordenar una base de contribuyentes de mayor a menor monto. La base tiene columnas de NIT, nombre y monto. Un compañero te sugiere seleccionar solo la columna del monto y ordenarla, 'para ir más rápido'. Tú sabes qué pasa si se ordena una sola columna.","q": "¿Cuál es la forma correcta de ordenar la base?","ops": ["Seleccionar solo la columna del monto y ordenarla de mayor a menor, dejando las columnas de NIT y nombre como están, ya que así se ordena más rápido lo que interesa.","Ordenar toda la tabla a la vez por la columna del monto, de modo que el NIT y el nombre de cada contribuyente se muevan junto con su monto, para no descuadrar la correspondencia entre los campos de cada fila.","Borrar las columnas de NIT y nombre, ordenar el monto solo, y después volver a escribir a mano los NIT y nombres junto a cada monto ya ordenado."],"correcta": 1,"expl": "Ordenar solo la columna del monto (A) descuadra los datos: el monto de uno queda junto al nombre de otro, corrompiendo la base silenciosamente. Borrar y reescribir (C) es absurdo. Lo correcto es ordenar toda la tabla a la vez, para que cada fila conserve la correspondencia entre sus campos."},{"nivel": "b","tema": "Depurar antes de calcular","ctx": "Eres Analista I de la DIAN y vas a calcular el recaudo total de una seccional a partir de una base. Un compañero te apura para que 'sumes ya y entregues'. Al abrir la base, detectas que hay 150 registros duplicados por NIT y dos montos negativos imposibles. Tú conoces la regla sobre la calidad de los datos.","q": "¿Cuál es la actuación correcta antes de calcular el total?","ops": ["Sumar de inmediato la base tal como está y entregar el total, confiando en que 150 duplicados y dos montos negativos no afectan de forma relevante el resultado final del recaudo.","Depurar primero la base (eliminar los duplicados reales, corregir o excluir los montos negativos imposibles) y documentar los ajustes antes de calcular el total, porque 'entra basura, sale basura' y esos datos distorsionan la cifra.","Eliminar sin verificar todos los registros de montos altos, incluidos los legítimos de grandes contribuyentes, para que el total salga más parejo y la suma sea más rápida."],"correcta": 1,"expl": "Los duplicados y los montos imposibles distorsionan el total: sumar sin depurar (A) da una cifra inflada o errónea. Pero tampoco se borran los montos altos legítimos sin verificar (C). Lo correcto es depurar (quitar duplicados reales, corregir imposibles) y documentar antes de calcular."},{"nivel": "b","tema": "Formato para enviar datos","ctx": "Eres Analista I de la DIAN y debes enviar una base de datos a otra área para que la procesen y hagan cruces con ella. Un compañero te dice que la mandes en PDF 'porque se ve más ordenada y oficial'. Tú sabes para qué sirve cada formato.","q": "¿Cuál es el formato correcto para enviar esos datos?","ops": ["Enviarla en PDF, porque se ve más ordenada y oficial, aunque el área que la recibe tenga que redigitar o extraer los datos del PDF para poder procesarlos.","Enviarla en un formato de datos como csv o xlsx (verificando que al convertir no se alteren los NIT ni los ceros ni las tildes), porque el área necesita procesar la información y del PDF es engorroso extraer datos.","Enviarla como una imagen (captura de pantalla) de la hoja, para que el área vea exactamente cómo se ven los datos en tu computador."],"correcta": 1,"expl": "El PDF (A) y la imagen (C) obligan a redigitar o extraer datos con errores: no sirven para enviar información a procesar. Lo correcto es csv o xlsx, verificando que no se alteren NIT, ceros ni tildes al convertir. El PDF se reserva para documentos finales que no deben modificarse."},{"nivel": "i","tema": "Tabla dinámica sobre datos sucios","ctx": "Eres Analista I de la DIAN y usas una tabla dinámica para resumir el recaudo por seccional de una base grande. El resultado muestra que 'Bogotá' aparece como tres seccionales distintas (por variantes en cómo está escrito el nombre) y un total que parece inflado. Un compañero dice que 'la tabla dinámica es confiable, entrégala así'. Tú sabes qué exige una tabla dinámica.","q": "¿Cuál es la actuación correcta ante ese resultado?","ops": ["Entregar el resumen tal como lo arrojó la tabla dinámica, incluidas las tres 'Bogotá' separadas y el total inflado, confiando en que las tablas dinámicas nunca se equivocan.","Reconocer que la tabla dinámica resume lo que recibe: hay que depurar antes (homologar los nombres de seccional, quitar duplicados) y verificar que el gran total cuadre con la base, y luego rehacer el resumen.","Dejar las tres 'Bogotá' separadas pero sumarlas a mano en una nota aparte, sin corregir la base, dando por hecho que así el resumen ya queda bien aunque los datos sigan sucios."],"correcta": 1,"expl": "Una tabla dinámica resume lo que recibe: si 'Bogotá' está escrita de tres formas, la agrupa por separado, y los duplicados inflan el total (A confía ciegamente; C parcha sin corregir). Lo correcto es depurar antes (homologar nombres, quitar duplicados), verificar el total contra la base y rehacer el resumen."},{"nivel": "i","tema": "Los 'no encontrados' del cruce","ctx": "Eres Analista I de la DIAN y cruzas dos tablas por el NIT con una función de búsqueda, para traer a las declaraciones lo reportado por terceros. Aparecen cientos de 'no encontrados'. Un compañero concluye de inmediato que 'esos contribuyentes no tienen ninguna información reportada por terceros'. Tú sabes qué suele causar esos errores.","q": "¿Cuál es la actuación correcta ante los 'no encontrados'?","ops": ["Aceptar la conclusión del compañero y reportar que esos cientos de contribuyentes no tienen información reportada por terceros, ya que la función de búsqueda no los encontró en la otra tabla.","Revisar primero si la llave (el NIT) está sucia o con formatos distintos entre las tablas (por ejemplo, con dígito de verificación en una y sin él en otra); homologarla y rehacer el cruce antes de concluir nada.","Borrar de la base todos los registros que dieron 'no encontrado', para que el cruce quede limpio y solo queden los que sí coincidieron, sin averiguar por qué fallaron."],"correcta": 1,"expl": "Muchos 'no encontrados' suelen deberse a una llave sucia (NIT con/sin dígito de verificación, espacios), no a que esos contribuyentes no existan: aceptar la conclusión (A) es un error de negocio por un problema técnico. Borrar los registros (C) oculta el problema. Lo correcto es revisar y homologar la llave y rehacer el cruce."},{"nivel": "i","tema": "Verificar el resultado de una fórmula","ctx": "Eres Analista I de la DIAN y usas una fórmula SUMA para totalizar el recaudo de una seccional. El resultado te parece demasiado alto frente a lo que razonablemente esperabas. Un compañero te dice que 'si la fórmula lo calculó así, estará bien, entrégalo'. Tú conoces la regla de oro al usar fórmulas.","q": "¿Cuál es la actuación correcta ante ese resultado sospechoso?","ops": ["Entregar el resultado tal cual, porque lo calculó una fórmula y las fórmulas no se equivocan, de modo que no hace falta revisar ni contrastar con lo esperado.","Desconfiar del resultado que no cuadra y verificarlo: revisar que el rango de la SUMA sea el correcto (por ejemplo, que no esté incluyendo una fila de totales ya existente) y que no haya textos o duplicados, corrigiendo antes de entregar.","Reducir el resultado a ojo hasta que 'se vea razonable' y entregar esa cifra ajustada manualmente, sin averiguar por qué la fórmula dio un valor tan alto."],"correcta": 1,"expl": "Una fórmula calcula lo que se le indica, aunque el rango esté mal (A confía ciegamente); y ajustar la cifra a ojo (C) es inventar. La regla de oro es verificar que el resultado tenga sentido: revisar el rango, los datos y corregir la causa real (p. ej. una fila de totales incluida en la SUMA)."},{"nivel": "i","tema": "Seguridad: la clave","ctx": "Eres Analista I de la DIAN y un compañero te pide tu usuario y contraseña 'un momento, para avanzar con un archivo mientras su equipo está ocupado'. Insiste en que 'es rápido, es de confianza y nadie se va a enterar'. Tú conoces las reglas de seguridad sobre las credenciales.","q": "¿Cuál es la actuación correcta ante esa petición?","ops": ["Prestarle la clave un momento, ya que es un compañero de confianza, es rápido y nadie se enterará, de modo que compartirla para que avance no genera ningún problema.","Negarte a compartir la clave y explicar que es individual y personal; sugerirle que use su propia cuenta, porque compartir credenciales anula la seguridad y la trazabilidad (lo que él haga quedaría a tu nombre).","Prestarle la clave pero cambiándola inmediatamente después de que termine, dando por hecho que así ya no hay ningún riesgo de que su uso quede registrado a tu nombre."],"correcta": 1,"expl": "Las contraseñas son individuales: prestarla (A) anula la seguridad y la trazabilidad, y lo que el otro haga queda a tu nombre; cambiarla después (C) no borra lo que ya se hizo con ella. Lo correcto es negarse, explicar que es personal y sugerir que use su propia cuenta."},{"nivel": "a","tema": "Caso integrador: del dato crudo al informe","ctx": "Eres Analista I de la DIAN y te encargan un informe breve del recaudo por impuesto de una seccional, a partir de una base cruda de declaraciones. El plazo es ajustado. Un compañero te sugiere ir directo a hacer una tabla dinámica y un gráfico vistoso 'para entregar ya', sin detenerte en revisar la base. Tú sabes cuál es el ciclo correcto del trabajo con información.","q": "¿Cuál es la secuencia correcta para producir el informe?","ops": ["Ir directo a la tabla dinámica y a un gráfico vistoso con la base cruda, sin revisarla, para entregar cuanto antes, confiando en que la herramienta corrige sola cualquier problema de los datos.","Organizar la tabla, depurarla (duplicados, montos imposibles), resumir con una tabla dinámica, verificar que el gran total cuadre con la base, crear un gráfico honesto (eje desde cero, fuente rotulada) y redactar el informe con el hallazgo claro; gestionar prórroga si el tiempo no alcanza.","Hacer un gráfico con un eje truncado para que el recaudo se vea más alto e impresione a la Dirección, y acompañarlo de un informe largo con decenas de tablas para que 'se vea completo'."],"correcta": 1,"expl": "Ir directo con la base cruda (A) arriesga resumir basura; un gráfico truncado y un informe sobrecargado (C) engañan y no comunican. Lo correcto es el ciclo completo: organizar, depurar, resumir, verificar el total, graficar con honestidad y redactar claro, pidiendo prórroga si hace falta."},{"nivel": "a","tema": "Caso integrador: correo y reserva","ctx": "Eres Analista I de la DIAN y debes enviar por correo un archivo con datos reservados a un área interna. El plazo es ajustado. Al escribir el destinatario, el autocompletado te sugiere un nombre muy parecido al correcto pero que corresponde a una persona externa a la entidad. Además, recibes al tiempo un correo 'urgente del área de sistemas' pidiendo tu contraseña por un enlace. Un compañero te dice que 'envíes rápido y le des la clave a sistemas para no quedar bloqueada'.","q": "¿Cuál es la actuación correcta en ambas situaciones?","ops": ["Enviar rápido el archivo al destinatario que sugirió el autocompletado y entregar la contraseña en el enlace del correo de 'sistemas', para cumplir el plazo y no quedar bloqueada, confiando en que ambas cosas son rutinarias.","Verificar cuidadosamente que el destinatario del archivo sea la persona interna correcta (no la externa parecida) antes de enviar, y NO entregar la contraseña: el correo que la pide es un probable phishing; verificarlo por el canal oficial y reportarlo.","Enviar el archivo a ambos destinatarios (el correcto y el externo parecido) 'por si acaso' para asegurarte de que llegue, y entregar la clave solo si el correo de sistemas insiste una segunda vez."],"correcta": 1,"expl": "Enviar al destinatario sugerido sin verificar (A) filtraría datos reservados a un externo, y entregar la clave a un correo que la pide es caer en phishing; enviar 'a ambos por si acaso' (C) también filtra. Lo correcto es verificar el destinatario interno correcto antes de enviar y no entregar la clave, reportando el phishing."},{"nivel": "a","tema": "Caso integrador: usuario experto y responsable","ctx": "Eres Analista I de la DIAN y tienes una jornada con varias tareas de ofimática a la vez, con plazos. Un compañero, abrumado, te propone una serie de atajos: confiar en los resultados de la herramienta sin verificar, enviar las bases en PDF para 'no complicarse', compartir la clave con un auxiliar para avanzar más rápido y presentar los resultados con un gráfico de eje truncado 'para que luzcan mejor'. Insiste en que 'con tal de entregar a tiempo, todo vale'.","q": "¿Cuál es la actuación correcta que combina eficiencia, criterio, honestidad y seguridad?","ops": ["Seguir todos los atajos del compañero (no verificar, enviar en PDF, compartir la clave, gráfico truncado), ya que entregar a tiempo es la prioridad y la rapidez justifica cualquier medio.","Usar las herramientas con eficiencia pero verificando los resultados (criterio), enviando los datos en csv/xlsx, sin compartir la clave (que el auxiliar use la suya) y con gráficos honestos (sin eje truncado); gestionar prórroga si el tiempo no alcanza para hacerlo bien.","Hacer solo una parte mínima del trabajo sin ningún análisis ni formato, entregando datos crudos sin resumir ni comunicar, para evitar equivocarse al tener que usar las herramientas."],"correcta": 1,"expl": "Los atajos (A) sacrifican criterio, seguridad y honestidad por la rapidez; entregar datos crudos sin análisis (C) no cumple la tarea. El perfil correcto de usuario experto y responsable combina eficiencia con verificación (criterio), formatos adecuados, seguridad (no compartir la clave) y gráficos honestos, pidiendo prórroga si hace falta."},{"nivel": "i","tema": "Copias de respaldo","ctx": "Eres Analista I de la DIAN y llevas tres semanas trabajando en una consolidación compleja que guardas únicamente en el disco local de tu computador. Un compañero te comenta que a él una vez se le dañó el equipo y perdió todo lo que tenía guardado solo ahí. Reflexionas sobre cómo proteger tu trabajo ante una posible falla del equipo.","q": "¿Cuál es la práctica correcta para proteger ese trabajo?","ops": ["Seguir guardando todo únicamente en el disco local de tu computador, ya que ahí lo tienes a la mano y es poco probable que justo a ti se te dañe el equipo mientras terminas la consolidación.","Respaldar periódicamente el trabajo en los repositorios institucionales previstos para ello, de modo que no dependa de una única copia local y pueda recuperarse si el equipo falla, conforme a las buenas prácticas de seguridad.","Imprimir en papel toda la consolidación como respaldo, aunque sean miles de registros, confiando en que el papel nunca se pierde y reemplaza cualquier copia digital."],"correcta": 1,"expl": "Depender de una única copia local (A) arriesga perder semanas de trabajo ante un daño del equipo; imprimir miles de registros (C) es inviable y el papel también se pierde. Lo correcto es respaldar periódicamente en los repositorios institucionales, para poder recuperar el trabajo si el equipo falla."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
