@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-RADM-05 · Servicios Generales y Parque Automotor — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-RADM-05</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 13 · Funcional Específica · Servicios y Parque Automotor</div>
+  <h1>Servicios Generales y Parque Automotor</h1>
+  <p class="header-sub">La operación diaria de la Entidad: aseo, vigilancia, cafetería y correspondencia (servicios continuos que no pueden interrumpirse), y el parque automotor con sus obligaciones legales (SOAT, revisión técnico-mecánica), mantenimiento, uso institucional, combustible y seguros. Lo que un <strong>Gestor III (Nivel Profesional)</strong> gestiona y supervisa, sin ordenar el gasto ni suscribir los contratos.</p>
+  <div class="badges"><span class="badge">📅 Día 13 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Es martes, 7:40 a. m. Llegas a la Subdirección de Recursos Físicos de la DIAN, en tu primera semana como Gestor III del proceso de Recursos Administrativos. Marcela, tu coordinadora, te entrega cuatro asuntos antes del almuerzo. El primero: la Dirección Seccional de Barranquilla reporta una filtración en la cubierta de su sede y pide "reparación urgente"; alguien ya habló con un contratista conocido para que "empiece hoy mismo y después legalizamos". El segundo: hay que dar de baja veinte computadores obsoletos y un vehículo del parque automotor, y un funcionario propone "regalarlos a una fundación para no complicarse". El tercero: una sede recibió, como pago de una obligación fiscal, un lote urbano, y nadie sabe quién debe asegurarlo, mantenerlo ni custodiarlo. El cuarto: la póliza que ampara los bienes muebles de tres seccionales vence el viernes y el corredor de seguros pregunta si "renovamos igual que el año pasado".</p>
+    <p>¿Se puede "empezar hoy y legalizar después"? ¿Un bien del Estado se "regala"? ¿Quién responde por un inmueble recibido en pago? ¿Qué significa que una póliza se renueve "igual"? Todas estas respuestas parten de unas mismas bases, y esas bases son las <mark>generalidades de los Recursos Administrativos</mark>: qué es este proceso dentro de la DIAN, qué bienes y servicios administra, con qué normas (presupuesto, contratación, bienes, seguros, ambiental), con qué principios actúa el servidor público y, sobre todo, qué te corresponde decidir a ti como Gestor III y qué no. Hoy construyes ese mapa.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es el <strong>proceso de Recursos Administrativos</strong> en la DIAN y cómo se ubica dentro de la estructura de la Entidad (Decreto 1742 de 2020).</li>
+      <li>El <strong>propósito y las funciones esenciales</strong> del empleo Gestor III del área administrativa y financiera, según el manual específico (Resolución 0067 de 2024).</li>
+      <li>Los <strong>cinco grandes frentes</strong> que administra el proceso: infraestructura física, bienes muebles e inmuebles, servicios generales y parque automotor, aseguramiento de bienes y gestión ambiental de sedes.</li>
+      <li>El <strong>mapa normativo</strong> del cargo: Constitución (función administrativa), Estatuto de Contratación (Ley 80 de 1993, Ley 1150 de 2007, Decreto 1082 de 2015), régimen de bienes del Estado, presupuesto y plan anual de adquisiciones.</li>
+      <li>El <strong>ciclo de la gestión administrativa</strong>: planear (PAA) → contratar → ejecutar y supervisar → recibir → administrar y mantener → dar de baja o enajenar.</li>
+      <li>Los <strong>principios de la función pública</strong> aplicados a lo administrativo (art. 209 C.P.): igualdad, moralidad, eficacia, economía, celeridad, imparcialidad y publicidad.</li>
+      <li>La diferencia entre <strong>bien mueble e inmueble</strong>, entre <strong>baja y enajenación</strong>, y qué son los <strong>bienes recibidos en pago</strong> de obligaciones fiscales.</li>
+      <li>El <strong>aseguramiento de bienes</strong>: qué es un programa de seguros, qué ampara y por qué no se "renueva igual" sin análisis.</li>
+      <li>El <strong>rol del Gestor III</strong>: qué proyecta, gestiona y supervisa, y por qué no puede dispensar requisitos ni decidir lo que es de otro.</li>
+      <li>Ejercicios, casos aplicados a tu día a día y <strong>12 preguntas de simulacro</strong> de juicio situacional con tres opciones.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás ubicar cualquier asunto administrativo en su lugar correcto —qué bien o servicio es, qué norma lo rige, en qué fase del ciclo está y a quién le corresponde decidir— y tendrás la base para estudiar, en los días siguientes, la infraestructura física, la administración de bienes muebles e inmuebles, los servicios y el parque automotor, y la contratación estatal paso a paso.</p>
+  </div>
+</section>
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <p>"Generalidades de los Recursos Administrativos" es el <mark>cimiento</mark> de todo el bloque funcional de tu empleo. El manual específico del <strong>Gestor III del Nivel Profesional</strong> describe un cargo cuyo propósito es efectuar las acciones que demandan la proyección y el desarrollo de la infraestructura física de la Entidad, la administración de sus bienes muebles e inmuebles, la prestación de servicios generales, el transporte y parque automotor, el aseguramiento de bienes y la contratación necesaria para todo ello. No puedes dominar ninguna de esas funciones si antes no tienes claro <strong>qué es el proceso, qué administra, con qué normas y con qué límites</strong>. Esa es la foto completa que arma esta guía.</p>
+  <p>Recuerda cómo es la prueba: las competencias funcionales se evalúan con <strong>juicio situacional</strong> (un caso, un enunciado y tres opciones de respuesta, de las cuales solo una es la más apropiada), es una prueba <mark>eliminatoria</mark> y exige un puntaje mínimo aprobatorio. Además, en los ejes que se sustentan en leyes, decretos y otras normas solo se tienen en cuenta las que estén <strong>vigentes</strong> a la fecha de corte definida en la convocatoria. Por eso aquí no solo aprenderás qué dicen las normas, sino a razonar con los principios que las sostienen, que son los que permiten resolver un caso aunque no te sepas de memoria un artículo.</p>
+  <p>Para quien llega al cargo, estas generalidades importan por cuatro razones concretas:</p>
+  <ul class="lista">
+    <li>Tus funciones de <strong>infraestructura y bienes inmuebles</strong> exigen saber en qué fase está cada asunto (planeación, contratación, ejecución, recibo, mantenimiento, baja/enajenación) para no "saltarse" pasos que la ley impone.</li>
+    <li>Tus funciones de <strong>contratación</strong> (estudios previos, selección, perfeccionamiento, liquidación, garantías) se apoyan en el Estatuto de Contratación, que aquí se introduce y luego se profundiza en los Días 14 y 15.</li>
+    <li>Tus funciones de <strong>atención de trámites, PQRSDF y conceptos técnicos de alta complejidad</strong> requieren ubicar correctamente a qué proceso y a qué norma pertenece cada solicitud.</li>
+    <li>El <strong>comportamiento ético (nivel 4)</strong> se pone a prueba todos los días en el manejo de recursos públicos: saber qué te toca decidir y qué no es la mejor barrera contra la extralimitación, la omisión y el riesgo de corrupción.</li>
+  </ul>
+  <p>Las preguntas de esta guía en la prueba suelen ser <mark>situacionales</mark>: te presentan a alguien que propone un atajo ("empecemos la obra y legalizamos después", "regalemos los equipos de baja", "renovemos la póliza igual") y debes escoger la actuación más apropiada. Los distractores casi siempre contienen una parte correcta y un error sutil: invertir el orden de un trámite, aplicar una figura a un supuesto que no es, o decidir algo que le corresponde a otra instancia.</p>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con las guías anteriores y siguientes</div>
+    <p>En los Días 5 a 8 estudiaste tus competencias comportamentales y el alcance del cargo. Hoy entras al contenido técnico: esta guía es el mapa general del proceso. En el Día 10 y 11 profundizarás la <strong>infraestructura física</strong>; en el Día 12, la <strong>administración de bienes muebles e inmuebles</strong>; en el Día 13, los <strong>servicios y el parque automotor</strong>; y en los Días 14 y 15, la <strong>contratación estatal</strong> paso a paso. Todo lo que hoy ves como título, en los días siguientes lo abres en detalle.</p>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Servicios Generales y Parque Automotor: la operación diaria de la Entidad</h2>
+  <p>Esta sección desarrolla doce módulos con teoría completa, normas verificadas, ejemplos aplicados al trabajo de un Gestor III del área administrativa, ejercicios resueltos y checkpoints interactivos. El hilo conductor es lo que mantiene viva la operación todos los días: el aseo, la vigilancia, la cafetería, la correspondencia y, muy especialmente, el parque automotor (los vehículos de la Entidad, con sus obligaciones legales de SOAT, revisión técnico-mecánica, mantenimiento y buen uso). Resuelve los checkpoints antes de abrir la explicación. En cada módulo encontrarás, además de la teoría, ejemplos y ejercicios situados en el día a día real del cargo, para que no solo sepas la norma sino que sepas actuar. El cierre integrará todo en el rol del Gestor III, que gestiona y supervisa estos servicios sin ordenar el gasto ni suscribir los contratos. A lo largo de la guía verás que la clave de esta área es la constancia: estos servicios no admiten pausas, y por eso el Gestor III combina planeación anticipada, supervisión permanente y documentación rigurosa para que la Entidad opere sin sobresaltos día tras día.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🧹</span><h5>Servicios generales</h5><p>Aseo, vigilancia, cafetería, correspondencia y mensajería</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📄</span><h5>Contratación continua</h5><p>Tracto sucesivo · supervisión permanente</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🚗</span><h5>Parque automotor</h5><p>Vehículos · obligaciones legales</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔧</span><h5>Mantenimiento y uso</h5><p>Preventivo · buen uso · combustible</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🛡️</span><h5>Seguros y rol</h5><p>SOAT · pólizas adicionales · qué decides y qué no</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Qué son los servicios generales y por qué importan</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los <mark>servicios generales</mark> son el conjunto de servicios de apoyo que mantienen las sedes operando día a día: aseo, vigilancia, cafetería, correspondencia y mensajería, jardinería, y el transporte. Son invisibles cuando funcionan y muy notorios cuando fallan: una sede sin aseo, sin vigilancia o sin correspondencia se paraliza y pierde seguridad e imagen.</p>
+</div>
+<div class="b-texto">
+  <p>El manual asigna al Gestor III la gestión de los "servicios generales" y del "transporte y parque automotor" como parte de sus funciones esenciales. A diferencia de una obra (que es un proyecto puntual), los servicios generales son una <strong>operación continua</strong>: se prestan todos los días, de forma permanente, y por eso su gestión no es un proyecto que termina, sino una vigilancia que no para. Esta es una diferencia conceptual clave que organiza todo el día.</p>
+  <p>Casi todos los servicios generales se prestan mediante <strong>contratos con terceros</strong> (empresas de aseo, de vigilancia, de cafetería), porque la Entidad no tiene de planta todo el personal necesario. Esto conecta con la contratación (Días 14-15): estos servicios se consiguen por un proceso de selección y luego se supervisan. Son, en su mayoría, <strong>contratos de tracto sucesivo</strong> (de prestación continua en el tiempo), lo que exige una planeación especial para que el servicio nunca se interrumpa cuando un contrato vence.</p>
+  <p>La importancia de los servicios generales se entiende por lo que pasa cuando fallan. Sin <strong>aseo</strong>, la sede se vuelve insalubre y da mala imagen. Sin <strong>vigilancia</strong>, los bienes y las personas quedan desprotegidos. Sin <strong>correspondencia</strong>, los documentos oficiales (notificaciones, respuestas a peticiones) no llegan a tiempo, con consecuencias legales. Sin <strong>cafetería</strong>, se afecta el bienestar. Cada servicio tiene un impacto concreto, y el Gestor III vela por que todos funcionen de forma continua y con calidad.</p>
+</div>
+<div class="iconrow">
+  <div class="ic-item"><span class="em">🧹</span><strong>Aseo.</strong> Limpieza y salubridad de las sedes; insumos y personal.</div>
+  <div class="ic-item"><span class="em">👮</span><strong>Vigilancia.</strong> Seguridad de personas y bienes; control de acceso.</div>
+  <div class="ic-item"><span class="em">📮</span><strong>Correspondencia.</strong> Recepción y envío de documentos oficiales.</div>
+  <div class="ic-item"><span class="em">☕</span><strong>Cafetería.</strong> Bienestar y atención en las sedes.</div>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> los servicios generales son de prestación continua; su gran riesgo es la interrupción por mala planeación (dejar vencer un contrato sin tener listo el siguiente). La respuesta correcta siempre asegura la continuidad del servicio por el procedimiento, sin baches.</div>
+    <div class="practica">
+      <div class="practica-head">🧩 En la práctica</div>
+      <div class="practica-body"><p>Una sede nueva entra en operación. Un Gestor III previsor anticipa sus servicios generales al planear la apertura: aseo, vigilancia, inclusión en el programa de seguros, correspondencia. Así la sede abre con todos sus servicios funcionando. Abrir una sede sin prever sus servicios la deja insegura e insalubre desde el primer día; preverlos es parte de gestionar la continuidad y la operación, y es justo lo que distingue a quien planea de quien improvisa.</p></div>
+    </div>
+<div class="practica">
+  <div class="practica-head">🧩 En la práctica</div>
+  <div class="practica-body"><p>El contrato de aseo de una sede vence en una semana y no se ha estructurado el nuevo. Un compañero dice "esperemos a que venza y con calma armamos el nuevo, unos días sin aseo no pasa nada". Como Gestor III no lo aceptas: la interrupción afecta la salubridad y la imagen, y revela mala planeación. Gestionas con urgencia la continuidad por el procedimiento, y dejas la lección de llevar un cronograma de vencimientos para planear con antelación.</p></div>
+</div>
+<div class="b-texto"><p>Conviene fijar desde el principio la mentalidad correcta para esta área: los servicios generales son el soporte invisible de todo lo demás. Mientras las obras son proyectos que empiezan y terminan, los servicios son un flujo que no se detiene. Esa diferencia cambia la forma de gestionarlos: no se trata de "entregar un producto", sino de "mantener un servicio" día tras día, con una calidad constante y sin interrupciones. El Gestor III que entiende esto no gestiona los servicios como una lista de contratos que firmar, sino como una operación viva que vigilar permanentemente. Y asume una verdad incómoda: en servicios generales, el éxito es que nadie note que existen; el fracaso, en cambio, es inmediato y visible para toda la Entidad el día que el aseo falla, la vigilancia se ausenta o la correspondencia se demora.</p></div>
+<div class="b-texto"><p>Vale la pena entender por qué casi todos los servicios generales se tercerizan en lugar de prestarse con personal de planta. La razón es de eficiencia y especialización: mantener de planta a todo el personal de aseo, vigilancia y cafetería de decenas de sedes sería costoso e inflexible, mientras que contratar empresas especializadas permite ajustar el servicio a las necesidades, aprovechar su experiencia y trasladar parte de la gestión del personal al contratista. Pero esta tercerización tiene una contrapartida: la Entidad no pierde la responsabilidad por el servicio ni por vigilar que el contratista cumpla con su gente. Por eso la supervisión de estos contratos es tan importante y por eso se exigen garantías de pago de salarios. Tercerizar el servicio no es "desentenderse": es gestionar a través de un tercero, con una vigilancia que sigue siendo responsabilidad del Gestor III.</p></div>
+<div class="b-texto"><p>Para la prueba, conviene tener presente que los servicios generales, aunque parezcan "lo más básico", son una fuente frecuente de casos situacionales, porque en ellos se cruzan la continuidad, la calidad, el control del gasto y el buen uso de los recursos. Un caso típico puede combinar varios de estos elementos (un contrato por vencer, una queja de calidad, una presión por usar un recurso para fines no institucionales), y la respuesta correcta articula los principios que ya conoces: continuidad por procedimiento, supervisión real, uso institucional y documentación. Tener clara la naturaleza de estos servicios —continuos, tercerizados, supervisados— te permite ubicar cualquier caso y razonar la actuación apropiada sin memorizar reglas aisladas.</p></div>
+<div class="b-texto"><p>Conviene también ubicar estos servicios dentro del conjunto del cargo: junto con la infraestructura (Días 10-11) y la administración de bienes (Día 12), los servicios generales completan el panorama de lo que mantiene a la Entidad operando físicamente. La infraestructura da el edificio, los bienes lo equipan, y los servicios lo mantienen funcionando día a día. El parque automotor, por su parte, da movilidad a la operación. Todo ello se consigue y se sostiene con contratación (Días 14-15). Ver esta articulación ayuda a entender que el cargo no son funciones sueltas, sino un sistema coherente de administración de los recursos físicos de la Entidad, donde cada pieza sostiene a las demás.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>La contratación de servicios de tracto sucesivo</h3></div>
+    <div class="b-texto">
+  <p>Los servicios generales se contratan, en su mayoría, como <mark>contratos de tracto sucesivo</mark>: su objeto se cumple de forma continua y repetida en el tiempo (el aseo se presta todos los días, la vigilancia cubre todos los turnos). Esto los diferencia de los contratos de ejecución instantánea (una compra que se agota en la entrega) y tiene consecuencias para su supervisión, su continuidad y su liquidación.</p>
+  <p>La <strong>planeación</strong> de estos contratos es crítica. Como el servicio no puede interrumpirse, el nuevo contrato debe estar listo para empezar cuando termina el anterior. Esto obliga al Gestor III a anticipar los vencimientos con meses de antelación, estructurar a tiempo los estudios previos y el proceso de selección, de modo que no haya un solo día sin servicio. Un calendario o cronograma de vencimientos de contratos es la herramienta básica para no caer en la improvisación de último momento.</p>
+  <p>La <strong>supervisión</strong> de estos contratos es permanente, no puntual: hay que verificar cada período que el servicio se preste con la calidad pactada (que la sede esté efectivamente limpia, que los puestos de vigilancia estén cubiertos), tramitar los pagos periódicos contra esa verificación, y atender las novedades. Un supervisor que "firma los pagos sin verificar" el servicio mes a mes falta a su deber. La supervisión continua es lo que garantiza que se recibe lo que se paga.</p>
+  <p>Estos contratos exigen además vigilar el <strong>cumplimiento del contratista con su personal</strong>: el pago de salarios y seguridad social de los trabajadores de aseo, vigilancia, etc. Si el contratista no les paga, puede haber consecuencias para la Entidad. Por eso la garantía de pago de salarios y prestaciones es importante aquí, y el supervisor verifica periódicamente ese cumplimiento. Esto tiene además una dimensión ética: detrás de estos servicios hay personas cuyos derechos laborales la Entidad ayuda a proteger exigiendo el cumplimiento al contratista.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><h4>Anticipar</h4><p>Vencimiento del contrato con meses de antelación</p></div>
+  <div class="flujo-paso"><span class="fp-n">2</span><h4>Estructurar</h4><p>Estudios previos y proceso de selección a tiempo</p></div>
+  <div class="flujo-paso"><span class="fp-n">3</span><h4>Empalmar</h4><p>El nuevo contrato empieza cuando termina el anterior</p></div>
+  <div class="flujo-paso"><span class="fp-n">4</span><h4>Supervisar</h4><p>Verificación continua de calidad y cumplimiento</p></div>
+</div>
+<div class="checkpoint">
+  <div class="cp-tag">✅ Checkpoint 1</div>
+  <div class="cp-q">El contrato de vigilancia vence en 10 días y no hay nuevo proceso. Un compañero propone "dejar la sede sin vigilancia unos días mientras se arma". ¿Qué haces?</div>
+  <div class="cp-opts">
+    <button class="cp-opt" data-cp="1" data-ans="0">Aceptar; unos días sin vigilancia no representan mayor riesgo.</button>
+    <button class="cp-opt" data-cp="1" data-ans="1">Gestionar con urgencia la continuidad del servicio por el procedimiento, para que no haya un solo día sin vigilancia (la sede resguarda bienes y personas), y adoptar un cronograma de vencimientos para no repetir el descuido.</button>
+    <button class="cp-opt" data-cp="1" data-ans="0">Contratar informalmente a unos conocidos por esos días, sin contrato.</button>
+  </div>
+  <div class="cp-fb" id="cpfb1"><strong>Asegurar la continuidad por el procedimiento.</strong> Dejar la sede sin vigilancia expone bienes y personas; contratar informalmente es irregular. La continuidad no se improvisa: se planea con un cronograma de vencimientos.</div>
+</div>
+<div class="b-texto"><p>Para la prueba, los casos de servicios de tracto sucesivo giran casi siempre alrededor de la continuidad y de la supervisión real. Memoriza dos patrones: (1) ante un vencimiento próximo sin nuevo contrato, la respuesta correcta asegura la continuidad por el procedimiento, nunca "deja un bache" ni "contrata informalmente"; y (2) ante quejas de calidad con pagos puntuales, la respuesta correcta revela que la supervisión falla (se paga sin verificar) y corrige verificando la calidad real antes de pagar. Estos dos patrones resuelven la mayoría de las preguntas de servicios continuos. Detrás de ambos está el mismo principio: el Gestor III no administra papeles, administra servicios reales que deben prestarse con calidad y sin interrupción, y su firma en un pago certifica que eso efectivamente ocurrió.</p></div>
+<div class="b-texto"><p>Un aspecto operativo de estos contratos que conviene conocer es el manejo de las novedades del personal del contratista. En servicios como la vigilancia, la Entidad necesita que los puestos estén siempre cubiertos; si un guarda falta, el contratista debe reemplazarlo. El supervisor verifica que esa cobertura se cumpla y deja constancia de las fallas. También vigila que el personal del contratista cumpla las normas de la Entidad (identificación, protocolos de seguridad, confidencialidad). Aunque el personal es del contratista, trabaja en las sedes de la Entidad, y el Gestor III vela por que el servicio se preste con la calidad, cobertura y comportamiento pactados. Esta vigilancia del día a día es lo que diferencia un contrato de servicios bien supervisado de uno que, pese a pagarse puntualmente, se presta con deficiencias que nadie corrige.</p></div>
+<div class="b-texto"><p>Una última idea sobre estos contratos continuos: su liquidación. Como son de tracto sucesivo, por regla general requieren liquidación al terminar, igual que los de obra. El Gestor III lleva el control de cuáles contratos de servicios deben liquidarse y cuándo, y proyecta las liquidaciones a tiempo, con el balance de lo ejecutado y pagado durante toda la vigencia. Un contrato de servicios terminado y no liquidado queda, como cualquier otro, "abierto" y expuesto a hallazgos. Cerrar bien lo que se contrató es parte de la gestión completa del servicio, desde su planeación hasta su liquidación.</p></div>
+<div class="b-texto"><p>Vale la pena distinguir estos contratos de servicios de los contratos de prestación de servicios profesionales (como los de personas naturales que apoyan a la Entidad): aquí hablamos de servicios generales prestados por empresas (aseo, vigilancia, cafetería), que son contratos con un objeto continuo y un personal a cargo del contratista. Su régimen de supervisión se centra en la calidad y cobertura del servicio y en el cumplimiento del contratista con su gente. El Gestor III supervisa el servicio, no gestiona directamente al personal del contratista (eso es del contratista), pero sí verifica que la empresa cumpla con sus trabajadores, porque de ello puede derivarse afectación para la Entidad. Esta distinción ayuda a no confundir roles y a supervisar correctamente.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>El parque automotor: los vehículos de la Entidad</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>parque automotor</mark> es el conjunto de vehículos de propiedad o a cargo de la Entidad, destinados a su operación (comisiones, traslados, transporte de funcionarios y documentos). Son bienes muebles de alto valor y, además, su uso implica obligaciones legales y riesgos (accidentes, responsabilidad) que hay que administrar con rigor.</p>
+</div>
+<div class="b-texto">
+  <p>El manual asigna al Gestor III la gestión del "transporte y parque automotor". Administrar vehículos es más complejo que administrar un escritorio: un vehículo circula, consume combustible, requiere mantenimiento mecánico, debe cumplir obligaciones legales (SOAT, revisión técnico-mecánica), lo conduce alguien que puede tener un accidente, y puede causar daños a terceros. Por eso el parque automotor combina la administración de bienes (Día 12) con obligaciones específicas de los vehículos.</p>
+  <p>Cada vehículo es, a la vez, un <strong>bien del inventario</strong> (con su placa de inventario, su responsable, su valor) y un <strong>vehículo sujeto a normas de tránsito</strong> (con su placa de circulación, sus documentos legales, su conductor). El Gestor III lleva el control de ambos planos: el patrimonial (el vehículo como activo) y el operativo-legal (el vehículo como medio de transporte que debe cumplir la ley).</p>
+  <p>La administración del parque automotor incluye: mantener los vehículos (preventivo y correctivo), garantizar sus obligaciones legales al día (SOAT, revisión técnico-mecánica, impuestos), controlar su uso (que se usen para fines institucionales, con conductores autorizados), gestionar el combustible, asegurarlos, y atender los siniestros (accidentes). Es una gestión integral que el Gestor III coordina.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión del vehículo</th><th>Qué implica</th></tr></thead>
+    <tbody>
+      <tr><td>Bien patrimonial</td><td>Placa de inventario, responsable, valor, aseguramiento, baja.</td></tr>
+      <tr><td>Vehículo legal</td><td>SOAT, revisión técnico-mecánica, impuestos, documentos al día.</td></tr>
+      <tr><td>Operación</td><td>Conductor autorizado, uso institucional, combustible, mantenimiento.</td></tr>
+      <tr><td>Riesgo</td><td>Accidentes, daños a terceros, responsabilidad.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> un vehículo es, a la vez, un bien del patrimonio y un vehículo sujeto a la ley de tránsito. Descuidar cualquiera de los dos planos (no asegurarlo como bien, o circular sin SOAT/revisión) genera problemas y responsabilidad.</div>
+<div class="b-texto"><p>El parque automotor es, probablemente, la parte de la administración de bienes que más combina planos distintos y, por eso, la que más errores genera si se gestiona a la ligera. Un vehículo no es un escritorio: se mueve, consume, se desgasta, cumple obligaciones legales, lo opera una persona y puede causar daños. Cada uno de esos planos tiene sus reglas, y descuidar uno solo puede traer consecuencias graves: un vehículo sin SOAT que choca deja a las víctimas sin cobertura obligatoria; uno sin mantenimiento que falla causa un accidente; uno usado para fines personales genera responsabilidad. Por eso el Gestor III gestiona el parque automotor con una visión integral, llevando el control simultáneo de todos los planos: el patrimonial, el legal, el operativo y el de riesgo. Esa visión integral es, de nuevo, el valor profesional que aporta al cargo.</p></div>
+<div class="b-texto"><p>El inventario del parque automotor merece el mismo rigor que el de cualquier bien, con información adicional propia de los vehículos: placa de circulación, modelo, kilometraje, estado de los documentos legales, responsable (el área o conductor asignado), e historial. Un parque automotor bien inventariado permite saber en todo momento cuántos vehículos hay, en qué estado, dónde están, qué documentos tienen vigentes y quién responde por cada uno. Esta información alimenta las decisiones: cuáles requieren mantenimiento, cuáles están próximos a cumplir su vida útil y conviene reponer, cuáles tienen documentos por vencer. El Gestor III que mantiene este inventario al día administra el parque con control; el que no, administra a ciegas y se expone a que un vehículo circule con documentos vencidos o a que uno se pierda sin que nadie lo note.</p></div>
+<div class="b-texto"><p>Conviene recordar que, como el parque automotor es parte del patrimonio, le aplica todo lo visto en el Día 12: los vehículos ingresan formalmente al inventario, se les asigna responsable, se mantienen, y cuando cumplen su vida útil se dan de baja y se les define un destino final (enajenación con avalúo, chatarrización) por procedimiento. Un vehículo que se "da de baja y se regala" o se dispone a dedo incurre en el mismo error que cualquier bien mal dispuesto. Así, la administración del parque automotor es, en el fondo, la administración de bienes del Día 12 aplicada a un tipo de bien particular (los vehículos), con las obligaciones legales adicionales que hemos visto. Esta conexión ayuda a no estudiar el parque automotor como un tema aislado, sino como una aplicación especializada del control patrimonial.</p></div>
+<div class="b-texto"><p>Para la prueba, recuerda que el parque automotor combina lo que ya sabes de administración de bienes con obligaciones propias de los vehículos. No necesitas memorizar tarifas ni plazos exactos de SOAT o revisión; necesitas dominar los principios: todo vehículo debe estar legal (SOAT y revisión vigentes) y seguro para circular, mantenido para ser seguro, usado solo para fines institucionales, y controlado en su combustible y recorridos. Con esos principios resuelves los casos. Y recuerda el doble plano: el vehículo es bien (inventario, responsable, baja) y es vehículo legal (documentos, conductor). Mantener ambos planos bajo control es la esencia de administrar el parque automotor.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Obligaciones legales de los vehículos: SOAT y revisión técnico-mecánica</h3></div>
+    <div class="b-texto">
+  <p>Todo vehículo que circula en Colombia debe cumplir obligaciones legales, y los de la Entidad no son la excepción. Las dos más importantes son el <mark>SOAT</mark> (Seguro Obligatorio de Accidentes de Tránsito) y la <mark>revisión técnico-mecánica y de emisiones</mark>. Ambas son obligatorias, deben mantenerse vigentes, y su ausencia expone al vehículo (y al conductor y a la Entidad) a sanciones e inmovilización.</p>
+  <p>El <strong>SOAT</strong> es un seguro obligatorio que cubre los gastos derivados de un accidente de tránsito (atención a las víctimas). Es obligatorio para todo vehículo que circule, debe renovarse antes de que venza, y circular sin SOAT vigente es una infracción grave (multa e inmovilización). El Gestor III vela por que todos los vehículos del parque tengan su SOAT vigente, controlando las fechas de vencimiento y gestionando las renovaciones a tiempo.</p>
+  <p>La <strong>revisión técnico-mecánica y de emisiones contaminantes</strong> certifica que el vehículo funciona correctamente y no contamina por encima de lo permitido. La realizan los Centros de Diagnóstico Automotor (CDA), es obligatoria en los tiempos que define la ley (según la antigüedad del vehículo), y circular sin ella vigente también es infracción. Además de ser un requisito, la revisión es una práctica de seguridad vial: detecta fallas que podrían causar accidentes.</p>
+  <p>El Gestor III lleva el <strong>control de vencimientos</strong> de estas obligaciones para cada vehículo: cuándo vence el SOAT, cuándo la revisión técnico-mecánica, cuándo hay que pagar el impuesto vehicular. Un vehículo con documentos vencidos no puede circular legalmente, y si lo hace, expone a la Entidad. Mantener estos documentos al día es una tarea de control de fechas que no puede fallar, porque su incumplimiento es visible e inmediato (un operativo de tránsito lo detecta).</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Obligación legal</th><th>Qué es</th><th>Consecuencia de no tenerla</th></tr></thead>
+    <tbody>
+      <tr><td>SOAT</td><td>Seguro obligatorio que cubre accidentes de tránsito</td><td>Multa, inmovilización; víctimas sin cobertura</td></tr>
+      <tr><td>Revisión técnico-mecánica</td><td>Certifica funcionamiento y emisiones (CDA)</td><td>Multa, inmovilización; riesgo de accidente por fallas</td></tr>
+      <tr><td>Impuesto vehicular</td><td>Tributo anual sobre el vehículo</td><td>Intereses de mora, sanciones</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="checkpoint">
+  <div class="cp-tag">✅ Checkpoint 2</div>
+  <div class="cp-q">Un conductor avisa que el SOAT de un vehículo venció ayer, pero hay una comisión urgente que requiere ese carro hoy. ¿Qué corresponde?</div>
+  <div class="cp-opts">
+    <button class="cp-opt" data-cp="2" data-ans="0">Usar el vehículo hoy por la urgencia y renovar el SOAT mañana sin falta.</button>
+    <button class="cp-opt" data-cp="2" data-ans="1">No permitir que el vehículo circule sin SOAT vigente (es infracción y deja sin cobertura un eventual accidente); gestionar de inmediato la renovación del SOAT y, mientras tanto, resolver la comisión con otro vehículo que esté al día o por otro medio.</button>
+    <button class="cp-opt" data-cp="2" data-ans="0">Usar el vehículo solo si el conductor asume personalmente el riesgo de la multa.</button>
+  </div>
+  <div class="cp-fb" id="cpfb2"><strong>No circular sin SOAT vigente.</strong> Es infracción y deja sin cobertura un eventual accidente (víctimas desprotegidas). Se renueva de inmediato y la comisión se resuelve con otro vehículo al día. La urgencia no justifica circular ilegalmente ni exponer a las personas.</div>
+</div>
+<div class="b-texto"><p>Un punto que conviene reforzar para la prueba: ante la tentación de "usar un vehículo con documentos vencidos por una urgencia", la respuesta correcta nunca es circular ilegalmente. El SOAT y la revisión técnico-mecánica no son trámites prescindibles: protegen a las víctimas de accidentes y la seguridad vial. Circular sin ellos es infracción, expone a inmovilización y, lo más grave, deja sin cobertura a quien resulte afectado en un accidente. Por eso el control de vencimientos de estos documentos es una tarea que no puede fallar: el Gestor III anticipa las renovaciones y, si un documento venció, no permite que el vehículo circule hasta regularizarlo. La urgencia operativa se resuelve con otro vehículo al día, no exponiendo a las personas y a la Entidad a circular ilegalmente. La seguridad y la legalidad están por encima de la conveniencia.</p></div>
+<div class="b-texto"><p>Conviene añadir que estas obligaciones legales de los vehículos conectan con la seguridad vial, un tema de interés público. La revisión técnico-mecánica no es un simple trámite recaudatorio: estudios de las autoridades y del sector asegurador muestran que una porción significativa de los siniestros viales graves se relaciona con fallas técnicas que una revisión habría detectado. Por eso mantener los vehículos de la Entidad con su revisión al día no solo evita multas: contribuye a la seguridad de los funcionarios que los usan y de los demás actores viales. El Gestor III que vela por estas obligaciones está, en el fondo, protegiendo vidas, no solo cumpliendo requisitos. Esta perspectiva ayuda a darle al control de vencimientos la seriedad que merece: detrás de una fecha de revisión hay un tema de seguridad, no solo de papeleo.</p></div>
+<div class="b-texto"><p>Para no fallar en la prueba, memoriza la jerarquía de valores en los casos de vehículos: primero la seguridad de las personas, luego la legalidad, y después la operación. Nunca se circula sin SOAT o sin revisión (legalidad y seguridad) por una urgencia operativa; nunca se usa un vehículo con una falla de seguridad por una comisión; nunca se usa un vehículo para fines personales. Cuando un caso ponga en tensión la operación ("necesitamos el carro ya") contra la legalidad o la seguridad ("pero tiene los documentos vencidos" o "pero frena mal"), la respuesta correcta siempre protege la legalidad y la seguridad, y resuelve la operación por otra vía. Esta jerarquía resuelve la mayoría de los casos de parque automotor.</p></div>
+<div class="b-texto"><p>El control de los documentos de los vehículos se apoya en registros y alertas: una matriz con la fecha de vencimiento del SOAT, de la revisión técnico-mecánica y del impuesto de cada vehículo, con alertas anticipadas, permite al Gestor III renovar a tiempo y evitar que un vehículo quede ilegal. Esta herramienta, simple pero poderosa, es parte del calendario de vencimientos del área. Un parque automotor con todos sus documentos al día es señal de buena administración; uno con documentos vencidos circulando es una falla de control que un operativo de tránsito expone de inmediato, con multas e inmovilización que, además, afectan la operación.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Mantenimiento del parque automotor</h3></div>
+    <div class="b-texto">
+  <p>Los vehículos requieren <mark>mantenimiento</mark> para funcionar bien y con seguridad. Como en el Día 11, se distingue el preventivo (programado: cambios de aceite, revisiones, frenos, llantas) del correctivo (reparar lo que falló). Un vehículo con buen mantenimiento preventivo es más seguro, dura más y falla menos; uno descuidado es un riesgo de accidente y de varadas en plena comisión.</p>
+  <p>El mantenimiento del parque automotor suele contratarse con talleres especializados mediante contratos de mantenimiento (preventivo y correctivo), como el que, por ejemplo, auditan los organismos de control en las entidades públicas. El Gestor III proyecta estos contratos, define el plan de mantenimiento preventivo de cada vehículo según su uso y kilometraje, y supervisa su cumplimiento. El mantenimiento no es opcional: un vehículo sin frenos en condiciones o con llantas lisas es un peligro para el conductor, los ocupantes y terceros.</p>
+  <p>El mantenimiento preventivo del parque automotor tiene, además, relación con las <strong>obligaciones legales</strong>: un vehículo bien mantenido pasa la revisión técnico-mecánica; uno descuidado la reprueba. Y tiene relación con los <strong>seguros</strong>: un siniestro causado por falta de mantenimiento podría complicar la cobertura. Por eso mantener los vehículos es parte integral de su buena administración, no un gasto prescindible.</p>
+  <p>El Gestor III lleva una <strong>hoja de vida de cada vehículo</strong>: su historial de mantenimientos, reparaciones, siniestros, kilometraje, consumos. Este registro permite decidir cuándo un vehículo ya cumplió su vida útil y conviene reponerlo (igual que con cualquier bien, Día 11-12), y es trazabilidad frente al control. Un parque automotor con hojas de vida al día es un parque bien administrado.</p>
+</div>
+<div class="practica">
+  <div class="practica-head">🧩 En la práctica</div>
+  <div class="practica-body"><p>Un conductor reporta que un vehículo "frena raro" y hace un ruido extraño, pero hay presión para usarlo en comisiones. El Gestor III no lo pone a circular así: un problema de frenos es un riesgo de seguridad. Gestiona su revisión y reparación por el contrato de mantenimiento antes de volver a usarlo, y mientras tanto resuelve las comisiones con otro vehículo. La seguridad del conductor y de terceros está por encima de la comodidad de usar ese carro ya.</p></div>
+</div>
+<div class="b-texto"><p>El mantenimiento del parque automotor tiene una dimensión de seguridad que lo hace especialmente delicado: a diferencia de un equipo de oficina que falla sin mayor riesgo, un vehículo mal mantenido puede causar un accidente con lesionados o fallecidos. Por eso el mantenimiento preventivo de los vehículos no es negociable: frenos, llantas, dirección, luces, deben estar en condiciones. El Gestor III que permite circular un vehículo con una falla de seguridad conocida (frenos defectuosos, llantas lisas) asume una responsabilidad enorme si ocurre un accidente. La regla es clara: un vehículo con una falla que compromete la seguridad no circula hasta repararse, por urgente que sea la comisión. La seguridad de las personas —conductor, ocupantes y terceros— está por encima de cualquier necesidad operativa.</p></div>
+<div class="b-texto"><p>El mantenimiento del parque automotor suele estructurarse en contratos que combinan el preventivo (programado por kilometraje o tiempo) y el correctivo (reparaciones que surjan), con talleres que garanticen calidad, repuestos adecuados y tiempos de respuesta. El Gestor III, al proyectar estos contratos, cuida que incluyan las condiciones necesarias para mantener la flota operativa y segura, y luego supervisa su cumplimiento: que los mantenimientos preventivos se hagan en los tiempos previstos, que las reparaciones sean efectivas, que no se pague por trabajos no realizados. Como en toda supervisión, verifica y deja constancia. Un contrato de mantenimiento de vehículos bien supervisado mantiene la flota en condiciones; uno mal supervisado puede derivar en vehículos inseguros o en pagos por mantenimientos que no se hicieron, ambos problemas serios.</p></div>
+<div class="b-texto"><p>Para la prueba, los casos de mantenimiento del parque automotor suelen enfrentar la presión de "usar el vehículo ya" contra una falla de seguridad conocida. La respuesta correcta siempre prioriza la seguridad: un vehículo con frenos o llantas en mal estado no circula hasta repararse, por urgente que sea la comisión, y esta se resuelve con otro vehículo. Interioriza que, en vehículos, la seguridad no se negocia: las consecuencias de un accidente por falla mecánica conocida son gravísimas y recaen sobre quien permitió circular el vehículo. El Gestor III protege a las personas antes que la conveniencia operativa, siempre.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Uso adecuado de los vehículos y control de combustible</h3></div>
+    <div class="b-texto">
+  <p>Los vehículos de la Entidad se usan para <mark>fines institucionales</mark>, no personales. Usar un vehículo oficial para asuntos privados (un paseo, una diligencia personal) es un uso indebido del patrimonio que genera responsabilidad. El Gestor III vela por el uso adecuado: que los vehículos se asignen a comisiones o servicios institucionales, con conductores autorizados, y con registro de su uso.</p>
+  <p>El control del uso se apoya en herramientas como la <strong>planilla o bitácora de recorridos</strong> (qué vehículo, quién lo condujo, a dónde fue, para qué, kilometraje) y la autorización de los desplazamientos. Estas herramientas permiten saber cómo se usan los vehículos y detectar usos anómalos. Un vehículo que registra recorridos los fines de semana sin comisión, o kilometrajes que no cuadran, es una señal de posible uso indebido.</p>
+  <p>El <strong>combustible</strong> es otro punto de control. El consumo de combustible de los vehículos oficiales se controla (vales, tarjetas, registros) para evitar desvíos (que el combustible pagado por la Entidad termine en vehículos particulares). El Gestor III vela por que el consumo de combustible sea coherente con los recorridos registrados. Un consumo que no corresponde a los recorridos es una alerta de posible desvío de recursos públicos.</p>
+  <p>El <strong>conductor</strong> tiene responsabilidades: conducir con licencia vigente, respetar las normas de tránsito, cuidar el vehículo, reportar fallas y siniestros. Las infracciones de tránsito (multas, comparendos) que comete un conductor por su culpa son su responsabilidad, no de la Entidad. El Gestor III gestiona que los conductores estén autorizados y cumplan sus deberes, y canaliza las novedades (multas, accidentes) por el procedimiento.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Control del uso</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td>Planilla de recorridos</td><td>Saber cómo se usa cada vehículo; detectar usos anómalos.</td></tr>
+      <tr><td>Autorización de desplazamientos</td><td>Garantizar que el uso sea institucional.</td></tr>
+      <tr><td>Control de combustible</td><td>Evitar desvíos; coherencia con los recorridos.</td></tr>
+      <tr><td>Conductores autorizados</td><td>Licencia vigente, responsabilidad por infracciones propias.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="ejercicio" style="background:#fff;border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:12px;padding:16px 18px;margin:16px 0;">
+  <p style="font-weight:800;color:var(--azul);margin-bottom:6px;">✏️ Ejercicio 1</p>
+  <p>Detectas que un vehículo registra consumos de combustible altos los fines de semana, pero no hay comisiones autorizadas esos días. ¿Qué haces?</p>
+  <details class="acc" style="margin-top:8px;"><summary>Ver solución</summary><div class="acc-body"><p>Es una alerta de posible uso personal o desvío de combustible. Verificas los registros (planillas de recorridos, autorizaciones), contrastas los consumos con los recorridos institucionales, y documentas la inconsistencia. Si se confirma un uso indebido, lo reportas por el conducto que corresponde para que se adelante lo pertinente. No lo "dejas pasar": el uso indebido de vehículos y combustible es un daño al patrimonio que debe detectarse y escalarse.</p></div></details>
+</div>
+<div class="b-texto"><p>El control del uso y del combustible es donde más se juega la integridad en la administración del parque automotor, porque es donde más fácilmente se desvían recursos. Un vehículo oficial usado para fines personales, combustible pagado por la Entidad que termina en vehículos particulares, recorridos "fantasma": son formas conocidas de daño al patrimonio. Las herramientas de control (planillas de recorridos, autorizaciones, control de combustible) existen para cerrar esas puertas. El Gestor III las usa con rigor y revisa las inconsistencias (consumos que no cuadran con recorridos, usos fuera de horario sin comisión). No por desconfianza hacia las personas, sino porque es su deber proteger recursos públicos. Y porque un control efectivo también protege a los conductores honestos, al dejar claro que el sistema funciona y que las anomalías se detectan.</p></div>
+<div class="b-texto"><p>Para la prueba, los casos de uso y combustible suelen presentar una anomalía (consumos que no cuadran, uso fuera de horario, recorridos sin autorización) y evaluar si el Gestor III la detecta y la maneja correctamente. La respuesta correcta nunca "deja pasar" la anomalía ni la resuelve por mano propia sancionando: verifica, documenta y escala por el conducto que corresponde. Recuerda que detectar una irregularidad en el uso de vehículos o combustible es parte del deber de control; ignorarla es una omisión, y "sancionar" directamente es extralimitación. El punto medio —detectar, documentar, escalar— es, una vez más, la actuación correcta. Y es coherente con todo el curso: el Gestor III es los ojos que vigilan el buen uso de los recursos, no el juez que sanciona.</p></div>
+<div class="b-texto"><p>Conviene cerrar el tema del uso con una idea sobre la integridad: el control del uso de vehículos y combustible no es solo una técnica administrativa, es una barrera contra la corrupción cotidiana. Los pequeños desvíos (usar el carro para lo personal, "cargar de más" combustible) parecen menores, pero erosionan el patrimonio y la cultura de integridad. El Gestor III que mantiene estos controles con rigor protege no solo recursos, sino también la cultura institucional. Y lo hace de forma justa: los controles aplican a todos por igual, sin importar el cargo, lo que refuerza la equidad. Un control del uso bien llevado es, a la vez, protección del patrimonio y afirmación de la integridad.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Aseguramiento del parque automotor</h3></div>
+    <div class="b-texto">
+  <p>Los vehículos de la Entidad se <mark>aseguran</mark> más allá del SOAT. El SOAT cubre solo a las víctimas de accidentes de tránsito, pero el vehículo necesita cobertura adicional: contra daños al propio vehículo, hurto, y responsabilidad civil por daños a terceros (más amplia que el SOAT). Estas coberturas se incluyen en el programa de seguros de la Entidad (Día de seguros) mediante una póliza de automóviles o similar.</p>
+  <p>La relación entre vehículos y seguros tiene dos planos. El <strong>SOAT</strong> es obligatorio por ley y debe estar vigente para circular (lo vimos en obligaciones legales). Las <strong>pólizas voluntarias</strong> (todo riesgo, responsabilidad civil extracontractual) protegen el patrimonio de la Entidad frente a daños, pérdidas y responsabilidad. El Gestor III vela por ambos: el SOAT al día de cada vehículo, y los vehículos incluidos en el programa de seguros con los valores actualizados.</p>
+  <p>Cuando ocurre un <strong>siniestro</strong> (accidente, hurto), el Gestor III actúa como con cualquier bien: documenta lo ocurrido, hace la denuncia si aplica (hurto, accidente), reporta a la aseguradora dentro de los términos, y gestiona la reclamación. Si el vehículo se repone o repara vía seguro, se registra en el inventario y en la hoja de vida. Reportar a tiempo es crítico, como siempre en seguros.</p>
+  <p>Un punto delicado: los <strong>accidentes de tránsito</strong> pueden generar responsabilidad por daños a terceros, lesiones o incluso fallecimientos. Aquí el manejo trasciende lo administrativo y entra en lo legal. El Gestor III documenta, reporta a la aseguradora y a las instancias que corresponda, y coordina con el área jurídica. No "maneja" el accidente por su cuenta: lo canaliza por los conductos correctos, porque las consecuencias pueden ser graves.</p>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> el SOAT no lo cubre todo: solo a las víctimas del accidente. El vehículo necesita pólizas adicionales (daños propios, responsabilidad civil, hurto). Confundir "tiene SOAT" con "está totalmente asegurado" es un error.</div>
+<div class="b-texto"><p>Para la prueba, un error frecuente que debes evitar es creer que "tener SOAT" equivale a "estar asegurado". El SOAT tiene un alcance limitado y específico: cubre a las víctimas de accidentes de tránsito (gastos médicos, incapacidad, muerte), pero no cubre los daños al propio vehículo, ni el hurto, ni la responsabilidad civil por daños materiales a terceros más allá de ciertos límites. Para todo eso se necesitan pólizas adicionales dentro del programa de seguros. Por eso el Gestor III vela por dos cosas distintas: el SOAT vigente de cada vehículo (obligación legal para circular) y la inclusión de los vehículos en el programa de seguros con coberturas adecuadas (protección del patrimonio). Confundir ambas, o creer que una reemplaza a la otra, deja a la Entidad expuesta.</p></div>
+<div class="b-texto"><p>Un matiz importante sobre los accidentes de tránsito con vehículos oficiales: estos pueden escalar rápidamente a consecuencias legales serias (lesiones, fallecimientos, daños a terceros, posibles procesos). Por eso el manejo de un siniestro vial trasciende lo administrativo. El Gestor III documenta lo ocurrido, se asegura de que se hagan las denuncias y reportes que correspondan, reporta a la aseguradora a tiempo, y coordina con el área jurídica de la Entidad. No intenta "resolver" el accidente negociando por su cuenta ni asumiendo responsabilidades que no le competen. Su papel es canalizar correctamente el siniestro por los conductos legales y de seguros, y proteger los intereses de la Entidad reuniendo la información y los soportes. Un accidente mal manejado puede agravar las consecuencias; uno bien canalizado permite que cada instancia (aseguradora, jurídica, autoridades) actúe en su ámbito.</p></div>
+<div class="b-texto"><p>Un detalle práctico del aseguramiento del parque: los valores asegurados de los vehículos deben mantenerse actualizados, igual que con cualquier bien (Día 12). Un vehículo nuevo que ingresa debe incluirse en la póliza; uno que se da de baja debe retirarse. Además, los vehículos se deprecian, por lo que su valor asegurable cambia con el tiempo. El Gestor III coordina con el programa de seguros para que la flota esté correctamente asegurada: ni vehículos sin cobertura (infraseguro) ni primas pagadas por vehículos que ya no existen. Esta coherencia entre el inventario del parque y el programa de seguros es, de nuevo, una tarea de actualización que no puede descuidarse, especialmente en cada renovación de la póliza.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Transporte y comisiones</h3></div>
+    <div class="b-texto">
+  <p>El <mark>transporte</mark> es uno de los servicios que presta el parque automotor: trasladar funcionarios a comisiones, diligencias, operativos, y transportar documentos o elementos. El Gestor III coordina la disponibilidad de vehículos y conductores para atender estas necesidades de la Entidad de forma ordenada y eficiente.</p>
+  <p>La asignación de vehículos para comisiones se hace con criterio: según la necesidad real, la disponibilidad, y con la debida autorización. No se trata de asignar vehículos "por jerarquía" o "por favor", sino según la necesidad institucional. El Gestor III gestiona esta asignación de modo que los vehículos se usen eficientemente (sin que unos estén ociosos mientras faltan para otras comisiones) y siempre para fines institucionales.</p>
+  <p>Cuando la Entidad no tiene vehículos propios suficientes, puede <strong>contratar el servicio de transporte</strong> con terceros (empresas de transporte). Esta es otra vía: en lugar de tener parque propio, se contrata el servicio. Cada modelo (parque propio vs. transporte contratado) tiene ventajas y costos, y la decisión de cuál usar se sustenta con criterio económico. El Gestor III puede proyectar análisis sobre cuál conviene según las necesidades.</p>
+  <p>El control del transporte se apoya, de nuevo, en el registro: qué comisión, qué vehículo, qué conductor, qué recorrido, qué autorización. Este registro permite que el uso del transporte sea trazable y eficiente, y conecta con el control de uso y combustible del parque automotor. Un transporte bien gestionado atiende las necesidades de la Entidad sin desperdicio y con trazabilidad.</p>
+</div>
+<div class="practica">
+  <div class="practica-head">🧩 En la práctica</div>
+  <div class="practica-body"><p>Dos áreas piden vehículo para el mismo día: una para un operativo institucional programado y otra para "llevar a un directivo a un evento social". Con un solo vehículo disponible, el Gestor III prioriza la comisión institucional (el operativo), porque los vehículos se usan para fines institucionales. El evento social de un directivo no es una necesidad institucional que justifique el vehículo oficial. Se sustenta la decisión con el criterio del uso institucional.</p></div>
+</div>
+<div class="b-texto"><p>La gestión del transporte exige un equilibrio entre eficiencia y servicio: atender las necesidades reales de la Entidad sin desperdiciar recursos. Esto implica resistir dos presiones opuestas: la de usar los vehículos oficiales para fines que no son institucionales (un favor, un evento social, una diligencia personal de alguien con poder), y la de negar el transporte a necesidades institucionales legítimas por exceso de celo. El criterio correcto es el fin institucional: el vehículo se usa para lo que la Entidad necesita, priorizando según la necesidad real, no según quién pide. El Gestor III que aplica este criterio con firmeza y cortesía gestiona un transporte eficiente y libre de usos indebidos, y sustenta sus decisiones de asignación con el criterio del servicio institucional.</p></div>
+<div class="b-texto"><p>La decisión entre tener parque automotor propio o contratar el servicio de transporte es un ejemplo de análisis que el Gestor III puede sustentar. El parque propio da control y disponibilidad, pero implica costos de propiedad (mantenimiento, seguros, documentos, depreciación, conductores). El transporte contratado traslada esos costos al proveedor y da flexibilidad, pero puede ser más caro por servicio y menos disponible. No hay una respuesta única: depende de la intensidad y previsibilidad de la necesidad. El valor del Gestor III está en analizar estos factores con datos y proyectar una recomendación sustentada, que el competente decidirá. Este tipo de análisis —costo-beneficio de propio versus contratado— es característico del nivel profesional del cargo: no solo ejecutar, sino aportar criterio técnico para decisiones de fondo.</p></div>
+<div class="b-texto"><p>Para la prueba, los casos de transporte suelen poner en tensión el fin institucional contra una solicitud de uso para fines personales o de conveniencia, muchas veces de alguien con autoridad. La respuesta correcta siempre reivindica el uso institucional: el vehículo oficial se usa para lo que la Entidad necesita, no para favores ni eventos privados, por importante que sea quien lo pide. El Gestor III sostiene este criterio con firmeza y cortesía, y lo sustenta. Ceder a la presión de un uso indebido no solo es irregular: sienta un precedente que erosiona el control. Mantener el criterio del uso institucional, documentado, protege el patrimonio y al propio servidor.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Correspondencia, mensajería y gestión documental de apoyo</h3></div>
+    <div class="b-texto">
+  <p>La <mark>correspondencia y mensajería</mark> es un servicio general con impacto legal directo: los documentos oficiales (notificaciones, respuestas a peticiones, comunicaciones) deben llegar a su destino de forma oportuna y con constancia. Un documento mal gestionado (una notificación que no llega, una respuesta a una petición que se pierde) puede tener consecuencias jurídicas para la Entidad.</p>
+  <p>Este servicio incluye la recepción de la correspondencia que llega a la Entidad (y su radicación y distribución interna) y el envío de la correspondencia que sale (con los medios adecuados y la constancia de entrega). Conecta con la <strong>gestión documental</strong> (Día 16): la correspondencia se radica, se registra y se maneja conforme a las normas de archivo. El Gestor III coordina que este servicio funcione con oportunidad y trazabilidad.</p>
+  <p>La importancia de la constancia de entrega es jurídica: en muchos trámites, la fecha en que se recibió o se notificó un documento tiene efectos legales (cuenta términos, por ejemplo). Por eso la mensajería oficial no es "mandar un papel": es un acto con efectos. El Gestor III vela por que el servicio garantice la trazabilidad (quién envió, cuándo, a quién, con qué constancia de recibo).</p>
+  <p>Como otros servicios generales, la correspondencia suele prestarse mediante contrato (empresas de mensajería) o con personal propio, y se supervisa de forma continua. El Gestor III gestiona su contratación y supervisión, cuidando especialmente la oportunidad (que los documentos no se demoren) y la trazabilidad (que haya constancia de cada envío y recibo).</p>
+</div>
+<div class="ojo"><b>Ojo en la prueba:</b> la correspondencia oficial tiene efectos jurídicos (la fecha de notificación cuenta términos legales). Por eso debe gestionarse con oportunidad y constancia de entrega. Tratarla como "mandar un papel" sin trazabilidad es un error con consecuencias legales.</div>
+    <div class="practica">
+      <div class="practica-head">🧩 En la práctica</div>
+      <div class="practica-body"><p>Una respuesta a un derecho de petición, con término que vence mañana, debe notificarse a un ciudadano. El servicio de correspondencia la despacha pero no deja constancia clara de la entrega. Como Gestor III exiges que el envío se haga por un medio con constancia de recibo (o el que corresponda legalmente) y que quede registrada la fecha de entrega, porque de ella dependen efectos jurídicos. Sin constancia, la Entidad no podría demostrar que respondió a tiempo, aunque lo haya hecho. La oportunidad y la constancia, juntas, son lo que da valor legal a la correspondencia oficial.</p></div>
+    </div>
+<div class="b-texto"><p>La correspondencia merece una atención que a veces se subestima, porque su falla tiene consecuencias legales directas. Si una notificación no llega o llega tarde, pueden vencerse términos, caerse procesos o vulnerarse derechos. Si una respuesta a un derecho de petición no se envía o no queda constancia de su entrega, la Entidad puede ser considerada incumplida aunque la respuesta se haya elaborado. Por eso la mensajería oficial se gestiona con los mismos estándares de oportunidad y trazabilidad que el resto: medios adecuados, constancia de entrega, registro. El Gestor III que entiende el peso jurídico de la correspondencia la gestiona con el rigor que merece, y no la trata como un servicio "menor" de simple reparto de papeles.</p></div>
+<div class="b-texto"><p>Conviene conectar la correspondencia con la gestión documental que se verá en el Día 16: la correspondencia que entra y sale de la Entidad debe radicarse, registrarse y archivarse conforme a las normas (Ley General de Archivos y las Tablas de Retención Documental). La radicación asigna a cada documento un número y una fecha que son jurídicamente relevantes (marcan el inicio de términos, dan constancia de recibo). Por eso el servicio de correspondencia no es independiente del archivo: son parte de un mismo sistema de gestión de la información de la Entidad. El Gestor III coordina que la correspondencia se integre correctamente con la gestión documental, de modo que todo documento que entra o sale quede debidamente radicado, trazado y conservado. Esta integración es lo que garantiza que la Entidad pueda demostrar qué recibió, qué envió y cuándo, algo esencial para su defensa jurídica.</p></div>
+<div class="b-texto"><p>Conviene subrayar que la oportunidad en la correspondencia es tan importante como la trazabilidad. Un documento que llega tarde, aunque llegue con constancia, puede haber perdido su efecto (vencido un término, por ejemplo). Por eso el servicio de correspondencia se gestiona con tiempos de respuesta definidos y con seguimiento a que los documentos urgentes (notificaciones, respuestas a peticiones con término) se despachen y entreguen a tiempo. El Gestor III vela por esa oportunidad, especialmente para los documentos con efectos jurídicos. La combinación de oportunidad y trazabilidad es lo que hace que la correspondencia oficial cumpla su función legal, y es lo que el Gestor III asegura al gestionar y supervisar este servicio.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Continuidad, planeación y calendario de servicios</h3></div>
+    <div class="b-texto">
+  <p>El gran reto de los servicios generales es la <mark>continuidad</mark>: ninguno puede interrumpirse. Para lograrlo, el Gestor III maneja un <strong>calendario o cronograma de vencimientos</strong> de todos los contratos de servicios (aseo, vigilancia, cafetería, correspondencia, mantenimiento de vehículos) y de las obligaciones legales de los vehículos (SOAT, revisión técnico-mecánica, impuestos). Con ese calendario a la vista, anticipa cada vencimiento con el tiempo suficiente.</p>
+  <p>La <strong>planeación</strong> de estos servicios entra en el Plan Anual de Adquisiciones: cuánto se necesita de cada servicio, cuándo vencen los contratos, cuándo hay que renovarlos. Un servicio que "se olvidó" planear termina en una contratación de emergencia (cara, improvisada) o en una interrupción (riesgosa). La planeación evita ambos males. El Gestor III convierte el conocimiento de los vencimientos y necesidades en insumos para el PAA.</p>
+  <p>La continuidad también exige prever los <strong>empalmes</strong> entre contratos: que el nuevo contrato de aseo empiece el día que termina el anterior, sin baches. Esto requiere que el proceso de selección del nuevo contrato se adelante con suficiente antelación, contando con los tiempos que toma cada modalidad. Un proceso de selección iniciado tarde no alcanza a terminar antes de que venza el contrato vigente, y ahí aparece la interrupción.</p>
+  <p>Un principio transversal: en servicios continuos, <strong>planear es evitar emergencias</strong>. La mayoría de las "emergencias" de servicios generales (quedarse sin aseo, sin vigilancia, con vehículos sin SOAT) no son realmente imprevistos: son vencimientos conocidos que no se anticiparon. El Gestor III que planea con su calendario de vencimientos rara vez tiene emergencias; el que improvisa, vive apagando incendios.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Qué va en el calendario de vencimientos</th><th>Antelación recomendada</th></tr></thead>
+    <tbody>
+      <tr><td>Contratos de servicios (aseo, vigilancia, etc.)</td><td>Con meses de antelación (según la modalidad de selección)</td></tr>
+      <tr><td>SOAT de cada vehículo</td><td>Antes del vencimiento, sin baches</td></tr>
+      <tr><td>Revisión técnico-mecánica</td><td>Según antigüedad del vehículo, antes de vencer</td></tr>
+      <tr><td>Pólizas del programa de seguros</td><td>Antes del vencimiento, con inventario actualizado</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="b-texto"><p>La continuidad es el concepto que amarra todo el día, y conviene cerrarlo con una idea práctica: la mayoría de las "emergencias" de servicios generales no son verdaderos imprevistos, sino vencimientos conocidos que no se anticiparon. El SOAT que venció, el contrato de aseo que se acabó, la póliza que caducó: todos tenían una fecha conocida de antemano. Por eso el instrumento más poderoso del Gestor III en esta área no es la capacidad de reaccionar rápido a las crisis, sino la disciplina de llevar un calendario de vencimientos y planear con antelación. Un calendario bien llevado convierte las "emergencias" en tareas programadas que se atienden con tranquilidad. La diferencia entre un área que vive en crisis y una que fluye no es el talento para apagar incendios, sino el hábito de prevenirlos planeando.</p></div>
+<div class="b-texto"><p>Para cerrar el tema de la continuidad, una reflexión sobre la planeación como cultura. Planear los vencimientos no es solo una técnica, es una forma de trabajar que distingue al profesional del improvisador. El improvisador vive en crisis: siempre hay algo por vencer que se le olvidó, siempre está contratando de afán, siempre hay un servicio en riesgo de interrupción. El planeador trabaja con tranquilidad: su calendario le avisa con antelación, sus procesos empiezan a tiempo, sus servicios nunca se interrumpen. La diferencia no es de capacidad, es de hábito. El Gestor III que adopta la cultura de la planeación —calendario de vencimientos, procesos iniciados con antelación, empalmes previstos— no solo cumple mejor, sino que trabaja mejor, con menos estrés y menos riesgo. Y protege a la Entidad de las interrupciones y de las contrataciones de emergencia, que son caras y riesgosas.</p></div>
+<div class="b-texto"><p>La planeación de los servicios también debe prever los <strong>imprevistos razonables</strong>: un aumento de necesidades (una sede nueva que requiere aseo y vigilancia), un cambio normativo (nuevas exigencias para los vehículos), una variación de precios. Un buen plan no es rígido: contempla márgenes y revisa periódicamente las necesidades. El Gestor III revisa su planeación de servicios con regularidad y la ajusta a la realidad cambiante, de modo que el PAA refleje lo que de verdad se necesitará. Planear no es adivinar el futuro, sino prepararse razonablemente para él con la mejor información disponible, y ajustar cuando esa información cambia.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Servicios, sostenibilidad y buenas prácticas</h3></div>
+    <div class="b-texto">
+  <p>Los servicios generales también tienen una dimensión de <mark>sostenibilidad y eficiencia</mark>. El aseo puede usar productos y prácticas amigables con el ambiente; la cafetería puede reducir desechables; el parque automotor puede optimizar rutas para ahorrar combustible y emisiones; los consumos (agua, energía) pueden racionalizarse. El Gestor III incorpora criterios de sostenibilidad y eficiencia en la gestión de estos servicios, lo que ahorra recursos y reduce el impacto ambiental.</p>
+  <p>La <strong>eficiencia</strong> en los servicios generales tiene impacto económico: optimizar el consumo de combustible del parque automotor, racionalizar el uso de insumos de aseo, ajustar la vigilancia a las necesidades reales de cada sede, ahorra recursos públicos. El Gestor III analiza estos consumos y busca eficiencias sin sacrificar la calidad ni la seguridad del servicio.</p>
+  <p>Las <strong>buenas prácticas</strong> incluyen medir la calidad de los servicios (¿la sede está realmente limpia?, ¿la vigilancia es efectiva?, ¿la correspondencia llega a tiempo?), escuchar a los usuarios de las sedes (que detectan problemas del servicio), y mejorar continuamente. Un servicio que se gestiona solo "para cumplir el contrato" sin medir su calidad real puede estar fallando sin que nadie lo note hasta que es tarde. Todo ello configura un cargo que exige criterio profesional, no mera ejecución: por eso el manual lo ubica en el Nivel Profesional y le exige título profesional y experiencia. El Gestor III de servicios y parque automotor no "hace mandados": gestiona con criterio un conjunto de servicios críticos para la operación.</p>
+  <p>Finalmente, la gestión de servicios generales, como todo en el cargo, deja <strong>trazabilidad</strong>: contratos, supervisión, pagos verificados, novedades atendidas, consumos registrados. Esta documentación es buen servicio y protección frente al control. Un servicio bien gestionado y documentado se defiende solo ante cualquier auditoría.</p>
+</div>
+<div class="ejercicio" style="background:#fff;border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:12px;padding:16px 18px;margin:16px 0;">
+  <p style="font-weight:800;color:var(--azul);margin-bottom:6px;">✏️ Ejercicio 2</p>
+  <p>El contrato de aseo se paga puntual cada mes, pero los usuarios de la sede se quejan de que la limpieza es deficiente. ¿Qué revela esto sobre la supervisión?</p>
+  <details class="acc" style="margin-top:8px;"><summary>Ver solución</summary><div class="acc-body"><p>Que la supervisión está fallando: se están tramitando pagos sin verificar realmente la calidad del servicio. Supervisar no es "firmar el pago cada mes", es verificar que el servicio se preste con la calidad pactada. El Gestor III debe verificar la queja, documentar la deficiencia, requerir al contratista el cumplimiento de la calidad, y solo tramitar pagos contra servicio efectivamente prestado. Pagar un servicio deficiente es pagar por lo que no se recibe.</p></div></details>
+</div>
+<div class="b-texto"><p>La sostenibilidad y la eficiencia en los servicios generales no son solo "temas de moda": son expresión de la buena administración de recursos públicos y del deber ambiental del Estado. Cada litro de combustible ahorrado con rutas optimizadas, cada insumo de aseo usado racionalmente, cada kilovatio no desperdiciado, es un recurso público mejor empleado y un impacto ambiental reducido. Para la DIAN, además, ser ejemplo en estas prácticas tiene valor institucional. El Gestor III incorpora estos criterios no como una carga adicional, sino como parte de gestionar bien: un servicio eficiente y sostenible suele ser también un servicio más económico y mejor administrado. La eficiencia bien entendida no sacrifica la calidad ni la seguridad; las logra con menos desperdicio.</p></div>
+<div class="b-texto"><p>Medir la calidad de los servicios es una práctica que distingue la buena gestión. No basta con que el contrato esté vigente y los pagos al día: hay que verificar que el servicio realmente se presta con calidad. ¿La sede está efectivamente limpia o solo "por encima"? ¿La vigilancia es efectiva o solo presencial? ¿La correspondencia llega a tiempo o se demora? Herramientas simples (inspecciones, encuestas a los usuarios de las sedes, indicadores de cumplimiento) permiten medir la calidad real y actuar cuando baja. El Gestor III que mide la calidad detecta los problemas antes de que escalen y tiene argumentos para exigir al contratista. El que solo "paga y firma" sin medir puede estar pagando por un servicio deficiente durante meses sin saberlo. Medir es, al final, la forma de asegurar que se recibe lo que se paga.</p></div>
+<div class="b-texto"><p>Las buenas prácticas en servicios generales incluyen también la relación con el contratista: una relación profesional, basada en el contrato y en la exigencia del cumplimiento, pero también en la comunicación oportuna de las necesidades y novedades. Un contratista que conoce bien las expectativas y recibe retroalimentación presta mejor servicio; uno al que solo se le reclama cuando algo falla, sin diálogo, tiende a cumplir al mínimo. El Gestor III gestiona esta relación con profesionalismo: exige lo pactado, documenta los incumplimientos, pero también comunica y coordina para que el servicio mejore. Esta gestión de la relación, siempre dentro del marco del contrato y sin perder la objetividad, es parte del arte de supervisar servicios continuos.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>El rol del Gestor III en servicios y parque automotor</h3></div>
+    <div class="b-texto">
+  <p>Cerramos con tu frontera de competencia. En servicios generales y parque automotor, tú <strong>gestionas y proyectas los contratos de servicios, supervisas su prestación continua, administras el parque automotor (inventario, obligaciones legales, mantenimiento, uso, seguros), controlas el combustible y el uso de vehículos, y coordinas el transporte</strong>. No eres tú quien ordena el gasto, ni quien suscribe los contratos, ni quien decide sanciones a contratistas, ni quien "maneja por su cuenta" un accidente de tránsito.</p>
+  <p>El equilibrio de siempre: ni extralimitación (firmar, sancionar, decidir lo ajeno) ni omisión (dejar vencer un SOAT, no supervisar la calidad, no controlar el combustible, no reportar un siniestro). El buen Gestor III de esta área es el que mantiene la operación diaria funcionando sin interrupciones, con los vehículos legales y seguros, y con todo documentado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>✅ Lo que SÍ te corresponde</th><th>🚫 Lo que NO te corresponde</th></tr></thead>
+    <tbody>
+      <tr><td>Proyectar y supervisar contratos de servicios</td><td>Ordenar el gasto o suscribir los contratos</td></tr>
+      <tr><td>Administrar el parque automotor (legal, mantenimiento, uso)</td><td>Permitir circular vehículos sin SOAT/revisión vigentes</td></tr>
+      <tr><td>Controlar combustible, uso y recorridos</td><td>Autorizar uso personal de vehículos oficiales</td></tr>
+      <tr><td>Asegurar la continuidad de los servicios por procedimiento</td><td>Dejar vencer contratos o contratar informalmente</td></tr>
+      <tr><td>Documentar, reportar siniestros, escalar al competente</td><td>Manejar por tu cuenta accidentes o sancionar contratistas</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="idea"><span class="idea-ic">💡</span><p><strong>Regla de oro:</strong> los servicios no se interrumpen (planea los vencimientos), los vehículos no circulan sin estar legales y seguros, los bienes no se usan para fines personales, y todo se documenta. Decidir, firmar y sancionar es del competente.</p></div>
+<div class="destacado oro"><span class="dst-ic">🧠</span><div class="dst-body"><span class="dst-title">Idea clave del día</span><p>Los servicios generales (aseo, vigilancia, cafetería, correspondencia) y el parque automotor mantienen viva la operación diaria. Se contratan como servicios continuos que no pueden interrumpirse (planea los vencimientos) y se supervisan verificando su calidad real. Los vehículos son bienes del patrimonio Y vehículos sujetos a la ley: SOAT y revisión técnico-mecánica vigentes, mantenimiento, uso institucional, control de combustible y aseguramiento. Tú gestionas y supervisas; decidir, firmar y sancionar es del competente.</p></div></div>
+<div class="box gold"><div class="box-title">💡 Tips para memorizar</div>
+  <ul class="lista">
+    <li><strong>Servicios continuos:</strong> no se interrumpen; planea los vencimientos con un cronograma.</li>
+    <li><strong>Vehículo = bien + vehículo legal:</strong> SOAT y revisión técnico-mecánica vigentes para circular.</li>
+    <li><strong>SOAT no lo cubre todo:</strong> solo víctimas; se necesitan pólizas adicionales.</li>
+    <li><strong>Uso institucional:</strong> nada de vehículos ni combustible para fines personales.</li>
+    <li><strong>Supervisar = verificar calidad</strong>, no solo firmar el pago mensual.</li>
+  </ul>
+</div>
+<div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"El servicio no para, el vehículo no circula sin estar legal, el bien no se usa para lo personal, y todo queda registrado."</p></div></div>
+<div class="fuentes">
+  <div class="box-title">📚 Fuentes oficiales para profundizar</div>
+  <p>Consulta siempre la versión vigente de cada norma. Enlaces oficiales:</p>
+  <ul class="lista">
+    <li><a href="https://www.mintransporte.gov.co/" target="_blank" rel="noopener">Ministerio de Transporte — SOAT y revisión técnico-mecánica</a></li>
+    <li><a href="https://www.runt.gov.co/" target="_blank" rel="noopener">RUNT — Registro Único Nacional de Tránsito</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=304" target="_blank" rel="noopener">Ley 80 de 1993 — contratación de servicios</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=76608" target="_blank" rel="noopener">Decreto 1082 de 2015 — supervisión de contratos</a></li>
+    <li><a href="https://www.colombiacompra.gov.co/" target="_blank" rel="noopener">Colombia Compra Eficiente</a></li>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">Portal oficial de la DIAN</a></li>
+  </ul>
+</div>
+<div class="b-texto"><p>Al cerrar, vale la pena ver el hilo que conecta este día con todo el curso: servicios generales y parque automotor son, otra vez, un terreno donde el Gestor III gestiona y supervisa con rigor, pero no decide ni firma lo que es de otro. La misma lógica de infraestructura, bienes y contratación se repite aquí: procedimiento, documentación y escalamiento. Lo específico de esta área es la continuidad (servicios que no paran) y las obligaciones legales de los vehículos (SOAT, revisión). Dominar esos dos rasgos propios, sobre la base de la lógica común del cargo, te permite resolver cualquier caso de servicios y parque automotor. Y te prepara para el día a día real, donde mantener la operación funcionando sin interrupciones y con los vehículos legales y seguros es una contribución silenciosa pero esencial al funcionamiento de la Entidad.</p></div>
+<div class="b-texto"><p>Como síntesis del rol, vale subrayar que en servicios generales y parque automotor el Gestor III es el garante de la operación cotidiana de la Entidad. Puede sonar menos "importante" que la contratación grande o los proyectos de infraestructura, pero la verdad es que si estos servicios fallan, la Entidad se detiene: sin aseo se cierra una sede por salubridad, sin vigilancia se expone el patrimonio, sin vehículos legales y seguros no hay comisiones, sin correspondencia no llegan las notificaciones. El Gestor III que mantiene todo esto funcionando sin interrupciones, con los vehículos legales y seguros, con los servicios supervisados y con todo documentado, hace una contribución silenciosa pero fundamental. Y lo hace, como en todo el cargo, gestionando con rigor y escalando al competente lo que es de su decisión: ni se queda corto ni se pasa de la raya.</p></div>
+<div class="b-texto"><p>Un cierre para fijar la idea central del día: en servicios generales y parque automotor, el Gestor III administra la cotidianidad que hace posible todo lo demás. No son funciones glamorosas, pero son las que mantienen las puertas abiertas, las sedes seguras y limpias, los vehículos rodando legalmente y los documentos llegando a tiempo. Gestionarlas bien exige método (planear vencimientos), rigor (supervisar la calidad real), integridad (uso institucional y control del gasto) y la disciplina de documentar todo. Y exige, como siempre, moverse en el punto justo entre hacer lo propio con diligencia y no invadir lo que es de otro. El Gestor III que domina esta área garantiza que la Entidad funcione día a día sin sobresaltos, que es, al final, el mejor elogio para un trabajo de apoyo bien hecho.</p></div>
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>Parejas de conceptos que la prueba usa para armar distractores en servicios y parque automotor.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody>
+        <tr><td>Contrato de tracto sucesivo</td><td>Ejecución instantánea</td><td>Tracto sucesivo: prestación continua (aseo, vigilancia). Instantánea: se agota en la entrega.</td></tr>
+        <tr><td>SOAT</td><td>Póliza de automóviles</td><td>SOAT: obligatorio, cubre solo víctimas de accidentes. Póliza: adicional, cubre daños propios, hurto, responsabilidad civil.</td></tr>
+        <tr><td>Revisión técnico-mecánica</td><td>SOAT</td><td>Revisión: certifica funcionamiento y emisiones (CDA). SOAT: seguro de víctimas. Ambas obligatorias para circular.</td></tr>
+        <tr><td>Mantenimiento preventivo</td><td>Correctivo</td><td>Preventivo: programado, antes de la falla. Correctivo: repara lo que falló.</td></tr>
+        <tr><td>Parque propio</td><td>Transporte contratado</td><td>Propio: control y costos de propiedad. Contratado: flexibilidad, se traslada el costo al proveedor.</td></tr>
+        <tr><td>Uso institucional</td><td>Uso personal</td><td>Institucional: para lo que la Entidad necesita. Personal: uso indebido que genera responsabilidad.</td></tr>
+        <tr><td>Supervisar</td><td>Pagar</td><td>Supervisar: verificar la calidad real del servicio. Pagar sin verificar es faltar al deber.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> si una opción confunde "tener SOAT" con "estar totalmente asegurado", o trata la supervisión como "solo firmar el pago", o justifica el uso personal de un vehículo, es el distractor.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos de servicios y parque automotor</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · El contrato de vigilancia por vencer</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El contrato de vigilancia vence en 10 días y no hay nuevo proceso. Alguien propone dejar la sede unos días sin vigilancia "mientras se arma".</p>
+      <span class="label">Análisis</span>
+      <p>Los servicios continuos no se interrumpen; la sede resguarda bienes y personas. Contratar informalmente sería irregular.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> gestionar con urgencia la continuidad por el procedimiento, sin baches, y adoptar un cronograma de vencimientos para no repetir el descuido.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El vehículo con SOAT vencido</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El SOAT de un vehículo venció, pero hay una comisión urgente que lo requiere hoy.</p>
+      <span class="label">Análisis</span>
+      <p>Circular sin SOAT es infracción y deja sin cobertura un eventual accidente. La urgencia no justifica circular ilegalmente.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> no permitir que circule sin SOAT; renovarlo de inmediato y resolver la comisión con otro vehículo al día o por otro medio.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · El servicio que se paga pero falla</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El contrato de aseo se paga puntual, pero los usuarios se quejan de limpieza deficiente.</p>
+      <span class="label">Análisis</span>
+      <p>La supervisión está fallando: se paga sin verificar la calidad real. Supervisar es verificar, no solo firmar el pago.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> verificar la queja, documentar la deficiencia, requerir al contratista el cumplimiento de la calidad y tramitar pagos solo contra servicio efectivamente prestado.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Dejar interrumpir un servicio continuo</div><p>No planear los vencimientos y dejar la sede sin aseo, vigilancia o mantenimiento. Riesgo y mala planeación.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Circular vehículos sin SOAT o revisión</div><p>Es infracción, expone a inmovilización y deja sin cobertura un accidente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Usar vehículos o combustible para fines personales</div><p>Uso indebido del patrimonio; genera responsabilidad.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Pagar sin supervisar la calidad</div><p>Firmar el pago mensual sin verificar que el servicio se preste bien es faltar al deber.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Circular con fallas de seguridad</div><p>Usar un vehículo con frenos o llantas en mal estado por una comisión urgente. La seguridad no se negocia.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confundir SOAT con aseguramiento total</div><p>El SOAT solo cubre víctimas; faltan pólizas de daños propios, hurto y responsabilidad civil.</p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p><strong>Los servicios no paran.</strong> Planea los vencimientos con un cronograma; asegura la continuidad por procedimiento.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p><strong>El vehículo no circula sin estar legal</strong> (SOAT y revisión vigentes) ni sin estar seguro (mantenimiento).</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p><strong>Uso institucional siempre.</strong> Nada de vehículos ni combustible para fines personales.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p><strong>Supervisar es verificar la calidad real</strong>, no solo firmar el pago.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p><strong>Seguridad y legalidad sobre la operación.</strong> La urgencia no justifica circular ilegal o inseguro.</p></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "El SOAT venció pero la comisión es urgente; usemos el carro hoy."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: la urgencia lo justifica.</div>
+      <div class="t-row malo">🔴 La trampa: circular sin SOAT es infracción y deja sin cobertura un accidente.</div>
+      <div class="t-row bueno">🟢 Lo correcto: renovar de inmediato y resolver la comisión con otro vehículo al día.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "El aseo se paga puntual, así que el contrato va bien."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: si se paga, se cumple.</div>
+      <div class="t-row malo">🔴 La trampa: pagar no es supervisar; hay que verificar la calidad real del servicio.</div>
+      <div class="t-row bueno">🟢 Lo correcto: verificar la calidad, requerir cumplimiento y pagar solo lo efectivamente prestado.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 "El carro está libre el fin de semana; préstalo para un asunto personal."</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: no se desperdicia estando ocioso.</div>
+      <div class="t-row malo">🔴 La trampa: usar un vehículo oficial para fines personales genera responsabilidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: los vehículos se usan solo para fines institucionales, estén o no ociosos.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>🧹 Servicios generales</h4><p>Aseo, vigilancia, cafetería, correspondencia. Continuos: no se interrumpen.</p></div>
+    <div class="resumen-item"><h4>📄 Tracto sucesivo</h4><p>Contratos de prestación continua; planear vencimientos, supervisar la calidad, liquidar.</p></div>
+    <div class="resumen-item"><h4>🚗 Parque automotor</h4><p>Vehículo = bien del patrimonio + vehículo sujeto a la ley de tránsito.</p></div>
+    <div class="resumen-item"><h4>📋 Obligaciones legales</h4><p>SOAT y revisión técnico-mecánica vigentes para circular; impuesto al día.</p></div>
+    <div class="resumen-item"><h4>🔧 Mantenimiento</h4><p>Preventivo mejor que correctivo; un vehículo inseguro no circula.</p></div>
+    <div class="resumen-item"><h4>⛽ Uso y combustible</h4><p>Uso institucional; control de recorridos y combustible; detectar anomalías.</p></div>
+    <div class="resumen-item"><h4>🛡️ Seguros</h4><p>SOAT (solo víctimas) + pólizas adicionales (daños propios, hurto, responsabilidad).</p></div>
+    <div class="resumen-item"><h4>🧭 Tu rol</h4><p>Gestionas y supervisas; decidir, firmar y sancionar es del competente.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Servicios generales</dt><dd>Servicios de apoyo que mantienen la operación: aseo, vigilancia, cafetería, correspondencia.</dd>
+      <dt>Tracto sucesivo</dt><dd>Contrato de prestación continua en el tiempo; exige supervisión permanente y continuidad.</dd>
+      <dt>Parque automotor</dt><dd>Conjunto de vehículos de la Entidad; bienes del patrimonio con obligaciones legales de tránsito.</dd>
+      <dt>SOAT</dt><dd>Seguro Obligatorio de Accidentes de Tránsito; cubre a las víctimas; obligatorio para circular.</dd>
+      <dt>Revisión técnico-mecánica</dt><dd>Certificación del funcionamiento y emisiones del vehículo (CDA); obligatoria.</dd>
+      <dt>Hoja de vida del vehículo</dt><dd>Historial de mantenimientos, reparaciones, siniestros y kilometraje de cada vehículo.</dd>
+      <dt>Planilla de recorridos</dt><dd>Registro del uso de cada vehículo para control y trazabilidad.</dd>
+      <dt>Continuidad</dt><dd>Principio de que los servicios no se interrumpen; se planean los vencimientos.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Servicios Generales y Parque Automotor</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 13. Mañana: FUN-RADM-06, contratación estatal I.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 13 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 13</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué son los servicios generales y qué los caracteriza?","b": "Servicios de apoyo que mantienen las sedes operando: aseo, vigilancia, cafetería, correspondencia, transporte. Su rasgo clave es que son de prestación continua: no pueden interrumpirse. Casi todos se contratan con terceros (tracto sucesivo) y se supervisan permanentemente."},{"f": "¿Por qué es crítica la planeación de los contratos de servicios continuos?","b": "Porque el servicio no puede interrumpirse: el nuevo contrato debe estar listo cuando termina el anterior. Hay que anticipar los vencimientos con un cronograma y estructurar el proceso con antelación, para que no haya un solo día sin servicio. La continuidad no se improvisa."},{"f": "¿Qué significa que un vehículo tiene 'doble plano'?","b": "Es a la vez un bien del patrimonio (placa de inventario, responsable, valor, baja) y un vehículo sujeto a la ley de tránsito (placa de circulación, SOAT, revisión técnico-mecánica, conductor). El Gestor III controla ambos planos."},{"f": "¿Qué obligaciones legales debe tener vigente un vehículo para circular?","b": "El SOAT (seguro obligatorio que cubre a las víctimas de accidentes) y la revisión técnico-mecánica y de emisiones (certificada por un CDA), además del impuesto vehicular al día. Circular sin SOAT o sin revisión es infracción y expone a inmovilización."},{"f": "¿El SOAT cubre todos los riesgos de un vehículo?","b": "No. El SOAT cubre solo a las víctimas de accidentes de tránsito (gastos médicos, incapacidad, muerte). No cubre daños al propio vehículo, hurto ni responsabilidad civil por daños materiales a terceros más allá de ciertos límites: para eso se necesitan pólizas adicionales."},{"f": "¿Qué hace el Gestor III ante un vehículo con una falla de seguridad (frenos, llantas)?","b": "No lo pone a circular hasta repararlo, por urgente que sea la comisión; la seguridad del conductor, ocupantes y terceros está por encima de la conveniencia. Gestiona la reparación por el contrato de mantenimiento y resuelve la comisión con otro vehículo."},{"f": "¿Para qué sirven la planilla de recorridos y el control de combustible?","b": "Para garantizar el uso institucional de los vehículos y detectar usos anómalos o desvíos: recorridos sin comisión, consumos que no cuadran con los recorridos. Los vehículos y el combustible se usan solo para fines institucionales; lo contrario genera responsabilidad."},{"f": "¿Cómo se maneja un accidente de tránsito con un vehículo oficial?","b": "Se documenta lo ocurrido, se hacen las denuncias y reportes que correspondan, se reporta a la aseguradora a tiempo y se coordina con el área jurídica. El Gestor III canaliza el siniestro por los conductos legales y de seguros; no lo 'resuelve' por su cuenta, pues puede tener consecuencias graves."},{"f": "¿Qué diferencia hay entre supervisar y pagar un contrato de servicios?","b": "Supervisar es verificar que el servicio se preste con la calidad pactada (que la sede esté limpia, que la vigilancia cubra los turnos); pagar sin verificar es faltar al deber. Se tramitan pagos solo contra servicio efectivamente prestado y verificado."},{"f": "¿Por qué la correspondencia oficial debe gestionarse con oportunidad y constancia?","b": "Porque tiene efectos jurídicos: la fecha de notificación o entrega cuenta términos legales. Un documento que llega tarde o sin constancia de entrega puede hacer perder términos o impedir demostrar que la Entidad cumplió. Oportunidad y trazabilidad son esenciales."},{"f": "¿Cuál es el instrumento clave para la continuidad de los servicios?","b": "Un calendario o cronograma de vencimientos de todos los contratos (aseo, vigilancia, mantenimiento) y obligaciones legales de vehículos (SOAT, revisión). Permite anticipar cada vencimiento y evitar interrupciones. La mayoría de las 'emergencias' son vencimientos conocidos que no se anticiparon."},{"f": "¿Cuál es el rol del Gestor III en servicios y parque automotor?","b": "Gestiona y proyecta los contratos de servicios, supervisa su prestación continua, administra el parque automotor (inventario, obligaciones legales, mantenimiento, uso, seguros), controla combustible y recorridos, y coordina el transporte. No ordena el gasto, ni suscribe contratos, ni sanciona, ni maneja por su cuenta un accidente: sustenta y escala al competente."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Continuidad de servicios","ctx": "Eres Gestor III del área administrativa de la DIAN. El contrato de aseo de una sede vence en una semana y no se ha estructurado el proceso para el nuevo. Un compañero propone: \"Esperemos a que venza y luego, con calma, armamos el nuevo proceso; mientras tanto unos días sin aseo no le hacen daño a nadie\". La sede atiende público y alberga a decenas de funcionarios.","q": "Ante el vencimiento próximo del contrato de aseo sin un nuevo proceso listo, ¿cuál es la actuación correcta?","ops": ["Esperar a que venza el contrato y armar el nuevo con calma, asumiendo unos días sin aseo, ya que no representa un problema grave y permite hacer el proceso sin presión.","Gestionar con urgencia la continuidad del servicio por el procedimiento que corresponda, para que no haya un solo día sin aseo (la sede atiende público y a los funcionarios), y adoptar un cronograma de vencimientos para planear los contratos con antelación.","Contratar informalmente a unas personas conocidas para el aseo durante esos días, sin contrato, mientras se estructura el proceso formal, para cubrir el lapso."],"correcta": 1,"expl": ["Incorrecto: dejar una sede que atiende público sin aseo afecta la salubridad y la imagen; 'unos días sin aseo' revela mala planeación.","✔ Se asegura la continuidad del servicio por el procedimiento, sin baches, y se adopta un cronograma de vencimientos. Los servicios continuos no se interrumpen.","Incorrecto: contratar informalmente sin contrato es irregular; la continuidad se resuelve por el procedimiento adecuado."]},{"nivel": "b","tema": "Vehículo con SOAT vencido","ctx": "Eres Gestor III. Un conductor te avisa que el SOAT de un vehículo venció ayer, pero hay una comisión institucional urgente que requiere ese carro hoy mismo. El conductor dice que \"por un día no pasa nada\" y que renueva el SOAT mañana sin falta.","q": "Ante la necesidad de usar hoy un vehículo con el SOAT vencido, ¿cuál es la actuación correcta?","ops": ["Permitir que el vehículo haga la comisión hoy por la urgencia, con el compromiso del conductor de renovar el SOAT al día siguiente, ya que es solo por un día.","No permitir que el vehículo circule sin SOAT vigente (circular sin SOAT es infracción y deja sin cobertura un eventual accidente), gestionar de inmediato la renovación y resolver la comisión con otro vehículo que esté al día o por otro medio.","Dejar la decisión al conductor: si él asume el riesgo de la multa, puede usar el vehículo; si no, que no lo use."],"correcta": 1,"expl": ["Incorrecto: 'por un día' basta para una infracción y, si hay un accidente, las víctimas quedan sin la cobertura obligatoria del SOAT.","✔ No se circula sin SOAT vigente: es infracción y deja sin cobertura un accidente. Se renueva de inmediato y la comisión se resuelve con otro vehículo al día.","Incorrecto: no es una decisión que se delegue al conductor; circular sin SOAT es ilegal y la Entidad no debe permitirlo, asuma quien asuma la multa."]},{"nivel": "b","tema": "Uso institucional de vehículos","ctx": "Eres Gestor III. Un funcionario te pide prestado un vehículo oficial el sábado para una diligencia personal, y otro quiere llevarse el video beam institucional para una celebración familiar. Ambos argumentan que \"el fin de semana esos recursos están ociosos, así no se desperdician\".","q": "Ante las solicitudes de usar bienes y vehículos oficiales para fines personales, ¿cuál es la actuación correcta?","ops": ["Autorizar ambos préstamos, ya que los recursos estarían ociosos el fin de semana y así se les da uso, con el compromiso de devolverlos en buen estado.","Negar ambos usos y explicar que los vehículos y bienes de la Entidad se destinan a fines institucionales, no personales; usarlos para asuntos privados es un uso indebido del patrimonio que genera responsabilidad, estén o no ociosos.","Autorizar solo el video beam (de menor valor y riesgo) pero no el vehículo (por el riesgo vial), como punto intermedio razonable."],"correcta": 1,"expl": ["Incorrecto: que un recurso esté ocioso no autoriza su uso personal; es un uso indebido del patrimonio.","✔ Los vehículos y bienes de la Entidad se usan solo para fines institucionales. Usarlos para fines personales genera responsabilidad, estén o no ociosos.","Incorrecto: el valor del bien no cambia el principio; ningún bien del Estado se usa para fines personales."]},{"nivel": "b","tema": "Supervisar vs. pagar","ctx": "Eres Gestor III y supervisas el contrato de aseo de una sede. Los pagos mensuales se vienen tramitando puntualmente. Sin embargo, varios funcionarios se quejan de que la sede permanece sucia, los baños no se asean bien y faltan insumos. Un compañero dice que \"si se paga puntual, el contrato va bien\".","q": "Ante las quejas de calidad con los pagos al día, ¿cuál es la actuación correcta del supervisor?","ops": ["Considerar que el contrato va bien porque los pagos están al día y las quejas son percepciones subjetivas de algunos funcionarios que no reflejan el servicio real.","Verificar directamente la calidad del servicio (inspección, constatar las quejas), documentar las deficiencias, requerir al contratista el cumplimiento de la calidad pactada y tramitar los pagos solo contra servicio efectivamente prestado y verificado.","Suspender de inmediato todos los pagos al contratista hasta que la sede quede impecable, como medida de presión por las quejas recibidas."],"correcta": 1,"expl": ["Incorrecto: pagar puntual no significa que el servicio se preste bien; supervisar es verificar la calidad real, no asumir que las quejas son subjetivas.","✔ El supervisor verifica la calidad, documenta las deficiencias, requiere el cumplimiento y paga solo contra servicio efectivamente prestado. Supervisar es verificar, no solo firmar.","Incorrecto: suspender todos los pagos de golpe no es proporcional ni se ajusta al procedimiento; se requiere el cumplimiento y se paga lo efectivamente prestado, gestionando las deficiencias por el conducto correcto."]},{"nivel": "i","tema": "SOAT no cubre todo","ctx": "Eres Gestor III. Un compañero sostiene que, como todos los vehículos del parque tienen su SOAT vigente, \"la flota está totalmente asegurada y no hace falta incluirla en el programa de seguros de la Entidad, eso sería un gasto doble\".","q": "Frente a la afirmación de que el SOAT hace innecesario el aseguramiento adicional de los vehículos, ¿qué debes explicar?","ops": ["Que tiene razón: si todos los vehículos tienen SOAT vigente, están cubiertos ante cualquier eventualidad y sería un gasto doble incluirlos además en el programa de seguros.","Que el SOAT cubre únicamente a las víctimas de accidentes de tránsito, no los daños al propio vehículo, el hurto ni la responsabilidad civil por daños materiales a terceros más allá de ciertos límites; por eso los vehículos deben incluirse en el programa de seguros con pólizas adicionales que protejan el patrimonio.","Que basta con el SOAT para los vehículos viejos y con seguro adicional solo para los nuevos, como forma de ahorrar en primas sin dejar del todo desprotegida a la flota."],"correcta": 1,"expl": ["Incorrecto: el SOAT no cubre daños propios, hurto ni responsabilidad civil amplia; creer que 'con SOAT está todo cubierto' deja a la Entidad expuesta.","✔ El SOAT cubre solo a las víctimas de accidentes; para daños propios, hurto y responsabilidad civil se necesitan pólizas adicionales. Los vehículos deben incluirse en el programa de seguros.","Incorrecto: la antigüedad no define la necesidad de aseguramiento; todos los vehículos requieren cobertura adecuada según su valor y riesgo, más allá del SOAT."]},{"nivel": "i","tema": "Falla de seguridad en vehículo","ctx": "Eres Gestor III. Un conductor reporta que un vehículo \"frena raro\" y hace un ruido extraño en las ruedas. Ese mismo día hay varias comisiones programadas que requieren ese carro, y hay presión para que no se quede sin usar. El conductor dice que \"igual todavía anda, se puede usar hoy y mañana lo llevamos al taller\".","q": "Ante la falla de seguridad reportada y la presión por usar el vehículo, ¿cuál es la actuación correcta?","ops": ["Permitir que el vehículo haga las comisiones hoy, ya que 'todavía anda', y llevarlo al taller al día siguiente, para no afectar las comisiones programadas.","No poner a circular el vehículo con una posible falla de frenos (un riesgo de seguridad para el conductor, ocupantes y terceros): gestionar su revisión y reparación por el contrato de mantenimiento antes de volver a usarlo, y atender las comisiones con otro vehículo.","Usar el vehículo solo para las comisiones cortas y cercanas de hoy, evitando las largas, como forma de reducir el riesgo mientras se repara mañana."],"correcta": 1,"expl": ["Incorrecto: una posible falla de frenos es un riesgo de accidente grave; 'todavía anda' no es garantía de seguridad.","✔ Un vehículo con una posible falla de seguridad no circula hasta repararse; la seguridad de las personas está por encima de la comodidad de usarlo. Las comisiones se atienden con otro vehículo.","Incorrecto: una falla de frenos es peligrosa en cualquier recorrido, corto o largo; no se mitiga 'usándolo poco'. No debe circular hasta repararse."]},{"nivel": "i","tema": "Control de combustible y uso","ctx": "Eres Gestor III. Al revisar los consumos del parque automotor, notas que un vehículo registra cargas de combustible elevadas los fines de semana, pero no hay comisiones autorizadas esos días en las planillas de recorridos. Un compañero dice que \"seguro es un error de registro, déjalo así\".","q": "Ante el consumo de combustible anómalo sin comisiones que lo justifiquen, ¿cuál es la actuación correcta?","ops": ["Dejarlo así asumiendo que es un error de registro, ya que revisar cada consumo a fondo consume mucho tiempo y probablemente no haya nada irregular.","Investigar la inconsistencia: contrastar los consumos con los recorridos autorizados y las planillas, documentar lo encontrado y, si se confirma un uso indebido o desvío, reportarlo por el conducto que corresponde; el control del combustible y el uso protege el patrimonio.","Descontarle al conductor del vehículo el valor del combustible de los fines de semana directamente de su salario, como sanción inmediata por el consumo irregular."],"correcta": 1,"expl": ["Incorrecto: 'dejarlo así' asumiendo un error es una omisión; un consumo anómalo puede ser un desvío de recursos que debe investigarse.","✔ Se investiga la inconsistencia, se documenta y, si se confirma uso indebido, se reporta por el conducto correcto. El control del combustible y el uso protege el patrimonio.","Incorrecto: el Gestor III no impone sanciones ni descuentos salariales por su cuenta (sería extralimitación); documenta y escala para que el competente actúe con debido proceso."]},{"nivel": "i","tema": "Cumplimiento del contratista con su personal","ctx": "Eres Gestor III y supervisas el contrato de vigilancia. Varios guardas se te acercan y comentan que la empresa contratista les debe salarios y no les ha pagado la seguridad social de los últimos meses. El contrato tiene una garantía de pago de salarios y prestaciones. Un compañero dice que \"eso es problema entre la empresa y sus empleados, no de la DIAN\".","q": "Ante el presunto incumplimiento del contratista con su personal, ¿cuál es la actuación correcta del supervisor?","ops": ["No intervenir, ya que la relación laboral es entre la empresa de vigilancia y sus trabajadores, y no corresponde a la DIAN inmiscuirse en los pagos del contratista a su personal.","Verificar el cumplimiento del contratista con el pago de salarios y seguridad social de su personal (parte del seguimiento del contrato), requerir formalmente el cumplimiento, documentar y, si persiste el incumplimiento, escalarlo al competente para las medidas que correspondan (incluida la garantía de salarios); la Entidad puede verse afectada por el incumplimiento.","Pagarles directamente a los guardas los salarios adeudados con recursos de la Entidad, para resolver el problema rápido y asegurar que el servicio de vigilancia no se interrumpa."],"correcta": 1,"expl": ["Incorrecto: aunque la relación laboral es del contratista, la Entidad debe vigilar su cumplimiento (por eso existe la garantía de salarios) y puede verse afectada; 'no es mi problema' es una omisión del seguimiento.","✔ El supervisor verifica el cumplimiento del contratista con su personal, requiere, documenta y escala al competente; la garantía de salarios existe precisamente para estos casos.","Incorrecto: la Entidad no paga directamente los salarios que debe el contratista; eso le corresponde a la empresa. Lo correcto es exigir el cumplimiento y, si procede, activar la garantía por el conducto que corresponde."]},{"nivel": "a","tema": "Accidente de tránsito con vehículo oficial","ctx": "Eres Gestor III. Un vehículo oficial, conducido por un funcionario autorizado en una comisión, se ve involucrado en un accidente de tránsito con daños a un tercero y una persona lesionada. Un compañero sugiere que, para \"resolverlo rápido y sin escándalo\", negocies directamente con el tercero afectado un arreglo económico con recursos de caja de la Entidad y no reportes el accidente a nadie más.","q": "Ante el accidente de tránsito con lesionados y daños a terceros, ¿cuál es la actuación correcta?","ops": ["Negociar directamente con el tercero un arreglo económico con recursos de la Entidad y no reportar el accidente, para resolverlo rápido y evitar un escándalo o trámites largos.","Documentar lo ocurrido, asegurar que se hagan las denuncias y reportes de tránsito que correspondan, reportar el siniestro a la aseguradora (SOAT y póliza) dentro de los términos, y coordinar con el área jurídica de la Entidad; no negociar ni asumir responsabilidades por cuenta propia, pues el accidente tiene consecuencias legales.","Responsabilizar de inmediato al conductor de todos los daños y lesiones y descontárselos, para deslindar a la Entidad y cerrar el caso rápidamente."],"correcta": 1,"expl": ["Incorrecto: negociar por fuera con recursos de caja y ocultar el accidente es gravemente irregular y puede constituir faltas serias; los accidentes con lesionados tienen consecuencias legales que no se 'arreglan' por debajo.","✔ Se documenta, se hacen las denuncias y reportes, se activa el SOAT y las pólizas a tiempo, y se coordina con jurídica. El Gestor III canaliza el siniestro por los conductos correctos; no negocia ni asume responsabilidades por su cuenta.","Incorrecto: no corresponde al Gestor III declarar la responsabilidad del conductor ni descontarle los daños; eso se determina por los procedimientos legales con debido proceso."]},{"nivel": "a","tema": "Planeación de la continuidad","ctx": "Eres Gestor III. Revisas que en los próximos tres meses vencen, en fechas cercanas, los contratos de aseo, vigilancia y mantenimiento de vehículos de varias sedes, y además vence el SOAT de varios carros. No hay un instrumento que integre estos vencimientos y cada uno se ha venido manejando por separado y a última hora.","q": "Ante la concentración de vencimientos y la falta de un instrumento de control, ¿cuál es la actuación correcta?","ops": ["Atender cada vencimiento a medida que vaya llegando, de forma separada y reactiva, ya que así se ha hecho siempre y los servicios no se han interrumpido hasta ahora.","Construir y mantener un cronograma de vencimientos que integre todos los contratos y obligaciones legales, anticipar cada vencimiento con la antelación que exige su procedimiento, e iniciar a tiempo los procesos para que los nuevos contratos empalmen sin baches; incluirlos en la planeación y el PAA.","Renovar todos los contratos actuales de forma automática y por el mismo valor, sin nuevo proceso, para ahorrar tiempo y asegurar que ningún servicio se interrumpa."],"correcta": 1,"expl": ["Incorrecto: manejar los vencimientos de forma reactiva y a última hora es justamente lo que provoca interrupciones o contrataciones de emergencia; 'hasta ahora no ha fallado' no es garantía.","✔ Un cronograma de vencimientos integrado permite anticipar cada uno, iniciar los procesos a tiempo y lograr empalmes sin baches, con todo incluido en la planeación y el PAA.","Incorrecto: no se 'renuevan automáticamente' los contratos sin proceso ni análisis; cada contratación sigue su procedimiento, y renovar 'por el mismo valor' sin revisar puede ser improcedente."]},{"nivel": "a","tema": "Priorización del transporte","ctx": "Eres Gestor III y solo queda un vehículo disponible para el día. Dos solicitudes compiten por él: una es para un operativo institucional programado de un área misional (comisión de trabajo), y la otra es para llevar a un directivo a un evento social al que fue invitado a título personal. El directivo insiste en que su solicitud se atienda primero \"por jerarquía\".","q": "Con un solo vehículo disponible, ¿cómo priorizas las dos solicitudes?","ops": ["Atender primero la solicitud del directivo por su jerarquía y porque conviene mantener una buena relación, y buscar luego una alternativa para el operativo institucional.","Asignar el vehículo al operativo institucional (una necesidad real de la Entidad), explicando con cortesía que los vehículos oficiales se usan para fines institucionales y que un evento social a título personal no lo es; buscar, si acaso, una alternativa para el directivo por fuera del vehículo oficial.","Dividir el día: usar el vehículo medio día para cada solicitud, aunque eso implique que el operativo institucional quede a medias, para no incomodar a ninguno de los dos solicitantes."],"correcta": 1,"expl": ["Incorrecto: priorizar por jerarquía un uso personal sobre una necesidad institucional es un uso indebido del recurso; la buena relación no justifica desviar el vehículo a un fin personal.","✔ El vehículo se asigna al fin institucional (el operativo); un evento social personal no justifica el vehículo oficial. Se prioriza por necesidad institucional, con cortesía y sustentando la decisión.","Incorrecto: comprometer el operativo institucional para 'repartir' el vehículo con un uso personal es un mal uso del recurso; el criterio es el fin institucional, no el reparto equitativo entre un fin institucional y uno personal."]},{"nivel": "a","tema": "Mantenimiento preventivo vs. recorte presupuestal","ctx": "Eres Gestor III. En la discusión del presupuesto, un directivo propone recortar el mantenimiento preventivo del parque automotor \"porque este año ningún vehículo tuvo una falla grave, así que es plata que se puede ahorrar\". Tú sabes que no hubo fallas graves precisamente porque el mantenimiento preventivo se cumplió, y que varios vehículos ya acumulan kilometraje que exige mantenimientos próximos.","q": "Ante la propuesta de recortar el mantenimiento preventivo del parque automotor porque \"no hubo fallas\", ¿cuál es la actuación correcta?","ops": ["Aceptar el recorte, ya que si no hubo fallas graves el gasto parece innecesario, y dejar solo un rubro mínimo para atender las averías que surjan durante el año.","Sustentar técnicamente, con el historial y el kilometraje de los vehículos, que la ausencia de fallas se debe al mantenimiento preventivo cumplido, y que recortarlo llevaría a un modelo correctivo de emergencia, más caro, riesgoso (fallas de seguridad en marcha) y disruptivo; recomendar conservar el preventivo planeado.","Proponer eliminar el mantenimiento preventivo pero aumentar el seguro de los vehículos, de modo que si alguno falla o se accidenta, el seguro cubra la reparación y así se ahorre en mantenimiento."],"correcta": 1,"expl": ["Incorrecto: 'no hubo fallas' porque el preventivo funcionó; recortarlo desmonta justo lo que da seguridad y evita costos mayores, y arriesga fallas de seguridad en vehículos en marcha.","✔ Se sustenta con datos (historial, kilometraje) que el preventivo evitó las fallas, y que recortarlo lleva al correctivo de emergencia, más caro y riesgoso. Se recomienda conservar el preventivo planeado.","Incorrecto: el seguro no reemplaza el mantenimiento (y un siniestro por falta de mantenimiento puede complicar la cobertura); además, un vehículo sin mantenimiento es un riesgo de seguridad vial, no un asunto que resuelva una póliza."]}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
