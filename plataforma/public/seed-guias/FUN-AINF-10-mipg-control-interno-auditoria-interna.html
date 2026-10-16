@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-10 · MIPG, control interno y auditoría interna — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-10</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 18 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>MIPG, control interno y auditoría interna</h1>
+  <p class="header-sub">El marco de planeación, gestión y control del Estado: el MIPG, el control interno como responsabilidad de todos, las tres líneas de defensa y la integridad como control esencial.</p>
+  <div class="badges"><span class="badge">📅 Día 18 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones. Primero, un compañero dice que 'el control interno es cosa de la oficina de control, no suya'. Segundo, llega una auditoría interna a revisar un proceso en el que participaste. Tercero, otro compañero sugiere 'mostrarle al auditor solo lo que conviene'. Y cuarto, en el mapa de riesgos de tu área aparece el 'uso indebido de información reservada' como riesgo de corrupción.</p>
+    <p>¿El control interno es solo de una oficina? ¿Cómo te relacionas con la auditoría? ¿Ocultas información o colaboras? ¿Qué son esos mapas de riesgos? Todas estas respuestas parten de un mismo conocimiento: el <mark>MIPG, el control interno y la auditoría interna</mark>. Hoy aprenderás el marco de planeación, gestión y control bajo el que trabajas, por qué el control es responsabilidad de todos (empezando por tu autocontrol), y por qué el control no es un enemigo sino la garantía de que lo público funciona bien.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es el <strong>MIPG</strong>, sus dimensiones y la Gestión de la Información como una de ellas.</li>
+      <li>Qué es el <strong>control interno</strong> (responsabilidad de todos) y el <strong>autocontrol</strong> como base.</li>
+      <li>El modelo de las <strong>tres líneas de defensa</strong> y dónde se ubica el Analista (primera línea).</li>
+      <li>Qué es la <strong>auditoría interna</strong> (asegura y asesora, no persigue) y cómo relacionarse con ella.</li>
+      <li>Los <strong>mapas de riesgos</strong> (incluidos los de corrupción), los indicadores y la evaluación.</li>
+      <li>La <strong>rendición de cuentas</strong> y la <strong>integridad</strong> como el control más eficaz de todos.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender qué es el MIPG →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>Toda entidad pública se organiza y controla bajo el <mark>MIPG</mark> (Modelo Integrado de Planeación y Gestión), y el <mark>control interno</mark> es responsabilidad de todos los servidores. La DIAN no es la excepción. Es un tema frecuente en la prueba y marca el contexto de todo el trabajo del cargo: cómo se planea, se gestiona, se controla y se rinde cuentas.</p>
+    <p>Necesitas entender qué es el MIPG y la dimensión de información (donde encaja tu trabajo), qué es el control interno y por qué empieza en tu autocontrol, el modelo de las tres líneas de defensa, qué es y qué no es la auditoría interna, cómo relacionarte con ella, y por qué la integridad es el control más eficaz. Todo esto define el marco en el que actúa un servidor íntegro y profesional.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean estos dilemas: creer que el control es ajeno, ocultar información a una auditoría, tomar un hallazgo como ataque, manipular un indicador o ceder a presiones contra la integridad. La respuesta correcta casi siempre se deriva de asumir el control como propio (autocontrol), colaborar con transparencia ante la auditoría y actuar con integridad. Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que ven el control como ajeno ('es cosa de la oficina de control'), que proponen ocultar o alterar información ante una auditoría, tomar un hallazgo como ataque personal, manipular un indicador o ceder a una presión contra la integridad. La respuesta suele estar en el autocontrol, la colaboración transparente y la integridad.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 MIPG, control interno y auditoría interna</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. Toda entidad pública se organiza y controla bajo un marco común. Hoy verás qué es el <mark>MIPG</mark> (Modelo Integrado de Planeación y Gestión), sus dimensiones y la Gestión de la Información como una de ellas; qué es el <mark>control interno</mark> y el modelo de las <mark>tres líneas de defensa</mark>; el autocontrol como base; la <mark>auditoría interna</mark> y cómo relacionarse con ella; los mapas de riesgos institucionales; la rendición de cuentas y la integridad. Todo ambientado en el rol real del Analista. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, entenderás el marco de planeación, gestión y control bajo el que trabajas, y por qué el control no es un enemigo sino una garantía de que las cosas se hacen bien.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🏛️</span><h5>MIPG</h5><p>Marco de planeación y gestión</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🛡️</span><h5>Control interno</h5><p>Que las cosas se hagan bien</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧍</span><h5>Autocontrol</h5><p>La primera línea</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔍</span><h5>Auditoría interna</h5><p>Verifica y asesora</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🤝</span><h5>Rendir cuentas</h5><p>Integridad y transparencia</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Qué es el MIPG</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>MIPG</mark> (Modelo Integrado de Planeación y Gestión) es el marco con el que todas las entidades públicas del país planean, gestionan, controlan y mejoran su trabajo para servir mejor al ciudadano. Unifica en un solo modelo lo que antes eran muchos sistemas separados, con una idea central: generar resultados y valor para la ciudadanía.</p>
+</div>
+<div class="b-texto">
+  <p>Toda entidad pública necesita un marco que ordene cómo planea, hace y controla su trabajo. En Colombia, ese marco es el <strong>MIPG</strong>, el Modelo Integrado de Planeación y Gestión. Su propósito es que las entidades funcionen de manera articulada y orientada a resultados, al servicio del ciudadano. En lugar de que cada entidad improvise su forma de gestionarse, el MIPG ofrece un modelo común con dimensiones, políticas y herramientas definidas.</p>
+  <p>Una de las grandes virtudes del MIPG es que <strong>integra</strong> en un solo modelo lo que antes eran sistemas separados (de calidad, de control interno, de desarrollo administrativo, etc.). Esa integración evita la duplicación de esfuerzos y da una visión de conjunto: planear, gestionar y controlar dejan de ser compartimentos estancos y pasan a entenderse como partes de un mismo ciclo orientado a servir mejor. Es, en esencia, un modelo para gestionar lo público con método.</p>
+  <p>El MIPG tiene una orientación clara al <strong>ciudadano y a los resultados</strong>. No se trata de cumplir trámites internos por cumplirlos, sino de que la gestión produzca valor: mejores servicios, decisiones más acertadas, uso responsable de los recursos. Esta orientación es importante porque recuerda que el fin de toda la maquinaria administrativa no es la maquinaria misma, sino el servicio a las personas. Todo lo que el MIPG organiza apunta a ese objetivo.</p>
+  <p>Para el Analista I, el MIPG es el marco general bajo el que trabaja, aunque no lo mencione a diario. Entender que existe, que ordena la planeación, la gestión y el control de la entidad, y que la gestión de la información es una de sus piezas, le da contexto a muchas de las prácticas que ya ha estudiado (gobernanza de datos, controles, documentación). No necesita dominar el modelo en detalle, pero sí ubicarse dentro de él y comprender que su trabajo contribuye a un sistema mayor orientado a servir al ciudadano.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El MIPG...</th><th>Qué aporta</th></tr></thead>
+    <tbody>
+      <tr><td>Integra sistemas antes separados</td><td>Evita duplicar esfuerzos; visión de conjunto</td></tr>
+      <tr><td>Ordena planear, gestionar y controlar</td><td>Un ciclo común para toda entidad pública</td></tr>
+      <tr><td>Se orienta al ciudadano y a resultados</td><td>El fin es servir y generar valor público</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero cree que el MIPG es 'un trámite más que inventaron para complicar'. Le explicas que es el marco que ordena cómo la entidad planea, gestiona y controla su trabajo, que integra en uno solo varios sistemas antes separados, y que su fin es servir mejor al ciudadano. Entender el MIPG te ubica dentro del sistema en el que trabajas y le da sentido a muchas prácticas de control.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>El MIPG (Modelo Integrado de Planeación y Gestión) es:</p>
+  <div class="cp-op" data-op="a">a) Un sistema aislado de control que solo usan los auditores, sin relación con la gestión diaria.</div>
+  <div class="cp-op" data-op="b">b) El marco que integra planeación, gestión, control y mejora de las entidades públicas, orientado a servir al ciudadano y generar valor.</div>
+  <div class="cp-op" data-op="c">c) Un trámite burocrático sin ningún propósito ni relación con el servicio al ciudadano.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Ejercicio resuelto: ubicar una situación en el sistema</h4>
+    <p>Veamos un ejercicio de ubicación. Le plantean varias situaciones y debe decir a qué parte del sistema corresponden. 'Verificar sus propios cálculos antes de entregar': es autocontrol, primera línea de defensa. 'El área de riesgos le da una metodología para valorar un riesgo': es la segunda línea apoyando. 'Llega una evaluación independiente de si los controles funcionan': es la auditoría interna, tercera línea. 'Producir cifras confiables para un informe de gestión': alimenta la evaluación de resultados y la rendición de cuentas del MIPG.</p>
+    <p>El valor de este ejercicio no es memorizar etiquetas, sino desarrollar la capacidad de reconocer, ante cualquier situación, qué rol y qué principio del sistema están en juego. Un Analista que sabe ubicarse —'esto es mi autocontrol de primera línea', 'esto lo decide la auditoría, no yo'— actúa con claridad sobre su papel y no se extralimita ni se desentiende. Esa ubicación precisa es, en sí misma, una competencia profesional valiosa.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Las dimensiones del MIPG y la Gestión de la Información</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El MIPG organiza la gestión en varias <mark>dimensiones</mark> (como talento humano, direccionamiento estratégico, gestión con valores para resultados, información y comunicación, gestión del conocimiento, control interno). Una de ellas es la <mark>información y comunicación</mark>, directamente relacionada con el trabajo del Analista: la información como soporte de la gestión y del control.</p>
+</div>
+<div class="b-texto">
+  <p>El MIPG se estructura en <strong>dimensiones</strong>, que son los grandes ámbitos en que se organiza la gestión de una entidad. Entre ellas están el <strong>talento humano</strong> (las personas), el <strong>direccionamiento estratégico y la planeación</strong> (hacia dónde va la entidad), la <strong>gestión con valores para resultados</strong> (cómo opera para servir), la <strong>evaluación de resultados</strong>, la <strong>información y comunicación</strong>, la <strong>gestión del conocimiento</strong> y el <strong>control interno</strong>. Cada dimensión agrupa políticas y prácticas afines.</p>
+  <p>Para el Analista I, la dimensión más cercana es la de <strong>información y comunicación</strong>. Esta dimensión reconoce que la información es un soporte esencial de toda la gestión: sin información de calidad, no se puede planear, decidir, controlar ni rendir cuentas. Aquí encajan directamente los temas que el Analista ya domina: la gestión de la información, su calidad, su seguridad, la transparencia y la gestión documental. El trabajo del Analista es, en términos del MIPG, parte de esta dimensión.</p>
+  <p>Otra dimensión relevante es la de <strong>gestión del conocimiento</strong>, que busca que lo que la entidad aprende no se pierda, sino que se capture, comparta y reutilice. La información bien gestionada es la materia prima del conocimiento institucional; un Analista que documenta bien, que deja trazabilidad y que organiza la información está contribuyendo también a que la entidad no dependa de la memoria de las personas, sino que conserve y aproveche lo que sabe.</p>
+  <p>No es necesario que el Analista I memorice todas las dimensiones, pero sí que entienda dos cosas: que su trabajo con la información es una pieza reconocida del modelo de gestión de toda la entidad, y que la información atraviesa casi todas las dimensiones (no se puede planear, evaluar ni controlar sin información). Esta comprensión eleva el valor de su labor: no es un apoyo marginal, sino un soporte transversal de la gestión pública organizada por el MIPG.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión del MIPG (ejemplos)</th><th>De qué se ocupa</th></tr></thead>
+    <tbody>
+      <tr><td>Talento humano</td><td>Las personas de la entidad</td></tr>
+      <tr><td>Direccionamiento y planeación</td><td>Hacia dónde va la entidad</td></tr>
+      <tr><td>Información y comunicación</td><td>La información como soporte de la gestión (cercana al Analista)</td></tr>
+      <tr><td>Control interno</td><td>Que las cosas se hagan bien y con control</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Entiendes que tu trabajo con la información encaja en la dimensión de 'información y comunicación' del MIPG, que la reconoce como soporte esencial de toda la gestión. Al documentar bien y dejar trazabilidad, también aportas a la 'gestión del conocimiento'. Ubicar tu labor dentro del modelo te muestra que no es un apoyo marginal, sino un soporte transversal del que dependen la planeación, la evaluación y el control de la entidad.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>La dimensión del MIPG más directamente relacionada con el trabajo del Analista I es:</p>
+  <div class="cp-op" data-op="a">a) La de talento humano, porque es la única que importa.</div>
+  <div class="cp-op" data-op="b">b) Ninguna: el trabajo con información no tiene lugar en el MIPG.</div>
+  <div class="cp-op" data-op="c">c) La de información y comunicación, que reconoce la información como soporte esencial de toda la gestión.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>De muchos sistemas a uno solo</h4>
+    <p>Vale la pena entender por qué el MIPG fue un avance. Antes de él, las entidades manejaban por separado el sistema de gestión de calidad, el de control interno, el de desarrollo administrativo y otros, cada uno con sus propios documentos, comités y requisitos, muchas veces pidiendo lo mismo de formas distintas. Eso generaba duplicación, cargas innecesarias y una visión fragmentada. El MIPG los integró en un solo modelo con una sola lógica, lo que simplifica y da coherencia.</p>
+    <p>Para el Analista I, esta integración tiene una consecuencia práctica: no debe pensar que calidad, control y gestión son mundos aparte, sino caras de un mismo modelo. Documentar bien sirve a la vez a la calidad, al control y a la gestión del conocimiento; un buen dato alimenta la planeación, la evaluación y la rendición de cuentas. Ver el modelo como un todo integrado, y no como una colección de requisitos sueltos, ayuda a trabajar con sentido y sin duplicar esfuerzos.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Qué es el control interno</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>control interno</mark> es el conjunto de políticas, procesos y acciones que una entidad adopta para tener una seguridad razonable de que cumple sus objetivos, usa bien los recursos, produce información confiable y respeta la ley. No es una oficina ni una persona: es responsabilidad de todos, y busca que las cosas se hagan bien y se prevengan errores e irregularidades.</p>
+</div>
+<div class="b-texto">
+  <p>El <strong>control interno</strong> es uno de los conceptos más importantes —y más malentendidos— de la gestión pública. No es una oficina de «los que vigilan», ni una traba burocrática: es el conjunto de mecanismos que una entidad establece para tener una <strong>seguridad razonable</strong> de que logra sus objetivos, protege sus recursos, produce información confiable y cumple la ley. Es, en el fondo, la forma en que la entidad se asegura de que las cosas se hagan bien.</p>
+  <p>Un punto clave es que el control interno es <strong>responsabilidad de todos</strong>, no solo de un área. Cada servidor, al hacer bien su trabajo y verificarlo, está ejerciendo control interno; cada proceso bien diseñado lo incorpora. Esta es una diferencia crucial con la idea errónea de que «el control lo hacen los de control». En realidad, el control empieza en cada puesto de trabajo, y la oficina de control interno (auditoría) es solo una parte del sistema, no todo él.</p>
+  <p>El control interno persigue <strong>objetivos</strong> concretos: la eficacia y eficiencia de las operaciones (que las cosas funcionen bien), la confiabilidad de la información (que las cifras y reportes sean fiables), el cumplimiento de las normas (que se respete la ley) y la protección de los recursos (que no se pierdan ni se malgasten). Cada control que existe en la entidad apunta a uno o varios de estos objetivos; entenderlos ayuda a ver para qué sirve cada control, en vez de vivirlos como estorbos.</p>
+  <p>Para el Analista I, el control interno no es algo externo a su trabajo, sino parte de él. Cuando depura datos, verifica resultados, documenta sus actuaciones y respeta las reglas, está ejerciendo control interno sobre su propia labor. Entender que el control empieza en su puesto —y no en una oficina lejana— cambia su actitud: deja de ver el control como vigilancia ajena y lo asume como parte de su responsabilidad de hacer bien las cosas. Esa es la esencia de un buen sistema de control interno.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El control interno busca</th><th>Qué asegura</th></tr></thead>
+    <tbody>
+      <tr><td>Eficacia y eficiencia</td><td>Que las operaciones funcionen bien</td></tr>
+      <tr><td>Información confiable</td><td>Que las cifras y reportes sean fiables</td></tr>
+      <tr><td>Cumplimiento normativo</td><td>Que se respete la ley</td></tr>
+      <tr><td>Protección de recursos</td><td>Que no se pierdan ni se malgasten</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero dice que 'el control interno es cosa de la oficina de control, no mía'. Le explicas que el control interno es responsabilidad de todos: cuando él depura datos, verifica resultados y documenta, está ejerciendo control interno sobre su propio trabajo. El control empieza en cada puesto, no en una oficina lejana. Asumirlo así cambia la actitud: el control deja de ser vigilancia ajena y se vuelve parte de hacer bien las cosas.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El control interno es, correctamente entendido:</p>
+  <div class="cp-op" data-op="a">a) Responsabilidad de todos los servidores: el conjunto de mecanismos para asegurar que las cosas se hagan bien; empieza en cada puesto de trabajo.</div>
+  <div class="cp-op" data-op="b">b) Una tarea exclusiva de la oficina de control, ajena al resto de los servidores.</div>
+  <div class="cp-op" data-op="c">c) Una traba burocrática sin relación con el logro de los objetivos de la entidad.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La información atraviesa casi todas las dimensiones</h4>
+    <p>Conviene insistir en una idea que eleva el valor del trabajo del Analista: la información no es solo una dimensión más del MIPG, sino un insumo que atraviesa casi todas. No se puede hacer direccionamiento estratégico sin información para decidir el rumbo; no se puede evaluar resultados sin datos de desempeño; no se puede gestionar el riesgo sin información sobre lo que puede fallar; no se puede rendir cuentas sin cifras veraces. La información es, en ese sentido, el sistema circulatorio de toda la gestión.</p>
+    <p>Para el Analista I, comprender esta transversalidad cambia la percepción de su rol. Su trabajo no abastece solo a un rincón del modelo, sino que irriga buena parte de él. Una base mal depurada no daña únicamente un reporte: puede distorsionar una decisión estratégica, una evaluación o una rendición de cuentas. Por eso su rigor tiene un alcance que va mucho más allá de la tarea concreta que tenga entre manos en un momento dado.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>El autocontrol como base</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>autocontrol</mark> es el principio según el cual cada servidor es responsable de controlar su propio trabajo: verificar que lo hace bien, detectar sus propios errores y corregirlos. Es la base del control interno: si cada quien se autocontrola, el sistema funciona desde su raíz. El control no empieza en la auditoría, empieza en cada persona.</p>
+</div>
+<div class="b-texto">
+  <p>Si el control interno es responsabilidad de todos, su cimiento es el <strong>autocontrol</strong>: el deber y la capacidad de cada servidor de controlar su propio trabajo. Significa que no se espera a que otro venga a revisar; cada quien verifica lo que hace, detecta sus propios errores y los corrige antes de que causen daño. El autocontrol convierte a cada servidor en el primer y más cercano control de su labor.</p>
+  <p>El autocontrol tiene una lógica poderosa: los errores se atrapan mejor donde nacen. Quien produce un trabajo es quien mejor puede verificarlo en el momento, cuando el error aún es fácil de corregir. Si se deja todo a controles posteriores (un supervisor, una auditoría), los errores viajan más lejos, se mezclan con otros y son más costosos de arreglar. Por eso un sistema de control interno que descansa en el autocontrol de todos es mucho más eficaz que uno que confía solo en revisiones externas.</p>
+  <p>El autocontrol conecta con la autonomía y la madurez profesional. Un servidor que se autocontrola no necesita que lo vigilen para hacer bien las cosas: lo hace porque es su responsabilidad y porque entiende el valor de un trabajo bien hecho. Esta es una de las diferencias entre un profesional y alguien que solo cumple cuando lo miran. El autocontrol es, en ese sentido, una expresión de integridad: hacer bien el trabajo aunque nadie esté revisando.</p>
+  <p>Para el Analista I, el autocontrol es la competencia más transversal de todo su trabajo, y ya ha aparecido en varios temas. Verificar los datos, comprobar los resultados, revisar los informes, documentar las actuaciones: todo eso es autocontrol. Asumirlo como un hábito —no como una carga ni como algo que se hace solo cuando hay tiempo— es lo que hace que su trabajo sea confiable desde la raíz. Un Analista que se autocontrola es la primera garantía de un buen control interno.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Con autocontrol</th><th>Sin autocontrol</th></tr></thead>
+    <tbody>
+      <tr><td>Cada quien verifica su trabajo</td><td>Se espera a que otro revise</td></tr>
+      <tr><td>Los errores se atrapan en el origen</td><td>Los errores viajan y se mezclan</td></tr>
+      <tr><td>Expresión de integridad y madurez</td><td>Se cumple solo cuando vigilan</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>En vez de esperar a que un supervisor revise tu informe, aplicas autocontrol: verificas los datos, compruebas los resultados y corriges dos errores antes de entregar. Lo haces porque es tu responsabilidad, no porque alguien te vigile. Ese hábito atrapa los errores en el origen, cuando son fáciles de corregir, y hace tu trabajo confiable desde la raíz. El autocontrol es la base del control interno.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>El autocontrol, como base del control interno, significa que:</p>
+  <div class="cp-op" data-op="a">a) Cada servidor debe esperar a que un superior o una auditoría revise su trabajo antes de verificarlo.</div>
+  <div class="cp-op" data-op="b">b) Cada servidor es responsable de controlar su propio trabajo: verificarlo, detectar sus errores y corregirlos, sin esperar a que otro lo haga.</div>
+  <div class="cp-op" data-op="c">c) Solo hay que hacer bien el trabajo cuando alguien está vigilando.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Seguridad razonable, no absoluta</h4>
+    <p>Un matiz importante del control interno es que ofrece una seguridad razonable, no absoluta. Ningún sistema de control puede garantizar que nunca ocurra un error o una irregularidad: lo que hace es reducir su probabilidad a un nivel aceptable y aumentar las chances de detectarlos a tiempo. Pretender un control que elimine todo riesgo sería imposible y, además, paralizante; el objetivo realista es gestionar los riesgos, no suprimirlos por completo.</p>
+    <p>Entender esto protege al Analista de dos errores. Uno, confiar ciegamente en que, por haber controles, nada puede salir mal; el autocontrol sigue siendo indispensable porque los controles no son infalibles. Dos, frustrarse porque a pesar de los controles ocurrió un error; lo relevante entonces es que el sistema permita detectarlo, aprender y mejorar. La seguridad razonable es un objetivo maduro y alcanzable, a diferencia de la ilusión de un control perfecto.</p>
+
+
+    <h4>El control interno no frena, habilita</h4>
+    <p>Una idea que conviene fijar es que el control interno, bien diseñado, no frena el trabajo: lo habilita. Un proceso con controles claros se ejecuta con más confianza y menos reprocesos, porque los errores se atrapan a tiempo y cada quien sabe qué le corresponde. El control mal entendido —el que añade trabas sin sentido— sí frena, pero ese es un mal diseño, no la esencia del control. El buen control es como los frenos de un auto: no están para impedir avanzar, sino para permitir avanzar rápido y seguro.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>El modelo de las tres líneas de defensa</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El control interno se organiza en <mark>tres líneas de defensa</mark>. La <mark>primera</mark> son quienes hacen el trabajo y lo controlan día a día (el autocontrol de cada servidor y sus jefes). La <mark>segunda</mark> son las áreas que vigilan y apoyan el control (riesgos, calidad). La <mark>tercera</mark> es la auditoría interna, independiente, que evalúa todo el sistema. Cada línea tiene su rol.</p>
+</div>
+<div class="b-texto">
+  <p>Para organizar las responsabilidades de control, se usa el modelo de las <strong>tres líneas de defensa</strong>, que ayuda a entender quién controla qué. La <strong>primera línea</strong> son quienes ejecutan los procesos y los controlan directamente: cada servidor con su autocontrol y cada jefe supervisando su área. Es la línea más cercana al trabajo y la más importante, porque es donde los riesgos se gestionan en el día a día. Aquí trabaja el Analista.</p>
+  <p>La <strong>segunda línea</strong> son las áreas que vigilan, apoyan y coordinan el control sin ejecutar directamente los procesos: por ejemplo, las oficinas de gestión de riesgos, de calidad, de cumplimiento. Ayudan a la primera línea a controlar mejor, definen metodologías, hacen seguimiento. No son independientes de la gestión, pero sí especializadas en control. Son un refuerzo y un apoyo a lo que hace la primera línea.</p>
+  <p>La <strong>tercera línea</strong> es la <strong>auditoría interna</strong> (la oficina de control interno), que evalúa de forma <strong>independiente</strong> si todo el sistema de control funciona. No ejecuta los procesos ni los supervisa directamente: los audita, verifica si los controles existen y operan, y asesora para mejorar. Su valor está justamente en su independencia: puede mirar la entidad con distancia y objetividad, sin estar comprometida con la gestión que evalúa.</p>
+  <p>Para el Analista I, entender las tres líneas le ayuda a ubicar su rol y el de los demás. Él está en la <strong>primera línea</strong>: su autocontrol es la base del sistema. Las áreas de riesgos o calidad (segunda línea) lo apoyan y le dan metodologías; la auditoría interna (tercera línea) evaluará si los controles funcionan. Saber esto evita confusiones: la auditoría no es «el enemigo» ni hace el trabajo de la primera línea; es una evaluación independiente que, bien entendida, ayuda a que todo funcione mejor.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Línea de defensa</th><th>Quién es</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td>Primera</td><td>Quienes hacen el trabajo y sus jefes</td><td>Autocontrol y supervisión directa (el Analista está aquí)</td></tr>
+      <tr><td>Segunda</td><td>Áreas de riesgos, calidad, cumplimiento</td><td>Vigilan, apoyan y coordinan el control</td></tr>
+      <tr><td>Tercera</td><td>Auditoría interna (independiente)</td><td>Evalúa si todo el sistema de control funciona</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Entiendes que, como Analista, estás en la primera línea de defensa: tu autocontrol gestiona los riesgos de tu trabajo día a día. Cuando el área de riesgos (segunda línea) te da una metodología, la aprovechas; cuando la auditoría interna (tercera línea) evalúa, colaboras. Ubicar cada rol evita verlos como rivales: cada línea aporta a que el sistema de control funcione, y la primera —la tuya— es la base de todo.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>En el modelo de las tres líneas de defensa, el Analista I se ubica en:</p>
+  <div class="cp-op" data-op="a">a) La tercera línea, porque audita de forma independiente todo el sistema.</div>
+  <div class="cp-op" data-op="b">b) Ninguna línea, porque su trabajo no tiene relación con el control.</div>
+  <div class="cp-op" data-op="c">c) La primera línea: quien hace el trabajo y lo controla día a día con su autocontrol.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Autocontrol, autorregulación y autogestión</h4>
+    <p>El Modelo Estándar de Control Interno habla de tres principios que se refuerzan: el autocontrol (cada servidor controla su trabajo), la autorregulación (la entidad se da sus propias reglas y las aplica) y la autogestión (la entidad gestiona con autonomía el logro de sus fines). Los tres parten de la misma idea: el control eficaz nace de dentro, de la propia organización y de sus personas, no solo de la vigilancia externa. El autocontrol es la base más concreta y personal de esa tríada.</p>
+    <p>Para el Analista I, el que más lo toca directamente es el autocontrol, pero entender los tres ayuda a ver el conjunto: una entidad que se autorregula bien le da reglas claras sobre las que ejercer su autocontrol, y una que se autogestiona orienta ese autocontrol hacia sus objetivos. El servidor que se autocontrola está contribuyendo, desde su puesto, a que toda esa arquitectura de control desde dentro funcione. Es el eslabón más pequeño pero más numeroso del sistema.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Qué es la auditoría interna</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>auditoría interna</mark> (oficina de control interno) evalúa, de forma independiente y objetiva, si los procesos y controles de la entidad funcionan, y asesora para mejorarlos. Su papel no es castigar ni «cazar culpables», sino verificar, agregar valor y ayudar a que la entidad logre sus objetivos. Es una función de aseguramiento y de consejo, no de persecución.</p>
+</div>
+<div class="b-texto">
+  <p>La <strong>auditoría interna</strong> es la función que, dentro de la propia entidad, evalúa de manera independiente si las cosas se están haciendo bien: si los controles existen y funcionan, si los procesos cumplen las normas, si los riesgos se gestionan. La ejerce la oficina de control interno (o quien haga sus veces) y su independencia es clave: para poder evaluar con objetividad, no debe estar involucrada en ejecutar los procesos que revisa.</p>
+  <p>Hay un malentendido muy extendido que conviene desmontar: la auditoría interna <strong>no es una policía que caza culpables</strong>. Su propósito, según los estándares modernos, es doble: dar <strong>aseguramiento</strong> (una opinión independiente sobre si los controles funcionan) y ofrecer <strong>asesoría</strong> (recomendaciones para mejorar). Es decir, la auditoría está para agregar valor y ayudar a que la entidad logre sus objetivos, no para perseguir a las personas. Verla como enemiga es no entender su función.</p>
+  <p>La auditoría trabaja por <strong>evidencia</strong>: revisa documentos, datos, procesos, y a partir de ahí formula hallazgos y recomendaciones. Por eso el trabajo documentado y trazable del Analista es tan importante: una auditoría no se basa en impresiones, sino en lo que se puede demostrar. Un servidor que documenta bien no teme a la auditoría, porque tiene con qué respaldar lo que hizo; uno que no documenta queda expuesto, no porque sea culpable, sino porque no puede probar que actuó bien.</p>
+  <p>Para el Analista I, entender la auditoría interna como una función de aseguramiento y asesoría —no de persecución— cambia por completo su actitud hacia ella. En vez de temerla u ocultarle información, colabora, le aporta la evidencia documentada de su trabajo y ve sus recomendaciones como oportunidades de mejora. Un Analista que trabaja con orden, trazabilidad y autocontrol es, de hecho, el mejor aliado de la auditoría, porque su trabajo ya está hecho para ser verificado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La auditoría interna NO es</th><th>La auditoría interna SÍ es</th></tr></thead>
+    <tbody>
+      <tr><td>Una policía que caza culpables</td><td>Una evaluación independiente y objetiva</td></tr>
+      <tr><td>Un enemigo del que esconderse</td><td>Aseguramiento + asesoría para mejorar</td></tr>
+      <tr><td>Una opinión basada en impresiones</td><td>Un análisis basado en evidencia</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Llega una auditoría interna a revisar un proceso en el que participaste. En vez de temerla u ocultar información, le aportas tu trabajo documentado y trazable, y tomas sus recomendaciones como oportunidades de mejora. Como documentaste bien, tienes con qué respaldar lo que hiciste. Entiendes que la auditoría no caza culpables: asegura y asesora. Tu orden y trazabilidad te hacen su mejor aliado.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>El propósito de la auditoría interna es, sobre todo:</p>
+  <div class="cp-op" data-op="a">a) Dar aseguramiento (evaluar si los controles funcionan) y asesoría (recomendar mejoras), agregando valor; no 'cazar culpables'.</div>
+  <div class="cp-op" data-op="b">b) Perseguir y castigar a los servidores, actuando como una policía interna.</div>
+  <div class="cp-op" data-op="c">c) Ejecutar directamente los procesos de la entidad en lugar de los servidores.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Por qué la independencia de la tercera línea importa</h4>
+    <p>La razón por la que la auditoría interna debe ser independiente merece explicarse, porque no es un formalismo. Si quien evalúa los controles fuera la misma persona que los ejecuta, difícilmente detectaría sus propias fallas con objetividad: estaría, en cierto modo, calificándose a sí misma. La independencia de la tercera línea garantiza que la evaluación sea imparcial, que no haya conflicto de interés y que los problemas se señalen aunque incomoden a quien gestiona.</p>
+    <p>Esa independencia es, paradójicamente, lo que hace valiosa a la auditoría también para quien es auditado. Una evaluación imparcial, que no está comprometida con la gestión, da una opinión confiable sobre si los controles funcionan de verdad. Para el Analista, entender esto ayuda a no ver la auditoría como una intromisión, sino como una mirada externa y objetiva que puede detectar lo que, desde dentro del proceso, es difícil de ver. La distancia del auditor es una ventaja, no una amenaza.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Cómo relacionarse con una auditoría</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Ante una auditoría, la actitud correcta es la <mark>colaboración transparente</mark>: aportar la información y la evidencia solicitadas, responder con honestidad, no ocultar ni alterar nada, y tomar los hallazgos como oportunidades de mejora. Ocultar información, obstruir o tomarlo como un ataque personal es contraproducente y puede agravar la situación.</p>
+</div>
+<div class="b-texto">
+  <p>Cuando a un servidor le toca ser parte de una auditoría, su actitud marca la diferencia. La correcta es la <strong>colaboración transparente</strong>: aportar la información y la evidencia que se pidan, responder con honestidad y claridad, facilitar el acceso a los documentos y datos. El auditor necesita entender cómo funcionan las cosas y verificar los controles; colaborar le ayuda a hacer su trabajo y, de paso, demuestra que no hay nada que ocultar.</p>
+  <p>Las actitudes equivocadas tienen todas un alto costo. <strong>Ocultar o alterar</strong> información es gravísimo: además de impedir la auditoría, puede configurar una falta disciplinaria seria y transformar una observación menor en un problema mayor. <strong>Obstruir</strong> o entorpecer la auditoría genera desconfianza y sospecha donde quizás no la había. Y tomarlo como un <strong>ataque personal</strong>, poniéndose a la defensiva, impide ver las recomendaciones como lo que son: oportunidades de mejorar.</p>
+  <p>Un punto importante es cómo recibir los <strong>hallazgos</strong>. Un hallazgo de auditoría no es una condena ni un ataque: es la identificación de algo que se puede mejorar o corregir. La respuesta madura es analizarlo, reconocer lo que proceda y establecer acciones de mejora, no justificarse a toda costa ni sentirse perseguido. De hecho, muchos hallazgos señalan problemas del proceso o del sistema, no faltas de personas; tomarlos con apertura permite que la entidad aprenda y mejore.</p>
+  <p>Para el Analista I, relacionarse bien con una auditoría es una competencia valiosa. Si trabaja con orden, trazabilidad y autocontrol, tendrá con qué respaldar su labor y podrá colaborar con tranquilidad. Si recibe un hallazgo, lo tomará como una oportunidad de ajustar, no como una ofensa. Esta actitud —transparente, honesta y abierta a mejorar— no solo facilita la auditoría, sino que proyecta la imagen de un servidor íntegro y profesional, que es exactamente lo que el control interno busca cultivar.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Actitud correcta</th><th>Actitud equivocada</th></tr></thead>
+    <tbody>
+      <tr><td>Colaborar y aportar la evidencia</td><td>Ocultar o alterar información (falta grave)</td></tr>
+      <tr><td>Responder con honestidad</td><td>Obstruir o entorpecer la auditoría</td></tr>
+      <tr><td>Tomar los hallazgos como mejora</td><td>Tomarlo como un ataque personal</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un auditor te pide la evidencia de un proceso. Un compañero te sugiere 'demorar la entrega y mostrar solo lo que conviene'. Te niegas: aportas toda la información solicitada con honestidad y, cuando el auditor señala un hallazgo, lo tomas como oportunidad de mejora en vez de ponerte a la defensiva. La colaboración transparente facilita la auditoría y proyecta integridad; ocultar o alterar convertiría una observación menor en un problema grave.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>Ante una auditoría, la actitud correcta del servidor es:</p>
+  <div class="cp-op" data-op="a">a) Ocultar o mostrar solo la información que conviene, para que no encuentren observaciones.</div>
+  <div class="cp-op" data-op="b">b) Colaborar con transparencia, aportar la evidencia con honestidad y tomar los hallazgos como oportunidades de mejora.</div>
+  <div class="cp-op" data-op="c">c) Obstruir la auditoría y tomar cada hallazgo como un ataque personal que hay que rebatir a toda costa.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Independencia y objetividad del auditor</h4>
+    <p>La auditoría interna se rige por principios profesionales, entre ellos la independencia (no estar comprometida con lo que evalúa) y la objetividad (basarse en evidencia, no en prejuicios ni simpatías). Estos principios buscan que sus conclusiones sean confiables y justas: ni se inventa problemas donde no los hay, ni los esconde donde los hay. Un buen auditor interno no persigue a nadie ni protege a nadie; sigue la evidencia hasta donde lleve.</p>
+    <p>Para el Analista, saber que la auditoría se basa en evidencia y objetividad refuerza por qué conviene aportar su trabajo documentado: un hallazgo se sostiene o cae según la evidencia, y el que tiene su trabajo bien respaldado puede aclarar con pruebas cualquier malentendido. La objetividad del auditor es, de hecho, una garantía para el servidor honesto: significa que no será juzgado por impresiones, sino por lo que efectivamente demuestre su trabajo documentado.</p>
+
+
+    <h4>Resumen de la actitud correcta ante la auditoría</h4>
+    <p>Para fijarlo: ante la auditoría interna, recuerda que su propósito es asegurar y asesorar, no castigar; que trabaja por evidencia, así que tu trabajo documentado es tu mejor aliado; que su independencia garantiza objetividad; y que la actitud correcta es colaborar con transparencia y tomar los hallazgos como oportunidades de mejora dentro de un plan de mejoramiento. Con esa comprensión, la auditoría deja de ser una amenaza y se vuelve un apoyo para que la entidad —y tu propio trabajo— funcionen mejor.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Los mapas de riesgos institucionales</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Las entidades identifican sus riesgos (lo que puede impedirles cumplir sus objetivos) y los organizan en <mark>mapas de riesgos</mark>, que incluyen los riesgos de corrupción. Para cada riesgo se definen controles que lo previenen o mitigan. El servidor debe conocer los riesgos de su área y aplicar los controles previstos; es parte de la gestión del riesgo en la primera línea de defensa.</p>
+</div>
+<div class="b-texto">
+  <p>Así como se construyen perfiles de riesgo de los contribuyentes, las entidades también gestionan sus <strong>propios riesgos</strong>: todo aquello que puede impedirles cumplir sus objetivos (fallas en los procesos, pérdida de información, errores, y de forma destacada, la <strong>corrupción</strong>). Estos riesgos se identifican, se valoran (probabilidad e impacto) y se organizan en <strong>mapas de riesgos</strong>, que son la base de la gestión del riesgo institucional dentro del MIPG.</p>
+  <p>Un componente especialmente importante es el <strong>mapa de riesgos de corrupción</strong>, que las entidades están obligadas a elaborar y publicar. Identifica dónde podría haber corrupción (por ejemplo, en el manejo de información reservada, en decisiones con discrecionalidad, en el acceso a recursos) y define controles para prevenirla. Que estos mapas sean públicos es, en sí mismo, una medida de transparencia y control social.</p>
+  <p>Para cada riesgo identificado se definen <strong>controles</strong>: acciones que lo previenen (que no ocurra) o lo mitigan (que, si ocurre, su impacto sea menor). La segregación de funciones, las validaciones, las revisiones, la trazabilidad de los accesos: muchos de los controles que el Analista ya conoce son, en realidad, respuestas a riesgos identificados. Entender esto le da sentido a los controles: no son trabas arbitrarias, sino protecciones frente a riesgos concretos.</p>
+  <p>Para el Analista I, los mapas de riesgos tienen una implicación práctica directa: debe conocer los riesgos de su área —incluidos los de corrupción— y aplicar los controles previstos para ellos. Como parte de la primera línea de defensa, él es quien gestiona esos riesgos en el día a día. Por ejemplo, el riesgo de uso indebido de información reservada se mitiga con los controles de acceso y la trazabilidad que ya domina. Ver su trabajo a la luz de los riesgos que previene refuerza por qué cada control importa.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Elemento</th><th>Qué es</th></tr></thead>
+    <tbody>
+      <tr><td>Mapa de riesgos</td><td>Identifica y valora lo que impide cumplir objetivos</td></tr>
+      <tr><td>Mapa de riesgos de corrupción</td><td>Identifica dónde podría haber corrupción y cómo prevenirla</td></tr>
+      <tr><td>Control</td><td>Acción que previene o mitiga un riesgo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Revisas el mapa de riesgos de tu área y ves que el 'uso indebido de información reservada' está identificado como un riesgo de corrupción, con controles de acceso y trazabilidad para prevenirlo. Entiendes que esos controles que ya aplicas no son trabas arbitrarias: son la respuesta a un riesgo concreto. Como estás en la primera línea, aplicarlos bien es tu forma de gestionar ese riesgo día a día.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Los mapas de riesgos institucionales sirven para:</p>
+  <div class="cp-op" data-op="a">a) Perfilar a los contribuyentes según su riesgo de incumplimiento.</div>
+  <div class="cp-op" data-op="b">b) Eliminar todos los riesgos de la entidad de forma definitiva y permanente.</div>
+  <div class="cp-op" data-op="c">c) Identificar y valorar los riesgos de la entidad (incluidos los de corrupción) y definir controles para prevenirlos o mitigarlos.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Los planes de mejoramiento</h4>
+    <p>Cuando una auditoría produce hallazgos, el cierre del proceso no es el informe, sino el plan de mejoramiento: el conjunto de acciones que el área acuerda para corregir las causas de los hallazgos, con responsables y plazos. Este plan es donde la auditoría agrega valor de verdad, porque transforma una observación en una mejora concreta. Un hallazgo sin plan de mejoramiento, o con uno que no se cumple, es una oportunidad desperdiciada.</p>
+    <p>Para el Analista I, participar en un plan de mejoramiento con buena disposición es parte de la actitud correcta ante la auditoría. No se trata de aceptar culpas, sino de comprometerse con acciones que eviten que el problema se repita, en la lógica del PHVA. Cumplir lo acordado en el plan —y documentarlo— demuestra madurez profesional y cierra el ciclo de mejora. Es la diferencia entre una auditoría que solo señala y una que de verdad hace mejorar a la entidad.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Indicadores y evaluación de la gestión</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Para saber si la gestión funciona, las entidades miden sus resultados con <mark>indicadores</mark> (medidas de desempeño: cuánto se logró frente a lo planeado). La evaluación de resultados, otra dimensión del MIPG, permite verificar si se cumplen los objetivos y tomar decisiones de mejora. La información confiable es la base de toda medición: sin buenos datos, no hay buena evaluación.</p>
+</div>
+<div class="b-texto">
+  <p>«Lo que no se mide no se puede mejorar.» Bajo ese principio, el MIPG promueve que las entidades midan su gestión con <strong>indicadores</strong>: medidas que comparan lo logrado con lo planeado o esperado. Un indicador puede medir cuánto se recaudó frente a la meta, cuántos trámites se resolvieron en el plazo, qué porcentaje de un proceso se cumplió. Los indicadores traducen la gestión en cifras que permiten saber si se va bien o mal y dónde corregir.</p>
+  <p>La <strong>evaluación de resultados</strong> es la dimensión del MIPG que usa esos indicadores para verificar si la entidad cumple sus objetivos. No se trata de medir por medir, sino de usar la medición para tomar decisiones: reforzar lo que funciona, corregir lo que falla, rendir cuentas de lo logrado. La evaluación cierra el ciclo de la gestión: se planea, se hace, y luego se evalúa para mejorar, en la misma lógica del PHVA.</p>
+  <p>Aquí reaparece un hilo central del curso: toda medición depende de la <strong>información confiable</strong>. Un indicador calculado sobre datos sucios o manipulados da una imagen falsa de la gestión y lleva a decisiones equivocadas. De poco sirve un tablero de indicadores si las cifras que lo alimentan no son fiables. Por eso la calidad de la información que produce el Analista no es solo un asunto técnico: es la base de que la entidad pueda evaluarse y mejorar con fundamento.</p>
+  <p>Para el Analista I, esto conecta directamente con su trabajo. Muchas de las cifras que produce —estadísticas, consolidados, reportes— alimentan los indicadores con que la entidad mide su gestión. Si esos datos son confiables, la evaluación será fiel y las decisiones, acertadas; si no, la entidad se evaluará sobre una ilusión. Entender que su información sostiene la medición y la evaluación del MIPG eleva el valor de su rigor: está contribuyendo a que la entidad se conozca a sí misma con verdad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Elemento</th><th>Para qué sirve</th></tr></thead>
+    <tbody>
+      <tr><td>Indicador</td><td>Medir lo logrado frente a lo planeado</td></tr>
+      <tr><td>Evaluación de resultados</td><td>Verificar el cumplimiento de objetivos y decidir mejoras</td></tr>
+      <tr><td>Información confiable</td><td>La base de toda medición fiel (aporte del Analista)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Produces las cifras que alimentan un indicador de gestión de la entidad. Consciente de que una decisión dependerá de ese indicador, cuidas especialmente la calidad: depuras, verificas, documentas. Entiendes que un indicador sobre datos sucios daría una imagen falsa de la gestión y llevaría a decisiones equivocadas. Tu rigor es lo que permite que la entidad se evalúe con verdad y no sobre una ilusión.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Para que la evaluación de la gestión mediante indicadores sea fiel, es imprescindible:</p>
+  <div class="cp-op" data-op="a">a) Que la información que alimenta los indicadores sea confiable, porque un indicador sobre datos sucios da una imagen falsa de la gestión.</div>
+  <div class="cp-op" data-op="b">b) Que los indicadores siempre muestren buenos resultados, sin importar los datos reales.</div>
+  <div class="cp-op" data-op="c">c) Que no se midan los resultados, para evitar cualquier evaluación incómoda.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Riesgo inherente y riesgo residual</h4>
+    <p>En la gestión de riesgos se distinguen dos conceptos útiles: el riesgo inherente (el que existe antes de aplicar cualquier control) y el riesgo residual (el que queda después de aplicar los controles). La idea es que los controles reducen el riesgo inherente hasta un nivel residual aceptable; nunca a cero, pero sí a un punto manejable. Un control eficaz es, precisamente, el que logra bajar el riesgo de un nivel inaceptable a uno tolerable.</p>
+    <p>Para el Analista I, esta distinción ayuda a valorar los controles que aplica. Los controles de acceso y la trazabilidad, por ejemplo, no eliminan por completo el riesgo de uso indebido de información (riesgo residual siempre habrá), pero lo reducen drásticamente desde su nivel inherente. Entender esto evita dos extremos: creer que un control vuelve imposible el riesgo, o pensar que, como no lo elimina del todo, no sirve. El control valioso es el que deja un riesgo residual aceptable.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Rendición de cuentas y participación</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>rendición de cuentas</mark> es el deber de las entidades de informar y explicar a la ciudadanía qué hacen, cómo usan los recursos y qué resultados logran, y de responder por ello. Es una dimensión del MIPG y una expresión de la transparencia. La información confiable y disponible es su materia prima: sin ella, no hay rendición de cuentas real.</p>
+</div>
+<div class="b-texto">
+  <p>La <strong>rendición de cuentas</strong> es uno de los pilares de la gestión pública democrática: las entidades no manejan recursos y funciones propias, sino de la ciudadanía, y por eso tienen el deber de informar y explicar qué hacen con ellos, y de responder por sus resultados. No es un acto formal anual, sino una actitud permanente de apertura: mostrar la gestión, explicar las decisiones y someterse al escrutinio público.</p>
+  <p>La rendición de cuentas se relaciona estrechamente con la <strong>participación ciudadana</strong>: no basta con informar en una sola dirección, sino que la ciudadanía pueda preguntar, opinar e incidir. Una buena rendición de cuentas genera un diálogo: la entidad informa, la ciudadanía reacciona, y de ese intercambio surge control social y mejora. Es una de las formas más concretas en que la democracia se ejerce más allá del voto.</p>
+  <p>Igual que la transparencia y la evaluación, la rendición de cuentas descansa sobre la <strong>información confiable</strong>. No se puede rendir cuentas con cifras falsas o incompletas; eso no sería rendir cuentas, sino simular hacerlo. Una rendición de cuentas real exige información veraz, completa y comprensible sobre lo que la entidad hizo, cómo usó los recursos y qué logró. Y esa información, de nuevo, pasa por manos como las del Analista, que la producen y la cuidan.</p>
+  <p>Para el Analista I, entender la rendición de cuentas completa la visión del sentido de su trabajo. Las cifras que produce no solo sirven para la gestión interna o el control del incumplimiento: también son la materia con la que la entidad rinde cuentas a la ciudadanía. Un Analista que produce información confiable y disponible está contribuyendo a que el Estado pueda explicar y justificar lo que hace ante quienes, en última instancia, son los dueños de lo público. Esa es una dimensión profundamente democrática de su labor.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La rendición de cuentas</th><th>Implica</th></tr></thead>
+    <tbody>
+      <tr><td>Informar y explicar</td><td>Qué se hace, cómo se usan los recursos, qué resultados</td></tr>
+      <tr><td>Responder</td><td>Someterse al escrutinio y asumir responsabilidad</td></tr>
+      <tr><td>Participación</td><td>Que la ciudadanía pregunte, opine e incida</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Las cifras agregadas que produces alimentarán un ejercicio de rendición de cuentas de la entidad a la ciudadanía. Las cuidas especialmente: sabes que rendir cuentas con cifras falsas o incompletas no sería rendir cuentas, sino simularlo. Al producir información veraz y comprensible, contribuyes a que el Estado pueda explicar y justificar lo que hace ante los ciudadanos, que son los dueños de lo público.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>La rendición de cuentas es:</p>
+  <div class="cp-op" data-op="a">a) Un acto formal anual sin relación con la información ni con la ciudadanía.</div>
+  <div class="cp-op" data-op="b">b) El deber de informar, explicar y responder a la ciudadanía sobre qué se hace y cómo se usan los recursos; descansa en información confiable.</div>
+  <div class="cp-op" data-op="c">c) Una forma de mostrar solo lo bueno, con cifras ajustadas para que la gestión luzca mejor.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Metas e indicadores que no se manipulan</h4>
+    <p>Un riesgo serio de medir la gestión con indicadores y metas es la tentación de manipularlos para que luzcan bien. Ajustar una cifra, elegir el indicador que favorece, maquillar un resultado: todo eso convierte la medición en una ficción y lleva a decisiones equivocadas, además de ser una falta de integridad. Un indicador existe para conocer la realidad y mejorarla, no para aparentar; manipularlo traiciona su propósito y engaña a quien decide a partir de él.</p>
+    <p>Para el Analista I, que a menudo produce las cifras que alimentan los indicadores, esto es una línea roja ética. Su deber es entregar la medición fiel, aunque muestre resultados incómodos, y no ceder a presiones para 'mejorar' las cifras artificialmente. Un resultado malo bien medido es más valioso que uno bueno inventado, porque el primero permite corregir y el segundo oculta el problema hasta que estalla. La integridad en la medición es parte esencial de la del cargo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>La integridad y el control que empieza en cada uno</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El mejor control no es el externo, sino la <mark>integridad</mark> de cada servidor: hacer lo correcto aunque nadie vigile. El MIPG incluye una política de integridad (código de integridad del servicio público). Ningún sistema de control sustituye a la honestidad personal; por eso el autocontrol y la integridad son la base sobre la que todo lo demás se sostiene.</p>
+</div>
+<div class="b-texto">
+  <p>Después de recorrer el MIPG, el control interno, las líneas de defensa y la auditoría, llega una idea que las ordena a todas: el control más importante y más barato es la <strong>integridad</strong> de cada servidor. Ningún sistema de control, por sofisticado que sea, puede sustituir a la honestidad personal. Los controles externos atrapan errores y disuaden irregularidades, pero si los servidores no actúan con integridad, siempre habrá una grieta por la que se cuele el problema.</p>
+  <p>Por eso el MIPG incluye una política y un <strong>código de integridad</strong> del servicio público, que recoge los valores que deben guiar la actuación de todo servidor: honestidad, respeto, compromiso, diligencia, justicia. Estos valores no son adornos: son el fundamento ético sobre el que descansa todo el sistema de gestión y control. Una entidad llena de controles pero vacía de integridad es una fachada; una con servidores íntegros tiene el control asegurado desde la raíz.</p>
+  <p>La integridad se expresa justamente en el <strong>autocontrol</strong>: hacer lo correcto cuando nadie mira. El servidor íntegro no necesita que lo vigilen para proteger la información reservada, para no usar su acceso en favores, para documentar bien o para reportar un error en vez de ocultarlo. Hace lo correcto porque es correcto, no por miedo a la sanción. Esa es la diferencia entre un control que depende de la vigilancia y uno que nace de la convicción.</p>
+  <p>Para el Analista I, esta es quizás la lección final y más profunda del tema. Todo el aparato de MIPG, control interno y auditoría se sostiene, en última instancia, sobre su propia integridad y la de sus compañeros. Un Analista íntegro —que protege lo reservado, documenta con honestidad, se autocontrola y no usa su posición indebidamente— es, él mismo, el control más eficaz. Cultivar esa integridad no es solo cumplir una política: es ser el tipo de servidor en el que el Estado y la ciudadanía pueden confiar.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Control externo</th><th>Integridad (control interior)</th></tr></thead>
+    <tbody>
+      <tr><td>Depende de la vigilancia</td><td>Nace de la convicción (hacer lo correcto aunque nadie mire)</td></tr>
+      <tr><td>Atrapa errores e irregularidades</td><td>Los previene desde la raíz</td></tr>
+      <tr><td>Siempre tiene grietas</td><td>Es el control más eficaz y más barato</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Nadie está mirando y podrías saltarte un control o usar tu acceso para un favor sin que se note de inmediato. No lo haces: proteges lo reservado, documentas con honestidad y te autocontrolas, porque es lo correcto, no por miedo a la sanción. Entiendes que tu integridad es, en sí misma, el control más eficaz: el que ningún sistema externo puede reemplazar. Ese es el fundamento de todo el MIPG.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>El control más importante y eficaz de todos es:</p>
+  <div class="cp-op" data-op="a">a) La vigilancia externa constante, porque sin ella ningún servidor haría bien su trabajo.</div>
+  <div class="cp-op" data-op="b">b) La cantidad de controles y auditorías, sin importar la honestidad de las personas.</div>
+  <div class="cp-op" data-op="c">c) La integridad de cada servidor: hacer lo correcto aunque nadie vigile, que ningún sistema externo puede sustituir.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Rendición de cuentas interna y externa</h4>
+    <p>La rendición de cuentas no es solo hacia la ciudadanía (externa); también opera hacia adentro y hacia los órganos de control. Internamente, las áreas rinden cuentas de su gestión a las directivas; y la entidad responde ante los organismos de control del Estado (Contraloría, Procuraduría) que vigilan el uso de los recursos y la conducta de los servidores. Todas estas formas de rendir cuentas comparten la misma exigencia: información veraz, completa y respaldada.</p>
+    <p>Para el Analista, esto refuerza que su trabajo puede ser requerido por distintas instancias de control, no solo por la auditoría interna. La misma disciplina —datos confiables, documentación, trazabilidad— que lo prepara para una auditoría interna lo prepara para responder ante cualquier órgano de control. Un servidor que trabaja pensando en que todo lo que hace puede tener que explicarse y demostrarse adopta, de forma natural, el rigor que la rendición de cuentas, en todas sus formas, exige.</p>
+
+
+    <h4>Rendir cuentas con lenguaje claro</h4>
+    <p>Rendir cuentas de verdad no es solo publicar cifras, sino hacerlo de forma que la ciudadanía las entienda. Un informe lleno de tecnicismos o de datos sin contexto cumple la formalidad pero no el propósito: la gente no puede ejercer control social sobre lo que no entiende. Por eso la rendición de cuentas exige también claridad y pedagogía, traducir la gestión a un lenguaje comprensible. El Analista que produce cifras claras y bien contextualizadas facilita que esa rendición de cuentas sea real y no un trámite.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>El Analista I dentro del sistema de gestión y control</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El Analista I es parte activa del sistema MIPG: su trabajo con información alimenta la dimensión de información, sostiene la evaluación y la rendición de cuentas, y su autocontrol es la base del control interno (primera línea). Entender dónde encaja le da sentido a su labor: no es un engranaje aislado, sino un soporte del que depende que la entidad planee, gestione, controle y rinda cuentas con verdad.</p>
+</div>
+<div class="b-texto">
+  <p>Al reunir los temas del día, se ve con claridad el lugar del Analista I en el sistema de gestión y control. En términos del <strong>MIPG</strong>, su trabajo con la información pertenece a la dimensión de información y comunicación, y alimenta transversalmente la planeación, la evaluación de resultados y la rendición de cuentas. En términos del <strong>control interno</strong>, está en la primera línea de defensa, y su autocontrol es la base sobre la que se construye todo el sistema.</p>
+  <p>Esta ubicación no es un detalle académico: le da <strong>sentido y valor</strong> a su labor. El Analista no es un engranaje aislado que «mueve datos», sino un soporte del que dependen funciones esenciales de la entidad. Si sus datos son confiables, la entidad puede evaluarse, rendir cuentas y controlarse con verdad; si no, todo ese edificio se construye sobre arena. Entender esto transforma la percepción del propio trabajo: eleva su importancia y su responsabilidad.</p>
+  <p>El tema también integra todo lo aprendido en el curso. La gobernanza de datos, la calidad de la información, la trazabilidad, la gestión documental, el autocontrol, la transparencia: todos esos hilos confluyen en el marco del MIPG y el control interno. El Analista que ve este encadenamiento entiende que no ha estudiado temas sueltos, sino las distintas caras de una misma responsabilidad: tratar la información del Estado con rigor, dentro de un sistema que busca servir bien al ciudadano.</p>
+  <p>La conclusión práctica es clara: el Analista I contribuye al buen funcionamiento de todo el sistema de gestión y control con la calidad de su trabajo y con su integridad. No necesita dominar el MIPG en detalle ni auditar nada, pero sí entender que su labor es una pieza fundamental de la primera línea de defensa y de la dimensión de información. Un Analista que asume ese papel con rigor e integridad es, en sí mismo, una garantía de que la entidad funciona bien desde su base.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>En el sistema...</th><th>El Analista I aporta</th></tr></thead>
+    <tbody>
+      <tr><td>MIPG (dimensión de información)</td><td>Información como soporte de la gestión</td></tr>
+      <tr><td>Evaluación y rendición de cuentas</td><td>Cifras confiables que las hacen fieles</td></tr>
+      <tr><td>Control interno (primera línea)</td><td>Autocontrol como base del sistema</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Al ver el panorama completo, entiendes dónde encaja tu trabajo: alimentas la dimensión de información del MIPG, sostienes con tus cifras la evaluación y la rendición de cuentas, y tu autocontrol es la base del control interno. No eres un engranaje aislado: eres un soporte del que depende que la entidad se planee, controle y rinda cuentas con verdad. Esa comprensión le da sentido y peso a tu labor.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>Dentro del sistema de gestión y control (MIPG, control interno), el Analista I:</p>
+  <div class="cp-op" data-op="a">a) Es parte activa: alimenta la dimensión de información, sostiene la evaluación y la rendición de cuentas, y su autocontrol es la base del control interno (primera línea).</div>
+  <div class="cp-op" data-op="b">b) No tiene ningún papel, porque el sistema solo depende de los auditores.</div>
+  <div class="cp-op" data-op="c">c) Es quien audita de forma independiente todo el sistema desde la tercera línea.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La integridad frente a las presiones</h4>
+    <p>La integridad se pone a prueba, sobre todo, frente a las presiones: la del jefe que quiere una cifra más favorable, la del compañero que pide un favor con un dato reservado, la del plazo que invita a saltarse un control. Un servidor íntegro reconoce esas presiones y, aun así, hace lo correcto; no porque sea más valiente que los demás, sino porque tiene claras sus líneas rojas y entiende el valor de no cruzarlas. La integridad no es ausencia de presiones, sino firmeza ante ellas.</p>
+    <p>Para el Analista I, prepararse para esas situaciones es parte de su formación como servidor. Saber de antemano que dirá que no a manipular una cifra, a prestar su clave o a entregar información reservada le da la firmeza para hacerlo cuando llegue el momento, sin titubear. Esa claridad previa es lo que convierte la integridad de un valor abstracto en una conducta concreta. Y es, al final, lo que hace de alguien un servidor confiable: no que nunca lo tienten, sino que no ceda cuando lo tienten.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>Síntesis: planear, gestionar, controlar y mejorar</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El MIPG organiza el ciclo de <mark>planear, gestionar, controlar y mejorar</mark> al servicio del ciudadano; el control interno asegura que todo se haga bien, con el autocontrol y la integridad como base; y la auditoría evalúa y asesora. El Analista I aporta a todo ello con información confiable e integridad. El control no es un enemigo: es la garantía de que lo público funciona bien.</p>
+</div>
+<div class="b-texto">
+  <p>Al cerrar el tema, conviene unir sus piezas en una visión de conjunto. El <strong>MIPG</strong> da el marco: organiza el ciclo de planear, gestionar, controlar y mejorar, con la mira puesta en servir al ciudadano y generar valor. Dentro de ese marco, el <strong>control interno</strong> asegura que las cosas se hagan bien, protegiendo los objetivos, los recursos, la información y el cumplimiento de la ley, con el <strong>autocontrol y la integridad</strong> de cada servidor como cimiento.</p>
+  <p>Las <strong>tres líneas de defensa</strong> reparten las responsabilidades de control, y la <strong>auditoría interna</strong>, como tercera línea independiente, evalúa y asesora para mejorar, no para perseguir. Los <strong>mapas de riesgos</strong> anticipan lo que puede salir mal y definen controles; los <strong>indicadores</strong> miden la gestión; y la <strong>rendición de cuentas</strong> abre la entidad al escrutinio ciudadano. Todo ello forma un sistema coherente orientado a que lo público funcione bien y con transparencia.</p>
+  <p>El hilo que atraviesa todo el sistema es la <strong>información confiable</strong> y la <strong>integridad</strong> de las personas. Sin información fiel, no hay evaluación, ni rendición de cuentas, ni control que valgan; sin integridad, ningún sistema de control es suficiente. El Analista I aporta precisamente esos dos elementos: produce información confiable y actúa con integridad. Por eso su rol, aunque técnico, es una pieza fundamental de todo el edificio de la gestión y el control públicos.</p>
+  <p>Si tuvieras que quedarte con una sola idea, que sea esta: el control no es un enemigo ni una traba, sino la garantía de que lo público funciona bien y sirve al ciudadano. Un Analista I que entiende el MIPG, asume el control interno como propio (empezando por su autocontrol), colabora con la auditoría y actúa con integridad no solo aprueba una prueba: encarna el tipo de servidor sobre el que se construye un Estado confiable. Esa es la excelencia que el cargo busca y que este tema sintetiza.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Pieza del sistema</th><th>Qué aporta</th></tr></thead>
+    <tbody>
+      <tr><td>MIPG</td><td>El marco: planear, gestionar, controlar y mejorar</td></tr>
+      <tr><td>Control interno (autocontrol, integridad)</td><td>Que todo se haga bien, desde la base</td></tr>
+      <tr><td>Auditoría interna</td><td>Evalúa y asesora para mejorar (no persigue)</td></tr>
+      <tr><td>Información confiable e integridad</td><td>El hilo que sostiene todo (aporte del Analista)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Cierras el tema con una convicción: el control no es un enemigo que te vigila, sino la garantía de que lo público funciona bien. Cuando produces información confiable, te autocontrolas, colaboras con la auditoría y actúas con integridad, eres parte activa de ese sistema. Dejas de ver el MIPG y el control como trabas y los entiendes como el marco que hace que tu trabajo —y el de toda la entidad— sirva de verdad al ciudadano.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 13</div>
+  <p>La idea central que resume el MIPG, el control interno y la auditoría es que:</p>
+  <div class="cp-op" data-op="a">a) El control es un enemigo que vigila al servidor y entorpece el trabajo.</div>
+  <div class="cp-op" data-op="b">b) El control no es un enemigo sino la garantía de que lo público funciona bien y sirve al ciudadano; se sostiene en información confiable y en la integridad de cada servidor.</div>
+  <div class="cp-op" data-op="c">c) Todo depende solo de los auditores, sin que el servidor común tenga papel alguno.</div>
+  <div class="cp-fb"></div>
+</div>
+
+<div class="destacado">
+  <div class="destacado-t">💡 Idea clave para recordar</div>
+  <p>El <strong>MIPG</strong> es el marco que ordena planear, gestionar, controlar y mejorar al servicio del ciudadano. El <strong>control interno es responsabilidad de todos</strong> y empieza en el <strong>autocontrol</strong> de cada puesto (primera línea de defensa). La <strong>auditoría interna</strong> (tercera línea, independiente) asegura y asesora: NO caza culpables. Y el control más eficaz de todos es la <strong>integridad</strong>: hacer lo correcto aunque nadie vigile. El control no es un enemigo: es la garantía de que lo público funciona bien.</p>
+</div>
+
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips finales para tu prueba</div>
+  <ul>
+    <li>El control interno es <strong>responsabilidad de todos</strong>, no solo de la oficina de control; empieza en el autocontrol.</li>
+    <li>El Analista está en la <strong>primera línea de defensa</strong>; la auditoría interna es la tercera (independiente).</li>
+    <li>La auditoría <strong>asegura y asesora</strong>, no persigue: ante ella, colabora con transparencia y aporta tu evidencia documentada.</li>
+    <li>Desconfía de las opciones que proponen <strong>ocultar o alterar</strong> información ante una auditoría o tomarla como un ataque.</li>
+    <li>El control más eficaz es la <strong>integridad</strong>: ningún sistema externo sustituye la honestidad personal.</li>
+  </ul>
+</div>
+
+<div class="frase-recordar">⚡ El control no te vigila: te respalda. Empieza en tu autocontrol y se corona en tu integridad.</div>
+
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG (Modelo Integrado de Planeación y Gestión)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=297" target="_blank" rel="noopener">Ley 87 de 1993 — Control interno en las entidades del Estado</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/eva/modelo-estandar-de-control-interno" target="_blank" rel="noopener">MECI — Modelo Estándar de Control Interno (tres líneas de defensa)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62866" target="_blank" rel="noopener">Ley 1757 de 2015 — Participación democrática y rendición de cuentas</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/valores" target="_blank" rel="noopener">Código de Integridad del Servicio Público</a></li>
+  </ul>
+</div>
+
+    <h4>El sentido último: servir al ciudadano</h4>
+    <p>Conviene cerrar recordando para qué existe todo este aparato de planeación, gestión y control. No es para producir documentos ni para satisfacer a los auditores: es para que la entidad sirva mejor al ciudadano. El MIPG lo dice explícitamente al orientarse a resultados y valor público. Cuando el control interno asegura que las cosas se hagan bien, cuando la auditoría ayuda a mejorar, cuando se rinde cuentas, el beneficiario final es la persona que recibe mejores servicios de un Estado más confiable.</p>
+    <p>Para el Analista I, no perder de vista ese horizonte evita que el control se convierta en un fin en sí mismo. Documenta, se autocontrola, colabora con la auditoría y actúa con integridad no para cumplir por cumplir, sino porque todo eso hace que la información sea confiable y que la entidad funcione mejor al servicio de las personas. Ese sentido último —servir al ciudadano— es lo que da dignidad y propósito incluso a las tareas más técnicas de gestión y control.</p>
+
+  </div>
+
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque de ellos depende entender el marco de gestión y control de la entidad.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>MIPG</td><td>Control interno</td><td>El MIPG es el marco general de planeación y gestión; el control interno es una de sus dimensiones, que asegura que las cosas se hagan bien.</td></tr><tr><td>Control interno</td><td>Oficina de control interno</td><td>El control interno es responsabilidad de TODOS y empieza en cada puesto; la oficina (auditoría) es solo una parte (la tercera línea).</td></tr><tr><td>Autocontrol</td><td>Control del supervisor</td><td>El autocontrol lo ejerce el servidor sobre su propio trabajo (primera línea, base del sistema); el del supervisor es un control posterior.</td></tr><tr><td>Primera línea</td><td>Tercera línea</td><td>La primera son quienes hacen el trabajo y lo controlan (el Analista); la tercera es la auditoría interna, independiente, que evalúa todo el sistema.</td></tr><tr><td>Auditoría interna</td><td>Policía que caza culpables</td><td>La auditoría asegura (evalúa controles) y asesora (recomienda mejoras); NO persigue ni castiga, agrega valor.</td></tr><tr><td>Riesgo inherente</td><td>Riesgo residual</td><td>El inherente existe antes de los controles; el residual es el que queda después de aplicarlos (nunca cero, pero sí aceptable).</td></tr><tr><td>Control externo</td><td>Integridad</td><td>El control externo depende de la vigilancia; la integridad (hacer lo correcto aunque nadie mire) es el control más eficaz, que ningún sistema sustituye.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta vea el control como ajeno, proponga ocultar información a la auditoría, tomar un hallazgo como ataque o manipular un indicador, desconfía.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · 'El control no es asunto mío'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero le dice al Analista I que 'el control interno es cosa de la oficina de control, no suya', y que él solo debe hacer su tarea sin preocuparse por controlar nada.</p>
+      <span class="label">Análisis</span>
+      <p>El control interno es responsabilidad de TODOS y empieza en cada puesto (primera línea de defensa). Cuando el Analista depura, verifica y documenta, está ejerciendo control interno sobre su propio trabajo.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Explicar que el control interno es de todos y empieza en el autocontrol de cada servidor; asumir el control del propio trabajo (verificar, documentar) como parte de hacer bien las cosas, no como algo ajeno.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · La auditoría interna</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega una auditoría interna a revisar un proceso en el que el Analista participó. Un compañero se pone a la defensiva y propone demorar la entrega de información 'porque vienen a cazar culpables'.</p>
+      <span class="label">Análisis</span>
+      <p>La auditoría interna no caza culpables: asegura (evalúa si los controles funcionan) y asesora (recomienda mejoras). Trabaja por evidencia; el trabajo documentado es el mejor aliado.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Colaborar con transparencia, aportar la evidencia documentada del trabajo, responder con honestidad y tomar los hallazgos como oportunidades de mejora; no ponerse a la defensiva ni demorar la información.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · 'Mostrar solo lo que conviene'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Durante una auditoría, un compañero le sugiere al Analista 'mostrarle al auditor solo lo que conviene y ocultar lo demás, para que no encuentren observaciones'.</p>
+      <span class="label">Análisis</span>
+      <p>Ocultar o alterar información ante una auditoría es una falta grave y convierte una observación menor en un problema mayor; además, genera sospecha donde quizás no la había.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Aportar toda la información solicitada con honestidad y transparencia, sin ocultar ni alterar nada; si hay un hallazgo, tomarlo como oportunidad de mejora dentro de un plan de mejoramiento.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · El mapa de riesgos de corrupción</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista revisa el mapa de riesgos de su área y ve que el 'uso indebido de información reservada' está identificado como riesgo de corrupción, con controles de acceso y trazabilidad para prevenirlo.</p>
+      <span class="label">Análisis</span>
+      <p>Como parte de la primera línea de defensa, el Analista es quien gestiona ese riesgo día a día. Los controles de acceso y la trazabilidad que ya aplica son, precisamente, la respuesta a ese riesgo identificado.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Conocer los riesgos de su área (incluidos los de corrupción) y aplicar rigurosamente los controles previstos (acceso, trazabilidad, mínimo necesario); entender que esos controles no son trabas, sino la respuesta a un riesgo concreto.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Creer que el control interno es ajeno</div><p>El control interno es responsabilidad de todos y empieza en cada puesto (primera línea). Cuando el servidor verifica y documenta, ya está ejerciendo control; no es solo 'cosa de la oficina de control'.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Ver la auditoría como una amenaza que caza culpables</div><p>La auditoría asegura y asesora, agrega valor y trabaja por evidencia. Verla como enemiga lleva a ocultar información y a ponerse a la defensiva, lo que es contraproducente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Ocultar o alterar información ante una auditoría</div><p>Es una falta grave que convierte una observación menor en un problema mayor y genera sospecha. La actitud correcta es la colaboración transparente.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Tomar los hallazgos como ataques personales</div><p>Un hallazgo no es una condena: identifica algo que se puede mejorar (a menudo del proceso, no de la persona). La respuesta madura es analizarlo y establecer acciones de mejora.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Manipular indicadores para que luzcan bien</div><p>Un indicador existe para conocer la realidad y mejorarla, no para aparentar. Manipularlo engaña a quien decide y es una falta de integridad; un mal resultado bien medido vale más que uno bueno inventado.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confiar solo en el control externo y descuidar la integridad</div><p>Ningún sistema de control sustituye la honestidad personal. El control más eficaz es la integridad: hacer lo correcto aunque nadie vigile.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>El <strong>control interno es responsabilidad de todos</strong> y empieza en el autocontrol de cada puesto.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>El Analista está en la <strong>primera línea de defensa</strong>; la auditoría interna es la tercera (independiente).</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>La auditoría <strong>asegura y asesora</strong>, no caza culpables; ante ella, colabora con transparencia.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Nunca ocultes ni alteres información ante una auditoría: es una <strong>falta grave</strong>; toma los hallazgos como mejora.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>No manipules indicadores: un <strong>mal resultado bien medido</strong> vale más que uno bueno inventado.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>El control más eficaz es la <strong>integridad</strong>: hacer lo correcto aunque nadie vigile.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sostiene que el control interno es 'cosa de la oficina de control', no del servidor.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece lógico que controlar sea tarea de una oficina especializada.</div>
+      <div class="t-row malo">🔴 La trampa: El control interno es responsabilidad de todos y empieza en el autocontrol de cada puesto (primera línea).</div>
+      <div class="t-row bueno">🟢 Lo correcto: Asumir el control del propio trabajo (verificar, documentar) como parte de hacer bien las cosas.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone ocultar información o 'mostrar solo lo que conviene' a una auditoría.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece prudente evitar que encuentren observaciones ocultando lo incómodo.</div>
+      <div class="t-row malo">🔴 La trampa: Ocultar o alterar es una falta grave y agrava el problema; la auditoría trabaja por evidencia y agrega valor.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Colaborar con transparencia, aportar toda la evidencia y tomar los hallazgos como mejora.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a 'mejorar' un indicador manipulando la cifra para que luzca bien.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece conveniente mostrar buenos resultados de la gestión.</div>
+      <div class="t-row malo">🔴 La trampa: Manipular el indicador engaña a quien decide y es una falta de integridad; traiciona el propósito de medir.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Entregar la medición fiel aunque sea incómoda, porque permite corregir; no ceder a la presión de maquillar.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>MIPG</h4><p>Marco que integra planeación, gestión, control y mejora de las entidades públicas, orientado a servir al ciudadano; la información es una de sus dimensiones.</p></div>
+    <div class="resumen-item"><h4>Control interno y autocontrol</h4><p>Responsabilidad de todos; empieza en el autocontrol de cada puesto (primera línea de defensa). Busca que las cosas se hagan bien.</p></div>
+    <div class="resumen-item"><h4>Tres líneas y auditoría</h4><p>Primera (quienes hacen el trabajo), segunda (riesgos, calidad), tercera (auditoría interna, independiente, que asegura y asesora, no persigue).</p></div>
+    <div class="resumen-item"><h4>Riesgos, indicadores y rendición de cuentas</h4><p>Mapas de riesgos (incl. corrupción) con sus controles; indicadores para medir; rendición de cuentas a la ciudadanía con información confiable.</p></div>
+    <div class="resumen-item"><h4>La integridad</h4><p>El control más eficaz: hacer lo correcto aunque nadie vigile. Ningún sistema externo sustituye la honestidad personal.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>MIPG</dt><dd>Modelo Integrado de Planeación y Gestión: marco con el que las entidades públicas planean, gestionan, controlan y mejoran.</dd>
+      <dt>Control interno</dt><dd>Conjunto de mecanismos para asegurar que la entidad cumple objetivos, usa bien los recursos y respeta la ley; responsabilidad de todos.</dd>
+      <dt>Autocontrol</dt><dd>El control que cada servidor ejerce sobre su propio trabajo; base del control interno.</dd>
+      <dt>Tres líneas de defensa</dt><dd>Primera (quienes ejecutan y controlan), segunda (riesgos/calidad), tercera (auditoría interna independiente).</dd>
+      <dt>Auditoría interna</dt><dd>Función que evalúa de forma independiente si los controles funcionan y asesora para mejorar; no persigue.</dd>
+      <dt>Mapa de riesgos</dt><dd>Instrumento que identifica y valora los riesgos de la entidad (incluidos los de corrupción) y define controles.</dd>
+      <dt>Rendición de cuentas</dt><dd>Deber de informar, explicar y responder a la ciudadanía sobre la gestión y el uso de los recursos.</dd>
+      <dt>Integridad</dt><dd>Actuar con honestidad y hacer lo correcto aunque nadie vigile; el control más eficaz.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — MIPG, control interno y auditoría interna</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 18. Continúa con el Día 19: CPACA, PQRSF y servicio al ciudadano.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 18 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 18</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué es el MIPG?","b": "El Modelo Integrado de Planeación y Gestión: el marco con el que las entidades públicas planean, gestionan, controlan y mejoran su trabajo para servir al ciudadano. Integra en un solo modelo varios sistemas antes separados, con orientación a resultados y valor público."},{"f": "¿En qué dimensión del MIPG encaja el trabajo del Analista?","b": "Principalmente en la dimensión de información y comunicación, que reconoce la información como soporte esencial de toda la gestión. También aporta a la gestión del conocimiento. La información, además, atraviesa casi todas las dimensiones."},{"f": "¿Qué es el control interno y de quién es responsabilidad?","b": "Es el conjunto de mecanismos para tener seguridad razonable de que la entidad cumple objetivos, usa bien los recursos, produce información confiable y respeta la ley. Es responsabilidad de TODOS y empieza en cada puesto de trabajo, no solo de la oficina de control."},{"f": "¿Qué es el autocontrol y por qué es la base?","b": "Es el control que cada servidor ejerce sobre su propio trabajo: verificar que lo hace bien, detectar sus errores y corregirlos sin esperar a que otro lo haga. Es la base del control interno porque los errores se atrapan mejor donde nacen."},{"f": "¿Cuáles son las tres líneas de defensa?","b": "Primera: quienes hacen el trabajo y lo controlan día a día (autocontrol y supervisión); el Analista está aquí. Segunda: áreas de riesgos, calidad, cumplimiento que apoyan el control. Tercera: la auditoría interna, independiente, que evalúa todo el sistema."},{"f": "¿Qué es (y qué no es) la auditoría interna?","b": "Es una función que evalúa de forma independiente si los controles funcionan (aseguramiento) y asesora para mejorar; agrega valor. NO es una policía que caza culpables ni un enemigo: trabaja por evidencia y ayuda a que la entidad logre sus objetivos."},{"f": "¿Cuál es la actitud correcta ante una auditoría?","b": "Colaboración transparente: aportar la información y la evidencia solicitadas, responder con honestidad, no ocultar ni alterar nada, y tomar los hallazgos como oportunidades de mejora (plan de mejoramiento). Ocultar o alterar es una falta grave."},{"f": "¿Qué son los mapas de riesgos institucionales?","b": "Instrumentos que identifican y valoran los riesgos de la entidad (lo que impide cumplir objetivos), incluidos los riesgos de corrupción, y definen controles para prevenirlos o mitigarlos. El servidor de primera línea aplica esos controles en su día a día."},{"f": "¿Diferencia entre riesgo inherente y residual?","b": "El riesgo inherente existe antes de aplicar controles; el residual es el que queda después. Los controles reducen el riesgo a un nivel residual aceptable (nunca a cero). Un control eficaz baja el riesgo de un nivel inaceptable a uno tolerable."},{"f": "¿Por qué no se deben manipular los indicadores?","b": "Porque un indicador existe para conocer la realidad y mejorarla, no para aparentar. Manipularlo da una imagen falsa, engaña a quien decide y es una falta de integridad. Un mal resultado bien medido vale más que uno bueno inventado, porque permite corregir."},{"f": "¿Qué es la rendición de cuentas?","b": "El deber de las entidades de informar, explicar y responder a la ciudadanía sobre qué hacen, cómo usan los recursos y qué resultados logran. Descansa en información confiable: no se puede rendir cuentas de verdad con cifras falsas o incompletas."},{"f": "¿Cuál es el control más eficaz de todos?","b": "La integridad de cada servidor: hacer lo correcto aunque nadie vigile. Ningún sistema de control externo sustituye la honestidad personal. El autocontrol y la integridad son la base sobre la que se sostiene todo el sistema de gestión y control."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Qué es el control interno","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un compañero sostiene que 'el control interno es cosa de la oficina de control, no suya', y que él solo debe hacer su tarea sin preocuparse por controlar nada de lo que produce. Tú conoces qué es y de quién es responsabilidad el control interno.","q": "¿Cuál es la aclaración correcta sobre el control interno?","ops": ["El compañero tiene razón: el control interno es una tarea exclusiva de la oficina de control, ajena al resto de los servidores, que solo deben hacer su trabajo sin controlarlo.","El control interno es responsabilidad de TODOS y empieza en cada puesto: cuando el servidor depura datos, verifica resultados y documenta, está ejerciendo control interno sobre su propio trabajo (primera línea de defensa).","El control interno es una traba burocrática que no tiene relación con el logro de los objetivos de la entidad, por lo que conviene ignorarlo para trabajar más rápido."],"correcta": 1,"expl": "El control interno es responsabilidad de todos y empieza en el autocontrol de cada puesto (B). No es exclusivo de una oficina (A) ni una traba inútil (C): la oficina de control (auditoría) es solo la tercera línea; el control empieza en cada servidor que verifica y documenta su trabajo."},{"nivel": "b","tema": "Qué es la auditoría interna","ctx": "Eres Analista I de la DIAN y se anuncia que llegará una auditoría interna a revisar un proceso en el que participaste. Un compañero se pone nervioso y dice que 'la auditoría viene a cazar culpables y a castigar, hay que tenerle miedo'. Tú conoces el verdadero propósito de la auditoría interna.","q": "¿Cuál es la descripción correcta del propósito de la auditoría interna?","ops": ["El compañero tiene razón: la auditoría interna es una policía que viene a cazar culpables y castigar servidores, por lo que hay que tenerle miedo y protegerse de ella.","La auditoría interna evalúa de forma independiente si los controles funcionan (aseguramiento) y asesora para mejorar; agrega valor y trabaja por evidencia, no persigue ni castiga a las personas.","La auditoría interna ejecuta directamente los procesos de la entidad en lugar de los servidores, reemplazándolos en sus tareas del día a día."],"correcta": 1,"expl": "La auditoría interna asegura (evalúa controles) y asesora (recomienda mejoras), agregando valor (B). No es una policía que caza culpables (A) ni ejecuta los procesos (C): es una evaluación independiente que trabaja por evidencia y ayuda a que la entidad mejore."},{"nivel": "b","tema": "El autocontrol","ctx": "Eres Analista I de la DIAN y terminas un trabajo. Un compañero te dice que 'no te molestes en revisarlo, que para eso están los supervisores y la auditoría, que ellos encontrarán los errores si los hay'. Tú conoces el papel del autocontrol como base del control interno.","q": "¿Cuál es la actuación correcta respecto a revisar tu propio trabajo?","ops": ["No revisar tu trabajo y entregarlo tal cual, ya que encontrar los errores es tarea exclusiva de los supervisores y la auditoría, y el servidor no debe controlar lo que produce.","Aplicar autocontrol: verificar tu propio trabajo, detectar tus errores y corregirlos antes de entregar, porque el autocontrol es la base del control interno y los errores se atrapan mejor donde nacen.","Entregar el trabajo sin revisar pero avisando que 'puede tener errores', trasladando toda la responsabilidad de encontrarlos a quien lo reciba después."],"correcta": 1,"expl": "El autocontrol es la base del control interno: cada servidor verifica su propio trabajo y corrige antes de entregar (B). No se deja todo a controles posteriores (A), porque los errores viajan y se mezclan; ni se traslada la responsabilidad avisando 'puede tener errores' (C). El autocontrol atrapa los errores en el origen."},{"nivel": "b","tema": "Tres líneas de defensa","ctx": "Eres Analista I de la DIAN y, en una capacitación sobre control interno, se habla del modelo de las tres líneas de defensa. Un compañero no entiende en cuál se ubica un servidor como ustedes, que hace el trabajo y lo controla día a día. Tú conoces el modelo.","q": "¿En qué línea de defensa se ubica el Analista I?","ops": ["En la tercera línea, porque audita de forma independiente todo el sistema de control de la entidad, igual que la oficina de control interno.","En la primera línea de defensa: quienes hacen el trabajo y lo controlan directamente en el día a día, con su autocontrol; es la línea más cercana al trabajo y la base del sistema.","En ninguna línea, porque el trabajo de gestión de información no tiene ninguna relación con el sistema de control interno de la entidad."],"correcta": 1,"expl": "El Analista está en la primera línea de defensa: hace el trabajo y lo controla día a día con su autocontrol (B). La tercera línea es la auditoría interna, independiente (A); y su trabajo sí tiene relación con el control (C): su autocontrol es, de hecho, la base del sistema."},{"nivel": "i","tema": "Relacionarse con una auditoría","ctx": "Eres Analista I de la DIAN y, durante una auditoría interna, un auditor te pide la evidencia de un proceso. Un compañero te sugiere 'demorar la entrega y mostrarle solo lo que conviene, para que no encuentre observaciones'. Tú conoces la actitud correcta ante una auditoría.","q": "¿Cuál es la actuación correcta ante la solicitud del auditor?","ops": ["Demorar la entrega y mostrar solo la información que conviene, ocultando lo demás, para que la auditoría no encuentre ninguna observación sobre el proceso.","Aportar toda la información y la evidencia solicitadas con transparencia y honestidad, sin ocultar ni alterar nada, y tomar los eventuales hallazgos como oportunidades de mejora.","Negarse a entregar cualquier información al auditor, dado que como él viene a buscar errores, lo mejor es no colaborar en nada para no darle elementos."],"correcta": 1,"expl": "Ante una auditoría, la actitud correcta es la colaboración transparente: aportar toda la evidencia con honestidad (B). Ocultar o mostrar solo lo que conviene (A) es una falta grave que agrava el problema; negarse a colaborar (C) genera sospecha. La auditoría trabaja por evidencia y agrega valor."},{"nivel": "i","tema": "Recibir un hallazgo","ctx": "Eres Analista I de la DIAN y una auditoría interna señala un hallazgo sobre un proceso en el que participas: detectó que faltaba un control. Un compañero se lo toma como un ataque personal y propone 'rebatirlo a toda costa y justificarse para que lo retiren'. Tú conoces cómo recibir un hallazgo.","q": "¿Cuál es la actuación correcta ante el hallazgo?","ops": ["Tomar el hallazgo como un ataque personal y dedicarse a rebatirlo y justificarse a toda costa para que lo retiren, sin analizar si tiene fundamento.","Analizar el hallazgo con apertura, reconocer lo que proceda y establecer acciones de mejora (plan de mejoramiento), entendiendo que un hallazgo identifica algo que se puede mejorar y a menudo señala un problema del proceso, no una falta personal.","Ignorar el hallazgo por completo, dado que si se ignora el tiempo suficiente, el problema que señala desaparecerá por sí solo sin necesidad de hacer nada."],"correcta": 1,"expl": "Un hallazgo no es un ataque ni una condena: identifica algo mejorable, a menudo del proceso (B). Rebatirlo a toda costa (A) es ponerse a la defensiva; ignorarlo (C) deja el problema sin resolver. La respuesta madura es analizarlo con apertura y establecer acciones de mejora."},{"nivel": "i","tema": "Mapas de riesgos de corrupción","ctx": "Eres Analista I de la DIAN y revisas el mapa de riesgos de tu área. Ves que el 'uso indebido de información reservada' está identificado como un riesgo de corrupción, con controles de acceso y trazabilidad para prevenirlo. Un compañero dice que 'esos controles son trabas inútiles que solo estorban'. Tú conoces la función de los mapas de riesgos.","q": "¿Cuál es la valoración correcta de esos controles?","ops": ["El compañero tiene razón: los controles de acceso y la trazabilidad son trabas inútiles que solo estorban y conviene saltárselos para trabajar más rápido.","Esos controles no son trabas arbitrarias: son la respuesta a un riesgo de corrupción concreto identificado en el mapa (uso indebido de información reservada); como parte de la primera línea, el Analista los aplica para gestionar ese riesgo día a día.","Esos controles eliminan por completo y de forma definitiva el riesgo de uso indebido, por lo que, una vez establecidos, ya no hace falta aplicarlos con cuidado."],"correcta": 1,"expl": "Los controles de acceso y trazabilidad son la respuesta a un riesgo de corrupción identificado, no trabas inútiles (A); y aunque reducen el riesgo, no lo eliminan por completo (C), por lo que hay que aplicarlos con cuidado. El Analista, en la primera línea, los aplica para gestionar ese riesgo."},{"nivel": "i","tema": "No manipular indicadores","ctx": "Eres Analista I de la DIAN y produces las cifras que alimentan un indicador de gestión de la entidad. El resultado de este período es más bajo de lo esperado. Un compañero (o un superior) te presiona para que 'ajustes un poco la cifra para que el indicador luzca mejor, que total nadie lo va a notar'. Tú conoces el valor de la integridad en la medición.","q": "¿Cuál es la actuación correcta ante esa presión?","ops": ["Ajustar la cifra para que el indicador luzca mejor, ya que un buen resultado conviene a todos y, si nadie lo nota, no genera ningún problema real.","Entregar la medición fiel aunque el resultado sea incómodo, sin manipular la cifra, porque un indicador existe para conocer la realidad y mejorarla; un mal resultado bien medido permite corregir, y manipularlo es una falta de integridad que engaña a quien decide.","Entregar una cifra intermedia, inventada a ojo, que no sea ni la real ni la que pide el superior, como una solución de compromiso entre ambas presiones."],"correcta": 1,"expl": "Manipular la cifra (A) o inventar una intermedia (C) convierte la medición en una ficción, engaña a quien decide y es una falta de integridad. Lo correcto es entregar la medición fiel aunque sea incómoda: un mal resultado bien medido permite corregir, y la integridad en la medición es innegociable."},{"nivel": "a","tema": "Caso integrador: el control empieza en uno","ctx": "Eres Analista I de la DIAN. Nadie está supervisándote en este momento y podrías saltarte un control (no verificar unos datos antes de entregarlos) o usar tu acceso para consultar algo que no es de tu tarea, sin que se note de inmediato. Un compañero te dice que 'si nadie mira, da igual, nadie se va a enterar'. Tú conoces el papel de la integridad y el autocontrol.","q": "¿Cuál es la actuación correcta cuando nadie está vigilando?","ops": ["Aprovechar que nadie mira para saltarte la verificación y usar tu acceso como quieras, ya que si no hay vigilancia en ese momento, nada de lo que hagas tendrá consecuencias.","Verificar los datos igualmente y usar tu acceso solo para lo que tu tarea requiere, porque haces lo correcto aunque nadie vigile: el autocontrol y la integridad son el control más eficaz, el que ningún sistema externo sustituye (y, además, los accesos quedan trazados).","Saltarte el control solo por esta vez y usar tu acceso para una consulta ajena, prometiéndote que no lo volverás a hacer, dando por sentado que una sola vez no cuenta."],"correcta": 1,"expl": "La integridad es hacer lo correcto aunque nadie vigile (B): es el control más eficaz, que ningún sistema externo sustituye, y además los accesos quedan trazados. Aprovechar que nadie mira (A) o 'solo por esta vez' (C) traiciona esa integridad. El autocontrol no depende de la vigilancia."},{"nivel": "a","tema": "Caso integrador: ubicar el rol en el sistema","ctx": "Eres Analista I de la DIAN y, en un mismo día, enfrentas varias situaciones: debes verificar tus propios cálculos antes de entregar; el área de riesgos te ofrece una metodología para valorar un riesgo; llega una auditoría a evaluar si los controles funcionan; y debes producir cifras confiables para un informe de gestión. Un compañero mezcla todo y cree que 'todas esas cosas son lo mismo y las hace la oficina de control'. Tú sabes ubicar cada rol en el sistema.","q": "¿Cuál es la comprensión correcta de esas situaciones?","ops": ["Todas esas cosas son lo mismo y las hace la oficina de control interno; el Analista no tiene ningún papel propio en el sistema de gestión y control de la entidad.","Verificar los propios cálculos es tu autocontrol (primera línea); la metodología del área de riesgos es apoyo de la segunda línea; la auditoría que evalúa es la tercera línea (independiente); y producir cifras confiables alimenta la evaluación y la rendición de cuentas del MIPG.","Como el Analista está en la primera línea, también debe auditar de forma independiente el sistema y decidir él mismo si los controles de toda la entidad funcionan."],"correcta": 1,"expl": "Cada situación corresponde a un rol distinto del sistema (B): autocontrol de primera línea, apoyo de segunda línea, auditoría independiente de tercera línea, e información que alimenta el MIPG. No todo lo hace la oficina de control (A), ni el Analista audita de forma independiente (C): eso es de la tercera línea."},{"nivel": "a","tema": "Caso integrador: integridad, control y colaboración","ctx": "Eres Analista I de la DIAN y, con un plazo apretado, un compañero te propone una serie de atajos: no verificar tu trabajo (que para eso está la auditoría), ocultarle a una auditoría una observación menor para que no la reporte, y 'mejorar' un indicador ajustando una cifra. Insiste en que 'así se cumple el plazo y nadie sale perjudicado'. Tú conoces el control interno, la auditoría y la integridad.","q": "¿Cuál es la actuación correcta que integra todo lo del tema?","ops": ["Seguir los atajos del compañero (no verificar, ocultar la observación a la auditoría, ajustar el indicador), ya que con el plazo apretado lo prioritario es cumplir y, según él, nadie sale perjudicado.","Aplicar autocontrol verificando tu trabajo (no delegar eso en la auditoría), colaborar con transparencia con la auditoría aportando la evidencia (sin ocultar la observación) y entregar el indicador con la cifra fiel; gestionar prórroga si el tiempo no alcanza para hacerlo bien.","Hacer solo lo mínimo visible y ocultar todo lo demás —el trabajo sin verificar, la observación y la cifra real— para que nada se note, dando por hecho que lo que no se ve no genera consecuencias."],"correcta": 1,"expl": "Los atajos (A) violan el autocontrol, engañan a la auditoría (falta grave) y manipulan el indicador (falta de integridad); ocultarlo todo (C) es peor. Lo correcto integra el tema: autocontrol (verificar), colaboración transparente con la auditoría (no ocultar) e integridad en la medición (cifra fiel), pidiendo prórroga si hace falta."},{"nivel": "i","tema": "La información y la rendición de cuentas","ctx": "Eres Analista I de la DIAN y produces unas cifras agregadas de gestión que la entidad usará en un ejercicio de rendición de cuentas a la ciudadanía. Un compañero te sugiere 'redondear al alza algunos resultados y dejar por fuera los datos menos favorables, para que la gestión luzca mejor ante la gente'. Tú conoces qué implica una rendición de cuentas real.","q": "¿Cuál es la actuación correcta al producir esas cifras?","ops": ["Redondear al alza los resultados y dejar por fuera los datos menos favorables, para que la gestión luzca mejor ante la ciudadanía en la rendición de cuentas.","Producir cifras veraces, completas y comprensibles, incluidos los datos menos favorables, porque rendir cuentas con cifras maquilladas o incompletas no es rendir cuentas sino simularlo; la rendición de cuentas real exige información confiable.","Entregar las cifras sin ningún contexto ni explicación, solo los números crudos, para evitar interpretaciones y que la ciudadanía no pueda cuestionar la gestión."],"correcta": 1,"expl": "La rendición de cuentas descansa en información confiable: maquillar o dejar fuera lo desfavorable (A) la convierte en una simulación; entregar números crudos sin contexto (C) impide el control social. Lo correcto es producir cifras veraces, completas y comprensibles, aun las incómodas."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
