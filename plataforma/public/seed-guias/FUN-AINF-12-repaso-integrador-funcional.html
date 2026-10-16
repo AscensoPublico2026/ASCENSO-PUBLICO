@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-12 · Repaso integrador del componente funcional — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-12</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 20 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>Repaso integrador del componente funcional</h1>
+  <p class="header-sub">Consolidar y conectar los once temas funcionales (Días 9-19): el mapa completo del rol del Analista I y la brújula para responder el simulacro con criterio.</p>
+  <div class="badges"><span class="badge">📅 Día 20 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Falta poco para la prueba, y hoy no vas a ver temas nuevos: vas a <mark>consolidar y conectar</mark> todo lo aprendido en el componente funcional (Días 9 a 19). Repasarás, con sus ideas clave, sus trampas típicas y sus ejercicios de aplicación, el marco constitucional y tributario, las herramientas de información (sistemas, datos, estadísticas, perfiles), el control (documental, MIPG, auditoría) y el servicio al ciudadano.</p>
+    <p>¿Tienes claro el mapa completo del rol del Analista I? ¿Sabes cómo se conectan los once temas? ¿Reconoces las trampas más frecuentes de las preguntas situacionales? Hoy armarás esa visión de conjunto y te quedarás con una brújula para responder con criterio: la respuesta correcta protege la información confiable, respeta las garantías del ciudadano, se mantiene en el rol (aporta, no decide ni sanciona) y actúa con integridad. Al terminar, estarás listo para el simulacro del Día 21.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar este repaso habrás consolidado:</p>
+    <ul class="lista">
+      <li>El <strong>marco</strong>: la Constitución aplicada al cargo y el sistema tributario, aduanero y cambiario.</li>
+      <li>Las <strong>herramientas de información</strong>: sistemas, gobernanza de datos, estadísticas y perfiles de riesgo.</li>
+      <li>La <strong>evasión y la transparencia</strong>, y la <strong>ofimática aplicada</strong> con criterio.</li>
+      <li>El <strong>orden y el control</strong>: gestión documental, trazabilidad, MIPG, control interno y auditoría.</li>
+      <li>El <strong>servicio al ciudadano</strong>: CPACA, derecho de petición, PQRSF y atención de calidad.</li>
+      <li>Cómo <strong>se conectan todos los temas</strong> y la brújula para responder el simulacro con criterio.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por recordar por qué este repaso es clave →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este repaso es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>Has recorrido once temas funcionales, cada uno con mucho contenido. Pero la prueba no evalúa temas aislados: plantea <mark>casos situacionales</mark> que a menudo mezclan varios temas y exigen responder con criterio. Por eso, antes del simulacro, es clave <mark>consolidar y conectar</mark> lo aprendido, no repasarlo como once compartimentos sueltos.</p>
+    <p>Este repaso te da dos cosas. Primero, un recordatorio ágil de la idea clave, las trampas típicas y el ejercicio de aplicación de cada tema, para refrescar lo esencial. Segundo, y más importante, la visión de conjunto: cómo el marco, las herramientas, el orden y el servicio forman una cadena coherente, sostenida por dos pilares (información confiable e integridad). Esa visión es la que te permite responder incluso los casos que combinan temas.</p>
+    <p>La mayoría de las preguntas situacionales se resuelven con una misma brújula: la respuesta correcta protege la información confiable, respeta las garantías del ciudadano (buena fe, debido proceso, reserva), mantiene al Analista en su rol (aporta, no decide ni sanciona) y actúa con integridad (no cede a presiones ni usa el acceso indebidamente). Interiorizar esa brújula —y reconocer las trampas que la cruzan— es la mejor preparación para el simulacro.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> casi siempre hay una opción tentadora que 'resuelve rápido' pero cruza una línea (manipula datos, atropella una garantía, extralimita el rol o falta a la integridad) y otra que hace lo correcto aunque cueste más. La brújula del curso apunta a la segunda. Descarta primero las que manipulan, atropellan, se extralimitan o faltan a la integridad.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, repasemos tema por tema →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Repaso 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Repaso integrador del componente funcional</h2>
+  <p>Esta sección integra en trece módulos todo lo aprendido en el componente funcional del curso (Días 9 a 19), con las ideas clave, los errores a evitar y los ejercicios de aplicación de cada tema, más la forma en que todos se conectan. El objetivo de hoy no es ver temas nuevos, sino <mark>consolidar y conectar</mark> lo estudiado para llegar firme al simulacro y a la prueba. Repasarás el marco constitucional y el sistema tributario, los servicios informáticos y la gobernanza de datos, las estadísticas y los perfiles de riesgo, la evasión y la transparencia, la ofimática y la gestión documental, el MIPG y el control interno, y el servicio al ciudadano. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae un recordatorio de las trampas típicas de la prueba y un ejercicio de aplicación. Al terminar, tendrás el mapa completo del rol del Analista I y las claves para responder con criterio.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual del repaso</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🏛️</span><h5>Marco</h5><p>Constitución y sistema tributario</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">💾</span><h5>Información</h5><p>Datos, estadísticas, riesgo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🛡️</span><h5>Control</h5><p>Documental, MIPG, auditoría</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🤝</span><h5>Servicio</h5><p>El ciudadano en el centro</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🎯</span><h5>Integración</h5><p>El rol completo del Analista I</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Repaso: la Constitución aplicada al Analista I (Día 9)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>La Constitución es el marco de todo: el Estado social de derecho, el deber de contribuir (art. 95-9), la función pública al servicio de la comunidad (art. 123), la prevalencia del interés general, el debido proceso (art. 29) y la buena fe (art. 83). El Analista I actúa siempre dentro de ese marco: su trabajo tiene fundamento y límite en la Constitución.</p>
+</div>
+<div class="b-texto">
+  <p>El primer tema funcional estableció el fundamento de todo lo demás: la Constitución. De ella se deriva que el sistema tributario existe porque hay un <strong>deber de contribuir</strong> al financiamiento del Estado (art. 95-9), y que ese Estado es un <strong>Estado social de derecho</strong> que usa esos recursos para garantizar derechos. El servidor, por su parte, está al <strong>servicio de la comunidad</strong> (art. 123) y debe anteponer el interés general.</p>
+  <p>Las garantías constitucionales que más reaparecen en el trabajo del Analista son el <strong>debido proceso</strong> (art. 29) —nadie es sancionado sin un procedimiento con defensa— y la <strong>presunción de buena fe</strong> (art. 83) —se presume que el ciudadano actúa correctamente—. Estas dos garantías recorren casi todos los temas: los perfiles de riesgo, las sanciones, la atención. Tenerlas presentes es clave para responder las preguntas situacionales.</p>
+  <p>La enseñanza integradora es que el Analista no actúa en el vacío: su trabajo tiene fundamento constitucional (el deber de contribuir, el servicio al ciudadano) y límite constitucional (las garantías de las personas). Un buen servidor entiende que recaudar y controlar son medios al servicio de los fines del Estado social de derecho, y que esos medios deben respetar siempre los derechos fundamentales.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Principio constitucional</th><th>Qué aporta al Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Deber de contribuir (art. 95-9)</td><td>Fundamenta el sistema tributario</td></tr>
+      <tr><td>Servicio a la comunidad (art. 123)</td><td>El servidor existe para servir</td></tr>
+      <tr><td>Debido proceso y buena fe (29, 83)</td><td>Límites que protegen al ciudadano</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una pregunta que proponga actuar contra un contribuyente sin respetar el debido proceso o la buena fe, recuerda que, por más eficaz que parezca, viola el marco constitucional. La respuesta correcta siempre respeta las garantías. Trampa típica: opciones que priorizan el resultado (recaudar, sancionar) saltándose los derechos; esa es justo la que hay que descartar.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>El trabajo del Analista I, frente a la Constitución, tiene:</p>
+  <div class="cp-op" data-op="a">a) Total libertad, porque la Constitución no se aplica al trabajo técnico con datos.</div>
+  <div class="cp-op" data-op="b">b) Fundamento (el deber de contribuir, el servicio a la comunidad) y límite (las garantías de las personas: debido proceso, buena fe).</div>
+  <div class="cp-op" data-op="c">c) Solo límites, sin ningún fundamento, porque la Constitución solo prohíbe.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Caso tipo y por qué la respuesta es constitucional</h4>
+    <p>Un caso frecuente en la prueba: un superior presiona para 'adelantar' una sanción a un contribuyente que un perfil señaló, sin seguir el procedimiento. La respuesta correcta no es la que complace al superior ni la que 'resuelve rápido', sino la que respeta el debido proceso y la buena fe. ¿Por qué? Porque esas garantías son constitucionales y están por encima de la conveniencia del momento; una actuación eficaz pero inconstitucional es, en el fondo, ilegítima y se caerá ante un juez.</p>
+    <p>La clave de repaso es entrenar el reflejo de mirar, en cada caso, si se respetan las garantías de la persona. Mucho antes de recordar una ley específica, ese reflejo —presunción de buena fe, debido proceso, igualdad— resuelve la mayoría de los dilemas. El marco constitucional no es un tema académico que se estudia y se olvida: es la brújula moral y jurídica que ordena toda actuación del servidor, y la primera a la que conviene acudir cuando una pregunta plantea una tensión entre resultado y derechos.</p>
+
+
+    <h4>Qué memorizar y qué entender del marco</h4>
+    <p>Para la prueba conviene distinguir lo que se memoriza de lo que se entiende. Se memorizan algunos anclajes: el deber de contribuir (art. 95-9), el servicio a la comunidad (art. 123), el debido proceso (art. 29) y la buena fe (art. 83). Pero lo decisivo es entender la lógica: el Estado social de derecho se financia con tributos para garantizar derechos, y el servidor está a su servicio con límites que protegen a las personas. Esa lógica resuelve más preguntas que la memorización de artículos sueltos.</p>
+
+
+    <h4>El reflejo que resuelve los casos de garantías</h4>
+    <p>Un último anclaje del marco constitucional para la prueba: cuando una pregunta enfrenta 'resultado rápido' contra 'respetar una garantía', la respuesta es siempre la garantía. La eficacia que atropella el debido proceso, la buena fe o la igualdad no es eficacia legítima, porque una actuación inconstitucional se cae. Interiorizar este reflejo —las garantías por encima de la conveniencia— es la mejor preparación para las preguntas situacionales, que casi siempre esconden esa tensión bajo distintos disfraces.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Repaso: el sistema tributario, aduanero y cambiario (Día 10)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>La DIAN controla tres ámbitos: el <mark>tributario</mark> (impuestos internos: renta, IVA), el <mark>aduanero</mark> (comercio exterior) y el <mark>cambiario</mark> (operaciones con divisas). Los tributos se clasifican (impuestos, tasas, contribuciones) y el sistema se rige por principios (equidad, eficiencia, progresividad, legalidad). Este es el terreno sobre el que trabaja el Analista.</p>
+</div>
+<div class="b-texto">
+  <p>El segundo tema dio el mapa del terreno: los tres ámbitos de competencia de la DIAN. El <strong>tributario</strong> cubre los impuestos internos (renta, IVA, retención); el <strong>aduanero</strong>, el comercio exterior (importaciones, exportaciones, aranceles); el <strong>cambiario</strong>, las operaciones con divisas. Distinguirlos es importante porque cada uno tiene sus señales de riesgo y sus fuentes de información propias, como se vio luego en perfiles de riesgo.</p>
+  <p>Conviene recordar la clasificación de los <strong>tributos</strong>: los <strong>impuestos</strong> (se pagan sin contraprestación directa, como la renta), las <strong>tasas</strong> (por un servicio recibido) y las <strong>contribuciones</strong> (por un beneficio). Y los <strong>principios</strong> del sistema tributario: equidad (que cada quien aporte según su capacidad), eficiencia (recaudar al menor costo), progresividad (que quien más tiene aporte proporcionalmente más) y legalidad (no hay tributo sin ley).</p>
+  <p>La enseñanza integradora es que todo el trabajo del Analista —gestionar información, perfilar riesgo, producir estadísticas— ocurre dentro de este sistema tributario, aduanero y cambiario. Conocer el terreno le permite entender qué significan los datos que maneja, qué señales importan en cada ámbito y por qué el control del incumplimiento protege la equidad del sistema. Es el contexto que da sentido a todo lo demás.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Ámbito</th><th>Objeto</th><th>Ejemplo de tributo/control</th></tr></thead>
+    <tbody>
+      <tr><td>Tributario</td><td>Impuestos internos</td><td>Renta, IVA</td></tr>
+      <tr><td>Aduanero</td><td>Comercio exterior</td><td>Aranceles, control de importaciones</td></tr>
+      <tr><td>Cambiario</td><td>Operaciones con divisas</td><td>Canalización de operaciones de cambio</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una señal de riesgo, ubica el ámbito: ¿es tributario (subdeclaración de renta/IVA), aduanero (subfacturación de importaciones) o cambiario (operaciones no canalizadas)? Acertar el ámbito orienta qué cruces y fuentes usar. Trampa típica: confundir contrabando (aduanero) con evasión de renta (tributario), o tratar un principio como la progresividad como si fuera lo mismo que la equidad.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>Un impuesto (como la renta) se diferencia de una tasa en que:</p>
+  <div class="cp-op" data-op="a">a) El impuesto se paga por un servicio concreto recibido, y la tasa sin contraprestación.</div>
+  <div class="cp-op" data-op="b">b) No hay ninguna diferencia entre impuesto y tasa.</div>
+  <div class="cp-op" data-op="c">c) El impuesto se paga sin contraprestación directa, mientras que la tasa se paga por un servicio recibido.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: ubicar el ámbito correcto</h4>
+    <p>Mini-caso: un contribuyente importa grandes volúmenes de mercancía declarando valores muy bajos, y además no registra buena parte de sus ventas internas. ¿Qué ámbitos están en juego? Hay una señal <strong>aduanera</strong> (posible subfacturación en las importaciones) y una <strong>tributaria</strong> (subdeclaración de IVA/renta por las ventas no registradas). Reconocer que un mismo contribuyente puede presentar señales en varios ámbitos a la vez enriquece el análisis y refuerza la hipótesis de riesgo.</p>
+    <p>El ejercicio de repaso consiste en no quedarse con una sola etiqueta. Ante una situación, preguntarse: ¿qué ámbitos toca y qué fuentes/cruces sirven para cada uno? Esta capacidad de ubicar el ámbito y combinar señales de distintos frentes es una de las que más distingue a un analista con criterio, y conecta directamente este tema con el de perfiles de riesgo. El sistema tributario, aduanero y cambiario no es solo una clasificación teórica: es el mapa que guía dónde y cómo buscar el incumplimiento.</p>
+
+
+    <h4>Repaso de principios tributarios</h4>
+    <p>Vale repasar los principios del sistema tributario porque suelen confundirse. Equidad: cada quien aporta según su capacidad. Progresividad: quien más tiene aporta proporcionalmente más (la equidad vertical). Eficiencia: recaudar al menor costo posible, para el Estado y para el contribuyente. Legalidad: no hay tributo sin ley que lo cree. Distinguirlos evita caer en opciones que intercambian un principio por otro, una trampa habitual en las preguntas sobre el sistema tributario.</p>
+
+
+    <h4>Por qué el terreno importa para el análisis</h4>
+    <p>Conviene cerrar el repaso del sistema tributario con una idea que lo conecta con el resto: conocer el terreno (los tres ámbitos, los tipos de tributo, los principios) no es erudición, es lo que permite entender qué significan los datos. Cuando el Analista ve una cifra de recaudo de IVA, una importación o una operación de cambio, sabe en qué ámbito está, qué señal de riesgo podría esconder y por qué su control protege la equidad. Sin ese mapa, los datos serían números sin sentido; con él, son información que se puede interpretar y usar.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Repaso: servicios informáticos y sistemas (Día 11)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Un <mark>sistema de información</mark> es personas + datos + procesos + tecnología (no solo software). El Analista <mark>usa y da soporte</mark> a la información; NO desarrolla ni administra la infraestructura (eso es de tecnología). No se confía ciegamente en el sistema: se aplica criterio. Seguridad = confidencialidad, integridad, disponibilidad.</p>
+</div>
+<div class="b-texto">
+  <p>El tercer tema definió el rol del Analista frente a la tecnología. Un <strong>sistema de información</strong> no es solo el software: es el conjunto de personas, datos, procesos y tecnología. Y el rol del Analista es claro: <strong>usar con criterio y dar soporte a la gestión de información</strong>, no desarrollar software ni administrar servidores o redes (eso corresponde al área de tecnología). Tampoco es un simple digitador: su valor está en el manejo experto de los datos.</p>
+  <p>Dos ideas de este tema reaparecen una y otra vez. La primera: <strong>no confiar ciegamente en el sistema</strong>; la máquina procesa, pero el criterio humano verifica e interpreta. La segunda: la <strong>seguridad de la información</strong> (confidencialidad, integridad, disponibilidad), que se cuida con claves individuales, respaldos y prudencia frente al phishing. Ambas ideas son transversales a todo el curso.</p>
+  <p>La enseñanza integradora es que la tecnología multiplica al buen analista, pero no lo reemplaza, y que el Analista debe conocer su rol (y sus límites) frente a los sistemas. Saber qué le corresponde (usar, dar soporte, cuidar la calidad y la seguridad) y qué no (desarrollar, administrar la infraestructura) evita extralimitaciones y lo ubica correctamente en su cargo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El Analista SÍ</th><th>El Analista NO</th></tr></thead>
+    <tbody>
+      <tr><td>Usa los sistemas con criterio</td><td>Desarrolla software</td></tr>
+      <tr><td>Da soporte a la información</td><td>Administra servidores/redes</td></tr>
+      <tr><td>Cuida calidad y seguridad</td><td>Confía ciegamente en el sistema</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que te haga 'arreglar la red', 'programar' o 'administrar servidores', descártala: eso es de tecnología. Y ante una que proponga confiar en una salida rara del sistema sin verificar, también: el criterio del Analista verifica. Trampa típica: hacer ver 'colaborador' al que asume tareas de tecnología, o 'eficiente' al que confía ciegamente en la máquina.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El rol del Analista I frente a los sistemas de información es:</p>
+  <div class="cp-op" data-op="a">a) Usarlos con criterio y dar soporte a la información, sin desarrollar ni administrar la infraestructura, y sin confiar ciegamente en lo que arrojen.</div>
+  <div class="cp-op" data-op="b">b) Programar las aplicaciones y administrar los servidores de su dependencia.</div>
+  <div class="cp-op" data-op="c">c) Confiar ciegamente en cualquier resultado del sistema, porque la máquina no se equivoca.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: la red caída y el correo sospechoso</h4>
+    <p>Mini-caso doble, muy típico en la prueba: (1) se cae la red y presionan al Analista para que 'la arregle porque sabe de sistemas' —la respuesta es reportar a tecnología y aplicar contingencia, no asumir una función ajena—; y (2) llega un correo 'del área de sistemas' pidiendo la clave por un enlace —la respuesta es no entregarla, verificar por el canal oficial y reportar el phishing—. Ambos casos se resuelven con las dos ideas del tema: conocer el límite del rol y cuidar la seguridad.</p>
+    <p>La clave de repaso es que las preguntas sobre sistemas casi siempre esconden una de dos trampas: hacer que el Analista asuma tareas de tecnología (arreglar, programar, administrar) o que confíe/actúe sin criterio (entregar la clave, creer una salida rara del sistema). Identificar cuál de las dos trampas plantea la pregunta lleva directo a la respuesta correcta: el Analista usa y da soporte con criterio, cuida la seguridad y no se extralimita ni confía ciegamente.</p>
+
+
+    <h4>Dato, información y conocimiento, en resumen</h4>
+    <p>Un repaso útil del tema de sistemas: el dato es el registro crudo, la información es el dato procesado y con contexto, y el conocimiento es la comprensión que permite decidir. El sistema entrega datos e información; el Analista aporta el criterio que los convierte en conocimiento útil. Por eso no basta con 'bajar registros': producir información es interpretarlos con criterio. Esta cadena dato-información-conocimiento recorre todo el curso y explica por qué el juicio humano sigue siendo insustituible.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Repaso: gestión de información y gobernanza de datos (Día 12)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>La información es un <mark>activo estratégico</mark> (vale si es disponible, íntegra, confidencial y oportuna). La <mark>gobernanza de datos</mark> define reglas, responsables y trazabilidad; la gestión ejecuta. Calidad, metadatos, clasificación (pública/clasificada/reservada) e interoperabilidad (llave limpia para cruzar). No se altera un dato a mano sin reportar.</p>
+</div>
+<div class="b-texto">
+  <p>El cuarto tema es el corazón del cargo: tratar la información como un <strong>activo</strong> que se gobierna. La gobernanza define el 'qué' y el 'quién' (reglas, responsables); la gestión, el 'cómo' (cargar, limpiar, consolidar). El Analista vive en la gestión pero obedece a la gobernanza: por eso no cambia un dato a mano sin reportarlo al responsable, no usa bases de origen desconocido y documenta su trabajo (trazabilidad).</p>
+  <p>Conceptos clave que reaparecen: la <strong>calidad</strong> (exactitud, completitud, unicidad...), los <strong>metadatos</strong> (fuente, fecha de corte, significado), la <strong>clasificación</strong> (pública, clasificada, reservada —la tributaria individual es reservada, art. 583 ET—) y la <strong>interoperabilidad</strong> (homologar la llave, el NIT, antes de cruzar). Y la regla de oro al consolidar: no tocar las fuentes originales y validar con una cifra de control.</p>
+  <p>La enseñanza integradora es que la calidad y el buen gobierno de los datos son la base de todo lo que sigue: estadísticas, perfiles, rendición de cuentas. 'Entra basura, sale basura'. Un dato mal gestionado contamina todo lo demás; uno bien gobernado lo fortalece. Por eso este tema es el cimiento del rol del Analista.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Concepto</th><th>Idea clave</th></tr></thead>
+    <tbody>
+      <tr><td>Gobernanza vs gestión</td><td>Reglas/responsables vs ejecución</td></tr>
+      <tr><td>Clasificación</td><td>Pública se entrega; reservada se protege</td></tr>
+      <tr><td>Interoperabilidad</td><td>Homologar la llave (NIT) antes de cruzar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que proponga 'ajustar un dato a mano porque un compañero lo dice', usar una base sin origen verificado o entregar información tributaria individual, descártala. Trampa típica: hacer ver 'ágil' al que cambia un dato sin reportar o 'colaborador' al que entrega lo reservado. La respuesta respeta la gobernanza, la calidad y la reserva.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>Frente a una inconsistencia en un dato, lo correcto en la gobernanza de datos es:</p>
+  <div class="cp-op" data-op="a">a) Cambiar el dato a mano de inmediato, porque un compañero asegura que está mal.</div>
+  <div class="cp-op" data-op="b">b) Reportar la inconsistencia al responsable del dato, dejar registro y esperar la corrección formal, sin alterarlo por cuenta propia.</div>
+  <div class="cp-op" data-op="c">c) Borrar el dato para evitar el problema, sin dejar ninguna constancia.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: el 'ajuste a mano' y la base sin origen</h4>
+    <p>Mini-caso: un compañero pide 'ajustar a mano' una cifra 'porque está mal y ya', y además entregan una base sin fecha ni fuente para un cruce urgente. Las dos respuestas se derivan de la gobernanza: la cifra no se cambia por cuenta propia (se reporta al responsable, se deja registro); y la base sin origen no se usa para una decisión oficial hasta verificar su procedencia. Ambas protegen la integridad y la trazabilidad del activo de información.</p>
+    <p>El reflejo de repaso es desconfiar de todo lo que rompa la gobernanza: alterar un dato sin reportar, usar fuentes no verificadas, saltarse la trazabilidad por rapidez, o confundir lo público con lo reservado. Este tema es el cimiento de los siguientes (estadísticas, perfiles, rendición de cuentas), porque todos dependen de datos bien gobernados. 'Entra basura, sale basura' no es un eslogan: es la razón por la que la calidad y el gobierno de los datos están en el centro del cargo.</p>
+
+
+    <h4>El ciclo del dato y los metadatos, en resumen</h4>
+    <p>Repaso de gobernanza: el dato tiene un ciclo (captura, almacenamiento, uso, compartición, archivo, eliminación), y las etapas que más fallan son la captura (basura que entra) y la eliminación/archivo (conservar o borrar mal). Los metadatos —fuente, fecha de corte, significado de cada campo— son lo que permite que un archivo se entienda y reutilice. Un archivo sin metadatos es un misterio; con ellos, es información gobernada. Estos conceptos sostienen la calidad de todo lo que el Analista produce.</p>
+
+
+    <h4>La regla de oro al consolidar</h4>
+    <p>Un anclaje práctico de gobernanza: al consolidar, nunca se tocan las fuentes originales (se trabaja sobre copias), se documenta cada transformación y se valida el resultado con una cifra de control que confirme que las sumas cuadran con las fuentes. Un consolidado que no cuadra con sus fuentes es una alarma, no algo que se entregue 'porque la diferencia es poca'. Esta disciplina —copias, documentación, cifra de control— es lo que hace que un consolidado sea confiable y reconstruible, y por tanto defendible.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Repaso: estadísticas y estudios económicos (Día 13)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Una estadística convierte datos en información útil. Con datos de dinero, sospecha del <mark>promedio</mark> (lo distorsionan los extremos) y compáralo con la <mark>mediana</mark>. Toda variación porcentual va con valores absolutos y base; compara contra el mismo mes del año anterior (estacionalidad); <mark>correlación no es causa</mark>; presenta sin engañar; depura antes de calcular.</p>
+</div>
+<div class="b-texto">
+  <p>El quinto tema enseñó a interpretar los datos sin que engañen. Las ideas más preguntadas: con datos de dinero, el <strong>promedio</strong> se distorsiona por los valores extremos, así que conviene compararlo con la <strong>mediana</strong> (que representa al típico). Toda <strong>variación porcentual</strong> debe ir con los valores absolutos y la base de comparación, porque un porcentaje enorme sobre una base pequeña engaña.</p>
+  <p>Otras claves: para comparar un mes, hacerlo contra el <strong>mismo mes del año anterior</strong> (neutraliza la estacionalidad del calendario tributario); <strong>correlación no es causa</strong> (que dos cifras se muevan juntas no prueba que una cause la otra); presentar <strong>sin engañar</strong> (ejes desde cero, fuente rotulada); y, de nuevo, <strong>depurar antes de calcular</strong>. Toda estadística es tan buena como los datos de los que sale.</p>
+  <p>La enseñanza integradora es que el Analista no solo 'saca números', sino que produce información confiable que alimenta decisiones y la política económica. Su rigor al elegir la medida, contextualizar la cifra, no afirmar causas sin pruebas y presentar con honestidad es lo que hace que sus estadísticas merezcan confianza. Una cifra vale por la confianza que merece.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Situación</th><th>Respuesta correcta</th></tr></thead>
+    <tbody>
+      <tr><td>Datos de dinero con extremos</td><td>Usar/reportar la mediana, no solo el promedio</td></tr>
+      <tr><td>Variación % sobre base pequeña</td><td>Acompañar con absolutos; no es tendencia</td></tr>
+      <tr><td>Dos cifras que suben juntas</td><td>Correlación no es causa; verificar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que reporte un promedio engañoso, celebre un porcentaje enorme sobre base pequeña, confunda una caída estacional con una crisis o afirme una causa sin pruebas, descártala. Trampa típica: la cifra 'impresionante' (un 150% de crecimiento de 2 a 5 casos) o la conclusión causal apresurada. La respuesta es la que aplica rigor estadístico.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Con datos de dinero donde unos pocos valores enormes distorsionan el promedio, conviene:</p>
+  <div class="cp-op" data-op="a">a) Reportar solo el promedio, porque siempre es la mejor medida.</div>
+  <div class="cp-op" data-op="b">b) Inventar una cifra intermedia que parezca razonable.</div>
+  <div class="cp-op" data-op="c">c) Comparar con la mediana (que representa al típico) y reportar ambas si difieren.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: el promedio que engaña y el 150%</h4>
+    <p>Mini-caso doble: (1) reportan que 'cada contribuyente aporta 80 millones' (el promedio), pero la mediana es de 6 —la respuesta es reportar ambas y aclarar que el típico aporta cerca de 6, porque unos pocos grandes inflan el promedio—; y (2) celebran un 'crecimiento del 150%' que fue de 2 a 5 casos —la respuesta es mostrar los absolutos y advertir que la base pequeña no permite hablar de tendencia—. Ambos son las trampas estadísticas más frecuentes.</p>
+    <p>La clave de repaso es tener a mano las tres alertas: sospechar del promedio con datos de dinero (comparar con la mediana), desconfiar de los porcentajes grandes sobre bases pequeñas (pedir los absolutos) y no confundir una caída estacional con una crisis (comparar año contra año). A ello se suma no afirmar causas sin pruebas (correlación no es causa) y presentar sin escalas tramposas. Con esas alertas activadas, las preguntas de estadística se responden reconociendo cuál trampa plantea cada una.</p>
+
+
+    <h4>Dispersión y presentación, en resumen</h4>
+    <p>Repaso estadístico: además del centro (promedio/mediana), importa la dispersión (qué tan juntos o separados están los datos); dos grupos con el mismo promedio pueden ser muy distintos. Y la presentación honesta: ejes desde cero, tipo de gráfico adecuado, fuente y período rotulados. Un eje truncado exagera un cambio pequeño; un gráfico mal elegido confunde. Presentar es informar, no impresionar. Estas ideas completan el arsenal para no dejarse engañar —ni engañar— con los datos.</p>
+
+
+    <h4>El rol del Analista como productor de estadísticas</h4>
+    <p>Para fijar el tema estadístico: el Analista no 'saca números', produce información confiable que alimenta decisiones e incluso la política económica del país. Esa responsabilidad eleva la exigencia de rigor —elegir la medida correcta, contextualizar, no afirmar causas sin pruebas, presentar con honestidad— y de ética —no maquillar una cifra para que luzca mejor—. Una estadística vale por la confianza que merece, y esa confianza se gana con rigor e integridad. Es el mismo estándar que recorre todo el curso, aplicado a los datos.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Repaso: perfiles de riesgo (Día 14)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Un perfil de riesgo <mark>orienta, no condena</mark>: señala a quién mirar, no quién es culpable. El riesgo combina probabilidad e impacto; lo que lo eleva es la <mark>convergencia de varias señales</mark>, no una sola. Una inconsistencia es una señal a verificar, no fraude probado. Se respetan la buena fe y el debido proceso. El Analista aporta señales, NO decide ni sanciona.</p>
+</div>
+<div class="b-texto">
+  <p>El sexto tema es una de las funciones más características del cargo. La idea central: el perfil de riesgo <strong>orienta</strong> (a quién revisar), no <strong>condena</strong> (no prueba culpa). Aparecer en un perfil no convierte a nadie en culpable; se mantiene la presunción de buena fe, y solo un debido proceso puede llevar a una sanción. El Analista da soporte (datos, cruces, señales a verificar), pero no decide a quién fiscalizar ni impone sanciones.</p>
+  <p>Claves que reaparecen: el riesgo combina <strong>probabilidad e impacto</strong> (se prioriza donde ambos son altos); lo que eleva el riesgo es la <strong>convergencia de varias señales</strong> coherentes, no un solo dato; una <strong>inconsistencia</strong> de un cruce es una señal a verificar, no fraude probado; y hay que minimizar los <strong>falsos positivos</strong> (señalar a quien cumple) depurando los datos y combinando señales. El lenguaje importa: 'señales a verificar', no 'evasores'.</p>
+  <p>La enseñanza integradora es que un buen perfil es a la vez <strong>útil</strong> (dirige el control a donde importa) y <strong>justo</strong> (no señala a inocentes), y ambas cosas dependen del rigor del Analista y del respeto por las garantías. El perfil abre una pregunta, no cierra un juicio.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El perfil...</th><th>El Analista...</th></tr></thead>
+    <tbody>
+      <tr><td>Orienta (a quién mirar)</td><td>Aporta señales a verificar</td></tr>
+      <tr><td>No condena ni prueba culpa</td><td>No decide ni sanciona</td></tr>
+      <tr><td>Combina varias señales</td><td>Depura y respeta las garantías</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que trate a un perfilado como 'evasor probado', tome una sola señal como fraude o salte el debido proceso, descártala. Trampa típica: hacer ver 'resolutivo' al que sanciona de inmediato a quien aparece en un perfil. La respuesta recuerda que el perfil orienta, las señales se combinan y verifican, y las garantías se respetan.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Que un contribuyente aparezca en un perfil de riesgo significa que:</p>
+  <div class="cp-op" data-op="a">a) Presenta un patrón que amerita una revisión más atenta, sin que ello pruebe por sí solo ningún incumplimiento ni permita sancionarlo.</div>
+  <div class="cp-op" data-op="b">b) Ya está probado que es un evasor y puede sancionarse de inmediato.</div>
+  <div class="cp-op" data-op="c">c) Debe demostrar su inocencia antes de cualquier revisión.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: la inconsistencia del cruce</h4>
+    <p>Mini-caso: un cruce arroja 50 contribuyentes que importan mucho y declaran ventas casi nulas, y presionan para reportarlos 'como fraude'. La respuesta correcta: verificar que los NIT estén bien cruzados, descartar los casos con explicación evidente (mercancía en inventario, desfase) y reportar la lista depurada como 'señales a verificar', no como fraude probado. El perfil orienta, no condena; y el Analista aporta señales, no determina culpas ni sanciona.</p>
+    <p>El reflejo de repaso para perfiles es triple: (1) una sola señal rara vez basta —lo que eleva el riesgo es la convergencia—; (2) una inconsistencia es una señal a verificar, no una prueba; y (3) el lenguaje importa: se reportan 'señales a verificar', no 'evasores'. Cualquier opción que trate a un perfilado como culpable, sancione de inmediato o salte el debido proceso es la incorrecta. Este tema conecta el marco (buena fe, debido proceso) con las herramientas (datos, cruces): perfilar bien es perfilar con rigor y con garantías.</p>
+
+
+    <h4>Falsos positivos y garantías, en resumen</h4>
+    <p>Repaso de perfiles: todo sistema comete falsos positivos (señalar a quien cumple) y falsos negativos (dejar pasar a quien incumple); el objetivo es reducirlos, no eliminarlos (es imposible). Minimizar los falsos positivos —depurando datos y combinando señales— protege a los honestos. Y las garantías (buena fe, debido proceso, no discriminación) acompañan todo el perfilamiento. Un perfil útil y justo es el que dirige bien el control sin atropellar derechos; esa doble cualidad es el estándar del tema.</p>
+
+
+    <h4>Útil y justo, en una frase</h4>
+    <p>Para cerrar el repaso de perfiles en una frase: un buen perfil es a la vez útil (dirige el control a donde más importa, combinando probabilidad e impacto con datos confiables) y justo (no señala a inocentes, porque depura los datos, exige la convergencia de señales y respeta las garantías). Ambas cualidades se refuerzan: un perfil lleno de falsos positivos no solo es injusto, también es inútil. El Analista logra ambas con rigor y respeto por los derechos.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Repaso: evasión, contrabando y transparencia (Día 15)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Distingue <mark>evasión</mark> (ocultar: ilegal), <mark>elusión</mark> (abuso: gris) y <mark>planeación</mark> (beneficio legal: legítima). El <mark>contrabando técnico</mark> (subfacturar, mal clasificar) se detecta con datos. Ante posible lavado, reporta por los canales (lo persigue Fiscalía/UIAF). Transparencia (Ley 1712): lo público se entrega, lo reservado se protege.</p>
+</div>
+<div class="b-texto">
+  <p>El séptimo tema enseñó qué combate la DIAN y qué debe honrar. La distinción clave: la <strong>evasión</strong> (ocultar o falsear para no pagar) es ilegal; la <strong>elusión</strong> (abuso de la norma sin razón económica) es una zona gris perseguida; y la <strong>planeación tributaria</strong> (aprovechar beneficios que la ley permite) es legítima. No hay que confundir planeación con evasión: perseguir a quien actúa dentro de la ley es un error.</p>
+  <p>El <strong>contrabando técnico</strong> (subfacturación, clasificación errónea) se detecta cruzando valores declarados con referentes; ante posibles señales de <strong>lavado</strong>, el Analista reporta por los canales, pero la persecución penal es de la Fiscalía y la UIAF. Y del otro lado, la <strong>transparencia</strong> (Ley 1712, máxima publicidad): lo público se entrega (negar lo público también es falta), lo reservado se protege; las cifras agregadas suelen ser públicas, los datos individuales son reservados.</p>
+  <p>La enseñanza integradora es que el control del incumplimiento y la transparencia del Estado son dos caras del mismo compromiso con lo público, y ambas descansan en información confiable. El Analista distingue lo ilegal de lo legítimo y lo público de lo reservado, siempre respetando las garantías.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Conducta/Situación</th><th>Clave</th></tr></thead>
+    <tbody>
+      <tr><td>Evasión / elusión / planeación</td><td>Ilegal / gris / legítima</td></tr>
+      <tr><td>Contrabando técnico</td><td>Se detecta con datos (subfacturación)</td></tr>
+      <tr><td>Transparencia (Ley 1712)</td><td>Público se entrega; reservado se protege</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que confunda planeación con evasión, haga al Analista investigar el lavado por su cuenta o niegue información pública 'por si acaso', descártala. Trampa típica: tratar como evasor a quien aprovechó un beneficio legal, o negar una cifra agregada que es pública. La respuesta distingue lo legal de lo ilegal y lo público de lo reservado.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>Aprovechar una deducción que la ley expresamente permite es:</p>
+  <div class="cp-op" data-op="a">a) Evasión, porque el contribuyente pagó menos impuesto.</div>
+  <div class="cp-op" data-op="b">b) Planeación tributaria legítima: ejerció un derecho previsto por la propia ley, no un incumplimiento.</div>
+  <div class="cp-op" data-op="c">c) Contrabando, porque redujo lo que debía pagar.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: planeación, evasión y una base reservada</h4>
+    <p>Mini-caso: un contribuyente pagó poco impuesto aprovechando una deducción legal —eso es planeación legítima, no se persigue—; y, por otro lado, un conocido pide 'averiguar' si una empresa está en la mira de la DIAN —eso se niega, porque la información es reservada y usarla para fines ajenos es falta grave—. Dos decisiones que aplican las distinciones del tema: lo legal frente a lo ilegal, y lo que se protege frente a lo que no se divulga.</p>
+    <p>La clave de repaso es tener claras dos distinciones que la prueba suele poner a prueba: evasión (ilegal) / elusión (gris) / planeación (legítima); y público (se entrega) / reservado (se protege). Ante la duda, preguntarse por el engaño (¿hay ocultamiento?) y por la razón de negocio (¿la operación tiene sentido económico real o solo busca pagar menos?). Y recordar que la transparencia es la regla (negar lo público también es falta), pero la reserva de los datos individuales es firme. Son las dos brújulas de este tema.</p>
+
+
+    <h4>Por qué combatir la evasión, en resumen</h4>
+    <p>Repaso del porqué: la evasión no es una 'viveza' sin víctimas. Priva al Estado de recursos para servicios, rompe la equidad (la carga del que evade se traslada a los que cumplen) y genera competencia desleal (la empresa que evade tiene costos artificialmente bajos). Combatirla protege los recursos de todos, la justicia del sistema y la competencia leal. Este sentido le da propósito al trabajo del Analista: no persigue personas, protege la equidad del sistema tributario.</p>
+
+
+    <h4>La transparencia como deber del propio Estado</h4>
+    <p>Un cierre del tema de transparencia: no solo se controla a los particulares; el Estado también debe rendir cuentas y dejar ver cómo actúa (Ley 1712, máxima publicidad). Lo público se entrega —negarlo 'por si acaso' también es falta—, lo reservado se protege. Las cifras agregadas suelen ser públicas; los datos individuales, reservados. El Analista, al producir información veraz y disponible, contribuye a esa transparencia, que es una de las principales herramientas contra la corrupción. Controlar y rendir cuentas son dos caras del mismo compromiso con lo público.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Repaso: ofimática aplicada (Día 16)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>La herramienta <mark>multiplica al buen analista, pero no lo reemplaza</mark>: calcula lo que se le indica, aunque esté mal. Depura antes; verifica que el resultado tenga sentido; ordena toda la tabla; los 'no encontrados' de un cruce suelen ser llave sucia; envía datos en csv/xlsx (no PDF); no compartas la clave; presenta sin escalas tramposas.</p>
+</div>
+<div class="b-texto">
+  <p>El octavo tema trató el uso con criterio de las herramientas. La idea central: la hoja de cálculo y demás herramientas <strong>multiplican al buen analista, pero no lo reemplazan</strong>; calculan con precisión lo que se les indica, aunque lo indicado esté mal. Por eso: depurar antes (duplicados, vacíos, formatos), verificar que el resultado tenga sentido, ordenar siempre la tabla completa.</p>
+  <p>Claves prácticas que reaparecen: muchos <strong>'no encontrados'</strong> en un cruce suelen ser por la llave (NIT) sucia, no por ausencia real; las <strong>tablas dinámicas</strong> resumen rápido pero sobre datos sucios resumen basura; para enviar datos se usa <strong>csv o xlsx</strong> (no PDF, del que es engorroso extraer); no se <strong>comparte la clave</strong>; y se presenta <strong>sin escalas tramposas</strong>. El perfil buscado es el de un usuario experto y responsable: eficiencia + criterio + honestidad + seguridad.</p>
+  <p>La enseñanza integradora es que dominar las herramientas es necesario pero insuficiente: lo decisivo es usarlas con criterio (verificar), con honestidad (comunicar sin engañar) y con seguridad (proteger la información). La herramienta amplifica tanto el acierto como el descuido del que la usa.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Situación</th><th>Respuesta correcta</th></tr></thead>
+    <tbody>
+      <tr><td>Resultado raro de la herramienta</td><td>Verificar, no confiar ciegamente</td></tr>
+      <tr><td>Muchos 'no encontrados' al cruzar</td><td>Revisar la llave (NIT sucia)</td></tr>
+      <tr><td>Enviar datos a procesar</td><td>csv/xlsx, no PDF</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que confíe ciegamente en un resultado raro, comparta la clave, envíe datos en PDF u ordene una sola columna descuadrando la tabla, descártala. Trampa típica: hacer ver 'eficiente' al que confía en la máquina o 'colaborador' al que presta la clave. La respuesta aplica criterio, honestidad y seguridad.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Respecto a las herramientas ofimáticas, lo correcto es entender que:</p>
+  <div class="cp-op" data-op="a">a) Reemplazan el criterio del analista: basta con que calculen.</div>
+  <div class="cp-op" data-op="b">b) Nunca se equivocan, así que no hay que verificar sus resultados.</div>
+  <div class="cp-op" data-op="c">c) Multiplican el trabajo, pero no reemplazan el criterio: calculan lo que se les indica aunque esté mal; hay que depurar y verificar.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: el resultado raro y la clave prestada</h4>
+    <p>Mini-caso doble: (1) una tabla dinámica arroja un total absurdamente alto —la respuesta es desconfiar y verificar (probable duplicado o rango mal elegido), no reportarlo 'porque lo dijo la herramienta'—; y (2) un compañero pide la clave 'un momento para avanzar' —la respuesta es negarse, porque las claves son individuales y comparten la trazabilidad—. Las dos aplican el principio del tema: la herramienta no reemplaza el criterio, y la seguridad es innegociable.</p>
+    <p>El reflejo de repaso para ofimática es: depurar antes, verificar después, cuidar la llave al cruzar, enviar datos en csv/xlsx (no PDF), no compartir la clave y presentar sin escalas tramposas. Casi todas las preguntas del tema plantean una de estas trampas: confiar ciegamente, compartir credenciales, usar el formato equivocado o engañar con un gráfico. Reconocer la trampa lleva a la respuesta: el usuario experto y responsable combina eficiencia con criterio, honestidad y seguridad.</p>
+
+
+    <h4>Tablas dinámicas y formatos, en resumen</h4>
+    <p>Repaso de ofimática: la tabla dinámica es la herramienta reina para resumir (agrupa y calcula en segundos), pero sobre datos sucios resume basura con elegancia, así que exige depurar antes y verificar el total contra la base. Y los formatos: xlsx para trabajar, csv para intercambiar datos entre sistemas (cuidando NIT, ceros y tildes), PDF solo para documentos finales. Elegir mal el formato puede corromper una base o hacer ilegible un dato clave. Son detalles técnicos con consecuencias grandes.</p>
+
+
+    <h4>El usuario experto y responsable, en una frase</h4>
+    <p>Para cerrar el repaso de ofimática: el perfil buscado es el de un usuario experto y responsable, que combina eficiencia técnica (domina filtros, cruces, tablas dinámicas), criterio (depura y verifica, no confía ciegamente), honestidad (comunica sin engañar) y seguridad (protege la información y no comparte la clave). La herramienta multiplica a ese analista, pero nunca lo reemplaza: calcula lo que se le indica, aunque esté mal. El criterio humano sigue siendo lo decisivo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Repaso: gestión documental y trazabilidad (Día 17)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Documentar NO es burocracia: hace el trabajo <mark>trazable, auditable y defendible</mark>. La eliminación de documentos se rige por la <mark>TRD</mark> (no 'porque estorban'); la foliación garantiza la integridad del expediente; la <mark>trazabilidad</mark> protege al servidor honesto; el autocontrol es la primera línea de defensa.</p>
+</div>
+<div class="b-texto">
+  <p>El noveno tema mostró que el orden documental no es burocracia. Las ideas más preguntadas: la <strong>eliminación</strong> de documentos de archivo se rige por la <strong>Tabla de Retención Documental (TRD)</strong>, con procedimiento y acta, nunca 'porque estorban'; la <strong>foliación</strong> (numerar las hojas) garantiza la integridad del expediente (un salto en la numeración delata una hoja faltante); y la <strong>trazabilidad</strong> (quién hizo qué y cuándo) no es solo control: protege al servidor honesto, porque le permite demostrar que actuó bien.</p>
+  <p>Otras claves: el documento de archivo tiene valor (admin., legal, fiscal, histórico) y se organiza en series y expedientes a lo largo de un ciclo vital (gestión, central, histórico); el documento electrónico, si cumple autenticidad, integridad y conservación, vale igual que el de papel; y el <strong>autocontrol</strong> (verificar lo propio antes de entregar) es la primera y mejor línea de defensa contra los errores.</p>
+  <p>La enseñanza integradora es que documentar, ordenar y controlar hacen el trabajo trazable, auditable y defendible. Lo que no se documenta, no se puede probar. El orden y la trazabilidad no frenan el trabajo: lo respaldan y lo protegen.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Situación</th><th>Respuesta correcta</th></tr></thead>
+    <tbody>
+      <tr><td>'Botar expedientes que estorban'</td><td>Se rige por la TRD, con procedimiento</td></tr>
+      <tr><td>Aportar a un expediente foliado</td><td>Orden cronológico y foliar (integridad)</td></tr>
+      <tr><td>Demostrar cómo se hizo el trabajo</td><td>Trazabilidad (bitácora) que respalda</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que elimine documentos 'porque estorban', rompa la integridad de un expediente o no deje constancia de una actuación, descártala. Trampa típica: hacer ver 'práctico' al que bota expedientes o 'ágil' al que no documenta. La respuesta respeta la TRD, la foliación y la trazabilidad.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>La eliminación de documentos de archivo:</p>
+  <div class="cp-op" data-op="a">a) Se decide a ojo, botando lo que estorba para ganar espacio.</div>
+  <div class="cp-op" data-op="b">b) Se rige por la Tabla de Retención Documental (TRD), con su procedimiento y acta; nunca 'porque estorban'.</div>
+  <div class="cp-op" data-op="c">c) La puede hacer cualquiera, cuando quiera, con cualquier documento.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: botar expedientes y la auditoría</h4>
+    <p>Mini-caso doble: (1) proponen 'botar expedientes viejos que estorban' —la respuesta es que la eliminación se rige por la TRD, con procedimiento y acta, no a ojo—; y (2) seis meses después, una auditoría pregunta cómo se obtuvo una cifra —quien llevó bitácora (trazabilidad) lo demuestra en minutos; quien no, queda indefenso—. Ambos muestran por qué el orden documental no es burocracia, sino respaldo.</p>
+    <p>El reflejo de repaso para gestión documental: la eliminación por la TRD (nunca 'porque estorba'), la foliación que protege la integridad del expediente, la trazabilidad que respalda al servidor honesto y el autocontrol como primera línea de defensa. Las preguntas suelen presentar la tentación de 'ahorrarse el papeleo'; la respuesta correcta recuerda que documentar hace el trabajo trazable, auditable y defendible. Lo que no se documenta, no se puede probar: ese es el principio que resuelve el tema.</p>
+
+
+    <h4>Documento de archivo y ciclo vital, en resumen</h4>
+    <p>Repaso documental: no todo papel es documento de archivo; lo es el que se produce o recibe en ejercicio de las funciones y tiene valor (admin., legal, fiscal, histórico). Los documentos viven un ciclo (archivo de gestión, central, histórico) y la TRD define los tiempos y la disposición final. Series (por tipo) y expedientes (por asunto) organizan el acervo; la foliación garantiza la integridad. Distinguir documento de archivo de copia de apoyo evita tanto el caos de guardarlo todo como la pérdida de borrar lo valioso.</p>
+
+
+    <h4>Por qué el orden documental respalda al servidor</h4>
+    <p>Para fijar el tema documental: documentar y ordenar no son burocracia, son el respaldo del propio servidor. Un trabajo trazable se puede reconstruir, auditar y defender; uno sin documentar queda a merced de la memoria. La trazabilidad, lejos de ser solo vigilancia, es la prueba de que se actuó bien. Y la eliminación de documentos se rige por la TRD, nunca por el espacio o la comodidad. Un Analista ordenado y que documenta no es más lento: es más confiable, porque su trabajo se sostiene ante cualquier revisión.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Repaso: MIPG, control interno y auditoría (Día 18)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>El <mark>MIPG</mark> es el marco de planeación y gestión. El control interno es <mark>responsabilidad de todos</mark> y empieza en el autocontrol (primera línea de defensa). La <mark>auditoría interna</mark> (tercera línea) asegura y asesora, NO caza culpables: ante ella, colabora con transparencia. El control más eficaz es la <mark>integridad</mark>.</p>
+</div>
+<div class="b-texto">
+  <p>El décimo tema ubicó al Analista en el sistema de gestión y control. El <strong>MIPG</strong> es el marco que ordena planear, gestionar, controlar y mejorar al servicio del ciudadano. El <strong>control interno</strong> es responsabilidad de todos y empieza en el <strong>autocontrol</strong> de cada puesto (primera línea de defensa); el Analista está en esa primera línea.</p>
+  <p>La <strong>auditoría interna</strong> (tercera línea, independiente) asegura (evalúa si los controles funcionan) y asesora (recomienda mejoras): NO caza culpables. Ante ella, la actitud correcta es la <strong>colaboración transparente</strong> (aportar la evidencia, no ocultar ni alterar, tomar los hallazgos como mejora). Y por encima de todo, el control más eficaz es la <strong>integridad</strong>: hacer lo correcto aunque nadie vigile.</p>
+  <p>La enseñanza integradora es que el control no es un enemigo, sino la garantía de que lo público funciona bien y sirve al ciudadano; y que se sostiene en información confiable y en la integridad de cada servidor. El Analista aporta ambas cosas.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Elemento</th><th>Clave</th></tr></thead>
+    <tbody>
+      <tr><td>Control interno</td><td>Responsabilidad de todos; empieza en el autocontrol</td></tr>
+      <tr><td>Auditoría interna</td><td>Asegura y asesora, no caza culpables</td></tr>
+      <tr><td>El control más eficaz</td><td>La integridad: hacer lo correcto sin vigilancia</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que vea el control como ajeno, oculte información a una auditoría, tome un hallazgo como ataque o ceda a una presión contra la integridad, descártala. Trampa típica: hacer ver 'prudente' al que oculta lo incómodo a la auditoría. La respuesta asume el autocontrol, colabora con transparencia y actúa con integridad.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>Ante una auditoría interna, la actitud correcta es:</p>
+  <div class="cp-op" data-op="a">a) Ocultar o mostrar solo lo que conviene, para que no encuentren observaciones.</div>
+  <div class="cp-op" data-op="b">b) Obstruir y tomar cada hallazgo como un ataque personal.</div>
+  <div class="cp-op" data-op="c">c) Colaborar con transparencia, aportar la evidencia y tomar los hallazgos como oportunidades de mejora.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: el control ajeno y la cifra incómoda</h4>
+    <p>Mini-caso doble: (1) un compañero dice que 'el control es cosa de la oficina de control, no suya' —la respuesta es que el control interno es de todos y empieza en el autocontrol (primera línea)—; y (2) presionan para 'ajustar un indicador que salió bajo' —la respuesta es entregar la cifra fiel, porque manipularla engaña a quien decide y es falta de integridad—. Ambos aplican el núcleo del tema: el control empieza en uno y la integridad es el control más eficaz.</p>
+    <p>El reflejo de repaso para MIPG y control interno: el Analista está en la primera línea (su autocontrol es la base); la auditoría asegura y asesora, no caza culpables (ante ella, colaborar con transparencia); no se oculta ni se manipula; y el control más eficaz es la integridad. Las preguntas plantean la tentación de ver el control como ajeno, ocultar a una auditoría o ceder a una presión; la respuesta correcta asume el control como propio y actúa con integridad aunque nadie mire.</p>
+
+
+    <h4>Las tres líneas de defensa, en resumen</h4>
+    <p>Repaso de control: tres líneas de defensa. Primera: quienes hacen el trabajo y lo controlan día a día (el Analista, con su autocontrol). Segunda: áreas de riesgos/calidad que apoyan y dan metodología. Tercera: la auditoría interna, independiente, que evalúa todo el sistema. Ubicar cada rol evita verlos como rivales: la auditoría no hace el trabajo de la primera línea ni es su enemiga; es una evaluación objetiva que agrega valor. Y todo descansa en la integridad de las personas.</p>
+
+
+    <h4>La integridad como base de todo el sistema de control</h4>
+    <p>Un cierre del tema de control: toda la arquitectura del MIPG, el control interno, las líneas de defensa y la auditoría descansa, en última instancia, sobre la integridad de cada servidor. Ningún sistema de control sustituye la honestidad personal; por eso el control más eficaz y más barato es hacer lo correcto aunque nadie vigile. El Analista que protege lo reservado, documenta con honestidad, se autocontrola y no usa su posición indebidamente es, él mismo, el control más eficaz. El control no es un enemigo: es la garantía de que lo público funciona bien.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Repaso: CPACA, PQRSF y servicio al ciudadano (Día 19)</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>El ciudadano está en el <mark>centro</mark>. El <mark>derecho de petición</mark> obliga a responder pronto, de fondo y claro (plazos: 15 general, 10 info/docs, 30 consultas, en días hábiles). Las PQRSF obligan a responder; una petición mal dirigida se traslada por competencia; buena atención es <mark>resolver</mark>, no despachar; con igualdad e inclusión.</p>
+</div>
+<div class="b-texto">
+  <p>El undécimo tema recordó para quién se trabaja: el ciudadano. El <strong>derecho de petición</strong> (art. 23) obliga a responder de forma <strong>pronta, de fondo y clara</strong>, con plazos de 15 días hábiles (general), 10 (documentos e información) y 30 (consultas); si no se alcanza, hay que informar al peticionario antes del vencimiento. Las <strong>PQRSF</strong> son los canales del ciudadano y todas obligan a responder.</p>
+  <p>Claves que reaparecen: una petición <strong>mal dirigida</strong> se traslada por competencia e se informa al ciudadano (no se 'pelotea'); la buena atención es <strong>resolver</strong>, no solo despachar; se trata a todos con <strong>igualdad e imparcialidad</strong> (sin trato preferente a conocidos) y con <strong>accesibilidad e inclusión</strong>; y el <strong>debido proceso</strong> protege al ciudadano de decisiones arbitrarias (el perfil orienta, pero la decisión exige procedimiento con garantías).</p>
+  <p>La enseñanza integradora es que todo el aparato administrativo existe para servir al ciudadano con respeto, en los plazos, de fondo y con garantías. El Analista sirve al ciudadano con información confiable y oportuna, y con respeto por sus derechos.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Situación</th><th>Respuesta correcta</th></tr></thead>
+    <tbody>
+      <tr><td>No se alcanza el plazo</td><td>Informar al peticionario antes del vencimiento</td></tr>
+      <tr><td>Petición mal dirigida</td><td>Trasladar por competencia e informar</td></tr>
+      <tr><td>Ciudadano confundido</td><td>Resolver con empatía, no despachar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una opción que vea al ciudadano como estorbo, no responda o responda tarde/con evasivas, dé trato preferente a un conocido o excluya a quien no maneja la tecnología, descártala. Trampa típica: hacer ver 'eficiente' al que despacha sin resolver. La respuesta pone al ciudadano en el centro, responde a tiempo y de fondo y respeta la igualdad.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>La respuesta a un derecho de petición debe ser:</p>
+  <div class="cp-op" data-op="a">a) Pronta (en el plazo), de fondo (resuelve lo pedido) y clara; es una obligación, no una gracia.</div>
+  <div class="cp-op" data-op="b">b) Opcional: la administración responde solo si quiere.</div>
+  <div class="cp-op" data-op="c">c) Una evasiva basta, siempre que formalmente 'se responda algo'.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Mini-caso: el plazo y la petición mal dirigida</h4>
+    <p>Mini-caso doble: (1) no se alcanza el plazo de una petición de información (10 días hábiles) —la respuesta es informar al peticionario antes del vencimiento, no dejar vencer en silencio—; y (2) llega una PQRSF que es de otra dependencia —la respuesta es trasladarla por competencia e informar al ciudadano, no devolverla ni 'peletearlo'—. Ambas protegen el derecho de petición y ponen al ciudadano en el centro.</p>
+    <p>El reflejo de repaso para el servicio al ciudadano: responder pronto, de fondo y con claridad; informar si no se alcanza el plazo; trasladar por competencia lo que no es del área; resolver (no despachar); tratar a todos con igualdad (sin trato preferente a conocidos) y con inclusión. Las preguntas suelen presentar al ciudadano como estorbo o tentar con evasivas, favoritismos o exclusión; la respuesta correcta recuerda que servir al ciudadano con respeto y a tiempo es la razón de ser del servidor.</p>
+
+
+    <h4>El silencio administrativo y la inclusión, en resumen</h4>
+    <p>Repaso del servicio: el silencio administrativo es un remedio para el ciudadano (generalmente negativo, para que pueda seguir actuando), no una salida para que la administración deje de responder; la obligación de responder se mantiene. Y la accesibilidad e inclusión son parte del derecho a la igualdad: dar atención adaptada a quien lo necesita (adulto mayor, persona con discapacidad, quien no maneja la tecnología) no es un privilegio, es igualdad real. Nadie debe quedar excluido del acceso a sus derechos.</p>
+
+
+    <h4>El ciudadano en el centro, siempre</h4>
+    <p>Para cerrar el tema de servicio: todo el aparato administrativo —CPACA, derecho de petición, PQRSF, debido proceso, atención— existe para servir al ciudadano. Responder siempre, a tiempo, de fondo y con respeto; tratar a todos por igual y sin excluir a nadie; resolver, no despachar. El ciudadano no es un estorbo: atenderlo es el trabajo. El Analista sirve al ciudadano con información confiable y oportuna y con respeto por sus derechos, aunque muchas veces no lo vea directamente. Esa vocación de servicio le da sentido a toda la competencia técnica del cargo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Cómo se conectan todos los temas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>Los once temas no son islas: forman una cadena. La Constitución y el sistema tributario dan el <mark>marco</mark>; la gestión de información, las estadísticas y los perfiles son las <mark>herramientas</mark> del control; la gestión documental, el MIPG y el control interno dan el <mark>orden y el respaldo</mark>; y el servicio al ciudadano es el <mark>fin</mark>. Todo descansa en información confiable e integridad.</p>
+</div>
+<div class="b-texto">
+  <p>El valor de un repaso no es solo recordar cada tema, sino ver cómo se conectan. Hay un hilo claro. El <strong>marco</strong> (Constitución, sistema tributario) fija el porqué y los límites: el deber de contribuir, los tres ámbitos de control, las garantías. Sobre ese marco operan las <strong>herramientas de información</strong> (servicios informáticos, gobernanza de datos, estadísticas, perfiles de riesgo), que son el corazón técnico del cargo: convertir datos confiables en información útil para el control.</p>
+  <p>Ese trabajo con información necesita <strong>orden y respaldo</strong>: la gestión documental, la trazabilidad, el MIPG y el control interno aseguran que todo sea trazable, auditable y defendible. Y todo el conjunto apunta a un <strong>fin</strong>: servir al ciudadano (CPACA, derecho de petición, PQRSF, atención de calidad) y sostener la transparencia del Estado. Marco, herramientas, orden y fin forman una cadena coherente.</p>
+  <p>Dos elementos atraviesan toda la cadena: la <strong>información confiable</strong> (sin ella, nada funciona: ni el control, ni la evaluación, ni la rendición de cuentas) y la <strong>integridad</strong> del servidor (ningún sistema sustituye la honestidad personal). El Analista I aporta precisamente esos dos elementos, y por eso su rol —aunque técnico— es fundamental en todo el edificio.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Bloque</th><th>Temas</th><th>Aporte</th></tr></thead>
+    <tbody>
+      <tr><td>Marco</td><td>Constitución, sistema tributario</td><td>El porqué y los límites</td></tr>
+      <tr><td>Herramientas</td><td>Sistemas, datos, estadísticas, riesgo</td><td>Convertir datos en control</td></tr>
+      <tr><td>Orden y respaldo</td><td>Documental, MIPG, control interno</td><td>Trazable, auditable, defendible</td></tr>
+      <tr><td>Fin</td><td>Servicio al ciudadano, transparencia</td><td>Para qué existe todo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante una pregunta situacional compleja, ubícala en la cadena: ¿toca el marco (garantías), las herramientas (datos, riesgo), el orden (control, documentación) o el servicio (ciudadano)? Casi siempre la respuesta correcta protege la información confiable, respeta las garantías y sirve al ciudadano. Ver el tema dentro de la cadena te da el criterio para elegir.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>Los dos elementos que atraviesan y sostienen toda la cadena de temas del cargo son:</p>
+  <div class="cp-op" data-op="a">a) La velocidad y la cantidad de cifras producidas.</div>
+  <div class="cp-op" data-op="b">b) La información confiable y la integridad del servidor: sin ellas nada funciona y ningún sistema las sustituye.</div>
+  <div class="cp-op" data-op="c">c) La vigilancia externa y el miedo a la sanción.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Cómo usar la cadena en el simulacro</h4>
+    <p>En el simulacro, muchas preguntas mezclan temas: una sobre un cruce que involucra datos reservados toca gobernanza, perfiles, transparencia y servicio a la vez. Ubicar la pregunta en la cadena ayuda a no perderse: ¿qué garantía o principio está en juego? Casi siempre, la respuesta correcta protege la información confiable, respeta las garantías del ciudadano, mantiene al Analista en su rol (aporta, no decide) y actúa con integridad. Esa brújula resuelve incluso los casos que combinan varios temas.</p>
+    <p>La clave de repaso es no estudiar los temas como once compartimentos, sino verlos como un sistema con una lógica común. Cuando una pregunta parezca difícil porque toca varios temas, volver a la cadena —marco, herramientas, orden, fin— y a los dos pilares —información confiable e integridad— casi siempre ilumina la respuesta. El simulacro no premia memorizar datos sueltos, sino aplicar con criterio esta visión integrada del rol del Analista I.</p>
+
+
+    <h4>Cómo se refuerzan control y transparencia</h4>
+    <p>Un repaso de las conexiones más finas: el control del incumplimiento y la transparencia del Estado no se oponen, se refuerzan. Un Estado que controla pero es opaco genera desconfianza; uno transparente pero incapaz de hacer cumplir es ineficaz. La legitimidad plena viene de hacer ambas cosas, y ambas descansan en información confiable. El Analista, al producir datos fiables, sostiene a la vez el control (perfiles, detección) y la transparencia (cifras públicas, rendición de cuentas). Esa doble contribución resume el valor de su rol.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>Síntesis: el rol completo del Analista I</h3></div>
+    <div class="def-panel"><span class="def-label">Idea para fijar</span>
+  <p>El Analista I es un <mark>servidor de la información al servicio del ciudadano</mark>: gestiona datos confiables, apoya el control del incumplimiento con rigor y respeto por las garantías, trabaja con orden y trazabilidad, y actúa con integridad. Rigor técnico + vocación de servicio + integridad = el perfil que el cargo busca y que la prueba evalúa.</p>
+</div>
+<div class="b-texto">
+  <p>Al cerrar el repaso, todo converge en un perfil. El Analista I es, en esencia, un <strong>servidor de la información al servicio del ciudadano</strong>. Gestiona datos confiables (gobernanza, calidad); los convierte en información útil (estadísticas, perfiles) para apoyar el control del incumplimiento, siempre con rigor y respeto por las garantías; trabaja con orden y trazabilidad (gestión documental, control interno); y, sobre todo, actúa con integridad.</p>
+  <p>La fórmula que resume el perfil es: <strong>rigor técnico + vocación de servicio + integridad</strong>. El rigor, para que la información sea confiable y las decisiones que alimenta, acertadas. La vocación de servicio, para recordar que detrás de cada dato hay un ciudadano y que todo el trabajo existe para servirle. Y la integridad, porque ningún sistema sustituye la honestidad personal, y es la base sobre la que todo lo demás se sostiene.</p>
+  <p>Para la prueba, la clave es responder con criterio: casi todas las preguntas situacionales se resuelven recordando que la respuesta correcta protege la información confiable, respeta las garantías del ciudadano (buena fe, debido proceso), se mantiene dentro del rol (aporta, no decide ni sanciona), y actúa con integridad (no cede a presiones, no usa el acceso indebidamente, no oculta ni manipula). Esa brújula resuelve la gran mayoría de los casos.</p>
+  <p>Si te quedas con una sola idea al llegar al simulacro, que sea esta: el Analista I sirve al ciudadano con información confiable e integridad. Rigor para hacer bien las cosas, vocación para hacerlas al servicio de las personas, e integridad para hacerlas siempre bien, aunque nadie mire. Ese es el estándar del cargo, el hilo que une todo el curso y la clave para responder con seguridad. Estás listo para el simulacro.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Componente del perfil</th><th>Qué asegura</th></tr></thead>
+    <tbody>
+      <tr><td>Rigor técnico</td><td>Información confiable y decisiones acertadas</td></tr>
+      <tr><td>Vocación de servicio</td><td>Que todo se haga para el ciudadano</td></tr>
+      <tr><td>Integridad</td><td>Hacer lo correcto siempre, aunque nadie mire</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 Ejercicio de aplicación</div>
+  <p>Ante cualquier pregunta situacional del simulacro, aplica la brújula: la respuesta correcta protege la información confiable, respeta las garantías del ciudadano, se mantiene dentro del rol (aporta, no decide ni sanciona) y actúa con integridad (no cede a presiones ni usa el acceso indebidamente). Con esa brújula, la mayoría de los casos se resuelven con seguridad. Estás listo.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 13</div>
+  <p>El perfil completo del Analista I que el cargo busca se resume en:</p>
+  <div class="cp-op" data-op="a">a) Solo rapidez para producir muchas cifras, sin importar nada más.</div>
+  <div class="cp-op" data-op="b">b) Solo amabilidad con el ciudadano, sin competencia técnica.</div>
+  <div class="cp-op" data-op="c">c) Rigor técnico + vocación de servicio + integridad: un servidor de la información confiable al servicio del ciudadano, que hace lo correcto aunque nadie mire.</div>
+  <div class="cp-fb"></div>
+</div>
+
+<div class="destacado">
+  <div class="destacado-t">💡 Idea clave para recordar</div>
+  <p>Los once temas funcionales forman una cadena: <strong>marco</strong> (Constitución, sistema tributario) → <strong>herramientas</strong> (información, estadísticas, perfiles) → <strong>orden y respaldo</strong> (documental, MIPG, control interno) → <strong>fin</strong> (servicio al ciudadano, transparencia). Todo descansa en <strong>información confiable</strong> e <strong>integridad</strong>. La brújula para el simulacro: la respuesta correcta protege la información confiable, respeta las garantías (buena fe, debido proceso), se mantiene en el rol (aporta, no decide ni sanciona) y actúa con integridad.</p>
+</div>
+
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips finales para tu prueba</div>
+  <ul>
+    <li>El perfil de riesgo <strong>orienta, no condena</strong>; el Analista aporta señales, no decide ni sanciona.</li>
+    <li>No confundas <strong>planeación legítima con evasión</strong>, ni lo <strong>público con lo reservado</strong>.</li>
+    <li>No <strong>confíes ciegamente</strong> en la herramienta ni en el sistema: depura y verifica.</li>
+    <li>Responde al ciudadano <strong>pronto, de fondo y con respeto</strong>; nunca lo veas como un estorbo.</li>
+    <li>El control más eficaz es la <strong>integridad</strong>: no cedas a presiones, no uses el acceso indebidamente, no ocultes ni manipules.</li>
+  </ul>
+</div>
+
+<div class="frase-recordar">⚡ Rigor técnico + vocación de servicio + integridad: un servidor de la información confiable al servicio del ciudadano. Con esa brújula, estás listo para el simulacro.</div>
+
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991.html" target="_blank" rel="noopener">Constitución Política de Colombia</a></li>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN — Portal institucional</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62516" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=41249" target="_blank" rel="noopener">Ley 1437 de 2011 — CPACA</a></li>
+  </ul>
+</div>
+
+    <h4>La brújula final para responder con seguridad</h4>
+    <p>Para cerrar, una brújula práctica que resume todo el curso y sirve para casi cualquier pregunta situacional. Ante un caso, el Analista se pregunta cuatro cosas: ¿la opción protege la información confiable (depura, verifica, no manipula)? ¿Respeta las garantías del ciudadano (buena fe, debido proceso, reserva)? ¿Se mantiene en el rol (aporta señales/datos, no decide ni sanciona)? ¿Actúa con integridad (no cede a presiones, no usa el acceso indebidamente, no oculta)? La opción que responde sí a las cuatro suele ser la correcta.</p>
+    <p>Esta brújula funciona porque condensa lo esencial de los once temas. No reemplaza el estudio, pero da un método para elegir bajo presión en el simulacro: descartar las opciones que manipulan datos, atropellan garantías, se extralimitan o faltan a la integridad, y quedarse con la que hace lo correcto en los cuatro frentes. Con esa brújula y el repaso de cada tema, el estudiante llega preparado no solo para aprobar, sino para ejercer el cargo con el estándar que la DIAN y el país esperan.</p>
+
+
+    <h4>Checklist mental antes del simulacro</h4>
+    <p>Un checklist mental para entrar al simulacro con seguridad: (1) ¿La opción manipula, oculta o usa datos sin verificar? → descártala. (2) ¿Atropella una garantía del ciudadano (buena fe, debido proceso, reserva, igualdad)? → descártala. (3) ¿Hace que el Analista decida, sancione o asuma funciones ajenas (tecnología)? → descártala. (4) ¿Cede a una presión, usa el acceso indebidamente o falta a la integridad? → descártala. La que sobrevive a los cuatro filtros suele ser la correcta.</p>
+    <p>Este checklist no sustituye el conocimiento de cada tema, pero ordena la forma de decidir cuando dos opciones parecen razonables. En las preguntas situacionales, casi siempre hay una opción tentadora que 'resuelve rápido' pero cruza una de esas líneas, y una que hace lo correcto aunque cueste un poco más. La brújula del curso —información confiable, garantías, rol y integridad— apunta a la segunda. Con eso, y el repaso de los once temas, el estudiante está listo para dar lo mejor en el simulacro.</p>
+
+
+    <h4>Un mensaje para el día de la prueba</h4>
+    <p>Un último mensaje para el día de la prueba: confía en lo que estudiaste y aplica la brújula con calma. Lee cada caso con atención, identifica qué garantía, principio o regla está en juego, descarta las opciones que manipulan datos, atropellan derechos, se extralimitan o faltan a la integridad, y elige la que hace lo correcto. No te dejes llevar por la opción que 'suena resolutiva' si cruza una línea. Has recorrido once temas que, bien entendidos, forman una sola visión del rol: un servidor de la información confiable, al servicio del ciudadano y con integridad. Con eso, estás listo.</p>
+
+  </div>
+
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>Este repaso integra los conceptos que más se confunden de todo el componente funcional. Domina estas distinciones: son las que más se evalúan en el simulacro.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Evasión / elusión / planeación</td><td>-</td><td>Ocultar (ilegal) / abusar de la norma (gris) / aprovechar un beneficio legal (legítima). No confundir planeación con evasión.</td></tr><tr><td>Perfil de riesgo</td><td>Prueba de culpa</td><td>El perfil orienta a quién revisar; no prueba incumplimiento ni permite sancionar. El Analista aporta señales, no decide.</td></tr><tr><td>Promedio</td><td>Mediana</td><td>Con datos de dinero el promedio se distorsiona por extremos; la mediana representa al típico. Reportar ambas si difieren.</td></tr><tr><td>Información pública</td><td>Información reservada</td><td>La pública se entrega (transparencia); la tributaria individual es reservada (art. 583 ET). Negar lo público también es falta.</td></tr><tr><td>La herramienta</td><td>El criterio del Analista</td><td>La herramienta calcula lo que se le indica aunque esté mal; el criterio depura y verifica. No confiar ciegamente.</td></tr><tr><td>Control interno</td><td>Oficina de control</td><td>El control interno es de todos y empieza en el autocontrol; la auditoría (tercera línea) asegura y asesora, no caza culpables.</td></tr><tr><td>Despachar</td><td>Resolver</td><td>Despachar es responder cualquier cosa para cerrar; resolver es atender de verdad la necesidad del ciudadano.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> La brújula para todo el simulacro: la respuesta correcta protege la información confiable, respeta las garantías, se mantiene en el rol (aporta, no decide/sanciona) y actúa con integridad.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · Marco: garantías sobre conveniencia</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un superior presiona al Analista para 'adelantar' una sanción a un contribuyente que un perfil señaló, sin seguir el procedimiento, 'para dar ejemplo rápido'.</p>
+      <span class="label">Análisis</span>
+      <p>Las garantías constitucionales (debido proceso, buena fe) están por encima de la conveniencia; una actuación eficaz pero inconstitucional es ilegítima y se cae. El perfil orienta, no condena.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Negarse a adelantar la sanción sin procedimiento; recordar que el perfil solo orienta y que toda decisión que afecte al contribuyente exige debido proceso con defensa; aportar la información, sin decidir ni sancionar.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · Herramientas: datos sucios y cruce</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista debe cruzar dos bases para un perfil, pero los NIT están sucios y hay duplicados; presionan para 'correr el cruce ya y reportar todo lo que salga'.</p>
+      <span class="label">Análisis</span>
+      <p>Un cruce sobre datos sucios produce falsos positivos (señala a honestos) e inconsistencias falsas; 'entra basura, sale basura'. Las inconsistencias son señales a verificar, no fraude.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Depurar y homologar la llave (NIT) antes de cruzar, verificar, y reportar como 'señales a verificar' (no fraude probado), documentando; gestionar prórroga si el tiempo no alcanza.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · Control: la auditoría y la cifra incómoda</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega una auditoría y, a la vez, presionan al Analista para 'ajustar un indicador que salió bajo'. Un compañero sugiere ocultarle a la auditoría una observación y maquillar la cifra.</p>
+      <span class="label">Análisis</span>
+      <p>Ocultar a la auditoría es falta grave; manipular un indicador engaña a quien decide y es falta de integridad. La auditoría asegura y asesora, no caza culpables; el control empieza en el autocontrol y la integridad.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Colaborar con la auditoría con transparencia (aportar la evidencia, no ocultar), entregar el indicador con la cifra fiel aunque sea incómoda, y tomar los hallazgos como oportunidades de mejora.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · Servicio: el ciudadano en el centro</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Con el plazo encima, el Analista debe responder una petición, atender a un ciudadano confundido y a un conocido que pide 'trato preferente'. Un compañero sugiere despachar, dejar vencer la petición y hacerle el favor al conocido.</p>
+      <span class="label">Análisis</span>
+      <p>El ciudadano está en el centro: responder a tiempo y de fondo, resolver (no despachar), tratar a todos con igualdad (sin favoritismos). Dejar vencer la petición vulnera el derecho; el favoritismo viola la imparcialidad.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Atender al confundido con vocación de resolver, responder la petición a tiempo (o avisar si no se alcanza) y negar el trato preferente por igualdad; gestionar prórroga si hace falta.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Poner la conveniencia por encima de las garantías</div><p>Una actuación eficaz que atropella el debido proceso, la buena fe o la igualdad es ilegítima y se cae. Las garantías van primero.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confiar ciegamente en la herramienta o el sistema</div><p>Calculan lo que se les indica, aunque esté mal; el criterio del Analista depura y verifica. No se reporta un resultado raro 'porque lo dijo la máquina'.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Tratar un perfil como condena</div><p>El perfil orienta, no prueba culpa; el Analista aporta señales a verificar, no decide ni sanciona. Confundirlo con una condena vulnera la buena fe y el debido proceso.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confundir planeación con evasión, o lo público con lo reservado</div><p>Aprovechar un beneficio legal es planeación legítima; lo público se entrega y lo reservado se protege. Estas distinciones se evalúan mucho.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Ver el control como ajeno u ocultar a una auditoría</div><p>El control es de todos y empieza en el autocontrol; ante la auditoría se colabora con transparencia. Ocultar o manipular es falta grave.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Ver al ciudadano como estorbo o despacharlo sin resolver</div><p>El servidor existe para servir; atenderlo es el trabajo. Responder a tiempo, de fondo, con respeto e igualdad, resolviendo de verdad.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>Brújula: protege la <strong>información confiable</strong>, respeta las <strong>garantías</strong>, mantente en el <strong>rol</strong> (aporta, no decide) y actúa con <strong>integridad</strong>.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>El perfil <strong>orienta, no condena</strong>; no confundas <strong>planeación con evasión</strong> ni lo <strong>público con lo reservado</strong>.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>No <strong>confíes ciegamente</strong> en herramientas ni sistemas: depura y verifica.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>El control empieza en tu <strong>autocontrol</strong>; ante la auditoría, <strong>colabora con transparencia</strong>.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Responde al ciudadano <strong>pronto, de fondo y con respeto</strong>; nunca lo veas como un estorbo.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>El control más eficaz es la <strong>integridad</strong>: hacer lo correcto aunque nadie mire.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción 'resuelve rápido' adelantando una sanción sin procedimiento.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece resolutivo y eficaz actuar de inmediato contra el perfilado.</div>
+      <div class="t-row malo">🔴 La trampa: Atropella el debido proceso y la buena fe; el perfil orienta, no condena.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Respetar el debido proceso, aportar la información y no decidir ni sancionar.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción confía en un resultado raro de la herramienta 'porque lo calculó'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente confiar en una herramienta sofisticada.</div>
+      <div class="t-row malo">🔴 La trampa: La herramienta calcula lo que se le indica aunque esté mal; puede dar errores impecables.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Desconfiar, verificar el rango/datos/llave y corregir antes de reportar.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción oculta a la auditoría o maquilla un indicador incómodo.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece prudente evitar observaciones o mostrar buenos resultados.</div>
+      <div class="t-row malo">🔴 La trampa: Ocultar es falta grave y manipular engaña a quien decide; falta a la integridad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Colaborar con transparencia y entregar la cifra fiel aunque sea incómoda.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Marco</h4><p>Constitución (deber de contribuir, servicio, garantías) y sistema tributario/aduanero/cambiario: el porqué y los límites.</p></div>
+    <div class="resumen-item"><h4>Herramientas</h4><p>Sistemas, gobernanza de datos, estadísticas y perfiles: convertir datos confiables en información útil para el control, con criterio.</p></div>
+    <div class="resumen-item"><h4>Orden y respaldo</h4><p>Gestión documental, trazabilidad, MIPG y control interno: trabajo trazable, auditable y defendible, con autocontrol e integridad.</p></div>
+    <div class="resumen-item"><h4>Servicio</h4><p>CPACA, derecho de petición, PQRSF y atención de calidad: el ciudadano en el centro, con respuestas a tiempo, de fondo y con garantías.</p></div>
+    <div class="resumen-item"><h4>Brújula del simulacro</h4><p>Información confiable + garantías + rol (aporta, no decide) + integridad: la respuesta correcta cumple las cuatro.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Marco</dt><dd>La Constitución y el sistema tributario/aduanero/cambiario: fundamento y límites del cargo.</dd>
+      <dt>Gobernanza de datos</dt><dd>Reglas, responsables y trazabilidad para que los datos sean confiables y bien usados.</dd>
+      <dt>Perfil de riesgo</dt><dd>Herramienta que orienta a quién revisar (no prueba culpa); el Analista aporta señales, no decide.</dd>
+      <dt>Transparencia</dt><dd>Deber de entregar lo público (Ley 1712) y proteger lo reservado (art. 583 ET).</dd>
+      <dt>Control interno</dt><dd>Mecanismos para asegurar que las cosas se hagan bien; responsabilidad de todos, empieza en el autocontrol.</dd>
+      <dt>Auditoría interna</dt><dd>Tercera línea independiente que asegura y asesora; no caza culpables.</dd>
+      <dt>Derecho de petición</dt><dd>Derecho fundamental a solicitar y recibir respuesta pronta, de fondo y clara (plazos 15/10/30 hábiles).</dd>
+      <dt>Integridad</dt><dd>Hacer lo correcto aunque nadie vigile; el control más eficaz, base de todo el sistema.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Repaso integrador del componente funcional</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 20. Continúa con el Día 21: Simulacro final.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 20 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 20</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Cuál es la brújula para responder las preguntas situacionales del simulacro?","b": "La respuesta correcta: (1) protege la información confiable (depura, verifica, no manipula), (2) respeta las garantías del ciudadano (buena fe, debido proceso, reserva), (3) mantiene al Analista en su rol (aporta señales/datos, no decide ni sanciona) y (4) actúa con integridad (no cede a presiones ni usa el acceso indebidamente)."},{"f": "¿Qué aporta el marco constitucional al trabajo del Analista?","b": "Fundamento (el deber de contribuir, art. 95-9; el servicio a la comunidad, art. 123) y límite (las garantías: debido proceso art. 29, buena fe art. 83). Una actuación eficaz que atropella las garantías es ilegítima y se cae."},{"f": "¿Cuáles son los tres ámbitos de control de la DIAN?","b": "Tributario (impuestos internos: renta, IVA), aduanero (comercio exterior: contrabando, subfacturación) y cambiario (operaciones con divisas). Un mismo contribuyente puede presentar señales en varios ámbitos a la vez."},{"f": "¿Cuál es el rol del Analista frente a los sistemas de información?","b": "Usarlos con criterio y dar soporte a la información; NO desarrollar software ni administrar la infraestructura (eso es de tecnología), y NO confiar ciegamente en lo que arrojen. La tecnología multiplica al buen analista, no lo reemplaza."},{"f": "¿Cuál es la idea central de la gobernanza de datos?","b": "La información es un activo que se gobierna con reglas, responsables y trazabilidad. No se altera un dato a mano sin reportar, no se usan bases de origen desconocido, se clasifica (pública/reservada) y se homologa la llave antes de cruzar. 'Entra basura, sale basura'."},{"f": "¿Cuáles son las tres alertas estadísticas clave?","b": "(1) Con datos de dinero, sospechar del promedio y comparar con la mediana; (2) desconfiar de porcentajes grandes sobre bases pequeñas (pedir absolutos); (3) no confundir una caída estacional con una crisis (comparar año contra año). Además: correlación no es causa; presentar sin engañar."},{"f": "¿Qué significa que un perfil 'orienta, no condena'?","b": "Que señala a quién mirar con más atención, no quién es culpable. Aparecer en un perfil no prueba incumplimiento; se mantiene la buena fe y la decisión exige debido proceso. El Analista aporta 'señales a verificar', no 'evasores', y no decide ni sanciona."},{"f": "¿Cómo se distinguen evasión, elusión y planeación?","b": "Evasión: ocultar o falsear para no pagar (ilegal). Elusión: abusar de la norma sin razón económica real (zona gris perseguida). Planeación: aprovechar beneficios y opciones que la ley permite (legítima). No confundir planeación con evasión."},{"f": "¿Cuál es el principio del buen uso de las herramientas ofimáticas?","b": "La herramienta multiplica al buen analista pero no lo reemplaza: calcula lo que se le indica, aunque esté mal. Por eso: depurar antes, verificar que el resultado tenga sentido, cuidar la llave al cruzar, enviar datos en csv/xlsx (no PDF), no compartir la clave y presentar sin escalas tramposas."},{"f": "¿Por qué documentar no es burocracia?","b": "Porque hace el trabajo trazable (se reconstruye), auditable (se verifica) y defendible (se prueba que se hizo bien). La eliminación se rige por la TRD (no 'porque estorba'); la trazabilidad protege al servidor honesto; el autocontrol es la primera línea de defensa."},{"f": "¿Qué recordar del MIPG, el control interno y la auditoría?","b": "El control interno es responsabilidad de todos y empieza en el autocontrol (primera línea); la auditoría interna (tercera línea) asegura y asesora, no caza culpables (colaborar con transparencia). El control más eficaz es la integridad: hacer lo correcto aunque nadie mire."},{"f": "¿Cómo se conectan todos los temas del componente funcional?","b": "Forman una cadena: marco (Constitución, sistema tributario) → herramientas (información, estadísticas, perfiles) → orden y respaldo (documental, MIPG, control interno) → fin (servicio al ciudadano, transparencia). Todo descansa en información confiable e integridad."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "La brújula del cargo","ctx": "Eres Analista I del nivel Técnico en la DIAN y, repasando para la prueba, un compañero te pregunta si hay alguna 'regla general' que sirva para resolver la mayoría de las preguntas situacionales, dado que son muchos temas. Tú conoces la brújula que integra todo el componente funcional.","q": "¿Cuál es la brújula correcta para resolver las preguntas situacionales?","ops": ["Elegir siempre la opción que resuelva más rápido el caso, sin importar si manipula datos, atropella garantías o excede el rol, ya que lo que la prueba premia es la eficacia a cualquier costo.","La respuesta correcta protege la información confiable, respeta las garantías del ciudadano (buena fe, debido proceso, reserva), mantiene al Analista en su rol (aporta, no decide ni sanciona) y actúa con integridad.","Escoger la opción que complazca a quien ejerce presión en el caso (un superior o un compañero), porque mantener buenas relaciones es lo prioritario en el servicio público."],"correcta": 1,"expl": "La brújula del cargo (B) resuelve la mayoría de los casos: proteger la información confiable, respetar las garantías, mantenerse en el rol y actuar con integridad. Elegir 'lo rápido a cualquier costo' (A) o 'complacer a quien presiona' (C) son precisamente las trampas que cruzan esas líneas."},{"nivel": "b","tema": "Marco: garantías sobre conveniencia","ctx": "Eres Analista I de la DIAN y un superior te presiona para 'adelantar' una sanción a un contribuyente que un perfil de riesgo señaló, sin seguir el procedimiento, 'para dar ejemplo rápido'. Tú conoces el marco constitucional del cargo.","q": "¿Cuál es la actuación correcta ante esa presión?","ops": ["Adelantar la sanción sin procedimiento para complacer al superior y 'dar ejemplo rápido', ya que la eficacia y la obediencia al jefe están por encima de los trámites.","Negarte a adelantar la sanción sin procedimiento: el perfil solo orienta y toda decisión que afecte al contribuyente exige debido proceso con defensa; aportar la información, sin decidir ni sancionar.","Renunciar a aportar cualquier información sobre el caso, dado que si no puedes sancionar de inmediato entonces no debes participar en nada relacionado con ese contribuyente."],"correcta": 1,"expl": "Las garantías constitucionales (debido proceso, buena fe) están por encima de la conveniencia: adelantar una sanción sin procedimiento (A) es ilegítimo y se cae; el perfil orienta, no condena. Pero el Analista sí aporta información (C es el extremo opuesto erróneo). Lo correcto: respetar el debido proceso y aportar sin decidir ni sancionar."},{"nivel": "b","tema": "Herramientas: no confiar ciegamente","ctx": "Eres Analista I de la DIAN y una tabla dinámica te arroja un total de recaudo absurdamente alto para una seccional. Un compañero te dice que 'lo reportes tal cual, que si lo calculó la herramienta debe estar bien'. Tú conoces el principio del buen uso de las herramientas.","q": "¿Cuál es la actuación correcta ante ese resultado?","ops": ["Reportar el total tal cual lo arrojó la tabla dinámica, confiando en que una herramienta sofisticada no se equivoca y no requiere verificación alguna.","Desconfiar del resultado que no cuadra y verificarlo (revisar duplicados, el rango, los nombres de categoría), porque la herramienta calcula lo que se le indica aunque esté mal y puede dar resultados impecablemente erróneos.","Reducir el total a ojo hasta que 'se vea razonable' y reportar esa cifra ajustada manualmente, sin averiguar la causa del valor tan alto."],"correcta": 1,"expl": "La herramienta calcula lo que se le indica, aunque esté mal (A confía ciegamente); ajustar a ojo (C) es inventar. Lo correcto es desconfiar de un resultado raro y verificarlo: la herramienta multiplica al analista pero no reemplaza su criterio."},{"nivel": "b","tema": "Evasión vs planeación","ctx": "Eres Analista I de la DIAN y analizas a un contribuyente que pagó poco impuesto porque aprovechó una deducción que la ley expresamente permite, sin ocultar ni falsear nada. Un compañero quiere marcarlo como evasor. Tú conoces la distinción entre evasión y planeación.","q": "¿Cuál es la valoración correcta de ese contribuyente?","ops": ["Marcarlo como evasor, ya que pagó menos impuesto del que podría, y todo el que paga poco es, por definición, un incumplidor que debe perseguirse.","Reconocer que aprovechar una deducción que la ley permite es planeación tributaria legítima, no evasión, y NO marcarlo; las señales se reservan para el ocultamiento (evasión) o el abuso de la norma (elusión).","Marcarlo 'por si acaso' y dejar que otra área decida, dado que ante cualquier contribuyente que pague poco lo más seguro es señalarlo para no dejar pasar a un posible evasor."],"correcta": 1,"expl": "Aprovechar una deducción legal es planeación legítima, no evasión (A y C lo tratarían como incumplidor): perseguir a quien actúa dentro de la ley es un error. Lo correcto es no marcarlo; las señales se reservan para el ocultamiento o el abuso de la norma."},{"nivel": "i","tema": "Perfil: inconsistencia a verificar","ctx": "Eres Analista I de la DIAN y un cruce de importaciones con ventas declaradas arroja 50 contribuyentes que importan mucho y declaran ventas casi nulas. El plazo es ajustado y un compañero te pide reportarlos de una vez 'como evasores probados'. Tú conoces cómo tratar una inconsistencia de un cruce.","q": "¿Cuál es la actuación correcta con esos casos?","ops": ["Reportar los 50 contribuyentes como evasores probados de inmediato, ya que la inconsistencia entre lo que importan y lo que declaran es prueba suficiente y definitiva de evasión.","Verificar que los NIT estén bien cruzados, descartar los casos con explicación evidente (mercancía en inventario, desfase) y reportar la lista depurada como 'señales a verificar', no como fraude probado, documentando el cruce.","Descartar por completo el resultado del cruce y no reportar nada, dado que si una inconsistencia puede tener explicación, entonces ningún cruce sirve para orientar el control."],"correcta": 1,"expl": "Una inconsistencia de un cruce es una señal a verificar, no fraude probado (A): puede deberse a inventario, desfase o NIT mal cruzado. Pero tampoco se descarta todo el cruce (C). Lo correcto es verificar la llave, descartar explicaciones evidentes y reportar como 'señales a verificar', documentando."},{"nivel": "i","tema": "Control: la auditoría y la cifra incómoda","ctx": "Eres Analista I de la DIAN y, al tiempo que llega una auditoría interna a revisar un proceso en el que participas, un superior te presiona para 'ajustar un indicador que salió bajo'. Un compañero sugiere ocultarle a la auditoría una observación y maquillar la cifra del indicador. Tú conoces el control interno y la integridad.","q": "¿Cuál es la actuación correcta ante ambas situaciones?","ops": ["Ocultarle a la auditoría la observación y maquillar la cifra del indicador para que todo luzca bien, ya que conviene evitar observaciones y mostrar buenos resultados de gestión.","Colaborar con la auditoría con transparencia (aportar la evidencia, sin ocultar la observación) y entregar el indicador con la cifra fiel aunque sea incómoda, tomando los hallazgos como oportunidades de mejora.","Entregar la cifra fiel pero ocultarle a la auditoría la observación, como una supuesta 'solución intermedia' entre la integridad y evitar problemas."],"correcta": 1,"expl": "Ocultar a la auditoría es falta grave y maquillar el indicador es falta de integridad (A y C cruzan esas líneas: C ocultaría la observación igual). La auditoría asegura y asesora, no caza culpables. Lo correcto es colaborar con transparencia y entregar la cifra fiel aunque sea incómoda, tomando los hallazgos como mejora."},{"nivel": "i","tema": "Servicio: el ciudadano en el centro","ctx": "Eres Analista I de la DIAN y, con el plazo encima, debes responder una petición de información, atender a un ciudadano confundido y a un conocido que te pide 'que le des prioridad por encima de los demás'. Un compañero te sugiere 'despachar rápido al confundido, dejar vencer la petición y hacerle el favor al conocido'. Tú conoces los principios del servicio al ciudadano.","q": "¿Cuál es la actuación correcta que pone al ciudadano en el centro?","ops": ["Seguir el consejo del compañero: despachar al confundido sin resolver, dejar vencer la petición y darle prioridad al conocido, para salir del paso con el plazo encima.","Atender al confundido con vocación de resolver, responder la petición a tiempo (o informar al peticionario si no se alcanza el plazo) y negar el trato preferente al conocido por igualdad e imparcialidad; gestionar prórroga si hace falta.","Dedicarte solo a complacer al conocido y dejar las demás situaciones sin atender, dado que ayudar a quien uno conoce es lo que de verdad importa."],"correcta": 1,"expl": "La actuación correcta pone al ciudadano en el centro (B): resolver al confundido, responder la petición a tiempo o avisar, y negar el favoritismo por igualdad. Dejar vencer la petición (A) vulnera el derecho de petición, y el trato preferente (A y C) viola la imparcialidad."},{"nivel": "i","tema": "Transparencia vs reserva","ctx": "Eres Analista I de la DIAN y llegan dos solicitudes: una pide el total agregado de recaudo de un departamento (cifra general) y otra pide el detalle de las declaraciones de una empresa concreta. Un compañero propone 'negar las dos por prudencia'. Tú conoces cómo clasificar la información.","q": "¿Cuál es la actuación correcta con ambas solicitudes?","ops": ["Negar las dos por prudencia, ya que ante cualquier solicitud de información lo más seguro es no entregar nada para evitarse problemas.","Entregar la cifra agregada (información pública, por transparencia) y negar el detalle individual de la empresa (información reservada, art. 583 ET), explicando en cada caso la regla aplicable.","Entregar las dos por igual, incluido el detalle de las declaraciones de la empresa, ya que si una parte de la información de recaudo es pública, toda debe entregarse."],"correcta": 1,"expl": "No toda la información tiene la misma clasificación: negar todo por prudencia (A) vulnera el acceso a lo público (negar lo público también es falta); entregar lo reservado (C) viola el art. 583 ET. Lo correcto es entregar la cifra agregada (pública) y proteger el detalle individual (reservado)."},{"nivel": "a","tema": "Caso integrador: datos sucios para un perfil","ctx": "Eres Analista I de la DIAN y preparas los datos de un perfil de riesgo cruzando declaraciones con información exógena. El plazo es ajustado y notas que muchos NIT están sucios y hay duplicados. Un compañero te dice que 'corras el cruce ya como esté y reportes como riesgo todo lo que salga'. Tú conoces la gobernanza de datos y los perfiles.","q": "¿Cuál es la actuación correcta antes de que esos datos alimenten el perfil?","ops": ["Correr el cruce de inmediato con las bases sucias y reportar como riesgo todo lo que salga, para cumplir el plazo, confiando en que las inconsistencias que arroje igual orientarán el control.","Depurar y homologar la llave (NIT) y eliminar duplicados antes de cruzar, verificar, y reportar los casos como 'señales a verificar' (no fraude probado), documentando; gestionar prórroga si el tiempo no alcanza.","Eliminar sin verificar todos los registros con cualquier NIT dudoso para que el cruce corra limpio, aunque eso signifique dejar fuera contribuyentes reales y perder su rastro."],"correcta": 1,"expl": "Un cruce sobre datos sucios produce falsos positivos que señalarían a honestos (A); eliminar registros sin verificar (C) pierde información real. Lo correcto integra gobernanza y perfiles: depurar y homologar la llave antes de cruzar, verificar, reportar como 'señales a verificar' y pedir prórroga si hace falta."},{"nivel": "a","tema": "Caso integrador: presión contra la integridad","ctx": "Eres Analista I de la DIAN. Nadie te está supervisando y un conocido te ofrece 'colaborarte con algo' si usas tu acceso para averiguarle la situación tributaria de una empresa; además, un superior te presiona para maquillar una cifra. El conocido insiste en que 'nadie revisa esas consultas'. Tú conoces el papel de la integridad.","q": "¿Cuál es la actuación correcta ante ambas presiones?","ops": ["Hacerle el favor al conocido (ya que nadie revisa las consultas) y maquillar la cifra que pide el superior, aprovechando que nadie está supervisando en ese momento.","Negarte a ambas cosas: no usar tu acceso para fines ajenos al servicio (la información es reservada y las consultas quedan trazadas) ni maquillar la cifra (manipularla engaña y es falta de integridad); dejar constancia y, si corresponde, reportar.","Hacerle solo el favor al conocido pero sin cobrar nada, y negarte únicamente a maquillar la cifra, dado que consultar por un conocido sin recibir dinero no tendría ningún problema."],"correcta": 1,"expl": "La integridad es hacer lo correcto aunque nadie vigile (B): usar el acceso para fines ajenos es falta grave (y queda trazado), y maquillar una cifra es falta de integridad. Ceder a ambas (A) o 'solo' al favor del conocido (C) cruza esas líneas. El control más eficaz es la propia integridad."},{"nivel": "a","tema": "Caso integrador: la cadena completa","ctx": "Eres Analista I de la DIAN y te llega un caso que mezcla varios temas: un cruce que involucra datos reservados de contribuyentes, que alimentará un perfil de riesgo, cuyas cifras agregadas luego se publicarán, y sobre el que un ciudadano presentó una petición de información. Un compañero, abrumado, cree que 'son tantos temas que es imposible saber qué hacer'. Tú conoces cómo se conecta todo.","q": "¿Cuál es la forma correcta de abordar un caso que mezcla varios temas?","ops": ["Rendirse ante la complejidad y responder al azar, ya que cuando un caso mezcla tantos temas es imposible aplicar ningún criterio para decidir qué hacer.","Ubicar el caso en la cadena (marco, herramientas, orden, servicio) y aplicar la brújula: proteger la información confiable y la reserva, aportar señales sin decidir, responder la petición de fondo y a tiempo, publicar solo lo agregado, y actuar con integridad.","Atender solo la parte que le resulte más cómoda y dejar las demás sin resolver, dado que no se puede abordar un caso que toca varios temas a la vez."],"correcta": 1,"expl": "Los casos que mezclan temas no son imposibles (A) ni se abordan parcialmente (C): se resuelven ubicándolos en la cadena y aplicando la brújula del curso (B). Proteger la información y la reserva, aportar sin decidir, responder la petición a tiempo, publicar solo lo agregado y actuar con integridad: así se resuelve incluso lo complejo."},{"nivel": "i","tema": "Documentar no es burocracia","ctx": "Eres Analista I de la DIAN y, repasando, un compañero sostiene que 'documentar y llevar bitácora del trabajo es burocracia inútil que frena todo' y propone saltarse esos pasos para ir más rápido. Tú conoces para qué sirve la disciplina documental.","q": "¿Cuál es la respuesta correcta a esa afirmación?","ops": ["El compañero tiene razón: documentar es burocracia que frena el trabajo, así que lo mejor es saltarse la bitácora y la trazabilidad para producir más rápido.","Documentar con criterio hace el trabajo trazable, auditable y defendible (se puede reconstruir, verificar y probar que se hizo bien); no frena, respalda, y lo que no se documenta no se puede demostrar ante una auditoría.","Documentarlo y controlarlo absolutamente todo al extremo, incluso lo trivial, aunque eso paralice el trabajo, para estar a salvo de cualquier observación."],"correcta": 1,"expl": "Saltarse la documentación (A) deja el trabajo indefendible; documentarlo todo al extremo (C) cae en el papeleo paralizante. Lo correcto es documentar con criterio lo que tiene valor: hace el trabajo trazable, auditable y defendible. Lo que no se documenta, no se puede probar."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
