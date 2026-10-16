@@ -466,6 +466,43 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
     ],
   },
+  // DIAN — Gestor I (301-01), Fiscalización y Liquidación, concurso DIAN 2676.
+  // Eje del manual: determinación y control tributario, régimen cambiario,
+  // fiscalización internacional y fiscalización aduanera + básicas (ver
+  // referencias/_SPEC-CURSO-GESTOR1-ANDREA.md).
+  "dian-gestor-i-fiscalizacion": {
+    id: "dian-gestor-i-fiscalizacion",
+    nombre: "DIAN · Gestor I (301-01, fiscalización y liquidación), concurso DIAN 2676 — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00", dia: 1 },
+      { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
+      { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
+      { codigo: "GEN-01", dia: 2 },
+      { codigo: "GEN-02", dia: 3 },
+      { codigo: "GEN-03", dia: 4 },
+      { codigo: "DIAN-PRO-COM-01", dia: 5 },
+      { codigo: "DIAN-PRO-COM-02", dia: 6 },
+      { codigo: "DIAN-PRO-COM-03", dia: 7 },
+      { codigo: "DIAN-PRO-COM-04", dia: 8 },
+      { codigo: "FUN-DIAN-01", dia: 9 },
+      { codigo: "FUN-DIAN-02", dia: 10 },
+      { codigo: "FUN-DIAN-03", dia: 11 },
+      { codigo: "FUN-DIAN-04", dia: 12 },
+      { codigo: "FUN-DIAN-05", dia: 13 },
+      { codigo: "FUN-DIAN-06", dia: 14 },
+      { codigo: "FUN-DIAN-07", dia: 15 },
+      { codigo: "FUN-DIAN-08", dia: 16 },
+      { codigo: "FUN-DIAN-JUR-01", dia: 17 },
+      { codigo: "FUN-MIPG-01", dia: 18 },
+      { codigo: "FUN-DOC-01", dia: 19 },
+      { codigo: "FUN-DIAN-09", dia: 20 },
+      { codigo: "SIM-DIAN-001", dia: 21 },
+      { codigo: "BON-01", dia: null, orden: 100 },
+      { codigo: "BON-02", dia: null, orden: 101 },
+      { codigo: "DIAN-EST-01", dia: null, orden: 102 },
+      { codigo: "DIAN-INT-01", dia: null, orden: 103 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
