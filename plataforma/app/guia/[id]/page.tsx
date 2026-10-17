@@ -1,5 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { esCursoSecuencial, calcularDesbloqueo, MINUTOS_MINIMOS_GUIA } from "@/lib/desbloqueo";
+import BotonTerminar from "./BotonTerminar";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +26,40 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
   // ¿El que mira es admin? El admin previsualiza sin marcar progreso ni bloqueos.
   const { data: perfilV } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
   const esAdmin = perfilV?.rol === "admin";
+
+  // 🔒 Desbloqueo secuencial (solo cursos marcados): la guía se abre cuando
+  // el estudiante TERMINA la anterior. Bloqueo server-side (acceso por URL).
+  const { data: cursoG } = await supabase
+    .from("cursos")
+    .select("*")
+    .eq("id", guia.curso_id)
+    .single();
+  const secuencial = esCursoSecuencial(cursoG);
+
+  if (secuencial && !esAdmin) {
+    const { data: todas } = await supabase
+      .from("guias_curso")
+      .select("id, titulo, leida, archivo_path, tipo, dia, orden")
+      .eq("curso_id", guia.curso_id);
+    const { bloqueadas, actual } = calcularDesbloqueo(todas || []);
+    if (bloqueadas.has(guia.id)) {
+      return (
+        <main style={{ maxWidth: 620, margin: "0 auto", padding: "60px 22px", textAlign: "center" }}>
+          <div style={{ fontSize: "2.6rem", marginBottom: 12 }}>🔒</div>
+          <h1 style={{ fontSize: "1.4rem", marginBottom: 8 }}>{guia.titulo}</h1>
+          <p style={{ color: "var(--texto-suave)", marginBottom: 8, lineHeight: 1.6 }}>
+            Tu ruta avanza <strong>guía por guía, en orden</strong>. Esta guía se abre cuando termines la anterior.
+          </p>
+          {actual && (
+            <p style={{ color: "var(--texto-suave)", marginBottom: 24 }}>
+              Ahora te toca: <a href={`/guia/${actual.id}`} style={{ color: "var(--azul)", fontWeight: 700 }}>{actual.dia != null ? `Día ${actual.dia} · ` : ""}{actual.titulo}</a>
+            </p>
+          )}
+          <a href={`/perfil/${guia.curso_id}`} style={{ color: "var(--azul)", fontWeight: 700 }}>← Volver a mi curso</a>
+        </main>
+      );
+    }
+  }
 
   // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías del PLAN
   // con archivo (generales/nivel/funcionales) ya fueron leídas. El bonus no
@@ -57,7 +93,10 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
 
   // Marcar la guía como leída (si aún no lo está) + recalcular progreso del curso.
   // El admin en vista previa NO marca progreso (no contamina el avance del alumno).
-  if (!esAdmin && !guia.leida) {
+  // En cursos secuenciales NO se marca al abrir: el estudiante la marca con
+  // "✓ Terminé esta guía" (salvo el simulacro, que es la última del plan).
+  const marcaAlAbrir = !secuencial || guia.tipo === "simulacro";
+  if (!esAdmin && !guia.leida && marcaAlAbrir) {
     await supabase
       .from("guias_curso")
       .update({ leida: true, fecha_leida: new Date().toISOString() })
@@ -130,7 +169,11 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
           </span>
         </div>
 
-        <div style={{ width: 80 }}>{/* Spacer para centrar el título */}</div>
+        {secuencial && !esAdmin && !marcaAlAbrir ? (
+          <BotonTerminar guiaId={guia.id} cursoId={guia.curso_id} yaTerminada={!!guia.leida} minutos={MINUTOS_MINIMOS_GUIA} />
+        ) : (
+          <div style={{ width: 80 }}>{/* Spacer para centrar el título */}</div>
+        )}
       </div>
 
       {/* Iframe con la guía */}
