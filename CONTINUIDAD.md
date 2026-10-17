@@ -5,7 +5,37 @@
 >
 > ⭐ **`CONTINUIDAD.md` es el ÚNICO documento de ESTADO al día y la fuente de verdad.** Si cualquier otro archivo (README, ARQUITECTURA, etc.) parece contradecirlo, **manda este**.
 
-_Última actualización: 22 de septiembre de 2026 — **NUEVO CURSO TERMINADO: Valentina Martínez Valenzuela — PGN Profesional Universitario 3PU-17 Funciones Mixtas (Conv. 144-2026), 22 guías (Días 1-21 + simulacro) construidas, validadas y pusheadas. Rama `feat/curso-pgn-3pu17-valentina-martinez`, pendiente merge a main + pasos de carga.**_
+_Última actualización: 17 de octubre de 2026 — **3 cursos DIAN con DESBLOQUEO SECUENCIAL: Gloriela Usuga (Analista IV 236760) COMPLETO; Clary Castaño (Gestor I TH 236897) y Paula Molina (Facilitador II 236906) entregables con guías 🛠 en preparación. PR #276 (incluye #275).**_
+
+---
+
+## 🆕 CAMBIOS RECIENTES (sesión 17 oct 2026 — Claude: cursos DIAN 236760, 236897, 236906)
+
+**PENDIENTE (Julio):** merge del **PR #276** (contiene el #275) → deploy Vercel → visitar `/api/admin/seed-guias` → en cada curso **🔄 Rehacer** con su plan → Habilitar. (Opcional: `plataforma/supabase/migracion-desbloqueo-secuencial.sql`.)
+
+**🔐 Desbloqueo secuencial (plataforma, `plataforma/lib/desbloqueo.ts`):**
+- Cursos con OPEC en `OPECS_SECUENCIALES` (236897, 236906, 236760) o con `cursos.desbloqueo_secuencial = true`: el estudiante ve TODO el plan, pero cada guía se abre al terminar la anterior. Abrir una guía ya NO la marca leída; se marca con el botón **“✓ Terminé esta guía”** del visor (activo tras 10 min) o con el botón **“✅ Finalizar Día N”** al final de la guía (postMessage `GUIA_COMPLETADA`). Bloqueo en listado, visor y `/api/guia`.
+- **`GUIAS_EN_PREPARACION`**: guías visibles como 🛠, no abribles, que frenan la ruta y el simulacro. **Al terminar una guía: reemplazar su HTML (guias/ + seed-guias/), quitarla de la lista, desplegar y visitar `/api/admin/seed-guias`.**
+- `restaurarBaseCNSC` ya no mete genéricas en planes con INTRO/GEN propios (`INTRO-00-XXX`, `GEN-0N-XXX`).
+
+**🎓 Gloriela Paola Usuga — DIAN Analista IV 204-04 (ficha AT-FL-2010, técnico, fiscalización y liquidación), OPEC 236760 — COMPLETO ✅**
+- Plan `dian-analista-iv-fiscalizacion-236760`. Mismas 4 competencias funcionales que Gestor I 301-01 → reutiliza FUN-DIAN-01/02/04 y versiones **-AIV** (rol de apoyo técnico) de FUN-DIAN-03 (sin el bloque duplicado del original), 05-09, JUR, MIPG, DOC.
+- Comportamentales DIAN-AIV-COM-01/02/03 (adaptadas de PRO-COM: 204-04, técnico, ponderación ingreso con experiencia 65/15/10/10, Trabajo en equipo nivel 2) y **DIAN-AIV-COM-04** (alcance del cargo, reescrita con la ficha y los indicadores de la OPEC). **SIM-DIAN-AIV-001** (50 funcionales + 20 Likert nuevos de sus indicadores + 6 integridad + 4 control). Bonus BON-01/02/03, DIAN-EST-01, DIAN-INT-01.
+- Indicador “razonamiento matemático”: solo BON-03 + cálculos de las funcionales. **Mejora futura:** guía específica de razonamiento matemático.
+- Manual e indicadores: archivos subidos por el usuario en el chat (no están en el repo).
+
+**🎓 Clary María Castaño — DIAN Gestor I Talento Humano 301-01 (ficha TH-GH-3010), OPEC 236897 — entregable, faltan 5**
+- Plan `dian-gestor-i-talento-humano-236897`. Días 1-4 = INTRO-00 y GEN-01/02/03 genéricas reales. Días 9-20 reales (Kiro).
+- 🛠 **Pendientes:** DIAN-GHI-COM-01..04 (Días 5-8; competencias: ética 4, equipo 3, innovación 3, comunicación 3) y SIM-DIAN-GHI-001. Las versiones de Kiro eran plantilla (texto repetido, correcta siempre B) y se reemplazaron por páginas “en preparación”.
+- COM-01 a medias: fuentes en `referencias/fuentes-guias/DIAN-GHI-COM-01/` (p1-p4 = secciones 0-2 con 14 módulos, ~14.000 palabras). Falta p5 (secciones 3-9) y `datos.json` (10 flashcards + 12 preguntas). Se arma con `python3 scripts/armar-guia.py referencias/fuentes-guias/DIAN-GHI-COM-01` (concatenar p1..p5 en `contenido.html`) y se valida con `scripts/validar-guia-dian.py`.
+
+**🎓 Paula Andrea Molina — DIAN Facilitador II (asistencial), OPEC 236906 — entregable, faltan 8**
+- Plan `dian-facilitador-ii-236906`. Días 1-13 reales (Kiro).
+- 🛠 **Pendientes:** Días 14-20 (FUN-GDOC-FAC2-03, FUN-COR-FAC2-02, FUN-GP-FAC2-02, FUN-DOC-FAC2-01, FUN-CONST-FAC2-02, FUN-COR-FAC2-03, FUN-GDOC-FAC2-04) y SIM-DIAN-FAC2-001 (eran plantilla).
+
+**Herramientas nuevas:** `scripts/armar-guia.py` (ensambla guía desde molde + contenido), `scripts/adaptar-guia.py` (copia adaptada a otro cargo por reglas), `scripts/validar-guia-dian.py` (validación completa: HTML, JS, checkpoints, preguntas al estándar, fugas).
+
+**Deuda detectada:** las funcionales FUN-DIAN (curso Gestor I fiscalización, y sus -AIV) tienen enunciados cortos y la correcta suele ser la opción más larga (formato previo al estándar); FUN-DOC-01 y FUN-MIPG-01 usan 4 opciones. FUN-DIAN-03 original tiene las secciones 9-10 duplicadas fuera de `<main>`.
 
 ---
 

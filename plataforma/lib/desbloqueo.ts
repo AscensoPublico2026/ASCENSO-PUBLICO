@@ -16,7 +16,7 @@
 //     migración aún no se haya aplicado).
 // ============================================================
 
-export const OPECS_SECUENCIALES = ["236897", "236906"];
+export const OPECS_SECUENCIALES = ["236897", "236906", "236760"];
 
 // Guías que aparecen en el plan pero aún se están escribiendo. Se ven en la
 // ruta como "🛠️ En preparación", no se pueden abrir ni marcar, y FRENAN la

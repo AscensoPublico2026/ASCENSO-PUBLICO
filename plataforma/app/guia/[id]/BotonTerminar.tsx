@@ -19,6 +19,29 @@ export default function BotonTerminar({ guiaId, cursoId, yaTerminada, minutos }:
   const [error, setError] = useState<string | null>(null);
   const [pendiente, startTransition] = useTransition();
 
+  function terminar() {
+    setError(null);
+    startTransition(async () => {
+      const r = await marcarGuiaTerminada(guiaId);
+      if (!r.ok) { setError(r.error || "No se pudo guardar."); return; }
+      setSiguienteId(r.siguienteId ?? null);
+      setHecha(true);
+    });
+  }
+
+  // El botón "✅ Finalizar Día N" al final de cada guía avisa con postMessage
+  // (GUIA_COMPLETADA): llegar al final y confirmar también la marca como terminada.
+  useEffect(() => {
+    if (hecha) return;
+    const onMsg = (e: MessageEvent) => {
+      if (e.origin !== window.location.origin) return;
+      if (e.data && e.data.type === "GUIA_COMPLETADA") terminar();
+    };
+    window.addEventListener("message", onMsg);
+    return () => window.removeEventListener("message", onMsg);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hecha]);
+
   useEffect(() => {
     if (hecha || restante <= 0) return;
     const t = setInterval(() => setRestante((s) => Math.max(0, s - 1)), 1000);
@@ -57,15 +80,7 @@ export default function BotonTerminar({ guiaId, cursoId, yaTerminada, minutos }:
           color: listo ? "#0A2A5E" : "var(--texto-suave)",
           background: listo ? "linear-gradient(135deg, #E8A33D, #F6C56B)" : "var(--gris-borde)",
         }}
-        onClick={() => {
-          setError(null);
-          startTransition(async () => {
-            const r = await marcarGuiaTerminada(guiaId);
-            if (!r.ok) { setError(r.error || "No se pudo guardar."); return; }
-            setSiguienteId(r.siguienteId ?? null);
-            setHecha(true);
-          });
-        }}
+        onClick={terminar}
       >
         {pendiente ? "Guardando…" : listo ? "✓ Terminé esta guía" : `✓ Terminé (en ${mm}:${ss})`}
       </button>
