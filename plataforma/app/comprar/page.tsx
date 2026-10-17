@@ -9,9 +9,10 @@ import { createClient } from "@/lib/supabase/client";
 
 // Componente principal (ahora completamente cliente)
 export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string; error?: string } }) {
-  const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string }[]>([]);
+  const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string; precio_cop: number }[]>([]);
   const [usuarioLogueado, setUsuarioLogueado] = useState<{ correo: string; celular: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [convSeleccionada, setConvSeleccionada] = useState<string>("");
 
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [mostrarConfirm, setMostrarConfirm] = useState(false);
@@ -28,7 +29,7 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
         // Cargar convocatorias
         const { data: convData } = await supabase
           .from("convocatorias")
-          .select("id,nombre")
+          .select("id,nombre,precio_cop")
           .eq("activa", true)
           .order("orden");
         setConvocatorias(convData || []);
@@ -64,6 +65,17 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
       setErrorPassword("");
     }
   }, [password, confirmPassword]);
+
+  // Precargar la convocatoria si viene por URL (?conv=...)
+  useEffect(() => {
+    if (searchParams?.conv) setConvSeleccionada(searchParams.conv);
+  }, [searchParams?.conv]);
+
+  // Precio de la convocatoria seleccionada (COP). Null si aún no eligió.
+  const precioSeleccionado =
+    convocatorias.find((c) => c.id === convSeleccionada)?.precio_cop ?? null;
+  const formatoCOP = (n: number) =>
+    "$" + n.toLocaleString("es-CO") + " COP";
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "12px 14px", borderRadius: 12, border: "1px solid var(--gris-borde)",
@@ -105,7 +117,11 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
       <p style={{ color: "var(--texto-suave)", marginBottom: 8 }}>
         Completa tus datos y sube tu manual de funciones. Después realizas el pago seguro con Wompi.
       </p>
-      <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Pago único · escribes el valor a pagar</p>
+      <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>
+        {precioSeleccionado != null
+          ? `Precio: ${formatoCOP(precioSeleccionado)} · pago único`
+          : "Pago único · el precio depende de la convocatoria que elijas"}
+      </p>
 
       <ContadorCupos />
 
@@ -148,9 +164,19 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
           <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" defaultValue={usuarioLogueado?.celular || ""} />
         </label>
         <label style={label}>Convocatoria *
-          <select style={inputStyle} name="convocatoria_id" defaultValue={searchParams?.conv || ""} required>
+          <select
+            style={inputStyle}
+            name="convocatoria_id"
+            value={convSeleccionada}
+            onChange={(e) => setConvSeleccionada(e.target.value)}
+            required
+          >
             <option value="">Selecciona tu convocatoria</option>
-            {convocatorias.map((c) => (<option key={c.id} value={c.id}>{c.nombre}</option>))}
+            {convocatorias.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.nombre} — {formatoCOP(c.precio_cop)}
+              </option>
+            ))}
           </select>
         </label>
         <label style={label}>Número de OPEC *
@@ -167,21 +193,12 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
             <option value="profesional">Profesional</option>
           </select>
         </label>
-        <label style={label}>Valor a pagar (COP) *
-          <input
-            style={inputStyle}
-            type="number"
-            name="monto"
-            min={1000}
-            step={1000}
-            required
-            inputMode="numeric"
-            placeholder="Ej: 300000"
-          />
-          <span style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginTop: 4, display: "block" }}>
-            Escribe en pesos el valor que vas a pagar (sin puntos ni comas). Mínimo $1.000.
-          </span>
-        </label>
+        {precioSeleccionado != null && (
+          <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginTop: 16, fontSize: ".92rem", color: "var(--azul)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontWeight: 600 }}>Valor a pagar</span>
+            <strong style={{ fontSize: "1.1rem" }}>{formatoCOP(precioSeleccionado)}</strong>
+          </div>
+        )}
         <label style={label}>Manual de funciones (PDF) *
           <input style={inputStyle} type="file" name="manual" accept=".pdf,application/pdf" required />
           <span style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginTop: 4, display: "block" }}>

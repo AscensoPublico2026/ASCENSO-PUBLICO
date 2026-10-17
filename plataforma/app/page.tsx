@@ -280,8 +280,8 @@ export default async function LandingPage() {
           <p className="lead center" style={{ margin: "0 auto 38px" }}>Un único pago por tu curso personalizado completo.</p>
           <div className="precio-card">
             <span className="precio-tag">🚀 Precio de lanzamiento</span>
-            <div className="precio-num">$300.000 <small>COP</small></div>
-            <p style={{ color: "var(--texto-suave)" }}>Pago único · Acceso a tu curso completo</p>
+            <div className="precio-num">Desde $200.000 <small>COP</small></div>
+            <p style={{ color: "var(--texto-suave)" }}>Pago único · el valor depende de tu convocatoria</p>
             <ul>
               <li>Plan personalizado de 21 días según tu cargo</li>
               <li>Todas las guías de tu ruta (general, nivel y funcionales)</li>
