@@ -5,7 +5,7 @@
 -- ============================================================
 
 -- Primero verificamos cuáles ya existen para no duplicar
-INSERT INTO public.convocatorias (nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema, activa, orden)
+INSERT INTO public.convocatorias (nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema, precio_cop, activa, orden)
 SELECT * FROM (VALUES
   (
     'Entidades del Orden Nacional 2026',
@@ -16,6 +16,7 @@ SELECT * FROM (VALUES
     'Inscripciones en curso · prueba escrita pendiente',
     '/fotos/nacional.jpg',
     'nacional',
+    200000,
     true,
     1
   ),
@@ -28,6 +29,7 @@ SELECT * FROM (VALUES
     'Inscripciones cerradas (12 jun 2026) · prueba pendiente',
     '/fotos/territorial12.jpg',
     'territorial',
+    200000,
     true,
     2
   ),
@@ -40,6 +42,7 @@ SELECT * FROM (VALUES
     'Proceso en ejecución · prueba pendiente',
     '/fotos/territorial-uapa.jpg',
     'territorial',
+    200000,
     true,
     3
   ),
@@ -52,6 +55,7 @@ SELECT * FROM (VALUES
     'En verificación de requisitos (VRM) · prueba pendiente',
     '/fotos/dian.jpg',
     'impuestos',
+    200000,
     true,
     4
   ),
@@ -64,6 +68,7 @@ SELECT * FROM (VALUES
     'Inscripciones: 7–18 sep 2026 (Res. 133 de 2026)',
     '/fotos/procuraduria.jpg',
     'justicia',
+    300000,
     true,
     5
   ),
@@ -76,10 +81,11 @@ SELECT * FROM (VALUES
     'En divulgación · prueba escrita lejana',
     '/fotos/ese.jpg',
     'salud',
+    200000,
     true,
     6
   )
-) AS nuevas(nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema, activa, orden)
+) AS nuevas(nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema, precio_cop, activa, orden)
 WHERE NOT EXISTS (
   SELECT 1 FROM public.convocatorias c WHERE c.nombre = nuevas.nombre
 );

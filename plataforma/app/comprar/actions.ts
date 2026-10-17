@@ -26,11 +26,6 @@ export async function crearCompra(formData: FormData) {
   const password = String(formData.get("password") || "").trim();
   const confirmPassword = String(formData.get("confirmPassword") || "").trim();
 
-  // Monto libre: el cliente escribe cuánto va a pagar (en pesos COP).
-  const montoIngresado = Number(
-    String(formData.get("monto") || "").replace(/[^\d]/g, "")
-  );
-
   // URL de destino (checkout de Wompi). Se calcula dentro del try y la
   // redirección real se hace al final, fuera del try, para no capturar el
   // NEXT_REDIRECT interno de Next.js.
@@ -50,10 +45,8 @@ export async function crearCompra(formData: FormData) {
       throw new Error("Las contraseñas no coinciden.");
     }
 
-    // Validar el monto a pagar (campo libre). Mínimo de seguridad para evitar
-    // pagos en $0 o valores inválidos que Wompi rechazaría.
-    if (!Number.isFinite(montoIngresado) || montoIngresado < 1000) {
-      throw new Error("Ingresa un valor a pagar válido (mínimo $1.000 COP).");
+    if (!convocatoria_id) {
+      throw new Error("Selecciona una convocatoria.");
     }
 
     // Verificación explícita de configuración del servidor: si faltan las
@@ -64,6 +57,22 @@ export async function crearCompra(formData: FormData) {
 
     const supabase = createAdminClient();
     const referencia = generarReferencia();
+
+    // Precio según la convocatoria (fuente de verdad en el servidor; no se
+    // confía en ningún valor enviado por el cliente). Cada convocatoria define
+    // su propio precio_cop (ej. DIAN/CNSC 200.000, Procuraduría 300.000).
+    const { data: conv, error: convErr } = await supabase
+      .from("convocatorias")
+      .select("precio_cop")
+      .eq("id", convocatoria_id)
+      .single();
+    if (convErr || !conv) {
+      throw new Error("La convocatoria seleccionada no es válida.");
+    }
+    const precioCop = Number(conv.precio_cop);
+    if (!Number.isFinite(precioCop) || precioCop < 1000) {
+      throw new Error("La convocatoria no tiene un precio válido configurado.");
+    }
 
     // Subir el manual de funciones (PDF) a Storage privado
     let manual_pdf_path: string | null = null;
@@ -92,8 +101,8 @@ export async function crearCompra(formData: FormData) {
     }
 
     // Pago pendiente + firma + redirección a Wompi
-    // Monto libre ingresado por el cliente, convertido a centavos.
-    const monto = Math.round(montoIngresado * 100); // a centavos
+    // El monto sale del precio de la convocatoria, convertido a centavos.
+    const monto = Math.round(precioCop * 100); // a centavos
     const { error: pagoError } = await supabase
       .from("pagos")
       .insert({ referencia, monto, estado: "pendiente" });

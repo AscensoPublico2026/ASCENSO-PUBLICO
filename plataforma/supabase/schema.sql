@@ -34,6 +34,7 @@ create table if not exists public.convocatorias (
   fecha_prueba_aprox text,
   imagen_url text,
   tema text default 'nacional',
+  precio_cop int not null default 200000,  -- valor a pagar del curso (COP) para esta convocatoria
   activa boolean not null default true,
   orden int not null default 0,
   created_at timestamptz not null default now()

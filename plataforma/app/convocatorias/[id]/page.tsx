@@ -147,7 +147,7 @@ export default async function ConvocatoriaDetalle({ params }: { params: { id: st
               Precio de lanzamiento
             </div>
             <div style={{ fontFamily: "'Source Serif 4',serif", fontSize: "2.4rem", color: "var(--azul)", fontWeight: 700 }}>
-              $300.000 <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
+              ${Number(conv.precio_cop ?? 200000).toLocaleString("es-CO")} <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
             </div>
             <p style={{ fontSize: ".85rem", color: "var(--texto-suave)", margin: "6px 0 18px" }}>Pago único · acceso completo</p>
           </div>
