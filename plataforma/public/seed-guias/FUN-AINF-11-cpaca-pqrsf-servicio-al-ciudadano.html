@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-11 · CPACA, PQRSF y servicio al ciudadano — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-11</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 19 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>CPACA, PQRSF y servicio al ciudadano</h1>
+  <p class="header-sub">El ciudadano en el centro: el CPACA, el derecho de petición y sus plazos, las PQRSF, el debido proceso y la atención de calidad como razón de ser del servidor público.</p>
+  <div class="badges"><span class="badge">📅 Día 19 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones. Primero, un compañero trata las solicitudes de los ciudadanos como 'molestias que no lo dejan trabajar'. Segundo, llega una petición de información que no alcanzas a responder en el plazo. Tercero, llega una PQRSF que corresponde a otra dependencia. Y cuarto, un adulto mayor que no maneja la tecnología no puede hacer un trámite que se volvió digital.</p>
+    <p>¿El ciudadano es un estorbo? ¿Qué haces si no alcanzas el plazo? ¿Se rechaza una petición mal dirigida? ¿Cómo atiendes a quien no maneja la tecnología? Todas estas respuestas parten de un mismo conocimiento: el <mark>CPACA, las PQRSF y el servicio al ciudadano</mark>. Hoy aprenderás el marco de la actuación administrativa (Ley 1437 de 2011), el derecho de petición y sus plazos, el debido proceso y la atención de calidad, y entenderás que servir al ciudadano con respeto, en los plazos y de fondo es la razón de ser del servidor público.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Que el servidor público existe para <strong>servir al ciudadano</strong>; qué es el <strong>CPACA</strong> (Ley 1437 de 2011).</li>
+      <li>Los <strong>principios</strong> de la actuación administrativa; el <strong>derecho de petición</strong> (art. 23) y sus <strong>plazos</strong>.</li>
+      <li>Qué son las <strong>PQRSF</strong> y cómo se gestionan; el <strong>debido proceso administrativo</strong> y los recursos.</li>
+      <li>La <strong>atención de calidad</strong> (resolver, no despachar) y la <strong>accesibilidad e inclusión</strong>.</li>
+      <li>El <strong>silencio administrativo</strong> y la información al servicio del ciudadano.</li>
+      <li>La <strong>vocación de servicio</strong>: el ciudadano en el centro.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender para quién trabaja el servidor público →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>El servidor público existe, ante todo, para <mark>servir al ciudadano</mark>. El CPACA (Ley 1437 de 2011) regula cómo la administración debe relacionarse con las personas, y el derecho de petición (art. 23 de la Constitución) es un derecho fundamental que obliga a responder. Es un tema central en la prueba y define la vocación del cargo.</p>
+    <p>Necesitas conocer los principios de la actuación administrativa, el derecho de petición y sus plazos (15 días general, 10 para documentos/información, 30 para consultas), qué son las PQRSF y cómo se gestionan, el debido proceso que protege al ciudadano, y cómo atender con calidad, respeto e inclusión. Todo ello define al servidor que pone al ciudadano en el centro.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean estos dilemas: ver al ciudadano como un estorbo, no responder o responder tarde o con evasivas, rechazar una petición mal dirigida, dar trato preferente a un conocido, o excluir a quien no maneja la tecnología. La respuesta correcta casi siempre se deriva de servir al ciudadano con respeto, responder a tiempo y de fondo, respetar el debido proceso y la igualdad. Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que ven al ciudadano como un estorbo, que no responden o responden con evasivas o fuera de plazo, que rechazan una petición por formalismo o la 'pelotean', que dan trato preferente a un conocido o que excluyen a los más vulnerables. La respuesta suele estar en servir con respeto, responder a tiempo y de fondo, y respetar el debido proceso y la igualdad.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 CPACA, PQRSF y servicio al ciudadano</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. El servidor público está, ante todo, al servicio del ciudadano. Hoy verás qué es el <mark>CPACA</mark> (Código de Procedimiento Administrativo y de lo Contencioso Administrativo, Ley 1437 de 2011) y los principios de la actuación administrativa; el <mark>derecho de petición</mark> (art. 23 de la Constitución) y sus plazos; qué son las <mark>PQRSF</mark> (peticiones, quejas, reclamos, sugerencias, felicitaciones) y cómo se gestionan; el debido proceso administrativo; la atención al ciudadano con calidad y accesibilidad; y la relación entre el trabajo del Analista y el servicio. Todo ambientado en el rol real del cargo. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, entenderás que servir al ciudadano con respeto, en los plazos y con el debido proceso es la razón de ser del servidor público.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📜</span><h5>CPACA</h5><p>Reglas de la actuación administrativa</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">✉️</span><h5>Derecho de petición</h5><p>Preguntar y recibir respuesta</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">📨</span><h5>PQRSF</h5><p>Canales del ciudadano</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Debido proceso</h5><p>Garantías de la actuación</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🤝</span><h5>Servicio</h5><p>El ciudadano en el centro</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>El servidor público está al servicio del ciudadano</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La Constitución establece que la función pública está al <mark>servicio de los intereses generales</mark> y que los servidores públicos están al servicio del Estado y de la comunidad. El ciudadano no es un estorbo ni un «cliente molesto»: es la razón de ser del servicio público. Toda la actuación administrativa gira en torno a servirle con respeto, eficacia y legalidad.</p>
+</div>
+<div class="b-texto">
+  <p>Antes de cualquier norma o procedimiento, hay un principio que lo ordena todo: el servidor público existe para servir al ciudadano. El artículo 123 de la Constitución lo dice con claridad: los servidores públicos están al servicio del Estado y de la comunidad. No trabajan para sí mismos ni para la entidad como fin en sí misma, sino para que las personas reciban los servicios y vean protegidos sus derechos. Esta es la vocación que da sentido a todo lo demás.</p>
+  <p>De aquí se desprende una actitud fundamental: el ciudadano no es un estorbo. Es fácil, en el trajín diario, empezar a ver a quien pide, pregunta o reclama como una molestia que interrumpe el trabajo. Esa mirada invierte la realidad: atender al ciudadano no interrumpe el trabajo, es el trabajo. El servidor que internaliza esto trata cada solicitud, cada pregunta y cada reclamo como lo que son: el ejercicio de un derecho que él está para garantizar.</p>
+  <p>Este principio tiene implicaciones concretas en el trato. Servir bien significa atender con <strong>respeto</strong> (a todos por igual, sin privilegios ni malos tratos), con <strong>eficacia</strong> (resolver de verdad, no solo despachar), con <strong>oportunidad</strong> (en los plazos) y con <strong>legalidad</strong> (conforme a la norma, sin arbitrariedad). Estas cualidades no son favores que el servidor concede, sino deberes que la ciudadanía tiene derecho a exigir.</p>
+  <p>Para el Analista I, aunque su trabajo sea más de información que de atención directa al público, este principio lo orienta igual. La información que produce, los perfiles que apoya, los datos que cuida, todo está, en última instancia, al servicio de que la entidad cumpla su misión frente a la ciudadanía. Y cuando le toque atender una solicitud o una petición, debe hacerlo con la convicción de que servir al ciudadano no es una carga añadida a su trabajo, sino el propósito que le da sentido.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Mirada equivocada</th><th>Mirada correcta</th></tr></thead>
+    <tbody>
+      <tr><td>El ciudadano es un estorbo que interrumpe</td><td>Atender al ciudadano es el trabajo, no una interrupción</td></tr>
+      <tr><td>Servir bien es un favor del servidor</td><td>Es un deber que la ciudadanía puede exigir</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero trata las solicitudes de los ciudadanos como 'molestias que no lo dejan trabajar'. Le recuerdas que atender al ciudadano no interrumpe el trabajo: es el trabajo. El servidor público existe para servir a la comunidad (art. 123 de la Constitución), y cada solicitud es el ejercicio de un derecho que él está para garantizar, no un estorbo.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>Respecto al ciudadano que pide, pregunta o reclama, la actitud correcta del servidor es entender que:</p>
+  <div class="cp-op" data-op="a">a) Es un estorbo que interrumpe el trabajo y conviene despachar lo antes posible.</div>
+  <div class="cp-op" data-op="b">b) Atenderlo es el trabajo mismo, no una interrupción: el servidor existe para servir a la comunidad y garantizar sus derechos.</div>
+  <div class="cp-op" data-op="c">c) Servirle bien es un favor que el servidor concede cuando tiene ganas.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Servir no es servilismo</h4>
+    <p>Conviene precisar qué significa y qué no significa servir al ciudadano. Servir no es servilismo ni someterse a exigencias improcedentes: es atender con respeto y resolver conforme a la ley lo que corresponde. Un ciudadano tiene derecho a una respuesta pronta, de fondo y respetuosa, pero no a que el servidor incumpla la norma, entregue información reservada o le dé un trato privilegiado. La vocación de servicio convive, sin contradicción, con la firmeza para aplicar la ley por igual a todos.</p>
+    <p>Esta distinción protege al servidor de dos errores. Uno, el maltrato o la indiferencia, que olvidan que el ciudadano es la razón del servicio. Otro, la debilidad frente a presiones indebidas, que confunde servir con ceder a lo que no corresponde. El punto medio —atender con calidez y, a la vez, aplicar la ley con imparcialidad— es la postura correcta del servidor público, y la que mejor sirve al interés general.</p>
+
+
+    <h4>Ejercicio resuelto: una petición que llega mal dirigida</h4>
+    <p>Veamos un ejercicio. Llega a tu área una petición de un ciudadano que, al leerla, corresponde a otra dependencia, y además una parte pide información reservada. ¿Qué haces? Primero, no la rechazas ni la ignoras: la recibes. Segundo, la parte que no es de tu competencia la trasladas a la dependencia correcta e informas al ciudadano (traslado por competencia, no 'peloteo'). Tercero, la parte reservada la respondes negándola con el fundamento legal. Todo, dentro del plazo o informando si no se alcanza.</p>
+    <p>El resultado es una gestión que respeta el derecho de petición en todos sus frentes: no deja al ciudadano sin respuesta, encauza lo que corresponde a otros, protege lo reservado con fundamento y cuida los plazos. Este ejercicio muestra cómo varias reglas del tema (respuesta obligada, de fondo, traslado por competencia, reserva, plazos) se aplican juntas en un caso real. Esa capacidad de articularlas es la marca de un servidor que domina el servicio al ciudadano.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Qué es el CPACA</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>CPACA</mark> (Ley 1437 de 2011) es el Código de Procedimiento Administrativo y de lo Contencioso Administrativo: la norma que regula cómo las autoridades deben actuar frente a los ciudadanos y cómo se controlan sus decisiones ante los jueces. Fija los principios, los procedimientos y las garantías de la actuación administrativa. Es el marco de cómo la administración se relaciona con las personas.</p>
+</div>
+<div class="b-texto">
+  <p>Cuando una autoridad actúa frente a un ciudadano —le responde una petición, le hace un requerimiento, toma una decisión que lo afecta—, no puede hacerlo como quiera: debe seguir unas reglas. Esas reglas están, en buena parte, en el <strong>CPACA</strong>, la Ley 1437 de 2011. Su nombre completo, Código de Procedimiento Administrativo y de lo Contencioso Administrativo, revela sus dos grandes partes: cómo actúa la administración (procedimiento administrativo) y cómo los jueces controlan esa actuación (lo contencioso administrativo).</p>
+  <p>La primera parte, el <strong>procedimiento administrativo</strong>, es la que más toca el día a día del servidor: regula cómo se adelantan las actuaciones, cómo se responden las peticiones, cómo se notifican las decisiones, cómo se garantiza el debido proceso. Es, en esencia, el «manual» de cómo la administración debe relacionarse con las personas de forma ordenada, transparente y respetuosa de sus derechos.</p>
+  <p>La segunda parte, <strong>lo contencioso administrativo</strong>, regula cómo el ciudadano puede acudir a los jueces (la jurisdicción contencioso-administrativa) cuando considera que una decisión de la administración es ilegal o lesiona sus derechos. Esto es una garantía fundamental: las decisiones de la administración no son la última palabra; pueden ser controladas por un juez independiente. Saber que existe este control recuerda al servidor que debe actuar conforme a derecho, porque su actuación puede ser revisada.</p>
+  <p>Para el Analista I, el CPACA es el marco que ordena cómo la entidad se relaciona con los ciudadanos. No necesita dominarlo como un abogado, pero sí conocer sus principios y, sobre todo, las reglas del derecho de petición y de la atención, que son las que más probablemente tocará. Entender que existe un código que regula la actuación administrativa le recuerda que servir al ciudadano no es improvisación, sino una función reglada con principios, plazos y garantías que debe respetar.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Parte del CPACA</th><th>De qué se ocupa</th></tr></thead>
+    <tbody>
+      <tr><td>Procedimiento administrativo</td><td>Cómo actúa la administración frente al ciudadano (el día a día)</td></tr>
+      <tr><td>Lo contencioso administrativo</td><td>Cómo los jueces controlan las decisiones de la administración</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero cree que la administración 'puede responderle al ciudadano como quiera y cuando quiera'. Le explicas que el CPACA (Ley 1437 de 2011) regula cómo deben adelantarse las actuaciones, responderse las peticiones y garantizarse el debido proceso, y que las decisiones pueden ser controladas por un juez. Actuar frente al ciudadano es una función reglada, no una improvisación.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>El CPACA (Ley 1437 de 2011) regula, principalmente:</p>
+  <div class="cp-op" data-op="a">a) Cómo las autoridades deben actuar frente a los ciudadanos (procedimiento administrativo) y cómo los jueces controlan esas decisiones (lo contencioso).</div>
+  <div class="cp-op" data-op="b">b) Únicamente los impuestos que deben pagar los contribuyentes.</div>
+  <div class="cp-op" data-op="c">c) La organización interna de las oficinas, sin relación con los ciudadanos.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Procedimiento administrativo general y especial</h4>
+    <p>Conviene saber que el CPACA fija un procedimiento administrativo general, pero muchas materias tienen procedimientos especiales con sus propias reglas. En lo tributario y aduanero, por ejemplo, el Estatuto Tributario y las normas aduaneras establecen procedimientos específicos (de determinación, sancionatorio, de devoluciones), que prevalecen sobre el general en lo que regulan. El CPACA actúa como marco supletorio: aplica en lo no previsto por la norma especial.</p>
+    <p>Para el Analista I, el detalle de los procedimientos tributarios lo verá sobre todo en los temas específicos de su cargo; lo importante aquí es entender la relación: hay reglas especiales para la DIAN y, por encima o complementándolas, los principios y reglas generales del CPACA. Esta articulación garantiza que, aun en los procedimientos especiales, se respeten las garantías esenciales (debido proceso, derecho de petición, etc.) que el CPACA consagra para toda actuación administrativa.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>Los principios de la actuación administrativa</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El CPACA fija <mark>principios</mark> que deben guiar toda actuación administrativa: debido proceso, igualdad, imparcialidad, buena fe, moralidad, eficacia, economía, celeridad, publicidad, entre otros. No son adornos: son criterios obligatorios que orientan cómo el servidor debe actuar y que permiten evaluar si una actuación es correcta.</p>
+</div>
+<div class="b-texto">
+  <p>El CPACA no se limita a fijar procedimientos; establece <strong>principios</strong> que deben inspirar toda actuación administrativa. Estos principios son el «espíritu» de la ley: cuando una regla no cubre exactamente un caso, o cuando hay que decidir cómo actuar, los principios orientan hacia lo correcto. Conocerlos permite al servidor actuar bien aun en situaciones no previstas al detalle, y permite evaluar si una actuación respetó lo esencial.</p>
+  <p>Varios principios son especialmente relevantes para el servicio. El <strong>debido proceso</strong> garantiza que las actuaciones respeten las reglas y el derecho de defensa. La <strong>igualdad</strong> y la <strong>imparcialidad</strong> exigen tratar a todos por igual, sin favoritismos ni discriminación. La <strong>buena fe</strong> presume la honestidad del ciudadano. La <strong>moralidad</strong> impone actuar con rectitud. Y la <strong>publicidad</strong> exige que las actuaciones sean conocidas por los interesados, sin secretismo indebido.</p>
+  <p>Otros principios apuntan a la <strong>eficiencia del servicio</strong>: la <strong>eficacia</strong> (que las actuaciones logren su fin), la <strong>economía</strong> (sin trámites ni costos innecesarios), la <strong>celeridad</strong> (sin dilaciones indebidas). Estos principios recuerdan que servir bien no es solo cumplir la ley, sino hacerlo de forma ágil y sin poner trabas: la administración existe para resolver, no para complicar la vida al ciudadano con formalismos estériles.</p>
+  <p>Para el Analista I, los principios de la actuación administrativa son una brújula de conducta. Ante cualquier actuación que lo involucre, puede preguntarse: ¿estoy tratando a todos por igual (igualdad)?, ¿con rectitud (moralidad)?, ¿respetando las garantías (debido proceso)?, ¿sin dilaciones ni trabas innecesarias (celeridad, economía)?, ¿presumiendo la buena fe del ciudadano? Estos principios no son teoría lejana: son los criterios con los que se juzga si una actuación fue correcta, y por tanto, guías prácticas para actuar bien.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Principio</th><th>Qué exige</th></tr></thead>
+    <tbody>
+      <tr><td>Debido proceso</td><td>Respetar las reglas y el derecho de defensa</td></tr>
+      <tr><td>Igualdad e imparcialidad</td><td>Tratar a todos por igual, sin favoritismos</td></tr>
+      <tr><td>Buena fe</td><td>Presumir la honestidad del ciudadano</td></tr>
+      <tr><td>Celeridad y economía</td><td>Sin dilaciones ni trámites innecesarios</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero quiere darle trato preferente a un conocido en un trámite y poner trabas a otro ciudadano que le cae mal. Le recuerdas los principios del CPACA: igualdad e imparcialidad (tratar a todos por igual), buena fe, celeridad y economía (sin trabas innecesarias). Esos principios no son adornos: son los criterios con que se juzga si una actuación fue correcta, y obligan a actuar sin favoritismos.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>Los principios de la actuación administrativa del CPACA (igualdad, imparcialidad, debido proceso, celeridad...) son:</p>
+  <div class="cp-op" data-op="a">a) Simples adornos sin ningún efecto práctico en cómo se debe actuar.</div>
+  <div class="cp-op" data-op="b">b) Criterios opcionales que el servidor aplica solo si le conviene.</div>
+  <div class="cp-op" data-op="c">c) Criterios obligatorios que guían cómo actuar y permiten evaluar si una actuación fue correcta.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Actos administrativos y su firmeza</h4>
+    <p>El CPACA regula también los actos administrativos: las decisiones con que la administración produce efectos jurídicos (una resolución, una liquidación, una sanción). Un acto administrativo debe estar motivado (explicar sus razones), notificarse al interesado y puede ser objeto de recursos. Mientras no quede en firme (agotados los recursos o los plazos), el ciudadano puede controvertirlo. Entender esto ayuda a ver que las decisiones de la administración siguen un camino reglado, no son definitivas de inmediato.</p>
+    <p>Para el Analista I, aunque no emita actos administrativos, conviene saber que las decisiones de la entidad que afectan a los contribuyentes son actos reglados, motivados y controvertibles. La información que él aporta puede alimentar esos actos, lo que refuerza la exigencia de rigor: un acto administrativo basado en información defectuosa es un acto vulnerable, que el ciudadano puede desmontar con recursos o ante un juez. La calidad de la información sostiene la solidez de las decisiones.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>El derecho de petición</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>derecho de petición</mark> (art. 23 de la Constitución) permite a toda persona presentar solicitudes respetuosas a las autoridades y obtener una <mark>respuesta pronta y de fondo</mark>. Es un derecho fundamental: la administración está obligada a responder (de forma clara, completa y en los plazos), no puede ignorar una petición. Es la principal herramienta del ciudadano para relacionarse con el Estado.</p>
+</div>
+<div class="b-texto">
+  <p>El <strong>derecho de petición</strong> es, probablemente, la herramienta más importante que tiene el ciudadano frente a la administración. Consagrado en el artículo 23 de la Constitución, permite a toda persona presentar solicitudes respetuosas a las autoridades y recibir una respuesta. No es una gracia que la administración concede: es un derecho fundamental que la obliga a responder. Ignorar una petición o no responderla es una violación de este derecho, con consecuencias para la entidad y el servidor.</p>
+  <p>La respuesta al derecho de petición debe cumplir tres condiciones: ser <strong>pronta</strong> (dentro de los plazos legales), ser <strong>de fondo</strong> (resolver realmente lo pedido, no una respuesta evasiva o que no responde) y ser <strong>clara y completa</strong> (que el ciudadano entienda la respuesta). Una respuesta que llega tarde, que no responde lo que se preguntó, o que es incomprensible, no satisface el derecho de petición aunque formalmente «se haya respondido».</p>
+  <p>Hay distintos tipos de petición según lo que se pide: de <strong>interés general o particular</strong>, de <strong>información</strong>, de <strong>documentos</strong>, de <strong>consulta</strong>, entre otras. Cada tipo tiene reglas y plazos específicos. Pero todas comparten lo esencial: generan la obligación de responder de fondo y a tiempo. El servidor que recibe una petición no puede escoger si responde o no; solo puede, dentro de la ley, cómo y cuándo responderla correctamente.</p>
+  <p>Para el Analista I, el derecho de petición es una obligación que debe conocer y respetar. Si recibe o debe contribuir a responder una petición (por ejemplo, una solicitud de información que él maneja), debe hacerlo de fondo, a tiempo y con claridad, y encauzar la parte que no le corresponde. No responder, responder tarde o responder con evasivas vulnera un derecho fundamental. Entender la seriedad del derecho de petición es parte de servir al ciudadano conforme a la ley.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Una respuesta válida al derecho de petición es</th><th>No lo es</th></tr></thead>
+    <tbody>
+      <tr><td>Pronta (dentro del plazo)</td><td>Tardía o sin respuesta</td></tr>
+      <tr><td>De fondo (resuelve lo pedido)</td><td>Evasiva o que no responde lo preguntado</td></tr>
+      <tr><td>Clara y completa</td><td>Incomprensible o incompleta</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Llega una petición de información que involucra datos que tú manejas. Un compañero sugiere 'responder con una evasiva para salir del paso'. Te niegas: el derecho de petición exige una respuesta pronta, de fondo y clara. Respondes lo que te corresponde de fondo y a tiempo, proteges lo que es reservado explicando el fundamento, y encauzas lo demás. Una evasiva o el silencio vulnerarían un derecho fundamental.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>La respuesta a un derecho de petición debe ser:</p>
+  <div class="cp-op" data-op="a">a) Opcional: la administración responde solo si quiere y tiene tiempo.</div>
+  <div class="cp-op" data-op="b">b) Pronta (en el plazo), de fondo (resuelve lo pedido) y clara; es una obligación, no una gracia.</div>
+  <div class="cp-op" data-op="c">c) Una respuesta evasiva basta, siempre que formalmente 'se haya respondido algo'.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>El principio de buena fe en la práctica</h4>
+    <p>El principio de buena fe tiene consecuencias muy concretas en el trato al ciudadano. Significa presumir que quien se dirige a la administración lo hace de forma honesta, y no exigirle pruebas o requisitos desproporcionados por desconfianza. Por ejemplo, no se le puede pedir al ciudadano que demuestre hechos que la propia entidad ya tiene registrados, ni multiplicar requisitos como si fuera un sospechoso. La buena fe agiliza los trámites y respeta la dignidad del ciudadano.</p>
+    <p>Esto no significa ingenuidad: si hay elementos concretos que indiquen un fraude, la administración actúa. Pero el punto de partida es la confianza, no la sospecha generalizada. Para el Analista, el principio de buena fe se traduce en no tratar a cada ciudadano como un posible tramposo, en no poner trabas por desconfianza y en pedir solo lo que de verdad se necesita. Es, además, coherente con la presunción de buena fe constitucional que ya vimos en los perfiles de riesgo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Los plazos del derecho de petición</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El derecho de petición tiene <mark>plazos</mark> legales para responder: como regla general, 15 días hábiles; las peticiones de documentos e información, 10 días hábiles; las consultas, 30 días hábiles. Si no se puede responder a tiempo, hay que informarlo al peticionario explicando el motivo y la fecha en que se responderá. Incumplir los plazos vulnera el derecho.</p>
+</div>
+<div class="b-texto">
+  <p>Un derecho de petición no respondido a tiempo es un derecho vulnerado, por eso los <strong>plazos</strong> son esenciales. La regla general es de <strong>quince (15) días hábiles</strong> para resolver una petición. Pero hay plazos especiales según el tipo: las peticiones de <strong>documentos e información</strong> tienen un plazo más corto, de <strong>diez (10) días hábiles</strong>; y las <strong>consultas</strong> (opiniones o conceptos sobre materias a cargo de la entidad) tienen un plazo mayor, de <strong>treinta (30) días hábiles</strong>. Conocer estos plazos permite responder a tiempo.</p>
+  <p>Un punto que conviene tener claro es qué pasa cuando, por una razón válida, no se puede responder dentro del plazo. La ley no permite simplemente guardar silencio: la autoridad debe <strong>informar al peticionario antes de que venza el plazo</strong>, explicando por qué no puede responder a tiempo y señalando cuándo lo hará (dentro de un término razonable). Esto mantiene informado al ciudadano y evita que el silencio se convierta en una violación del derecho.</p>
+  <p>Incumplir los plazos del derecho de petición tiene <strong>consecuencias</strong>. Para el ciudadano, abre la puerta a la acción de tutela (porque el derecho de petición es fundamental) y a otras acciones. Para el servidor, puede configurar una <strong>falta disciplinaria</strong>. Es decir, responder a tiempo no es solo buena práctica: es una obligación cuyo incumplimiento acarrea responsabilidad. El servidor diligente lleva control de los plazos de las peticiones que le corresponden.</p>
+  <p>Para el Analista I, cuando participe en responder peticiones —especialmente las de información y documentos, cuyo plazo es de 10 días hábiles—, llevar control del tiempo es parte de su responsabilidad. Si por la complejidad no alcanza a responder a tiempo, debe gestionar que se informe al peticionario en lugar de dejar vencer el plazo en silencio. La puntualidad en las respuestas es una forma muy concreta de respetar el derecho del ciudadano y de evitar responsabilidad para la entidad y para sí mismo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de petición</th><th>Plazo (días hábiles)</th></tr></thead>
+    <tbody>
+      <tr><td>Regla general</td><td>15 días hábiles</td></tr>
+      <tr><td>Documentos e información</td><td>10 días hábiles</td></tr>
+      <tr><td>Consultas</td><td>30 días hábiles</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Te corresponde contribuir a responder una petición de información (plazo de 10 días hábiles), pero por su complejidad ves que no alcanzarás. En vez de dejar vencer el plazo en silencio, gestionas que se informe al peticionario antes del vencimiento, explicando el motivo y la fecha en que se responderá. Así respetas el derecho de petición y evitas una posible falta disciplinaria por el incumplimiento del plazo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>Si no es posible responder un derecho de petición dentro del plazo legal, lo correcto es:</p>
+  <div class="cp-op" data-op="a">a) Informar al peticionario antes de que venza el plazo, explicando el motivo y cuándo se responderá.</div>
+  <div class="cp-op" data-op="b">b) Guardar silencio y responder cuando se pueda, sin avisar nada al ciudadano.</div>
+  <div class="cp-op" data-op="c">c) No responder nunca, porque si venció el plazo ya no hay obligación de hacerlo.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Peticiones verbales, escritas y por cualquier medio</h4>
+    <p>Un rasgo del derecho de petición que conviene conocer es su flexibilidad de forma: puede presentarse de manera verbal o escrita, y por cualquier medio idóneo que la entidad disponga (ventanilla, correo físico, correo electrónico, canales en línea). No puede exigirse una formalidad excesiva como condición para recibirla: lo importante es que la autoridad reciba la solicitud y la tramite. Rechazar una petición por un formalismo menor sería poner trabas a un derecho fundamental.</p>
+    <p>Tampoco puede exigirse al peticionario que exprese las razones de su solicitud como condición para responderla, salvo las excepciones legales. Para el Analista, esto refuerza una idea: el derecho de petición está hecho para ser fácil de ejercer, y la administración debe facilitarlo, no complicarlo. Recibir la petición por el canal que sea, orientar al ciudadano si hace falta y tramitarla es parte de servir sin poner barreras innecesarias a un derecho esencial.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Qué son las PQRSF</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p><mark>PQRSF</mark> es la sigla de las distintas solicitudes que un ciudadano puede presentar: <mark>P</mark>eticiones, <mark>Q</mark>uejas, <mark>R</mark>eclamos, <mark>S</mark>ugerencias y <mark>F</mark>elicitaciones. Las entidades tienen canales y procedimientos para recibirlas, tramitarlas y responderlas. Son el principal mecanismo de relación con la ciudadanía y una fuente valiosa de mejora.</p>
+</div>
+<div class="b-texto">
+  <p>Las entidades organizan la relación con los ciudadanos a través de las <strong>PQRSF</strong>, sigla que agrupa las distintas formas en que una persona puede dirigirse a la administración. La <strong>Petición</strong> es una solicitud (información, un trámite, una actuación). La <strong>Queja</strong> expresa inconformidad por la conducta de un servidor o por una irregularidad. El <strong>Reclamo</strong> manifiesta insatisfacción por la prestación de un servicio o por una decisión. La <strong>Sugerencia</strong> propone una mejora. Y la <strong>Felicitación</strong> reconoce un buen servicio.</p>
+  <p>Distinguir entre ellas importa porque cada una tiene un tratamiento adecuado. Una queja por la conducta de un servidor puede requerir una revisión disciplinaria; un reclamo por un servicio exige corregir y responder al ciudadano; una sugerencia debe analizarse como oportunidad de mejora. Clasificar bien una PQRSF al recibirla —saber si es petición, queja, reclamo, etc.— es el primer paso para darle el trámite correcto y responderla adecuadamente.</p>
+  <p>Las PQRSF tienen, como el derecho de petición, <strong>plazos y obligación de respuesta</strong>. No son un buzón donde las solicitudes se pierden: son un canal que la entidad debe gestionar con rigor, respondiendo a tiempo y de fondo. Las entidades suelen tener un área o un sistema que centraliza las PQRSF, les hace seguimiento y vela por que se respondan dentro de los términos. El servidor que recibe una PQRSF debe canalizarla correctamente y no dejarla en el olvido.</p>
+  <p>Para el Analista I, las PQRSF son parte del entorno de servicio de la entidad. Puede verse involucrado cuando una de ellas requiere información que él maneja, o cuando debe contribuir a responder. Entender qué es cada tipo, que todas obligan a responder a tiempo y de fondo, y que deben canalizarse por el procedimiento de la entidad, le permite actuar correctamente. Además, las PQRSF son una fuente valiosa de mejora: las quejas, reclamos y sugerencias señalan dónde el servicio puede ser mejor.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo</th><th>Qué expresa</th></tr></thead>
+    <tbody>
+      <tr><td>Petición</td><td>Una solicitud (información, trámite, actuación)</td></tr>
+      <tr><td>Queja</td><td>Inconformidad por la conducta de un servidor o una irregularidad</td></tr>
+      <tr><td>Reclamo</td><td>Insatisfacción por un servicio o una decisión</td></tr>
+      <tr><td>Sugerencia / Felicitación</td><td>Propuesta de mejora / reconocimiento de buen servicio</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Llega una PQRSF y, antes de tramitarla, la clasificas: ¿es una petición de información, una queja por la conducta de alguien, un reclamo por un servicio o una sugerencia? Identificar bien qué es te permite darle el trámite correcto y responderla adecuadamente, en el plazo y de fondo. No la dejas en el olvido: la canalizas por el procedimiento de la entidad. Y si es una queja o sugerencia, la ves como oportunidad de mejora.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Las PQRSF (peticiones, quejas, reclamos, sugerencias, felicitaciones) son:</p>
+  <div class="cp-op" data-op="a">a) Un buzón donde las solicitudes pueden perderse sin obligación de responder.</div>
+  <div class="cp-op" data-op="b">b) Mensajes que el servidor responde solo si le parecen importantes.</div>
+  <div class="cp-op" data-op="c">c) Los canales por los que el ciudadano se dirige a la entidad, que obligan a responder a tiempo y de fondo, y son una fuente de mejora.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Días hábiles, no calendario: un detalle que importa</h4>
+    <p>Un detalle práctico que confunde a muchos es que los plazos del derecho de petición se cuentan en días hábiles, no calendario: no cuentan sábados, domingos ni festivos. Esto significa que un plazo de 10 días hábiles puede equivaler a dos semanas o más en el calendario, dependiendo de los festivos. Confundir días hábiles con calendario lleva a errores en ambos sentidos: creer que hay más tiempo del que hay, o angustiarse sin necesidad.</p>
+    <p>Para el Analista I que lleve control de plazos de peticiones, contar bien los días hábiles es parte del rigor. Un error de conteo puede hacer que una respuesta que se creía a tiempo llegue vencida. Llevar un control claro de la fecha de recepción y del vencimiento real en días hábiles evita incumplimientos involuntarios y la responsabilidad que acarrean. Es un detalle pequeño, pero de los que marcan la diferencia entre cumplir y no cumplir un plazo legal.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>El debido proceso administrativo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>debido proceso</mark> (art. 29 de la Constitución) también rige las actuaciones administrativas: nadie puede ser afectado por una decisión de la administración sin que se respeten las reglas, se le comunique, pueda ser oído, presentar pruebas y controvertir. En materia tributaria y aduanera, esto significa que antes de una sanción o una decisión que afecte al contribuyente, debe surtirse un procedimiento con garantías.</p>
+</div>
+<div class="b-texto">
+  <p>El <strong>debido proceso</strong>, que ya apareció en los temas de perfiles y sanciones, no es solo un principio penal: rige también las actuaciones administrativas. Significa que la administración no puede tomar decisiones que afecten a una persona de forma sorpresiva o arbitraria: debe seguir un procedimiento reglado en el que el ciudadano conozca lo que se le imputa o decide, pueda ser oído, presentar pruebas y controvertir. Es una garantía esencial frente al poder del Estado.</p>
+  <p>En el ámbito de la DIAN, esto es muy concreto. Antes de determinar una diferencia tributaria, imponer una sanción o tomar una decisión que afecte a un contribuyente, debe surtirse un <strong>procedimiento con garantías</strong>: notificaciones, oportunidad de responder, de aportar pruebas, de interponer recursos. La administración no puede «caerle» a un contribuyente con una decisión firme sin haberle dado la oportunidad de defenderse. El perfil de riesgo, como vimos, solo orienta; la decisión exige todo este debido proceso.</p>
+  <p>Un componente clave del debido proceso administrativo son los <strong>recursos</strong>: los medios por los que el ciudadano puede pedir que se revise una decisión que lo afecta (como el recurso de reposición ante la misma autoridad, o el de apelación ante el superior). Los recursos permiten corregir errores de la administración sin necesidad de ir de inmediato a un juez. Son parte de las garantías: el ciudadano no está indefenso frente a una decisión, puede pedir que se reconsidere.</p>
+  <p>Para el Analista I, entender el debido proceso administrativo le recuerda los límites y las garantías de la actuación de la entidad. Su trabajo de información puede alimentar actuaciones que afectan a contribuyentes, pero esas actuaciones deben respetar siempre el debido proceso. Esto refuerza dos cosas ya vistas: que su rol es de soporte (no decide ni sanciona), y que la información que aporta debe ser rigurosa, porque alimentará procedimientos con garantías en los que el contribuyente podrá defenderse. El debido proceso es el marco justo de toda actuación.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El debido proceso administrativo garantiza</th><th>Qué significa</th></tr></thead>
+    <tbody>
+      <tr><td>Conocer la actuación</td><td>Que se notifique lo que se decide o imputa</td></tr>
+      <tr><td>Ser oído y aportar pruebas</td><td>Oportunidad de defenderse antes de la decisión</td></tr>
+      <tr><td>Interponer recursos</td><td>Pedir que se revise la decisión (reposición, apelación)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero cree que, si un perfil de riesgo señala a un contribuyente, se le puede imponer una sanción de inmediato. Le recuerdas el debido proceso administrativo: antes de cualquier decisión que lo afecte, el contribuyente debe ser notificado, poder ser oído, aportar pruebas e interponer recursos. El perfil solo orienta; la decisión exige un procedimiento con garantías. Saltarse eso vulneraría el debido proceso.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>El debido proceso administrativo implica que, antes de una decisión que afecte a un contribuyente:</p>
+  <div class="cp-op" data-op="a">a) Basta con que un perfil de riesgo lo señale para sancionarlo de inmediato.</div>
+  <div class="cp-op" data-op="b">b) Debe surtirse un procedimiento con garantías: notificación, oportunidad de ser oído, aportar pruebas e interponer recursos.</div>
+  <div class="cp-op" data-op="c">c) La administración puede decidir de forma sorpresiva, sin notificar ni dar derecho a defensa.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Traslado por competencia: no es rebote</h4>
+    <p>Una situación común es recibir una petición que no corresponde a la entidad o al área. El CPACA prevé qué hacer: cuando una autoridad recibe una petición que no es de su competencia, debe trasladarla a la autoridad competente dentro de un término breve e informar al peticionario, en lugar de simplemente devolverla o ignorarla. Esto evita el clásico 'peloteo' en el que el ciudadano es enviado de oficina en oficina sin que nadie resuelva.</p>
+    <p>Para el Analista I, esto marca la conducta correcta cuando una PQRSF o petición llega a su área pero le corresponde a otra: no se rechaza ni se deja morir, se canaliza a quien compete y se informa al ciudadano. El traslado por competencia es una muestra de que el servicio se organiza en torno a resolverle al ciudadano, no a desentenderse de lo que 'no es mío'. Un buen servidor facilita que la solicitud llegue a quien puede resolverla, aunque no sea él.</p>
+
+
+    <h4>Resumen de las PQRSF para la prueba</h4>
+    <p>Para fijarlo: toda PQRSF (petición, queja, reclamo, sugerencia, felicitación) obliga a responder a tiempo y de fondo; clasificar bien el tipo al recibirla orienta el trámite correcto; las que llegan mal dirigidas se trasladan por competencia e se informa al ciudadano (no se 'pelotean'); y las quejas, reclamos y sugerencias son, además, insumos de mejora que señalan dónde el servicio puede ser mejor. Nunca se dejan en el olvido ni se responden con evasivas.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Atención al ciudadano con calidad</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Atender bien al ciudadano implica <mark>calidad</mark> en el trato y en la respuesta: amabilidad y respeto, claridad en la información, oportunidad (sin hacer esperar de más), y soluciones reales (no solo despachar). Una buena atención no es un lujo: es parte del deber del servidor y de la confianza del ciudadano en el Estado.</p>
+</div>
+<div class="b-texto">
+  <p>Más allá de los procedimientos y los plazos, hay una dimensión humana del servicio: la <strong>calidad de la atención</strong>. Atender bien significa tratar al ciudadano con <strong>amabilidad y respeto</strong>, darle información <strong>clara y comprensible</strong> (no en lenguaje técnico incomprensible), atenderlo con <strong>oportunidad</strong> (sin hacerlo esperar más de lo necesario) y, sobre todo, buscar <strong>soluciones reales</strong> a su necesidad, no solo despacharlo para quitárselo de encima.</p>
+  <p>Hay una diferencia importante entre <strong>despachar y resolver</strong>. Despachar es responder cualquier cosa para cerrar la interacción; resolver es atender de verdad la necesidad del ciudadano. Un servidor que solo despacha puede «cumplir» formalmente pero deja al ciudadano insatisfecho y sin solución, lo que genera reclamos, desconfianza y a menudo más trabajo (el ciudadano vuelve a insistir). Resolver de verdad, aunque tome un poco más, es más eficaz y construye confianza.</p>
+  <p>La calidad de la atención también incluye la <strong>empatía</strong>: ponerse en el lugar del ciudadano, que muchas veces llega confundido, apurado o preocupado por un trámite que para él es importante. Un trato empático, que explica con paciencia y orienta, transforma la experiencia del ciudadano con el Estado. La indiferencia o el maltrato, en cambio, dañan la imagen de la entidad y, más profundamente, la confianza de la gente en lo público.</p>
+  <p>Para el Analista I, aunque su rol sea más de información que de atención directa, la cultura de la calidad en el servicio lo orienta igual. Cuando le toque atender a un ciudadano o responder una solicitud, hacerlo con respeto, claridad, oportunidad y vocación de resolver es parte de su deber. Y en su trabajo de información, recordar que al final hay personas —que la cifra es de un contribuyente, que el trámite es de alguien— mantiene viva esa vocación de servicio que da sentido a todo el aparato administrativo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Despachar (insuficiente)</th><th>Resolver (buena atención)</th></tr></thead>
+    <tbody>
+      <tr><td>Responder cualquier cosa para cerrar</td><td>Atender de verdad la necesidad</td></tr>
+      <tr><td>Deja al ciudadano insatisfecho</td><td>Construye confianza y evita reclamos</td></tr>
+      <tr><td>Trato indiferente o técnico</td><td>Amabilidad, claridad y empatía</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un ciudadano llega confundido con un trámite. Podrías 'despacharlo' con una respuesta rápida que lo saque de tu vista, pero eso lo dejaría sin solución y volvería a insistir. En cambio, lo atiendes con empatía, le explicas con claridad lo que necesita y resuelves de verdad su necesidad. Toma un poco más, pero construye confianza y evita reclamos. Resolver, no solo despachar, es la buena atención.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>La diferencia entre 'despachar' y 'resolver' en la atención al ciudadano es que:</p>
+  <div class="cp-op" data-op="a">a) Despachar es responder cualquier cosa para cerrar la interacción; resolver es atender de verdad la necesidad, lo que construye confianza y evita reclamos.</div>
+  <div class="cp-op" data-op="b">b) No hay diferencia: mientras se responda algo, el ciudadano queda bien atendido.</div>
+  <div class="cp-op" data-op="c">c) Resolver es siempre peor, porque toma más tiempo y lo ideal es quitarse al ciudadano de encima.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Notificación: el ciudadano debe enterarse</h4>
+    <p>Un componente esencial del debido proceso es la notificación: la administración debe comunicar formalmente sus decisiones al interesado para que este se entere y pueda ejercer sus derechos (responder, aportar pruebas, interponer recursos). Una decisión que afecta a alguien sin que se le haya notificado debidamente vulnera el debido proceso, porque la persona no tuvo cómo defenderse. La notificación no es un trámite menor: es la puerta por la que el ciudadano accede a sus garantías.</p>
+    <p>El CPACA regula las formas y los tiempos de la notificación precisamente para asegurar que el ciudadano se entere de verdad. Para el Analista, esto conecta con la idea de que las actuaciones que su trabajo alimenta deben respetar todo el procedimiento, incluida la notificación. Una buena decisión, basada en buena información, pero mal notificada, puede caerse por esa sola razón. El debido proceso es una cadena, y la notificación es uno de sus eslabones indispensables.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Accesibilidad e inclusión en el servicio</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El servicio debe ser <mark>accesible para todos</mark>, incluidas las personas con discapacidad, los adultos mayores, quienes no manejan la tecnología o hablan otra lengua, y las poblaciones vulnerables. La accesibilidad y la inclusión no son un favor: son parte del derecho a la igualdad. Una buena atención se adapta a las necesidades de cada ciudadano para que nadie quede excluido.</p>
+</div>
+<div class="b-texto">
+  <p>No todos los ciudadanos llegan al Estado en las mismas condiciones. Algunos tienen alguna <strong>discapacidad</strong>, otros son <strong>adultos mayores</strong>, otros no manejan la <strong>tecnología</strong> (y cada vez más trámites son digitales), otros hablan una <strong>lengua distinta</strong> o pertenecen a poblaciones en situación de vulnerabilidad. Un servicio verdaderamente al servicio de todos debe ser <strong>accesible e inclusivo</strong>: adaptarse a esas distintas necesidades para que nadie quede excluido del acceso a sus derechos.</p>
+  <p>La accesibilidad tiene múltiples dimensiones. <strong>Física</strong> (que las instalaciones permitan el acceso de personas con movilidad reducida), <strong>digital</strong> (que los canales en línea sean usables y que haya alternativas para quien no los maneja), <strong>comunicativa</strong> (lenguaje claro, apoyos para personas con discapacidad sensorial), y de <strong>trato</strong> (atención preferente y adaptada a quien lo necesita). Pensar en estas dimensiones evita que la digitalización o los procedimientos dejen afuera a los más vulnerables.</p>
+  <p>Esto conecta con el principio de <strong>igualdad</strong>: tratar a todos por igual no significa tratar a todos idéntico, sino dar a cada quien lo que necesita para acceder a sus derechos en condiciones equitativas. Una atención preferente a un adulto mayor o a una persona con discapacidad no es un privilegio injusto, sino la forma de garantizar que esa persona pueda ejercer su derecho al servicio igual que las demás. La inclusión es, en el fondo, igualdad real.</p>
+  <p>Para el Analista I, aunque no siempre atienda directamente, la perspectiva de accesibilidad e inclusión lo orienta. En su trabajo con información y sistemas, puede contribuir a que los servicios no excluyan (por ejemplo, teniendo presente que no todos manejan la tecnología). Y cuando atienda, debe adaptar su trato a las necesidades de cada ciudadano. Entender que el servicio debe llegar a todos, sin dejar afuera a los más vulnerables, es parte de una vocación de servicio verdaderamente inclusiva.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión de accesibilidad</th><th>Qué busca</th></tr></thead>
+    <tbody>
+      <tr><td>Física</td><td>Acceso para personas con movilidad reducida</td></tr>
+      <tr><td>Digital</td><td>Canales usables y alternativas para quien no los maneja</td></tr>
+      <tr><td>Comunicativa</td><td>Lenguaje claro y apoyos para discapacidad sensorial</td></tr>
+      <tr><td>De trato</td><td>Atención preferente y adaptada a quien lo necesita</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un adulto mayor que no maneja la tecnología no puede hacer un trámite que se volvió totalmente digital. En vez de decirle 'ahora todo es por internet, arrégleselas', reconoces que la accesibilidad es parte del derecho a la igualdad: le ofreces una alternativa o lo orientas con paciencia para que pueda ejercer su derecho igual que los demás. La inclusión no es un favor: es igualdad real.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Dar atención preferente y adaptada a un adulto mayor o a una persona con discapacidad es:</p>
+  <div class="cp-op" data-op="a">a) Un privilegio injusto que rompe la igualdad entre los ciudadanos.</div>
+  <div class="cp-op" data-op="b">b) Innecesario, porque todos deben arreglárselas por igual sin importar sus condiciones.</div>
+  <div class="cp-op" data-op="c">c) La forma de garantizar la igualdad real: dar a cada quien lo que necesita para acceder a sus derechos en condiciones equitativas.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Lenguaje claro: un derecho del ciudadano</h4>
+    <p>Una tendencia creciente en el servicio público es el lenguaje claro: la idea de que las entidades deben comunicarse con la ciudadanía de forma comprensible, evitando la jerga jurídica y técnica innecesaria. Una respuesta correcta en el fondo pero escrita en un lenguaje incomprensible no cumple del todo su función, porque el ciudadano no la entiende y, por tanto, no puede ejercer bien sus derechos. El lenguaje claro no simplifica el contenido: lo hace accesible.</p>
+    <p>Para el Analista I, cuando produce informes, respuestas o cifras que llegarán a ciudadanos, el lenguaje claro es parte de la calidad del servicio. Explicar en términos comprensibles, acompañar un dato de su contexto, evitar tecnicismos innecesarios: todo eso hace que la información efectivamente sirva a quien la recibe. Comunicar con claridad no es 'rebajar' el trabajo, sino completarlo: la información solo cumple su fin cuando el destinatario la entiende.</p>
+
+
+    <h4>La paciencia como parte del servicio</h4>
+    <p>Un intangible que marca la calidad de la atención es la paciencia. Muchos ciudadanos llegan sin conocer los trámites, repiten preguntas o se expresan con dificultad; responder con impaciencia o condescendencia los humilla y los aleja de sus derechos. La paciencia —explicar de nuevo si hace falta, con el mismo respeto— no es debilidad, es profesionalismo. Un servidor paciente convierte una interacción potencialmente frustrante en una experiencia de buen servicio, y eso fortalece la confianza en lo público.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>El silencio administrativo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>silencio administrativo</mark> es la figura según la cual, si la administración no responde una petición o un recurso en el plazo, la ley le da un efecto: generalmente negativo (se entiende negada, para que el ciudadano pueda seguir actuando) y, en casos especiales, positivo (se entiende concedida). No es una excusa para no responder: la obligación de responder se mantiene siempre.</p>
+</div>
+<div class="b-texto">
+  <p>¿Qué pasa jurídicamente cuando la administración no responde a tiempo? La ley prevé el <strong>silencio administrativo</strong>: le asigna un efecto a ese silencio para que el ciudadano no quede atrapado en una espera indefinida. Por regla general, el silencio es <strong>negativo</strong>: pasado el plazo sin respuesta, se entiende que la petición o el recurso fue negado, lo que permite al ciudadano seguir actuando (por ejemplo, acudir a instancias superiores o a un juez) en lugar de esperar para siempre.</p>
+  <p>En casos excepcionales, la ley establece un <strong>silencio positivo</strong>: cuando la norma expresamente lo dispone, el no responder a tiempo se entiende como una respuesta favorable, es decir, se concede lo pedido. El silencio positivo es la excepción y solo aplica donde la ley lo señala; su lógica es presionar a la administración a responder, porque su inacción beneficia al ciudadano. Pero, como se dijo, es excepcional: la regla es el silencio negativo.</p>
+  <p>Es crucial entender que el silencio administrativo <strong>no es una excusa para no responder</strong>. Que la ley asigne un efecto al silencio no libera a la administración de su deber de responder; al contrario, el silencio suele acarrear responsabilidad disciplinaria para el servidor que no respondió a tiempo. La figura existe para proteger al ciudadano del limbo, no para que la administración se desentienda de su obligación de contestar. Responder sigue siendo siempre el deber.</p>
+  <p>Para el Analista I, el silencio administrativo es un concepto que conviene conocer, aunque lo central es la conducta correcta: <strong>responder siempre a tiempo</strong>. Entender que el silencio tiene consecuencias (para el ciudadano y para el servidor) refuerza la importancia de los plazos. El servidor no debe «dejar que opere el silencio» como si fuera una salida; debe responder, porque esa es su obligación, y el silencio es un remedio para el ciudadano, no un atajo para la administración.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de silencio</th><th>Efecto</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td>Negativo</td><td>Se entiende negada la petición/recurso</td><td>Regla general</td></tr>
+      <tr><td>Positivo</td><td>Se entiende concedida</td><td>Solo cuando la ley lo dispone (excepcional)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero propone 'dejar vencer el plazo y que opere el silencio administrativo' en vez de responder una petición complicada. Le explicas que el silencio no es una salida: la obligación de responder se mantiene, el silencio es un remedio para el ciudadano (que puede seguir actuando) y su inacción puede acarrearle una falta disciplinaria. La conducta correcta es siempre responder a tiempo.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>El silencio administrativo (el efecto que la ley da a la falta de respuesta) es:</p>
+  <div class="cp-op" data-op="a">a) Una salida válida para que la administración no tenga que responder las peticiones difíciles.</div>
+  <div class="cp-op" data-op="b">b) Un remedio para proteger al ciudadano del limbo (generalmente negativo), que NO libera a la administración de su deber de responder.</div>
+  <div class="cp-op" data-op="c">c) Siempre positivo: si no responden, automáticamente se concede todo lo que se pida.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La atención no presencial también cuenta</h4>
+    <p>Cada vez más, la relación con el ciudadano ocurre por canales no presenciales: teléfono, correo electrónico, chat, portales en línea. Las reglas del buen servicio —respeto, claridad, oportunidad, resolver de verdad— aplican igual en estos canales, aunque a veces se descuiden por la distancia. Un correo cortante, una respuesta en línea que no resuelve o un canal digital inaccesible fallan al ciudadano tanto como un mal trato en ventanilla.</p>
+    <p>Para el Analista I, que probablemente interactúe más por canales escritos y digitales que presenciales, esto es relevante. Un correo de respuesta claro, completo y respetuoso es una forma de buena atención; uno confuso o seco, de mala. Y la accesibilidad digital —recordar que no todos manejan la tecnología— sigue siendo un deber. La vocación de servicio no se enciende solo frente a un ciudadano presente: también se expresa en cada respuesta escrita y en cada canal digital.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>La información al servicio del ciudadano</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El trabajo del Analista con la <mark>información</mark> está, en última instancia, al servicio del ciudadano: responder peticiones de información, producir cifras que se publican, soportar trámites y decisiones. Cuidar la calidad y la oportunidad de la información es, por tanto, una forma de servir. La información confiable y disponible es un derecho del ciudadano, no solo un insumo interno.</p>
+</div>
+<div class="b-texto">
+  <p>Este tema conecta de forma directa con el núcleo del trabajo del Analista. Mucho de lo que hace con la información tiene, al final del camino, un ciudadano: una petición de información que hay que responder, una cifra que se publica para la transparencia, un dato que soporta un trámite o una decisión que afecta a una persona. La información no es solo un insumo interno de la entidad; es, en buena medida, un servicio y un derecho del ciudadano.</p>
+  <p>Esto resignifica la calidad y la oportunidad de la información. Cuando el Analista depura bien una base, no solo evita un error técnico: contribuye a que la respuesta a un ciudadano sea correcta, a que una decisión que lo afecta se tome sobre datos confiables, a que las cifras públicas con que rinde cuentas el Estado sean veraces. La calidad de la información es, vista así, una forma concreta de respetar el derecho del ciudadano a una administración que actúa bien y con verdad.</p>
+  <p>La oportunidad también adquiere sentido de servicio. Una respuesta de información que llega tarde vulnera el derecho de petición; una cifra que no está disponible cuando se necesita falla a quien la requiere. La disponibilidad y la puntualidad de la información no son solo eficiencia interna: son parte de servir al ciudadano en los tiempos que la ley y la necesidad exigen. El Analista que entrega a tiempo información confiable está sirviendo, aunque no vea directamente al ciudadano beneficiado.</p>
+  <p>Para el Analista I, entender que su trabajo con la información es un servicio al ciudadano eleva el sentido de su labor y refuerza su responsabilidad. No está «solo moviendo datos»: está contribuyendo a que las personas reciban respuestas correctas, a que las decisiones que las afectan sean justas y a que el Estado pueda mostrarse con transparencia. Esa conciencia —que detrás de cada dato hay, en última instancia, un ciudadano— es lo que une el trabajo técnico con la vocación de servicio público.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>El trabajo con información...</th><th>Es, al final, un servicio porque...</th></tr></thead>
+    <tbody>
+      <tr><td>Responde peticiones de información</td><td>Satisface un derecho del ciudadano</td></tr>
+      <tr><td>Produce cifras que se publican</td><td>Permite la transparencia y el control social</td></tr>
+      <tr><td>Soporta trámites y decisiones</td><td>Afecta derechos de personas concretas</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Al depurar una base y entregarla a tiempo, recuerdas que no es 'solo mover datos': de esa información dependerá la respuesta a un ciudadano, una decisión que afecta a una persona o una cifra pública de rendición de cuentas. Esa conciencia —que detrás de cada dato hay un ciudadano— le da sentido de servicio a tu trabajo técnico y refuerza por qué la calidad y la oportunidad importan tanto.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>El trabajo del Analista I con la información, en relación con el servicio al ciudadano:</p>
+  <div class="cp-op" data-op="a">a) Es, en última instancia, un servicio: de su calidad y oportunidad dependen respuestas, decisiones y cifras que afectan a los ciudadanos.</div>
+  <div class="cp-op" data-op="b">b) No tiene ninguna relación con el ciudadano: es solo un insumo interno sin consecuencias externas.</div>
+  <div class="cp-op" data-op="c">c) Solo importa para la eficiencia de la entidad, nunca para los derechos de las personas.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La tutela como garantía del derecho de petición</h4>
+    <p>El derecho de petición, por ser fundamental, está protegido por la acción de tutela: si la administración no responde o responde de forma que vulnera el derecho, el ciudadano puede acudir a un juez mediante tutela para que ordene responder, generalmente en un plazo muy breve. Esto hace del derecho de petición uno de los derechos más efectivamente protegidos, y convierte la falta de respuesta en un asunto serio con consecuencias rápidas.</p>
+    <p>Para el Analista, saber esto refuerza la importancia de responder a tiempo y de fondo: una petición no atendida puede escalar a una tutela, con el desgaste y la responsabilidad que ello implica para la entidad y el servidor. La forma de evitar las tutelas por derecho de petición no es ningún truco procesal, sino la más simple: responder bien y a tiempo. Cumplir el deber es, a la vez, la mejor protección frente a las consecuencias de incumplirlo.</p>
+
+
+    <h4>Responder bien previene el conflicto</h4>
+    <p>Una verdad práctica del servicio es que la mayoría de los conflictos con los ciudadanos —tutelas, quejas, reclamos reiterados— nacen de respuestas tardías, incompletas o evasivas. Responder bien y a tiempo desde el inicio previene buena parte de ese desgaste posterior. Es más eficiente resolver de fondo una vez que despachar mal y tener que atender después la insistencia, la queja o la acción judicial. Servir bien no solo es un deber: también ahorra trabajo y protege la imagen de la entidad.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>El Analista I y la vocación de servicio</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El perfil que busca el cargo incluye una <mark>vocación de servicio</mark>: tratar al ciudadano con respeto, responder en los plazos y de fondo, respetar el debido proceso, actuar con imparcialidad y recordar que detrás de cada trámite y cada dato hay una persona. La competencia técnica y la vocación de servicio juntas definen al buen servidor público.</p>
+</div>
+<div class="b-texto">
+  <p>Al reunir los temas del día, emerge un rasgo esencial del servidor público: la <strong>vocación de servicio</strong>. No es un valor decorativo, sino una disposición concreta que se manifiesta en conductas: tratar a cada ciudadano con respeto e imparcialidad, responder sus solicitudes a tiempo y de fondo, respetar el debido proceso en toda actuación, buscar resolver y no solo despachar, y adaptar el servicio a quien más lo necesita. Esa disposición es la que da alma al cumplimiento de las normas.</p>
+  <p>La vocación de servicio y la <strong>competencia técnica</strong> no son opuestas ni independientes: se necesitan mutuamente. De poco sirve un servidor muy técnico que trata mal al ciudadano o ignora sus derechos; y de poco sirve uno muy amable que no sabe hacer su trabajo. El buen servidor público combina ambas: la competencia para hacer bien las cosas y la vocación para hacerlas al servicio de las personas. Esa combinación es la que el cargo busca.</p>
+  <p>Para el Analista I, cuyo trabajo es más técnico que de atención directa, la vocación de servicio se expresa de formas a veces menos visibles pero igual de reales: en la calidad de la información que entrega, en el respeto a los plazos de las peticiones, en recordar que los datos que maneja son de personas, en respaldar actuaciones que respetan el debido proceso. La vocación de servicio no es solo del que atiende en una ventanilla; es de todo servidor que entiende que su trabajo, en última instancia, es para el ciudadano.</p>
+  <p>Si tuvieras que quedarte con una idea, que sea esta: el servidor público existe para servir al ciudadano, y toda su competencia técnica cobra sentido en esa vocación. Un Analista I que une el rigor en el manejo de la información con el respeto por los derechos del ciudadano —sus plazos, su debido proceso, su trato digno— no solo cumple su función: encarna lo que significa ser un servidor público. Esa es la excelencia que el cargo busca y que da verdadero sentido a todo lo aprendido en el curso.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Vocación de servicio sin técnica</th><th>Técnica sin vocación</th><th>El buen servidor</th></tr></thead>
+    <tbody>
+      <tr><td>Amable pero no resuelve</td><td>Competente pero maltrata o ignora derechos</td><td>Competente Y al servicio del ciudadano</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Entiendes que tu vocación de servicio no se expresa solo en una ventanilla: está en la calidad de la información que entregas, en respetar los plazos de las peticiones, en recordar que los datos son de personas y en respaldar actuaciones que respetan el debido proceso. Unes tu competencia técnica con el respeto por los derechos del ciudadano. Esa combinación es la que define al buen servidor público que el cargo busca.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>El perfil de buen servidor público que busca el cargo combina:</p>
+  <div class="cp-op" data-op="a">a) Solo competencia técnica, sin importar el trato al ciudadano ni sus derechos.</div>
+  <div class="cp-op" data-op="b">b) Competencia técnica Y vocación de servicio: hacer bien las cosas y hacerlas al servicio del ciudadano, respetando sus derechos.</div>
+  <div class="cp-op" data-op="c">c) Solo amabilidad, sin necesidad de saber hacer el trabajo.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Confidencialidad y servicio no se oponen</h4>
+    <p>Un equilibrio que el Analista debe manejar es el de servir con información y, a la vez, proteger la reserva. Servir al ciudadano no significa entregarle todo lo que pida: la información reservada (como los datos tributarios de terceros) se protege aunque la soliciten. Pero proteger lo reservado tampoco significa negar todo por prudencia: lo público se entrega. El buen servicio consiste en dar lo que corresponde y proteger lo que debe protegerse, explicando siempre con claridad el fundamento.</p>
+    <p>Esta articulación, ya vista en el tema de transparencia, reaparece aquí desde la óptica del servicio. Un ciudadano bien atendido no es el que recibe todo sin filtro, sino el que recibe una respuesta clara: esto se le entrega porque es público, esto no porque es reservado, y aquí está el porqué. Esa transparencia sobre lo que se puede y no se puede dar es, en sí misma, una forma de buen servicio y de respeto al ciudadano y a los derechos de terceros.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>Síntesis: el ciudadano en el centro</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Todo el marco del día —el CPACA, el derecho de petición, las PQRSF, el debido proceso, la atención de calidad— apunta a una idea: el <mark>ciudadano en el centro</mark>. El servidor público existe para servirle con respeto, en los plazos, de fondo y con garantías. El Analista I sirve al ciudadano con información confiable y oportuna, y con el respeto por sus derechos en toda actuación.</p>
+</div>
+<div class="b-texto">
+  <p>Al cerrar el tema, todas sus piezas convergen en una idea ordenadora: el <strong>ciudadano en el centro</strong>. El CPACA regula cómo la administración debe relacionarse con él; el derecho de petición y las PQRSF son sus canales para dirigirse al Estado; los plazos garantizan que reciba respuesta a tiempo; el debido proceso lo protege de decisiones arbitrarias; y la atención de calidad asegura que sea tratado con respeto. Todo el marco existe para servir al ciudadano.</p>
+  <p>Esta centralidad del ciudadano no es retórica: tiene consecuencias concretas en la conducta del servidor. Significa responder siempre (nunca ignorar una petición), responder a tiempo (respetar los plazos), responder de fondo (resolver, no despachar), tratar a todos por igual (imparcialidad e inclusión) y respetar las garantías (debido proceso). Cada una de estas conductas es una forma de poner al ciudadano en el centro, y su ausencia es una forma de traicionar la vocación del servicio público.</p>
+  <p>Para el Analista I, poner al ciudadano en el centro se traduce en su trabajo con la información: entregarla confiable y a tiempo, responder las peticiones de información de fondo y en plazo, respaldar actuaciones que respetan el debido proceso, y recordar siempre que detrás de los datos hay personas con derechos. Su rol técnico y su vocación de servicio se unen en esa conciencia: trabaja con información, pero sirve a ciudadanos.</p>
+  <p>Si tuvieras que quedarte con una sola idea para la prueba y para el trabajo, que sea esta: el servidor público existe para servir al ciudadano con respeto, en los plazos, de fondo y con garantías. Un Analista I que une el rigor técnico con esta vocación de servicio —que responde a tiempo, trata con respeto, respeta el debido proceso y recuerda que detrás de cada dato hay una persona— no solo aprueba una prueba: encarna la esencia del servicio público. Esa es la síntesis de todo el curso y el estándar que el cargo busca en ti.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Pieza del marco</th><th>Cómo pone al ciudadano en el centro</th></tr></thead>
+    <tbody>
+      <tr><td>CPACA</td><td>Regla cómo la administración se relaciona con él</td></tr>
+      <tr><td>Derecho de petición y PQRSF</td><td>Sus canales para dirigirse al Estado (con respuesta obligada)</td></tr>
+      <tr><td>Debido proceso</td><td>Lo protege de decisiones arbitrarias</td></tr>
+      <tr><td>Atención de calidad e inclusión</td><td>Lo trata con respeto y sin excluir a nadie</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Cierras el tema con una convicción: todo el marco —CPACA, derecho de petición, PQRSF, debido proceso, atención de calidad— existe para servir al ciudadano. En tu trabajo con información, eso significa entregarla confiable y a tiempo, responder las peticiones de fondo y en plazo, respaldar actuaciones con debido proceso y recordar que detrás de los datos hay personas. Trabajas con información, pero sirves a ciudadanos.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 13</div>
+  <p>La idea que resume el CPACA, el derecho de petición, las PQRSF, el debido proceso y la atención de calidad es que:</p>
+  <div class="cp-op" data-op="a">a) El ciudadano es un estorbo que la administración debe tolerar lo menos posible.</div>
+  <div class="cp-op" data-op="b">b) La administración existe para sí misma, y el ciudadano es secundario.</div>
+  <div class="cp-op" data-op="c">c) El ciudadano está en el centro: el servidor existe para servirle con respeto, en los plazos, de fondo y con garantías.</div>
+  <div class="cp-fb"></div>
+</div>
+
+<div class="destacado">
+  <div class="destacado-t">💡 Idea clave para recordar</div>
+  <p>El servidor público existe para <strong>servir al ciudadano</strong>, que está en el centro. El <strong>derecho de petición</strong> (art. 23 Const.) obliga a responder pronto, de fondo y con claridad: plazos generales de 15 días hábiles, 10 para documentos/información y 30 para consultas. Las <strong>PQRSF</strong> son sus canales y obligan a responder. El <strong>debido proceso</strong> lo protege de decisiones arbitrarias. Y la buena atención es <strong>resolver</strong>, no solo despachar, con respeto e inclusión.</p>
+</div>
+
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips finales para tu prueba</div>
+  <ul>
+    <li>El ciudadano <strong>no es un estorbo</strong>: atenderlo es el trabajo, no una interrupción.</li>
+    <li>El derecho de petición obliga a responder <strong>pronto, de fondo y con claridad</strong>; una evasiva o el silencio lo vulneran.</li>
+    <li>Si no se alcanza el plazo, hay que <strong>informar al peticionario</strong> antes de que venza, no guardar silencio.</li>
+    <li>El <strong>silencio administrativo</strong> protege al ciudadano; NO libera a la administración de su deber de responder.</li>
+    <li>Desconfía de las opciones que proponen trato <strong>preferente a un conocido</strong>, despachar sin resolver o excluir a quien no maneja la tecnología.</li>
+  </ul>
+</div>
+
+<div class="frase-recordar">⚡ El ciudadano está en el centro: responde siempre, a tiempo, de fondo y con respeto. Servirlo no interrumpe tu trabajo: es tu trabajo.</div>
+
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991_pr001.html#23" target="_blank" rel="noopener">Constitución Política — Art. 23 (derecho de petición) y Art. 29 (debido proceso)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=41249" target="_blank" rel="noopener">Ley 1437 de 2011 — CPACA (Código de Procedimiento Administrativo)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334" target="_blank" rel="noopener">Ley 1755 de 2015 — Derecho de petición</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=14861" target="_blank" rel="noopener">Ley 1474 de 2011 — Estatuto Anticorrupción (atención al ciudadano)</a></li>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN — Portal institucional (PQRSF y servicio al ciudadano)</a></li>
+  </ul>
+</div>
+
+    <h4>El servicio da sentido a todo el curso</h4>
+    <p>Conviene cerrar notando que este tema, el del servicio al ciudadano, le da sentido a todos los demás del curso. ¿Para qué gestionar bien la información, hacer buenos perfiles, cuidar la calidad de los datos, documentar, controlar? En última instancia, para que la DIAN sirva mejor al país y a sus ciudadanos: recaudando con justicia, controlando el incumplimiento, protegiendo derechos y rindiendo cuentas. Toda la competencia técnica del Analista cobra su significado pleno en esa vocación de servicio.</p>
+    <p>Por eso el buen Analista no vive su trabajo como una serie de tareas técnicas desconectadas, sino como un aporte a un fin que lo trasciende: un Estado que sirve bien a las personas. Esa conciencia —que detrás de cada dato, cada perfil y cada cifra hay ciudadanos y un país— es lo que convierte a un técnico competente en un verdadero servidor público. Y es, al final, lo que este curso entero ha buscado sembrar: rigor e integridad al servicio del ciudadano.</p>
+
+  </div>
+
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque de ellos depende servir al ciudadano con respeto, en los plazos y conforme a la ley.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Derecho de petición</td><td>PQRSF</td><td>El derecho de petición es el derecho fundamental (art. 23) a solicitar y recibir respuesta; las PQRSF son los tipos y canales (petición, queja, reclamo, sugerencia, felicitación).</td></tr><tr><td>Petición de información (10 días)</td><td>Consulta (30 días)</td><td>La petición de documentos e información tiene plazo de 10 días hábiles; la consulta (concepto u opinión) tiene 30 días hábiles; la regla general es de 15.</td></tr><tr><td>Despachar</td><td>Resolver</td><td>Despachar es responder cualquier cosa para cerrar; resolver es atender de verdad la necesidad del ciudadano (buena atención).</td></tr><tr><td>Debido proceso administrativo</td><td>Perfil de riesgo</td><td>El perfil solo orienta a quién revisar; antes de una decisión que afecte al contribuyente debe surtirse el debido proceso (notificación, defensa, pruebas, recursos).</td></tr><tr><td>Silencio negativo</td><td>Silencio positivo</td><td>El negativo (regla general) entiende negada la petición para que el ciudadano siga actuando; el positivo (excepcional, solo si la ley lo dice) la entiende concedida.</td></tr><tr><td>Días hábiles</td><td>Días calendario</td><td>Los plazos del derecho de petición se cuentan en días hábiles (no sábados, domingos ni festivos), no en días calendario.</td></tr><tr><td>Traslado por competencia</td><td>'Peloteo'</td><td>Si la petición no es de la entidad/área, se traslada a quien compete e se informa al ciudadano; NO se rebota ni se envía de oficina en oficina sin resolver.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta vea al ciudadano como estorbo, proponga no responder o responder tarde/con evasivas, rechazar una petición por formalismo o dar trato preferente a un conocido, desconfía.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · 'El ciudadano es un estorbo'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero trata las solicitudes de los ciudadanos como 'molestias que no lo dejan trabajar' y propone despacharlas lo más rápido posible para quitárselas de encima.</p>
+      <span class="label">Análisis</span>
+      <p>El servidor público existe para servir a la comunidad (art. 123 Const.); atender al ciudadano no interrumpe el trabajo, es el trabajo. Cada solicitud es el ejercicio de un derecho que el servidor está para garantizar.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Atender cada solicitud con respeto y vocación de resolver (no solo despachar); recordar que el ciudadano es la razón del servicio, no un estorbo, y que servirle bien es un deber, no un favor.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El plazo que no se alcanza</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega una petición de información (plazo 10 días hábiles) que, por su complejidad, el Analista no alcanza a responder a tiempo. Un compañero sugiere 'dejar vencer el plazo y responder cuando se pueda'.</p>
+      <span class="label">Análisis</span>
+      <p>El derecho de petición obliga a responder a tiempo; dejar vencer el plazo en silencio lo vulnera y puede ser falta disciplinaria. La ley exige informar al peticionario antes del vencimiento.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Informar al peticionario antes de que venza el plazo, explicando el motivo y la fecha en que se responderá; nunca guardar silencio. Llevar control de los plazos (en días hábiles).</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · La petición mal dirigida</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega una PQRSF que, al leerla, corresponde a otra dependencia y no al área del Analista. Un compañero propone 'devolverla o ignorarla, que no es asunto nuestro'.</p>
+      <span class="label">Análisis</span>
+      <p>El CPACA exige que, si la petición no es de la competencia, se traslade a la autoridad/dependencia competente e se informe al peticionario; no se rechaza ni se 'pelotea' al ciudadano de oficina en oficina.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Trasladar la petición a la dependencia competente dentro del término, informar al ciudadano del traslado y no dejarla morir; facilitar que la solicitud llegue a quien puede resolverla.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · El ciudadano que no maneja la tecnología</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un adulto mayor no puede hacer un trámite que se volvió totalmente digital, y un compañero le dice 'ahora todo es por internet, arrégleselas'. El Analista conoce el deber de accesibilidad e inclusión.</p>
+      <span class="label">Análisis</span>
+      <p>La accesibilidad es parte del derecho a la igualdad: tratar a todos por igual no es tratarlos idéntico, sino dar a cada quien lo que necesita para acceder a sus derechos. Excluir a quien no maneja la tecnología vulnera ese derecho.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Ofrecer una alternativa o acompañar con paciencia al adulto mayor para que pueda ejercer su derecho igual que los demás; la atención preferente no es un privilegio, sino igualdad real e inclusión.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Ver al ciudadano como un estorbo</div><p>El servidor existe para servir a la comunidad; atenderlo es el trabajo, no una interrupción. Cada solicitud es el ejercicio de un derecho que hay que garantizar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 No responder o responder tarde/con evasivas</div><p>El derecho de petición obliga a responder pronto, de fondo y con claridad; el silencio o la evasiva lo vulneran y pueden ser falta disciplinaria (y tutela).</p></div>
+  <div class="box danger"><div class="box-title">🚫 Dejar vencer el plazo sin avisar</div><p>Si no se alcanza, hay que informar al peticionario antes del vencimiento, explicando el motivo y cuándo se responderá; no guardar silencio.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Rechazar o 'peletear' una petición mal dirigida</div><p>Si no es de la competencia, se traslada a quien compete e se informa al ciudadano; no se rechaza por formalismo ni se envía de oficina en oficina.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Dar trato preferente o poner trabas por antipatía</div><p>Los principios de igualdad e imparcialidad obligan a tratar a todos por igual, sin favoritismos ni discriminación.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Despachar sin resolver y excluir a los vulnerables</div><p>Buena atención es resolver (no solo despachar), con respeto, y adaptarse a quien más lo necesita (accesibilidad e inclusión); lo contrario falla al ciudadano.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>El ciudadano <strong>no es un estorbo</strong>: atenderlo es el trabajo, no una interrupción.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>El derecho de petición obliga a responder <strong>pronto, de fondo y con claridad</strong>; plazos: 15 general, 10 info/docs, 30 consultas (hábiles).</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Si no alcanzas el plazo, <strong>informa al peticionario</strong> antes del vencimiento; no guardes silencio.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Petición mal dirigida: <strong>traslado por competencia</strong> e informar al ciudadano; nunca 'peloteo'.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Buena atención es <strong>resolver</strong>, no solo despachar; con respeto, igualdad e inclusión.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>El <strong>silencio administrativo</strong> protege al ciudadano; NO libera del deber de responder.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone despachar rápido a los ciudadanos porque 'son molestias que no dejan trabajar'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente quitarse de encima las interrupciones para avanzar en lo 'importante'.</div>
+      <div class="t-row malo">🔴 La trampa: Atender al ciudadano no interrumpe el trabajo, es el trabajo; el servidor existe para servir a la comunidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Atender con respeto y vocación de resolver, entendiendo que cada solicitud es un derecho a garantizar.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere dejar vencer el plazo de una petición y responder 'cuando se pueda'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece razonable priorizar otras tareas y responder la petición compleja después.</div>
+      <div class="t-row malo">🔴 La trampa: Dejar vencer el plazo en silencio vulnera el derecho de petición y puede ser falta disciplinaria (y tutela).</div>
+      <div class="t-row bueno">🟢 Lo correcto: Informar al peticionario antes del vencimiento, explicando el motivo y la fecha de respuesta.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone dar trato preferente a un conocido y poner trabas a otro ciudadano.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece un favor menor ayudar a un conocido y 'natural' demorar a quien cae mal.</div>
+      <div class="t-row malo">🔴 La trampa: Viola los principios de igualdad e imparcialidad: hay que tratar a todos por igual, sin favoritismos.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Aplicar los mismos criterios a todos, sin privilegios ni trabas por antipatía.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>El servidor sirve al ciudadano</h4><p>El servidor público existe para servir a la comunidad (art. 123); el ciudadano es la razón del servicio, no un estorbo.</p></div>
+    <div class="resumen-item"><h4>CPACA y principios</h4><p>Ley 1437 de 2011: regula la actuación administrativa con principios (debido proceso, igualdad, imparcialidad, buena fe, celeridad...).</p></div>
+    <div class="resumen-item"><h4>Derecho de petición y PQRSF</h4><p>Derecho fundamental a solicitar y recibir respuesta pronta, de fondo y clara; plazos (15/10/30 hábiles); PQRSF como canales que obligan a responder.</p></div>
+    <div class="resumen-item"><h4>Debido proceso y recursos</h4><p>Antes de una decisión que afecte al ciudadano: notificación, defensa, pruebas y recursos; el silencio administrativo lo protege pero no exime de responder.</p></div>
+    <div class="resumen-item"><h4>Atención de calidad e inclusión</h4><p>Resolver (no despachar), con respeto, empatía, accesibilidad e inclusión; el ciudadano en el centro.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>CPACA</dt><dd>Código de Procedimiento Administrativo y de lo Contencioso Administrativo (Ley 1437 de 2011).</dd>
+      <dt>Derecho de petición</dt><dd>Derecho fundamental (art. 23 Const.) a presentar solicitudes y recibir respuesta pronta, de fondo y clara.</dd>
+      <dt>PQRSF</dt><dd>Peticiones, Quejas, Reclamos, Sugerencias y Felicitaciones: los canales por los que el ciudadano se dirige a la entidad.</dd>
+      <dt>Debido proceso administrativo</dt><dd>Garantía de que nadie sea afectado por una decisión sin notificación, derecho a ser oído, pruebas y recursos (art. 29 Const.).</dd>
+      <dt>Recursos</dt><dd>Medios para pedir que se revise una decisión administrativa (reposición, apelación).</dd>
+      <dt>Silencio administrativo</dt><dd>Efecto que la ley da a la falta de respuesta: negativo (regla) o positivo (excepcional); no exime del deber de responder.</dd>
+      <dt>Traslado por competencia</dt><dd>Enviar una petición que no es de la entidad a la autoridad competente, informando al peticionario.</dd>
+      <dt>Accesibilidad e inclusión</dt><dd>Adaptar el servicio para que todos (discapacidad, adultos mayores, etc.) puedan acceder a sus derechos en condiciones equitativas.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — CPACA, PQRSF y servicio al ciudadano</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 19. Continúa con el Día 20: Repaso integrador del componente funcional.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 19 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 19</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Para quién trabaja el servidor público?","b": "Para el ciudadano y la comunidad. El art. 123 de la Constitución establece que los servidores públicos están al servicio del Estado y de la comunidad. El ciudadano no es un estorbo: atenderlo es el trabajo, no una interrupción."},{"f": "¿Qué es el CPACA?","b": "El Código de Procedimiento Administrativo y de lo Contencioso Administrativo (Ley 1437 de 2011). Regula cómo las autoridades deben actuar frente a los ciudadanos (procedimiento administrativo) y cómo los jueces controlan esas decisiones (lo contencioso)."},{"f": "¿Cuáles son algunos principios de la actuación administrativa?","b": "Debido proceso, igualdad, imparcialidad, buena fe, moralidad, eficacia, economía, celeridad y publicidad, entre otros. Son criterios obligatorios que guían cómo actuar y permiten evaluar si una actuación fue correcta."},{"f": "¿Qué es el derecho de petición?","b": "Un derecho fundamental (art. 23 de la Constitución) a presentar solicitudes respetuosas a las autoridades y obtener una respuesta pronta, de fondo y clara. La administración está obligada a responder; no puede ignorar una petición."},{"f": "¿Cuáles son los plazos del derecho de petición?","b": "Regla general: 15 días hábiles. Peticiones de documentos e información: 10 días hábiles. Consultas: 30 días hábiles. Se cuentan en días hábiles (no sábados, domingos ni festivos). Si no se alcanza, hay que informar al peticionario antes del vencimiento."},{"f": "¿Qué significan las siglas PQRSF?","b": "Peticiones, Quejas, Reclamos, Sugerencias y Felicitaciones: las formas y canales por los que un ciudadano se dirige a la entidad. Todas obligan a responder a tiempo y de fondo, y las quejas/reclamos/sugerencias son fuentes de mejora."},{"f": "¿Qué es el debido proceso administrativo?","b": "La garantía (art. 29) de que nadie sea afectado por una decisión de la administración sin que se respeten las reglas: notificación, oportunidad de ser oído, aportar pruebas e interponer recursos. El perfil de riesgo orienta, pero la decisión exige debido proceso."},{"f": "¿Diferencia entre 'despachar' y 'resolver'?","b": "Despachar es responder cualquier cosa para cerrar la interacción; resolver es atender de verdad la necesidad del ciudadano. Resolver construye confianza y evita reclamos; despachar deja al ciudadano insatisfecho y suele generar más trabajo."},{"f": "¿Qué es la accesibilidad e inclusión en el servicio?","b": "Que el servicio sea accesible para todos (personas con discapacidad, adultos mayores, quienes no manejan la tecnología, etc.). No es un favor: es parte del derecho a la igualdad. Dar atención adaptada a quien lo necesita es igualdad real, no un privilegio."},{"f": "¿Qué es el silencio administrativo?","b": "El efecto que la ley da a la falta de respuesta: generalmente negativo (se entiende negada, para que el ciudadano siga actuando) y, en casos especiales, positivo (se entiende concedida). NO libera a la administración de su deber de responder."},{"f": "¿Qué hacer con una petición que no es de la competencia del área?","b": "Trasladarla a la autoridad o dependencia competente dentro del término e informar al peticionario (traslado por competencia). No se rechaza por formalismo ni se 'pelotea' al ciudadano de oficina en oficina sin que nadie resuelva."},{"f": "¿Cómo se relaciona el trabajo con información y el servicio al ciudadano?","b": "El trabajo del Analista con la información está, en última instancia, al servicio del ciudadano: responder peticiones, producir cifras públicas, soportar trámites y decisiones. La información confiable y oportuna es un derecho del ciudadano, no solo un insumo interno."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "El ciudadano no es un estorbo","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un compañero trata las solicitudes de los ciudadanos como 'molestias que no lo dejan trabajar' y propone despacharlas lo más rápido posible, sin detenerse a resolverlas, para quitárselas de encima y seguir con lo 'importante'. Tú conoces para quién trabaja el servidor público.","q": "¿Cuál es la actitud correcta frente a las solicitudes de los ciudadanos?","ops": ["El compañero tiene razón: las solicitudes de los ciudadanos son interrupciones molestas que conviene despachar lo más rápido posible para poder dedicarse al trabajo que de verdad importa.","Entender que atender al ciudadano no interrumpe el trabajo, es el trabajo: el servidor público existe para servir a la comunidad (art. 123 Const.) y cada solicitud es el ejercicio de un derecho que él está para garantizar, con vocación de resolver.","Atender las solicitudes solo cuando el ciudadano insista varias veces, dado que si no insiste es porque su solicitud no era realmente importante y puede dejarse de lado."],"correcta": 1,"expl": "Atender al ciudadano no interrumpe el trabajo, es el trabajo: el servidor existe para servir a la comunidad (B). Despacharlas como molestias (A) o atender solo a quien insiste (C) invierte la vocación del servicio público. Cada solicitud es el ejercicio de un derecho que hay que garantizar."},{"nivel": "b","tema": "Qué es el CPACA","ctx": "Eres Analista I de la DIAN y un compañero cree que la administración 'puede responderle al ciudadano como quiera, cuando quiera, sin ninguna regla'. Tú conoces el marco que regula la actuación administrativa.","q": "¿Cuál es la aclaración correcta sobre cómo debe actuar la administración frente al ciudadano?","ops": ["El compañero tiene razón: la administración puede responder o actuar como quiera y cuando quiera, sin reglas que la obliguen frente al ciudadano.","El CPACA (Ley 1437 de 2011) regula cómo las autoridades deben actuar frente a los ciudadanos (procedimiento administrativo) y cómo los jueces controlan esas decisiones; actuar frente al ciudadano es una función reglada, con principios, plazos y garantías.","La administración solo debe seguir reglas cuando el ciudadano contrate un abogado; de lo contrario puede actuar libremente sin ninguna norma."],"correcta": 1,"expl": "La actuación frente al ciudadano es reglada por el CPACA (B): tiene principios, plazos y garantías, y las decisiones pueden ser controladas por un juez. No es libre ni arbitraria (A), ni depende de que el ciudadano tenga abogado (C)."},{"nivel": "b","tema": "Derecho de petición","ctx": "Eres Analista I de la DIAN y llega una petición de un ciudadano. Un compañero sugiere 'responderla con una evasiva que no diga nada concreto, para salir del paso y cerrar el tema rápido'. Tú conoces las condiciones de una respuesta válida al derecho de petición.","q": "¿Cuál es la forma correcta de responder la petición?","ops": ["Responder con una evasiva que no resuelva lo preguntado, ya que lo importante es que formalmente 'se haya respondido algo' y así se cierra el tema rápido.","Responder de forma pronta (en el plazo), de fondo (resolviendo realmente lo que se pidió) y clara, porque el derecho de petición es fundamental y una evasiva o el silencio lo vulneran.","No responder en absoluto, dado que si el ciudadano no vuelve a insistir se puede entender que ya no le interesa la respuesta."],"correcta": 1,"expl": "El derecho de petición exige una respuesta pronta, de fondo y clara (B): una evasiva que no resuelve (A) o el silencio (C) lo vulneran, aunque formalmente 'se responda algo'. Es un derecho fundamental: la administración está obligada a resolver realmente lo pedido."},{"nivel": "b","tema": "Plazos del derecho de petición","ctx": "Eres Analista I de la DIAN y te corresponde contribuir a responder una petición de información y documentos. Un compañero dice que 'hay mucho tiempo, que el plazo son 30 días calendario'. Tú conoces los plazos reales del derecho de petición.","q": "¿Cuál es el plazo correcto para una petición de documentos e información?","ops": ["Treinta (30) días calendario, contando sábados, domingos y festivos, ya que ese es el plazo que aplica a todas las peticiones por igual.","Diez (10) días hábiles (sin contar sábados, domingos ni festivos); la regla general son 15 días hábiles y las consultas 30, pero las peticiones de documentos e información tienen el plazo más corto de 10.","El plazo que el servidor decida, ya que los plazos del derecho de petición son solo orientativos y no obligan realmente a la administración."],"correcta": 1,"expl": "Las peticiones de documentos e información tienen plazo de 10 días hábiles (B); la regla general es 15 y las consultas 30, todos en días hábiles. No son 30 días calendario para todo (A) ni plazos opcionales (C): son obligatorios y su incumplimiento vulnera el derecho."},{"nivel": "i","tema": "Plazo que no se alcanza","ctx": "Eres Analista I de la DIAN y te corresponde responder una petición de información (plazo 10 días hábiles), pero por su complejidad ves que no alcanzarás a hacerlo a tiempo. Un compañero te sugiere 'dejar vencer el plazo y responder cuando se pueda, que nadie se va a dar cuenta'. Tú conoces qué hacer cuando no se alcanza el plazo.","q": "¿Cuál es la actuación correcta ante el plazo que no se alcanza?","ops": ["Dejar vencer el plazo en silencio y responder cuando se pueda, confiando en que nadie se dará cuenta de que la respuesta llegó tarde.","Informar al peticionario antes de que venza el plazo, explicando el motivo por el que no se puede responder a tiempo y señalando la fecha en que se responderá, sin guardar silencio.","No responder nunca, dado que si el plazo ya está por vencerse, la obligación de responder desaparece junto con el plazo."],"correcta": 1,"expl": "Cuando no se alcanza el plazo, la ley exige informar al peticionario antes del vencimiento, con el motivo y la fecha de respuesta (B). Dejar vencer el plazo en silencio (A) o no responder (C) vulneran el derecho de petición y pueden ser falta disciplinaria. La obligación de responder se mantiene."},{"nivel": "i","tema": "Petición mal dirigida","ctx": "Eres Analista I de la DIAN y llega a tu área una PQRSF que, al leerla, corresponde a otra dependencia de la entidad, no a la tuya. Un compañero propone 'devolvérsela al ciudadano diciéndole que se equivocó de oficina' o simplemente ignorarla. Tú conoces la regla del traslado por competencia.","q": "¿Cuál es la actuación correcta con esa petición?","ops": ["Devolvérsela al ciudadano para que la lleve él mismo a la oficina correcta, o ignorarla, dado que no es asunto de tu área y no te corresponde hacer nada con ella.","Trasladar la petición a la dependencia competente dentro del término e informar al ciudadano del traslado, sin rechazarla ni dejarla morir, para que la solicitud llegue a quien puede resolverla.","Responderla tú mismo inventando una respuesta, aunque el asunto no sea de tu competencia, con tal de que el ciudadano reciba algo y no haya que trasladar nada."],"correcta": 1,"expl": "Si la petición no es de la competencia del área, el CPACA exige trasladarla a la dependencia competente e informar al ciudadano (B). Devolverla o ignorarla (A) es el 'peloteo' que la norma busca evitar; e inventar una respuesta ajena a la competencia (C) sería incorrecto. Se traslada y se informa."},{"nivel": "i","tema": "Debido proceso administrativo","ctx": "Eres Analista I de la DIAN y un compañero cree que, si un perfil de riesgo señala a un contribuyente, se le puede imponer de inmediato una sanción firme, sin más trámite. Tú conoces el debido proceso administrativo.","q": "¿Cuál es la aclaración correcta sobre lo que debe ocurrir antes de una decisión que afecte al contribuyente?","ops": ["El compañero tiene razón: si el perfil de riesgo lo señala, se le puede imponer de inmediato una sanción firme, sin notificarlo ni darle oportunidad de defenderse.","Antes de una decisión que lo afecte debe surtirse el debido proceso administrativo: notificación, oportunidad de ser oído, aportar pruebas e interponer recursos; el perfil solo orienta a quién revisar, no sustituye el procedimiento.","El contribuyente debe demostrar su inocencia por su cuenta antes de que la administración inicie cualquier actuación, invirtiendo la carga de la prueba."],"correcta": 1,"expl": "El debido proceso exige notificación, defensa, pruebas y recursos antes de una decisión que afecte al contribuyente (B): el perfil solo orienta, no permite sancionar de inmediato (A), ni invertir la carga de la prueba (C)."},{"nivel": "i","tema": "Atención de calidad","ctx": "Eres Analista I de la DIAN y un ciudadano llega confundido con un trámite importante para él. Un compañero te sugiere 'despacharlo rápido con cualquier respuesta para quitártelo de encima'. Tú conoces la diferencia entre despachar y resolver.","q": "¿Cuál es la forma correcta de atender a ese ciudadano?","ops": ["Despacharlo rápido con cualquier respuesta para cerrar la interacción, ya que lo importante es quitárselo de encima y seguir con otras tareas, aunque quede sin solución.","Atenderlo con empatía y respeto, explicarle con claridad lo que necesita y resolver de verdad su necesidad, porque la buena atención es resolver (no solo despachar), lo que construye confianza y evita que vuelva a insistir.","Pedirle que vuelva otro día cuando haya menos trabajo, dado que atender a un ciudadano confundido toma tiempo y es preferible aplazarlo para cuando resulte más cómodo."],"correcta": 1,"expl": "La buena atención es resolver de verdad la necesidad, con empatía y claridad (B): despachar con cualquier respuesta (A) deja al ciudadano insatisfecho y suele generar más trabajo; aplazarlo sin razón (C) también falla al ciudadano. Resolver construye confianza y evita reclamos."},{"nivel": "a","tema": "Caso integrador: accesibilidad e igualdad","ctx": "Eres Analista I de la DIAN y un adulto mayor que no maneja la tecnología no puede completar un trámite que se volvió totalmente digital. Un compañero le dice 'ahora todo es por internet, arrégleselas como pueda'. Otro opina que darle atención especial 'sería un privilegio injusto frente a los demás'. Tú conoces el deber de accesibilidad e inclusión.","q": "¿Cuál es la actuación correcta con ese adulto mayor?","ops": ["Decirle que ahora todo es por internet y que se las arregle como pueda, ya que si el trámite es digital, es su responsabilidad aprender a usar la tecnología.","Ofrecerle una alternativa o acompañarlo con paciencia para que pueda hacer el trámite, porque la accesibilidad es parte del derecho a la igualdad: dar a cada quien lo que necesita para acceder a sus derechos no es un privilegio, es igualdad real.","Negarle la atención especial porque 'sería un privilegio injusto', dejándolo sin poder hacer el trámite igual que si tuviera las mismas condiciones que los demás."],"correcta": 1,"expl": "La accesibilidad e inclusión son parte del derecho a la igualdad: dar atención adaptada a quien lo necesita no es un privilegio, es igualdad real (B). Decirle que 'se las arregle' (A) o negarle apoyo por creerlo un privilegio (C) lo excluye del acceso a sus derechos. Tratar igual no es tratar idéntico."},{"nivel": "a","tema": "Caso integrador: petición mixta (competencia y reserva)","ctx": "Eres Analista I de la DIAN y llega una petición de un ciudadano con tres partes: una corresponde a otra dependencia, otra pide información tributaria individual de un tercero (reservada) y otra pide una cifra agregada pública. El plazo corre. Un compañero propone 'negar todo de una vez para no complicarse'. Tú sabes cómo manejar cada parte.","q": "¿Cuál es la actuación correcta con esa petición?","ops": ["Negar toda la petición de una vez para no complicarse, ya que como una parte es reservada y otra no es de tu competencia, lo más simple es rechazarla por completo.","Entregar la cifra agregada (pública), negar con fundamento la información reservada del tercero, trasladar a la dependencia competente la parte que no es de tu área informando al ciudadano, y todo dentro del plazo o avisando si no se alcanza.","Entregar absolutamente todo, incluida la información tributaria individual del tercero, para que el ciudadano no se queje de que le negaron algo."],"correcta": 1,"expl": "Cada parte tiene un trámite distinto (B): lo público se entrega, lo reservado se niega con fundamento, lo que no es de la competencia se traslada informando al ciudadano, respetando el plazo. Negar todo (A) vulnera el acceso a lo público; entregar lo reservado (C) viola la reserva del tercero."},{"nivel": "a","tema": "Caso integrador: el ciudadano en el centro","ctx": "Eres Analista I de la DIAN y, con un plazo apretado, enfrentas varias situaciones a la vez: una petición de información por responder, un ciudadano confundido por atender y un conocido que te pide 'que le des prioridad y le adelantes su trámite por encima de los demás'. Un compañero te dice que 'con el plazo encima, despacha rápido al confundido, deja vencer la petición y hazle el favor al conocido'. Tú conoces los principios del servicio al ciudadano.","q": "¿Cuál es la actuación correcta que pone al ciudadano en el centro con los principios del CPACA?","ops": ["Seguir el consejo del compañero: despachar rápido al ciudadano confundido sin resolver, dejar vencer la petición y darle prioridad al conocido por encima de los demás, para salir del paso con el plazo encima.","Atender al ciudadano confundido con respeto y vocación de resolver, responder la petición de información a tiempo (o avisar si no se alcanza) y negar el trato preferente al conocido aplicando igualdad e imparcialidad; gestionar prórroga si hace falta.","Dedicarte solo a complacer al conocido y dejar las demás situaciones sin atender, dado que ayudar a quien uno conoce es lo que de verdad importa en el servicio."],"correcta": 1,"expl": "La actuación correcta pone al ciudadano en el centro con los principios del CPACA (B): resolver al confundido (no despachar), responder la petición a tiempo o avisar, y negar el trato preferente por igualdad e imparcialidad. Los atajos (A) y el favoritismo (A y C) vulneran el servicio y la igualdad."},{"nivel": "i","tema": "El silencio administrativo","ctx": "Eres Analista I de la DIAN y un compañero propone, ante una petición complicada, 'dejar que simplemente venza el plazo y que opere el silencio administrativo, así nos ahorramos responder'. Tú conoces qué es y qué no es el silencio administrativo.","q": "¿Cuál es la aclaración correcta sobre el silencio administrativo?","ops": ["El compañero tiene razón: el silencio administrativo es una salida válida para que la administración no tenga que responder las peticiones complicadas, basta con dejar vencer el plazo.","El silencio administrativo es un remedio para proteger al ciudadano del limbo (generalmente negativo, para que pueda seguir actuando); NO libera a la administración de su deber de responder, y dejar vencer el plazo puede ser una falta disciplinaria.","El silencio administrativo siempre es positivo: si no se responde, automáticamente se concede todo lo que el ciudadano haya pedido, sin importar la ley."],"correcta": 1,"expl": "El silencio administrativo protege al ciudadano (generalmente negativo, para que siga actuando), pero NO exime a la administración de responder (B): no es una salida válida para no contestar (A), ni es siempre positivo (C, que solo aplica cuando la ley lo dispone). La obligación de responder se mantiene."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-09 · Gestión documental, controles y trazabilidad — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-09</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 17 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>Gestión documental, controles y trazabilidad</h1>
+  <p class="header-sub">Administrar los documentos con orden (Ley 594/2000), documentar las actuaciones (trazabilidad) y autocontrolar el trabajo: la base de una labor trazable, auditable y defendible.</p>
+  <div class="badges"><span class="badge">📅 Día 17 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones. Primero, un compañero quiere 'botar unos expedientes viejos que estorban' para ganar espacio. Segundo, debes aportar un documento a un expediente ya foliado. Tercero, seis meses después de un informe, una auditoría te pregunta cómo obtuviste cierta cifra. Y cuarto, otro compañero trata un expediente electrónico como 'menos serio' que uno en papel.</p>
+    <p>¿Se pueden botar documentos porque estorban? ¿Cómo aportas sin romper la integridad del expediente? ¿Puedes demostrar cómo hiciste tu trabajo? ¿Un documento digital vale igual que uno de papel? Todas estas respuestas parten de un mismo conocimiento: la <mark>gestión documental, los controles y la trazabilidad</mark>. Hoy aprenderás a administrar documentos con orden (Ley 594 de 2000), a documentar tus actuaciones para respaldarte, a autocontrolarte y a entender que documentar bien no es burocracia: es la base de un trabajo trazable, auditable y defendible.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es la <strong>gestión documental</strong> (deber legal) y la diferencia entre documento y documento de archivo.</li>
+      <li>El <strong>ciclo vital</strong> del documento, las <strong>tablas de retención (TRD)</strong> y la organización (series, expedientes, foliación).</li>
+      <li>La <strong>trazabilidad</strong> (quién hizo qué y cuándo) como control y como protección del servidor honesto.</li>
+      <li>Los <strong>controles y el autocontrol</strong>; la <strong>seguridad y conservación</strong>; el documento electrónico y la firma.</li>
+      <li>Los <strong>sistemas de gestión</strong> y la mejora continua (ciclo <strong>PHVA</strong>).</li>
+      <li>Por qué documentar NO es burocracia: la cultura del orden y el respaldo.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender qué es la gestión documental →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>El trabajo del Analista I con información genera documentos, reportes y expedientes que deben administrarse con orden, respaldo y reserva. La gestión documental es un <mark>deber legal</mark> (Ley 594 de 2000, Ley General de Archivos), y la trazabilidad y los controles son parte de los sistemas de gestión de la entidad. Es, por tanto, un tema relevante para la prueba y para el día a día del cargo.</p>
+    <p>Necesitas entender cómo se organizan y conservan los documentos (ciclo vital, TRD, expedientes, foliación), por qué documentar tus actuaciones (trazabilidad) te respalda, cómo el autocontrol previene errores, y por qué todo esto —lejos de ser burocracia— hace tu trabajo trazable, auditable y defendible. Un documento perdido o una actuación sin respaldo pueden tener consecuencias serias.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean estos dilemas: eliminar documentos 'porque estorban', romper la integridad de un expediente, no documentar una actuación, o confiar ciegamente sin autocontrol. La respuesta correcta casi siempre se deriva de respetar las reglas documentales (la TRD, la foliación), de documentar para la trazabilidad y de verificar con autocontrol. Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que proponen eliminar documentos 'porque estorban' (la eliminación se rige por la TRD), romper la integridad de un expediente, no dejar constancia de una actuación, o entregar sin verificar. La respuesta suele estar en respetar las reglas documentales, documentar para la trazabilidad y aplicar autocontrol.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Gestión documental, controles y trazabilidad</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. El trabajo con información genera documentos y expedientes que hay que administrar con orden y respaldo. Hoy verás qué es la <mark>gestión documental</mark> y por qué es un deber legal (Ley 594 de 2000, Ley General de Archivos); el ciclo vital del documento y las tablas de retención; la diferencia entre documento y documento de archivo; la <mark>trazabilidad</mark> (quién hizo qué y cuándo) como respaldo del servidor; los controles y el autocontrol; la seguridad y conservación; y los principios de un sistema de gestión (mejora continua). Todo ambientado en el manejo real de información tributaria. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, entenderás que documentar y conservar bien no es burocracia, sino la base de un trabajo trazable, auditable y defendible.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🗂️</span><h5>Gestión documental</h5><p>Administrar documentos con orden</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">♻️</span><h5>Ciclo vital</h5><p>Del documento al archivo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧾</span><h5>Trazabilidad</h5><p>Quién, qué y cuándo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">✔</span><h5>Controles</h5><p>Verificar y autocontrol</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔁</span><h5>Mejora continua</h5><p>Sistema de gestión</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Qué es la gestión documental</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>gestión documental</mark> es el conjunto de actividades para producir, recibir, organizar, conservar y disponer de los documentos de una entidad a lo largo de su vida útil. No es solo «archivar papeles»: es administrar la información documentada como lo que es, un recurso que respalda la actuación del Estado y garantiza derechos.</p>
+</div>
+<div class="b-texto">
+  <p>Toda entidad produce y recibe documentos: declaraciones, oficios, informes, resoluciones, expedientes. La gestión documental es la disciplina que se ocupa de administrar todo ese caudal de información documentada de forma ordenada, desde que un documento se crea o se recibe hasta que se decide conservarlo permanentemente o eliminarlo. Abarca producir, recibir, clasificar, organizar, consultar, conservar y disponer de los documentos con método.</p>
+  <p>Lo primero que hay que desterrar es la idea de que «archivar» es una tarea menor o puramente burocrática. Los documentos de una entidad pública respaldan sus actuaciones, soportan derechos de los ciudadanos y permiten rendir cuentas. Un expediente mal organizado o un documento perdido pueden significar que no se puede demostrar una actuación, que se vulnera un derecho o que no se puede responder a una auditoría. La gestión documental es, por tanto, una función que protege tanto a la entidad como a los ciudadanos.</p>
+  <p>La gestión documental tiene además un fuerte respaldo <strong>legal</strong>: la Ley 594 de 2000 (Ley General de Archivos) regula la función archivística del Estado y obliga a las entidades a gestionar sus documentos con criterios técnicos. No es opcional ni queda al gusto de cada quien: hay normas, instrumentos y responsabilidades definidas. Para el servidor público, esto significa que organizar bien los documentos es un deber, no una cortesía.</p>
+  <p>Para el Analista I, que trabaja con información y produce documentos (informes, bases, reportes), la gestión documental es parte de su entorno de trabajo. Debe entender que lo que produce no son papeles sueltos, sino documentos que pueden tener valor probatorio, administrativo o histórico, y que deben organizarse y conservarse según las reglas de la entidad. Esta conciencia conecta con todo lo visto sobre información: documentar bien es otra forma de cuidar el activo informacional.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La gestión documental NO es</th><th>La gestión documental SÍ es</th></tr></thead>
+    <tbody>
+      <tr><td>Solo 'archivar papeles'</td><td>Administrar la información documentada con método</td></tr>
+      <tr><td>Una tarea menor y opcional</td><td>Un deber legal (Ley 594 de 2000)</td></tr>
+      <tr><td>Un gusto de cada quien</td><td>Una función que respalda actuaciones y derechos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero trata los documentos que produce como 'papeles que luego se botan' y los deja sueltos sin orden. Le explicas que esos documentos respaldan actuaciones y derechos, que la ley obliga a gestionarlos y que un documento perdido puede impedir demostrar algo ante una auditoría. Organizarlos bien no es burocracia: es proteger a la entidad y a los ciudadanos.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>La gestión documental, correctamente entendida, es:</p>
+  <div class="cp-op" data-op="a">a) Solo archivar papeles, una tarea menor que queda al gusto de cada quien.</div>
+  <div class="cp-op" data-op="b">b) Administrar con método la información documentada a lo largo de su vida útil, como un deber legal que respalda actuaciones y derechos.</div>
+  <div class="cp-op" data-op="c">c) Una práctica opcional sin ninguna norma que la regule.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Los procesos de la gestión documental</h4>
+    <p>La gestión documental no es un acto único, sino una serie de procesos encadenados que la normativa archivística define: la producción (crear bien el documento), la recepción (recibir y radicar lo que llega), la distribución (hacerlo llegar a quien corresponde), el trámite (gestionarlo), la organización (clasificar y ordenar), la consulta, la conservación y la disposición final. Cada eslabón importa: un documento mal radicado al entrar puede perderse; uno mal organizado no se encuentra cuando se necesita.</p>
+    <p>Para el Analista, conocer estos procesos le ayuda a ubicar su aporte y a entender por qué existen ciertas reglas que a primera vista parecen trámites. La radicación de un documento que entra, por ejemplo, no es burocracia: es lo que permite saber que llegó, cuándo y a quién se asignó, lo que a su vez habilita la trazabilidad y el cumplimiento de plazos. Ver la gestión documental como una cadena de procesos, y no como un depósito final de papeles, cambia la forma de trabajar con ella.</p>
+
+
+    <h4>Ejercicio resuelto: organizar un asunto</h4>
+    <p>Veamos un ejercicio. Le entregan documentos sueltos de un mismo asunto, en desorden, con borradores mezclados. Paso a paso: primero separa los documentos de archivo (los oficiales con valor) de las copias de apoyo y borradores (que se pueden eliminar); segundo, reúne los documentos de archivo en un expediente del asunto; tercero, los ordena cronológicamente respetando el orden original; cuarto, los folia para garantizar la integridad; y quinto, deja constancia de lo organizado para la trazabilidad.</p>
+    <p>El resultado no es una pila de papeles, sino un expediente completo, ordenado, foliado y trazable, que permite reconstruir el asunto con confianza. Cada paso aplicó un principio del tema: distinguir documento de archivo, agrupar en expediente, respetar el orden original, foliar para la integridad y documentar para la trazabilidad. Ese recorrido ilustra cómo la gestión documental convierte el caos en información defendible, que es lo que el cargo espera.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>Documento y documento de archivo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>No todo documento es «documento de archivo». Un <mark>documento</mark> es cualquier información registrada; un <mark>documento de archivo</mark> es el que se produce o recibe en ejercicio de las funciones de la entidad y que tiene valor (administrativo, legal, probatorio o histórico). Distinguirlos ayuda a saber qué debe conservarse con las reglas archivísticas y qué no.</p>
+</div>
+<div class="b-texto">
+  <p>En el lenguaje corriente llamamos «documento» a casi cualquier cosa: una nota, un borrador, un correo informal. Pero la archivística hace una distinción importante. El <strong>documento de archivo</strong> es aquel que una entidad produce o recibe en el ejercicio de sus funciones y que, por tanto, da cuenta de su actuación: una resolución, un expediente de un trámite, un informe oficial, un oficio recibido. Estos documentos tienen valor y deben gestionarse según las reglas archivísticas.</p>
+  <p>Los documentos de archivo tienen <strong>valores</strong> que determinan su importancia y su conservación. El valor <strong>administrativo</strong> (sirve para la gestión diaria), el <strong>legal o probatorio</strong> (demuestra derechos o actuaciones), el <strong>fiscal o contable</strong> (soporta temas económicos) y el <strong>histórico</strong> (interesa a la memoria de la entidad o del país). Un mismo documento puede tener varios valores, y estos cambian con el tiempo: algo muy útil hoy (valor administrativo) puede, pasados los años, conservar solo valor histórico.</p>
+  <p>Esta distinción tiene una consecuencia práctica: no todo lo que uno produce debe conservarse como documento de archivo. Un borrador de trabajo, una copia de apoyo o una anotación personal no son documentos de archivo y pueden eliminarse sin mayor trámite; en cambio, el documento oficial resultante sí debe gestionarse y conservarse según las reglas. Saber distinguir qué es documento de archivo evita dos errores opuestos: conservarlo todo (caos) o eliminar lo que debía guardarse (pérdida de respaldo).</p>
+  <p>Para el Analista I, reconocer qué de lo que produce es documento de archivo le ayuda a gestionar su trabajo con criterio. El informe oficial que entrega, el reporte que respalda una actuación, el expediente al que contribuye: eso es documento de archivo y debe conservarse según las reglas. Sus borradores y copias de trabajo, en cambio, no. Esta distinción le permite mantener el orden sin acumular basura ni perder lo que tiene valor.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Valor del documento</th><th>Qué sustenta</th></tr></thead>
+    <tbody>
+      <tr><td>Administrativo</td><td>La gestión diaria de la entidad</td></tr>
+      <tr><td>Legal / probatorio</td><td>Derechos y actuaciones (demostrar lo hecho)</td></tr>
+      <tr><td>Fiscal / contable</td><td>Temas económicos y de recaudo</td></tr>
+      <tr><td>Histórico</td><td>La memoria de la entidad o del país</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Terminas un informe oficial y, por el camino, acumulaste diez borradores y copias de apoyo. Reconoces que el informe oficial es documento de archivo (tiene valor administrativo y probatorio) y debe conservarse según las reglas; los borradores y copias no lo son y puedes eliminarlos. Así mantienes el orden sin acumular basura ni perder lo que tiene valor.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>Un 'documento de archivo' es, a diferencia de un documento cualquiera:</p>
+  <div class="cp-op" data-op="a">a) Cualquier borrador o copia de apoyo, que debe conservarse siempre con todas las reglas archivísticas.</div>
+  <div class="cp-op" data-op="b">b) Solo los documentos impresos en papel, nunca los digitales.</div>
+  <div class="cp-op" data-op="c">c) El que se produce o recibe en ejercicio de las funciones de la entidad y tiene valor (administrativo, legal, fiscal o histórico).</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Copias de apoyo y el riesgo de las versiones</h4>
+    <p>Una fuente frecuente de desorden son las copias de apoyo y las múltiples versiones de un documento. Una copia de apoyo es una reproducción que alguien conserva para su comodidad, pero que no es el documento oficial; no debe confundirse con él ni archivarse como tal, y puede eliminarse cuando deja de ser útil. El problema surge cuando conviven varias versiones sin control y nadie sabe cuál es la buena: la oficial, la corregida, la que se envió. Ahí es donde se cometen errores de trabajar sobre la versión equivocada.</p>
+    <p>La disciplina para evitarlo es doble: identificar con claridad cuál es el documento oficial (la versión final, firmada o aprobada) y tratar el resto como copias de apoyo que no deben multiplicarse ni confundir. El Analista que mantiene esta distinción evita el caos de versiones y garantiza que, cuando se necesite el documento 'de verdad', se sepa cuál es. Es una aplicación concreta del orden documental al trabajo digital cotidiano.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>El ciclo vital del documento</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los documentos tienen un <mark>ciclo vital</mark> con tres fases de archivo: <mark>gestión</mark> (archivo activo, documentos en trámite o de uso frecuente), <mark>central</mark> (documentos que ya no se usan a diario pero deben conservarse unos años) e <mark>histórico</mark> (documentos de valor permanente que se conservan para siempre). Saber en qué fase está un documento define cómo se guarda y por cuánto tiempo.</p>
+</div>
+<div class="b-texto">
+  <p>Al igual que los datos, los documentos tienen un ciclo de vida, que la archivística organiza en tres fases o «edades». La primera es el <strong>archivo de gestión</strong> (o activo): donde están los documentos en trámite o de consulta frecuente, cerca de quien los usa. Un expediente que se está tramitando o un informe reciente viven en esta fase, en la oficina que los maneja.</p>
+  <p>La segunda es el <strong>archivo central</strong>: cuando un documento deja de usarse a diario pero todavía debe conservarse durante cierto tiempo por razones administrativas o legales, pasa al archivo central de la entidad. Allí se guarda de forma más ordenada y menos accesible que en la oficina, hasta que se cumple su tiempo de retención y se decide su destino final. Es una fase de «reposo» en la que el documento ya no es de uso cotidiano pero sigue teniendo valor.</p>
+  <p>La tercera es el <strong>archivo histórico</strong>: los documentos que, por su valor permanente (histórico, cultural, científico), deben conservarse para siempre. No todos los documentos llegan aquí; la mayoría se eliminan al cumplir su tiempo de retención, y solo una parte, por su valor duradero, se conserva indefinidamente como memoria de la entidad y del país. Esta fase garantiza que el patrimonio documental no se pierda.</p>
+  <p>Para el Analista I, entender el ciclo vital le ayuda a saber qué hacer con los documentos que maneja según su etapa. Lo que está en trámite o es de uso frecuente va en el archivo de gestión; lo que ya no se usa a diario pero debe conservarse, se transfiere al archivo central cuando corresponde. No decide él las reglas de transferencia o conservación —eso lo fijan los instrumentos archivísticos—, pero saber en qué fase está cada documento le permite manejarlo con orden y no acumular en su oficina lo que ya debería haberse transferido o eliminado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Fase</th><th>Qué contiene</th><th>Acceso</th></tr></thead>
+    <tbody>
+      <tr><td>Archivo de gestión</td><td>Documentos en trámite o de uso frecuente</td><td>Cercano, en la oficina</td></tr>
+      <tr><td>Archivo central</td><td>Documentos que ya no se usan a diario pero se conservan</td><td>Ordenado, menos frecuente</td></tr>
+      <tr><td>Archivo histórico</td><td>Documentos de valor permanente</td><td>Conservación indefinida</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Tienes en tu oficina expedientes de hace años que ya no consultas, apilados junto a los de trámite actual. Reconoces que los antiguos ya cumplieron su fase de gestión y deben transferirse al archivo central según las reglas, mientras los actuales siguen en gestión. Separarlos y gestionar la transferencia mantiene el orden y evita que tu archivo de gestión se vuelva un depósito caótico.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>El 'archivo de gestión' (o activo) contiene:</p>
+  <div class="cp-op" data-op="a">a) Los documentos en trámite o de consulta frecuente, cercanos a quien los usa.</div>
+  <div class="cp-op" data-op="b">b) Solo los documentos de valor permanente que se conservan para siempre.</div>
+  <div class="cp-op" data-op="c">c) Los documentos que ya nadie debe volver a consultar nunca.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Documentos vitales y su protección especial</h4>
+    <p>Dentro de los documentos de archivo hay algunos llamados vitales o esenciales: los que la entidad necesitaría para seguir funcionando o para proteger derechos fundamentales si ocurriera un desastre (un incendio, una inundación, un ataque informático). Identificarlos y darles una protección reforzada —copias de seguridad en lugares distintos, condiciones especiales de conservación— es parte de una buena gestión documental, porque su pérdida sería catastrófica.</p>
+    <p>Para el Analista, aunque no suele decidir qué documentos son vitales, sí debe entender que no todos tienen el mismo peso y que algunos merecen un cuidado especial. Esta idea refuerza el criterio de proporcionalidad: dedicar más protección a lo más valioso. Un expediente rutinario y un documento del que depende la continuidad de una función no pueden tratarse con el mismo nivel de descuido; reconocer esa diferencia es parte de gestionar con sentido común y responsabilidad.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Las tablas de retención documental</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>Tabla de Retención Documental (TRD)</mark> es el instrumento que define, para cada tipo de documento de la entidad, cuánto tiempo se conserva en cada fase y cuál es su disposición final (conservar permanentemente o eliminar). Es la «hoja de ruta» que ordena qué se guarda, por cuánto tiempo y qué se puede eliminar, con criterios técnicos y no al azar.</p>
+</div>
+<div class="b-texto">
+  <p>¿Cómo se sabe cuánto tiempo guardar cada documento y cuándo se puede eliminar? No se decide a ojo ni según el espacio disponible: existe un instrumento técnico llamado <strong>Tabla de Retención Documental (TRD)</strong>. La TRD lista las series documentales de cada dependencia y define, para cada una, cuánto tiempo permanece en el archivo de gestión, cuánto en el central, y cuál es su disposición final: conservación permanente, eliminación, o selección.</p>
+  <p>La TRD responde preguntas que de otro modo quedarían al criterio arbitrario de cada quien: ¿este expediente se guarda cinco años o diez? ¿se elimina al final o se conserva para siempre? Al tener estas reglas definidas técnicamente, la entidad garantiza que los documentos con valor se conserven el tiempo necesario y que los que ya cumplieron su finalidad se eliminen de forma ordenada y legal, sin acumular indefinidamente ni destruir lo que debía guardarse.</p>
+  <p>La <strong>eliminación</strong> de documentos es, quizás, el punto más delicado. No se puede botar un documento de archivo porque «estorba» o «ya no sirve»: la eliminación debe hacerse según la TRD, con los procedimientos y las aprobaciones que exige la normativa, y dejando constancia (acta de eliminación). Destruir documentos por fuera de ese marco puede ser una falta grave, porque podría eliminarse información con valor probatorio o histórico. La TRD protege contra esa destrucción indebida.</p>
+  <p>Para el Analista I, la TRD es la referencia para saber qué hacer con los documentos que maneja. No necesita memorizarla, pero sí entender que existe, que define los tiempos de conservación y la disposición final de cada tipo de documento, y que las decisiones de conservar o eliminar se rigen por ella, no por el criterio personal. Respetar la TRD es parte de gestionar los documentos con rigor y de no incurrir en la grave falta de eliminar lo que debía conservarse.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La TRD define, por tipo de documento</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td>Tiempo en archivo de gestión</td><td>Cuánto permanece en la oficina</td></tr>
+      <tr><td>Tiempo en archivo central</td><td>Cuánto se conserva antes del destino final</td></tr>
+      <tr><td>Disposición final</td><td>Conservar permanentemente, eliminar o seleccionar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero propone 'botar unos expedientes viejos que estorban' para ganar espacio. Le adviertes que la eliminación de documentos de archivo no se decide a ojo: se rige por la Tabla de Retención Documental, con sus procedimientos y su acta de eliminación. Destruir documentos por fuera de ese marco podría eliminar información con valor probatorio y ser una falta grave. La TRD define qué se puede eliminar y cómo.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>La Tabla de Retención Documental (TRD) sirve para:</p>
+  <div class="cp-op" data-op="a">a) Decidir a ojo qué documentos botar según el espacio disponible en la oficina.</div>
+  <div class="cp-op" data-op="b">b) Definir técnicamente, por tipo de documento, cuánto se conserva en cada fase y su disposición final (conservar o eliminar).</div>
+  <div class="cp-op" data-op="c">c) Permitir que cada quien elimine cuando quiera cualquier documento que considere que ya no sirve.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Transferencias documentales: el paso entre fases</h4>
+    <p>El paso de un documento del archivo de gestión al central, o del central al histórico, no es automático ni informal: se hace mediante transferencias documentales, que son procesos reglados con sus inventarios y constancias. Transferir bien implica entregar los documentos organizados, con un inventario que detalla qué se transfiere, de modo que en el nuevo archivo se sepa exactamente qué se recibió. Una transferencia descuidada —cajas sin inventario, documentos revueltos— traslada el desorden en vez de resolverlo.</p>
+    <p>Para el Analista, cuando corresponde transferir documentos que ya cumplieron su fase de gestión, hacerlo con orden e inventario es parte de la disciplina documental. No se trata de 'sacar de la oficina lo que estorba', sino de entregar al archivo central un conjunto organizado y verificable. Ese cuidado garantiza que los documentos sigan siendo localizables y trazables en su nueva fase, y evita que la transferencia se convierta en una forma de perder información.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>Organización: series, expedientes y foliación</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los documentos se organizan en <mark>series</mark> (conjuntos de documentos del mismo tipo, como «declaraciones» o «informes»), que se agrupan en <mark>expedientes</mark> (todos los documentos de un mismo asunto o trámite). La <mark>foliación</mark> (numerar las hojas) y el orden cronológico dentro del expediente garantizan que no falte ni se altere ningún documento.</p>
+</div>
+<div class="b-texto">
+  <p>La organización archivística sigue una lógica que va de lo general a lo particular. Las <strong>series documentales</strong> agrupan documentos del mismo tipo producidos por una función (todas las resoluciones, todos los informes de cierto tipo). Dentro de ellas, los <strong>expedientes</strong> reúnen todos los documentos que corresponden a un mismo asunto o trámite: el expediente de un contribuyente, de un proceso, de una solicitud. El expediente cuenta la historia completa de un asunto.</p>
+  <p>Un principio clave es que el expediente debe estar <strong>completo y ordenado</strong>. Completo, porque debe contener todos los documentos del asunto, sin que falte ninguno; ordenado, generalmente de forma cronológica, de modo que se pueda seguir la secuencia de lo ocurrido. Un expediente al que le faltan documentos o que está desordenado puede impedir reconstruir una actuación, con consecuencias serias si llega una auditoría o una reclamación.</p>
+  <p>La <strong>foliación</strong> —numerar consecutivamente las hojas de un expediente— cumple una función de control esencial: garantiza que no se puedan quitar ni añadir documentos sin que se note. Si las hojas están numeradas del 1 al 50 y de pronto aparece una sin número o falta la 23, hay una alerta. La foliación es, así, una herramienta sencilla pero poderosa contra la alteración o la pérdida de documentos, y una garantía de integridad del expediente.</p>
+  <p>Para el Analista I, contribuir a que los expedientes y las series estén completos, ordenados y foliados es parte de trabajar con rigor documental. Cuando aporta un documento a un expediente, debe hacerlo de modo que el conjunto se mantenga completo y en orden. Esta disciplina conecta con la trazabilidad: un expediente bien organizado y foliado es un expediente que permite reconstruir con confianza qué pasó, cuándo y con qué documentos, lo que protege a la entidad y a los ciudadanos.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Nivel de organización</th><th>Qué agrupa</th></tr></thead>
+    <tbody>
+      <tr><td>Serie documental</td><td>Documentos del mismo tipo (resoluciones, informes)</td></tr>
+      <tr><td>Expediente</td><td>Todos los documentos de un mismo asunto o trámite</td></tr>
+      <tr><td>Foliación</td><td>Numeración de hojas que garantiza integridad</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Debes aportar un documento a un expediente ya foliado. En vez de intercalarlo sin más, lo ubicas en el orden cronológico correcto y lo folias de modo que la numeración siga siendo consecutiva y verificable. Así el expediente se mantiene completo, ordenado e íntegro: si alguien quitara una hoja, el salto en la foliación lo delataría. Ese cuidado protege la integridad del expediente.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>La foliación (numerar las hojas de un expediente) sirve, sobre todo, para:</p>
+  <div class="cp-op" data-op="a">a) Hacer el expediente más grueso y que parezca más importante.</div>
+  <div class="cp-op" data-op="b">b) Decorar el expediente, sin ninguna función de control.</div>
+  <div class="cp-op" data-op="c">c) Garantizar la integridad: que no se puedan quitar ni añadir documentos sin que el salto en la numeración lo delate.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Disposición final: conservar, eliminar o seleccionar</h4>
+    <p>La disposición final que define la TRD tiene tres opciones principales que conviene distinguir. Conservación total: el documento se guarda permanentemente por su valor histórico. Eliminación: al cumplir su tiempo de retención y agotar sus valores, se destruye con el procedimiento reglado. Y selección: se conserva solo una muestra representativa de una serie muy voluminosa, eliminando el resto, para preservar la memoria sin guardarlo todo. Cada serie documental tiene asignada una de estas opciones según su valor.</p>
+    <p>Para el Analista, entender la disposición final evita dos errores graves: conservar indefinidamente todo (lo que vuelve ingobernable el archivo) y eliminar lo que debía guardarse. Saber que existe un criterio técnico detrás de cada decisión de conservar o eliminar —y que no es asunto del gusto personal— es lo que permite confiar en el sistema y respetarlo. La disposición final es el cierre lógico del ciclo vital del documento, y debe seguirse con el mismo rigor que el resto del proceso.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>La trazabilidad: quién hizo qué y cuándo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>trazabilidad</mark> es la capacidad de reconstruir las actuaciones: quién hizo qué, cuándo, sobre qué documento o dato. Se logra con registros, bitácoras, fechas, firmas y logs de los sistemas. Para el servidor público es una doble garantía: permite controlar los usos indebidos y, a la vez, protege al que actúa correctamente, porque demuestra lo que hizo.</p>
+</div>
+<div class="b-texto">
+  <p>La trazabilidad, que ya apareció en temas anteriores, es uno de los conceptos más importantes para un servidor público, y conviene profundizar en él. Trazabilidad significa que las actuaciones dejan rastro: se puede reconstruir quién produjo o modificó un documento, quién accedió a un dato, cuándo ocurrió cada cosa y en qué orden. Este rastro se construye con fechas, firmas, registros de entrega, bitácoras y los logs automáticos de los sistemas informáticos.</p>
+  <p>La trazabilidad cumple una <strong>doble función</strong> que es clave entender. Por un lado, permite el <strong>control</strong>: si alguien hizo algo indebido —alteró un documento, accedió a datos sin autorización, eliminó algo que no debía—, queda registro, y eso disuade y permite detectar las faltas. Por otro lado, y esto es crucial, <strong>protege al servidor honesto</strong>: si actuó correctamente, la trazabilidad lo demuestra. Ante una acusación o una auditoría, el que documentó bien puede probar lo que hizo; el que no, queda indefenso.</p>
+  <p>Esta segunda función —la protección— suele subestimarse, pero es la razón por la que documentar conviene al propio servidor. Imaginar la trazabilidad solo como «vigilancia» es verla a medias. En realidad, el que lleva bitácora, deja constancia y conserva los soportes de sus actuaciones está construyendo su propia defensa: la prueba de que obró bien. En un trabajo donde las actuaciones pueden ser cuestionadas, poder demostrar lo que se hizo es una tranquilidad invaluable.</p>
+  <p>Para el Analista I, la trazabilidad debe ser un hábito en todo lo que hace: documentar de dónde salieron los datos, qué transformaciones les aplicó, cuándo entregó un informe y a quién, qué criterios usó en un cruce. Esa disciplina, lejos de ser una carga, es lo que convierte su trabajo en algo verificable, auditable y defendible. Un Analista que trabaja con trazabilidad produce no solo buenos resultados, sino resultados que puede respaldar, lo que lo protege y protege a la entidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Función de la trazabilidad</th><th>A quién sirve</th></tr></thead>
+    <tbody>
+      <tr><td>Control</td><td>Detecta y disuade los usos indebidos</td></tr>
+      <tr><td>Protección</td><td>Al servidor honesto: demuestra que actuó bien</td></tr>
+      <tr><td>Reconstrucción</td><td>A la entidad: permite auditar y rendir cuentas</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Seis meses después de entregar un informe, una auditoría pregunta cómo obtuviste cierta cifra. Como llevaste bitácora (fuente, fecha de corte, transformaciones, cruces), lo demuestras en minutos y queda claro que actuaste bien. Si no hubieras documentado, habrías quedado a merced de tu memoria y sin cómo probarlo. La trazabilidad te protegió: fue tu defensa, no solo un control.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Además de permitir el control, la trazabilidad es valiosa para el servidor porque:</p>
+  <div class="cp-op" data-op="a">a) Solo sirve para vigilarlo y nunca lo beneficia en nada.</div>
+  <div class="cp-op" data-op="b">b) Lo protege: si actuó correctamente, la trazabilidad demuestra lo que hizo ante una auditoría o una acusación.</div>
+  <div class="cp-op" data-op="c">c) Permite ocultar los errores, borrando el rastro de lo que se hizo.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>El principio de orden original y de procedencia</h4>
+    <p>La archivística se rige por dos principios clásicos que vale la pena conocer. El principio de procedencia dice que los documentos de cada entidad o dependencia deben mantenerse juntos, sin mezclarse con los de otra, porque reflejan quién los produjo. El principio de orden original dice que, dentro de un expediente, los documentos deben conservar el orden en que se produjeron durante el trámite. Juntos, estos principios garantizan que el archivo refleje fielmente cómo ocurrieron las cosas.</p>
+    <p>Estos principios no son caprichos de archivistas: tienen una lógica práctica poderosa. Respetar la procedencia evita que los documentos de distintos asuntos se revuelvan en una masa inservible; respetar el orden original permite reconstruir la secuencia real de un trámite, paso a paso. Para el Analista, la enseñanza es que al organizar no debe imponer un orden arbitrario ni mezclar lo que pertenece a asuntos distintos, sino respetar la lógica de cómo se produjeron los documentos.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Los controles y el autocontrol</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>control</mark> es una actividad que verifica que algo se hace bien y detecta o previene errores (una revisión, una validación, una conciliación). El <mark>autocontrol</mark> es el control que cada servidor ejerce sobre su propio trabajo: revisar antes de entregar, verificar los resultados, no confiar ciegamente. Es la primera y más importante línea de defensa contra los errores.</p>
+</div>
+<div class="b-texto">
+  <p>En toda organización existen controles: actividades diseñadas para asegurar que las cosas se hagan bien y para detectar o prevenir errores e irregularidades. Pueden ser revisiones de un supervisor, validaciones automáticas de un sistema, conciliaciones de cifras, verificaciones cruzadas. Los controles no son desconfianza hacia las personas: son mecanismos que protegen el trabajo, porque todos cometemos errores y conviene atraparlos antes de que causen daño.</p>
+  <p>El control más importante y cercano es el <strong>autocontrol</strong>: el que cada servidor ejerce sobre su propio trabajo antes de entregarlo. Revisar que una cifra cuadre, verificar que un cruce no perdió registros, releer un informe antes de enviarlo, comprobar que el destinatario del correo es el correcto. El autocontrol es la primera línea de defensa: atrapa la mayoría de los errores en el origen, antes de que lleguen a controles posteriores o a una decisión.</p>
+  <p>El autocontrol conecta con una idea que recorre todo el curso: no confiar ciegamente, verificar siempre. Un Analista que incorpora el autocontrol como hábito —que revisa lo propio con la misma exigencia con que revisaría lo ajeno— produce un trabajo mucho más confiable. No se trata de desconfianza excesiva ni de perfeccionismo paralizante, sino de la disciplina sana de comprobar antes de dar por terminado. Es, de hecho, una marca de profesionalismo y de madurez.</p>
+  <p>Para el Analista I, el autocontrol es quizás la competencia más transversal de todo el curso. Antes de entregar cualquier producto —un cruce, una estadística, un informe, una base—, el reflejo debe ser: ¿revisé, verifiqué, comprobé que esto está bien? Ese hábito, que toma minutos, evita que los errores lleguen a un informe oficial o a una decisión. Un servidor que se autocontrola es un servidor en el que la entidad puede confiar, porque entrega trabajo ya verificado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Tipo de control</th><th>Quién lo ejerce</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Control organizacional</td><td>Supervisores, sistemas, áreas</td><td>Revisión, validación, conciliación</td></tr>
+      <tr><td>Autocontrol</td><td>El propio servidor sobre su trabajo</td><td>Verificar antes de entregar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Antes de entregar un informe, aplicas autocontrol: verificas que los totales cuadren con la base, que el cruce no haya perdido registros, que las cifras tengan sentido y que el documento esté completo. Detectas y corriges dos errores que, de otro modo, habrían llegado a la Dirección. Ese hábito de revisar lo propio antes de entregar es tu primera y más eficaz línea de defensa.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>El autocontrol es:</p>
+  <div class="cp-op" data-op="a">a) El control que cada servidor ejerce sobre su propio trabajo (verificar antes de entregar); la primera y más importante línea de defensa contra los errores.</div>
+  <div class="cp-op" data-op="b">b) Una muestra de desconfianza hacia uno mismo que conviene evitar.</div>
+  <div class="cp-op" data-op="c">c) Una tarea exclusiva de los supervisores, que el servidor no debe ejercer sobre su propio trabajo.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La cadena de custodia del documento</h4>
+    <p>Un concepto emparentado con la trazabilidad es la cadena de custodia: el registro continuo de quién ha tenido bajo su responsabilidad un documento o expediente, desde que se produce hasta su disposición final. Igual que en una investigación, poder decir en todo momento quién custodió un documento y cuándo cambió de manos protege su integridad y permite responder si algo se altera o se pierde. Un expediente que pasa de mano en mano sin registro es un expediente vulnerable.</p>
+    <p>Para el Analista I, cuidar la cadena de custodia significa dejar constancia cuando recibe o entrega documentos y expedientes, no sacarlos de su sitio sin registro y asegurarse de que siempre se sepa quién responde por ellos. Este cuidado, que puede parecer formalismo, es lo que permite, ante una pérdida o una alteración, saber en qué eslabón ocurrió y protege al servidor que cumplió su parte. Es trazabilidad aplicada a la custodia física y lógica de los documentos.</p>
+
+
+    <h4>Trazabilidad en los sistemas: los logs</h4>
+    <p>En el entorno digital, buena parte de la trazabilidad la generan automáticamente los sistemas mediante los logs: registros de quién accedió, qué consultó, qué modificó y cuándo. Estos registros son valiosísimos tanto para el control (detectar accesos indebidos) como para la protección del servidor honesto (demostrar que solo accedió a lo que su tarea requería). El Analista debe saber que sus acciones en los sistemas quedan registradas, lo que es a la vez una responsabilidad y una garantía.</p>
+    <p>Esta trazabilidad automática refuerza el deber de usar los accesos solo para fines del servicio: cualquier consulta queda registrada y puede revisarse. Lejos de ser una amenaza para quien trabaja bien, es su mejor respaldo: si alguna vez se cuestiona su actuación, los logs demostrarán que accedió a lo debido, cuando debía y para lo que debía. La trazabilidad digital es, así, la versión moderna de la constancia documental, operando de forma continua y automática.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Seguridad y conservación de los documentos</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los documentos deben <mark>conservarse</mark> protegidos de su deterioro o pérdida (humedad, fuego, borrado, acceso indebido), tanto en papel como en digital. La <mark>seguridad</mark> documental incluye respaldos, control de acceso, condiciones adecuadas de almacenamiento y la protección de la reserva. Perder o dañar un documento puede significar perder un respaldo irremplazable.</p>
+</div>
+<div class="b-texto">
+  <p>De poco sirve organizar bien los documentos si luego se pierden o se deterioran. La <strong>conservación</strong> busca que los documentos sobrevivan íntegros durante el tiempo que deben guardarse. En el papel, esto implica protegerlos de la humedad, el fuego, las plagas, el manejo descuidado; en lo digital, protegerlos del borrado accidental, la corrupción de archivos, la obsolescencia de los formatos y los fallos de los equipos, lo que se logra con respaldos adecuados.</p>
+  <p>La <strong>seguridad</strong> documental tiene varias dimensiones. El <strong>control de acceso</strong> asegura que solo quien debe pueda ver o manipular ciertos documentos, protegiendo la reserva (un expediente con información tributaria reservada no puede estar al alcance de cualquiera). Los <strong>respaldos</strong> garantizan que, si se pierde un documento digital, se pueda recuperar. Y las <strong>condiciones de almacenamiento</strong> adecuadas evitan el deterioro físico. Todo ello protege la integridad y la disponibilidad del documento.</p>
+  <p>Hay un riesgo particular en lo digital: la <strong>obsolescencia</strong>. Un documento guardado en un formato o un soporte que con el tiempo deja de poder leerse es tan inaccesible como uno perdido. Por eso la conservación digital no es solo «guardar», sino velar por que la información siga siendo legible a futuro, migrando a formatos vigentes cuando haga falta. Esta es una preocupación creciente a medida que más documentos nacen y viven en digital.</p>
+  <p>Para el Analista I, la conservación y la seguridad de los documentos que maneja son parte de su responsabilidad cotidiana. Respaldar su trabajo, no dejar documentos reservados al alcance de quien no debe, cuidar los soportes, no borrar sin autorización lo que debe conservarse: son prácticas que protegen un activo valioso. Perder o dañar un documento puede significar perder un respaldo irremplazable, con consecuencias para la entidad y para los derechos que ese documento sustentaba.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión</th><th>Qué protege</th></tr></thead>
+    <tbody>
+      <tr><td>Conservación física/digital</td><td>Que el documento no se deteriore ni se pierda</td></tr>
+      <tr><td>Control de acceso</td><td>La reserva: solo accede quien debe</td></tr>
+      <tr><td>Respaldos</td><td>Recuperar la información si se pierde</td></tr>
+      <tr><td>Evitar obsolescencia</td><td>Que lo digital siga siendo legible a futuro</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Manejas expedientes digitales con información reservada. Te aseguras de respaldarlos en el repositorio institucional, de que solo tengan acceso quienes deben (no los dejas en una carpeta compartida abierta) y de usar formatos vigentes. Así proteges su conservación, su reserva y su legibilidad futura. Un descuido —un borrado sin respaldo, un acceso abierto— podría perder un respaldo irremplazable o filtrar información reservada.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>En la conservación de documentos digitales, un riesgo particular a tener en cuenta es:</p>
+  <div class="cp-op" data-op="a">a) Que ocupen demasiado espacio físico en la oficina.</div>
+  <div class="cp-op" data-op="b">b) La obsolescencia: un documento en un formato o soporte que deja de poder leerse es tan inaccesible como uno perdido.</div>
+  <div class="cp-op" data-op="c">c) Que los documentos digitales nunca necesitan respaldo porque no se pierden.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Controles preventivos y detectivos</h4>
+    <p>Los controles suelen clasificarse en preventivos y detectivos, y entender la diferencia ayuda a valorarlos. Un control preventivo actúa antes, para impedir que el error ocurra (una validación que no deja ingresar un dato mal formado, una doble revisión antes de enviar). Un control detectivo actúa después, para descubrir un error que ya ocurrió (una conciliación que revela una diferencia, una auditoría que detecta una inconsistencia). Ambos son necesarios y se complementan.</p>
+    <p>La enseñanza práctica es que vale más prevenir que detectar: un error impedido no causa daño, mientras que uno detectado ya tuvo tiempo de hacerlo, aunque sea parcialmente. Por eso el autocontrol, que es sobre todo preventivo, es tan valioso: atrapa el error en el origen. El Analista que privilegia los controles preventivos —verificar antes, no después— evita problemas en lugar de tener que remediarlos, lo que siempre es más eficiente y menos costoso.</p>
+
+
+    <h4>El autocontrol como cultura, no como tarea aislada</h4>
+    <p>El autocontrol rinde más cuando deja de ser un paso final que a veces se omite y se vuelve una forma de trabajar. No es 'revisar al final si queda tiempo', sino verificar en cada etapa: comprobar la fuente al recibir los datos, revisar el cruce al hacerlo, validar el total al resumir, releer el informe al redactarlo. Integrado así en todo el proceso, el autocontrol atrapa los errores cerca de donde nacen, cuando son más fáciles de corregir, en lugar de descubrirlos acumulados al final o, peor, después de entregar.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Documento electrónico y firma</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>documento electrónico</mark> tiene la misma validez que uno en papel si cumple los requisitos de autenticidad, integridad y conservación. La <mark>firma electrónica o digital</mark> permite atribuir un documento a su autor y garantizar que no se alteró. La administración avanza hacia lo digital, y el Analista debe entender que un documento electrónico bien gestionado es tan válido y serio como uno físico.</p>
+</div>
+<div class="b-texto">
+  <p>La transformación digital del Estado ha traído consigo el <strong>documento electrónico</strong>, que hoy tiene plena validez jurídica cuando cumple ciertos requisitos. Un documento electrónico es tan válido como uno en papel si se puede garantizar su <strong>autenticidad</strong> (que es de quien dice ser), su <strong>integridad</strong> (que no se alteró) y su <strong>conservación</strong> (que se puede acceder a él en el futuro). Esto ha permitido digitalizar trámites que antes dependían del papel.</p>
+  <p>La <strong>firma electrónica o digital</strong> es una pieza central de esta validez. Permite atribuir un documento a su autor (igual que una firma manuscrita) y, en el caso de la firma digital, garantizar criptográficamente que el documento no se modificó después de firmado. Gracias a ella, un documento electrónico puede tener el mismo valor probatorio que uno firmado a mano, lo que es esencial para una administración que opera cada vez más en línea.</p>
+  <p>Entender la validez del documento electrónico evita dos errores opuestos. Uno es menospreciarlo, tratar un documento digital como «menos serio» o «provisional» frente al papel; cuando cumple los requisitos, tiene plena validez. El otro es descuidar su gestión, creyendo que por ser digital no necesita las mismas reglas de conservación, trazabilidad y seguridad; en realidad, las necesita igual o más, porque lo digital también se pierde, se altera o se vuelve ilegible si no se cuida.</p>
+  <p>Para el Analista I, que trabaja mayormente con información y documentos digitales, esta comprensión es cotidiana. Un reporte, un expediente o una comunicación electrónica son documentos con valor que deben gestionarse con el mismo rigor que los físicos: conservarse, respaldarse, protegerse y, cuando corresponde, firmarse para darles autenticidad. Tratar lo digital con la seriedad que merece es parte de trabajar en una administración moderna, y de no perder de vista que un archivo electrónico puede ser tan importante como un documento en papel.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Requisito del documento electrónico</th><th>Qué garantiza</th></tr></thead>
+    <tbody>
+      <tr><td>Autenticidad</td><td>Que es de quien dice ser (firma)</td></tr>
+      <tr><td>Integridad</td><td>Que no se alteró después</td></tr>
+      <tr><td>Conservación</td><td>Que se puede acceder a él en el futuro</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero trata un expediente electrónico como 'menos serio' que uno en papel y lo descuida. Le explicas que un documento electrónico, si cumple autenticidad, integridad y conservación, tiene plena validez jurídica, y que por ser digital necesita las mismas reglas de conservación, trazabilidad y seguridad. Lo digital no es provisional ni inferior: es tan válido como el papel y hay que gestionarlo con igual rigor.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Un documento electrónico, frente a uno en papel:</p>
+  <div class="cp-op" data-op="a">a) Es siempre menos serio y provisional, sin validez jurídica real.</div>
+  <div class="cp-op" data-op="b">b) No necesita reglas de conservación ni seguridad, porque lo digital nunca se pierde ni se altera.</div>
+  <div class="cp-op" data-op="c">c) Tiene plena validez si cumple autenticidad, integridad y conservación, y requiere las mismas reglas de gestión que uno físico.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>La digitalización no es lo mismo que gestionar</h4>
+    <p>Un malentendido común es creer que escanear los documentos en papel (digitalizarlos) es ya gestionarlos bien. Digitalizar es útil —facilita el acceso, ahorra espacio, permite respaldos—, pero por sí solo no es gestión documental: un montón de archivos escaneados sin organizar, sin nombrar con criterio y sin metadatos es tan caótico como una pila de papeles sueltos. La digitalización es una herramienta; la organización y el cuidado siguen siendo necesarios.</p>
+    <p>Además, la digitalización plantea preguntas que hay que resolver: ¿el documento escaneado reemplaza al original en papel o ambos coexisten?, ¿tiene el escaneo la misma validez?, ¿cómo se garantiza que no se alteró? Estas cuestiones se resuelven con reglas y, cuando aplica, con firmas y certificaciones. Para el Analista, la lección es que pasar al digital no exime de las reglas archivísticas: un documento digital mal gestionado es tan problemático como uno físico mal archivado.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Los sistemas de gestión y la mejora continua</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>sistema de gestión</mark> organiza el trabajo de una entidad para asegurar calidad, orden y mejora. Se apoya en el ciclo <mark>PHVA</mark> (Planear, Hacer, Verificar, Actuar): planear cómo hacer algo, hacerlo, verificar los resultados y actuar para mejorar. La gestión documental y los controles son parte de ese sistema, que busca que la entidad trabaje cada vez mejor.</p>
+</div>
+<div class="b-texto">
+  <p>La gestión documental y los controles no existen aislados: forman parte de los <strong>sistemas de gestión</strong> de la entidad, que organizan el trabajo para asegurar calidad y orden. Un sistema de gestión define procesos, responsables, documentos y controles de modo que las cosas se hagan de forma consistente y no al azar de cada persona. La idea de fondo es que una entidad bien gestionada produce mejores resultados y es más confiable.</p>
+  <p>El corazón de los sistemas de gestión modernos es el ciclo de <strong>mejora continua</strong>, conocido como <strong>PHVA</strong>: <strong>Planear</strong> (definir qué se va a hacer y cómo), <strong>Hacer</strong> (ejecutarlo), <strong>Verificar</strong> (medir si los resultados fueron los esperados) y <strong>Actuar</strong> (corregir y mejorar para el siguiente ciclo). Este ciclo convierte el trabajo en un proceso que aprende de sí mismo: no se hace una vez y se olvida, sino que se revisa y se mejora de forma permanente.</p>
+  <p>La mejora continua tiene una filosofía poderosa: ningún proceso es perfecto, siempre se puede mejorar, y la forma de hacerlo es medir, aprender de los errores y ajustar. Esto se opone a dos actitudes negativas: la conformista («siempre se ha hecho así») y la del parche sin aprendizaje (corregir un error puntual sin preguntarse por qué ocurrió). El servidor que piensa en clave de mejora continua ve cada error no como un fracaso, sino como una oportunidad de ajustar el proceso para que no se repita.</p>
+  <p>Para el Analista I, entender los sistemas de gestión y el PHVA le da un marco para su trabajo. Sus tareas (gestionar información, documentar, controlar) son parte de procesos que buscan la calidad; y su actitud debe ser la de la mejora continua: planear bien, ejecutar, verificar los resultados (autocontrol) y aprender para mejorar. Un Analista que incorpora esta mentalidad no solo cumple tareas, sino que contribuye a que los procesos de la entidad funcionen cada vez mejor, que es el espíritu de un sistema de gestión.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Fase del ciclo PHVA</th><th>Qué implica</th></tr></thead>
+    <tbody>
+      <tr><td>Planear</td><td>Definir qué se hará y cómo</td></tr>
+      <tr><td>Hacer</td><td>Ejecutar lo planeado</td></tr>
+      <tr><td>Verificar</td><td>Medir si los resultados fueron los esperados</td></tr>
+      <tr><td>Actuar</td><td>Corregir y mejorar para el siguiente ciclo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Detectas que un proceso de consolidación mensual produce siempre los mismos errores. En vez de corregirlos uno a uno cada mes (parche), aplicas la mejora continua: analizas por qué ocurren, ajustas el procedimiento (planear), lo pruebas (hacer), verificas que los errores desaparezcan y estandarizas la mejora (actuar). Así el proceso aprende y deja de fallar. Esa es la mentalidad del PHVA.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>El ciclo PHVA (Planear, Hacer, Verificar, Actuar) busca, sobre todo:</p>
+  <div class="cp-op" data-op="a">a) La mejora continua: que el trabajo se revise y mejore de forma permanente, aprendiendo de los resultados y los errores.</div>
+  <div class="cp-op" data-op="b">b) Hacer las cosas una sola vez y no volver a revisarlas nunca.</div>
+  <div class="cp-op" data-op="c">c) Mantener todo igual porque 'siempre se ha hecho así'.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>El expediente electrónico</h4>
+    <p>La evolución natural del expediente de papel es el expediente electrónico: el conjunto de documentos electrónicos de un mismo asunto, gestionado digitalmente. Tiene las mismas exigencias que el físico —debe estar completo, ordenado, íntegro y conservado— pero adaptadas al medio digital: en lugar de foliación en papel, mecanismos que garantizan que no se altere; en lugar de carpetas físicas, una organización lógica con sus metadatos. Bien gestionado, es tan válido y confiable como el de papel.</p>
+    <p>El reto del expediente electrónico es mantener su integridad y trazabilidad a lo largo del tiempo, asegurando que ningún documento se añada, quite o altere sin registro, y que siga siendo legible pese a los cambios tecnológicos. Para el Analista, trabajar con expedientes electrónicos exige las mismas virtudes que con los de papel —orden, completitud, respaldo— aplicadas con las herramientas digitales. La transición al expediente electrónico no relaja las reglas: las traslada al nuevo medio.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Por qué documentar no es burocracia</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Documentar, organizar, controlar y conservar pueden parecer «papeleo», pero son lo que hace que un trabajo sea <mark>trazable, auditable y defendible</mark>. Un trabajo sin documentar es un trabajo que no se puede probar, reconstruir ni mejorar. La disciplina documental no frena el trabajo: lo respalda y lo protege. Verlo como burocracia inútil es no entender su función.</p>
+</div>
+<div class="b-texto">
+  <p>Existe una tentación comprensible de ver la gestión documental, los controles y la trazabilidad como «burocracia» que frena el trabajo real. Esta visión es un error que conviene desmontar. Documentar y organizar no son un fin en sí mismos, sino lo que convierte un trabajo en algo <strong>trazable</strong> (se puede reconstruir), <strong>auditable</strong> (se puede verificar) y <strong>defendible</strong> (se puede probar que se hizo bien). Sin eso, el trabajo queda flotando, imposible de respaldar.</p>
+  <p>Piénsese en lo que significa un trabajo sin documentar. Si no hay registro de de dónde salieron los datos, no se puede responder a una auditoría; si un expediente está incompleto, no se puede demostrar una actuación; si no hay trazabilidad, no se puede saber qué pasó ni quién respondió. Un error que, bien documentado, se explica y se corrige en minutos, sin documentación se vuelve un problema grave sin solución clara. La documentación es, literalmente, lo que permite dar cuenta del trabajo.</p>
+  <p>Hay, eso sí, una burocracia mala que conviene distinguir: la que documenta por documentar, que crea papeleo inútil que nadie usa. La buena gestión documental no es esa: es documentar lo que tiene valor, de forma que sirva, sin excesos. El criterio está en documentar lo que de verdad respalda, reconstruye o mejora el trabajo, y no multiplicar papeles por costumbre. Entender esta diferencia evita tanto el descuido como el papeleo estéril.</p>
+  <p>Para el Analista I, interiorizar que documentar no es burocracia inútil cambia su actitud hacia estas tareas. En vez de verlas como un estorbo, las entiende como la forma de proteger y respaldar su propio trabajo: la bitácora que lo defiende en una auditoría, el expediente ordenado que permite reconstruir un asunto, el control que atrapa un error a tiempo. Un Analista que documenta bien no es más lento: es más confiable, porque su trabajo puede sostenerse ante cualquier revisión.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Trabajo documentado</th><th>Trabajo sin documentar</th></tr></thead>
+    <tbody>
+      <tr><td>Trazable: se puede reconstruir</td><td>Imposible de reconstruir</td></tr>
+      <tr><td>Auditable: se puede verificar</td><td>No resiste una auditoría</td></tr>
+      <tr><td>Defendible: se prueba que se hizo bien</td><td>Indefendible ante una acusación</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Un compañero se queja de que 'documentar es perder tiempo en papeleo'. Le muestras un caso real: cuando llegó una auditoría, tu bitácora te permitió explicar todo en minutos, mientras que otro, que no documentó, pasó días rehaciendo su trabajo sin poder probar nada. Documentar lo que tiene valor no frena el trabajo: lo respalda y lo protege. Esa es la diferencia entre documentar con criterio y hacer papeleo inútil.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>Documentar, organizar y controlar el trabajo con criterio sirve, sobre todo, para:</p>
+  <div class="cp-op" data-op="a">a) Crear papeleo inútil que nadie usa, solo por cumplir una formalidad.</div>
+  <div class="cp-op" data-op="b">b) Frenar el trabajo real y complicar las cosas sin ningún beneficio.</div>
+  <div class="cp-op" data-op="c">c) Hacer el trabajo trazable, auditable y defendible: poder reconstruirlo, verificarlo y probar que se hizo bien.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>Autoevaluación y auditorías: aliadas, no enemigas</h4>
+    <p>Dentro de los sistemas de gestión, la verificación (la 'V' del PHVA) se materializa en autoevaluaciones y auditorías, internas y externas. Es frecuente verlas con recelo, como una amenaza o una caza de errores. Pero bien entendidas son aliadas: su función no es castigar, sino encontrar lo que se puede mejorar antes de que cause un problema mayor. Una observación de auditoría atendida a tiempo evita un error que, ignorado, podría crecer hasta volverse grave.</p>
+    <p>Para el Analista, esta actitud hacia la verificación marca la diferencia entre un servidor que esconde los problemas y uno que los enfrenta. El que documenta bien y se autocontrola no teme a una auditoría: tiene con qué responder y ve en cada observación una oportunidad de ajustar. Alinear la propia actitud con el espíritu de la mejora continua —aprender de los hallazgos en vez de temerles— convierte la verificación en motor de calidad, que es justamente lo que un sistema de gestión busca.</p>
+
+
+    <h4>De la observación a la mejora estandarizada</h4>
+    <p>El valor de la fase 'Actuar' del PHVA está en no quedarse en el parche. Cuando una verificación detecta un error, la mejora real no es solo corregir ese caso, sino preguntarse por qué ocurrió y ajustar el proceso para que no vuelva a pasar, dejando esa mejora estandarizada y documentada. Así, cada error se convierte en una lección que fortalece el proceso. El Analista que piensa en clave de mejora continua trata sus propios errores con esa actitud: no los esconde ni los repite, los convierte en ajustes que elevan la calidad de su trabajo.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>El Analista I y la cultura del orden y el respaldo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El perfil que busca el cargo incluye una <mark>cultura del orden y el respaldo</mark>: gestionar los documentos con método, documentar las actuaciones (trazabilidad), aplicar autocontrol y respetar las reglas de conservación y reserva. Esta cultura protege a la entidad, a los ciudadanos y al propio servidor, y hace que el trabajo con información sea confiable.</p>
+</div>
+<div class="b-texto">
+  <p>Al reunir los temas del día, emerge un rasgo de carácter profesional: la <strong>cultura del orden y el respaldo</strong>. No es solo saber de archivística o de controles; es una forma de trabajar en la que el orden, la documentación y la verificación están incorporados como hábitos. El Analista que tiene esta cultura organiza lo que produce, documenta lo que hace, verifica antes de entregar y respeta las reglas de conservación y reserva, de forma natural, no como una imposición externa.</p>
+  <p>Esta cultura protege a tres actores a la vez. Protege a la <strong>entidad</strong>, porque le permite rendir cuentas, resistir auditorías y no perder información valiosa. Protege a los <strong>ciudadanos</strong>, porque garantiza que sus trámites, derechos y actuaciones queden debidamente soportados y no se pierdan ni se alteren. Y protege al <strong>propio servidor</strong>, porque la trazabilidad y la documentación son su defensa ante cualquier cuestionamiento. Es una cultura que beneficia a todos.</p>
+  <p>Conecta, además, con todo lo aprendido en el curso. La gobernanza de datos, la calidad de la información, la trazabilidad, el no confiar ciegamente, el respeto por la reserva: todos esos hilos se tejen en esta cultura del orden y el respaldo. El Analista que la ha incorporado no vive estas prácticas como tareas separadas, sino como una misma forma rigurosa de tratar la información documentada, que es, al final, el núcleo de su cargo.</p>
+  <p>Si tuvieras que quedarte con una idea, que sea esta: el orden y el respaldo no son accesorios del trabajo con información, son su condición de confiabilidad. Un Analista I que gestiona bien los documentos, documenta sus actuaciones, se autocontrola y respeta las reglas produce un trabajo que la entidad puede sostener ante cualquier revisión. Esa confiabilidad, construida con disciplina documental, es exactamente lo que el cargo necesita y lo que distingue a un servidor en el que de verdad se puede confiar.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>La cultura del orden y el respaldo protege a</th><th>Cómo</th></tr></thead>
+    <tbody>
+      <tr><td>La entidad</td><td>Permite rendir cuentas y no perder información</td></tr>
+      <tr><td>Los ciudadanos</td><td>Garantiza que sus trámites y derechos queden soportados</td></tr>
+      <tr><td>El propio servidor</td><td>La trazabilidad lo defiende ante cuestionamientos</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Incorporas como hábito natural: organizar lo que produces, llevar bitácora de tus actuaciones, verificar antes de entregar y respetar las reglas de conservación y reserva. No lo vives como imposición, sino como tu forma de trabajar. Cuando llega una auditoría, todo está en orden y documentado; cuando un ciudadano reclama, su expediente está completo. Esa cultura del orden y el respaldo te protege a ti, a la entidad y a los ciudadanos.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>La 'cultura del orden y el respaldo' en el Analista I:</p>
+  <div class="cp-op" data-op="a">a) Es un estorbo que solo beneficia a los auditores y perjudica al servidor.</div>
+  <div class="cp-op" data-op="b">b) Protege a la vez a la entidad, a los ciudadanos y al propio servidor, y hace confiable el trabajo con información.</div>
+  <div class="cp-op" data-op="c">c) Consiste en acumular todo el papeleo posible sin ningún criterio.</div>
+  <div class="cp-fb"></div>
+</div>
+
+    <h4>El equilibrio entre rigor y agilidad</h4>
+    <p>Reconocer que documentar no es burocracia no significa caer en el extremo contrario de documentarlo y controlarlo todo hasta la parálisis. El rigor documental debe equilibrarse con la agilidad: se documenta lo que tiene valor y se controla lo que importa, sin convertir cada paso en un trámite. Un sistema que exige diez firmas para una tarea trivial no es riguroso, es disfuncional; y un servidor que no entrega nada por querer documentarlo todo al extremo tampoco sirve.</p>
+    <p>El criterio, de nuevo, es la clave. El buen Analista distingue qué merece documentación y control cuidadoso (lo que respalda derechos, lo que puede ser cuestionado, lo que tiene valor probatorio) de lo que puede manejarse con ligereza. Ese discernimiento —ni descuido ni papeleo obsesivo— es lo que hace sostenible la cultura del orden: un rigor inteligente, proporcionado al valor de lo que se gestiona, que protege sin paralizar.</p>
+
+
+    <h4>Lo que cuesta un documento perdido</h4>
+    <p>Para dimensionar por qué el orden importa, basta pensar en el costo de un documento perdido o un expediente incompleto. Puede significar que no se pueda demostrar una actuación ante un juez, que se vulnere el derecho de un ciudadano cuyo trámite quedó sin soporte, que la entidad pierda un proceso por no poder probar lo que hizo, o que una auditoría concluya mal por falta de evidencia. Frente a esos costos, los minutos invertidos en organizar, foliar y documentar son una inversión mínima con un retorno enorme en respaldo y tranquilidad.</p>
+
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>Síntesis: orden, trazabilidad y mejora</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La gestión documental da <mark>orden</mark>; la trazabilidad da <mark>respaldo</mark>; los controles y la mejora continua dan <mark>confianza</mark> en que el trabajo se hace bien y mejora. El Analista I que integra estas tres cosas convierte su manejo de la información en un trabajo riguroso, verificable y en permanente mejora. No es burocracia: es la base de un servicio público confiable.</p>
+</div>
+<div class="b-texto">
+  <p>Al cerrar el tema, conviene unir sus tres grandes aportes. La <strong>gestión documental</strong> da <strong>orden</strong>: administra los documentos con método, los organiza en series y expedientes, define cuánto se conservan y cómo se eliminan, y los protege de la pérdida y el deterioro. Sin ese orden, la información documentada se vuelve un caos imposible de aprovechar o de defender.</p>
+  <p>La <strong>trazabilidad</strong> da <strong>respaldo</strong>: permite reconstruir quién hizo qué y cuándo, controla los usos indebidos y, sobre todo, protege al servidor honesto demostrando que actuó bien. Un trabajo trazable es un trabajo que se puede probar, auditar y defender, lo que lo convierte en confiable para la entidad y seguro para quien lo realizó.</p>
+  <p>Los <strong>controles, el autocontrol y la mejora continua</strong> dan <strong>confianza</strong>: aseguran que el trabajo se verifique antes de entregarlo, que los errores se atrapen a tiempo y que los procesos aprendan y mejoren con el ciclo PHVA. Esta tercera dimensión convierte el orden y el respaldo en un trabajo que no solo se hace bien hoy, sino que mejora de forma permanente. Juntas, las tres cosas hacen del manejo de información una labor rigurosa y confiable.</p>
+  <p>Si tuvieras que quedarte con una sola idea para la prueba y para el trabajo, que sea esta: documentar, ordenar, controlar y conservar no son burocracia, sino la base de un servicio público confiable. El Analista I que integra el orden de la gestión documental, el respaldo de la trazabilidad y la confianza de los controles y la mejora continua produce un trabajo con información que puede sostenerse ante cualquier revisión y que mejora con el tiempo. Esa es la excelencia que el cargo busca y que la prueba evalúa en ti.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Aporte</th><th>Qué da</th></tr></thead>
+    <tbody>
+      <tr><td>Gestión documental</td><td>Orden (organizar, conservar, disponer)</td></tr>
+      <tr><td>Trazabilidad</td><td>Respaldo (quién hizo qué y cuándo)</td></tr>
+      <tr><td>Controles y mejora continua</td><td>Confianza (verificar, aprender, mejorar)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Cierras el tema con una convicción: cuando organizas los documentos (orden), documentas tus actuaciones (respaldo) y verificas y mejoras tu trabajo (confianza), tu manejo de la información se vuelve riguroso, verificable y en permanente mejora. Dejas de ver estas prácticas como papeleo y las entiendes como la base de un servicio público confiable. Esa mirada integral es la marca del Analista I que domina su cargo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 13</div>
+  <p>La gestión documental, la trazabilidad y los controles/mejora continua aportan, respectivamente:</p>
+  <div class="cp-op" data-op="a">a) Orden, respaldo y confianza: juntas hacen del manejo de información un trabajo riguroso, verificable y en mejora permanente.</div>
+  <div class="cp-op" data-op="b">b) Solo burocracia inútil que frena el trabajo sin ningún beneficio.</div>
+  <div class="cp-op" data-op="c">c) Tareas opuestas entre sí que no tienen relación con el trabajo del Analista.</div>
+  <div class="cp-fb"></div>
+</div>
+
+<div class="destacado">
+  <div class="destacado-t">💡 Idea clave para recordar</div>
+  <p>Documentar, ordenar, controlar y conservar NO son burocracia: son lo que hace el trabajo <strong>trazable, auditable y defendible</strong>. La gestión documental da orden (series, expedientes, foliación, TRD); la trazabilidad da respaldo (quién hizo qué y cuándo, y protege al servidor honesto); los controles, el autocontrol y la mejora continua (PHVA) dan confianza. La eliminación de documentos se rige por la TRD, nunca a ojo.</p>
+</div>
+
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips finales para tu prueba</div>
+  <ul>
+    <li>No se eliminan documentos de archivo 'porque estorban': la <strong>TRD</strong> define qué se conserva y qué se elimina, con su procedimiento.</li>
+    <li>La <strong>foliación</strong> garantiza la integridad del expediente: si falta una hoja, el salto en la numeración lo delata.</li>
+    <li>La <strong>trazabilidad</strong> no es solo vigilancia: protege al servidor honesto, porque demuestra que actuó bien.</li>
+    <li>El <strong>autocontrol</strong> (verificar lo propio antes de entregar) es la primera y mejor línea de defensa contra los errores.</li>
+    <li>Un <strong>documento electrónico</strong> con autenticidad, integridad y conservación es tan válido como uno en papel.</li>
+  </ul>
+</div>
+
+<div class="frase-recordar">⚡ Lo que no se documenta, no se puede probar. El orden y la trazabilidad no frenan el trabajo: lo respaldan y lo defienden.</div>
+
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4275" target="_blank" rel="noopener">Ley 594 de 2000 — Ley General de Archivos</a></li>
+    <li><a href="https://www.archivogeneral.gov.co/" target="_blank" rel="noopener">Archivo General de la Nación</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62516" target="_blank" rel="noopener">Ley 1712 de 2014 — Transparencia (gestión de la información)</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">MIPG — Modelo Integrado de Planeación y Gestión</a></li>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN — Portal institucional</a></li>
+  </ul>
+</div>
+
+    <h4>Una cultura que trasciende el archivo</h4>
+    <p>Conviene notar que la cultura del orden y el respaldo trasciende el archivo físico y se extiende a toda la forma de trabajar del Analista. Es la misma disciplina que lo lleva a nombrar bien sus archivos digitales, a llevar bitácora de sus análisis, a verificar antes de entregar y a respetar la reserva. No son prácticas de 'archivística' separadas del resto del trabajo: son una sola manera rigurosa de tratar la información, se exprese en un expediente de papel o en una base de datos.</p>
+    <p>Por eso este tema, que podría parecer el más 'administrativo' del curso, en realidad lo sintetiza. Todo lo aprendido —gobernanza de datos, calidad, trazabilidad, seguridad, no confiar ciegamente— confluye en esta cultura del orden y el respaldo. El Analista que la ha hecho suya no distingue entre 'gestionar datos' y 'gestionar documentos': entiende que ambos son expresiones de un mismo compromiso con tratar la información del Estado con el rigor que merece.</p>
+
+  </div>
+
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque de ellos depende gestionar los documentos con orden, respaldo y confianza.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Documento</td><td>Documento de archivo</td><td>Un documento es cualquier información registrada; el documento de archivo se produce o recibe en ejercicio de las funciones de la entidad y tiene valor (admin., legal, fiscal, histórico).</td></tr><tr><td>Archivo de gestión</td><td>Archivo central</td><td>El de gestión tiene documentos en trámite o de uso frecuente (en la oficina); el central, los que ya no se usan a diario pero deben conservarse unos años.</td></tr><tr><td>Serie documental</td><td>Expediente</td><td>La serie agrupa documentos del mismo tipo (resoluciones, informes); el expediente reúne todos los documentos de un mismo asunto o trámite.</td></tr><tr><td>Trazabilidad (control)</td><td>Trazabilidad (protección)</td><td>La trazabilidad detecta usos indebidos (control) y, a la vez, protege al servidor honesto demostrando que actuó bien (protección).</td></tr><tr><td>Control preventivo</td><td>Control detectivo</td><td>El preventivo impide que el error ocurra (validación, doble revisión); el detectivo lo descubre después (conciliación, auditoría).</td></tr><tr><td>Autocontrol</td><td>Control del supervisor</td><td>El autocontrol lo ejerce el servidor sobre su propio trabajo (primera línea); el del supervisor es un control posterior y externo.</td></tr><tr><td>Digitalizar</td><td>Gestionar</td><td>Digitalizar (escanear) es útil pero no basta; sin organización, nombres y metadatos, los archivos escaneados son tan caóticos como papeles sueltos.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta proponga eliminar documentos 'porque estorban', romper la integridad de un expediente o no dejar constancia de una actuación, desconfía.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · 'Botar los expedientes viejos'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero propone al Analista I 'botar unos expedientes viejos que estorban' para ganar espacio en la oficina. Insiste en que 'ya nadie los consulta'.</p>
+      <span class="label">Análisis</span>
+      <p>La eliminación de documentos de archivo no se decide a ojo ni por el espacio: se rige por la Tabla de Retención Documental (TRD), con su procedimiento y acta. Botar documentos por fuera de ese marco podría destruir información con valor probatorio y ser una falta grave.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> No botar nada por cuenta propia; verificar en la TRD qué corresponde a esos expedientes (transferencia al archivo central o eliminación reglada) y seguir el procedimiento con sus constancias; advertir al compañero del riesgo.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El expediente foliado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista debe aportar un documento a un expediente que ya está foliado y ordenado cronológicamente. Un compañero le dice que 'lo meta por cualquier lado, que total es un papel más'.</p>
+      <span class="label">Análisis</span>
+      <p>Intercalar un documento sin orden ni foliación rompe la integridad del expediente: podría parecer que falta o sobra algo, y dificulta reconstruir el asunto. El orden cronológico y la foliación garantizan la integridad.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Ubicar el documento en el orden cronológico correcto y foliarlo de modo que la numeración siga consecutiva y verificable, dejando constancia; así el expediente se mantiene completo, ordenado e íntegro.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · La auditoría seis meses después</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Seis meses después de entregar un informe, una auditoría le pregunta al Analista cómo obtuvo cierta cifra. Él había llevado (o no) una bitácora de su trabajo.</p>
+      <span class="label">Análisis</span>
+      <p>La trazabilidad protege al servidor honesto: si documentó (fuente, corte, transformaciones, cruces), puede demostrar en minutos que actuó bien; si no, queda a merced de su memoria y sin poder probar lo que hizo.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Mostrar la bitácora con la fuente, la fecha de corte, las transformaciones y los cruces, demostrando cómo se obtuvo la cifra; la trazabilidad llevada en su momento es su defensa. (Y si no la llevó, aprender a hacerlo siempre.)</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · El expediente electrónico 'menos serio'</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un compañero trata un expediente electrónico como 'menos serio' y provisional frente a uno en papel, y lo descuida (no lo respalda, lo deja en una carpeta abierta).</p>
+      <span class="label">Análisis</span>
+      <p>Un documento electrónico, si cumple autenticidad, integridad y conservación, tiene plena validez jurídica, igual que uno en papel; y por ser digital necesita las mismas reglas de conservación, trazabilidad y seguridad.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Explicar que lo digital no es inferior ni provisional: tiene plena validez y requiere el mismo rigor (respaldo, control de acceso, formatos vigentes); gestionar el expediente electrónico con las mismas reglas que uno físico.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Eliminar documentos de archivo 'porque estorban'</div><p>La eliminación se rige por la TRD, con procedimiento y acta; botar por fuera de ese marco puede destruir información con valor probatorio y ser una falta grave.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Romper la integridad del expediente</div><p>Intercalar documentos sin orden ni foliación, o dejar un expediente incompleto, impide reconstruir el asunto. El orden cronológico y la foliación garantizan la integridad.</p></div>
+  <div class="box danger"><div class="box-title">🚫 No dejar constancia de las actuaciones</div><p>Sin trazabilidad (bitácora, fechas, registros) no se puede demostrar cómo se hizo el trabajo ante una auditoría; el servidor queda indefenso. Documentar es su respaldo.</p></div>
+  <div class="box danger"><div class="box-title">🚫 No aplicar autocontrol antes de entregar</div><p>Entregar sin verificar deja pasar errores que un chequeo propio (totales, cruces, cifras) habría atrapado. El autocontrol es la primera línea de defensa.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Tratar lo digital como 'menos serio'</div><p>Un documento electrónico con autenticidad, integridad y conservación tiene plena validez y requiere las mismas reglas de gestión que uno en papel; descuidarlo es un error.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Creer que documentar es burocracia inútil</div><p>Documentar con criterio hace el trabajo trazable, auditable y defendible; no frena, respalda. Lo que no se documenta, no se puede probar ni reconstruir.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>La <strong>eliminación</strong> de documentos se rige por la TRD, nunca 'porque estorban'.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>La <strong>foliación</strong> garantiza la integridad del expediente: un salto en la numeración delata una hoja faltante.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>La <strong>trazabilidad</strong> protege al servidor honesto: demuestra que actuó bien ante una auditoría.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>El <strong>autocontrol</strong> (verificar lo propio antes de entregar) es la primera y mejor línea de defensa.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Un <strong>documento electrónico</strong> con autenticidad, integridad y conservación vale igual que uno en papel.</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>La mejora continua (<strong>PHVA</strong>): planear, hacer, verificar y actuar para que el trabajo mejore siempre.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone botar unos expedientes viejos 'porque estorban' y ganar espacio.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece práctico liberar espacio de documentos que ya nadie consulta.</div>
+      <div class="t-row malo">🔴 La trampa: La eliminación se rige por la TRD; botar por fuera puede destruir información con valor probatorio y ser falta grave.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Verificar en la TRD qué corresponde (transferir o eliminar con procedimiento) y seguir el proceso reglado con sus constancias.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere intercalar un documento en un expediente foliado 'por cualquier lado'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que un documento más no afecta un expediente que ya existe.</div>
+      <div class="t-row malo">🔴 La trampa: Romper el orden y la foliación daña la integridad del expediente y dificulta reconstruir el asunto.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Ubicarlo en el orden cronológico correcto, foliarlo de forma consecutiva y dejar constancia.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a entregar un informe sin dejar constancia de cómo se hizo.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente ahorrarse el 'papeleo' de documentar el trabajo.</div>
+      <div class="t-row malo">🔴 La trampa: Sin trazabilidad no se puede demostrar la actuación ante una auditoría; el servidor queda indefenso.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Llevar bitácora (fuente, corte, transformaciones) para poder respaldar y reconstruir el trabajo.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Gestión documental</h4><p>Administrar con método los documentos a lo largo de su vida útil; es un deber legal (Ley 594/2000) que respalda actuaciones y derechos.</p></div>
+    <div class="resumen-item"><h4>Ciclo vital y TRD</h4><p>Fases de gestión, central e histórico; la TRD define cuánto se conserva cada tipo de documento y su disposición final.</p></div>
+    <div class="resumen-item"><h4>Organización y trazabilidad</h4><p>Series, expedientes y foliación garantizan integridad; la trazabilidad (quién hizo qué y cuándo) controla y protege al servidor honesto.</p></div>
+    <div class="resumen-item"><h4>Controles y autocontrol</h4><p>El autocontrol (verificar lo propio antes de entregar) es la primera línea; los sistemas de gestión mejoran con el ciclo PHVA.</p></div>
+    <div class="resumen-item"><h4>No es burocracia</h4><p>Documentar, ordenar y controlar hacen el trabajo trazable, auditable y defendible: la cultura del orden y el respaldo.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Gestión documental</dt><dd>Conjunto de actividades para producir, recibir, organizar, conservar y disponer de los documentos de una entidad.</dd>
+      <dt>Documento de archivo</dt><dd>El que se produce o recibe en ejercicio de las funciones de la entidad y tiene valor (admin., legal, fiscal, histórico).</dd>
+      <dt>Ciclo vital</dt><dd>Las fases del documento: archivo de gestión (activo), central y histórico.</dd>
+      <dt>Tabla de Retención Documental (TRD)</dt><dd>Instrumento que define, por tipo de documento, cuánto se conserva en cada fase y su disposición final.</dd>
+      <dt>Expediente</dt><dd>Conjunto de todos los documentos de un mismo asunto o trámite, ordenados y foliados.</dd>
+      <dt>Foliación</dt><dd>Numeración consecutiva de las hojas de un expediente que garantiza su integridad.</dd>
+      <dt>Trazabilidad</dt><dd>Capacidad de reconstruir quién hizo qué, cuándo y sobre qué documento o dato.</dd>
+      <dt>PHVA</dt><dd>Ciclo de mejora continua: Planear, Hacer, Verificar, Actuar.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Gestión documental, controles y trazabilidad</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 17. Continúa con el Día 18: MIPG, control interno y auditoría interna.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 17 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 17</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué es la gestión documental y por qué importa?","b": "Es el conjunto de actividades para producir, recibir, organizar, conservar y disponer de los documentos de una entidad a lo largo de su vida útil. Es un deber legal (Ley 594 de 2000) y respalda las actuaciones y los derechos de los ciudadanos: no es solo 'archivar papeles'."},{"f": "¿Diferencia entre documento y documento de archivo?","b": "Un documento es cualquier información registrada; un documento de archivo es el que se produce o recibe en ejercicio de las funciones de la entidad y tiene valor (administrativo, legal, fiscal o histórico). Un borrador o copia de apoyo no es documento de archivo."},{"f": "¿Cuáles son las fases del ciclo vital del documento?","b": "Archivo de gestión (activo: documentos en trámite o de uso frecuente), archivo central (documentos que ya no se usan a diario pero se conservan unos años) y archivo histórico (documentos de valor permanente, conservados para siempre)."},{"f": "¿Qué es la Tabla de Retención Documental (TRD)?","b": "El instrumento que define, para cada tipo de documento, cuánto se conserva en cada fase y su disposición final (conservar permanentemente, eliminar o seleccionar). La eliminación se rige por la TRD, nunca 'porque estorban'."},{"f": "¿Qué son serie, expediente y foliación?","b": "La serie agrupa documentos del mismo tipo (resoluciones, informes); el expediente reúne todos los documentos de un mismo asunto; la foliación (numerar las hojas) garantiza la integridad, porque un salto en la numeración delata una hoja faltante."},{"f": "¿Qué es la trazabilidad y cuál es su doble función?","b": "Es la capacidad de reconstruir quién hizo qué, cuándo y sobre qué. Tiene doble función: control (detecta y disuade usos indebidos) y, sobre todo, protección del servidor honesto (demuestra que actuó bien ante una auditoría o acusación)."},{"f": "¿Qué es el autocontrol?","b": "El control que cada servidor ejerce sobre su propio trabajo: verificar antes de entregar, comprobar que las cifras cuadren, releer. Es la primera y más importante línea de defensa contra los errores, porque los atrapa en el origen."},{"f": "¿Diferencia entre control preventivo y detectivo?","b": "El preventivo actúa antes para impedir el error (validación, doble revisión); el detectivo actúa después para descubrirlo (conciliación, auditoría). Vale más prevenir que detectar: un error impedido no causa daño."},{"f": "¿Tiene validez un documento electrónico?","b": "Sí, plena validez si cumple autenticidad (es de quien dice ser), integridad (no se alteró) y conservación (se puede acceder a futuro). La firma electrónica/digital lo atribuye a su autor. Requiere las mismas reglas de gestión que uno en papel."},{"f": "¿Qué es el ciclo PHVA de mejora continua?","b": "Planear (definir qué y cómo), Hacer (ejecutar), Verificar (medir si los resultados fueron los esperados) y Actuar (corregir y mejorar). Convierte el trabajo en un proceso que aprende de sí mismo y mejora de forma permanente."},{"f": "¿Por qué documentar NO es burocracia inútil?","b": "Porque hace el trabajo trazable (se puede reconstruir), auditable (se puede verificar) y defendible (se puede probar que se hizo bien). Lo que no se documenta no se puede probar ni reconstruir. Documentar con criterio no frena: respalda y protege."},{"f": "¿Qué protege la 'cultura del orden y el respaldo'?","b": "A la entidad (permite rendir cuentas y no perder información), a los ciudadanos (garantiza que sus trámites y derechos queden soportados) y al propio servidor (la trazabilidad lo defiende ante cuestionamientos). Hace confiable el trabajo con información."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "Qué es la gestión documental","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un practicante trata los documentos que produce como 'papeles que luego se botan', los deja sueltos sin orden y dice que 'archivar es una tarea de poca importancia que cada quien hace como quiere'. Tú conoces qué es y qué respalda la gestión documental.","q": "¿Cuál es la aclaración correcta sobre la gestión documental?","ops": ["El practicante tiene razón: archivar es una tarea menor que cada quien hace a su gusto, y los documentos son papeles sin mayor importancia que pueden dejarse sueltos.","Es administrar con método la información documentada a lo largo de su vida útil; es un deber legal (Ley 594 de 2000) y respalda las actuaciones de la entidad y los derechos de los ciudadanos, por lo que no es una tarea menor ni opcional.","Consiste únicamente en escanear todos los papeles y guardarlos en el computador, sin necesidad de organizarlos ni de ninguna regla."],"correcta": 1,"expl": "La gestión documental no es archivar papeles al gusto de cada quien (A), ni solo escanear (C): es administrar con método la información documentada, es un deber legal (Ley 594/2000) y respalda actuaciones y derechos. Por eso no es una tarea menor ni opcional."},{"nivel": "b","tema": "Eliminación según la TRD","ctx": "Eres Analista I de la DIAN y un compañero propone 'botar unos expedientes viejos que estorban' en la oficina para ganar espacio, diciendo que 'ya nadie los consulta'. Tú conoces las reglas sobre la eliminación de documentos de archivo.","q": "¿Cuál es la actuación correcta ante esa propuesta?","ops": ["Botar de inmediato los expedientes viejos para ganar espacio, ya que si nadie los consulta puede decidirse eliminarlos a ojo, sin más trámite, según lo que estorbe en la oficina.","No botar nada por cuenta propia: verificar en la Tabla de Retención Documental (TRD) qué corresponde a esos expedientes (transferirlos al archivo central o eliminarlos con el procedimiento reglado y su acta), porque la eliminación no se decide a ojo.","Quemar o destruir los expedientes de inmediato y sin dejar constancia, para que no quede rastro del espacio que ocupaban ni de que existían."],"correcta": 1,"expl": "La eliminación de documentos de archivo se rige por la TRD, con procedimiento y acta, no por el espacio ni 'porque estorban' (A y C): botar por fuera de ese marco podría destruir información con valor probatorio y ser falta grave. Lo correcto es verificar la TRD y seguir el proceso reglado."},{"nivel": "b","tema": "Integridad del expediente","ctx": "Eres Analista I de la DIAN y debes aportar un documento a un expediente que ya está foliado y ordenado cronológicamente. Un compañero te dice que 'lo metas por cualquier lado, que total es un papel más y nadie va a revisar el orden'. Tú conoces la función del orden y la foliación.","q": "¿Cuál es la forma correcta de aportar ese documento?","ops": ["Meterlo por cualquier lado del expediente sin foliar, ya que es un documento más y el orden y la numeración de las hojas no cumplen ninguna función relevante.","Ubicarlo en el orden cronológico correcto y foliarlo de modo que la numeración siga consecutiva y verificable, dejando constancia, para que el expediente se mantenga completo, ordenado e íntegro.","Reemplazar con el nuevo documento alguno de los que ya estaban, para no tener que cambiar la foliación, aunque eso signifique sacar un documento que debía permanecer en el expediente."],"correcta": 1,"expl": "Intercalar sin orden ni foliación (A) rompe la integridad del expediente; reemplazar un documento existente (C) elimina algo que debía permanecer. Lo correcto es ubicar el documento en el orden cronológico y foliarlo de forma consecutiva, dejando constancia, para preservar la integridad."},{"nivel": "b","tema": "Documento electrónico","ctx": "Eres Analista I de la DIAN y un compañero trata un expediente electrónico como 'menos serio' y provisional frente a uno en papel: no lo respalda y lo deja en una carpeta compartida abierta, diciendo que 'lo digital no tiene la misma validez'. Tú conoces la validez y las exigencias del documento electrónico.","q": "¿Cuál es la aclaración correcta sobre el documento electrónico?","ops": ["El compañero tiene razón: un documento electrónico es siempre menos serio y provisional, no tiene la misma validez que el papel y por eso no necesita respaldo ni control de acceso.","Un documento electrónico tiene plena validez si cumple autenticidad, integridad y conservación, y por ser digital requiere las mismas reglas de gestión que uno físico (respaldo, control de acceso, formatos vigentes); no es inferior ni provisional.","Un documento electrónico es más válido que uno en papel en todos los casos, así que no hace falta cuidarlo ni respaldarlo porque lo digital nunca se pierde ni se altera."],"correcta": 1,"expl": "Un documento electrónico con autenticidad, integridad y conservación tiene plena validez (A lo subestima); pero eso no significa que no necesite cuidado (C lo confía en exceso). Lo correcto: vale igual que el papel y requiere las mismas reglas de respaldo, control de acceso y formatos vigentes."},{"nivel": "i","tema": "La trazabilidad como protección","ctx": "Eres Analista I de la DIAN. Seis meses después de entregar un informe, llega una auditoría que te pregunta cómo obtuviste cierta cifra. Un compañero opina que 'documentar cómo se hace el trabajo es papeleo inútil que solo sirve para vigilarte'. Tú conoces la doble función de la trazabilidad.","q": "¿Cuál es la valoración correcta de haber documentado tu trabajo?","ops": ["El compañero tiene razón: documentar solo sirve para vigilar al servidor y nunca lo beneficia, así que es mejor no dejar constancia de cómo se hace el trabajo.","Haber llevado bitácora (fuente, fecha de corte, transformaciones, cruces) te permite demostrar en minutos cómo obtuviste la cifra y que actuaste bien; la trazabilidad no es solo control, también protege al servidor honesto ante una auditoría.","Lo mejor habría sido borrar todo rastro de cómo hiciste el trabajo, para que la auditoría no pudiera revisar nada y no te hicieran preguntas."],"correcta": 1,"expl": "La trazabilidad tiene doble función: control y protección del servidor honesto (A la ve a medias); borrar el rastro (C) dejaría al servidor indefenso y sería irregular. Lo correcto es que la bitácora permite demostrar que se actuó bien: la trazabilidad es la defensa del que documenta."},{"nivel": "i","tema": "Autocontrol antes de entregar","ctx": "Eres Analista I de la DIAN y terminas un informe con cifras que irán a la Dirección. Un compañero te apura para que 'lo envíes ya, sin revisar, que seguro está bien'. Tú conoces el valor del autocontrol como primera línea de defensa.","q": "¿Cuál es la actuación correcta antes de entregar el informe?","ops": ["Enviarlo de inmediato sin revisar, confiando en que seguro está bien, ya que revisar el propio trabajo es una muestra de desconfianza en uno mismo que conviene evitar.","Aplicar autocontrol antes de entregar: verificar que los totales cuadren con la base, que el cruce no haya perdido registros, que las cifras tengan sentido y que el documento esté completo, corrigiendo lo que encuentre.","Enviarlo a la Dirección pidiéndoles a ellos que lo revisen y corrijan, dado que el control del trabajo corresponde solo a los superiores y no al servidor que lo produce."],"correcta": 1,"expl": "El autocontrol es la primera y mejor línea de defensa: verificar lo propio antes de entregar (B) atrapa los errores en el origen. Enviar sin revisar (A) deja pasar errores; trasladar la revisión a la Dirección (C) no exime al servidor de controlar su propio trabajo."},{"nivel": "i","tema": "Ciclo vital y transferencias","ctx": "Eres Analista I de la DIAN y en tu oficina se acumulan, junto a los expedientes de trámite actual, otros de hace años que ya no consultas. Un compañero sugiere dejarlos ahí mismo 'para no mover nada'. Tú conoces el ciclo vital del documento y las transferencias.","q": "¿Cuál es la actuación correcta con esos expedientes antiguos?","ops": ["Dejarlos apilados en la oficina junto a los de trámite actual indefinidamente, ya que mover documentos es complicado y es más fácil tenerlos todos en el mismo sitio aunque ya no se usen.","Reconocer que los expedientes antiguos ya cumplieron su fase de gestión y gestionar su transferencia al archivo central según las reglas (con inventario y constancia), separándolos de los de trámite actual que siguen en gestión.","Botar los expedientes antiguos para liberar espacio de una vez, dado que si ya no se consultan a diario entonces ya no sirven y pueden eliminarse sin más."],"correcta": 1,"expl": "Los expedientes que ya no se usan a diario deben transferirse al archivo central (según las reglas, con inventario), no quedarse apilados en la oficina (A) ni botarse sin seguir la TRD (C). Lo correcto es gestionar la transferencia y separar lo de gestión de lo que ya cumplió esa fase."},{"nivel": "i","tema": "Mejora continua (PHVA)","ctx": "Eres Analista I de la DIAN y notas que un proceso de consolidación mensual produce siempre los mismos errores. Un compañero propone 'corregirlos uno a uno cada mes y seguir igual, que siempre se ha hecho así'. Tú conoces el ciclo de mejora continua PHVA.","q": "¿Cuál es la actuación correcta ante esos errores recurrentes?","ops": ["Corregir los errores uno a uno cada mes y dejar el proceso igual, ya que 'siempre se ha hecho así' y no vale la pena cambiar un procedimiento que, a fin de cuentas, funciona.","Aplicar la mejora continua: analizar por qué ocurren los errores, ajustar el procedimiento (planear), probarlo (hacer), verificar que los errores desaparezcan y estandarizar la mejora (actuar), para que el proceso deje de fallar.","Ignorar los errores recurrentes, dado que si el proceso se ha hecho así por mucho tiempo entonces los errores son inevitables y no hay nada que mejorar."],"correcta": 1,"expl": "La mejora continua (PHVA) busca que el proceso aprenda y deje de fallar: analizar la causa, ajustar, verificar y estandarizar (B). Corregir uno a uno sin cambiar nada (A) o ignorar los errores (C) perpetúan el problema. El 'siempre se ha hecho así' es justo lo que la mejora continua supera."},{"nivel": "a","tema": "Caso integrador: organizar un asunto desordenado","ctx": "Eres Analista I de la DIAN y te entregan documentos sueltos de un mismo asunto, en desorden, con borradores y copias de apoyo mezclados con los documentos oficiales. El plazo para dejar el asunto organizado es ajustado. Un compañero te dice que 'metas todo junto en una carpeta como esté, que lo importante es que no se pierda nada'. Tú conoces cómo organizar un expediente.","q": "¿Cuál es la actuación correcta para organizar el asunto?","ops": ["Meter todos los documentos juntos en una carpeta tal como están, incluidos borradores y copias, sin ordenar ni foliar, ya que lo único que importa es que no se pierda ningún papel.","Separar los documentos de archivo (oficiales, con valor) de los borradores y copias de apoyo; reunir los de archivo en el expediente del asunto, ordenarlos cronológicamente, foliarlos para la integridad y dejar constancia de lo organizado.","Botar todos los documentos y pedir que los vuelvan a emitir, para empezar el expediente de cero y no tener que ordenar lo que llegó en desorden."],"correcta": 1,"expl": "Meter todo revuelto (A) no es organizar y mezcla borradores con documentos oficiales; botar y pedir que reemitan (C) es absurdo. Lo correcto es separar documentos de archivo de copias, reunirlos en el expediente, ordenarlos cronológicamente, foliarlos y dejar constancia: un expediente completo, íntegro y trazable."},{"nivel": "a","tema": "Caso integrador: documentar no es burocracia","ctx": "Eres Analista I de la DIAN y un compañero sostiene que 'documentar, organizar y controlar el trabajo es pura burocracia que frena todo' y propone saltarse esos pasos para ir más rápido: no llevar bitácora, no foliar expedientes y no verificar antes de entregar. Insiste en que 'así se produce más'. Tú conoces para qué sirve la disciplina documental.","q": "¿Cuál es la respuesta correcta a esa propuesta?","ops": ["Seguir la propuesta del compañero y saltarse la documentación, la foliación y la verificación, ya que esos pasos son burocracia que frena el trabajo y lo importante es producir más rápido.","Explicar que documentar, foliar y verificar con criterio hacen el trabajo trazable, auditable y defendible (se puede reconstruir, verificar y probar que se hizo bien); no frenan, respaldan, y lo que no se documenta no se puede probar ante una auditoría.","Documentarlo y controlarlo absolutamente todo al extremo, incluso lo trivial, aunque eso paralice el trabajo, para estar completamente a salvo de cualquier observación."],"correcta": 1,"expl": "Saltarse la documentación (A) deja el trabajo indefendible; documentarlo todo al extremo (C) cae en el papeleo paralizante. Lo correcto es el criterio: documentar lo que tiene valor hace el trabajo trazable, auditable y defendible. No es burocracia inútil; es lo que permite probar y reconstruir el trabajo."},{"nivel": "a","tema": "Caso integrador: orden, respaldo y confianza","ctx": "Eres Analista I de la DIAN y manejas a la vez: un expediente que debes completar y foliar, una base cuyos datos debes documentar (de dónde salieron y qué les hiciste), y un proceso mensual que viene fallando. El plazo aprieta. Un compañero te propone 'dejar el expediente a medias, no documentar la base para ganar tiempo y seguir con el proceso tal cual aunque falle'. Tú conoces la cultura del orden, el respaldo y la mejora.","q": "¿Cuál es la actuación correcta que integra orden, respaldo y mejora?","ops": ["Seguir los atajos del compañero: dejar el expediente incompleto, no documentar la base y mantener el proceso que falla, ya que con el plazo apretado lo prioritario es terminar rápido sin detenerse en esos detalles.","Completar y foliar el expediente (orden), documentar el origen y las transformaciones de la base (respaldo/trazabilidad) y analizar y ajustar el proceso que falla (mejora continua); gestionar prórroga si el tiempo no alcanza para hacerlo bien.","Hacer solo lo mínimo visible y ocultar que el proceso falla, para que no se note el problema y nadie pida corregirlo, dando por hecho que lo que no se ve no genera consecuencias."],"correcta": 1,"expl": "Los atajos (A) dejan el trabajo desordenado, sin respaldo y con el proceso fallando; ocultar el problema (C) es peor. Lo correcto integra las tres dimensiones del tema: orden (completar y foliar), respaldo (documentar la trazabilidad) y mejora (ajustar el proceso), pidiendo prórroga si hace falta."},{"nivel": "i","tema": "Serie y expediente","ctx": "Eres Analista I de la DIAN y, al organizar, dudas si un conjunto de documentos debe ir todo junto o separarse. Tienes, por un lado, todos los informes de cierto tipo producidos en el año y, por otro, los documentos de un mismo trámite de un contribuyente. Un compañero dice que 'da igual, todo va revuelto en una sola carpeta'. Tú conoces la diferencia entre serie y expediente.","q": "¿Cuál es la organización correcta de esos documentos?","ops": ["Meter todo revuelto en una sola carpeta (los informes del año y los documentos del trámite del contribuyente), ya que la distinción entre tipos de agrupación no tiene ninguna utilidad práctica.","Agrupar los informes del mismo tipo como una serie documental y reunir los documentos del trámite del contribuyente en su expediente (todos los de ese asunto juntos), respetando que la serie agrupa por tipo y el expediente por asunto.","Separar cada documento en su propia carpeta individual, sin agruparlos por tipo ni por asunto, para que cada uno quede completamente aislado de los demás."],"correcta": 1,"expl": "La serie agrupa documentos del mismo tipo (los informes del año) y el expediente reúne todos los de un mismo asunto (el trámite del contribuyente). Revolver todo (A) o aislar cada documento (C) rompe esa lógica. Lo correcto es organizar por serie y por expediente según corresponda."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

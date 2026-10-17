@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-AINF-03 · Servicios informáticos y sistemas de información — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-AINF-03</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker"><div class="kicker">Día 11 · Funcional Específica · Analista I (Técnico)</div></div>
+  <h1>Función de servicios informáticos y sistemas de información</h1>
+  <p class="header-sub">El entorno tecnológico del <strong>Analista I</strong>: sistemas de información, calidad y seguridad de los datos, y el rol de usar y dar soporte sin desarrollar ni administrar.</p>
+  <div class="badges"><span class="badge">📅 Día 11 de 21</span><span class="badge">⏱ 100-120 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Estás en tu puesto como Analista I del nivel Técnico de la DIAN, en el área de gestión de información. Hoy te llegan cuatro situaciones relacionadas con los sistemas. Primero, se cae la red de la oficina y un compañero te insiste en que 'tú que sabes de sistemas, arréglala'. Segundo, recibes un correo 'del área de sistemas' que te pide tu usuario y contraseña por un enlace 'urgente'. Tercero, debes cruzar dos grandes bases por el número de identificación, pero varios NIT están mal digitados. Y cuarto, un sistema te arroja un listado de 'incumplidores' en el que varios resultados, claramente, no tienen sentido.</p>
+    <p>¿Te corresponde a ti arreglar la red? ¿Qué haces con ese correo que pide tu clave? ¿Puedes cruzar bases con la identificación sucia? ¿Reportas el listado tal como lo arrojó el sistema? Todas estas respuestas parten de un mismo conocimiento: la <mark>función de servicios informáticos y los sistemas de información</mark> de la DIAN. No necesitas ser ingeniera de sistemas —ese no es tu cargo—, pero sí entender el entorno tecnológico en el que trabajas, cuál es tu rol frente a los sistemas, y cómo cuidar la calidad, la seguridad y la reserva de la información. Hoy construyes ese mapa.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es un <strong>sistema de información</strong> (personas, datos, procesos, tecnología) y la cadena dato-información.</li>
+      <li>El <strong>rol del Analista</strong>: usar y dar soporte a la gestión de información, sin desarrollar ni administrar sistemas.</li>
+      <li>La DIAN <strong>digital</strong>: servicios en línea, factura electrónica, y las bases de datos como fuente.</li>
+      <li>La <strong>calidad del dato</strong> ('entra basura, sale basura') y la <strong>seguridad</strong> (confidencialidad, integridad, disponibilidad).</li>
+      <li>La <strong>protección de datos personales</strong>, la continuidad (respaldo) y la coordinación con tecnología.</li>
+      <li>La <strong>trazabilidad</strong>, el buen uso de los sistemas y tu aporte al gobierno digital.</li>
+    </ul>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Empecemos por entender qué es un sistema de información →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[1].click();">Ver la importancia ⭐</button>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="b-texto">
+    <p>El manual de funciones del Analista I incluye expresamente la <mark>función de servicios informáticos</mark> entre los conocimientos a evaluar, y define el propósito del cargo en torno a la gestión de información estratégica y el soporte a los sistemas informáticos. Es, por tanto, un tema central de la prueba y del día a día del cargo.</p>
+    <p>La DIAN es una de las entidades más tecnificadas del Estado: su operación depende por completo de sus sistemas. Por eso necesitas entender el entorno tecnológico en el que trabajas, aunque no seas ingeniera: cuál es tu rol (y cuál no), cómo cuidar la calidad y la seguridad de la información, cómo coordinar con el área de tecnología y cómo usar los sistemas con criterio y responsabilidad.</p>
+    <p>En la prueba, muchas preguntas de juicio situacional plantean dilemas sobre los sistemas: una red que se cae, un correo que pide la clave, una salida del sistema que no cuadra, una base con datos sucios. La respuesta correcta casi siempre se deriva de entender tu rol (usar y dar soporte, no desarrollar), de cuidar la calidad y la seguridad, y de no confiar ciegamente en la tecnología. Dominar este tema te permite responder con criterio.</p>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> desconfía de las opciones que te hacen 'programar', 'arreglar la red' o 'administrar servidores' (eso es de tecnología), y de las que proponen confiar ciegamente en el sistema o compartir la clave. La respuesta suele estar en tu rol de gestión de información y en el buen uso con criterio.</div>
+  <div class="advance-bar">
+    <span class="advance-hint">Ahora sí, entremos en materia →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[2].click();">Ir al Desarrollo 📖</button>
+  </div>
+</section>
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Función de servicios informáticos y sistemas de información</h2>
+  <p>Esta sección desarrolla trece módulos con teoría completa, ejemplos aplicados al trabajo de un Analista I del nivel Técnico de la DIAN, ejercicios resueltos y checkpoints interactivos. El manual del Analista I incluye expresamente la <mark>función de servicios informáticos</mark> entre los conocimientos a evaluar, y define su propósito como la gestión de información estratégica y el soporte a los sistemas informáticos de la entidad. La DIAN es una de las entidades más tecnificadas del Estado: presta servicios en línea a millones de personas (declaración y pago electrónicos, factura electrónica, RUT en línea) y su operación depende por completo de sus sistemas de información. Hoy verás qué son los sistemas de información y para qué sirven, cuál es el papel del Analista I frente a ellos (soporte y uso, no desarrollo técnico de fondo), los principales sistemas y servicios informáticos de la DIAN, y los conceptos de datos, calidad, seguridad y continuidad que debes manejar. Resuelve los checkpoints antes de abrir la explicación; cada módulo trae ejemplos y ejercicios del día a día real del cargo. Al terminar, entenderás el entorno tecnológico en el que se desenvuelve tu cargo y cómo aportar valor desde él.</p>
+
+  <div class="mmap-t">🧠 Mapa conceptual de la guía</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">💻</span><h5>Sistemas</h5><p>Qué son y para qué sirven</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🏛</span><h5>DIAN digital</h5><p>Servicios en línea y sistemas propios</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🧩</span><h5>Tu rol</h5><p>Soporte y uso, no desarrollo de fondo</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🔐</span><h5>Seguridad</h5><p>Reserva, respaldo, continuidad</p></div>
+    <div class="arrow">➜</div>
+    <div class="node"><span class="ic">🤝</span><h5>Coordinación</h5><p>Con el área de tecnología</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">1</span><h3>Qué es un sistema de información</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Un <mark>sistema de información</mark> es un conjunto organizado de personas, datos, procesos y tecnología que capta, almacena, procesa y entrega información para apoyar la operación y las decisiones de una organización. En la DIAN, los sistemas de información son el corazón de la operación: sin ellos, la entidad no podría recaudar ni controlar.</p>
+</div>
+<div class="b-texto">
+  <p>Cuando pensamos en un sistema de información, solemos imaginar solo el software o los computadores, pero es más que eso: es la combinación de <strong>personas</strong> (quienes lo usan y lo alimentan), <strong>datos</strong> (la información que maneja), <strong>procesos</strong> (los procedimientos que sigue) y <strong>tecnología</strong> (el hardware y el software que lo soportan). Un sistema de información existe para un fin: captar datos, procesarlos y entregar información útil para operar y decidir. El Analista I trabaja dentro de ese engranaje, principalmente en la parte de datos y procesos.</p>
+  <p>En la DIAN, los sistemas de información cumplen funciones vitales: reciben las declaraciones de millones de contribuyentes, procesan los pagos, almacenan la información exógena, administran el RUT, apoyan la fiscalización y producen estadísticas. La entidad no podría operar manualmente a esa escala; sus sistemas son lo que hace posible administrar los impuestos de todo un país. Por eso el manual del Analista I pone la función de servicios informáticos y la gestión de información en el centro del cargo.</p>
+  <p>Conviene distinguir entre <strong>dato</strong>, <strong>información</strong> y <strong>conocimiento</strong>, porque es la cadena que recorre un sistema. El dato es el registro crudo (un número, una fecha); la información es el dato procesado y con contexto (una estadística de recaudo); el conocimiento es la comprensión que permite decidir (saber que el recaudo cae y por qué). Los sistemas transforman datos en información; las personas, como el Analista, aportan el criterio que la convierte en conocimiento útil.</p>
+  <p>Para el Analista I, entender qué es un sistema de información le permite ubicar su rol: no es un técnico que programa el sistema ni un usuario pasivo que solo digita, sino un profesional que alimenta el sistema con datos de calidad, lo usa con criterio para consolidar y analizar, y ayuda a convertir sus salidas en información útil. Ese lugar intermedio —entre la tecnología y la decisión— es donde el Analista agrega valor.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Componente del sistema</th><th>Qué aporta</th><th>Relación con el Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Personas</td><td>Usan y alimentan el sistema</td><td>El Analista es una de ellas</td></tr>
+      <tr><td>Datos</td><td>La materia prima</td><td>Los consolida y cuida su calidad</td></tr>
+      <tr><td>Procesos</td><td>Los procedimientos que sigue</td><td>Los aplica y respeta</td></tr>
+      <tr><td>Tecnología</td><td>Hardware y software</td><td>La usa; no la desarrolla de fondo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I recibe datos crudos de un sistema (miles de registros de operaciones). Su trabajo no termina en "bajarlos": los procesa, los cruza y los convierte en una información útil (un reporte de inconsistencias). El sistema le dio el dato; él aportó el criterio que lo volvió información. Entender esa cadena dato-información-conocimiento le permite ver el valor de su rol dentro del engranaje tecnológico.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 1</div>
+  <p>Un sistema de información es:</p>
+  <div class="cp-op" data-op="a">a) Únicamente el software y los computadores que usa la entidad.</div>
+  <div class="cp-op" data-op="b">b) Un conjunto organizado de personas, datos, procesos y tecnología que capta, procesa y entrega información para operar y decidir.</div>
+  <div class="cp-op" data-op="c">c) Un archivo donde se guardan documentos sin ningún procesamiento.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene que el Analista no caiga en el error común de identificar «sistema de información» con «computador». La tecnología es solo uno de los cuatro componentes; de hecho, el componente humano suele ser el más decisivo: un sistema excelente operado por personas que ingresan datos de mala calidad produce basura, mientras que un sistema modesto operado con rigor puede dar resultados confiables. El Analista, como parte del componente humano, tiene en sus manos buena parte de la calidad del sistema. Entender esto lo responsabiliza: no puede escudarse en «es que el sistema está mal» cuando el problema está en cómo se alimentan o se usan los datos. La tecnología habilita, pero las personas y los procesos deciden la calidad del resultado.</p></div>
+<div class="b-texto"><p>En síntesis de este primer módulo: un sistema de información es mucho más que su tecnología; son personas, datos, procesos y tecnología trabajando juntos para transformar datos en información útil. El Analista es parte de ese engranaje, sobre todo en los datos y los procesos, y su criterio es lo que convierte la información en conocimiento para decidir.</p></div>
+<div class="b-texto"><p>Por eso, cuando a lo largo del curso hablemos de datos, cruces, estadísticas o perfiles de riesgo, conviene tener presente que todo ello ocurre dentro de sistemas de información como los descritos aquí: la calidad del resultado dependerá siempre de la calidad de los datos, de lo bien definidos que estén los procesos y del criterio de las personas que los operan.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">2</span><h3>El rol del Analista I: usar y dar soporte, no desarrollar</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>rol del Analista I</mark> frente a los sistemas es de <strong>uso competente y soporte</strong>, no de desarrollo técnico de fondo. No programa software ni administra servidores (eso es del área de tecnología y de los perfiles especializados), pero sí usa los sistemas con criterio, alimenta datos de calidad y da soporte técnico en la consolidación de información.</p>
+</div>
+<div class="b-texto">
+  <p>El manual del Analista I lo dice con claridad: su propósito es "ejecutar labores técnicas relacionadas con la gestión de información estratégica de la entidad así como de los sistemas informáticos" y "brindar soporte técnico en la consolidación de la información". La palabra clave es <strong>soporte</strong>: el Analista apoya, usa y alimenta los sistemas, pero el desarrollo de software, la arquitectura de los sistemas y la administración de la infraestructura tecnológica corresponden al área de tecnología de la DIAN y a perfiles más especializados.</p>
+  <p>Esta distinción es importante para no confundir el alcance del cargo (como vimos en el Día 9: el servidor no debe omitir ni extralimitarse). El Analista I no tiene por qué saber programar ni resolver una falla de red; si eso se le exige o se le atribuye, hay una confusión de roles. Lo suyo es el manejo experto de los datos y de las herramientas de información: consolidar, cruzar, depurar, analizar, producir reportes y estadísticas, y usar los sistemas institucionales conforme a los procedimientos.</p>
+  <p>El "soporte técnico" que presta el Analista es, sobre todo, <strong>soporte a la gestión de información</strong>, no soporte de mesa de ayuda informática. Cuando una dependencia necesita consolidar información para un perfil de riesgo, el Analista la apoya técnicamente: entiende los datos, los organiza, los cruza, detecta inconsistencias. Esa es una labor técnica especializada en datos, distinta del soporte que presta un técnico de sistemas que arregla un computador o una impresora.</p>
+  <p>Entender bien este rol protege al Analista y lo hace más eficaz. Protege, porque sabe qué le corresponde y qué no (y puede declinar con fundamento lo que excede su cargo). Y lo hace eficaz, porque concentra su energía en lo que sí es suyo: la gestión de información de calidad. Un Analista que intenta ser "el que sabe de todo lo informático" se dispersa; uno que domina su terreno —los datos— se vuelve indispensable en lo que de verdad importa para el cargo.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Sí es del Analista I</th><th>NO es del Analista I (es del área de tecnología)</th></tr></thead>
+    <tbody>
+      <tr><td>Usar los sistemas con criterio</td><td>Programar o desarrollar el software</td></tr>
+      <tr><td>Consolidar y cruzar información</td><td>Administrar servidores y redes</td></tr>
+      <tr><td>Cuidar la calidad de los datos</td><td>Diseñar la arquitectura de los sistemas</td></tr>
+      <tr><td>Soporte técnico a la gestión de información</td><td>Reparar equipos o resolver fallas de red</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Se cae la red de la oficina y un compañero le pide al Analista I que "la arregle, que él sabe de sistemas". El Analista aclara que eso corresponde al área de tecnología y reporta la falla por el canal correcto. En cambio, cuando le piden consolidar y cruzar información para un perfil de riesgo, ahí sí se pone al frente: es su terreno. Conoce el límite entre su rol y el del técnico de sistemas.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 2</div>
+  <p>Frente a los sistemas de información, el rol del Analista I es:</p>
+  <div class="cp-op" data-op="a">a) Desarrollar el software y administrar los servidores de la entidad.</div>
+  <div class="cp-op" data-op="b">b) Reparar los equipos y resolver las fallas de red cuando ocurran.</div>
+  <div class="cp-op" data-op="c">c) Usar los sistemas con criterio, alimentar datos de calidad y dar soporte técnico a la gestión de información, sin desarrollar ni administrar la infraestructura.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Vale la pena precisar por qué esta distinción de roles es tan relevante en la práctica. En muchas entidades, a quien «sabe de computadores» le cargan todo lo informático, desde arreglar una impresora hasta hacer una consulta compleja de datos. El Analista I debe evitar caer en esa trampa, no por comodidad, sino por eficacia y por legalidad: asumir funciones de tecnología (que no son las suyas) lo distrae de su verdadero aporte y puede constituir una extralimitación. Lo suyo es la gestión de información, un conocimiento especializado que no todos tienen. Delimitar bien su rol no es negarse a colaborar, sino concentrarse en el valor que de verdad puede aportar y encauzar hacia tecnología lo que le corresponde a esa área.</p></div>
+<div class="b-texto"><p>En síntesis: el Analista usa los sistemas y da soporte a la gestión de información; no los desarrolla ni administra la infraestructura. Delimitar bien ese rol evita la extralimitación y lo concentra en su verdadero aporte: el manejo experto de los datos.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">3</span><h3>La DIAN como entidad digital: servicios en línea</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La DIAN presta la mayoría de sus <mark>servicios en línea</mark>: declaración y pago electrónicos, factura electrónica, RUT en línea, consultas y trámites digitales. Es una de las entidades líderes en gobierno digital. El Analista I trabaja en ese entorno y debe conocer sus principales servicios.</p>
+</div>
+<div class="b-texto">
+  <p>La DIAN ha digitalizado buena parte de su relación con los ciudadanos. Hoy, la mayoría de las declaraciones y pagos se hacen en línea; existe la <strong>factura electrónica</strong> (obligatoria para muchos), el <strong>RUT en línea</strong>, los servicios de consulta, y un portal de servicios al que acceden millones de usuarios. Esta transformación digital hace la gestión más eficiente y genera, además, enormes volúmenes de datos que alimentan el control y las estadísticas, es decir, la materia prima del trabajo del Analista.</p>
+  <p>La factura electrónica merece una mención especial, porque es una fuente de información valiosísima. Al obligar a que las facturas se emitan electrónicamente y se reporten a la DIAN, la entidad obtiene, casi en tiempo real, información sobre las transacciones de la economía. Esto potencia enormemente el control (permite cruzar ventas declaradas con ventas facturadas) y es un ejemplo de cómo la digitalización convierte una operación cotidiana en datos útiles para la gestión tributaria.</p>
+  <p>Estos servicios en línea se enmarcan en la <strong>política de Gobierno Digital</strong> del Estado colombiano, que busca que las entidades presten servicios en línea, usen los datos para decidir, y sean seguras y accesibles digitalmente. La DIAN es una de las entidades más avanzadas en esta política. El Analista I, al trabajar con la información que generan estos servicios, participa en el engranaje del gobierno digital.</p>
+  <p>Para el Analista, conocer estos servicios tiene un valor práctico: la información que consolida y analiza proviene, en buena parte, de ellos. Entender de dónde salen los datos (de las declaraciones en línea, de la factura electrónica, del RUT) le permite interpretarlos mejor, conocer sus límites y su calidad, y usarlos con criterio. No necesita operar los servicios de cara al ciudadano, pero sí entender que son la fuente de los datos con los que trabaja.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Servicio en línea DIAN</th><th>Qué permite</th><th>Valor para el Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Declaración y pago electrónicos</td><td>Cumplir obligaciones en línea</td><td>Fuente masiva de datos de cumplimiento</td></tr>
+      <tr><td>Factura electrónica</td><td>Reportar transacciones en tiempo real</td><td>Cruce de ventas facturadas vs. declaradas</td></tr>
+      <tr><td>RUT en línea</td><td>Inscripción y actualización</td><td>Identificación de contribuyentes (llave)</td></tr>
+      <tr><td>Consultas y trámites</td><td>Atención digital al ciudadano</td><td>Datos de servicio y gestión</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I debe apoyar un análisis de riesgo en un sector económico. Usa la información de factura electrónica para contrastar las ventas que las empresas facturaron con las que declararon. Como entiende de dónde sale ese dato y qué representa, lo interpreta correctamente y detecta diferencias relevantes. Conocer los servicios digitales de la DIAN le permitió aprovechar una fuente de información muy potente.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 3</div>
+  <p>La factura electrónica es valiosa para el control porque:</p>
+  <div class="cp-op" data-op="a">a) Da a la DIAN información casi en tiempo real de las transacciones, lo que permite cruzar ventas facturadas con ventas declaradas.</div>
+  <div class="cp-op" data-op="b">b) Reemplaza por completo la necesidad de que los contribuyentes declaren.</div>
+  <div class="cp-op" data-op="c">c) Es un trámite sin utilidad para la gestión de información de la entidad.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un aspecto que conviene subrayar es que la enorme digitalización de la DIAN convierte casi cada interacción en un dato aprovechable. Cada declaración en línea, cada factura electrónica, cada consulta en el portal deja un registro. Esto significa que la entidad dispone de una materia prima informativa inmensa, y que el trabajo del Analista —darle sentido y uso a esos datos— es cada vez más estratégico. Pero también implica una responsabilidad proporcional: a mayor volumen de datos, mayor exigencia de calidad, seguridad y reserva. El Analista que entiende la escala de la DIAN entiende también por qué su trabajo importa tanto: está manejando información de millones de personas y operaciones, no un archivo pequeño.</p></div>
+<div class="b-texto"><p>En síntesis: la DIAN es una entidad digital líder cuyos servicios en línea (declaración y pago electrónicos, factura electrónica, RUT en línea) generan la materia prima informativa del Analista. Entender de dónde salen los datos le permite interpretarlos y aprovecharlos con criterio.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">4</span><h3>Bases de datos: dónde vive la información</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Una <mark>base de datos</mark> es una colección organizada de datos que permite almacenarlos, consultarlos y relacionarlos de forma eficiente. Es donde "vive" la información de los sistemas. El Analista I trabaja constantemente con bases de datos: consulta, extrae, cruza y depura información de ellas.</p>
+</div>
+<div class="b-texto">
+  <p>Detrás de cada sistema de información hay bases de datos: estructuras que almacenan los datos de forma organizada para poder consultarlos y relacionarlos. La forma más común es la base de datos <strong>relacional</strong>, que organiza la información en tablas (filas y columnas) relacionadas entre sí por campos comunes (como el RUT/NIT). El Analista no necesita diseñar bases de datos, pero sí entender cómo están organizadas para poder extraer y cruzar información de ellas.</p>
+  <p>Conceptos básicos que el Analista encontrará: la <strong>tabla</strong> (un conjunto de registros del mismo tipo, por ejemplo "contribuyentes"), el <strong>registro</strong> o fila (un elemento, un contribuyente concreto), el <strong>campo</strong> o columna (un atributo, como el NIT o la actividad económica), y la <strong>llave</strong> (el campo que identifica de forma única cada registro y permite relacionar tablas, típicamente el NIT). Entender esta estructura es lo que permite hacer cruces: relacionar la tabla de declaraciones con la de información exógena a través del NIT.</p>
+  <p>El Analista suele trabajar con herramientas para consultar y manipular bases de datos. Puede usar <strong>consultas</strong> (para extraer la información que necesita según criterios), filtros, y cruces entre tablas. En niveles básicos, esto se hace con hojas de cálculo; en volúmenes grandes, con herramientas de bases de datos o de análisis. No necesita ser experto en lenguajes de consulta, pero sí entender la lógica de cómo se extrae y relaciona la información.</p>
+  <p>Para el Analista I, dominar la lógica de las bases de datos es central, porque es donde está la información con la que trabaja. Entender que los datos están en tablas relacionadas por llaves le permite hacer cruces correctos (como vimos, por el RUT), detectar problemas de integridad (datos que no relacionan bien), y extraer información con precisión. Un Analista que entiende cómo está organizada la información es mucho más eficaz que uno que ve los datos como un montón desordenado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Concepto de base de datos</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Tabla</td><td>Conjunto de registros del mismo tipo</td><td>Tabla de contribuyentes</td></tr>
+      <tr><td>Registro (fila)</td><td>Un elemento concreto</td><td>Un contribuyente</td></tr>
+      <tr><td>Campo (columna)</td><td>Un atributo del registro</td><td>NIT, actividad económica</td></tr>
+      <tr><td>Llave</td><td>Identifica y relaciona</td><td>El NIT (une tablas)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I necesita relacionar la información de dos sistemas: las declaraciones y la exógena. Entiende que ambas bases tienen una tabla con un campo común (el NIT), que es la llave. Hace el cruce por ese campo y obtiene la información combinada. Gracias a que comprende la estructura de las bases de datos, el cruce funciona; sin ese conocimiento, no habría sabido cómo relacionar los dos conjuntos de datos.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 4</div>
+  <p>En una base de datos, la 'llave' (como el NIT) sirve para:</p>
+  <div class="cp-op" data-op="a">a) Borrar registros que no se necesitan.</div>
+  <div class="cp-op" data-op="b">b) Identificar de forma única cada registro y permitir relacionar (cruzar) tablas entre sí.</div>
+  <div class="cp-op" data-op="c">c) Cambiar el color de las columnas para que se vean mejor.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Es útil que el Analista entienda que no necesita ser un experto en lenguajes de consulta de bases de datos para trabajar bien, pero sí dominar la lógica de las relaciones. Saber que las tablas se unen por una llave, que un cruce mal planteado puede duplicar o perder registros, y que la integridad de los datos depende de esas relaciones, le permite pedir bien lo que necesita y verificar que los resultados tengan sentido. En niveles básicos trabajará con hojas de cálculo; en volúmenes grandes, con herramientas especializadas o con el apoyo de tecnología. Lo constante es la comprensión de cómo se estructura y se relaciona la información, que es lo que le permite no perderse entre miles de registros.</p></div>
+<div class="b-texto"><p>En síntesis: entender la lógica de las bases de datos (tablas, registros, campos y llaves) es lo que le permite al Analista extraer y cruzar información con precisión. No necesita programar, pero sí comprender cómo se estructura y se relaciona la información.</p></div>
+<div class="b-texto"><p>Como regla práctica, antes de un cruce el Analista verifica tres cosas: que la llave (el NIT) esté limpia en ambas tablas, que no haya duplicados que inflen el resultado, y que los campos a relacionar signifiquen lo mismo en las dos fuentes. Ese chequeo evita la mayoría de los errores de cruce antes de que ocurran.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">5</span><h3>La calidad de los datos en los sistemas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>calidad de los datos</mark> determina la utilidad de todo lo que se construye sobre ellos. "Entra basura, sale basura": un sistema con datos incompletos, inexactos o desactualizados produce información engañosa. El Analista I es, en buena medida, un guardián de la calidad del dato.</p>
+</div>
+<div class="b-texto">
+  <p>Un sistema de información puede ser técnicamente perfecto, pero si los datos que contiene son malos, los resultados serán malos. Esta es la regla del "entra basura, sale basura": la calidad de la información depende de la calidad de los datos de origen. Para el Analista I, cuyo trabajo es consolidar, cruzar y producir información, la calidad del dato no es un detalle: es la condición para que su trabajo sirva.</p>
+  <p>La calidad de los datos tiene dimensiones concretas que el Analista debe cuidar: la <strong>completitud</strong> (que no falten datos), la <strong>exactitud</strong> (que correspondan a la realidad), la <strong>consistencia</strong> (que el mismo dato no aparezca distinto en dos lugares), la <strong>actualidad</strong> (que estén al día) y la <strong>unicidad</strong> (que no haya duplicados). Un dato que falla en cualquiera de estas dimensiones contamina los cruces, las estadísticas y los perfiles de riesgo en los que aparece.</p>
+  <p>El Analista aplica buenas prácticas de calidad: <strong>validar</strong> los datos al ingresarlos (que un NIT tenga el formato correcto, que una fecha sea una fecha), <strong>depurar</strong> periódicamente (eliminar duplicados, corregir errores contra los soportes), <strong>estandarizar</strong> (que todos registren igual), y mantener una <strong>fuente única de verdad</strong> (evitar versiones contradictorias). Estas prácticas, aplicadas con disciplina, son lo que distingue una información confiable de un caos de datos.</p>
+  <p>Para el Analista I, cuidar la calidad del dato es una de sus responsabilidades centrales y una de las que más valor aporta. Un cruce hecho sobre datos sucios produce falsos positivos que pueden perjudicar injustamente a un contribuyente cumplido; una estadística hecha sobre datos incompletos induce a decisiones equivocadas. El Analista que depura y valida antes de procesar protege la confiabilidad de todo lo que la entidad hace con esa información. Es, en ese sentido, un guardián silencioso pero esencial de la calidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Dimensión de calidad</th><th>Qué significa</th><th>Ejemplo de falla</th></tr></thead>
+    <tbody>
+      <tr><td>Completitud</td><td>No faltan datos</td><td>Contribuyente sin actividad económica</td></tr>
+      <tr><td>Exactitud</td><td>Corresponde a la realidad</td><td>NIT mal digitado</td></tr>
+      <tr><td>Consistencia</td><td>No se contradice en dos lugares</td><td>Dos direcciones distintas del mismo</td></tr>
+      <tr><td>Actualidad</td><td>Está al día</td><td>Datos del RUT desactualizados</td></tr>
+      <tr><td>Unicidad</td><td>Sin duplicados</td><td>El mismo contribuyente dos veces</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Antes de producir una estadística, el Analista I revisa la base y encuentra registros duplicados y varios NIT con formato errado. Los depura contra los soportes. Gracias a eso, la estadística refleja la realidad y no infla ni distorsiona cifras. Si hubiera procesado los datos sucios, el resultado habría sido engañoso. Su control de calidad fue lo que hizo confiable el producto final.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 5</div>
+  <p>La regla "entra basura, sale basura" significa que:</p>
+  <div class="cp-op" data-op="a">a) Los sistemas deben borrarse periódicamente para empezar de cero.</div>
+  <div class="cp-op" data-op="b">b) La calidad de los datos no importa si el sistema es moderno.</div>
+  <div class="cp-op" data-op="c">c) Si los datos de origen son malos (incompletos, inexactos, duplicados), la información y las estadísticas que salen también serán malas, por bueno que sea el sistema.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene insistir en que la calidad del dato no es responsabilidad exclusiva de nadie y de todos a la vez: cada quien que toca un dato contribuye a su calidad o la deteriora. El Analista ocupa una posición privilegiada porque suele ser quien consolida y depura, es decir, el último filtro antes de que la información se use para decidir. Por eso su control de calidad es tan valioso: es la oportunidad de corregir errores acumulados aguas arriba antes de que contaminen una estadística o un perfil. Un Analista que asume con seriedad este papel de filtro final protege toda la cadena; uno que lo descuida deja pasar errores que luego se vuelven decisiones equivocadas o injusticias con los contribuyentes.</p></div>
+<div class="b-texto"><p>En síntesis: «entra basura, sale basura». La calidad del dato —completitud, exactitud, consistencia, actualidad, unicidad— es la condición para que todo lo que se construye sobre él sirva. El Analista, como filtro final antes de la decisión, es un guardián clave de esa calidad.</p></div>
+<div class="b-texto"><p>Un ejemplo claro del impacto de la calidad: si en una base de contribuyentes el 5% de los NIT está mal digitado, ese 5% no cruzará con las otras fuentes y quedará fuera de los análisis, o peor, cruzará con el contribuyente equivocado. Un porcentaje de error que parece pequeño puede distorsionar por completo un perfil de riesgo o una estadística. Por eso el Analista no trata la depuración como un paso opcional, sino como la base de la confiabilidad.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">6</span><h3>Seguridad de la información en los sistemas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>seguridad de la información</mark> protege los datos y sistemas frente a accesos no autorizados, pérdidas y alteraciones. Se sostiene en tres pilares: confidencialidad, integridad y disponibilidad. El Analista I, que maneja información sensible y reservada, debe aplicar buenas prácticas de seguridad en su trabajo diario.</p>
+</div>
+<div class="b-texto">
+  <p>La seguridad de la información busca proteger tres cosas, conocidas como la tríada CIA (por sus siglas en inglés) o CID en español: la <strong>confidencialidad</strong> (que solo acceda quien está autorizado), la <strong>integridad</strong> (que los datos no se alteren sin control) y la <strong>disponibilidad</strong> (que la información esté accesible cuando se necesita). En la DIAN, que maneja información reservada de millones de contribuyentes, estos tres pilares son críticos, y una falla en cualquiera puede ser muy grave.</p>
+  <p>Para el Analista I, la confidencialidad conecta directamente con la reserva tributaria que vimos en el Día 9: la información de los contribuyentes solo debe conocerla quien está autorizado y para los fines del servicio. Esto exige prácticas concretas: usar credenciales individuales (no compartir claves), acceder solo a lo que corresponde al trabajo, no divulgar lo que se ve en los sistemas, y bloquear el equipo al ausentarse. Una filtración de información reservada es una falta grave, además de un fallo de seguridad.</p>
+  <p>La integridad y la disponibilidad también tienen prácticas asociadas. La integridad se protege con controles de acceso (que solo quien debe pueda modificar), con registros de quién hizo qué (trazabilidad) y con validaciones. La disponibilidad se protege, sobre todo, con <strong>copias de respaldo</strong>: si un sistema falla o un dato se pierde, el respaldo permite recuperarlo. El Analista debe respaldar la información importante de su trabajo y no depender de una única copia en su equipo.</p>
+  <p>Hay amenazas cotidianas que el Analista debe reconocer: el <strong>phishing</strong> (correos o mensajes falsos que buscan robar credenciales o datos), el malware, y los descuidos (claves débiles, equipos sin bloquear, dispositivos personales no autorizados). La seguridad es, en gran parte, una cuestión de hábitos y de prudencia. El Analista que incorpora estos hábitos protege la información reservada que maneja y contribuye a la seguridad de toda la entidad.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Pilar</th><th>Qué protege</th><th>Buena práctica del Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Confidencialidad</td><td>Que solo acceda el autorizado</td><td>No compartir claves; respetar la reserva</td></tr>
+      <tr><td>Integridad</td><td>Que el dato no se altere</td><td>Control de accesos y trazabilidad</td></tr>
+      <tr><td>Disponibilidad</td><td>Que esté cuando se necesita</td><td>Copias de respaldo</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I recibe un correo que parece del área de sistemas pidiéndole su usuario y contraseña "para una actualización urgente". Reconoce que es un posible phishing: el área de tecnología nunca pide la clave por correo. No responde, no hace clic, y reporta el correo. Su prudencia evitó que un atacante accediera con sus credenciales a información reservada. La seguridad empezó por un buen hábito suyo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 6</div>
+  <p>Los tres pilares de la seguridad de la información son:</p>
+  <div class="cp-op" data-op="a">a) Confidencialidad (solo accede el autorizado), integridad (el dato no se altera sin control) y disponibilidad (está cuando se necesita).</div>
+  <div class="cp-op" data-op="b">b) Velocidad, color y tamaño de los archivos.</div>
+  <div class="cp-op" data-op="c">c) Compartir claves, usar dispositivos personales y responder correos rápido.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Vale la pena aterrizar la seguridad en hábitos muy concretos del día a día, porque ahí se juega de verdad. Bloquear la pantalla al levantarse del puesto, no dejar información reservada a la vista, no compartir la contraseña «ni con el compañero de confianza», desconfiar de correos que piden credenciales o que tienen enlaces extraños, no conectar dispositivos personales no autorizados. Son gestos pequeños, pero la mayoría de las brechas de seguridad no vienen de ataques sofisticados, sino de descuidos cotidianos. El Analista que convierte estos hábitos en automáticos protege, sin esfuerzo extra, la información reservada de millones de contribuyentes que pasa por sus manos. La seguridad empieza en lo pequeño.</p></div>
+<div class="b-texto"><p>En síntesis: la seguridad de la información se sostiene en confidencialidad, integridad y disponibilidad, y se juega sobre todo en los hábitos cotidianos. Un descuido pequeño puede comprometer datos reservados de millones; un buen hábito los protege sin esfuerzo extra.</p></div>
+<div class="b-texto"><p>Conviene recordar que la confidencialidad que debe el Analista es, en el fondo, la reserva tributaria vista en el Día 9 aplicada al mundo de los sistemas: lo que ve en pantalla no se comenta, no se consulta por curiosidad y no se comparte sin fundamento. La seguridad informática y la reserva legal son, aquí, dos caras de la misma moneda.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">7</span><h3>Protección de datos personales en los sistemas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>protección de datos personales</mark> (Ley 1581 de 2012) exige tratar los datos de las personas solo para los fines autorizados, con reserva y garantías. Los sistemas de la DIAN contienen enormes cantidades de datos personales, y el Analista I debe manejarlos respetando esta ley y el habeas data (art. 15).</p>
+</div>
+<div class="b-texto">
+  <p>Los sistemas de la DIAN contienen datos personales a gran escala: identificación, ubicación, datos económicos, patrimoniales. La Ley 1581 de 2012 (de protección de datos personales), que desarrolla el habeas data del artículo 15 visto en el Día 9, fija las reglas para tratar esos datos: deben recogerse y usarse para finalidades legítimas y autorizadas, con las debidas garantías, y los titulares tienen derecho a conocerlos, actualizarlos y rectificarlos.</p>
+  <p>Para el Analista I, esto se traduce en principios concretos de manejo. La <strong>finalidad</strong>: los datos personales se usan solo para los fines del servicio para los que se tienen, no para otros. La <strong>reserva</strong>: no se divulgan a quien no corresponde. La <strong>seguridad</strong>: se protegen con las prácticas vistas (confidencialidad, control de acceso). Y la <strong>calidad</strong>: se mantienen exactos y actualizados, porque un dato personal errado puede perjudicar a su titular.</p>
+  <p>Hay una tensión que el Analista debe saber manejar, y que vimos en el Día 9: la transparencia tiene como límite la protección de datos personales. Cuando se maneja o se entrega información (por ejemplo, ante una solicitud de acceso), hay que distinguir lo que es información pública de lo que son datos personales protegidos, y entregar lo público reservando los datos personales de terceros. Ni negar todo (vulnerando el acceso) ni entregar todo sin filtro (vulnerando la protección de datos).</p>
+  <p>El Analista que maneja bases con datos personales a gran escala tiene una responsabilidad especial. Un mal manejo —una base filtrada, un uso para fines no autorizados, una divulgación indebida— no afecta a una persona, sino potencialmente a miles. Por eso debe tratar estos datos con el máximo cuidado, aplicar las prácticas de seguridad y respetar siempre la finalidad y la reserva. La protección de datos personales no es un trámite: es el respeto de un derecho fundamental a escala masiva.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Principio (Ley 1581)</th><th>Qué exige al Analista</th></tr></thead>
+    <tbody>
+      <tr><td>Finalidad</td><td>Usar los datos solo para los fines autorizados</td></tr>
+      <tr><td>Reserva / seguridad</td><td>No divulgar; proteger con buenas prácticas</td></tr>
+      <tr><td>Calidad</td><td>Mantenerlos exactos y actualizados</td></tr>
+      <tr><td>Derechos del titular</td><td>Permitir conocer, actualizar y rectificar</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I maneja una base con datos personales de muchos contribuyentes para un análisis. Un área le pide esa base "completa" para un uso distinto al autorizado. El Analista verifica que el nuevo uso tenga fundamento y, de no tenerlo, no entrega los datos personales para una finalidad no autorizada. Respetar la finalidad (Ley 1581) protege los derechos de miles de personas cuyos datos están en esa base.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 7</div>
+  <p>Conforme a la Ley 1581 de 2012, los datos personales que maneja el Analista I en los sistemas:</p>
+  <div class="cp-op" data-op="a">a) Pueden usarse para cualquier fin, ya que son información de la entidad.</div>
+  <div class="cp-op" data-op="b">b) Solo pueden tratarse para los fines autorizados, con reserva y garantías, respetando los derechos de los titulares (habeas data).</div>
+  <div class="cp-op" data-op="c">c) Deben publicarse para demostrar la transparencia de la entidad.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un matiz importante: la protección de datos personales y la facultad de control de la DIAN no se oponen, se concilian. La entidad puede y debe tratar grandes volúmenes de datos personales para cumplir su misión (eso lo habilita la ley), pero debe hacerlo con finalidad, reserva y seguridad. No es «o protejo los datos o hago control»: es «hago control respetando la protección de los datos». El Analista que entiende esta conciliación actúa con firmeza en su labor de información y, a la vez, con cuidado en el trato de los datos personales. Confundir los extremos —creer que no puede usar datos personales, o creer que puede usarlos sin límite— lleva a errores opuestos, ambos equivocados.</p></div>
+<div class="b-texto"><p>En síntesis: los datos personales que maneja el Analista a gran escala se tratan solo para los fines autorizados, con reserva y seguridad (Ley 1581/2012). La protección de datos no se opone al control: lo enmarca. Un mal manejo no afecta a una persona, sino potencialmente a miles.</p></div>
+<div class="b-texto"><p>Conviene recordar, además, que los derechos del titular (conocer, actualizar, rectificar sus datos) también aplican en el mundo de los sistemas: cuando un ciudadano pide corregir un dato suyo que la DIAN tiene, está ejerciendo el habeas data, y el Analista que gestiona esa información debe facilitar, por los canales correspondientes, que esa corrección sea posible.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">8</span><h3>Continuidad de la operación y respaldo</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>continuidad de la operación</mark> busca que los sistemas y la información sigan disponibles aun ante fallas o incidentes. Se apoya en las copias de respaldo y en los planes de contingencia. Para una entidad como la DIAN, cuya operación depende de sus sistemas, la continuidad es crítica.</p>
+</div>
+<div class="b-texto">
+  <p>La DIAN presta servicios a millones de personas y recauda recursos esenciales para el Estado; si sus sistemas se caen, la afectación es enorme. Por eso la <strong>continuidad de la operación</strong> es una prioridad: el conjunto de medidas que buscan que, aun ante una falla, un ataque o un desastre, los sistemas y la información puedan seguir funcionando o recuperarse rápidamente. Esto incluye la infraestructura redundante, los planes de contingencia y, de manera central, las copias de respaldo (backups).</p>
+  <p>El <strong>respaldo</strong> es la medida más básica y esencial de continuidad. Consiste en tener copias de la información en lugares seguros, de modo que si el original se pierde o se daña, se pueda recuperar. Aunque la infraestructura de respaldo de la entidad la gestiona el área de tecnología, el Analista I tiene su propia responsabilidad: respaldar la información de su trabajo y no depender de una única copia en su equipo personal, que podría dañarse o perderse.</p>
+  <p>Los <strong>planes de contingencia</strong> definen qué hacer cuando algo falla: a quién reportar, cómo seguir operando mientras se resuelve, cómo recuperar la información. El Analista no diseña estos planes (eso es del área de tecnología y de planeación), pero debe conocerlos en lo que le aplica: saber a quién reportar una falla, cómo actuar si un sistema no está disponible, y cómo proteger su trabajo mientras tanto. Conocer el plan evita la improvisación en el momento crítico.</p>
+  <p>Para el Analista, la continuidad se traduce en hábitos sencillos pero importantes: respaldar su trabajo, no concentrar información crítica en un solo lugar, reportar a tiempo las fallas por el canal correcto, y conocer qué hacer cuando un sistema no está disponible. Un Analista previsor no pierde semanas de trabajo por un daño del equipo ni se paraliza cuando un sistema se cae: sabe que la continuidad también depende de sus propias prácticas, no solo de la infraestructura de la entidad.</p>
+</div>
+<div class="flujo">
+  <div class="flujo-paso"><span class="fp-n">1</span><div><strong>Respaldar</strong><p>Copias de la información en lugar seguro</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">2</span><div><strong>Reportar</strong><p>Avisar la falla por el canal correcto</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">3</span><div><strong>Contingencia</strong><p>Seguir operando según el plan</p></div></div>
+  <div class="flujo-flecha">→</div>
+  <div class="flujo-paso"><span class="fp-n">4</span><div><strong>Recuperar</strong><p>Restaurar la información desde el respaldo</p></div></div>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El computador del Analista I falla y se pierde todo lo del disco local. Pero él venía respaldando su trabajo en los sistemas institucionales, así que no pierde nada: recupera la información y sigue. Un compañero que guardaba todo solo en su equipo perdió semanas de trabajo. La diferencia fue un hábito simple de continuidad: respaldar y no depender de una única copia.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 8</div>
+  <p>Respecto de la continuidad de la operación, el Analista I debe, como mínimo:</p>
+  <div class="cp-op" data-op="a">a) Diseñar él mismo la infraestructura de respaldo de toda la entidad.</div>
+  <div class="cp-op" data-op="b">b) Concentrar toda la información crítica únicamente en su computador personal.</div>
+  <div class="cp-op" data-op="c">c) Respaldar su trabajo, no depender de una única copia, y reportar las fallas por el canal correcto conforme al plan.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene que el Analista valore el respaldo no como una tarea tediosa, sino como un seguro barato contra una pérdida cara. Reconstruir semanas de trabajo perdido por un disco dañado, o perder información crítica que no estaba respaldada, cuesta mucho más que el minuto que toma guardar una copia en el lugar institucional adecuado. La disciplina del respaldo distingue al profesional previsor del que juega a la suerte. Y en una entidad donde la información es el activo principal, esa previsión no es opcional: es parte de la responsabilidad del cargo. El Analista que respalda con disciplina nunca se verá en la situación angustiosa de haber perdido un trabajo que no se puede recuperar.</p></div>
+<div class="b-texto"><p>En síntesis: la continuidad de la operación se apoya en el respaldo y los planes de contingencia. El Analista contribuye con hábitos simples: respaldar su trabajo, no depender de una única copia y reportar a tiempo las fallas por el canal correcto.</p></div>
+<div class="b-texto"><p>En una entidad cuya operación depende por completo de la tecnología, estas medidas de continuidad no son un lujo ni un formalismo: son lo que garantiza que el recaudo, el control y la atención al ciudadano no se detengan ante una falla, y que la información valiosa no se pierda.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">9</span><h3>Coordinación con el área de tecnología</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El Analista I debe <mark>coordinarse con el área de tecnología</mark> de la DIAN, que es la responsable del desarrollo, la administración y la seguridad de los sistemas. Saber qué le corresponde a cada uno y cómo trabajar juntos es clave para una buena gestión de la información.</p>
+</div>
+<div class="b-texto">
+  <p>En una entidad tan tecnificada como la DIAN, la gestión de la información es un trabajo de equipo entre las áreas usuarias (donde está el Analista) y el área de tecnología. Cada una tiene su rol: el área de tecnología desarrolla y administra los sistemas, garantiza la infraestructura, la seguridad y la disponibilidad; las áreas usuarias, como la del Analista, usan los sistemas, alimentan los datos, consolidan y analizan la información. Ni una puede hacer el trabajo de la otra: se necesitan mutuamente.</p>
+  <p>Esta coordinación aparece en situaciones cotidianas. Cuando el Analista necesita una información que el sistema no entrega en el formato requerido, coordina con tecnología para obtenerla. Cuando detecta un error en cómo el sistema procesa un dato, lo reporta para que tecnología lo corrija. Cuando requiere un acceso o un permiso, lo gestiona por los canales. Y cuando hay una falla, la reporta para que la resuelvan. El Analista no resuelve lo técnico de fondo, pero sabe cuándo y cómo acudir a quien sí lo hace.</p>
+  <p>Una buena coordinación exige que el Analista sepa <strong>comunicar bien sus necesidades</strong> en términos de información: qué datos necesita, con qué criterios, para qué fin. No tiene que saber programar, pero sí explicar con claridad lo que requiere para que el área de tecnología pueda ayudarlo. Un Analista que comunica bien sus requerimientos obtiene mejor soporte; uno que no logra explicar lo que necesita genera reprocesos y frustración.</p>
+  <p>Para el Analista I, entender esta relación de coordinación es parte de hacer bien su trabajo. No debe intentar asumir el rol de tecnología (extralimitación) ni desentenderse de los problemas técnicos que afectan su información (omisión): debe ser un buen interlocutor, que conoce sus datos, sabe lo que necesita, reporta lo que detecta y coordina con los especialistas. Esa articulación entre el conocimiento del negocio (los datos, el sistema tributario) y el conocimiento técnico (los sistemas) es lo que hace posible una gestión de información eficaz.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Situación</th><th>Área de tecnología</th><th>Analista I (área usuaria)</th></tr></thead>
+    <tbody>
+      <tr><td>Desarrollo del sistema</td><td>Lo desarrolla y mantiene</td><td>Comunica necesidades de información</td></tr>
+      <tr><td>Error en el procesamiento</td><td>Lo corrige</td><td>Lo detecta y reporta</td></tr>
+      <tr><td>Falla o caída del sistema</td><td>La resuelve</td><td>La reporta y aplica contingencia</td></tr>
+      <tr><td>Consolidación de datos</td><td>Provee acceso/extracción</td><td>Consolida, cruza, analiza</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I detecta que un sistema está clasificando mal cierto tipo de operación, lo que afecta sus estadísticas. No intenta "arreglar" el sistema (no le corresponde): documenta el error con ejemplos claros y lo reporta al área de tecnología explicando bien el problema. Tecnología lo corrige. La buena coordinación —cada uno en su rol— resolvió un problema que ninguno habría resuelto solo.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 9</div>
+  <p>Cuando el Analista I detecta un error en cómo un sistema procesa un dato, lo correcto es:</p>
+  <div class="cp-op" data-op="a">a) Documentar el error con claridad y reportarlo al área de tecnología para que lo corrija, sin intentar modificar él mismo el sistema.</div>
+  <div class="cp-op" data-op="b">b) Intentar reprogramar el sistema por su cuenta para corregirlo de inmediato.</div>
+  <div class="cp-op" data-op="c">c) Ignorar el error y seguir produciendo estadísticas con el dato mal procesado.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Es importante que el Analista entienda que coordinar bien con tecnología también es una habilidad de comunicación, no solo técnica. Saber traducir una necesidad de información a términos que el área de tecnología pueda atender —qué datos, de qué período, con qué criterios, en qué formato— marca la diferencia entre obtener lo que se necesita y recibir algo que no sirve. Un requerimiento vago genera reprocesos y frustración; uno claro y bien especificado se resuelve rápido. Por eso el Analista eficaz no solo domina los datos, sino que sabe pedir con precisión y explicar el porqué de lo que necesita. Esa claridad convierte la relación con tecnología en una colaboración fluida en lugar de una fuente de tensiones.</p></div>
+<div class="b-texto"><p>En síntesis: la gestión de información es un trabajo de equipo con el área de tecnología. El Analista aporta el conocimiento del negocio y los datos; tecnología, el desarrollo y la infraestructura. Comunicar bien los requerimientos es clave para que la colaboración funcione.</p></div>
+<div class="b-texto"><p>Y conviene entender que la buena coordinación con tecnología también significa respetar sus tiempos y procedimientos: los accesos, los permisos y los desarrollos tienen trámites por razones de seguridad y orden. El Analista que canaliza sus necesidades por los canales correctos, en lugar de buscar atajos, construye una relación de confianza que, a la larga, le facilita el trabajo.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">10</span><h3>Trazabilidad y auditoría de los sistemas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>Los sistemas registran <mark>quién hizo qué y cuándo</mark> (trazas o logs), lo que permite auditar el uso y las operaciones. El manual del Analista I incluye "aplicar controles y acciones de trazabilidad". Esta trazabilidad protege la información, permite el control y respalda al propio servidor.</p>
+</div>
+<div class="b-texto">
+  <p>Los sistemas de información modernos registran las acciones que se realizan en ellos: quién consultó qué, quién modificó un dato, cuándo y desde dónde. Estos registros (llamados trazas, logs o pistas de auditoría) cumplen funciones importantes: permiten auditar el uso del sistema, detectar accesos o modificaciones indebidos, y reconstruir lo que pasó ante un incidente. El manual del Analista I menciona expresamente "aplicar controles y acciones de trazabilidad sobre la documentación y soportes".</p>
+  <p>La trazabilidad tiene una dimensión de <strong>control</strong>: como todo queda registrado, un servidor que consulta información reservada sin un fin del servicio, o que modifica un dato indebidamente, deja huella. Esto disuade los malos usos y permite detectarlos. Para el Analista, saber que sus acciones en los sistemas quedan registradas es un recordatorio de que debe usarlos siempre para los fines del servicio: la traza es la prueba de que actuó bien o mal.</p>
+  <p>Pero la trazabilidad también <strong>protege al servidor honesto</strong>. Si el Analista actúa correctamente, la traza es su respaldo: demuestra que solo consultó lo que debía, que modificó lo que le correspondía, que actuó dentro de su rol. Ante una auditoría o una duda, el registro lo defiende. Por eso la trazabilidad no debe verse como vigilancia amenazante, sino como una garantía que ampara a quien hace bien su trabajo.</p>
+  <p>El Analista aplica trazabilidad no solo en los sistemas, sino en su propio trabajo de consolidación: documentar de dónde salió cada dato, qué cruces hizo, con qué criterios. Esta trazabilidad de su trabajo (vista también en el Día 9 a propósito del debido proceso) es lo que permite que la información que produce sea confiable, auditable y defendible. Un trabajo trazable es un trabajo que resiste cualquier revisión; uno sin trazabilidad queda en el aire.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Función de la trazabilidad</th><th>Qué permite</th></tr></thead>
+    <tbody>
+      <tr><td>Control</td><td>Detectar accesos o cambios indebidos</td></tr>
+      <tr><td>Auditoría</td><td>Reconstruir quién hizo qué y cuándo</td></tr>
+      <tr><td>Protección del servidor</td><td>Demostrar que se actuó correctamente</td></tr>
+      <tr><td>Confiabilidad de la información</td><td>Poder sustentar el origen de cada dato</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>Una auditoría revisa los accesos a cierta información reservada. Como el Analista I solo consultó lo que su trabajo requería y dejó trazado cada cruce que hizo, la traza confirma que actuó correctamente y queda respaldado. Un compañero que había consultado datos por curiosidad, en cambio, quedó en evidencia por la misma traza. La trazabilidad protegió al que hizo bien su trabajo y detectó al que no.</p>
+</div>
+<div class="checkpoint" data-correct="b">
+  <div class="cp-q">✅ Checkpoint 10</div>
+  <p>La trazabilidad (los registros de quién hizo qué en los sistemas):</p>
+  <div class="cp-op" data-op="a">a) Es una forma de vigilancia abusiva que debe evitarse.</div>
+  <div class="cp-op" data-op="b">b) Permite auditar y controlar los usos indebidos y, a la vez, protege al servidor honesto demostrando que actuó correctamente.</div>
+  <div class="cp-op" data-op="c">c) No tiene ninguna utilidad y solo ocupa espacio en los sistemas.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Conviene desmitificar la trazabilidad: no es una herramienta para «perseguir» a los servidores, sino una garantía del sistema que, bien entendida, favorece a quien trabaja bien. En un entorno donde se maneja información reservada de millones de personas, es natural y necesario que quede registro de quién accede a qué; sin esa trazabilidad, no habría forma de proteger la información ni de detectar abusos. Para el servidor honesto, el registro es un aliado: ante cualquier sospecha, demuestra que actuó correctamente. El único al que la trazabilidad incomoda es al que hace mal uso de los sistemas. Por eso el Analista íntegro no la teme, la valora: es parte de lo que hace confiable todo el sistema de información.</p></div>
+<div class="b-texto"><p>En síntesis: la trazabilidad registra quién hizo qué en los sistemas; controla los usos indebidos y, a la vez, protege al servidor honesto demostrando que actuó bien. El Analista íntegro no la teme: la valora como garantía del sistema.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">11</span><h3>Gobierno digital y el aporte del Analista</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>La <mark>política de Gobierno Digital</mark> busca que el Estado preste servicios en línea, use los datos para decidir y sea seguro y accesible digitalmente. La DIAN es líder en esta política, y el Analista I contribuye a ella gestionando bien la información y aprovechando los datos.</p>
+</div>
+<div class="b-texto">
+  <p>El Gobierno Digital es una política del Estado colombiano (parte del MIPG, que verás más adelante) que orienta la transformación digital de las entidades. Sus objetivos incluyen prestar servicios en línea, aprovechar los datos para tomar mejores decisiones, garantizar la seguridad digital y hacer el Estado más accesible y transparente. La DIAN, por su naturaleza tecnificada y el volumen de servicios digitales que presta, es una de las entidades más avanzadas en esta política.</p>
+  <p>El Analista I contribuye al Gobierno Digital de forma concreta. Al gestionar bien la información, al cuidar su calidad, al producir estadísticas confiables y al apoyar la conformación de perfiles de riesgo basados en datos, está materializando uno de los pilares de la política: usar los datos para decidir mejor. La "toma de decisiones basada en datos" no es un eslogan: se hace realidad cuando profesionales como el Analista convierten datos crudos en información útil para la gestión y la política.</p>
+  <p>Esta política también plantea retos que el Analista debe tener presentes: la seguridad digital (proteger la información frente a amenazas crecientes), la protección de datos personales (a escala masiva), la interoperabilidad (que los sistemas del Estado se conecten y compartan datos de forma segura) y la calidad de los datos como condición para que todo lo demás funcione. Son, en buena medida, los temas que hemos visto, enmarcados en una política de Estado.</p>
+  <p>Para el Analista I, entender que su trabajo se inscribe en el Gobierno Digital le da una perspectiva más amplia y un sentido de propósito. No es solo "manejar datos de la DIAN": es participar en la construcción de un Estado más inteligente, que decide con información, presta servicios en línea y protege los derechos digitales de los ciudadanos. Esa visión eleva el valor de un trabajo técnico que, bien hecho, es una pieza de la modernización del Estado.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Objetivo del Gobierno Digital</th><th>Aporte del Analista I</th></tr></thead>
+    <tbody>
+      <tr><td>Servicios en línea</td><td>Gestiona la información que los alimenta</td></tr>
+      <tr><td>Decisiones basadas en datos</td><td>Produce información y estadísticas confiables</td></tr>
+      <tr><td>Seguridad digital</td><td>Aplica buenas prácticas de seguridad</td></tr>
+      <tr><td>Datos de calidad</td><td>Depura y valida la información</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El Analista I produce un conjunto de datos de calidad que permite a la DIAN tomar una decisión de gestión mejor fundada. Entiende que, con ese trabajo, está materializando el pilar de "decisiones basadas en datos" del Gobierno Digital. Ver su labor en ese marco más amplio le da sentido y lo motiva a cuidar la calidad y la seguridad de la información que maneja, porque sabe que aporta a algo más grande.</p>
+</div>
+<div class="checkpoint" data-correct="c">
+  <div class="cp-q">✅ Checkpoint 11</div>
+  <p>El Analista I contribuye a la política de Gobierno Digital, principalmente, cuando:</p>
+  <div class="cp-op" data-op="a">a) Desarrolla aplicaciones y administra la infraestructura tecnológica de la entidad.</div>
+  <div class="cp-op" data-op="b">b) Evita usar los sistemas para no exponerse a riesgos digitales.</div>
+  <div class="cp-op" data-op="c">c) Gestiona información de calidad y la convierte en insumo para decisiones basadas en datos, aplicando buenas prácticas de seguridad.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Vale la pena que el Analista entienda que la interoperabilidad —que los sistemas del Estado se conecten y compartan datos— es a la vez una gran oportunidad y un gran reto. Oportunidad, porque permite cruzar información de distintas entidades y detectar inconsistencias que antes eran invisibles (patrimonio no declarado, por ejemplo). Reto, porque exige que los datos sean de calidad y estén bien identificados para que los cruces funcionen, y que la seguridad y la protección de datos se mantengan al compartir. El Analista que cuida la calidad y la identificación de sus datos está, sin siempre saberlo, habilitando la interoperabilidad: datos limpios y bien identificados son los que pueden cruzarse con otros de forma confiable.</p></div>
+<div class="b-texto"><p>En síntesis: el trabajo del Analista aporta al Gobierno Digital, sobre todo al pilar de decisiones basadas en datos. Gestionar información de calidad y convertirla en insumo para decidir es materializar esa política de modernización del Estado.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">12</span><h3>Riesgos y buen uso de los sistemas</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El uso de los sistemas conlleva <mark>riesgos</mark> (filtración, uso indebido, errores, dependencia) que el Analista I debe conocer y mitigar con un uso responsable. El buen uso de los sistemas protege la información, a los ciudadanos y al propio servidor.</p>
+</div>
+<div class="b-texto">
+  <p>Los sistemas de información son herramientas poderosas, pero su uso conlleva riesgos que conviene reconocer. El riesgo de <strong>filtración</strong> (que información reservada salga indebidamente); el de <strong>uso indebido</strong> (consultar o usar datos para fines ajenos al servicio); el de <strong>error</strong> (que un dato mal procesado se propague); y el de <strong>dependencia excesiva</strong> (confiar ciegamente en el sistema sin criterio propio). El Analista que conoce estos riesgos puede mitigarlos con un uso responsable.</p>
+  <p>El buen uso de los sistemas se resume en varios principios que ya hemos visto, ahora aplicados: acceder solo a lo que el trabajo requiere (no por curiosidad); usar la información solo para los fines del servicio; cuidar las credenciales y la seguridad; verificar la calidad de los datos antes de usarlos; y mantener el criterio propio (el sistema es una herramienta, no un oráculo infalible). Estos principios protegen la información, a los ciudadanos cuyos datos se manejan, y al propio servidor.</p>
+  <p>Un riesgo particular que el Analista debe evitar es la <strong>dependencia acrítica</strong> del sistema. Un sistema puede tener errores, datos mal cargados o clasificaciones equivocadas; si el Analista confía ciegamente en su salida sin aplicar criterio, puede propagar esos errores. El valor del Analista está, precisamente, en no ser un mero operador del sistema, sino en aportar el juicio que detecta cuándo algo no cuadra. El sistema procesa; el Analista comprende y verifica.</p>
+  <p>Para el Analista I, el uso responsable de los sistemas es la síntesis de todo lo visto en esta guía: usarlos para lo que corresponde, con criterio, cuidando la calidad, la seguridad y la reserva, coordinando con tecnología y dejando trazabilidad. Un Analista que usa bien los sistemas es un activo valioso para la entidad; uno que los usa mal —por descuido, curiosidad o falta de criterio— es un riesgo. El buen uso no es solo una regla: es la marca de un profesional confiable.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Riesgo</th><th>Cómo lo mitiga el buen uso</th></tr></thead>
+    <tbody>
+      <tr><td>Filtración de información</td><td>Reserva, seguridad, no divulgar</td></tr>
+      <tr><td>Uso indebido</td><td>Acceder solo para los fines del servicio</td></tr>
+      <tr><td>Propagación de errores</td><td>Verificar la calidad antes de usar</td></tr>
+      <tr><td>Dependencia acrítica</td><td>Mantener el criterio propio; no confiar ciegamente</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>El sistema le arroja al Analista I un listado de "incumplidores", pero al revisar nota que varios resultados no tienen sentido (parecen errores de clasificación del sistema). En lugar de reportar ciegamente la salida, aplica criterio, detecta el error, lo reporta a tecnología y depura el resultado. No se dejó llevar por una dependencia acrítica del sistema. Su juicio profesional evitó señalar injustamente a contribuyentes cumplidos.</p>
+</div>
+<div class="checkpoint" data-correct="a">
+  <div class="cp-q">✅ Checkpoint 12</div>
+  <p>Frente a la salida de un sistema que parece tener errores, el Analista I debe:</p>
+  <div class="cp-op" data-op="a">a) Aplicar su criterio profesional, verificar, detectar y reportar el error, en lugar de confiar ciegamente en la salida del sistema.</div>
+  <div class="cp-op" data-op="b">b) Reportar la salida tal cual, porque el sistema nunca se equivoca.</div>
+  <div class="cp-op" data-op="c">c) Ignorar el sistema por completo y trabajar solo a mano.</div>
+  <div class="cp-fb"></div>
+</div>
+<div class="b-texto"><p>Un último matiz sobre la dependencia acrítica del sistema: la tecnología es una ayuda extraordinaria, pero no sustituye el criterio profesional. Un sistema puede automatizar un cruce, pero no sabe si el resultado tiene sentido en el contexto; puede marcar una inconsistencia, pero no distingue por sí solo un fraude real de un error de digitación. Ese juicio lo pone la persona. Por eso el mejor Analista no es el que más confía en el sistema, sino el que combina la potencia del sistema con su propio criterio para verificar, interpretar y decidir si un resultado es confiable. La tecnología multiplica la capacidad del buen analista, pero no reemplaza la necesidad de pensar; un operador sin criterio, con el mejor sistema, igual produce errores.</p></div>
+<div class="b-texto"><p>En síntesis: el uso responsable de los sistemas mitiga los riesgos de filtración, uso indebido, propagación de errores y dependencia acrítica. El Analista aporta el criterio que el sistema no tiene: verifica, interpreta y no confía ciegamente en la salida de una máquina.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><span class="modulo-n">13</span><h3>El rol del Analista I en el entorno tecnológico</h3></div>
+    <div class="def-panel"><span class="def-label">Idea de base</span>
+  <p>El <mark>rol del Analista I</mark> en el entorno tecnológico de la DIAN es el de un profesional que usa los sistemas con criterio, gestiona información de calidad y actúa como puente entre el conocimiento del negocio y la tecnología, sin ser desarrollador ni administrador de sistemas.</p>
+</div>
+<div class="b-texto">
+  <p>Cerramos precisando el rol en su entorno tecnológico. El Analista I no es un ingeniero de sistemas ni un administrador de infraestructura, pero tampoco es un simple digitador. Es un profesional que conoce el negocio (el sistema tributario, la información de la DIAN) y usa la tecnología con criterio para gestionar esa información. Ocupa un lugar valioso: el puente entre los datos y las decisiones, entre lo técnico y lo sustantivo.</p>
+  <p>Su valor está en una combinación poco común: entender los datos (qué significan, de dónde salen, para qué sirven) y saber usarlos con las herramientas de información (consolidar, cruzar, depurar, analizar). Un ingeniero puede dominar la tecnología pero no el negocio; un experto tributario puede dominar el negocio pero no los datos. El Analista I combina ambos en la medida que su cargo requiere, y por eso es indispensable en la gestión de información.</p>
+  <p>Este rol conecta con todo lo visto en la guía: entender los sistemas, usarlos con criterio, cuidar la calidad y la seguridad, respetar la reserva y la protección de datos, asegurar la continuidad, coordinar con tecnología, dejar trazabilidad y aportar al gobierno digital. No son temas sueltos: son las facetas de un mismo rol de gestión responsable de la información en un entorno tecnológico.</p>
+  <p>Cierras este tercer día funcional conociendo el entorno en el que se desenvuelve tu cargo. Los temas que siguen —la gestión de información estratégica, las estadísticas, los perfiles de riesgo, la auditoría— se apoyan todos en los sistemas y en los datos que hoy aprendiste a entender. El Analista I que domina su entorno tecnológico, con sus posibilidades y sus límites, trabaja con seguridad y aporta valor real; el que no lo entiende, se pierde o se extralimita. Tú ya tienes ese mapa.</p>
+</div>
+<div class="tabla-wrap">
+  <table>
+    <thead><tr><th>Faceta del rol</th><th>Qué hace el Analista I</th></tr></thead>
+    <tbody>
+      <tr><td>Usuario competente</td><td>Usa los sistemas con criterio, no a ciegas</td></tr>
+      <tr><td>Gestor de información</td><td>Consolida, cruza, depura y analiza datos</td></tr>
+      <tr><td>Guardián de calidad y seguridad</td><td>Cuida la calidad, la reserva y la protección de datos</td></tr>
+      <tr><td>Puente con tecnología</td><td>Coordina, reporta, comunica necesidades</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="practica"><div class="practica-t">🛠 En la práctica</div>
+  <p>A Syndy le piden consolidar información de varios sistemas para un perfil de riesgo. No programa nada ni administra servidores: usa los sistemas con criterio, cuida la calidad y la reserva de los datos, coordina con tecnología lo que necesita, deja trazado su trabajo y produce información confiable. Ese es exactamente el rol que su cargo exige en el entorno tecnológico: el puente entre los datos y las decisiones.</p>
+</div>
+<div class="destacado"><div class="dst-body"><span class="dst-title">💡 Idea clave del día</span>
+  <p>El Analista I no desarrolla ni administra los sistemas, pero es quien los usa con criterio para gestionar información de calidad. Su valor está en ser el puente entre los datos y las decisiones, cuidando la calidad, la seguridad, la reserva y la trazabilidad, y coordinando con el área de tecnología.</p>
+</div></div>
+<div class="tips-box">
+  <div class="tips-t">⭐ Tips para recordar</div>
+  <ul>
+    <li>Un sistema de información es <strong>personas + datos + procesos + tecnología</strong>, no solo software.</li>
+    <li>El Analista <strong>usa y da soporte</strong> a la gestión de información; NO desarrolla ni administra sistemas.</li>
+    <li>"Entra basura, sale basura": la <strong>calidad del dato</strong> es la base de todo.</li>
+    <li>Seguridad: <strong>confidencialidad, integridad, disponibilidad</strong>; cuida claves, respalda, reporta phishing.</li>
+    <li>Datos personales: solo para fines autorizados, con reserva (Ley 1581/2012).</li>
+    <li>La <strong>trazabilidad</strong> controla los usos indebidos y protege al servidor honesto.</li>
+  </ul>
+</div>
+<div class="frase-recordar">⚡ "El sistema procesa los datos; yo aporto el criterio que los convierte en información confiable."</div>
+<div class="fuentes">
+  <div class="fuentes-t">📚 Fuentes oficiales para profundizar</div>
+  <ul>
+    <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN — servicios en línea</a></li>
+    <li><a href="https://gobiernodigital.mintic.gov.co/" target="_blank" rel="noopener">MinTIC — Política de Gobierno Digital</a></li>
+    <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank" rel="noopener">Ley 1581 de 2012 — Protección de datos personales</a></li>
+    <li><a href="https://www.funcionpublica.gov.co/web/mipg" target="_blank" rel="noopener">Función Pública — MIPG (política de gobierno y seguridad digital)</a></li>
+    <li><a href="https://www.dian.gov.co/impuestos/factura-electronica/" target="_blank" rel="noopener">DIAN — Factura electrónica</a></li>
+  </ul>
+</div>
+<div class="b-texto"><p>Para cerrar, conviene que el Analista vea su rol tecnológico con orgullo y con responsabilidad. Con orgullo, porque ocupa un lugar valioso y poco común: el puente entre los datos y las decisiones, entre lo técnico y lo sustantivo, que ninguna de las dos orillas puede ocupar sola. Con responsabilidad, porque ese lugar privilegiado implica cuidar la calidad, la seguridad y la reserva de información que afecta a millones. El Analista I que asume este rol con seriedad —usando los sistemas con criterio, cuidando los datos, coordinando con tecnología y dejando todo trazado— no solo hace bien su trabajo: se vuelve indispensable, porque hace posible que la enorme maquinaria de información de la DIAN produzca, al final, decisiones acertadas y justas.</p></div>
+<div class="b-texto"><p>Con este cierre terminas el recorrido por el entorno tecnológico del cargo. Los días siguientes —gestión de información estratégica, gobernanza de datos, estadísticas, perfiles de riesgo, auditoría— se apoyan en estos sistemas y datos. Llevas ya el mapa del entorno en el que agregarás valor.</p></div>
+<div class="b-texto"><p>Dominar este entorno tecnológico, en definitiva, es lo que permite al Analista I pasar de ser un usuario pasivo de los sistemas a ser un gestor activo de la información: alguien que entiende de dónde salen los datos, los trabaja con rigor y criterio, y los convierte en información confiable para que la DIAN decida mejor.</p></div>
+  </div>
+
+</section>
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones que no puedes confundir</h2>
+  <p>En este tema hay conceptos que se parecen pero conviene no confundir. Estúdialos hasta dominarlos, porque definen tu rol y el buen uso de los sistemas.</p>
+  <div class="tabla-wrap">
+    <table>
+      <thead><tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr></thead>
+      <tbody><tr><td>Sistema de información</td><td>Software</td><td>El sistema es personas + datos + procesos + tecnología; el software es solo uno de sus componentes.</td></tr><tr><td>Usar/soportar (Analista)</td><td>Desarrollar/administrar (tecnología)</td><td>El Analista usa los sistemas y da soporte a la información; tecnología los desarrolla y administra la infraestructura.</td></tr><tr><td>Dato</td><td>Información</td><td>El dato es el registro crudo; la información es el dato procesado y con contexto, útil para decidir.</td></tr><tr><td>Confidencialidad</td><td>Disponibilidad</td><td>La confidencialidad limita el acceso al autorizado; la disponibilidad asegura que la información esté cuando se necesita.</td></tr><tr><td>Respaldo (backup)</td><td>Plan de contingencia</td><td>El respaldo es la copia para recuperar datos; el plan de contingencia es qué hacer cuando algo falla.</td></tr><tr><td>Llave (de base de datos)</td><td>Campo cualquiera</td><td>La llave identifica de forma única y relaciona tablas (el NIT); un campo cualquiera es solo un atributo.</td></tr><tr><td>Soporte a la información</td><td>Soporte de mesa de ayuda</td><td>El Analista da soporte a la gestión de información (datos); no repara equipos ni resuelve fallas de red.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="ojo"><b>Ojo en la prueba:</b> Cuando una pregunta sugiera que el Analista debe 'programar', 'arreglar la red' o 'administrar servidores', desconfía: eso es del área de tecnología, no de su rol.</div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos resueltos</h2>
+  <div class="caso">
+    <div class="caso-head">Caso 1 · La red caída</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Se cae la red de la oficina y un compañero le pide al Analista I que 'la arregle, que él sabe de sistemas'. Hay presión porque nadie puede trabajar.</p>
+      <span class="label">Análisis</span>
+      <p>Reparar la red es del área de tecnología, no del Analista (su rol es la gestión de información). Intentar 'arreglarla' sería asumir una función ajena.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Reportar de inmediato la falla por el canal correcto al área de tecnología y, mientras se resuelve, aplicar la contingencia que corresponda para su propio trabajo.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 2 · El correo que pide la clave</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El Analista recibe un correo 'del área de sistemas' pidiendo su usuario y contraseña 'para una actualización urgente'. El remitente es extraño y hay un enlace.</p>
+      <span class="label">Análisis</span>
+      <p>Es un posible phishing: el área de tecnología nunca pide la clave por correo. Entregarla comprometería el acceso a información reservada.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> No hacer clic ni entregar la clave; verificar por el canal oficial y reportar el correo como posible phishing al área de tecnología.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 3 · El cruce sobre datos sucios</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Piden al Analista cruzar dos bases por el NIT para un perfil de riesgo, pero varios NIT están mal digitados y hay duplicados. El plazo es ajustado.</p>
+      <span class="label">Análisis</span>
+      <p>Un cruce sobre datos sucios produce falsos resultados (registros que no cruzan o cruzan con el contribuyente equivocado). La identificación es la llave.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Depurar primero la identificación (corregir NIT, eliminar duplicados) y luego ejecutar el cruce, dejando constancia; gestionar una prórroga si el tiempo no alcanza.</div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">Caso 4 · La salida del sistema que no cuadra</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El sistema arroja un listado de 'incumplidores', pero el Analista nota que varios resultados no tienen sentido y parecen errores de clasificación del sistema.</p>
+      <span class="label">Análisis</span>
+      <p>Confiar ciegamente en la salida (dependencia acrítica) propagaría el error y podría señalar injustamente a cumplidos. El criterio del Analista es clave.</p>
+      <div class="resp-correcta"><strong>Actuación correcta:</strong> Aplicar criterio, verificar, depurar los errores evidentes y reportar el problema de clasificación al área de tecnología, sin reportar la salida tal cual.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores frecuentes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">🚫 Creer que el Analista debe 'saber de todo lo informático'</div><p>Su rol es la gestión de información, no desarrollar ni administrar sistemas ni reparar equipos. Asumir lo de tecnología es extralimitarse y dispersarse.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Confiar ciegamente en la salida del sistema</div><p>El sistema puede tener errores; el valor del Analista es aplicar criterio, verificar e interpretar, no reportar a ciegas lo que la máquina arroje.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Procesar datos sin depurar su calidad</div><p>'Entra basura, sale basura': cruces y estadísticas sobre datos sucios producen falsos positivos y decisiones equivocadas. Depura antes de usar.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Compartir claves o descuidar la seguridad</div><p>Las credenciales son individuales; compartirlas, no bloquear el equipo o caer en phishing compromete información reservada de millones. La seguridad empieza en los hábitos.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Guardar la información crítica en una sola copia</div><p>Sin respaldo, un daño del equipo borra semanas de trabajo. Respalda y no dependas de una única copia en tu equipo personal.</p></div>
+  <div class="box danger"><div class="box-title">🚫 Intentar 'arreglar' el sistema por cuenta propia</div><p>Un error del sistema se documenta y se reporta al área de tecnología; modificarlo por cuenta propia no corresponde al rol y puede causar daños.</p></div>
+  
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips de oro para la prueba</h2>
+  <div class="idea"><span class="idea-ic">1️⃣</span><p>Un sistema de información es <strong>personas + datos + procesos + tecnología</strong>, no solo software.</p></div>
+  <div class="idea"><span class="idea-ic">2️⃣</span><p>El Analista <strong>usa y da soporte</strong> a la información; NO desarrolla ni administra la infraestructura.</p></div>
+  <div class="idea"><span class="idea-ic">3️⃣</span><p>Antes de cruzar, verifica la <strong>llave (NIT)</strong>: limpia, sin duplicados, con el mismo significado en ambas fuentes.</p></div>
+  <div class="idea"><span class="idea-ic">4️⃣</span><p>Seguridad = <strong>confidencialidad, integridad, disponibilidad</strong>; cuida claves, respalda, desconfía del phishing.</p></div>
+  <div class="idea"><span class="idea-ic">5️⃣</span><p>Datos personales: solo para fines autorizados, con reserva (Ley 1581/2012).</p></div>
+  <div class="idea"><span class="idea-ic">6️⃣</span><p>No confíes ciegamente en el sistema: <strong>aplica criterio, verifica e interpreta</strong>.</p></div>
+  
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas típicas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción propone que el Analista 'arregle' la red o el sistema porque 'sabe de computadores'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece colaborativo y resolutivo ayudar con lo técnico.</div>
+      <div class="t-row malo">🔴 La trampa: Reparar red/sistemas es del área de tecnología; asumirlo es extralimitación y distrae del rol real.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Reportar la falla por el canal correcto a tecnología y aplicar la contingencia para el propio trabajo.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción invita a reportar la salida del sistema 'tal cual', sin verificar, porque 'el sistema no se equivoca'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece eficiente confiar en la automatización.</div>
+      <div class="t-row malo">🔴 La trampa: La dependencia acrítica propaga errores del sistema y puede señalar injustamente a cumplidos.</div>
+      <div class="t-row bueno">🟢 Lo correcto: Aplicar criterio, verificar, depurar y reportar los errores de clasificación a tecnología.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 La opción sugiere entregar la clave ante un correo 'urgente del área de sistemas'.</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: Parece que atender rápido una solicitud de sistemas es lo correcto.</div>
+      <div class="t-row malo">🔴 La trampa: Es phishing: tecnología nunca pide la clave por correo; entregarla compromete información reservada.</div>
+      <div class="t-row bueno">🟢 Lo correcto: No entregar la clave, verificar por el canal oficial y reportar el correo como posible phishing.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Antes de voltear cada una, intenta responder en voz alta.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Qué es un sistema de información</h4><p>Personas, datos, procesos y tecnología que transforman datos en información para operar y decidir.</p></div>
+    <div class="resumen-item"><h4>El rol del Analista</h4><p>Usar y dar soporte a la gestión de información; no desarrollar ni administrar la infraestructura.</p></div>
+    <div class="resumen-item"><h4>Calidad y seguridad</h4><p>'Entra basura, sale basura'; confidencialidad, integridad y disponibilidad; reserva y protección de datos.</p></div>
+    <div class="resumen-item"><h4>Continuidad y coordinación</h4><p>Respaldar y reportar fallas; coordinar con tecnología comunicando bien las necesidades.</p></div>
+    <div class="resumen-item"><h4>Criterio y gobierno digital</h4><p>No confiar ciegamente en el sistema; aportar a decisiones basadas en datos con calidad y seguridad.</p></div>
+    
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Sistema de información</dt><dd>Conjunto de personas, datos, procesos y tecnología que capta, procesa y entrega información.</dd>
+      <dt>Base de datos</dt><dd>Colección organizada de datos (tablas, registros, campos) que permite consultarlos y relacionarlos.</dd>
+      <dt>Llave</dt><dd>Campo que identifica de forma única un registro y permite relacionar tablas (el NIT).</dd>
+      <dt>Calidad del dato</dt><dd>Completitud, exactitud, consistencia, actualidad y unicidad de la información.</dd>
+      <dt>Confidencialidad/integridad/disponibilidad</dt><dd>Los tres pilares de la seguridad de la información.</dd>
+      <dt>Phishing</dt><dd>Correo o mensaje falso que busca robar credenciales o datos.</dd>
+      <dt>Trazabilidad</dt><dd>Registro de quién hizo qué y cuándo en los sistemas; permite auditar y protege al servidor honesto.</dd>
+      <dt>Gobierno Digital</dt><dd>Política que busca servicios en línea, decisiones basadas en datos y seguridad digital del Estado.</dd>
+      
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Servicios informáticos y sistemas de información</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba CNSC, con 3 opciones (A, B, C) y una sola correcta. Cada caso incluye ruido y un dato decisivo: léelo completo antes de responder. Al final verás tu puntaje y los temas por reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 11. Continúa con el Día 12: Gestión de información estratégica y gobernanza de datos.</span>
+    <button class="advance-btn final" onclick="if(confirm('✅ Finalizar Día 11 y marcar como completado?'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 11</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[{"f": "¿Qué es un sistema de información?","b": "Un conjunto organizado de personas, datos, procesos y tecnología que capta, almacena, procesa y entrega información para apoyar la operación y las decisiones. No es solo el software: la tecnología es uno de sus cuatro componentes."},{"f": "¿Cuál es el rol del Analista I frente a los sistemas?","b": "Usarlos con criterio, alimentar datos de calidad y dar soporte técnico a la gestión de información. NO desarrolla software, NO administra servidores ni redes (eso es del área de tecnología), pero tampoco es un simple digitador."},{"f": "¿Qué diferencia hay entre dato, información y conocimiento?","b": "El dato es el registro crudo; la información es el dato procesado y con contexto; el conocimiento es la comprensión que permite decidir. Los sistemas transforman datos en información; el criterio del Analista la vuelve conocimiento útil."},{"f": "¿Por qué es valiosa la factura electrónica para el control?","b": "Porque le da a la DIAN información casi en tiempo real de las transacciones, lo que permite cruzar ventas facturadas con ventas declaradas y detectar inconsistencias. Es una fuente potente para la gestión de información."},{"f": "¿Qué es la 'llave' en una base de datos y para qué sirve?","b": "Es el campo que identifica de forma única cada registro y permite relacionar (cruzar) tablas entre sí. En la DIAN, la llave típica es el NIT/RUT. Su calidad es crítica para que los cruces funcionen."},{"f": "¿Qué significa 'entra basura, sale basura'?","b": "Que la calidad de la información depende de la calidad de los datos de origen: un sistema con datos incompletos, inexactos o duplicados produce resultados engañosos, por bueno que sea el sistema. El Analista es guardián de la calidad del dato."},{"f": "¿Cuáles son los tres pilares de la seguridad de la información?","b": "Confidencialidad (solo accede el autorizado), integridad (el dato no se altera sin control) y disponibilidad (está cuando se necesita). Se cuidan con claves individuales, respaldos y prudencia frente al phishing."},{"f": "¿Cómo debe tratar el Analista los datos personales de los sistemas?","b": "Solo para los fines autorizados, con reserva y seguridad, respetando los derechos del titular (habeas data), conforme a la Ley 1581 de 2012. Un mal manejo afecta potencialmente a miles de personas."},{"f": "¿Qué debe hacer el Analista por la continuidad de la operación?","b": "Respaldar su trabajo, no depender de una única copia en su equipo, y reportar las fallas por el canal correcto conforme al plan de contingencia. No diseña la infraestructura de respaldo (eso es de tecnología)."},{"f": "¿Qué hacer si detecta un error en cómo el sistema procesa un dato?","b": "Documentarlo con claridad y reportarlo al área de tecnología para que lo corrija, sin intentar modificar el sistema por cuenta propia ni seguir produciendo estadísticas con el dato mal procesado."},{"f": "¿Para qué sirve la trazabilidad (los logs) en los sistemas?","b": "Registra quién hizo qué y cuándo. Sirve para controlar los usos indebidos (quedan en evidencia) y, a la vez, protege al servidor honesto, porque demuestra que actuó correctamente. No es vigilancia abusiva: es garantía del sistema."},{"f": "¿Debe el Analista confiar ciegamente en la salida del sistema?","b": "No. El sistema puede tener errores o datos mal cargados; el valor del Analista está en aplicar criterio, verificar e interpretar. El sistema procesa; el Analista comprende y verifica. La tecnología multiplica al buen analista, no reemplaza su juicio."}];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[{"nivel": "b","tema": "El rol del Analista frente a los sistemas","ctx": "Eres Analista I del nivel Técnico en la DIAN, en el área de gestión de información. Un compañero, convencido, les dice a los nuevos que 'como el Analista maneja sistemas y datos, se espera que programe las aplicaciones que el área necesite y que administre los servidores donde se guarda la información, porque para eso es el del área técnica'. Tú conoces el manual de tu cargo y sabes que tu rol frente a los sistemas es distinto.","q": "¿Cuál es la descripción correcta del rol del Analista I frente a los sistemas de información?","ops": ["Desarrollar las aplicaciones que el área necesite y administrar los servidores donde se guarda la información, ya que, por manejar datos y sistemas, debe dominar y asumir todos los aspectos técnicos e informáticos de su dependencia.","Usar los sistemas con criterio, alimentar datos de calidad y dar soporte técnico a la gestión de la información, sin desarrollar software ni administrar la infraestructura (que corresponden al área de tecnología), aportando el conocimiento de los datos.","Limitarse a digitar en los sistemas lo que le indiquen, sin consolidar, cruzar ni analizar la información, ya que cualquier tarea que implique criterio sobre los datos corresponde exclusivamente a los cargos directivos."],"correcta": 1,"expl": "El Analista usa los sistemas con criterio y da soporte a la gestión de información; no desarrolla software ni administra la infraestructura —eso es del área de tecnología (A)— pero tampoco es un simple digitador sin criterio (C). Su valor está en el manejo experto de los datos."},{"nivel": "b","tema": "Seguridad: phishing","ctx": "Eres Analista I de la DIAN y recibes un correo que dice ser 'del área de sistemas'. El mensaje te pide que ingreses tu usuario y contraseña en un enlace 'para una actualización urgente del sistema, antes de que pierdas el acceso'. Al mirar con atención, el correo del remitente tiene una dirección extraña y el enlace no corresponde al dominio oficial de la entidad. Sientes algo de presión por la advertencia de 'perder el acceso'.","q": "¿Cuál es la actuación correcta ante ese correo?","ops": ["Ingresar de inmediato tu usuario y contraseña en el enlace indicado para no perder el acceso al sistema, dado que el correo dice venir del área de sistemas y la actualización se presenta como urgente e inaplazable.","No hacer clic en el enlace ni entregar tus credenciales; verificar la situación con el área de tecnología por el canal oficial y reportar el correo como un probable intento de fraude (phishing), pues el área nunca pide la clave por correo.","Reenviar el correo a tus compañeros para avisarles y, si varios de ellos también lo recibieron, entonces ingresar todos juntos las credenciales en el enlace para resolver de una vez la supuesta actualización."],"correcta": 1,"expl": "Es un probable phishing: remitente y enlace sospechosos, presión por urgencia. El área de tecnología nunca pide la clave por correo. No se entregan credenciales (A) ni se decide 'en grupo' seguir el enlace (C): se verifica por el canal oficial y se reporta el correo."},{"nivel": "b","tema": "Dato, información y conocimiento","ctx": "Eres Analista I de la DIAN y un practicante que te apoya cree que 'bajar un montón de registros de un sistema' ya es, en sí mismo, producir información útil para el área. Tú quieres explicarle la diferencia entre un dato crudo y la información que de verdad sirve para decidir, porque esa comprensión es clave para entender el valor de su trabajo.","q": "¿Cuál es la explicación correcta de la diferencia entre dato e información?","ops": ["No hay diferencia: descargar registros crudos de un sistema ya es producir información útil, pues cualquier conjunto de datos equivale, por sí solo, a información lista para la toma de decisiones del área.","El dato es el registro crudo (un número, una fecha); la información es el dato procesado y con contexto (una estadística, un reporte de inconsistencias) que sirve para decidir; el sistema entrega datos y el Analista aporta el criterio que los convierte en información.","El dato siempre es más valioso que la información, porque es el original sin procesar; por eso lo ideal es entregar a quien decide los registros en crudo, sin consolidarlos ni analizarlos, para que no se pierda nada."],"correcta": 1,"expl": "El dato es el registro crudo; la información es el dato procesado y con contexto, útil para decidir. Bajar registros no es producir información (A); y el dato crudo sin procesar no es lo más valioso para quien decide (C). El Analista aporta el criterio que convierte datos en información."},{"nivel": "b","tema": "Calidad del dato","ctx": "Eres Analista I de la DIAN y vas a producir una estadística a partir de una base de datos. Al revisarla, encuentras registros duplicados y varios números de identificación mal digitados. Un compañero te dice que 'no te detengas en eso, que corras la estadística tal cual, que el sistema es moderno y esos detalles no afectan el resultado'. Tú conoces la regla sobre la calidad de los datos.","q": "¿Cuál es la actuación correcta antes de producir la estadística?","ops": ["Correr la estadística tal cual, con los duplicados y los NIT mal digitados, confiando en que un sistema moderno corrige automáticamente esos detalles y produce igualmente un resultado confiable.","Depurar primero la base (eliminar duplicados, corregir los números de identificación contra los soportes) y verificar su calidad antes de producir la estadística, porque la calidad del resultado depende de la calidad de los datos de origen.","Eliminar de la base todos los registros que tengan cualquier duda, sin verificarlos, para que la estadística corra rápido y limpia aunque se pierda una parte importante de la información."],"correcta": 1,"expl": "'Entra basura, sale basura': una estadística sobre datos sucios es engañosa, por moderno que sea el sistema (A). Pero tampoco se eliminan registros sin verificar (C), lo que pierde información. Se depura y verifica contra los soportes antes de producir la estadística."},{"nivel": "i","tema": "La red caída y el alcance del rol","ctx": "Eres Analista I de la DIAN. Se cae la red de la oficina y nadie puede acceder a los sistemas. Un compañero, desesperado por la presión de un plazo, te insiste en que 'tú que sabes de sistemas, métete a arreglar la red o reinicia los servidores, que para eso eres del área técnica'. Tú sabes cuál es tu rol y cuál es el del área de tecnología.","q": "¿Cuál es la actuación correcta ante la caída de la red?","ops": ["Intentar arreglar la red y reiniciar los servidores por tu cuenta, ya que manejas sistemas y datos y hay un plazo apremiante, de modo que resolver el problema técnico tú mismo sería la forma más rápida de ayudar al equipo.","Reportar de inmediato la falla por el canal correcto al área de tecnología (responsable de la infraestructura) y, mientras se resuelve, aplicar la contingencia que corresponda para avanzar en lo que no dependa de la red, sin manipular tú la infraestructura.","Esperar sin hacer ni reportar nada a que alguien más note la caída y la resuelva, ya que no es asunto tuyo, de modo que no debes involucrarte de ninguna manera ni siquiera avisando del problema."],"correcta": 1,"expl": "Reparar la red/servidores es del área de tecnología, no del Analista: intentarlo sería extralimitación y podría causar más daño (A). Pero tampoco debe desentenderse por completo sin reportar (C), que sería omisión. Lo correcto es reportar por el canal correcto y aplicar contingencia."},{"nivel": "i","tema": "Cruce de datos y la llave","ctx": "Eres Analista I de la DIAN y debes cruzar dos grandes bases (declaraciones e información exógena) usando el número de identificación (NIT) como llave. Antes de procesar, detectas que en una de las bases hay NIT mal digitados y registros duplicados. El plazo es ajustado y un compañero te apura para que 'corras el cruce ya, que después se arreglan los detalles'. Tú sabes que la identificación es la llave de todo cruce.","q": "¿Cuál es la actuación correcta antes de ejecutar el cruce?","ops": ["Ejecutar el cruce de inmediato con las bases tal como están para cumplir el plazo, ya que los NIT mal digitados y los duplicados son pocos y no afectarán de manera relevante el resultado general del cruce.","Depurar primero la identificación (corregir los NIT, eliminar duplicados) y luego ejecutar el cruce, dejando constancia, pues el NIT es la llave: un error en la identificación hace que los registros no crucen o crucen con el contribuyente equivocado.","Ejecutar el cruce eliminando sin dejar constancia todos los registros con problemas de identificación, para que el proceso corra limpio y rápido, aunque eso signifique perder esa parte de la información y su rastro."],"correcta": 1,"expl": "El NIT es la llave del cruce: datos de identificación sucios producen falsos resultados (registros que no cruzan o cruzan mal). Correr con las bases sucias (A) contamina el resultado; eliminar registros sin constancia (C) pierde información y oculta el problema. Se depura la identificación primero y se deja constancia."},{"nivel": "i","tema": "Datos personales y finalidad","ctx": "Eres Analista I de la DIAN y administras una base con datos personales de muchos contribuyentes, que se recogió para un fin específico de control. Otra área te pide que le entregues esa base completa para un uso distinto al autorizado, 'aprovechando que ya la tienes armada'. Un compañero te dice que 'total, son datos de la entidad, entrégala y ya'. Tú conoces la Ley 1581 de 2012 y el principio de finalidad.","q": "¿Cuál es la actuación correcta frente a la solicitud de la otra área?","ops": ["Entregar la base completa de inmediato, ya que son datos de la entidad y otra área la solicita; como la información ya está armada, compartirla para cualquier uso agiliza el trabajo institucional sin mayor inconveniente.","Verificar si el nuevo uso tiene fundamento y autorización conforme a la finalidad para la que se recogieron los datos; si no la tiene, no entregar los datos personales para una finalidad no autorizada, y encauzar la solicitud por los canales correspondientes.","Entregar la base pero borrándole los nombres, aunque deje el resto de datos personales (identificación, dirección, datos económicos) intactos, dando por hecho que así ya no hay ningún problema de protección de datos."],"correcta": 1,"expl": "La Ley 1581/2012 exige el principio de finalidad: los datos personales solo se usan para los fines autorizados para los que se recogieron. Entregarlos para cualquier uso 'porque son de la entidad' (A) lo viola; y quitar solo los nombres (C) no basta si el resto permite identificar y el uso no está autorizado. Se verifica el fundamento y, si no lo hay, no se entregan."},{"nivel": "i","tema": "Continuidad y respaldo","ctx": "Eres Analista I de la DIAN y vienes trabajando desde hace semanas en una consolidación compleja de información, que guardas únicamente en el disco local de tu computador. Un compañero te comenta que a él una vez se le dañó el equipo y perdió todo lo que tenía guardado solo ahí. Reflexionas sobre cómo proteger tu trabajo frente a una eventual falla del equipo.","q": "¿Cuál es la práctica correcta para proteger tu trabajo?","ops": ["Seguir guardando todo únicamente en el disco local de tu computador, ya que ahí lo tienes siempre a la mano y es poco probable que justo a ti se te dañe el equipo mientras terminas la consolidación.","Respaldar periódicamente la información en los sistemas o repositorios institucionales previstos para ello, de modo que no dependa de una única copia local y pueda recuperarse si el equipo falla, conforme a las prácticas de continuidad.","Imprimir en papel toda la consolidación como respaldo, aunque sean miles de registros, y guardar las impresiones en tu puesto, confiando en que el papel nunca se pierde ni se daña y reemplaza cualquier copia digital."],"correcta": 1,"expl": "La continuidad exige no depender de una única copia: hay que respaldar en los repositorios institucionales. Guardar todo solo en el disco local (A) arriesga perder semanas de trabajo ante un daño; imprimir miles de registros (C) es inviable y el papel también se pierde. Se respalda digitalmente en el lugar institucional."},{"nivel": "i","tema": "Error del sistema y coordinación con tecnología","ctx": "Eres Analista I de la DIAN y detectas que un sistema está clasificando mal cierto tipo de operación, lo que distorsiona las estadísticas que produces. Un compañero te sugiere dos cosas: o que 'entres a modificar el sistema tú mismo para corregirlo rápido', o que 'ignores el error y sigas produciendo las estadísticas con el dato como está, que igual nadie se va a dar cuenta'. Tú sabes cuál es el procedimiento correcto.","q": "¿Cuál es la actuación correcta ante el error de clasificación del sistema?","ops": ["Entrar a modificar el sistema tú mismo para corregir la clasificación de inmediato, ya que detectaste el error y resolverlo por tu cuenta es más rápido que esperar a que lo haga otra área.","Ignorar el error y seguir produciendo las estadísticas con el dato mal clasificado, dado que corregirlo tomaría tiempo y, mientras nadie lo note, las estadísticas pueden entregarse igual dentro del plazo.","Documentar el error con ejemplos claros y reportarlo al área de tecnología para que lo corrija, y mientras tanto advertir o ajustar las estadísticas afectadas, sin modificar tú mismo el sistema."],"correcta": 2,"expl": "Modificar el sistema por cuenta propia (A) no corresponde al rol del Analista y puede causar daños; ignorar el error (B) propaga estadísticas distorsionadas. Lo correcto es documentar y reportar a tecnología para que corrija, y entretanto advertir o ajustar lo afectado."},{"nivel": "a","tema": "Caso integrador: dependencia acrítica del sistema","ctx": "Eres Analista I de la DIAN. Un sistema automatizado te entrega un listado de contribuyentes marcados como 'probables incumplidores' para alimentar un perfil de riesgo. Al revisarlo, notas que varios de los marcados son, con evidencia, contribuyentes que sí cumplieron: parece que el sistema aplicó mal un criterio de clasificación. El plazo para entregar el perfil es ajustado y un compañero te dice que 'reportes el listado tal cual lo arrojó el sistema, que la máquina no se equivoca y así cumples a tiempo'.","q": "¿Cuál es la actuación correcta con ese listado?","ops": ["Reportar el listado tal cual lo arrojó el sistema, sin revisar ni depurar, confiando en que la automatización es confiable y que así se cumple el plazo; si hay algún error, ya aparecerá más adelante en otra instancia.","Aplicar tu criterio profesional: verificar los casos que no cuadran, depurar los falsos positivos evidentes, reportar al área de tecnología el error de clasificación del sistema y entregar una información depurada, gestionando una prórroga si es necesario.","Descartar por completo el listado y no entregar nada, ya que si el sistema se equivocó en algunos casos no se puede confiar en ninguno, de modo que lo más seguro es no aportar información al perfil de riesgo."],"correcta": 1,"expl": "La dependencia acrítica del sistema (A) propaga errores y señalaría injustamente a cumplidos, vulnerando sus derechos. Pero descartar todo (C) desperdicia información útil. El valor del Analista es aplicar criterio: verificar, depurar falsos positivos, reportar el error a tecnología y entregar información depurada."},{"nivel": "a","tema": "Caso integrador: reserva, seguridad y uso de sistemas","ctx": "Eres Analista I de la DIAN. Un conocido que sabe dónde trabajas te escribe por un chat personal y te pide que uses tu acceso a los sistemas para 'averiguarle' la situación tributaria de una persona, y te ofrece 'colaborarte con algo' a cambio. Insiste en que 'nadie revisa lo que tú consultas en el sistema, así que es seguro'. Tú sabes que tus accesos quedan registrados (trazabilidad) y que la información tiene reserva.","q": "¿Cuál es la actuación correcta?","ops": ["Hacer la consulta y pasarle la información, aprovechando el acceso que tienes y la supuesta ausencia de controles, ya que es un conocido de confianza, te ofrece algo a cambio y crees que nadie se enterará de la consulta.","Negarte a realizar la consulta, no usar tus accesos para fines ajenos al servicio, dejar constancia de lo ocurrido y reportar la situación, pues la información tiene reserva, tus accesos quedan trazados y vender o filtrar datos configura faltas graves y posibles delitos.","Consultar la información solo para ti, sin pasársela al conocido ni cobrar nada, dado que el problema estaría únicamente en entregarla o en recibir dinero, y no en el simple hecho de mirarla aprovechando tu acceso al sistema."],"correcta": 1,"expl": "La información tiene reserva y los accesos quedan trazados: usarlos para fines ajenos al servicio es falta grave y posible delito, por más que 'nadie revise' (A). Y 'solo consultarla' sin fin del servicio (C) también es uso indebido que deja huella. Se niega, no se usa el acceso, se deja constancia y se reporta."},{"nivel": "a","tema": "Caso integrador: calidad, seguridad y rol en el gobierno digital","ctx": "Eres Analista I de la DIAN y debes consolidar, desde varios sistemas, un conjunto de datos de calidad que servirá de insumo para una decisión de gestión de la entidad, en el marco de la política de decisiones basadas en datos. El plazo es ajustado. Te enfrentas a varias tentaciones: tomar un atajo saltándote la depuración de calidad, guardar todo en tu equipo sin respaldo para ir más rápido, y compartir tu clave con un auxiliar para que te ayude a avanzar. Un compañero te dice que 'con tal de entregar a tiempo, todo vale'.","q": "¿Cuál es la actuación correcta que combina calidad, seguridad y buen rol?","ops": ["Tomar los atajos para cumplir el plazo: saltarte la depuración de calidad, guardar todo en tu equipo sin respaldo y compartir tu clave con el auxiliar, ya que entregar a tiempo es la prioridad y la decisión depende de que llegue el dato.","Depurar y validar la calidad de los datos antes de entregarlos, respaldar el trabajo en los repositorios institucionales, no compartir tu clave (que el auxiliar use la suya) y, si el tiempo no alcanza para hacerlo bien, gestionar una prórroga razonable.","Entregar los datos sin depurar pero advirtiendo que 'pueden tener errores', guardar en tu equipo sin respaldo y compartir la clave solo por hoy, como una solución intermedia entre la calidad y el cumplimiento del plazo."],"correcta": 1,"expl": "La decisión se basará en estos datos, así que la calidad es innegociable; y la seguridad (respaldo, no compartir claves) tampoco se sacrifica por el plazo. Los atajos (A) y la 'solución intermedia' (C) comprometen la decisión y la seguridad. Se depura, se respalda, no se comparte la clave y, si falta tiempo, se gestiona prórroga."}];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
