@@ -16,7 +16,7 @@
 //     migración aún no se haya aplicado).
 // ============================================================
 
-export const OPECS_SECUENCIALES = ["236897", "236906"];
+export const OPECS_SECUENCIALES = ["236897", "236906", "236760"];
 
 // Guías que aparecen en el plan pero aún se están escribiendo. Se ven en la
 // ruta como "🛠️ En preparación", no se pueden abrir ni marcar, y FRENAN la
@@ -39,6 +39,9 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   "FUN-COR-FAC2-03-mensajeria-y-control-entregas.html",
   "FUN-GDOC-FAC2-04-conservacion-prestamo-consulta.html",
   "SIM-DIAN-FAC2-001.html",
+  // Gloriela · Analista IV fiscalización (236760) — alcance del cargo Día 8 + simulacro
+  "DIAN-AIV-COM-04-alcance-cargo-analista-iv.html",
+  "SIM-DIAN-AIV-001.html",
 ]);
 
 export function enPreparacion(g: any): boolean {
