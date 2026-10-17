@@ -326,3 +326,21 @@ Estas entradas están en estado **pendiente** hasta completar validación editor
 | 7 | `DIAN-ASI-COM-03` | Orientación al logro y al usuario — Facilitador II | pendiente |
 | 8 | `DIAN-ASI-COM-04` | Alcance del cargo y evaluación — Facilitador II | pendiente |
 | 21 | `SIM-DIAN-FAC2-001` | Simulacro final DIAN Facilitador II | pendiente |
+
+
+### Entradas adicionales de los cursos DIAN (revisión de integridad)
+
+| Día | Código | Guía | Estado |
+|---:|---|---|---|
+| 9 | `FUN-CONST-FAC2-01` | Constitución aplicada al cargo Facilitador II | pendiente |
+| 10 | `FUN-COR-FAC2-01` | Correspondencia y comunicaciones oficiales | pendiente |
+| 11 | `FUN-GDOC-FAC2-01` | Gestión de documentos | pendiente |
+| 12 | `FUN-GDOC-FAC2-02` | Conservación y preservación documental | pendiente |
+| 13 | `FUN-GP-FAC2-01` | Gestión pública y función pública | pendiente |
+| 14 | `FUN-GDOC-FAC2-03` | Transferencia, consulta y trazabilidad documental | pendiente |
+| 15 | `FUN-COR-FAC2-02` | Radicación y seguimiento de comunicaciones oficiales | pendiente |
+| 16 | `FUN-GP-FAC2-02` | Apoyo operativo a actos administrativos | pendiente |
+| 17 | `FUN-DOC-FAC2-01` | Control de expedientes, préstamo y custodia | pendiente |
+| 18 | `FUN-CONST-FAC2-02` | Derechos, transparencia y protección de la información | pendiente |
+| 19 | `FUN-COR-FAC2-03` | Mensajería, entrega segura y control de recibidos | pendiente |
+| 20 | `FUN-GDOC-FAC2-04` | Conservación, préstamo y consulta de documentos | pendiente |
