@@ -668,6 +668,7 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "BON-02", dia: null, orden: 101 },
       { codigo: "DIAN-EST-01", dia: null, orden: 102 },
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
+      { codigo: "BON-03", dia: null, orden: 104 },
     ],
   },
 };
