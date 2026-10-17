@@ -577,12 +577,12 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
     id: "dian-gestor-i-talento-humano-236897",
     nombre: "DIAN · Gestor I, Talento Humano (OPEC 236897) — plan personalizado de 21 días",
     guias: [
-      { codigo: "INTRO-00-DIAN-GHI", dia: 1 },
+      { codigo: "INTRO-00", dia: 1 },
       { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
       { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
-      { codigo: "GEN-01-DIAN-GHI", dia: 2 },
-      { codigo: "GEN-02-DIAN-GHI", dia: 3 },
-      { codigo: "GEN-03-DIAN-GHI", dia: 4 },
+      { codigo: "GEN-01", dia: 2 },
+      { codigo: "GEN-02", dia: 3 },
+      { codigo: "GEN-03", dia: 4 },
       { codigo: "DIAN-GHI-COM-01", dia: 5 },
       { codigo: "DIAN-GHI-COM-02", dia: 6 },
       { codigo: "DIAN-GHI-COM-03", dia: 7 },
@@ -1062,6 +1062,9 @@ export async function restaurarBaseCNSC(
   const { data: guias } = await supabase.from("guias_curso").select("archivo_path").eq("curso_id", cursoId);
   const rutas = new Set<string>(((guias as any[]) || []).map((g) => (g.archivo_path || "").toString()).filter(Boolean));
   if ([...rutas].some((r) => /PGN/i.test(r) || /-AUX[-.]/i.test(r))) return 0; // señales de plan PGN.
+  // Plan personalizado CNSC (INTRO/GEN propios, p. ej. INTRO-00-DIAN-FAC2, GEN-01-DIAN-FAC2):
+  // ya trae su bloque Días 1-4; no agregar las genéricas encima.
+  if ([...rutas].some((r) => /(^|\/)(INTRO-00|GEN-0[1-3])-[A-Z]/.test(r))) return 0;
 
   // Solo si falta TODO el bloque inicial (no tocar cursos donde el admin borró una guía suelta).
   if (rutas.has(ARCHIVOS["INTRO-00"]) || rutas.has(ARCHIVOS["GEN-01"])) return 0;

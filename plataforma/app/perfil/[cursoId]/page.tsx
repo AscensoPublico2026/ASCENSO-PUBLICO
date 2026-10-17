@@ -98,7 +98,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   // Desbloqueo secuencial (cursos marcados): cada guía se abre al terminar la
   // anterior. En vista previa (admin) todo se ve abierto.
   const secuencial = esCursoSecuencial(curso) && !esPreview;
-  const desbloqueo = secuencial ? calcularDesbloqueo(guias || []) : { bloqueadas: new Set<string>(), actual: null as any };
+  const desbloqueo = secuencial
+    ? calcularDesbloqueo(guias || [])
+    : { bloqueadas: new Set<string>(), preparando: new Set<string>(), actual: null as any, esperando: null as any };
 
   // Desbloqueo del simulacro: solo se activa cuando TODAS las guías del PLAN
   // con archivo disponible (generales/nivel/funcionales) ya fueron leídas.
@@ -118,7 +120,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
     arr.sort((a: any, b: any) => (a.orden ?? a.dia ?? 0) - (b.orden ?? b.dia ?? 0))
   );
   // Módulo abierto por defecto: el primero que tenga guías por leer.
-  const moduloAbierto = secuencial && desbloqueo.actual ? moduloKey(desbloqueo.actual) :
+  const moduloAbierto = secuencial && (desbloqueo.actual || desbloqueo.esperando) ? moduloKey(desbloqueo.actual || desbloqueo.esperando) :
     (MODULOS.find((m) => (porModulo[m.key] || []).some((g: any) => g.archivo_path && !g.leida)) ||
       MODULOS.find((m) => (porModulo[m.key] || []).length > 0) ||
       { key: "" }).key;
@@ -273,6 +275,14 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
 
           {/* Continúa donde quedaste */}
           {proximaGuia && <ContinuarBanner guia={proximaGuia} />}
+          {secuencial && !proximaGuia && desbloqueo.esperando && (
+            <div style={{ background: "#EEF3FB", border: "1px solid #C9D7EE", borderRadius: 14, padding: "16px 18px", marginBottom: 22, display: "flex", gap: 12, alignItems: "center" }}>
+              <span style={{ fontSize: "1.4rem" }}>🛠️</span>
+              <span style={{ fontSize: ".88rem", color: "var(--texto-suave)", lineHeight: 1.55 }}>
+                ¡Vas al día! Tu siguiente guía, <strong style={{ color: "var(--azul)" }}>{desbloqueo.esperando.dia != null ? `Día ${desbloqueo.esperando.dia} · ` : ""}{desbloqueo.esperando.titulo}</strong>, está en preparación final y se habilitará muy pronto. Mientras tanto, repasa las guías que ya completaste.
+              </span>
+            </div>
+          )}
 
           {/* Módulos del currículo (acordeón) */}
           {modulosVisibles.map((m, idx) => {
@@ -294,6 +304,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
                 rango={rangoDias(gs)}
                 abierto={m.key === moduloAbierto}
                 bloqueadas={desbloqueo.bloqueadas}
+                preparando={desbloqueo.preparando}
               />
             );
           })}
@@ -382,12 +393,12 @@ const TIPO_LABEL: Record<string, string> = {
   simulacro: "Evaluación final",
 };
 
-function FilaGuia({ g, bloqueada }: { g: any; bloqueada?: boolean }) {
+function FilaGuia({ g, bloqueada, preparando }: { g: any; bloqueada?: boolean; preparando?: boolean }) {
   const dispo = !!g.archivo_path;
   if (bloqueada) {
     return (
       <div
-        title="Se abre cuando termines la guía anterior"
+        title={preparando ? "Guía en preparación final: se habilita pronto" : "Se abre cuando termines la guía anterior"}
         style={{
           display: "flex", alignItems: "center", gap: 14, background: "#FAFAF7",
           border: "1px dashed var(--gris-borde)", borderRadius: 14, padding: "13px 16px", opacity: .75,
@@ -406,7 +417,7 @@ function FilaGuia({ g, bloqueada }: { g: any; bloqueada?: boolean }) {
           <span style={{ fontWeight: 700, fontSize: ".95rem", color: "var(--texto-suave)", display: "block" }}>{g.titulo}</span>
           {g.tipo && <span style={{ display: "block", fontSize: ".74rem", color: "var(--texto-suave)", marginTop: 2 }}>{TIPO_LABEL[g.tipo] || g.tipo}</span>}
         </div>
-        <span style={{ color: "var(--texto-suave)", fontSize: ".76rem", fontWeight: 600, whiteSpace: "nowrap" }}>🔒 Termina la anterior</span>
+        <span style={{ color: "var(--texto-suave)", fontSize: ".76rem", fontWeight: 600, whiteSpace: "nowrap" }}>{preparando ? "🛠️ En preparación" : "🔒 Termina la anterior"}</span>
       </div>
     );
   }
@@ -464,8 +475,8 @@ function FilaGuia({ g, bloqueada }: { g: any; bloqueada?: boolean }) {
   );
 }
 
-function ModuloGuias({ numero, modulo, guias, total, leidas, rango, abierto, bloqueadas }: {
-  numero: number; modulo: ModuloDef; guias: any[]; total: number; leidas: number; rango: string | null; abierto: boolean; bloqueadas: Set<string>;
+function ModuloGuias({ numero, modulo, guias, total, leidas, rango, abierto, bloqueadas, preparando }: {
+  numero: number; modulo: ModuloDef; guias: any[]; total: number; leidas: number; rango: string | null; abierto: boolean; bloqueadas: Set<string>; preparando: Set<string>;
 }) {
   const estado = estadoModulo(total, leidas);
   const pct = total > 0 ? Math.round((leidas / total) * 100) : 0;
@@ -488,7 +499,7 @@ function ModuloGuias({ numero, modulo, guias, total, leidas, rango, abierto, blo
       </summary>
       <div className="modulo-body">
         <p className="modulo-intro"><span className="modulo-intro-ic">💡</span>{modulo.intro}</p>
-        {guias.map((g: any) => <FilaGuia key={g.id} g={g} bloqueada={bloqueadas.has(g.id)} />)}
+        {guias.map((g: any) => <FilaGuia key={g.id} g={g} bloqueada={bloqueadas.has(g.id)} preparando={preparando.has(g.id)} />)}
       </div>
     </details>
   );

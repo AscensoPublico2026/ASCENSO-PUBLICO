@@ -41,14 +41,17 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
       .from("guias_curso")
       .select("id, titulo, leida, archivo_path, tipo, dia, orden")
       .eq("curso_id", guia.curso_id);
-    const { bloqueadas, actual } = calcularDesbloqueo(todas || []);
+    const { bloqueadas, preparando, actual } = calcularDesbloqueo(todas || []);
     if (bloqueadas.has(guia.id)) {
+      const prep = preparando.has(guia.id);
       return (
         <main style={{ maxWidth: 620, margin: "0 auto", padding: "60px 22px", textAlign: "center" }}>
-          <div style={{ fontSize: "2.6rem", marginBottom: 12 }}>🔒</div>
+          <div style={{ fontSize: "2.6rem", marginBottom: 12 }}>{prep ? "🛠️" : "🔒"}</div>
           <h1 style={{ fontSize: "1.4rem", marginBottom: 8 }}>{guia.titulo}</h1>
           <p style={{ color: "var(--texto-suave)", marginBottom: 8, lineHeight: 1.6 }}>
-            Tu ruta avanza <strong>guía por guía, en orden</strong>. Esta guía se abre cuando termines la anterior.
+            {prep
+              ? "Esta guía está en preparación final y se habilitará muy pronto en tu ruta."
+              : <>Tu ruta avanza <strong>guía por guía, en orden</strong>. Esta guía se abre cuando termines la anterior.</>}
           </p>
           {actual && (
             <p style={{ color: "var(--texto-suave)", marginBottom: 24 }}>

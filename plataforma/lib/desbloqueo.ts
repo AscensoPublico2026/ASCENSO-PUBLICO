@@ -18,6 +18,34 @@
 
 export const OPECS_SECUENCIALES = ["236897", "236906"];
 
+// Guías que aparecen en el plan pero aún se están escribiendo. Se ven en la
+// ruta como "🛠️ En preparación", no se pueden abrir ni marcar, y FRENAN la
+// secuencia (y el simulacro). Al terminar una guía: reemplazar su HTML, sacarla
+// de esta lista y desplegar (+ /api/admin/seed-guias para refrescar el bucket).
+// Se compara por nombre de archivo (sin carpeta).
+export const GUIAS_EN_PREPARACION = new Set<string>([
+  // Clary · Gestor I Talento Humano (236897) — comportamentales Días 5-8 + simulacro
+  "DIAN-GHI-COM-01-etica-adaptabilidad.html",
+  "DIAN-GHI-COM-02-comunicacion-trabajo-equipo.html",
+  "DIAN-GHI-COM-03-logro-usuario-innovacion.html",
+  "DIAN-GHI-COM-04-alcance-cargo-evaluacion.html",
+  "SIM-DIAN-GHI-001.html",
+  // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
+  "FUN-GDOC-FAC2-03-transferencia-y-trazabilidad-documental.html",
+  "FUN-COR-FAC2-02-radicacion-y-comunicaciones-oficiales.html",
+  "FUN-GP-FAC2-02-apoyo-actos-administrativos.html",
+  "FUN-DOC-FAC2-01-control-expedientes.html",
+  "FUN-CONST-FAC2-02-derechos-peticion-transparencia.html",
+  "FUN-COR-FAC2-03-mensajeria-y-control-entregas.html",
+  "FUN-GDOC-FAC2-04-conservacion-prestamo-consulta.html",
+  "SIM-DIAN-FAC2-001.html",
+]);
+
+export function enPreparacion(g: any): boolean {
+  const base = String(g?.archivo_path || "").split("/").pop() || "";
+  return GUIAS_EN_PREPARACION.has(base);
+}
+
 // Minutos mínimos con la guía abierta antes de poder marcarla terminada.
 export const MINUTOS_MINIMOS_GUIA = 10;
 
@@ -60,22 +88,30 @@ export function secuenciaPlan(guias: any[]): any[] {
  * Regla: se recorre el plan en orden (sin bonus, que siempre está libre);
  * las guías ya terminadas están abiertas; la PRIMERA no terminada está
  * abierta (es la "actual"); todas las siguientes no terminadas, bloqueadas.
+ * Si la primera no terminada está EN PREPARACIÓN, no hay "actual": la ruta
+ * queda "esperando" esa guía y todo lo posterior sigue bloqueado.
  * Las guías sin archivo no cuentan (se muestran "Próximamente").
  */
-export function calcularDesbloqueo(guias: any[]): { bloqueadas: Set<string>; actual: any | null; anterior: Map<string, any> } {
+export function calcularDesbloqueo(guias: any[]): {
+  bloqueadas: Set<string>; preparando: Set<string>; actual: any | null; esperando: any | null;
+} {
   const bloqueadas = new Set<string>();
-  const anterior = new Map<string, any>();
-  let actual: any = null;
-  let previa: any = null;
+  const preparando = new Set<string>();
+  let actual: any = null;   // guía abierta por estudiar
+  let esperando: any = null; // guía en preparación que frena la ruta
   for (const g of secuenciaPlan(guias)) {
     if (g.tipo === "bonus" || !g.archivo_path) continue;
-    if (previa) anterior.set(g.id, previa);
-    previa = g;
-    if (g.leida) continue;
-    if (!actual) { actual = g; continue; }
+    const prep = enPreparacion(g);
+    if (prep) preparando.add(g.id);
+    if (g.leida && !prep) continue;
+    if (!actual && !esperando) {
+      if (prep) { esperando = g; bloqueadas.add(g.id); }
+      else actual = g;
+      continue;
+    }
     bloqueadas.add(g.id);
   }
-  return { bloqueadas, actual, anterior };
+  return { bloqueadas, preparando, actual, esperando };
 }
 
 /** Siguiente guía del plan (con archivo, sin bonus) después de `guiaId`. */
