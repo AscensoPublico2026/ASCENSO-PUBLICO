@@ -533,6 +533,44 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
     ],
   },
+  // DIAN — Analista I (nivel Técnico), concurso DIAN 2676, OPEC 246932 — Syndy Carolina Perilla Moreno.
+  // Eje del manual: GESTIÓN DE INFORMACIÓN y soporte técnico (NO fiscaliza, NO liquida,
+  // NO decide de fondo, NO administra infraestructura). Comportamentales propias
+  // -TEC-COM (nivel Técnico, reenfocadas del molde -PRO-COM del nivel Profesional,
+  // con 0 fugas) y funcionales propias FUN-AINF (ver referencias/_SPEC-CURSO-DIAN-ANALISTA-I-SYNDY.md).
+  "dian-analista-i": {
+    id: "dian-analista-i",
+    nombre: "DIAN · Analista I (Técnico, gestión de información), concurso DIAN 2676, OPEC 246932 — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00", dia: 1 },
+      { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
+      { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
+      { codigo: "GEN-01", dia: 2 },
+      { codigo: "GEN-02", dia: 3 },
+      { codigo: "GEN-03", dia: 4 },
+      { codigo: "DIAN-TEC-COM-01", dia: 5 },
+      { codigo: "DIAN-TEC-COM-02", dia: 6 },
+      { codigo: "DIAN-TEC-COM-03", dia: 7 },
+      { codigo: "DIAN-TEC-COM-04", dia: 8 },
+      { codigo: "FUN-AINF-01", dia: 9 },
+      { codigo: "FUN-AINF-02", dia: 10 },
+      { codigo: "FUN-AINF-03", dia: 11 },
+      { codigo: "FUN-AINF-04", dia: 12 },
+      { codigo: "FUN-AINF-05", dia: 13 },
+      { codigo: "FUN-AINF-06", dia: 14 },
+      { codigo: "FUN-AINF-07", dia: 15 },
+      { codigo: "FUN-AINF-08", dia: 16 },
+      { codigo: "FUN-AINF-09", dia: 17 },
+      { codigo: "FUN-AINF-10", dia: 18 },
+      { codigo: "FUN-AINF-11", dia: 19 },
+      { codigo: "FUN-AINF-12", dia: 20 },
+      { codigo: "SIM-DIAN-AI-001", dia: 21 },
+      { codigo: "BON-01", dia: null, orden: 100 },
+      { codigo: "BON-02", dia: null, orden: 101 },
+      { codigo: "DIAN-EST-01", dia: null, orden: 102 },
+      { codigo: "DIAN-INT-01", dia: null, orden: 103 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
