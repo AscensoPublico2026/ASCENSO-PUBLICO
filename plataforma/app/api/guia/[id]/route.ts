@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/site";
+import { esCursoSecuencial, calcularDesbloqueo } from "@/lib/desbloqueo";
 
 export const dynamic = "force-dynamic";
 
@@ -14,10 +15,25 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
   const { data: guia } = await supabase
     .from("guias_curso")
-    .select("archivo_path")
+    .select("archivo_path, curso_id")
     .eq("id", params.id)
     .single();
   if (!guia?.archivo_path) return new NextResponse("No encontrado", { status: 404 });
+
+  // Desbloqueo secuencial: no servir el HTML de una guía bloqueada (salvo admin).
+  const { data: cursoG } = await supabase.from("cursos").select("*").eq("id", guia.curso_id).single();
+  if (esCursoSecuencial(cursoG)) {
+    const { data: perfil } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
+    if (perfil?.rol !== "admin") {
+      const { data: todas } = await supabase
+        .from("guias_curso")
+        .select("id, leida, archivo_path, tipo, dia, orden")
+        .eq("curso_id", guia.curso_id);
+      if (calcularDesbloqueo(todas || []).bloqueadas.has(params.id)) {
+        return new NextResponse("Guía bloqueada: termina la anterior.", { status: 403 });
+      }
+    }
+  }
 
   const admin = createAdminClient();
   let html: string | null = null;

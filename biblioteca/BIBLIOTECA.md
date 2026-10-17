@@ -281,3 +281,66 @@ Temas:
 - **Profesional:** Aporte técnico-profesional · Comunicación efectiva · Gestión de procedimientos · Instrumentación de decisiones.
 
 **Formato de prueba:** Juicio situacional: se plantea un caso laboral y se elige la actuación más apropiada (4 opciones, una correcta).
+
+
+## Cursos personalizados DIAN — integración en revisión
+
+Estas entradas están en estado **pendiente** hasta completar validación editorial y técnica. No se deben asignar a estudiantes hasta aprobar la revisión.
+
+### Gestor I — Talento Humano (OPEC 236897)
+
+| Día | Código | Guía | Estado |
+|---:|---|---|---|
+| 1 | `INTRO-00-DIAN-GHI` | Presentación del curso Gestor I — Talento Humano | pendiente |
+| 2 | `GEN-01-DIAN-GHI` | Estado, función pública y empleo público | pendiente |
+| 3 | `GEN-02-DIAN-GHI` | Relación Estado-ciudadano y servicio público | pendiente |
+| 4 | `GEN-03-DIAN-GHI` | Marco institucional de la DIAN y organización del Estado | pendiente |
+| 5 | `DIAN-GHI-COM-01` | Ética y adaptabilidad — Gestor I | pendiente |
+| 6 | `DIAN-GHI-COM-02` | Comunicación y trabajo en equipo — Gestor I | pendiente |
+| 7 | `DIAN-GHI-COM-03` | Logro, servicio e innovación — Gestor I | pendiente |
+| 8 | `DIAN-GHI-COM-04` | Alcance del cargo y evaluación comportamental — Gestor I | pendiente |
+| 9 | `FUN-GHI-01` | Gestión del empleo público | pendiente |
+| 10 | `FUN-GHI-02` | Generalidades de la gestión humana pública | pendiente |
+| 11 | `FUN-GHI-03` | Gestión del rendimiento y evaluación del desempeño | pendiente |
+| 12 | `FUN-GHI-04` | Compensación, nómina y seguridad social | pendiente |
+| 13 | `FUN-GHI-05` | Desarrollo, capacitación, bienestar y SST | pendiente |
+| 14 | `FUN-GHI-06` | Planificación del trabajo y relaciones humanas | pendiente |
+| 15 | `FUN-CONST-DIAN-GHI-01` | Constitución aplicada al cargo Gestor I | pendiente |
+| 16 | `FUN-JUR-DIAN-GHI-01` | CPACA y procedimiento administrativo | pendiente |
+| 17 | `FUN-MIPG-DIAN-GHI-01` | MIPG, buen gobierno e integridad | pendiente |
+| 18 | `FUN-GDOC-DIAN-GHI-01` | Gestión documental e historias laborales | pendiente |
+| 19 | `FUN-ATC-DIAN-GHI-01` | PQRSF y servicio al ciudadano | pendiente |
+| 20 | `FUN-DIAN-GHI-INFO-01` | Herramientas informáticas, transparencia y conceptos DIAN | pendiente |
+| 21 | `SIM-DIAN-GHI-001` | Simulacro final DIAN Gestor I — Talento Humano | pendiente |
+
+### Facilitador II — OPEC 236906
+
+| Día | Código | Guía | Estado |
+|---:|---|---|---|
+| 1 | `INTRO-00-DIAN-FAC2` | Presentación del curso Facilitador II DIAN | pendiente |
+| 2 | `GEN-01-DIAN-FAC2` | Estado y función pública — Facilitador II | pendiente |
+| 3 | `GEN-02-DIAN-FAC2` | Relación Estado-ciudadano — Facilitador II | pendiente |
+| 4 | `GEN-03-DIAN-FAC2` | Marco institucional DIAN — Facilitador II | pendiente |
+| 5 | `DIAN-ASI-COM-01` | Comportamiento ético y adaptabilidad — Facilitador II | pendiente |
+| 6 | `DIAN-ASI-COM-02` | Comunicación efectiva y trabajo en equipo — Facilitador II | pendiente |
+| 7 | `DIAN-ASI-COM-03` | Orientación al logro y al usuario — Facilitador II | pendiente |
+| 8 | `DIAN-ASI-COM-04` | Alcance del cargo y evaluación — Facilitador II | pendiente |
+| 21 | `SIM-DIAN-FAC2-001` | Simulacro final DIAN Facilitador II | pendiente |
+
+
+### Entradas adicionales de los cursos DIAN (revisión de integridad)
+
+| Día | Código | Guía | Estado |
+|---:|---|---|---|
+| 9 | `FUN-CONST-FAC2-01` | Constitución aplicada al cargo Facilitador II | pendiente |
+| 10 | `FUN-COR-FAC2-01` | Correspondencia y comunicaciones oficiales | pendiente |
+| 11 | `FUN-GDOC-FAC2-01` | Gestión de documentos | pendiente |
+| 12 | `FUN-GDOC-FAC2-02` | Conservación y preservación documental | pendiente |
+| 13 | `FUN-GP-FAC2-01` | Gestión pública y función pública | pendiente |
+| 14 | `FUN-GDOC-FAC2-03` | Transferencia, consulta y trazabilidad documental | pendiente |
+| 15 | `FUN-COR-FAC2-02` | Radicación y seguimiento de comunicaciones oficiales | pendiente |
+| 16 | `FUN-GP-FAC2-02` | Apoyo operativo a actos administrativos | pendiente |
+| 17 | `FUN-DOC-FAC2-01` | Control de expedientes, préstamo y custodia | pendiente |
+| 18 | `FUN-CONST-FAC2-02` | Derechos, transparencia y protección de la información | pendiente |
+| 19 | `FUN-COR-FAC2-03` | Mensajería, entrega segura y control de recibidos | pendiente |
+| 20 | `FUN-GDOC-FAC2-04` | Conservación, préstamo y consulta de documentos | pendiente |

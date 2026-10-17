@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-GDOC-FAC2-01 · Gestión de Documentos en el Día a Día (Facilitador II) — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-GDOC-FAC2-01</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 12 · Funcional del cargo</div>
+  <h1>Gestión de Documentos en el Día a Día</h1>
+  <p class="header-sub">El corazón operativo del trabajo del <strong>Facilitador II</strong>: cómo se <strong>producen, reciben, radican, distribuyen y tramitan</strong> los documentos de la dependencia, con orden, trazabilidad y apego a la Ley 594 de 2000 y a los Acuerdos del AGN, aplicado al rol real del nivel Asistencial en la <strong>Dirección de Impuestos y Aduanas Nacionales (DIAN)</strong>.</p>
+  <div class="badges"><span class="badge">📅 Día 12 de 21</span><span class="badge">⏱ 90-110 min</span><span class="badge">🏛️ DIAN · CNSC</span><span class="badge">📖 Funcional</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Distinciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Son las 7:40 de la mañana en una Dirección Seccional de la DIAN. Llegas a tu puesto como <strong>Facilitador II</strong> y sobre el escritorio de la unidad de correspondencia hay trabajo represado: un lote de 32 documentos que llegaron ayer sin radicar todavía (unos por ventanilla física, otros impresos del correo institucional), un borrador de oficio que la División de Fiscalización te pidió alistar para firma, y una pila de comunicaciones que entraron por el buzón del Servicio al Ciudadano. Entre todo ese material hay —sin que aún lo sepas— un requerimiento ordinario dirigido a un contribuyente cuyo término de respuesta corre desde su radicación, un memorando interno entre la División de Gestión Documental y la de Cobranzas, una respuesta a una PQRSF que vence pronto, y una comunicación mal dirigida a un servidor que ya se trasladó. El teléfono suena: es un contribuyente que pregunta por el estado de un documento que radicó la semana pasada. ¿Por dónde empiezas? ¿Cómo recibes y radicas para que nada se pierda? ¿Cómo distribuyes cada cosa a la dependencia competente? ¿Qué le respondes al contribuyente en segundos?</p>
+    <p>Hoy vas a dominar el <strong>núcleo operativo de tu cargo</strong>: la <mark>gestión de documentos en el día a día</mark> —la <strong>producción, recepción, radicación, distribución y trámite</strong> de los documentos que entran y salen de tu dependencia—. No es "papeleo" ni una tarea mecánica: es la actividad que sostiene, todos los días, que la información de la DIAN circule sin perderse, que los términos legales no se venzan por descuido y que cada contribuyente y cada dependencia tengan lo que necesitan. Un Facilitador II que recibe, radica y distribuye bien es, literalmente, el <strong>sistema circulatorio</strong> de su dependencia. (La parte de qué pasa <em>después</em> con esos documentos —cuánto se guardan, cómo se transfieren y cómo se conservan a largo plazo— la verás en el Día 13.)</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es la <strong>gestión documental</strong> y por qué obliga a la DIAN como a toda entidad pública (Ley 594 de 2000 y Acuerdos del AGN).</li>
+      <li>El <strong>ciclo vital del documento</strong> visto desde su inicio: cómo <em>nace</em> (se produce o se recibe) y cómo <em>circula y se tramita</em> dentro de la entidad.</li>
+      <li>Los <strong>tipos documentales de la DIAN</strong> que vas a manejar: oficios y requerimientos a contribuyentes y usuarios aduaneros, memorandos internos, autos, actos administrativos, respuestas a PQRSF y comunicaciones de entes de control.</li>
+      <li>La <strong>producción documental</strong>: cómo se alista y proyecta un documento rutinario bajo normas técnicas (formato, membrete, anexos), sin decidir su contenido de fondo.</li>
+      <li>La <strong>recepción y la radicación</strong>: la ventanilla única, el número consecutivo, la fecha y hora ciertas, y por qué un documento sin radicar "no existe".</li>
+      <li>La <strong>distribución por competencia</strong>: a quién le entregas cada cosa dentro de la DIAN y cómo dejas constancia de la entrega.</li>
+      <li>La <strong>gestión y el trámite</strong>: el seguimiento de términos y el control de lo que entra y sale, para que nada quede "en el aire".</li>
+      <li>Dónde termina tu función: tú <strong>produces, recibes, radicas, distribuyes y tramitas bajo instrucciones</strong>; no decides el fondo, no fiscalizas ni liquidas.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Primero verás por qué este tema es decisivo para tu prueba de conocimientos (la gestión de documentos es columna vertebral del cargo). Luego, en el Desarrollo, recorrerás nueve módulos con teoría aplicada, tablas, ejemplos "En la práctica" ambientados en una unidad de correspondencia real de una Dirección Seccional de la DIAN, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro de juicio situacional con el formato de <strong>tres opciones</strong> de la prueba escrita DIAN. El Día 12 se concentra en <em>cómo nace y circula</em> el documento; la conservación, las TRD y las transferencias son el tema del Día 13.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>Abre el manual de funciones del cargo <strong>Facilitador II, OPEC 236906</strong> (Convocatoria DIAN 2676, concurso de ascenso administrado por la <strong>CNSC</strong>) y mira la sección de conocimientos y funciones. Varias de tus funciones de apoyo hablan de documentos: <mark>proyectar y alistar documentos rutinarios</mark>; <mark>recibir, radicar, clasificar y distribuir</mark> comunicaciones y correspondencia; controlar el <mark>ingreso y la salida</mark> de documentos; apoyar la gestión documental de la dependencia. En otras palabras: este tema no es "uno más", es la <strong>columna vertebral operativa</strong> del cargo en el nivel Asistencial.</p></div>
+  <div class="mmap-t">🗺️ Por qué la prueba insiste tanto en la gestión de documentos</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">📌</span><h5>Está en el manual</h5><p>Producir, recibir, radicar y distribuir son funciones explícitas del cargo: la prueba se construye sobre el manual.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚙️</span><h5>Es tu día a día</h5><p>Radicas, repartes y haces seguimiento todos los días: es lo más "medible" del rol.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">⚖️</span><h5>Tiene consecuencias</h5><p>Un documento sin radicar o mal distribuido puede vencer un término o tumbar una actuación.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🎯</span><h5>Se presta a casos</h5><p>La prueba pregunta con situaciones: "llega esto a la ventanilla, ¿qué haces?".</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>En la prueba de la DIAN <strong>no te van a pedir que recites definiciones</strong>: te van a poner en una situación real de la unidad de correspondencia y te van a preguntar qué es lo correcto. Por eso esta guía está llena de ejemplos "En la práctica" y de casos: para que entrenes el <mark>criterio</mark>, no la memoria. Aun así, hay datos duros que sí debes saber (la Ley 594 de 2000, las fases del ciclo vital, qué es radicar, la ventanilla única), y los vas a repasar con flashcards al final.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>Tu proceso es la <strong>Convocatoria DIAN 2676</strong>, un concurso de <strong>ascenso</strong> para el cargo Facilitador II (OPEC 236906), del <strong>nivel Asistencial</strong>, <mark>administrado por la Comisión Nacional del Servicio Civil (CNSC)</mark>. Las normas de archivo que verás hoy (Ley 594 de 2000, Decreto 1080 de 2015, Acuerdos del AGN) aplican a <strong>toda entidad pública del país</strong>, incluida la DIAN; el examen y sus reglas son los del proceso de ascenso de la DIAN con la CNSC. Mantén ese marco claro: entidad DIAN, cargo Facilitador II, nivel Asistencial, operador CNSC.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 La gestión de documentos en el día a día del Facilitador II de la DIAN</h2>
+  <p>Vamos a recorrer nueve módulos. Cada uno tiene teoría desarrollada, tablas comparativas, ejemplos "En la práctica" ambientados en tu cargo, ejercicios resueltos y puntos de control interactivos. La idea es que al final no solo sepas <em>qué</em> es gestionar documentos, sino que sepas <em>hacerlo</em> y <em>decidir</em> correctamente cuando el caso llegue a tu ventanilla. Hoy nos concentramos en la parte viva del documento: cómo <strong>nace</strong> (se produce o se recibe), cómo <strong>se radica</strong> y cómo <strong>circula y se tramita</strong>. Lo que ocurre después —cuánto se guarda, cómo se transfiere y cómo se conserva a largo plazo— es el tema del Día 13.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>¿Qué es la gestión documental y por qué obliga a la DIAN?</h3></div>
+    <div class="b-texto">
+      <p>Empecemos por lo esencial. La <strong>gestión documental</strong> no es "archivar papeles": es el conjunto de actividades técnicas y administrativas que se aplican a los documentos <mark>a lo largo de toda su vida</mark>, desde que se producen o se reciben hasta que se define su destino final. Su fin es que la entidad pueda <strong>producir, recibir, tramitar, organizar, conservar y recuperar</strong> su información de manera ordenada, íntegra y oportuna. En el Día 12 nos interesan especialmente las primeras etapas de esa vida: la producción, la recepción, la radicación, la distribución y el trámite.</p>
+      <div class="def-panel"><span class="def-label">Definición legal que debes conocer</span><p>El <strong>Archivo General de la Nación (AGN)</strong> y la Ley 594 de 2000 definen la Gestión Documental como el <mark>"conjunto de actividades administrativas y técnicas tendientes a la planificación, manejo y organización de la documentación producida y recibida por las entidades, desde su origen hasta su destino final, con el objeto de facilitar su utilización y conservación"</mark>.</p></div>
+      <p>Lee de nuevo la frase clave: <strong>"desde su origen hasta su destino final"</strong>. Eso significa que un documento tiene un ciclo de vida, igual que un ser vivo: nace (se produce o se recibe), crece y trabaja (se tramita y se usa) y en algún momento se define qué se hace con él. Tú, como Facilitador II, <mark>intervienes de lleno en el nacimiento y la circulación</mark> del documento: lo alistas, lo recibes, lo radicas, lo distribuyes y le haces seguimiento.</p>
+      <h4>¿Por qué esto es obligatorio y no opcional?</h4>
+      <p>Porque la información pública <strong>no es propiedad del funcionario</strong>: es patrimonio del Estado y de los ciudadanos. Cuando la DIAN produce un oficio o un requerimiento, ese documento es prueba de una actuación oficial; si se pierde, se traspapela o se envía sin radicar, se afecta el derecho de los contribuyentes a acceder a la información, se puede caer una actuación y se puede configurar una falta disciplinaria. Por eso el marco normativo es fuerte:</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Norma</th><th>Qué establece</th><th>Por qué te importa</th></tr>
+        <tr><td><strong>Ley 594 de 2000</strong></td><td>Ley General de Archivos. Fija los principios y obligaciones de la gestión documental para todas las entidades públicas.</td><td>Es la "columna vertebral". Si te preguntan "¿cuál es la ley de archivos?", la respuesta es esta.</td></tr>
+        <tr><td><strong>Decreto 1080 de 2015</strong></td><td>Decreto Único del sector Cultura; compila la reglamentación de archivos (incluye los ocho procesos de la gestión documental).</td><td>Es donde están los "cómo": producción, gestión y trámite, organización.</td></tr>
+        <tr><td><strong>Ley 1712 de 2014</strong></td><td>Ley de Transparencia y Acceso a la Información Pública.</td><td>Conecta el documento con el derecho del ciudadano a consultar: un buen manejo documental hace posible la transparencia.</td></tr>
+        <tr><td><strong>Ley 1437 de 2011 (CPACA)</strong></td><td>Procedimiento administrativo; incluye reglas de radicación, respuesta y expediente, y los términos del derecho de petición.</td><td>Define cómo se maneja la correspondencia y cuándo empiezan a correr los términos.</td></tr>
+        <tr><td><strong>Acuerdo 060 de 2001 del AGN</strong></td><td>Reglas para la administración de las comunicaciones oficiales: ventanilla única, radicación, control.</td><td>Es el "manual técnico" directo de lo que haces en la ventanilla.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> si una pregunta te da a elegir entre "es una buena práctica recomendable" y "es una obligación legal", en gestión documental casi siempre es <strong>obligación legal</strong>. Recibir, radicar y distribuir bien no es cortesía: es un deber funcional.</div>
+      <h4>La responsabilidad detrás de cada documento</h4>
+      <p>Conviene que entiendas el peso real de tu trabajo, porque explica por qué la prueba es exigente. La información que gestionas no es tuya ni de tu jefe: es <mark>patrimonio documental del Estado</mark>. Por eso el descuido documental tiene consecuencias reales: el Código General Disciplinario (Ley 1952 de 2019) tipifica como faltas conductas como ocultar, alterar, destruir o extraviar documentos públicos, y el Código Penal sanciona la destrucción, supresión u ocultamiento de documento público. Un documento que "desaparece" entre la ventanilla y la dependencia destino, o un radicado alterado, no es solo un problema de orden: puede ser una falta disciplinaria e incluso un delito. Cuando cuidas la integridad y la trazabilidad de lo que entra y sale, estás protegiendo a la entidad, al contribuyente y a ti mismo.</p>
+      <p>Hay además una razón práctica que a veces se olvida: la DIAN gestiona <strong>trámites con términos</strong> (requerimientos, respuestas a PQRSF, actuaciones de fiscalización y cobranza) en los que un día perdido en la ventanilla puede significar un término vencido para toda una dependencia. El documento que tú recibes a tiempo y distribuyes bien es el que permite que el abogado de Fiscalización, el gestor de Cobranzas o el servidor de Servicio al Ciudadano cumplan su propio plazo. Tu diligencia en el "nacimiento" del documento sostiene el cumplimiento de toda la cadena.</p>
+      <p>Conviene además desterrar una idea equivocada muy común en las oficinas: la de que "los documentos son del que los maneja". Durante años primó en el sector público la llamada "cultura del cajón", en la que cada servidor guardaba sus papeles como podía y, cuando se trasladaba o se retiraba, nadie encontraba nada. La normatividad archivística vino precisamente a acabar con eso, estableciendo que los documentos <strong>pertenecen a la entidad, no a la persona</strong>, y que deben manejarse con reglas técnicas uniformes para que cualquiera pueda ubicarlos. Esta idea —que el manejo documental es institucional y no personal— es la base de todo lo que verás hoy: por eso existe la ventanilla única (para que todo entre por un solo punto), la radicación con número único (para que cada documento tenga una identidad), y el control de ingreso y salida (para que nadie dependa de la memoria de un solo servidor). Entender esto te ayuda a elegir, en la prueba, las opciones que privilegian el procedimiento institucional sobre el arreglo informal.</p>
+      <h4>Los principios que rigen todo el manejo documental</h4>
+      <p>Dos principios archivísticos son el ADN de la organización de documentos, y aparecen desde el momento mismo en que un documento entra o se produce:</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🧩 Principio de procedencia</summary><div class="acc-body"><p>Los documentos <strong>deben mantenerse agrupados según la dependencia u oficina que los produjo</strong>, sin mezclarse con los de otra. Los documentos de la División de Fiscalización no se revuelven con los de Talento Humano. Cada "fondo" conserva su origen, desde que se recibe o produce.</p><p><em>Regla de bolsillo: cada dependencia, su documentación. No mezcles orígenes.</em></p></div></details>
+        <details class="acc"><summary>📜 Principio de orden original</summary><div class="acc-body"><p>Dentro de cada asunto, los documentos se conservan <strong>en el orden natural en que se produjeron los trámites</strong>, respetando la secuencia de las actuaciones. Esto empieza a aplicarse desde la primera comunicación: la solicitud va antes que la respuesta.</p><p><em>Regla de bolsillo: el trámite cuenta una historia; no le cambies el orden de los capítulos.</em></p></div></details>
+        <details class="acc"><summary>🔗 Integridad y trazabilidad</summary><div class="acc-body"><p>El documento debe recibirse y circular <strong>completo, íntegro y rastreable</strong>. Desde la radicación se le da un número único; desde la distribución se deja constancia de a quién se entregó. Esa cadena de registros es lo que permite saber, en cualquier momento, dónde está y por dónde pasó.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Tu primer lote de correspondencia mezclada</div><div class="practica-body"><p>Llegas a la unidad de correspondencia de la Seccional y encuentras una bandeja donde alguien dejó revueltos oficios de la División de Operación Aduanera, memorandos de Talento Humano y una comunicación personal de un contratista. Aplicando el <strong>principio de procedencia</strong>, tu primera tarea no es "repartir por encima": es <mark>separar por dependencia productora/destinataria</mark> para que cada cosa llegue a su fondo. No estás reorganizando a tu gusto: estás devolviéndole al flujo documental su lógica legal desde el primer minuto.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El documento que "no existe"</div><div class="practica-body"><p>Un compañero te pasa un oficio firmado por el jefe de la División de Cobranzas y te dice: "mándalo ya, sin radicar, que es urgente". Tú sabes que <mark>un documento que sale sin radicar oficialmente, para efectos institucionales, no existe</mark>: no hay número, no hay fecha cierta, no hay trazabilidad. Si mañana el destinatario dice que nunca lo recibió, la DIAN no puede probar que lo envió. Lo correcto es radicarlo primero (aunque sea en el mismo minuto) y luego enviarlo. La urgencia no elimina la radicación; la hace más importante.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 1</div><div class="cp-q">Un contribuyente pide copia de un oficio y notas que ese oficio se envió el mes pasado "sin radicar" porque había afán. ¿Qué revela esto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">Nada grave: si el documento se envió, cumplió su función.</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">Una falla de gestión documental: sin radicación no hay número, fecha cierta ni trazabilidad, y la DIAN no puede probar el envío.</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">Que la culpa es del contribuyente por pedir copia tan tarde.</button>
+      </div><div class="cp-fb" id="cpfb1"><strong>Correcto: la segunda.</strong> La radicación da existencia oficial al documento. Sin ella se pierde la trazabilidad y la entidad queda sin prueba del envío. La urgencia nunca justifica saltarse la radicación.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la gestión documental es una obligación legal que acompaña al documento desde que nace. Tú, como Facilitador II, eres el guardián del orden, la integridad y la trazabilidad de la información que entra, se produce y sale de tu dependencia.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>El ciclo vital del documento visto desde su inicio</h3></div>
+    <div class="b-texto">
+      <p>Para entender tu rol conviene ver el <strong>ciclo vital del documento</strong> completo, aunque hoy nos detengamos en su arranque. Todo documento pasa por <strong>tres edades o fases</strong>, y a cada fase le corresponde un archivo distinto. El Día 12 vive casi por completo en la <strong>primera fase</strong>: el archivo de gestión, donde el documento nace y se tramita.</p>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Archivo de gestión</h4><p>Documentos en trámite o de uso frecuente. Están en la dependencia que los produce o recibe. <strong>Aquí trabajas tú hoy.</strong></p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Archivo central</h4><p>Documentos cuyo trámite terminó pero aún se consultan a veces. Se transfieren desde gestión. <strong>(Día 13)</strong></p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Archivo histórico</h4><p>Documentos de conservación permanente por su valor. Se transfieren desde central. <strong>(Día 13)</strong></p></div>
+      </div>
+      <div class="def-panel"><span class="def-label">Concepto central</span><p>El <strong>ciclo vital del documento</strong> son las <mark>fases por las que atraviesa un documento desde su producción o recepción hasta su disposición final</mark>. A cada fase corresponde un valor (administrativo, legal, fiscal, histórico) y una ubicación física. El <strong>archivo de gestión</strong> es la fase viva: allí el documento se produce, se radica, circula y se tramita.</p></div>
+      <h4>Fase 1 — Archivo de gestión (el escenario del Día 12)</h4>
+      <p>Es el archivo que tú manejas en tu dependencia. Contiene los documentos <strong>en trámite</strong> (un requerimiento que se está respondiendo, una PQRSF en curso) o <strong>recién producidos/recibidos</strong> que todavía se consultan mucho. Es el archivo "vivo". Aquí ocurre casi todo lo que hace un Facilitador II a diario: se reciben y radican las comunicaciones, se alistan y proyectan documentos para firma, se abren y van organizando las carpetas de los asuntos en curso, y se distribuyen los documentos a la dependencia competente. La regla general es que un documento permanece en gestión mientras su asunto está activo y un tiempo prudencial después; cuándo y cómo pasa al archivo central (transferencia primaria) y qué conservación recibe son temas que verás en el <strong>Día 13</strong>.</p>
+      <h4>Fases 2 y 3 — un adelanto breve</h4>
+      <p>Para que tengas el mapa completo: cuando el trámite de un documento termina y ya casi no se consulta, se traslada al <strong>archivo central</strong> mediante la <strong>transferencia primaria</strong>; y algunos documentos, por su valor permanente, pasan luego al <strong>archivo histórico</strong> mediante la <strong>transferencia secundaria</strong>. Esos movimientos, junto con las Tablas de Retención Documental (TRD) que deciden cuánto se guarda cada cosa y la conservación preventiva, son el contenido del Día 13. Hoy solo necesitas saber que existen y que tu trabajo en gestión es el que deja los documentos listos para que, más adelante, puedan transferirse y conservarse bien.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Fase</th><th>Estado del documento</th><th>Quién lo maneja</th><th>¿Día 12 o Día 13?</th></tr>
+        <tr><td><strong>Gestión</strong></td><td>En producción / en trámite / uso frecuente</td><td>La dependencia productora (tú, en la ventanilla)</td><td><strong>Día 12</strong> (producción, radicación, trámite)</td></tr>
+        <tr><td><strong>Central</strong></td><td>Trámite terminado / consulta esporádica</td><td>El área de gestión documental / archivo</td><td>Día 13 (transferencias, conservación)</td></tr>
+        <tr><td><strong>Histórico</strong></td><td>Valor permanente (memoria)</td><td>Archivo histórico institucional</td><td>Día 13 (conservación, preservación)</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> no confundas <em>producir/recibir</em> con <em>transferir</em>. Recibir y radicar un documento es gestión viva (archivo de gestión). Transferirlo al central es un movimiento posterior. En el Día 12 casi todo ocurre dentro del archivo de gestión; si una pregunta mezcla "radicación" con "transferencia secundaria", es un distractor.</div>
+      <h4>Los valores del documento explican el ciclo</h4>
+      <p>Detrás del ciclo vital hay una lógica elegante. Todo documento nace con <strong>valores primarios</strong>: sirve para algo <em>ahora</em>. Esos valores pueden ser <strong>administrativos</strong> (permite gestionar un asunto), <strong>legales</strong> (prueba derechos y obligaciones), <strong>contables o fiscales</strong> (soporta cuentas) y <strong>técnicos</strong>. Mientras el documento conserva estos valores, la DIAN lo necesita a la mano: por eso está en el <mark>archivo de gestión</mark>, el territorio del Día 12. A medida que el asunto se resuelve, esos valores se van agotando y el documento se transfiere; algunos, además, adquieren <strong>valores secundarios</strong> (histórico, testimonial) y se conservan para siempre. Esa parte final la desarrollarás en el Día 13; hoy te basta entender que el documento que recibes y tramitas está en su etapa de mayor valor administrativo y legal, y por eso se cuida tanto.</p>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — "¿Dónde está el documento que radiqué?"</div><div class="practica-body"><p>Un contribuyente llama: radicó una solicitud hace cinco días y pregunta por su estado. Piensas en clave de ciclo vital: si el asunto está activo, el documento está en el <mark>archivo de gestión</mark> de la dependencia competente, en pleno trámite. Consultas el sistema de gestión documental por el número de radicado, verificas a qué dependencia se distribuyó y en qué estado está, y le respondes con certeza en segundos. Saber que el documento vive en gestión mientras su trámite está activo es lo que te permite ubicarlo al instante.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 2</div><div class="cp-q">Un requerimiento acaba de radicarse y la dependencia competente está preparando la respuesta. ¿En qué fase del ciclo vital está ese documento?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="1">Archivo de gestión: está en trámite activo en la dependencia que lo maneja.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Archivo central, porque ya fue radicado.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Archivo histórico, porque es un documento oficial importante.</button>
+      </div><div class="cp-fb" id="cpfb2"><strong>Correcto: la primera.</strong> Mientras el trámite está activo, el documento vive en el archivo de gestión. El paso al central (transferencia primaria) ocurre cuando el trámite termina: eso es tema del Día 13. Radicar no transfiere nada.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el Día 12 vive en el archivo de gestión, la fase viva del documento. Allí nace (se produce o se recibe), se radica, circula y se tramita. Las transferencias y la conservación (central e histórico) son el Día 13.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>Los tipos documentales de la DIAN que vas a manejar</h3></div>
+    <div class="b-texto">
+      <p>Antes de recibir y repartir, hay que saber <strong>qué</strong> se recibe y se reparte. No todos los documentos son iguales: cada tipo documental tiene una naturaleza, un ritmo y un trato. Conocer los tipos típicos de la DIAN te permite clasificar con criterio y distribuir a la dependencia correcta. Aclaración importante: tú <mark>identificas y canalizas</mark> cada tipo; <strong>no decides su contenido de fondo</strong> (no fiscalizas, no liquidas, no resuelves el trámite).</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Tipo documental</th><th>Qué es</th><th>Hacia dónde / de dónde</th><th>Qué cuidado especial exige</th></tr>
+        <tr><td><strong>Oficio</strong></td><td>Comunicación oficial hacia fuera de la entidad (a un contribuyente, otra entidad, apoderado).</td><td>Saliente (o recibido de otra entidad).</td><td>Radicación de salida; verificar anexos y dirección del destinatario.</td></tr>
+        <tr><td><strong>Memorando</strong></td><td>Comunicación interna entre dependencias de la misma DIAN.</td><td>Interno.</td><td>Consecutivo interno; distribución por competencia dentro de la entidad.</td></tr>
+        <tr><td><strong>Requerimiento</strong></td><td>Comunicación que exige al contribuyente o usuario aduanero información o actuación, con un término para responder.</td><td>Saliente a contribuyente / entrante su respuesta.</td><td>El término corre desde su radicación/notificación; prioridad alta.</td></tr>
+        <tr><td><strong>Auto</strong></td><td>Decisión de trámite dentro de una actuación administrativa.</td><td>Interno y luego comunicado.</td><td>Forma parte del expediente del asunto; orden original estricto.</td></tr>
+        <tr><td><strong>Acto administrativo</strong> (resolución, liquidación)</td><td>Decisión de fondo que crea, modifica o extingue derechos u obligaciones.</td><td>Se produce dentro y se da a conocer (reglas del CPACA).</td><td>Su comunicación/notificación tiene reglas propias; tú apoyas, no decides.</td></tr>
+        <tr><td><strong>Respuesta a PQRSF</strong></td><td>Respuesta a una petición, queja, reclamo, sugerencia o felicitación.</td><td>Entrante la PQRSF / saliente la respuesta.</td><td>Término legal estricto; se asocia al radicado de entrada.</td></tr>
+        <tr><td><strong>Comunicación de ente de control</strong></td><td>Oficio de la Contraloría General de la República u otro órgano de control.</td><td>Entrante.</td><td>Suele traer término corto; prioridad máxima y escalamiento.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la distinción más preguntada es <strong>oficio vs. memorando</strong>. Oficio = comunicación hacia <em>fuera</em> de la entidad. Memorando = comunicación <em>interna</em> entre dependencias. Si una opción los intercambia, es trampa.</div>
+      <h4>El canal no cambia la naturaleza</h4>
+      <p>Un error clásico es creer que un documento que llega por <strong>correo electrónico institucional</strong> es "menos oficial" que uno en papel. Falso: una comunicación oficial que entra por un canal electrónico institucional es una comunicación oficial y se trata con el mismo rigor —misma clasificación por tipo, misma prioridad según su naturaleza, misma radicación e incorporación al sistema—. De hecho, el canal electrónico exige un cuidado adicional: conservar su integridad y sus metadatos. Un requerimiento es un requerimiento, llegue impreso o en un correo institucional.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>📨 Comunicación oficial vs. comunicación personal</summary><div class="acc-body"><p>La <strong>comunicación oficial</strong> se relaciona con las funciones de la entidad y se gestiona con trazabilidad institucional (se radica, se distribuye por competencia, se deja constancia). La <strong>comunicación personal</strong> está dirigida a un servidor a título propio, sin relación con sus funciones, y no se radica como comunicación oficial. Confundirlas lleva a radicar lo que no corresponde o a no radicar lo que sí.</p></div></details>
+        <details class="acc"><summary>⚖️ ¿Por qué el Facilitador II no decide el fondo?</summary><div class="acc-body"><p>Porque su función es de <strong>apoyo administrativo y operativo</strong>: produce (alista/proyecta), recibe, radica, distribuye y tramita <em>bajo instrucciones</em>. Decidir si un requerimiento procede, liquidar un impuesto o resolver una PQRSF es competencia de los servidores de las divisiones técnicas (Fiscalización, Cobranzas, etc.). Tú garantizas que el documento llegue bien y a tiempo; ellos deciden el contenido.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Clasificar antes de repartir</div><div class="practica-body"><p>Tienes una bandeja con doce documentos del día. Antes de llevar nada a ninguna parte, los clasificas por tipo: tres son memorandos internos (van a sus dependencias por consecutivo interno), dos son oficios recibidos de otras entidades, uno es un requerimiento con término, cinco son respuestas a PQRSF listas para salir y uno es una comunicación de la Contraloría. Con solo clasificar, ya sabes <mark>qué es urgente</mark> (el requerimiento y el oficio de la Contraloría) y <mark>qué va a cada dependencia</mark>. La clasificación por contenido siempre precede al reparto.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El acto administrativo que te pide "una opinión"</div><div class="practica-body"><p>Un compañero te pasa una resolución y te dice: "¿tú crees que esto está bien liquidado? dale tu visto bueno antes de que salga". Tú sabes que ese <strong>no es tu rol</strong>: el contenido de fondo de un acto administrativo lo deciden y validan los servidores competentes. Tu función es verificar lo <mark>formal y logístico</mark> (que tenga firma, anexos completos, destinatario correcto) y radicar/comunicar según el procedimiento. No das visto bueno sobre el fondo porque ni te corresponde ni podrías responder por ello.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 3</div><div class="cp-q">Llega por correo institucional un requerimiento dirigido a un contribuyente. Un compañero dice: "como vino por correo, no es tan formal; déjalo para después". ¿Es correcto?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="0">Sí: lo que llega por correo electrónico tiene menos formalidad que el papel.</button>
+        <button class="cp-opt" data-cp="3" data-ans="1">No: el canal electrónico no cambia la naturaleza ni el término del requerimiento; se trata con el mismo rigor y prioridad que su versión física y se radica igual.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Sí, siempre que se imprima y se guarde en una carpeta aparte.</button>
+      </div><div class="cp-fb" id="cpfb3"><strong>Correcto: la segunda.</strong> Una comunicación oficial por canal electrónico institucional es tan oficial como la de papel: misma clasificación, misma prioridad, misma radicación. El canal no rebaja la formalidad ni el término.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> conoce los tipos documentales de la DIAN (oficio, memorando, requerimiento, auto, acto administrativo, PQRSF, comunicaciones de control) para clasificar bien. Oficio sale, memorando es interno. El canal no cambia la naturaleza. Tú identificas y canalizas; no decides el fondo.</p></div>
+    </div>
+  </div>
+
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>Producción documental: alistar y proyectar documentos rutinarios</h3></div>
+    <div class="b-texto">
+      <p>El documento nace de dos maneras: porque la entidad lo <strong>produce</strong> (un oficio, un memorando, una respuesta) o porque lo <strong>recibe</strong> (lo verás en el módulo 5). La <strong>producción documental</strong> es el segundo de los ocho procesos de la gestión documental y una de tus funciones de apoyo: <em>proyectar y alistar documentos rutinarios</em> bajo normas técnicas e instrucciones. Cuidado con la palabra: alistar y proyectar <mark>no es decidir el contenido de fondo</mark>; es dar forma correcta a lo que la dependencia necesita comunicar.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>producción documental</strong> es la <mark>generación de documentos en cumplimiento de las funciones de la entidad, con los formatos, estructura, soportes y medios adecuados</mark>. Incluye elaborar oficios, memorandos, actas y comunicaciones aplicando las normas de forma (membrete, estructura, firmas, anexos) definidas por la entidad.</p></div>
+      <h4>Qué hace (y qué no hace) el Facilitador II al producir</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Sí te corresponde</th><th>No te corresponde</th></tr>
+        <tr><td>Proyectar el borrador de un oficio rutinario a partir de un modelo y de las instrucciones recibidas.</td><td>Decidir el sentido de la respuesta o el contenido técnico de fondo.</td></tr>
+        <tr><td>Aplicar el formato institucional: membrete, estructura, tipografía, datos del destinatario.</td><td>Firmar el documento (lo firma el funcionario competente).</td></tr>
+        <tr><td>Verificar que estén completos los anexos y soportes que indicó la dependencia.</td><td>Añadir o retirar soportes por criterio propio.</td></tr>
+        <tr><td>Revisar ortografía, datos del radicado anterior y coherencia formal.</td><td>Liquidar, fiscalizar o resolver el trámite.</td></tr>
+        <tr><td>Alistar el documento para firma y posterior radicación/envío.</td><td>Enviar antes de que lo firme y autorice quien corresponde.</td></tr>
+      </table></div>
+      <h4>Las normas de forma importan</h4>
+      <p>Un documento mal elaborado genera problemas aunque su fondo sea correcto. Si falta el membrete o los datos del destinatario, puede no identificarse bien; si no tiene el número de radicado del antecedente, se pierde el hilo del trámite; si los anexos anunciados no están, el destinatario recibe algo incompleto. Por eso las entidades siguen pautas de elaboración (muchas inspiradas en la guía técnica colombiana de elaboración de documentos, la GTC 185) y plantillas institucionales. Tu valor como Facilitador II está en <mark>producir documentos impecables en la forma</mark>, de modo que el funcionario que los firma solo tenga que concentrarse en el fondo.</p>
+      <p>Hay un matiz que la prueba aprecia: producir bien también significa <strong>no adelantarse a decidir</strong>. Si la instrucción fue "proyecta una respuesta negando la solicitud por tal razón", tú proyectas eso; si no hay instrucción clara sobre el sentido, no lo inventas: consultas. Alistar un documento no es resolver el asunto, y confundir ambas cosas es uno de los errores de alcance de rol que más penaliza la prueba.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🧾 ¿Qué es el consecutivo de producción?</summary><div class="acc-body"><p>Cuando la entidad produce comunicaciones oficiales de salida, se les asigna un <strong>número consecutivo de salida</strong> al radicarlas. Ese consecutivo es único y ordenado; permite controlar cuántos documentos salieron, en qué orden y hacia dónde. No se salta ni se reutiliza.</p></div></details>
+        <details class="acc"><summary>📎 Anexos y soportes: la verificación que evita problemas</summary><div class="acc-body"><p>Antes de alistar un documento para firma, verifica que los anexos anunciados ("se adjunta copia de…") estén efectivamente incluidos. Un oficio que dice adjuntar tres soportes y sale con dos genera un reproceso y puede afectar un término. La verificación de completitud es parte de producir bien.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Alistar un oficio para la División de Fiscalización</div><div class="practica-body"><p>La jefa de Fiscalización te pide: "proyéctame el oficio de traslado para el contribuyente Jorge Medina, con los dos anexos que ya te pasé". Tú tomas la plantilla institucional, completas membrete, datos del destinatario y referencia al radicado antecedente, insertas los dos anexos, revisas ortografía y coherencia formal, y lo dejas <strong>listo para firma</strong>. No cambias el sentido del oficio ni agregas nada de fondo: <mark>produces la forma, ellos deciden el contenido</mark>. Una vez firmado, lo radicarás de salida.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Cuando la instrucción no está clara</div><div class="practica-body"><p>Te piden "responderle al usuario aduanero", pero no te dicen en qué sentido ni con qué fundamento. Tú no inventas la respuesta: ese es contenido de fondo. Preparas la estructura formal (destinatario, referencia, membrete) y <strong>consultas a quien te dio la instrucción</strong> el sentido y los soportes. Alistar no es resolver; cuando falta la decisión de fondo, se pregunta, no se improvisa.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 4</div><div class="cp-q">Te piden proyectar un oficio rutinario a partir de una plantilla e instrucciones claras. Al revisarlo notas que, en tu opinión, "la respuesta debería ser otra". ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="0">Cambio el sentido de la respuesta según mi criterio, para que el documento quede "mejor".</button>
+        <button class="cp-opt" data-cp="4" data-ans="1">Proyecto el documento según la instrucción recibida, impecable en la forma; si tengo una observación de fondo, la comunico a quien decide, pero no la impongo yo.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">No hago nada hasta que cambien la instrucción a lo que yo creo correcto.</button>
+      </div><div class="cp-fb" id="cpfb4"><strong>Correcto: la segunda.</strong> El Facilitador II produce la forma y ejecuta la instrucción; el fondo lo decide el funcionario competente. Puedes advertir una observación, pero no sustituir la decisión ni bloquear el trámite por tu criterio.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> producir es alistar y proyectar documentos rutinarios con forma impecable (membrete, estructura, anexos) bajo instrucciones. Tú das la forma correcta y los dejas listos para firma; el contenido de fondo y la firma son de quien tiene la competencia.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>Recepción y radicación: la ventanilla única y el reloj legal</h3></div>
+    <div class="b-texto">
+      <p>Esta es, literalmente, una de tus funciones esenciales: <em>recibir, radicar, clasificar y distribuir las comunicaciones y la correspondencia de la dependencia</em>. Vamos a desarmarla en pasos claros, porque aquí es donde más errores comete un Facilitador sin formación y donde más preguntas concretas hace la prueba.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>radicación</strong> es el <mark>procedimiento por el cual la entidad asigna un número consecutivo a las comunicaciones oficiales recibidas o enviadas, con la fecha y hora de recibo o envío</mark>, dejando constancia de su existencia y ubicándolas en el tiempo. Es lo que le da <strong>fecha cierta</strong> a un documento.</p></div>
+      <h4>La ventanilla única de correspondencia</h4>
+      <p>El <strong>Acuerdo 060 de 2001 del AGN</strong> estableció que las entidades deben centralizar la recepción y el envío de comunicaciones oficiales en una <mark>unidad de correspondencia (ventanilla única)</mark>. La idea es simple pero poderosa: <strong>todo entra y sale por un solo punto controlado</strong>, para que nada se pierda y todo quede radicado. No es válido que cada división reciba documentos "por su cuenta" y los guarde sin radicar. En la DIAN, esa ventanilla es donde un Facilitador II hace buena parte de su trabajo.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Tipo de comunicación</th><th>Qué es</th><th>¿Se radica?</th></tr>
+        <tr><td><strong>Oficial recibida</strong></td><td>La que llega de un contribuyente, un usuario aduanero, otra entidad o un ente de control.</td><td>Sí, con número + fecha + hora de recibo.</td></tr>
+        <tr><td><strong>Oficial enviada</strong></td><td>La que la DIAN remite hacia afuera (oficios, requerimientos, respuestas).</td><td>Sí, con consecutivo de salida.</td></tr>
+        <tr><td><strong>Interna</strong></td><td>Memorandos y comunicaciones entre dependencias de la misma DIAN.</td><td>Sí (consecutivo interno).</td></tr>
+        <tr><td><strong>Personal</strong></td><td>La dirigida a título personal a un servidor, sin relación con sus funciones.</td><td>No es comunicación oficial; no se radica como tal.</td></tr>
+      </table></div>
+      <h4>El paso a paso de la radicación de una comunicación recibida</h4>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Recepción</h4><p>Se recibe por ventanilla, correo físico o canal electrónico institucional.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Verificación</h4><p>Se revisa destinatario, anexos, folios y competencia.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Radicación</h4><p>Se asigna número consecutivo, fecha y hora.</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Registro</h4><p>Se ingresa al sistema de gestión documental.</p></div>
+        <div class="flujo-paso"><span class="fp-n">5</span><h4>Distribución</h4><p>Se reparte a la dependencia competente (módulo 6).</p></div>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> el número de radicado debe ser <strong>consecutivo y único</strong>, y <mark>no se puede reutilizar, saltar ni alterar</mark>. Tampoco se radica "hacia atrás" (ponerle a un documento de hoy la fecha de ayer). Alterar radicados es una falta grave porque destruye la trazabilidad y puede afectar términos legales.</div>
+      <h4>La radicación es un reloj legal</h4>
+      <p>Si tuvieras que quedarte con una sola idea del módulo, sería esta: <strong>muchos términos legales empiezan a correr desde la radicación</strong>. Un derecho de petición se cuenta desde el día siguiente a su recibo; un requerimiento fija su plazo desde que se notifica. Si radicas mal la fecha o la hora, puedes hacer que la dependencia crea que tiene más (o menos) tiempo del real, y eso deriva en respuestas fuera de término y faltas disciplinarias. La radicación no es un trámite burocrático: es el <mark>reloj que mide el cumplimiento de la entidad</mark>. Por eso se hace con rigor y en el momento exacto en que el documento entra.</p>
+      <p>La radicación es, además, el <strong>primer eslabón de la trazabilidad</strong>: a partir de ese número, cada movimiento posterior del documento (a qué dependencia se distribuyó, cuándo, con qué respuesta se cerró) se asocia a ese radicado. Un Facilitador que radica bien pero luego no registra los movimientos solo hizo la mitad del trabajo. El sistema de gestión documental es tu aliado: úsalo con disciplina para que, cuando el contribuyente pregunte "¿qué pasó con mi solicitud?", puedas responder con certeza en segundos.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>⏱️ ¿Por qué la fecha y la hora son tan importantes?</summary><div class="acc-body"><p>Porque fijan el inicio de los términos. Una PQRSF radicada un viernes a las 4:55 p.m. no empieza a contar el mismo viernes de forma caprichosa: la fecha y hora de radicación determinan el día desde el cual corre el plazo. Equivocarse en ese dato desplaza todo el cómputo. La radicación es un reloj; si el reloj está mal, toda la entidad llega tarde o cree que va a tiempo cuando no.</p></div></details>
+        <details class="acc"><summary>📧 ¿El correo electrónico oficial se radica?</summary><div class="acc-body"><p>Sí. Las comunicaciones oficiales que llegan por canales electrónicos institucionales también son comunicaciones oficiales y deben radicarse e incorporarse al sistema. La digitalización no las exime; al contrario, exige conservar su integridad y metadatos.</p></div></details>
+        <details class="acc"><summary>🔎 ¿Qué se verifica al recibir, antes de radicar?</summary><div class="acc-body"><p>Que el documento esté <strong>completo</strong> (anexos y folios anunciados), que el <strong>destinatario</strong> sea esa entidad/dependencia y que se identifique el <strong>asunto</strong>. Si falta un anexo, se deja constancia de la inconsistencia al recibir. Recibir no es solo "tomar el papel": es verificar y dejar registro.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El lote de 32 documentos del inicio</div><div class="practica-body"><p>Recuerdas el lote sin radicar del comienzo. Aplicas el paso a paso: recibes, verificas anexos y destinatario, <strong>radicas cada uno con su número, fecha y hora</strong>, los registras en el sistema y los dejas listos para distribuir. Uno resulta ser una PQRSF: al radicarla, el sistema marca que <mark>hoy empieza a correr el término</mark>, para que la dependencia responsable no lo deje vencer. Con eso convertiste una pila de papeles en información trazable y con reloj.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La comunicación de la Contraloría a las 4:50 p.m.</div><div class="practica-body"><p>Un oficio de un ente de control llega casi al cierre, con término corto. No lo dejas "para mañana": lo radicas de inmediato con la hora exacta, lo registras y lo escalas al responsable ese mismo día, dejando constancia. En gestión documental, <mark>un documento de control sin radicar y sin distribuir a tiempo puede costar un incumplimiento</mark>. Tu diligencia protege a la entidad.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 5</div><div class="cp-q">Un compañero te pide radicar hoy un oficio pero con la fecha de ayer "para que no se vea que nos demoramos". ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="5" data-ans="0">Le pongo la fecha de ayer: es un favor pequeño y ayuda a que no se note el retraso.</button>
+        <button class="cp-opt" data-cp="5" data-ans="1">Radico con la fecha y hora reales de hoy; alterar la fecha de radicación es una falta grave que destruye la trazabilidad y puede afectar términos legales.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">Radico sin fecha para no comprometerme con ningún día.</button>
+      </div><div class="cp-fb" id="cpfb5"><strong>Correcto: la segunda.</strong> La radicación lleva la fecha y hora reales, siempre. Antedatar o dejar sin fecha rompe el reloj legal, falsea la trazabilidad y constituye una falta. La radicación es única, consecutiva y verídica.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> todo entra y sale por ventanilla única; todo se radica con número consecutivo único, fecha y hora reales; la radicación es un reloj legal y el primer eslabón de la trazabilidad; y lo que llega por correo institucional se radica igual que el papel.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">6</div><h3>Distribución por competencia y constancia de entrega</h3></div>
+    <div class="b-texto">
+      <p>Radicar es solo la mitad: después hay que <strong>distribuir</strong> cada documento a quien corresponde y <strong>dejar constancia</strong> de la entrega. Aquí es donde se decide si la cadena de trazabilidad se mantiene o se rompe. La regla de oro: se distribuye <mark>por competencia</mark>, no por cercanía ni por "a quien le llegó primero".</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>distribución</strong> es la entrega del documento, una vez radicado, a la <mark>dependencia o persona competente</mark> para su trámite, dejando <strong>constancia</strong> de quién lo recibió, cuándo y en qué estado. Puede ser <strong>interna</strong> (entre dependencias de la DIAN) o preparar la <strong>salida externa</strong> (hacia contribuyentes, usuarios aduaneros u otras entidades).</p></div>
+      <h4>Distribuir por competencia, no por "a quien le llegó"</h4>
+      <p>Cuando un documento entra, se dirige a la <strong>dependencia competente para el asunto</strong>, no a la que esté más cerca de la ventanilla. Si llega algo que no es competencia de ninguna de "tus" divisiones, <mark>no se archiva ni se devuelve al ciudadano</mark>: se remite a la dependencia competente dentro de la entidad, con constancia, y se informa al peticionario a qué dependencia fue y por qué. Devolverle el documento al contribuyente diciéndole "vaya a otra oficina" es un error clásico que traslada indebidamente al ciudadano una carga que es de la entidad.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Situación</th><th>Conducta correcta</th><th>Conducta equivocada</th></tr>
+        <tr><td>Llega un documento que es de otra división de la misma DIAN.</td><td>Radicar y remitir internamente por competencia, con constancia.</td><td>Archivarlo "porque no es mío" o dejarlo en la bandeja.</td></tr>
+        <tr><td>Un contribuyente radica algo que no es competencia de la entidad.</td><td>Radicar, informar y, si procede, remitir a la entidad competente.</td><td>Devolvérselo y decirle "esto no es aquí, vaya allá".</td></tr>
+        <tr><td>Reparto interno entre dependencias de la seccional.</td><td>Entregar al punto correcto con firma/sello de recibido.</td><td>Dejarlo sobre un escritorio sin que nadie firme.</td></tr>
+        <tr><td>Salida externa a un apoderado.</td><td>Verificar dirección e identidad del receptor y obtener constancia.</td><td>Entregar a cualquiera que diga que "viene por eso".</td></tr>
+      </table></div>
+      <h4>La constancia de entrega: sin registro, no hay prueba</h4>
+      <p>La <strong>constancia de entrega</strong> (firma, sello, anotación en el sistema o planilla) es la prueba de que el documento llegó a su destinatario. Es obligatoria <mark>siempre</mark>, tanto en el reparto interno como en el externo, y <strong>sin excepciones por confianza personal o por afán</strong>. La trazabilidad no depende de relaciones de confianza ("en esa división siempre confían en mí"), sino de registros verificables. Si no dejas constancia y mañana alguien dice que nunca recibió el documento, la DIAN no puede probar la entrega y el problema recae sobre ti.</p>
+      <p>Piensa en la constancia como el <strong>último nudo del hilo</strong> que empezaste a tejer con la radicación. Radicaste (nudo 1), registraste el movimiento (nudo 2) y ahora dejas constancia de la entrega (nudo 3). Con esos tres nudos, en cualquier momento puedes reconstruir dónde está el documento, por dónde pasó y quién lo tiene. Si falta el último nudo, toda la cadena pierde valor: un documento perfectamente radicado pero entregado "de palabra" vuelve a ser un documento que, para efectos de prueba, se perdió.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🤝 "Hay confianza, no hace falta que firmen"</summary><div class="acc-body"><p>Es la trampa más común. La confianza informal entre compañeros no reemplaza la constancia. El procedimiento de control de entregas aplica a todos por igual, porque protege a la entidad y al propio Facilitador ante cualquier reclamo. Omitir la constancia por costumbre o cercanía es exactamente lo que la prueba marca como incorrecto.</p></div></details>
+        <details class="acc"><summary>📋 ¿Qué datos lleva una constancia de entrega?</summary><div class="acc-body"><p>Como mínimo: identificación del documento (radicado), dependencia o persona que recibe, fecha y hora de la entrega, estado del documento (completo, con anexos) y la firma o sello de recibido. En sistemas electrónicos, el registro de entrega cumple esa función. Es la "memoria operativa" del reparto.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La PQRSF que es de otra división</div><div class="practica-body"><p>En la ventanilla, una contribuyente radica una petición extensa cuyo asunto de fondo es claramente competencia de la División de Talento Humano, no de la que atiende tu punto. Molesta por la fila, te dice: "no me mande de oficina en oficina". Tú <strong>no le devuelves el documento</strong>: lo radicas, lo remites internamente a Talento Humano por competencia con constancia, y le informas por escrito a qué dependencia fue y por qué. <mark>Canalizar es obligación de la entidad</mark>, no carga del ciudadano.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — "No pidas firma en esa división"</div><div class="practica-body"><p>Un compañero te dice: "en Cobranzas siempre confían, entrega y ya, no pidas que firmen". El procedimiento de la seccional exige constancia en todos los casos. Tú <strong>sigues el procedimiento</strong> y obtienes la firma o el sello de recibido, sin importar la confianza informal. Una instrucción verbal de un compañero no deroga el control de entregas. Si no queda constancia y luego el documento "no aparece", eres tú quien no puede probar que lo entregaste.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 6</div><div class="cp-q">Llega un documento que claramente es competencia de otra dependencia de la DIAN. ¿Qué haces?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="6" data-ans="0">Se lo devuelvo al contribuyente y le digo que lo lleve a la oficina correcta.</button>
+        <button class="cp-opt" data-cp="6" data-ans="1">Lo radico y lo remito internamente a la dependencia competente, dejando constancia, e informo al peticionario a dónde se remitió; nunca lo devuelvo.</button>
+        <button class="cp-opt" data-cp="6" data-ans="0">Lo archivo sin trámite porque no es de mi punto.</button>
+      </div><div class="cp-fb" id="cpfb6"><strong>Correcto: la segunda.</strong> La obligación de canalizar es de la entidad, no del contribuyente. Se radica y se remite por competencia con constancia, informando al peticionario. Devolver al ciudadano o archivar sin trámite vulnera su derecho.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> se distribuye por competencia (nunca por cercanía ni devolviendo al ciudadano) y <strong>siempre con constancia</strong>, interna o externa, sin excepciones por confianza o afán. La constancia es el nudo que cierra la trazabilidad.</p></div>
+    </div>
+  </div>
+
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">7</div><h3>Gestión y trámite: seguimiento de términos y prioridad</h3></div>
+    <div class="b-texto">
+      <p>Recibir, radicar y distribuir no termina el trabajo: el documento sigue vivo mientras su trámite esté abierto, y alguien debe <strong>hacerle seguimiento</strong>. El proceso de <strong>gestión y trámite</strong> (el tercero de los ocho) abarca precisamente eso: controlar que cada documento avance, que los términos no se venzan y que lo urgente se atienda primero. El Facilitador II apoya este control; no decide el fondo, pero sí vigila el reloj.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>gestión y el trámite</strong> comprenden las <mark>actuaciones necesarias para el registro, la vinculación a un trámite, la distribución, la descripción y el seguimiento</mark> a las comunicaciones, hasta que el asunto se resuelve. Incluye controlar los <strong>términos de respuesta</strong> y la <strong>prioridad</strong> de atención.</p></div>
+      <h4>Los criterios de prioridad</h4>
+      <p>No todo se atiende "en el orden en que llegó". La prioridad se decide por tres criterios objetivos, y la prueba los valora:</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Criterio</th><th>Qué significa</th><th>Ejemplo DIAN</th></tr>
+        <tr><td><strong>Término legal</strong></td><td>Lo que tiene plazo corto o próximo a vencer va primero.</td><td>Una tutela o una comunicación de ente de control con término de días.</td></tr>
+        <tr><td><strong>Instrucción expresa</strong></td><td>Lo que el superior marcó como prioritario según el procedimiento.</td><td>La jefa de Fiscalización pide dar prelación a cierto requerimiento.</td></tr>
+        <tr><td><strong>Naturaleza del asunto</strong></td><td>El tipo documental y su impacto definen su urgencia intrínseca.</td><td>Un requerimiento con término corre antes que un memorando de rutina.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> la <strong>insistencia o la jerarquía informal de quien pregunta no es un criterio válido de prioridad</strong>. Que un coordinador insista en que "lo suyo es más urgente" no desplaza un término legal real. La urgencia se mide por términos, instrucciones y naturaleza, no por quién presiona más.</div>
+      <h4>El seguimiento como garantía de cumplimiento</h4>
+      <p>Hacer seguimiento es llevar la cuenta de qué documentos están en trámite, desde cuándo y cuándo vencen. En la práctica, esto significa usar el sistema de gestión documental para ver los pendientes por dependencia, alertar sobre los que se acercan a su término y confirmar que las respuestas efectivamente salieron y se asociaron a su radicado de entrada. Un documento bien recibido y bien distribuido que luego <strong>nadie vigila</strong> puede vencerse igual; el seguimiento es lo que cierra el círculo. El Facilitador II no responde el trámite, pero sí es, muchas veces, quien enciende la alarma a tiempo.</p>
+      <p>Conviene insistir en el límite del rol: tú <strong>vigilas el reloj y alertas</strong>, pero <strong>no decides ni resuelves</strong>. Si un término está por vencer, tu actuación correcta es informar oportunamente al responsable y dejar constancia; no es inventarte una respuesta ni presionar una decisión de fondo. El seguimiento bien hecho protege a la dependencia sin invadir competencias ajenas.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>⏳ Términos típicos del derecho de petición (CPACA)</summary><div class="acc-body"><p>Como referencia general del CPACA: las peticiones de interés general o particular tienen un término ordinario (15 días hábiles); las de documentos e información, un término menor (10 días hábiles); y las consultas, uno mayor (30 días hábiles). No tienes que resolver la petición, pero saber estos plazos te ayuda a priorizar y a alertar a tiempo. El dato exacto puede variar según la materia; lo importante es entender que <mark>el término corre desde la radicación</mark>.</p></div></details>
+        <details class="acc"><summary>🚦 ¿Cómo se organiza un lote por prioridad?</summary><div class="acc-body"><p>Primero se clasifica por tipo; luego se identifica lo que tiene término corto o próximo a vencer (va al primer reparto); después lo que tiene instrucción expresa de prelación; y por último lo rutinario, agrupado por dependencia destino. Nunca se reparte "en el orden en que estaba apilado".</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El requerimiento que vence en tres días</div><div class="practica-body"><p>Entre el lote del día aparece un requerimiento dirigido a un contribuyente cuyo término de respuesta ya corre y vence en tres días. Lo radicas, lo marcas como <strong>prioritario</strong> y lo distribuyes en el primer reparto a la dependencia competente, dejando constancia. Además, si el procedimiento lo contempla, informas a tu superior del término ajustado. No lo dejas mezclado con los memorandos de rutina "para verlo cuando se pueda": <mark>el término manda</mark>.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — El coordinador que insiste</div><div class="practica-body"><p>Un coordinador de otra área te pide con insistencia que su memorando interno "salga antes que todo lo demás porque es urgente para él". Al revisarlo, ves que es de rutina y sin término, mientras que en tu bandeja hay una comunicación de la Contraloría con plazo de dos días. Con respeto, <strong>mantienes la prioridad real</strong>: primero el documento con término legal. La insistencia no cambia la urgencia objetiva.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 7</div><div class="cp-q">Tienes en la bandeja un memorando de rutina (sin término) que un jefe pidió priorizar, y un oficio de un ente de control que vence en dos días. ¿Qué repartes primero?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="7" data-ans="0">El memorando de rutina, porque un jefe pidió priorizarlo y hay que respetar la jerarquía.</button>
+        <button class="cp-opt" data-cp="7" data-ans="1">El oficio del ente de control, porque tiene un término legal corto; la urgencia real (términos y naturaleza) manda sobre la insistencia o la jerarquía informal.</button>
+        <button class="cp-opt" data-cp="7" data-ans="0">Los dos al mismo tiempo, sin priorizar, para no incomodar a nadie.</button>
+      </div><div class="cp-fb" id="cpfb7"><strong>Correcto: la segunda.</strong> La prioridad se mide por término legal y naturaleza del asunto. Un documento con plazo de dos días va antes que un memorando de rutina, aunque alguien insista. Puedes explicar el criterio con respeto, pero lo mantienes.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el trámite incluye seguir los términos y priorizar por urgencia real (término legal, instrucción expresa, naturaleza), nunca por insistencia o jerarquía informal. Tú vigilas el reloj y alertas; no decides ni resuelves el fondo.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>Control de ingreso y salida de documentos</h3></div>
+    <div class="b-texto">
+      <p>Una de tus funciones de apoyo es <em>controlar el ingreso y la salida</em> de documentos de la dependencia. Es la "contabilidad" del flujo documental: saber qué entró, qué salió, cuándo y hacia dónde. Bien hecha, es lo que hace que la dependencia tenga memoria y pueda responder cualquier consulta; mal hecha, es la causa de los temidos "ese documento nunca llegó aquí".</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>El <strong>control de ingreso y salida</strong> es el <mark>registro ordenado de todas las comunicaciones que entran y salen de la dependencia</mark>, con su radicado, fecha, origen/destino y estado, de modo que en cualquier momento se pueda saber qué pasó con cada documento.</p></div>
+      <h4>Qué registrar y por qué</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Dato</th><th>Para qué sirve</th></tr>
+        <tr><td><strong>Número de radicado</strong></td><td>Identifica el documento de forma única y lo ancla en el tiempo.</td></tr>
+        <tr><td><strong>Fecha y hora</strong></td><td>Fijan el inicio de términos y permiten reconstruir la secuencia.</td></tr>
+        <tr><td><strong>Origen / destino</strong></td><td>Indican de dónde vino o a dónde va (dependencia, contribuyente, entidad).</td></tr>
+        <tr><td><strong>Asunto y tipo</strong></td><td>Permiten clasificar, priorizar y buscar después.</td></tr>
+        <tr><td><strong>Estado</strong></td><td>Dice si está en trámite, respondido, remitido por competencia, etc.</td></tr>
+        <tr><td><strong>Constancia de entrega</strong></td><td>Prueba quién recibió y cuándo (cierra la trazabilidad).</td></tr>
+      </table></div>
+      <h4>El sistema de gestión documental como aliado</h4>
+      <p>La mayoría de entidades, incluida la DIAN, lleva este control en un <strong>sistema de gestión documental</strong> (software de correspondencia). Tu disciplina al alimentarlo es lo que da valor al sistema: cada radicación, cada distribución y cada constancia que registras construye el historial del documento. Cuando un contribuyente llama o un auditor pregunta, no dependes de tu memoria ni de buscar papeles: consultas el radicado y el sistema te muestra la historia completa. Un control de ingreso y salida bien llevado es, para la dependencia, la diferencia entre "déjeme averiguo y le devuelvo la llamada en unos días" y "su documento está en la División de Cobranzas desde el martes, en estado de respuesta".</p>
+      <p>Hay una razón adicional, y es de <strong>protección personal e institucional</strong>: cuando algo se cuestiona ("¿por qué no se respondió a tiempo?", "¿dónde quedó ese oficio?"), el registro de ingreso y salida es la prueba objetiva de lo que efectivamente pasó. Sin registro, la discusión se vuelve "palabra contra palabra"; con registro, hay un hecho verificable. Por eso llevar el control no es un formalismo: es lo que te respalda a ti y respalda a la entidad.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🧮 Planilla vs. sistema: ¿cambia la obligación?</summary><div class="acc-body"><p>No. Ya sea en planilla física o en software, la obligación de registrar es la misma. Lo que cambia es la herramienta. Hoy predomina el registro electrónico, que facilita la búsqueda y la trazabilidad; pero el principio —todo ingreso y toda salida se registran— es idéntico.</p></div></details>
+        <details class="acc"><summary>🔐 ¿Se puede "borrar" un registro si me equivoqué?</summary><div class="acc-body"><p>No se borra: se corrige dejando traza de la corrección. Igual que no se altera un radicado, no se elimina un registro para "tapar" un error. Los sistemas serios guardan el historial de cambios. La transparencia del registro es parte de su valor probatorio.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La llamada del contribuyente del inicio</div><div class="practica-body"><p>Vuelve la llamada del comienzo: el contribuyente pregunta por el documento que radicó la semana pasada. Gracias al <strong>control de ingreso y salida</strong>, buscas por el número de radicado, ves que se distribuyó a la División de Servicio al Ciudadano hace cuatro días y que está en estado "en respuesta". Le informas con certeza y amabilidad. <mark>En segundos resolviste lo que, sin registro, habría sido un "no sé, llame después"</mark>.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La auditoría que pregunta por un oficio</div><div class="practica-body"><p>Una auditoría interna pide saber qué pasó con un oficio de hace tres meses. Tú no recuerdas el caso de memoria, pero no importa: el registro muestra la fecha de ingreso, la dependencia a la que se distribuyó, la constancia de entrega y la respuesta de salida asociada. El <strong>registro habla por ti</strong>. Esa es la tranquilidad de llevar bien el control: la prueba está, no depende de tu recuerdo.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 8</div><div class="cp-q">Te das cuenta de que registraste mal el destino de una distribución. ¿Cómo lo corriges?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="8" data-ans="0">Borro el registro equivocado para que no quede rastro del error.</button>
+        <button class="cp-opt" data-cp="8" data-ans="1">Corrijo dejando traza de la corrección (sin borrar el historial), para que el registro siga siendo verídico y auditable.</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">Lo dejo como está: total, nadie va a notar la diferencia.</button>
+      </div><div class="cp-fb" id="cpfb8"><strong>Correcto: la segunda.</strong> Los registros no se borran para ocultar errores: se corrigen con traza. Borrar o dejar un dato falso compromete la integridad del control y puede constituir una falta. La transparencia del registro es parte de su valor.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> controlar el ingreso y la salida es registrar todo lo que entra y sale (radicado, fecha, origen/destino, asunto, estado, constancia). El sistema de gestión documental es tu aliado; los registros no se borran, se corrigen con traza. El registro te respalda a ti y a la entidad.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">9</div><h3>Los ocho procesos y el alcance de tu rol</h3></div>
+    <div class="b-texto">
+      <p>Para cerrar el Día 12, ubiquemos todo lo que viste dentro del mapa completo de la gestión documental y dejemos clarísimo <strong>hasta dónde llega tu rol</strong>. El Decreto 1080 de 2015 organizó la gestión documental en <strong>ocho procesos</strong>. No tienes que ser experto en cada uno, pero sí saber cuáles son y en cuáles trabajas tú a diario.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>#</th><th>Proceso</th><th>En qué consiste</th><th>¿Día 12 o Día 13?</th></tr>
+        <tr><td>1</td><td><strong>Planeación</strong></td><td>Diseñar el sistema: instrumentos como TRD, PGD, CCD, PINAR.</td><td>Transversal (TRD se ve en Día 13)</td></tr>
+        <tr><td>2</td><td><strong>Producción</strong></td><td>Elaborar los documentos con normas técnicas (formato, membrete, firmas).</td><td><strong>Día 12</strong> (módulo 4)</td></tr>
+        <tr><td>3</td><td><strong>Gestión y trámite</strong></td><td>Recibir, radicar, distribuir y hacer seguimiento a los documentos.</td><td><strong>Día 12</strong> (módulos 5-8)</td></tr>
+        <tr><td>4</td><td><strong>Organización</strong></td><td>Clasificar, ordenar y describir: armar expedientes, foliar, rotular.</td><td>Día 13</td></tr>
+        <tr><td>5</td><td><strong>Transferencia</strong></td><td>Trasladar documentos entre archivos según la TRD (primaria y secundaria).</td><td>Día 13</td></tr>
+        <tr><td>6</td><td><strong>Disposición de documentos</strong></td><td>Aplicar el destino final: conservar, eliminar, seleccionar, digitalizar.</td><td>Día 13</td></tr>
+        <tr><td>7</td><td><strong>Preservación a largo plazo</strong></td><td>Garantizar la conservación física y digital en el tiempo.</td><td>Día 13</td></tr>
+        <tr><td>8</td><td><strong>Valoración</strong></td><td>Determinar los valores del documento. Es transversal.</td><td>Transversal (Día 13)</td></tr>
+      </table></div>
+      <p>Fíjate en algo importante: el Día 12 cubre de lleno los procesos <strong>2 (producción)</strong> y <strong>3 (gestión y trámite)</strong>, que son los que tocan el documento mientras está vivo. Los procesos 4 a 7 —organización de expedientes, transferencias, disposición y preservación— son el territorio del <strong>Día 13</strong>. Esta división no es arbitraria: separa el "nacimiento y circulación" del documento (hoy) de su "conservación y destino" (mañana).</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> cuando una pregunta te pida identificar "a qué proceso corresponde radicar y distribuir la correspondencia", la respuesta es <strong>gestión y trámite</strong> (el 3). Si pregunta por "elaborar un oficio", es <strong>producción</strong> (el 2). Memorizar esta correspondencia te da puntos fáciles.</div>
+      <h4>El alcance de tu rol: facilitas y ejecutas, no decides</h4>
+      <p>Si hay una idea que debe quedarte grabada de todo el día es el <strong>límite de tu función</strong>. El Facilitador II es un cargo de <mark>apoyo administrativo y operativo</mark> del nivel Asistencial: produce (alista/proyecta), recibe, radica, clasifica, distribuye, tramita y controla documentos <strong>bajo instrucciones</strong>. Lo que <strong>no</strong> hace es decidir el contenido de fondo, fiscalizar, liquidar o resolver los trámites. Esa frontera aparece una y otra vez en la prueba, porque muchas opciones "trampa" te muestran al Facilitador opinando sobre el fondo, dando visto bueno a una liquidación o decidiendo si un requerimiento procede. Todas esas son incorrectas.</p>
+      <div class="mmap">
+        <div class="node"><span class="ic">✅</span><h5>Sí haces</h5><p>Alistar, recibir, radicar, clasificar, distribuir, tramitar, controlar, dejar constancia.</p></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="ic">⚖️</span><h5>Bajo instrucciones</h5><p>Según los procedimientos de la DIAN y lo que indique el superior competente.</p></div>
+        <div class="arrow">→</div>
+        <div class="node"><span class="ic">🚫</span><h5>No haces</h5><p>Decidir el fondo, fiscalizar, liquidar, resolver PQRSF, firmar actos administrativos.</p></div>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Identificar el proceso en tu jornada</div><div class="practica-body"><p>Una mañana cualquiera: recibes y radicas un lote de correspondencia (proceso <strong>3, gestión y trámite</strong>), proyectas un oficio de respuesta para firma (proceso <strong>2, producción</strong>), distribuyes por competencia con constancia (sigue en <strong>3</strong>) y alertas sobre un requerimiento que vence (seguimiento, también <strong>3</strong>). Sin darte cuenta, tocaste los dos procesos del Día 12. Si además preparas carpetas para transferir —eso ya sería proceso 5—, pero esa parte la organizas con las reglas del <strong>Día 13</strong>.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — La tentación de "resolver" para ayudar</div><div class="practica-body"><p>Un contribuyente angustiado te ruega que "le digas tú mismo si su requerimiento procede o no, para no esperar". Tú entiendes su afán, pero sabes que <strong>decidir el fondo no es tu rol</strong>. Lo atiendes con amabilidad, verificas el estado de su trámite en el sistema y lo orientas sobre los tiempos, pero <mark>no emites juicio sobre el fondo</mark>: eso corresponde a la dependencia competente. Ayudar no es invadir competencias; es canalizar bien y con respeto.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 9</div><div class="cp-q">Recibir la correspondencia por ventanilla, radicarla y repartirla a las dependencias, ¿a qué proceso de la gestión documental corresponde?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="9" data-ans="0">Organización.</button>
+        <button class="cp-opt" data-cp="9" data-ans="1">Gestión y trámite.</button>
+        <button class="cp-opt" data-cp="9" data-ans="0">Producción.</button>
+      </div><div class="cp-fb" id="cpfb9"><strong>Correcto: gestión y trámite.</strong> Recibir, radicar, distribuir y hacer seguimiento a la correspondencia es el proceso 3. Organización es armar/foliar expedientes (Día 13); producción es elaborar el documento (módulo 4).</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el Día 12 vive en los procesos 2 (producción) y 3 (gestión y trámite). El Facilitador II alista, recibe, radica, distribuye, tramita y controla bajo instrucciones; nunca decide el fondo, fiscaliza ni liquida. Ese límite es la respuesta a muchas preguntas de la prueba.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">10</div><h3>El flujo completo de un documento, de principio a fin del Día 12</h3></div>
+    <div class="b-texto">
+      <p>Para que todo lo anterior quede como una sola película y no como piezas sueltas, sigamos a un documento real desde que entra a la ventanilla hasta que sale respondido, señalando en cada paso qué hace el Facilitador II y qué norma lo respalda. Este recorrido es, además, el modelo mental con el que conviene leer cualquier pregunta de la prueba: "¿en qué punto del flujo está este documento y qué corresponde hacer <em>aquí</em>?".</p>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Entra</h4><p>Llega a la ventanilla única (física o por canal electrónico institucional).</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Se verifica</h4><p>Destinatario, anexos, folios y competencia.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>Se radica</h4><p>Número único, fecha y hora; arranca el reloj legal.</p></div>
+        <div class="flujo-paso"><span class="fp-n">4</span><h4>Se registra</h4><p>Ingreso al sistema de gestión documental.</p></div>
+        <div class="flujo-paso"><span class="fp-n">5</span><h4>Se distribuye</h4><p>A la dependencia competente, con constancia.</p></div>
+        <div class="flujo-paso"><span class="fp-n">6</span><h4>Se tramita</h4><p>La dependencia resuelve; tú haces seguimiento al término.</p></div>
+        <div class="flujo-paso"><span class="fp-n">7</span><h4>Sale</h4><p>Se produce la respuesta, se radica de salida y se envía con constancia.</p></div>
+      </div>
+      <p>Observa que el Facilitador II está presente en casi todos los pasos, pero <strong>siempre en el mismo registro</strong>: facilita y ejecuta, no decide. En el paso 2 verifica (no evalúa el fondo); en el paso 3 radica (no le cambia el contenido); en el paso 5 distribuye por competencia (no resuelve); en el paso 6 hace seguimiento y alerta (no responde el trámite); en el paso 7 produce la forma de la respuesta y la radica de salida (no define su sentido). La única "decisión" que toma en todo el flujo es operativa: a qué dependencia corresponde por competencia y con qué prioridad según los términos. Nada más. Esa constancia de criterio es, justamente, lo que la prueba quiere ver.</p>
+      <h4>Qué puede salir mal en cada paso (y cómo lo evitas)</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Paso</th><th>Error típico</th><th>Cómo lo evitas</th></tr>
+        <tr><td>Entra</td><td>Recibir sin mirar si está completo.</td><td>Verificar anexos y dejar constancia de faltantes al recibir.</td></tr>
+        <tr><td>Se radica</td><td>Antedatar o saltar el consecutivo.</td><td>Fecha y hora reales, número único, sin excepciones.</td></tr>
+        <tr><td>Se registra</td><td>Radicar pero no registrar el movimiento.</td><td>Alimentar el sistema con disciplina en cada paso.</td></tr>
+        <tr><td>Se distribuye</td><td>Entregar sin constancia o devolver al ciudadano.</td><td>Remitir por competencia con firma/sello de recibido.</td></tr>
+        <tr><td>Se tramita</td><td>Perder de vista un término por vencer.</td><td>Seguimiento activo y alerta oportuna al responsable.</td></tr>
+        <tr><td>Sale</td><td>Enviar sin radicar de salida o con anexos incompletos.</td><td>Radicar de salida, verificar anexos y dejar constancia de envío.</td></tr>
+      </table></div>
+      <p>Una lectura final, por si la prueba lo plantea de forma abstracta: todo este flujo descansa en tres pilares que conviene nombrar. El primero es la <strong>ventanilla única</strong>, que garantiza que nada entre ni salga por fuera de control (Acuerdo 060 de 2001 del AGN). El segundo es la <strong>radicación</strong>, que da existencia, fecha cierta y arranque de términos a cada documento. El tercero es la <strong>trazabilidad</strong>, la cadena de registros y constancias que permite saber en todo momento dónde está cada cosa. Si en una pregunta una opción debilita cualquiera de estos tres pilares —"recibir por fuera de la ventanilla", "enviar sin radicar", "entregar sin constancia"—, esa opción es incorrecta, sin importar cuán razonable suene el pretexto (urgencia, confianza, afán por ayudar).</p>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Cerrando el día con la bandeja vacía</div><div class="practica-body"><p>Al final de la jornada, revisas que cada documento que entró quedó radicado y distribuido con constancia, que los dos con término corto fueron escalados y marcados como prioritarios, y que el oficio de salida de Fiscalización se radicó y se envió con constancia de envío. Tu bandeja está vacía, pero más importante: <mark>el sistema puede contar la historia completa de cada documento del día</mark>. Esa es la señal de un Facilitador II que domina la gestión de documentos.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 10</div><div class="cp-q">En el flujo de un documento, ¿cuál es la única "decisión" que toma legítimamente el Facilitador II?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="10" data-ans="0">Decidir el sentido de la respuesta de fondo cuando la dependencia está ocupada.</button>
+        <button class="cp-opt" data-cp="10" data-ans="1">La decisión operativa: a qué dependencia corresponde por competencia y con qué prioridad según los términos; nunca el fondo del trámite.</button>
+        <button class="cp-opt" data-cp="10" data-ans="0">Si un requerimiento procede o no, para agilizarle el trámite al contribuyente.</button>
+      </div><div class="cp-fb" id="cpfb10"><strong>Correcto: la segunda.</strong> El Facilitador II decide lo operativo (competencia y prioridad), nunca el fondo. Resolver el sentido de una respuesta o si un requerimiento procede es competencia de la dependencia técnica.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> el documento entra, se verifica, se radica, se registra, se distribuye, se tramita y sale. En todo el flujo el Facilitador II facilita y ejecuta; su única decisión es operativa (competencia y prioridad). Los tres pilares son ventanilla única, radicación y trazabilidad.</p></div>
+    </div>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">🏆</span><div class="dst-body"><span class="dst-title">Idea clave del día</span><p>La gestión de documentos en el día a día es el sistema circulatorio de tu dependencia: tú haces que cada documento <strong>nazca bien</strong> (producción), <strong>entre con existencia oficial</strong> (recepción y radicación), <strong>llegue a quien corresponde</strong> (distribución por competencia con constancia) y <strong>no se venza ni se pierda</strong> (trámite y control). Todo bajo instrucciones, sin decidir el fondo. Lo que pasa <em>después</em> con esos documentos —cuánto se guardan, cómo se transfieren y cómo se conservan— es el Día 13.</p></div></div>
+
+  <div class="card"><div class="box-title" style="color:var(--ambar)">💡 Tips para fijar el Desarrollo</div>
+    <ul class="lista">
+      <li>Cuando dudes, elige la opción <strong>"radicar, dejar constancia y remitir por competencia"</strong>. Las opciones que dicen "enviar sin radicar", "devolver al ciudadano" o "decidir el fondo" suelen ser las trampas.</li>
+      <li>La <strong>radicación es un reloj legal</strong>: fecha y hora reales, número único consecutivo, nunca antedatar.</li>
+      <li>El <strong>canal no cambia la naturaleza</strong>: lo que llega por correo institucional se trata y se radica igual que el papel.</li>
+      <li>La <strong>prioridad</strong> se mide por término legal, instrucción expresa y naturaleza del asunto; nunca por insistencia o jerarquía informal.</li>
+      <li>La <strong>constancia de entrega</strong> es obligatoria siempre, interna o externa, sin excepción por confianza o afán.</li>
+      <li>Recuerda el límite: <strong>produces, recibes, radicas, distribuyes y tramitas bajo instrucciones; no decides, no fiscalizas, no liquidas.</strong></li>
+    </ul>
+  </div>
+  <div class="destacado azul"><span class="dst-ic">🧠</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"Un documento sin radicar no existe; un documento sin constancia de entrega no se puede probar; y un documento sin seguimiento se puede vencer. Mi trabajo es que ninguna de las tres cosas pase."</p></div></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Normas y portales oficiales reales. Ábrelos para consultar el texto completo:</p>
+    <ul class="lista">
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4275" target="_blank" rel="noopener">Ley 594 de 2000</a> — Ley General de Archivos (Función Pública · gestor normativo).</li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=62515" target="_blank" rel="noopener">Decreto 1080 de 2015</a> — Decreto Único Reglamentario del sector Cultura (procesos de gestión documental).</li>
+      <li><a href="https://www.suin-juriscol.gov.co/viewDocument.asp?id=1687424" target="_blank" rel="noopener">Ley 1712 de 2014</a> — Transparencia y acceso a la información pública (SUIN-Juriscol).</li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=41249" target="_blank" rel="noopener">Ley 1437 de 2011 (CPACA)</a> — Procedimiento administrativo y derecho de petición.</li>
+      <li><a href="https://www.archivogeneral.gov.co/" target="_blank" rel="noopener">Archivo General de la Nación (AGN)</a> — Acuerdos y normatividad archivística (incluye el Acuerdo 060 de 2001).</li>
+      <li><a href="https://www.dian.gov.co/" target="_blank" rel="noopener">DIAN</a> — Portal institucional de la Dirección de Impuestos y Aduanas Nacionales.</li>
+      <li><a href="https://www.cnsc.gov.co/" target="_blank" rel="noopener">CNSC</a> — Comisión Nacional del Servicio Civil (operador del concurso de ascenso).</li>
+    </ul>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Ya dominas la teoría: afinemos las distinciones que confunde la prueba.</span><button class="advance-btn" data-goto="3">Ver distinciones →</button></div>
+</section>
+
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos que más se prestan a error en la gestión de documentos, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Recibir</strong></td><td><strong>Radicar</strong></td><td>Recibir: verificar y constatar que el documento llegó (completo, destinatario correcto). Radicar: asignarle el número consecutivo oficial con fecha y hora, dándole existencia y fecha cierta.</td></tr>
+    <tr><td><strong>Producir</strong></td><td><strong>Decidir el fondo</strong></td><td>Producir: alistar/proyectar el documento con forma correcta bajo instrucciones. Decidir el fondo: definir el contenido o el sentido, que corresponde al funcionario competente, no al Facilitador II.</td></tr>
+    <tr><td><strong>Oficio</strong></td><td><strong>Memorando</strong></td><td>Oficio: comunicación hacia fuera de la entidad. Memorando: comunicación interna entre dependencias de la misma DIAN.</td></tr>
+    <tr><td><strong>Distribución interna</strong></td><td><strong>Salida externa</strong></td><td>Interna: entre dependencias de la misma DIAN. Externa: hacia contribuyentes, usuarios aduaneros, apoderados u otras entidades.</td></tr>
+    <tr><td><strong>Distribuir por competencia</strong></td><td><strong>Devolver al ciudadano</strong></td><td>Por competencia: la entidad radica y remite internamente a quien corresponde. Devolver: error que traslada al ciudadano una carga que es de la entidad.</td></tr>
+    <tr><td><strong>Prioridad por urgencia real</strong></td><td><strong>Prioridad por insistencia</strong></td><td>La urgencia se basa en términos legales, instrucciones y naturaleza del asunto; la insistencia o la jerarquía de quien pregunta no es, por sí sola, criterio válido.</td></tr>
+    <tr><td><strong>Archivo de gestión (hoy)</strong></td><td><strong>Transferencia al central (Día 13)</strong></td><td>El documento vive en gestión mientras se tramita; transferirlo al central es un movimiento posterior que verás en el Día 13. Radicar no transfiere.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: construye una frase con cada pareja. Por ejemplo: "recibir es constatar que llegó; radicar es darle número, fecha y hora ciertas". Si puedes decir la frase completa sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Facilitador II en la unidad de correspondencia de una Dirección Seccional de la DIAN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · El oficio urgente "mándalo ya, radícalo después"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un viernes a las 4:30 p.m., un compañero llega con un oficio firmado dirigido a otra entidad y te pide enviarlo de inmediato sin radicar, "para no demorarnos; el lunes lo radicas con calma". El mensajero espera.</p>
+    <span class="label">¿Qué se debe hacer?</span>
+    <div class="resp-correcta"><p>Radicar el oficio primero (asignándole número de salida, fecha y hora y registrándolo en el sistema) y enviarlo enseguida. La radicación toma segundos y es la que da existencia oficial, fecha cierta y trazabilidad. La urgencia no elimina la radicación: la hace más necesaria.</p></div>
+    <span class="label">Por qué</span><p>Un documento enviado sin radicar carece de fecha cierta y de rastro institucional; si el destinatario negara haberlo recibido, la DIAN no podría probar el envío. Se radica y se envía el mismo día, incluso el mismo minuto.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · La instrucción verbal que contradice el procedimiento</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un compañero te dice: "en esa división siempre confían en mí; entrega el memorando y ya, no pidas que firmen el recibido". El procedimiento de la seccional exige constancia de entrega en todos los casos.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Sigues el procedimiento y obtienes la constancia de entrega, independientemente de la confianza informal. Una instrucción verbal de un compañero no deroga el control de entregas.</p></div>
+    <span class="label">Por qué</span><p>La trazabilidad no depende de relaciones de confianza: depende de registros verificables. Omitir la constancia por costumbre expone a la DIAN y al propio Facilitador II ante cualquier reclamo posterior.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · El requerimiento que llega a última hora</div><div class="caso-body">
+    <span class="label">Situación</span><p>A las 4:45 p.m. llega un requerimiento dirigido a un contribuyente con un término que ya corre y vence en tres días. Ya hiciste tu ronda de reparto de la tarde y estás por salir.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Lo radicas de inmediato con fecha y hora reales, lo marcas como prioritario y verificas si alcanzas a distribuirlo ese mismo día; si no, lo dejas como primer reparto del día siguiente e informas a tu superior del término ajustado. No lo mezclas con la correspondencia de rutina para "verlo cuando se pueda".</p></div>
+    <span class="label">Por qué</span><p>Un término de tres días es corto; dejar el documento sin atención prioritaria pone en riesgo el cumplimiento del plazo por parte de la dependencia destinataria.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 4 · "Dame tu visto bueno a esta liquidación"</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un compañero te pasa una liquidación lista para salir y te pide que le des el visto bueno "sobre si está bien hecha" antes de radicarla.</p>
+    <span class="label">¿Qué haces?</span>
+    <div class="resp-correcta"><p>Verificas lo formal y logístico (firma del competente, anexos completos, destinatario correcto) y, si está en orden, la radicas y la tramitas. No das visto bueno sobre el contenido de fondo: eso es competencia de quien liquida, no del Facilitador II.</p></div>
+    <span class="label">Por qué</span><p>El alcance del cargo es de apoyo: produces la forma y canalizas, pero no decides ni validas el fondo de una actuación técnica como una liquidación.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Enviar o entregar un documento sin radicarlo</div><p>Sin radicación no hay número, fecha cierta ni trazabilidad; para efectos institucionales, ese documento no existe.</p></div>
+  <div class="box danger"><div class="box-title">❌ Antedatar o alterar la fecha/hora de radicación</div><p>El radicado es un reloj legal: la fecha y hora son reales y el número es único y consecutivo. Alterarlo es falta grave.</p></div>
+  <div class="box danger"><div class="box-title">❌ Devolver el documento al ciudadano "porque no es aquí"</div><p>Canalizar por competencia es obligación de la entidad: se radica y se remite internamente, nunca se traslada la carga al contribuyente.</p></div>
+  <div class="box danger"><div class="box-title">❌ Omitir la constancia "porque hay confianza" o "porque hay prisa"</div><p>La constancia de entrega es obligatoria siempre, interna o externa, sin excepciones.</p></div>
+  <div class="box danger"><div class="box-title">❌ Decidir u opinar sobre el fondo de lo que se produce o reparte</div><p>El Facilitador II alista, radica, distribuye y tramita bajo instrucciones; no decide el contenido, no fiscaliza ni liquida.</p></div>
+  <div class="box danger"><div class="box-title">❌ Tratar el correo electrónico institucional con menos rigor que el papel</div><p>Es comunicación oficial igual que el papel: misma clasificación, misma prioridad, misma radicación.</p></div>
+  <div class="box danger"><div class="box-title">❌ Repartir por orden de llegada o por insistencia, ignorando los términos</div><p>La prioridad se mide por urgencia real (término, instrucción, naturaleza), no por quién insiste más.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Cuando dudes, elige "radicar, dejar constancia y remitir por competencia".</strong> Las opciones que implican "enviar sin radicar", "devolver al ciudadano" o "decidir el fondo" suelen ser las trampas.</li>
+    <li><strong>La radicación es un reloj legal.</strong> Fecha y hora reales, número único consecutivo; nunca antedatar ni saltar.</li>
+    <li><strong>El Facilitador II nunca decide el fondo.</strong> Cualquier opción que lo muestre opinando, fiscalizando, liquidando o dando visto bueno al contenido es errónea.</li>
+    <li><strong>El canal no cambia la naturaleza.</strong> Lo que llega por correo institucional se trata y se radica igual que el papel.</li>
+    <li><strong>Interno también necesita constancia.</strong> No asumas que "dentro de la misma DIAN" se puede entregar sin dejar registro.</li>
+    <li><strong>Atención amable, criterio firme.</strong> Informar con respeto a quien pregunta no significa ceder la prioridad técnica ni decidir por otros.</li>
+    <li><strong>Recuerda el verbo de tu función:</strong> producir, recibir, radicar, clasificar, distribuir, tramitar y controlar documentos según procedimientos e instrucciones impartidas.</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"Como el documento es urgente, se envía primero y se radica después."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la urgencia parece justificar saltarse pasos.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> sin radicar no hay fecha cierta ni prueba del envío; si el destinatario lo niega, la DIAN no puede demostrarlo.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> radicar primero (toma segundos) y enviar enseguida. La urgencia hace la radicación más necesaria.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Si el documento no es de mi dependencia, se lo devuelvo al ciudadano para que lo lleve donde corresponde."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "no es mi competencia" suena razonable.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> devolver traslada al ciudadano una carga que es de la entidad y puede vulnerar su derecho de petición.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> radicar y remitir internamente por competencia, con constancia, informando al peticionario.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El reparto interno no necesita constancia, porque es dentro de la misma DIAN y hay confianza."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> suena razonable confiar en los compañeros de la misma seccional.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la trazabilidad aplica también dentro de la entidad; sin constancia no hay cómo probar la entrega.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> dejar constancia de toda entrega, interna o externa.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Me pidieron alistar el oficio, así que de paso decido yo mismo qué conviene responderle al contribuyente."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "ya que lo estoy haciendo, lo completo".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> alistar la forma no es decidir el fondo; el sentido de la respuesta lo define el funcionario competente.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> proyectar la forma según la instrucción y, si falta la decisión de fondo, consultarla, no inventarla.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p style="text-align:center">Haz clic en la tarjeta para ver la respuesta. Usa los botones para avanzar.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para girar</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls"><button id="flashPrev">← Anterior</button><span id="flashCounter"></span><button id="flashFlip">Girar</button><button id="flashNext">Siguiente →</button></div>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">Consolida con el resumen ejecutivo.</span><button class="advance-btn" data-goto="9">Ver resumen →</button></div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Función de apoyo clave</h4><p>Producir, recibir, radicar, clasificar, distribuir y tramitar los documentos de la dependencia según procedimientos e instrucciones impartidas.</p></div>
+    <div class="resumen-item"><h4>Tipos documentales DIAN</h4><p>Oficios, memorandos, requerimientos, autos, actos administrativos, respuestas a PQRSF y comunicaciones de entes de control.</p></div>
+    <div class="resumen-item"><h4>Producción</h4><p>Alistar y proyectar documentos rutinarios con forma impecable (membrete, anexos), listos para firma; sin decidir el fondo.</p></div>
+    <div class="resumen-item"><h4>Radicación</h4><p>Número consecutivo único, fecha y hora reales: da existencia oficial y es un reloj legal. Todo entra y sale por ventanilla única.</p></div>
+    <div class="resumen-item"><h4>Distribución</h4><p>Por competencia, nunca devolviendo al ciudadano, y siempre con constancia de entrega.</p></div>
+    <div class="resumen-item"><h4>Trámite y prioridad</h4><p>Seguir términos y priorizar por urgencia real (término, instrucción, naturaleza), nunca por insistencia.</p></div>
+    <div class="resumen-item"><h4>Control de ingreso/salida</h4><p>Registrar todo lo que entra y sale; los registros no se borran, se corrigen con traza.</p></div>
+    <div class="resumen-item"><h4>Límite del rol</h4><p>El Facilitador II produce, radica, distribuye y tramita bajo instrucciones; no decide, no fiscaliza ni liquida.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Radicar</dt><dd>Asignar número consecutivo único, fecha y hora a una comunicación oficial al entrar o salir; le da fecha cierta.</dd>
+      <dt>Ventanilla única</dt><dd>Unidad de correspondencia por la que entra y sale toda la comunicación oficial (Acuerdo 060 de 2001 del AGN).</dd>
+      <dt>Distribución por competencia</dt><dd>Entrega del documento a la dependencia competente para el asunto, con constancia; no al ciudadano.</dd>
+      <dt>Constancia de entrega</dt><dd>Registro (firma, sello, anotación) que prueba que un documento fue entregado y a quién.</dd>
+      <dt>Gestión y trámite</dt><dd>Proceso de recibir, radicar, distribuir y hacer seguimiento a los documentos hasta resolver el asunto.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Gestión de Documentos en el Día a Día</h2>
+  <div class="quiz-intro card"><p>Cinco preguntas tipo prueba escrita de la DIAN: contextos largos, situados en tu rol, con <strong>tres opciones</strong> elaboradas. Lee con calma, elige y revisa la explicación de cada opción. Al final, calcula tu puntaje.</p>
+    <div class="dific-tags"><span class="tag b">● Básica</span><span class="tag i">● Intermedia</span><span class="tag a">● Avanzada</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn gold" id="btnCalcular">Calcular mi puntaje</button></div>
+  <div id="resultado"><div class="score-num" id="scoreNum">0/5</div><p id="scoreMsg"></p><div id="temasReforzar"></div><button class="btn" id="btnReiniciar" style="margin-top:16px">Reintentar simulacro</button></div>
+  <div class="advance-bar"><span class="advance-hint">Completaste el Día 12. ¡Excelente trabajo!</span><button class="advance-btn final" id="btnFinalizar">✅ Finalizar Día 12</button></div>
+</section>
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">© 2026 Ascenso Público · Preparación por cargo para concursos públicos · Todos los derechos reservados</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+function goSec(n){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  const nb=document.querySelector('nav button[data-sec="'+n+'"]');if(nb)nb.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+n+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>goSec(btn.dataset.sec));});
+document.querySelectorAll('.advance-btn[data-goto]').forEach(b=>{b.addEventListener('click',()=>goSec(b.dataset.goto));});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const btnFin=document.getElementById('btnFinalizar');
+if(btnFin)btnFin.addEventListener('click',()=>{alert('✅ Has finalizado el Día 12: Gestión de Documentos en el Día a Día. ¡Vas por muy buen camino, sigue así!');});
+const flashcards=[
+  {f:'¿Cuál es la Ley General de Archivos?',b:'Ley 594 de 2000.'},
+  {f:'¿Qué es radicar?',b:'Asignar número consecutivo único, fecha y hora a una comunicación oficial al entrar o salir. Da existencia oficial y fecha cierta.'},
+  {f:'¿Qué estableció el Acuerdo 060 de 2001 del AGN?',b:'La ventanilla única: toda comunicación oficial entra y sale por una unidad de correspondencia centralizada.'},
+  {f:'¿Cuál es la fase viva del documento donde trabaja el Facilitador II en el día a día?',b:'El archivo de gestión: allí el documento nace (se produce o recibe), se radica, circula y se tramita.'},
+  {f:'¿Diferencia entre oficio y memorando?',b:'Oficio: comunicación hacia fuera de la entidad. Memorando: comunicación interna entre dependencias de la misma DIAN.'},
+  {f:'¿Un documento que llega por correo institucional se radica?',b:'Sí. Es comunicación oficial igual que el papel: misma clasificación, misma prioridad, misma radicación.'},
+  {f:'¿Qué significa distribuir por competencia?',b:'Entregar el documento a la dependencia competente para el asunto, con constancia; nunca devolverlo al ciudadano.'},
+  {f:'¿Qué hace el Facilitador II al producir un documento?',b:'Alista/proyecta la forma (membrete, estructura, anexos) bajo instrucciones y lo deja listo para firma; no decide el fondo ni lo firma.'},
+  {f:'¿Por qué la radicación es un "reloj legal"?',b:'Porque muchos términos legales empiezan a correr desde la radicación (fecha y hora).'},
+  {f:'¿Cuándo es obligatoria la constancia de entrega?',b:'Siempre: en reparto interno y externo, sin excepción por confianza o afán.'},
+  {f:'¿Qué criterios definen la prioridad de un documento?',b:'Término legal, instrucción expresa y naturaleza del asunto; nunca la insistencia o la jerarquía de quien pregunta.'},
+  {f:'¿A qué proceso de la gestión documental corresponde recibir, radicar y distribuir?',b:'Gestión y trámite (el proceso 3). Elaborar el documento es producción (el 2).'},
+  {f:'¿Qué NO hace el Facilitador II?',b:'No decide el fondo, no fiscaliza, no liquida, no firma actos administrativos. Facilita y ejecuta bajo instrucciones.'}
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+  { nivel:'b', tema:'Radicación y trazabilidad', ctx:'Eres Facilitador II en la unidad de correspondencia de una Dirección Seccional de la DIAN. Un viernes a las 4:30 p.m., cuando ya organizas tu puesto para salir, Camilo Restrepo, de la División de Cobranzas, llega apurado con un oficio firmado por el jefe dirigido a otra entidad y te dice: "Necesito que esto salga hoy mismo, es urgentísimo; mándalo por correo ya y el lunes, con calma, lo radicas para no demorarnos ahora". El mensajero espera en la puerta y Camilo insiste en que la urgencia justifica hacerlo así, porque "lo importante es que llegue hoy"; además te recuerda que él siempre ayuda cuando tú necesitas algo, y que por un documento no se va a trabar toda la gestión de la seccional.', q:'Camilo te presiona con el afán, el mensajero esperando y el recordatorio de los favores mutuos, y te plantea enviar primero y radicar el lunes. Tienes que decidir en segundos qué haces con ese oficio para no comprometer ni la urgencia legítima ni la trazabilidad de la entidad. ¿Cuál es tu actuación correcta?', ops:['Enviar el oficio de inmediato como pide Camilo y radicarlo el lunes, porque la urgencia del envío prima sobre el trámite de radicación y lo esencial es que el documento llegue a su destino a tiempo, sin trabar la gestión de la seccional por un formalismo que se puede completar después.','Radicar el oficio primero (asignándole consecutivo de salida, fecha y hora reales y registrándolo en el sistema) y enviarlo enseguida; la radicación toma segundos y es la que da existencia oficial, fecha cierta y trazabilidad al documento, de modo que la urgencia no la elimina sino que la hace aún más necesaria.','Negarte a enviar el oficio hasta el lunes, porque los envíos urgentes de última hora no están permitidos y toda comunicación oficial debe tramitarse siempre al día siguiente en horario normal de oficina, sin excepciones por afán.'], correcta:1, expl:['El envío no prima sobre la radicación: un documento enviado sin radicar carece de fecha cierta y de rastro institucional, y si el destinatario negara haberlo recibido, la DIAN no podría probar el envío. Los favores personales no cambian el procedimiento.','Correcto. La radicación es rápida y es la que da número, fecha cierta y trazabilidad. Se radica y luego se envía, incluso en el mismo minuto. La urgencia hace la radicación más importante, no prescindible.','No es necesario aplazar el envío: se puede radicar y enviar el mismo día. Negarse sin más también sería incorrecto frente a una necesidad legítima y bien tramitada.'] },
+  { nivel:'b', tema:'Distribución por competencia', ctx:'En la ventanilla de la Seccional se presenta la señora Marta Quintero y radica una petición extensa. Al leerla para su reparto, adviertes que el asunto de fondo (una solicitud relacionada con un trámite de talento humano de la entidad) es claramente competencia de otra división, no del punto que tú atiendes. Marta, molesta porque ya hizo dos filas distintas en la mañana, te dice: "Yo ya perdí toda la mañana; usted me recibe esto aquí y aquí me lo resuelven, o me lo devuelve y yo veré qué hago, pero no me mande de una oficina a otra como una pelota". Detrás de ella la fila crece y un compañero te hace señas de que agilices.', q:'El asunto es de otra dependencia, Marta exige que se resuelva en tu punto o que se lo devuelvas, y la fila presiona para que agilices. Tienes que decidir cómo canalizar esa petición respetando el derecho de Marta sin asumir una competencia que no es tuya. ¿Cómo debes proceder?', ops:['Archivar la petición sin darle trámite, dado que fue radicada en un punto que no es competente y esa circunstancia la invalida hasta que la ciudadana la presente, por sus propios medios, en la dependencia que sí maneja el asunto de talento humano.','Devolverle el documento a Marta explicándole con amabilidad que esa no es la dependencia competente y orientándola para que ella misma lo radique directamente en la división que sí maneja el asunto, evitando así trámites internos innecesarios para la entidad y agilizando la fila.','Radicar la petición (dándole número, fecha y hora) y remitirla internamente a la dependencia competente dentro del término, informando a Marta por escrito que su petición fue remitida, a qué dependencia y por qué; en ningún caso se le devuelve el documento ni se le pide volver a radicar.'], correcta:2, expl:['Archivar sin trámite vulnera el derecho de petición: la solicitud fue radicada válidamente y la entidad debe canalizarla, no invalidarla por el punto de radicación.','No se devuelve el documento al ciudadano ni se le traslada la carga de "hacer la vuelta": la obligación de canalizar por competencia es de la entidad, no del peticionario.','Correcto. Se radica y se remite por competencia dentro del término, informando al peticionario a qué dependencia se remitió y por qué. Nunca se devuelve al ciudadano ni se le pide volver a radicar.'] },
+  { nivel:'i', tema:'Prioridad y seguimiento de términos', ctx:'Son las 4:50 p.m. y en tu bandeja de reparto quedan dos documentos y tiempo para empezar solo por uno. El primero es un memorando interno de rutina, sin término, que el coordinador Óscar Lema te pidió "sacar antes que todo lo demás porque es urgente para su área" y por el que ya te ha llamado dos veces. El segundo es un oficio de un ente de control, recién radicado, con un término de respuesta que vence en dos días hábiles y que debe llegar a la dependencia responsable para que alcance a preparar la respuesta. Óscar vuelve a llamarte en ese momento para insistir, molesto, en que lo suyo salga primero.', q:'Óscar presiona con insistencia y jerarquía para que su memorando de rutina salga primero, pero el oficio del ente de control tiene un plazo legal que vence en dos días. Debes decidir con cuál empezar y, sobre todo, con qué criterio sustentas esa decisión frente a la presión. ¿Qué haces?', ops:['Empezar por el oficio del ente de control, porque tiene un término legal corto que vence en dos días; la prioridad se mide por la urgencia real (término legal y naturaleza del asunto), que prevalece sobre la insistencia o la jerarquía informal de quien pide prelación, y así se lo explicas a Óscar con respeto.','Empezar por el memorando de Óscar, porque proviene de un coordinador que ha pedido expresamente prelación y ha llamado varias veces, y respetar la jerarquía y conservar las buenas relaciones internas es parte de una buena gestión de la correspondencia de la seccional.','No priorizar ninguno en particular: repartirlos en el mismo orden en que llegaron a la bandeja, sin decidir entre un coordinador y un ente de control, para evitar tener que elegir y no exponerte a un reclamo de ninguna de las dos partes.'], correcta:0, expl:['Correcto. La prioridad se decide por término legal, instrucción expresa procedente y naturaleza del asunto. Un plazo de dos días manda sobre la insistencia de un coordinador; puedes explicar el criterio con respeto y mantenerlo.','La insistencia o la jerarquía de quien pide no es criterio de prioridad. Un memorando de rutina sin término no desplaza a un documento con plazo legal próximo a vencer.','El orden de llegada no es el criterio de reparto: un documento con término corto debe atenderse primero, aunque haya llegado después. No priorizar es, de hecho, arriesgar el término.'] },
+  { nivel:'i', tema:'Producción y alcance del rol', ctx:'La jefa de la División de Fiscalización, Lucía Parra, te pide proyectar un oficio de respuesta a un contribuyente a partir de una plantilla institucional y de instrucciones claras sobre el sentido de la respuesta. Mientras redactas el borrador, a ti te parece, por lo que conoces del trámite, que "la respuesta debería ser otra" y que al contribuyente le convendría una decisión distinta a la que te indicaron. Tienes la plantilla, los dos anexos que Lucía te entregó y el número de radicado del antecedente; Lucía salió a una reunión y no volverá hasta mañana.', q:'Tu opinión sobre el fondo difiere de la instrucción de Lucía, que no está para consultarle en este momento, y el oficio debe quedar listo para firma. Debes decidir cómo elaborar el documento sin excederte en tu rol ni bloquear el trámite. ¿Cómo manejas la elaboración de ese oficio?', ops:['Abstenerte de elaborar el oficio hasta que Lucía regrese y modifique la instrucción para ajustarla a lo que tú consideras correcto, porque no tendría sentido producir un documento con cuyo fondo no estás de acuerdo y es mejor esperar a que se corrija.','Cambiar el sentido de la respuesta según tu criterio y dejar el oficio como tú crees que debería quedar, ya que conoces bien el trámite, Lucía no está para consultarle y el objetivo final es que el documento salga lo mejor posible para el contribuyente.','Proyectar el oficio según la instrucción recibida, impecable en la forma (membrete, estructura, anexos y referencia al radicado antecedente) y dejarlo listo para firma; si tienes una observación de fondo, la comunicas a Lucía cuando regrese, pero no la impones ni cambias el sentido por tu cuenta.'], correcta:2, expl:['Bloquear la producción del documento por tu desacuerdo excede el rol y entorpece el trámite; la decisión de fondo no la define el Facilitador II, así que no corresponde condicionar el trabajo a que se ajuste a tu criterio.','Cambiar el sentido por criterio propio excede tu rol: el contenido de fondo lo decide el funcionario competente, no el Facilitador II, por más que conozcas el trámite o busques el bien del contribuyente.','Correcto. Produces la forma y ejecutas la instrucción; el fondo lo decide quien tiene la competencia. Puedes advertir una observación cuando la jefa regrese, pero no sustituyes la decisión ni bloqueas el trámite.'] },
+  { nivel:'a', tema:'Control de ingreso/salida e integridad del registro', ctx:'Preparando el reporte semanal de correspondencia, descubres que hace tres días registraste mal el destino de una distribución: anotaste que un oficio fue a la División de Operación Aduanera cuando en realidad se entregó, con constancia firmada, a la División de Servicio al Ciudadano. El oficio llegó bien a su destino real, pero el registro del sistema quedó con el dato equivocado. Un compañero, viendo que se acerca una auditoría interna, te sugiere: "bórralo y vuélvelo a escribir bien, así nadie nota que te equivocaste y no te abren un hallazgo; total, el documento sí llegó donde tenía que llegar".', q:'El oficio sí llegó a la dependencia correcta, pero el registro del sistema tiene un destino equivocado y tu compañero te propone borrar y reescribir para que el error no quede a la vista de la auditoría. Debes decidir cómo tratar ese registro conservando su valor probatorio. ¿Cuál es la conducta correcta?', ops:['Dejar el registro como está, con el destino equivocado, porque el oficio ya se entregó con constancia a la dependencia correcta y una diferencia en el registro no cambia el hecho de que el documento llegó físicamente a su destino, de modo que no vale la pena remover el tema.','Corregir el dato dejando traza de la corrección (sin eliminar el historial del registro original), de manera que el control siga siendo verídico, íntegro y auditable, y quede claro qué se cambió, cuándo y por qué, para que la auditoría vea exactamente lo que pasó.','Borrar el registro equivocado y volver a escribirlo con el dato correcto, de modo que el historial quede limpio y no aparezca ninguna inconsistencia que pueda generar un hallazgo o una observación incómoda en la próxima auditoría interna.'], correcta:1, expl:['Dejar un dato falso en el control rompe la trazabilidad y la confiabilidad del registro; aunque la entrega física fue correcta, el registro debe reflejar la realidad para tener valor probatorio.','Correcto. Los registros se corrigen dejando traza, nunca se borran para ocultar errores. Así el control conserva su valor probatorio y la auditoría ve exactamente qué pasó y qué se corrigió.','Borrar el registro para ocultar el error compromete la integridad del control y puede constituir una falta; los registros no se eliminan para "limpiar" el historial ante una auditoría.'] }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.8)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.6)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro, :scope > .acordeon, :scope > .mmap';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='↑';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

@@ -571,6 +571,67 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
     ],
   },
+
+  // DIAN 2676 — Gestor I, Talento Humano (OPEC 236897).
+  "dian-gestor-i-talento-humano-236897": {
+    id: "dian-gestor-i-talento-humano-236897",
+    nombre: "DIAN · Gestor I, Talento Humano (OPEC 236897) — plan personalizado de 21 días",
+    guias: [
+      { codigo: "INTRO-00", dia: 1 },
+      { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
+      { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
+      { codigo: "GEN-01", dia: 2 },
+      { codigo: "GEN-02", dia: 3 },
+      { codigo: "GEN-03", dia: 4 },
+      { codigo: "DIAN-GHI-COM-01", dia: 5 },
+      { codigo: "DIAN-GHI-COM-02", dia: 6 },
+      { codigo: "DIAN-GHI-COM-03", dia: 7 },
+      { codigo: "DIAN-GHI-COM-04", dia: 8 },
+      { codigo: "FUN-GHI-01", dia: 9 },
+      { codigo: "FUN-GHI-02", dia: 10 },
+      { codigo: "FUN-GHI-03", dia: 11 },
+      { codigo: "FUN-GHI-04", dia: 12 },
+      { codigo: "FUN-GHI-05", dia: 13 },
+      { codigo: "FUN-GHI-06", dia: 14 },
+      { codigo: "FUN-CONST-DIAN-GHI-01", dia: 15 },
+      { codigo: "FUN-JUR-DIAN-GHI-01", dia: 16 },
+      { codigo: "FUN-MIPG-DIAN-GHI-01", dia: 17 },
+      { codigo: "FUN-GDOC-DIAN-GHI-01", dia: 18 },
+      { codigo: "FUN-ATC-DIAN-GHI-01", dia: 19 },
+      { codigo: "FUN-DIAN-GHI-INFO-01", dia: 20 },
+      { codigo: "SIM-DIAN-GHI-001", dia: 21 },
+    ],
+  },
+  // DIAN 2676 — Facilitador II, nivel asistencial (OPEC 236906).
+  "dian-facilitador-ii-236906": {
+    id: "dian-facilitador-ii-236906",
+    nombre: "DIAN · Facilitador II (OPEC 236906) — plan personalizado de 21 días",
+    guias: [
+      { codigo: "INTRO-00-DIAN-FAC2", dia: 1 },
+      { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
+      { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
+      { codigo: "GEN-01-DIAN-FAC2", dia: 2 },
+      { codigo: "GEN-02-DIAN-FAC2", dia: 3 },
+      { codigo: "GEN-03-DIAN-FAC2", dia: 4 },
+      { codigo: "DIAN-ASI-COM-01", dia: 5 },
+      { codigo: "DIAN-ASI-COM-02", dia: 6 },
+      { codigo: "DIAN-ASI-COM-03", dia: 7 },
+      { codigo: "DIAN-ASI-COM-04", dia: 8 },
+      { codigo: "FUN-CONST-FAC2-01", dia: 9 },
+      { codigo: "FUN-COR-FAC2-01", dia: 10 },
+      { codigo: "FUN-GDOC-FAC2-01", dia: 11 },
+      { codigo: "FUN-GDOC-FAC2-02", dia: 12 },
+      { codigo: "FUN-GP-FAC2-01", dia: 13 },
+      { codigo: "FUN-GDOC-FAC2-03", dia: 14 },
+      { codigo: "FUN-COR-FAC2-02", dia: 15 },
+      { codigo: "FUN-GP-FAC2-02", dia: 16 },
+      { codigo: "FUN-DOC-FAC2-01", dia: 17 },
+      { codigo: "FUN-CONST-FAC2-02", dia: 18 },
+      { codigo: "FUN-COR-FAC2-03", dia: 19 },
+      { codigo: "FUN-GDOC-FAC2-04", dia: 20 },
+      { codigo: "SIM-DIAN-FAC2-001", dia: 21 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
@@ -1001,6 +1062,9 @@ export async function restaurarBaseCNSC(
   const { data: guias } = await supabase.from("guias_curso").select("archivo_path").eq("curso_id", cursoId);
   const rutas = new Set<string>(((guias as any[]) || []).map((g) => (g.archivo_path || "").toString()).filter(Boolean));
   if ([...rutas].some((r) => /PGN/i.test(r) || /-AUX[-.]/i.test(r))) return 0; // señales de plan PGN.
+  // Plan personalizado CNSC (INTRO/GEN propios, p. ej. INTRO-00-DIAN-FAC2, GEN-01-DIAN-FAC2):
+  // ya trae su bloque Días 1-4; no agregar las genéricas encima.
+  if ([...rutas].some((r) => /(^|\/)(INTRO-00|GEN-0[1-3])-[A-Z]/.test(r))) return 0;
 
   // Solo si falta TODO el bloque inicial (no tocar cursos donde el admin borró una guía suelta).
   if (rutas.has(ARCHIVOS["INTRO-00"]) || rutas.has(ARCHIVOS["GEN-01"])) return 0;
