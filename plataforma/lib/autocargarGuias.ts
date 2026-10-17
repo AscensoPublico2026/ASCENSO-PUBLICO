@@ -570,7 +570,7 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "DIAN-EST-01", dia: null, orden: 102 },
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
     ],
-  },,
+  },
 
   // DIAN 2676 — Gestor I, Talento Humano (OPEC 236897).
   "dian-gestor-i-talento-humano-236897": {
