@@ -105,7 +105,7 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
       <p style={{ color: "var(--texto-suave)", marginBottom: 8 }}>
         Completa tus datos y sube tu manual de funciones. Después realizas el pago seguro con Wompi.
       </p>
-      <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Precio: $300.000 COP · pago único</p>
+      <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>Pago único · escribes el valor a pagar</p>
 
       <ContadorCupos />
 
@@ -166,6 +166,21 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
             <option value="tecnico">Técnico</option>
             <option value="profesional">Profesional</option>
           </select>
+        </label>
+        <label style={label}>Valor a pagar (COP) *
+          <input
+            style={inputStyle}
+            type="number"
+            name="monto"
+            min={1000}
+            step={1000}
+            required
+            inputMode="numeric"
+            placeholder="Ej: 300000"
+          />
+          <span style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginTop: 4, display: "block" }}>
+            Escribe en pesos el valor que vas a pagar (sin puntos ni comas). Mínimo $1.000.
+          </span>
         </label>
         <label style={label}>Manual de funciones (PDF) *
           <input style={inputStyle} type="file" name="manual" accept=".pdf,application/pdf" required />

@@ -26,6 +26,11 @@ export async function crearCompra(formData: FormData) {
   const password = String(formData.get("password") || "").trim();
   const confirmPassword = String(formData.get("confirmPassword") || "").trim();
 
+  // Monto libre: el cliente escribe cuánto va a pagar (en pesos COP).
+  const montoIngresado = Number(
+    String(formData.get("monto") || "").replace(/[^\d]/g, "")
+  );
+
   // URL de destino (checkout de Wompi). Se calcula dentro del try y la
   // redirección real se hace al final, fuera del try, para no capturar el
   // NEXT_REDIRECT interno de Next.js.
@@ -43,6 +48,12 @@ export async function crearCompra(formData: FormData) {
 
     if (password !== confirmPassword) {
       throw new Error("Las contraseñas no coinciden.");
+    }
+
+    // Validar el monto a pagar (campo libre). Mínimo de seguridad para evitar
+    // pagos en $0 o valores inválidos que Wompi rechazaría.
+    if (!Number.isFinite(montoIngresado) || montoIngresado < 1000) {
+      throw new Error("Ingresa un valor a pagar válido (mínimo $1.000 COP).");
     }
 
     // Verificación explícita de configuración del servidor: si faltan las
@@ -81,7 +92,8 @@ export async function crearCompra(formData: FormData) {
     }
 
     // Pago pendiente + firma + redirección a Wompi
-    const monto = Number(process.env.PRECIO_COP || "300000") * 100; // a centavos
+    // Monto libre ingresado por el cliente, convertido a centavos.
+    const monto = Math.round(montoIngresado * 100); // a centavos
     const { error: pagoError } = await supabase
       .from("pagos")
       .insert({ referencia, monto, estado: "pendiente" });
