@@ -24,7 +24,13 @@ Kiro, vamos a **construir el CURSO de preparación (21 días de guías HTML)** d
 **Reglas que NO se rompen (resumen; el detalle está en PROCESO-CURSOS-GUIAS.md):**
 - **PUSH POR GUÍA.** Crea una rama `feat/curso-<entidad>-<código>-<aspirante>` y púshéala YA. Después de cada guía validada, commit + push inmediato. NUNCA acumular trabajo sin commitear (ya perdimos un curso completo por eso).
 - **Desarrollo ≥ 10.000 palabras** en funcionales y generales, con módulos profundos, tablas, ejemplos `.practica` ambientados en el rol REAL del cargo, acordeones, checkpoints, `.flujo`, `.ojo`, cierre con "Idea clave" + Tips + "Frase para recordar" + `.fuentes` con enlaces reales `target="_blank"`. Frases clave en `<mark>` (subrayado dorado).
-- **Simulacros IDÉNTICOS a la prueba real:** contexto largo (6-10 renglones, 450-1000 car), enunciado que replantea la tensión, y 4 opciones largas (120-280 car) y confusas (distractores que no se descartan a simple vista). El simulacro final (Día 21) = 50 funcionales + 20 comportamentales = 70 preguntas.
+- **ESTÁNDAR OBLIGATORIO de las preguntas de juicio situacional (TODAS las guías Y el simulacro)** — regla confirmada por Julio César, PISO de calidad que nunca se empeora; no volver a dejar preguntas telegráficas:
+  - **Contexto** largo, **550–1000 car** (ideal ~680–780): escenario situado con **personas con nombre**, presiones y un distractor plausible.
+  - **Enunciado** largo, **2–4 renglones (~230–430 car)** que **replantea la tensión**. PROHIBIDO el "¿cuál es la actuación correcta?" de una línea.
+  - **Opciones**: en las GUÍAS, 3 opciones; en el SIMULACRO, 4 opciones. Todas **largas (mín 150, ideal 200–345 car)**, plausibles y confusas (la correcta no se delata por ser la más larga/completa).
+  - **Variedad** de aperturas y escenarios entre preguntas. Se conserva SIEMPRE el tema, la opción correcta y la explicación; solo se eleva la redacción.
+  - El **SIMULACRO FINAL/GENERAL debe ser AÚN MÁS INTENSO** que las guías (contextos y opciones más robustos, más distractores). Día 21 = 50 funcionales + 20 comportamentales (Likert) = 70 preguntas.
+  - Las preguntas viven en el HTML como `const preguntas=[...]` (dict con `nivel, tema, ctx, q, ops, correcta, expl`; en simulacro además `ref, refT`, y `const likertItems=[...]`). Método y umbrales detallados en la sección 8 de `PROCESO-CURSOS-GUIAS.md`. Validar: `node --check` + divs balanceados + 0 ctx<550, 0 q<110, 0 opciones<150.
 - **REENFOCAR el molde, no find-replace ciego:** cambia el ENFOQUE al rol real del cargo. Cuidado con regex agresivas (usar reemplazos literales o `\b`).
 - **0 FUGAS:** ningún dato de otro aspirante/cargo/código/convocatoria/entidad. Verifícalo con grep en cada guía. La PGN es régimen especial (NO CNSC como organizadora).
 - **Simulacro final:** archivo en `simulacro/SIM-...html` con nombre corto, y biblioteca `"Simulacro Final"` (para que quede en su módulo aparte, no mezclado con las generales).
@@ -39,6 +45,8 @@ Kiro, vamos a **construir el CURSO de preparación (21 días de guías HTML)** d
 4. Con mi OK, escribe un spec corto (como `_SPEC-CURSO-3PU15-LEYNER.md`) y construye la guía PILOTO (una funcional central), valídala, púshéala y pásame el enlace para mi visto bueno ANTES de las demás.
 5. Con mi visto bueno de la piloto, produce el resto (puedes paralelizar con sub-agentes), push por tanda.
 6. Cierra con: registro en biblioteca.json (x2), sync a seed-guias, plan plantilla, PR a main, y me pasas los pasos de carga.
+
+**Recordatorio de despliegue (por qué "no se actualiza"):** la plataforma sirve las guías desde el **bucket de Supabase**, no directo del repo; si una guía ya está en el bucket NO se reemplaza sola. Tras mergear a `main` y esperar el deploy de Vercel, como admin visito `/api/admin/seed-guias` (upsert al bucket) y recargo sin caché (Ctrl+Shift+R). Mejorar un curso ya existente requiere un PR NUEVO si el anterior ya se cerró/mergeó.
 
 **Empecemos:** confírmame que ya leíste `PROCESO-CURSOS-GUIAS.md` y el caso de referencia, y quédate esperando a que te dé los datos del **nuevo aspirante** (nombre, cargo, código, convocatoria y perfil). Recuerda: primero el PLAN DE ESTUDIO con el análisis de reutilización y mi OK; después construyes.
 

@@ -231,3 +231,33 @@ tenía guías, hay que **Rehacer** el plan para que tome tipo/ruta nuevos.
 **Leyner Andrés Urrego Sanmartín** — PGN Profesional Universitario **3PU-15**, Conv. **112-2026**,
 Dirección Nacional de Investigaciones Especiales, perfil financiero-contable. Plan plantilla:
 `pgn-profesional-3pu15`. Spec detallado: `referencias/_SPEC-CURSO-3PU15-LEYNER.md`.
+
+## 8. ESTÁNDAR OBLIGATORIO de las preguntas de juicio situacional (guías y simulacros)
+
+**Regla confirmada por Julio César (oct-2026). Es un PISO de calidad: nunca se empeora, solo se mejora. Aplica a TODO curso de aquí en adelante.** No volver a dejar preguntas telegráficas.
+
+Cada pregunta de juicio situacional (campo del array `const preguntas=[...]` en el HTML de la guía) debe cumplir:
+
+- **Contexto (`ctx`)**: largo, **550–1000 caracteres** (ideal ~680–780). Escenario situado, con **personas con nombre** (compañeros, superiores), dependencia, antecedentes, **varias presiones** y un **distractor plausible**. Nada de contextos de 2–3 renglones.
+- **Enunciado (`q`)**: largo, **2–4 renglones (~230–430 car)** que **replantea la tensión** del caso e incita a decidir. **PROHIBIDO** el "¿cuál es la actuación correcta?" de una sola línea.
+- **Opciones (`ops`)**: **tres**, todas **largas (ideal 270–345 car, mín 150)**, plausibles y **confusas** (que NO se adivinen a simple vista; la correcta no debe delatarse por ser la única larga o completa). Patrón típico: una que se pasa (extralimitación / exceso), una que se queda corta (omisión / mal servicio) y la correcta (hace lo propio, dentro de las reglas, con integridad).
+- **Variedad**: aperturas y escenarios distintos entre preguntas (distintos roles, personas, situaciones). No todas empiezan igual.
+- Se conserva SIEMPRE el **tema**, la **opción correcta** y la **explicación** de cada pregunta: solo se eleva la redacción, no se cambia el contenido ni la respuesta.
+
+**SIMULACRO FINAL / GENERAL de cada curso: AÚN MÁS INTENSO y mejor que las guías** — contextos y opciones todavía más robustos, más distractores, mayor dificultad. Es la prueba integradora.
+
+### Método técnico reutilizable
+Las preguntas viven en el HTML como `const preguntas=[...]` (y en simulacros además `const likertItems=[...]`). Cada pregunta es un dict: `nivel` ("b"/"i"/"a" o "basic"), `tema`, `ctx`, `q`, `ops` (lista de 3), `correcta` (índice 0-based), `expl`; en simulacros también `ref` y `refT`.
+
+1. Extraer con `re.search(r'const preguntas=(\[.*?\]);', h, re.S)` + `json.loads`.
+2. Reescribir `ctx`/`q`/`ops` conservando `tema`, `correcta` y `expl`.
+3. Reinyectar con `re.sub(r'const preguntas=\[.*?\];', lambda m: nuevo, h, count=1, flags=re.S)`.
+4. **Validar**: extraer los `<script>` y correr `node --check`; verificar `<div`==`</div>`; medir que 0 `ctx`<550, 0 `q`<110, 0 opciones<150 y `nops`==3.
+5. `cp` a `plataforma/public/seed-guias/` y **commit + push POR GUÍA**.
+
+Atajo útil: si un simulacro ya tiene contextos largos pero enunciados cortos, basta con reescribir SOLO el campo `q` de cada pregunta por índice.
+
+**Recordatorio de despliegue (por qué "no se actualiza"):** la plataforma sirve las guías desde el **bucket de Supabase**, no directo del repo; si una guía ya está en el bucket NO se reemplaza sola. Tras mergear a `main` y esperar el deploy de Vercel, el admin debe visitar `/api/admin/seed-guias` (upsert al bucket) y recargar sin caché (Ctrl+Shift+R). Además, mejorar preguntas de un curso ya existente requiere un PR NUEVO si el anterior ya se cerró/mergeó.
+
+### Caso de referencia (estándar de preguntas aplicado)
+Curso **DIAN Analista I** (Nivel Técnico, gestión de información), OPEC **246932**, concurso DIAN 2676, aspirante **Syndy Carolina Perilla Moreno**. Rama `feat/curso-dian-analista-i-comportamentales`. Se reescribieron al estándar las 204 preguntas de las 16 guías (FUN-AINF-01..12 y DIAN-TEC-COM-01..04) y se reforzó el simulacro final SIM-DIAN-AI-001 (50 enunciados largos 324–431 car). Familias: funcional `DIAN-AINF`, comportamental `DIAN-TEC-COM`. Plan plantilla: `dian-analista-i`.
