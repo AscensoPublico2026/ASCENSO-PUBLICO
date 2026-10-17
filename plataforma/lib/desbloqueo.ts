@@ -39,8 +39,7 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   "FUN-COR-FAC2-03-mensajeria-y-control-entregas.html",
   "FUN-GDOC-FAC2-04-conservacion-prestamo-consulta.html",
   "SIM-DIAN-FAC2-001.html",
-  // Gloriela · Analista IV fiscalización (236760) — alcance del cargo Día 8 + simulacro
-  "DIAN-AIV-COM-04-alcance-cargo-analista-iv.html",
+  // Gloriela · Analista IV fiscalización (236760) — simulacro
   "SIM-DIAN-AIV-001.html",
 ]);
 
