@@ -600,6 +600,11 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "FUN-ATC-DIAN-GHI-01", dia: 19 },
       { codigo: "FUN-DIAN-GHI-INFO-01", dia: 20 },
       { codigo: "SIM-DIAN-GHI-001", dia: 21 },
+      { codigo: "BON-01", dia: null, orden: 100 },
+      { codigo: "BON-02", dia: null, orden: 101 },
+      { codigo: "DIAN-EST-01", dia: null, orden: 102 },
+      { codigo: "DIAN-INT-01", dia: null, orden: 103 },
+      { codigo: "BON-03", dia: null, orden: 104 },
     ],
   },
   // DIAN 2676 — Facilitador II, nivel asistencial (OPEC 236906).

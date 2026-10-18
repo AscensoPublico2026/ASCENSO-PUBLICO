@@ -24,8 +24,7 @@ export const OPECS_SECUENCIALES = ["236897", "236906", "236760"];
 // de esta lista y desplegar (+ /api/admin/seed-guias para refrescar el bucket).
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
-  // Clary y Dayana · Gestor I Talento Humano (236897) — alcance del cargo Día 8 + simulacro
-  "DIAN-GHI-COM-04-alcance-cargo-evaluacion.html",
+  // Clary y Dayana · Gestor I Talento Humano (236897) — simulacro Día 21
   "SIM-DIAN-GHI-001.html",
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
   "FUN-GDOC-FAC2-03-transferencia-y-trazabilidad-documental.html",
