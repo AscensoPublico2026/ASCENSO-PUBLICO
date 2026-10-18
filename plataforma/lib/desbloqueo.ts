@@ -16,7 +16,7 @@
 //     migración aún no se haya aplicado).
 // ============================================================
 
-export const OPECS_SECUENCIALES = ["236897", "236906", "236760"];
+export const OPECS_SECUENCIALES = ["236897", "236906", "236760", "236740"];
 
 // Guías que aparecen en el plan pero aún se están escribiendo. Se ven en la
 // ruta como "🛠️ En preparación", no se pueden abrir ni marcar, y FRENAN la
@@ -35,6 +35,18 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   "FUN-COR-FAC2-03-mensajeria-y-control-entregas.html",
   "FUN-GDOC-FAC2-04-conservacion-prestamo-consulta.html",
   "SIM-DIAN-FAC2-001.html",
+  // Edwin · Gestor II administrativo y financiero (236740) — Días 6-8, 11, 12, 14-17, 19, 20
+  "DIAN-ADM-COM-02-innovacion-solucion-problemas.html",
+  "DIAN-ADM-COM-03-logro-usuario-comunicacion-equipo.html",
+  "DIAN-ADM-COM-04-alcance-cargo-gestor-ii.html",
+  "FUN-ADM-03-custodia-disposicion-mercancias.html",
+  "FUN-ADM-04-ingresos-almacenamiento-registro-mercancias.html",
+  "FUN-ADM-06-siif-nacion-ingresos-egresos.html",
+  "FUN-ADM-07-constitucion-politica.html",
+  "FUN-ADM-08-notificacion-recursos-archivo.html",
+  "FUN-ADM-09-cpaca-principios-procedimiento.html",
+  "FUN-ADM-11-documental-pqrsf-servicio-tic.html",
+  "FUN-ADM-12-evasion-elusion-contrabando-transparencia.html",
 ]);
 
 export function enPreparacion(g: any): boolean {

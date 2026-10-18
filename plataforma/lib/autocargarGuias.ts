@@ -698,6 +698,8 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "FUN-ADM-03", dia: 11 },
       { codigo: "FUN-ADM-04", dia: 12 },
       { codigo: "FUN-ADM-05", dia: 13 },
+      { codigo: "FUN-ADM-13", dia: 13 },
+      { codigo: "FUN-ADM-14", dia: 13 },
       { codigo: "FUN-ADM-06", dia: 14 },
       { codigo: "FUN-ADM-12", dia: 15 },
       { codigo: "FUN-ADM-07", dia: 16 },
@@ -710,6 +712,7 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "BON-02", dia: null, orden: 101 },
       { codigo: "DIAN-EST-01", dia: null, orden: 102 },
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
+      { codigo: "BON-03", dia: null, orden: 104 },
     ],
   },
 };
@@ -717,6 +720,8 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
 // Mapeo de código → archivo en storage (bucket 'guias')
 const ARCHIVOS: Record<string, string> = {
   "FUN-ADM-12": "guias/FUN-ADM-12-evasion-elusion-contrabando-transparencia.html",
+  "FUN-ADM-13": "guias/FUN-ADM-13-infraestructura-fisica.html",
+  "FUN-ADM-14": "guias/FUN-ADM-14-bienes-muebles-inmuebles-inventarios.html",
   "FUN-ADM-09": "guias/FUN-ADM-09-cpaca-principios-procedimiento.html",
   "FUN-ADM-10": "guias/FUN-ADM-10-mipg-buen-gobierno-integridad.html",
   "FUN-ADM-11": "guias/FUN-ADM-11-documental-pqrsf-servicio-tic.html",
