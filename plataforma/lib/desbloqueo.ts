@@ -36,7 +36,6 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   "FUN-GDOC-FAC2-04-conservacion-prestamo-consulta.html",
   "SIM-DIAN-FAC2-001.html",
   // Edwin · Gestor II administrativo y financiero (236740) — Días 6-8, 11, 12, 14-17, 19, 20
-  "DIAN-ADM-COM-02-innovacion-solucion-problemas.html",
   "DIAN-ADM-COM-03-logro-usuario-comunicacion-equipo.html",
   "DIAN-ADM-COM-04-alcance-cargo-gestor-ii.html",
   "FUN-ADM-03-custodia-disposicion-mercancias.html",
