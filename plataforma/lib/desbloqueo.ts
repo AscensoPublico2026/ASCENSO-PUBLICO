@@ -32,7 +32,6 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
   "SIM-DIAN-GHI-001.html",
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
-  "FUN-COR-FAC2-02-radicacion-y-comunicaciones-oficiales.html",
   "FUN-GP-FAC2-02-apoyo-actos-administrativos.html",
   "FUN-DOC-FAC2-01-control-expedientes.html",
   "FUN-CONST-FAC2-02-derechos-peticion-transparencia.html",
