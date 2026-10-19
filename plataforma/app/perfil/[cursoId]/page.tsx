@@ -5,7 +5,7 @@ import { toTitleCase } from "@/lib/format";
 import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 import { sanearGuiasGenericas } from "@/lib/autocargarGuias";
 import Contador from "../Contador";
-import { esCursoSecuencial, calcularDesbloqueo, moduloKey } from "@/lib/desbloqueo";
+import { esCursoSecuencial, calcularDesbloqueo, bloqueoPreparacion, moduloKey } from "@/lib/desbloqueo";
 
 export const dynamic = "force-dynamic";
 
@@ -100,7 +100,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   const secuencial = esCursoSecuencial(curso) && !esPreview;
   const desbloqueo = secuencial
     ? calcularDesbloqueo(guias || [])
-    : { bloqueadas: new Set<string>(), preparando: new Set<string>(), actual: null as any, esperando: null as any };
+    : esPreview
+      ? { bloqueadas: new Set<string>(), preparando: new Set<string>(), actual: null as any, esperando: null as any }
+      : bloqueoPreparacion(guias || []);
 
   // Desbloqueo del simulacro: solo se activa cuando TODAS las guías del PLAN
   // con archivo disponible (generales/nivel/funcionales) ya fueron leídas.
@@ -131,7 +133,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
   let proximaGuia: any = secuencial ? desbloqueo.actual : null;
   if (!secuencial) for (const m of MODULOS) {
     if (m.key === "simulacro" && !simulacroDesbloqueado) continue;
-    const next = (porModulo[m.key] || []).find((g: any) => g.archivo_path && !g.leida);
+    const next = (porModulo[m.key] || []).find((g: any) => g.archivo_path && !g.leida && !desbloqueo.preparando.has(g.id));
     if (next) { proximaGuia = next; break; }
   }
 

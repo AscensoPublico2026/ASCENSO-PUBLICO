@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/site";
-import { esCursoSecuencial, calcularDesbloqueo } from "@/lib/desbloqueo";
+import { esCursoSecuencial, calcularDesbloqueo, enPreparacion } from "@/lib/desbloqueo";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,12 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
         return new NextResponse("Guía bloqueada: termina la anterior.", { status: 403 });
       }
     }
+  }
+
+  // Guías en preparación: no se sirven (salvo admin).
+  if (enPreparacion(guia)) {
+    const { data: perfilP } = await supabase.from("profiles").select("rol").eq("id", user.id).single();
+    if (perfilP?.rol !== "admin") return new NextResponse("Guía en preparación.", { status: 403 });
   }
 
   const admin = createAdminClient();
