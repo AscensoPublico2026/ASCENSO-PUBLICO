@@ -16,7 +16,12 @@
 //     migración aún no se haya aplicado).
 // ============================================================
 
-export const OPECS_SECUENCIALES = ["236897", "236906", "236760"];
+// DESACTIVADO (19-oct-2026): a petición de la administración, ningún curso
+// avanza guía por guía; todas las guías listas quedan abiertas desde el inicio.
+// Solo siguen cerradas las guías EN PREPARACIÓN (ver bloqueoPreparacion).
+// Para volver a activarlo en un curso, agregar su OPEC aquí y quitar el
+// "return false" de esCursoSecuencial.
+export const OPECS_SECUENCIALES: string[] = [];
 
 // Guías que aparecen en el plan pero aún se están escribiendo. Se ven en la
 // ruta como "🛠️ En preparación", no se pueden abrir ni marcar, y FRENAN la
@@ -48,9 +53,10 @@ export function enPreparacion(g: any): boolean {
 export const MINUTOS_MINIMOS_GUIA = 10;
 
 export function esCursoSecuencial(curso: any): boolean {
-  if (!curso) return false;
-  if (curso.desbloqueo_secuencial === true) return true;
-  return OPECS_SECUENCIALES.includes(String(curso.opec || "").trim());
+  // Desactivado para todos los cursos (ignora también la columna
+  // desbloqueo_secuencial). Antes: columna true u OPEC en OPECS_SECUENCIALES.
+  void curso;
+  return false;
 }
 
 // Orden de los módulos del currículo (debe coincidir con /perfil/[cursoId]).
@@ -110,6 +116,18 @@ export function calcularDesbloqueo(guias: any[]): {
     bloqueadas.add(g.id);
   }
   return { bloqueadas, preparando, actual, esperando };
+}
+
+/**
+ * Bloqueo para cursos NO secuenciales: solo las guías en preparación quedan
+ * cerradas; todo lo demás está abierto.
+ */
+export function bloqueoPreparacion(guias: any[]): {
+  bloqueadas: Set<string>; preparando: Set<string>; actual: any | null; esperando: any | null;
+} {
+  const preparando = new Set<string>();
+  for (const g of guias || []) if (g.archivo_path && enPreparacion(g)) preparando.add(g.id);
+  return { bloqueadas: new Set(preparando), preparando, actual: null, esperando: null };
 }
 
 /** Siguiente guía del plan (con archivo, sin bonus) después de `guiaId`. */

@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { esCursoSecuencial, calcularDesbloqueo, MINUTOS_MINIMOS_GUIA } from "@/lib/desbloqueo";
+import { esCursoSecuencial, calcularDesbloqueo, enPreparacion, MINUTOS_MINIMOS_GUIA } from "@/lib/desbloqueo";
 import BotonTerminar from "./BotonTerminar";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +62,20 @@ export default async function GuiaPage({ params }: { params: { id: string } }) {
         </main>
       );
     }
+  }
+
+  // 🛠️ Guías en preparación: cerradas en todos los cursos (salvo admin).
+  if (!secuencial && !esAdmin && enPreparacion(guia)) {
+    return (
+      <main style={{ maxWidth: 620, margin: "0 auto", padding: "60px 22px", textAlign: "center" }}>
+        <div style={{ fontSize: "2.6rem", marginBottom: 12 }}>🛠️</div>
+        <h1 style={{ fontSize: "1.4rem", marginBottom: 8 }}>{guia.titulo}</h1>
+        <p style={{ color: "var(--texto-suave)", marginBottom: 24, lineHeight: 1.6 }}>
+          Esta guía está en preparación final y se habilitará muy pronto en tu ruta.
+        </p>
+        <a href={`/perfil/${guia.curso_id}`} style={{ color: "var(--azul)", fontWeight: 700 }}>← Volver a mi curso</a>
+      </main>
+    );
   }
 
   // 🔒 Bloqueo del simulacro: solo accesible cuando TODAS las guías del PLAN
