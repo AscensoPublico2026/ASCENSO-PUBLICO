@@ -100,6 +100,38 @@ const GUIAS_POR_NIVEL: Record<string, Array<{ codigo: string; dia: number; titul
   ],
 };
 
+// Comportamentales DIAN por nivel (Días 5-8). La DIAN usa su propio Diccionario de
+// Competencias Comportamentales (Resolución 065 de 2024), distinto del marco general
+// del Decreto 815 de 2018; por eso sus cursos cargan este set y no el genérico CNSC.
+// Son guías genéricas por nivel (sirven para cualquier cargo de ese nivel en la DIAN):
+// así solo hay que construir las funcionales (Días 9-20) y el simulacro de cada cargo.
+const GUIAS_POR_NIVEL_DIAN: Record<string, Array<{ codigo: string; dia: number; titulo: string; tipo: string; orden: number }>> = {
+  asistencial: [
+    { codigo: "DIAN-NIV-ASI-01", dia: 5, titulo: "Comportamiento ético y adaptabilidad (nivel asistencial DIAN)", tipo: "nivel", orden: 5 },
+    { codigo: "DIAN-NIV-ASI-02", dia: 6, titulo: "Comunicación efectiva y trabajo en equipo (nivel asistencial DIAN)", tipo: "nivel", orden: 6 },
+    { codigo: "DIAN-NIV-ASI-03", dia: 7, titulo: "Orientación al logro y al usuario y al ciudadano (nivel asistencial DIAN)", tipo: "nivel", orden: 7 },
+    { codigo: "DIAN-NIV-ASI-04", dia: 8, titulo: "Tu ficha, innovación, solución de problemas y cómo se evalúa (nivel asistencial DIAN)", tipo: "nivel", orden: 8 },
+  ],
+  tecnico: [
+    { codigo: "DIAN-NIV-TEC-01", dia: 5, titulo: "Comportamiento ético y adaptabilidad (nivel técnico DIAN)", tipo: "nivel", orden: 5 },
+    { codigo: "DIAN-NIV-TEC-02", dia: 6, titulo: "Comunicación efectiva y trabajo en equipo (nivel técnico DIAN)", tipo: "nivel", orden: 6 },
+    { codigo: "DIAN-NIV-TEC-03", dia: 7, titulo: "Orientación al logro, al usuario y al ciudadano e innovación (nivel técnico DIAN)", tipo: "nivel", orden: 7 },
+    { codigo: "DIAN-NIV-TEC-04", dia: 8, titulo: "Tu ficha, innovación, solución de problemas y cómo se evalúa (nivel técnico DIAN)", tipo: "nivel", orden: 8 },
+  ],
+  profesional: [
+    { codigo: "DIAN-NIV-PRO-01", dia: 5, titulo: "Comportamiento ético y adaptabilidad (nivel profesional DIAN)", tipo: "nivel", orden: 5 },
+    { codigo: "DIAN-NIV-PRO-02", dia: 6, titulo: "Comunicación efectiva y trabajo en equipo (nivel profesional DIAN)", tipo: "nivel", orden: 6 },
+    { codigo: "DIAN-NIV-PRO-03", dia: 7, titulo: "Orientación al logro y al usuario y al ciudadano (nivel profesional DIAN)", tipo: "nivel", orden: 7 },
+    { codigo: "DIAN-NIV-PRO-04", dia: 8, titulo: "Tu ficha, innovación, solución de problemas y cómo se evalúa (nivel profesional DIAN)", tipo: "nivel", orden: 8 },
+  ],
+};
+
+/** Guías por nivel (Días 5-8) según la entidad: la DIAN tiene su propio set. */
+export function guiasNivelPara(nivelNorm: string, codigoEntidad?: string | null) {
+  if (codigoEntidad === "ENT-DIAN-01" && GUIAS_POR_NIVEL_DIAN[nivelNorm]) return GUIAS_POR_NIVEL_DIAN[nivelNorm];
+  return GUIAS_POR_NIVEL[nivelNorm] || [];
+}
+
 const GUIAS_BONUS = [
   { codigo: "BON-01", dia: null, titulo: "Estrategia CNSC (Bonus)", tipo: "bonus", orden: 100 },
   { codigo: "BON-02", dia: null, titulo: "Ofimática (Bonus)", tipo: "bonus", orden: 101 },
@@ -832,6 +864,18 @@ const ARCHIVOS: Record<string, string> = {
   "PRO-COM-02": "guias/PRO-COM-02-servicio-articulacion.html",
   "PRO-ESP-01": "guias/PRO-ESP-01-competencias-nivel-profesional.html",
   "PRO-ESP-02": "guias/PRO-ESP-02-alcance-cargo-profesional.html",
+  "DIAN-NIV-ASI-01": "guias/DIAN-NIV-ASI-01-etica-adaptabilidad.html",
+  "DIAN-NIV-ASI-02": "guias/DIAN-NIV-ASI-02-comunicacion-trabajo-equipo.html",
+  "DIAN-NIV-ASI-03": "guias/DIAN-NIV-ASI-03-logro-usuario.html",
+  "DIAN-NIV-ASI-04": "guias/DIAN-NIV-ASI-04-ficha-innovacion-problemas-evaluacion.html",
+  "DIAN-NIV-TEC-01": "guias/DIAN-NIV-TEC-01-comportamiento-etico-adaptabilidad.html",
+  "DIAN-NIV-TEC-02": "guias/DIAN-NIV-TEC-02-comunicacion-trabajo-equipo.html",
+  "DIAN-NIV-TEC-03": "guias/DIAN-NIV-TEC-03-logro-usuario-innovacion.html",
+  "DIAN-NIV-TEC-04": "guias/DIAN-NIV-TEC-04-ficha-innovacion-problemas-evaluacion.html",
+  "DIAN-NIV-PRO-01": "guias/DIAN-NIV-PRO-01-comportamiento-etico-adaptabilidad.html",
+  "DIAN-NIV-PRO-02": "guias/DIAN-NIV-PRO-02-comunicacion-trabajo-equipo.html",
+  "DIAN-NIV-PRO-03": "guias/DIAN-NIV-PRO-03-logro-usuario.html",
+  "DIAN-NIV-PRO-04": "guias/DIAN-NIV-PRO-04-ficha-innovacion-problemas-evaluacion.html",
   "BON-01": "guias/BON-01-estrategia-cnsc.html",
   "BON-02": "guias/BON-02-ofimatica.html",
 };
@@ -916,7 +960,7 @@ export async function cargarGuiasAutomaticas(
   // Construir la lista de guías a insertar:
   // Día 1 = Introducción + "Conoce tu entidad" (si la convocatoria tiene), Días 2-4 generales,
   // Días 5-8 por nivel, + bonus.
-  const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
+  const guiasNivel = guiasNivelPara(nivelNorm, infoConv.entidad?.codigo);
   const entGuia = infoConv.entidad
     ? [{ codigo: infoConv.entidad.codigo, dia: 1, titulo: infoConv.entidad.titulo, tipo: "general", orden: 1 }]
     : [];
@@ -1206,8 +1250,8 @@ export async function restaurarBaseCNSC(
 
   const nivelNorm = ((curso as any).nivel || "").toString().toLowerCase().trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const guiasNivel = GUIAS_POR_NIVEL[nivelNorm] || [];
   const ent = entidadCNSCDeConvocatoria(textoConv);
+  const guiasNivel = guiasNivelPara(nivelNorm, ent?.codigo);
   const entGuia = ent ? [{ codigo: ent.codigo, dia: 1, titulo: ent.titulo, tipo: "general", orden: 1 }] : [];
   const extrasEnt = extrasDeEntidad(ent?.codigo);
   const base = [INTRO_CNSC, ...entGuia, ...extrasEnt.filter((g) => g.dia === 1), ...GUIAS_GENERALES, ...guiasNivel, ...GUIAS_BONUS, ...extrasEnt.filter((g) => g.dia === null)];
@@ -1277,4 +1321,52 @@ export async function asegurarExtrasEntidad(
     return 0;
   }
   return registros.length;
+}
+
+
+/**
+ * Cursos DIAN que recibieron las comportamentales GENÉRICAS de la CNSC (ASI/TEC/PRO-COM,
+ * -ESP) en los Días 5-8: se cambian por el set DIAN de su nivel (DIAN-NIV-*), que usa el
+ * Diccionario de Competencias de la DIAN (Res. 065/2024). Actualiza las filas en su lugar
+ * (mismo id), así no se pierde el progreso. No toca los cursos con comportamentales
+ * propias por cargo (DIAN-PRO-COM, DIAN-ASI-COM, etc.). Idempotente.
+ *
+ * @returns número de guías actualizadas.
+ */
+export async function actualizarNivelDIAN(
+  supabase: SupabaseClient,
+  cursoId: string
+): Promise<number> {
+  const { data: curso } = await supabase
+    .from("cursos")
+    .select("id, nivel, convocatorias(nombre, entidad)")
+    .eq("id", cursoId)
+    .single();
+  if (!curso) return 0;
+  const conv: any = Array.isArray((curso as any).convocatorias) ? (curso as any).convocatorias[0] : (curso as any).convocatorias;
+  const ent = entidadCNSCDeConvocatoria(`${conv?.nombre || ""} ${conv?.entidad || ""}`);
+  if (ent?.codigo !== "ENT-DIAN-01") return 0;
+  const nivelNorm = ((curso as any).nivel || "").toString().toLowerCase().trim()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const nuevas = GUIAS_POR_NIVEL_DIAN[nivelNorm];
+  if (!nuevas) return 0;
+
+  const viejas = new Set<string>(Object.values(GUIAS_POR_NIVEL).flat().map((g) => ARCHIVOS[g.codigo]).filter(Boolean));
+  const { data: guias } = await supabase.from("guias_curso").select("id, dia, archivo_path").eq("curso_id", cursoId);
+  const lista = (guias as any[]) || [];
+  const rutas = new Set<string>(lista.map((g) => (g.archivo_path || "").toString()));
+  let n = 0;
+  for (const g of lista) {
+    if (!g.archivo_path || !viejas.has(g.archivo_path)) continue;
+    const nueva = nuevas.find((x) => x.dia === g.dia);
+    if (!nueva || !ARCHIVOS[nueva.codigo] || rutas.has(ARCHIVOS[nueva.codigo])) continue;
+    const { error } = await supabase
+      .from("guias_curso")
+      .update({ titulo: nueva.titulo, archivo_path: ARCHIVOS[nueva.codigo], tipo: nueva.tipo })
+      .eq("id", g.id);
+    if (error) { console.error("[actualizarNivelDIAN]", error.message); continue; }
+    rutas.add(ARCHIVOS[nueva.codigo]);
+    n++;
+  }
+  return n;
 }

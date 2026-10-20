@@ -79,6 +79,9 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
     // Cursos de CNSC (no PGN): si perdieron el bloque base Días 1-8, se restaura.
     const { restaurarBaseCNSC } = await import("@/lib/autocargarGuias");
     await restaurarBaseCNSC(admin, curso.id);
+    // Cursos DIAN con comportamentales genéricas de la CNSC: pasar al set DIAN por nivel.
+    const { actualizarNivelDIAN } = await import("@/lib/autocargarGuias");
+    await actualizarNivelDIAN(admin, curso.id);
   } catch (e) {
     // No bloquear la carga del perfil si el saneamiento/completado falla.
     console.error("[perfil] auto-saneamiento de guías:", e);
