@@ -736,6 +736,7 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "DIAN-EST-01", dia: null, orden: 102 },
       { codigo: "DIAN-INT-01", dia: null, orden: 103 },
       { codigo: "BON-03", dia: null, orden: 104 },
+      { codigo: "FUN-AII-02", dia: null, orden: 105 },
     ],
   },
   // DIAN — Gestor II (302-02), Administrativo y Financiero (recursos administrativos,
