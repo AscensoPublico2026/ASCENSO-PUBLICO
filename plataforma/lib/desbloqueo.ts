@@ -30,7 +30,6 @@ export const OPECS_SECUENCIALES: string[] = [];
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
   // Andrea Aroca · Gestor III Control Interno (236872) — funcionales Días 9-20 + simulacro
-  "FUN-CI-10-cpaca-pqrsf-servicio-ciudadano.html",
   "FUN-CI-11-integridad-transparencia-evasion-contrabando.html",
   "FUN-CI-12-herramientas-informaticas-gestion-documental.html",
   "SIM-DIAN-CI-001.html",
