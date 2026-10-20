@@ -32,7 +32,6 @@ export const GUIAS_EN_PREPARACION = new Set<string>([
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
   "SIM-DIAN-GHI-001.html",
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
-  "SIM-DIAN-FAC2-001.html",
 ]);
 
 export function enPreparacion(g: any): boolean {
