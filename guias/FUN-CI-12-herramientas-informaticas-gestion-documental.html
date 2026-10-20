@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-CI-12 · Herramientas informáticas, gestión documental y repaso integrador para control interno — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-CI-12</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 20 · Funcional</div>
+  <h1>Herramientas informáticas, gestión documental y repaso integrador: la evidencia del auditor</h1>
+  <p class="header-sub">Hojas de cálculo y analítica de datos para auditoría; calidad e integridad de los datos; seguridad de la información; gestión documental (Ley 594 de 2000, instrumentos archivísticos, expediente y documento electrónico); papeles de trabajo y evidencia digital; y un repaso integrador de todo el curso antes del simulacro final.</p>
+  <div class="badges"><span class="badge">📅 Día 20 de 21</span><span class="badge">⏱ 110-130 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">🛡️ Funcional · Competencias básicas</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>La OCI audita el proceso de devoluciones y compensaciones de saldos a favor con apoyo de análisis de datos. Un analista del equipo recibe de la dependencia de tecnología una base con todas las devoluciones del año. Al revisar su trabajo encuentras varios problemas. No concilió el número de registros ni el valor total con los reportes oficiales del proceso. Filtró y borró filas directamente sobre el archivo original, así que ya no se puede reconstruir qué hizo. Encontró posibles devoluciones duplicadas, pero no documentó cómo las identificó. Guardó los papeles de trabajo en el escritorio de su computador personal. Y envió la base, que contiene información con reserva tributaria, a su correo personal para “avanzar desde la casa”.</p>
+    <p>Cuando el equipo revisa los expedientes físicos y electrónicos de una muestra de devoluciones, el panorama es parecido:</p>
+    <ul class="lista">
+      <li>Varios expedientes están incompletos, y la dependencia no aplica las tablas de retención documental.</li>
+      <li>Hay cajas de documentos sin inventario en un depósito.</li>
+      <li>Un coordinador “depuró” documentos antiguos sin acta de eliminación.</li>
+      <li>Las evidencias que tomó el equipo son capturas de pantalla sin fecha ni fuente.</li>
+    </ul>
+    <p>Hoy estudias las <mark>herramientas informáticas</mark> que usa el auditor (hojas de cálculo y analítica de datos), la <mark>calidad y seguridad</mark> de los datos y de la información, la <mark>gestión documental</mark> (Ley 594 de 2000 e instrumentos archivísticos), los <mark>papeles de trabajo</mark> y la <mark>evidencia digital</mark>. Cierras con un <mark>repaso integrador</mark> de todo el curso antes del simulacro final.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Las funciones de <strong>hoja de cálculo</strong> y las <strong>técnicas de analítica</strong> más útiles en auditoría: duplicados, secuencias, atípicos, estratificación, cruces y Benford.</li>
+      <li>Cómo asegurar la <strong>calidad e integridad</strong> de los datos: conciliación, copia de trabajo, trazabilidad y reproducibilidad.</li>
+      <li>Los fundamentos de <strong>seguridad de la información</strong> y la protección de datos con reserva.</li>
+      <li>La <strong>Ley 594 de 2000</strong>, el ciclo vital del documento y los <strong>instrumentos archivísticos</strong>: TRD, TVD, PGD, PINAR, cuadro de clasificación e inventario.</li>
+      <li>El <strong>expediente</strong>, el <strong>documento electrónico de archivo</strong>, los <strong>papeles de trabajo</strong> y la <strong>evidencia digital</strong>.</li>
+      <li>Un <strong>mapa integrador</strong> de todo el curso para el simulacro.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día podrás hacer un análisis de datos que otro auditor pueda reproducir paso a paso. También sabrás documentarlo en papeles de trabajo bien conservados y evaluar si un proceso gestiona bien sus documentos. Y llegarás al simulacro con el curso completo organizado en la cabeza.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba y para tu cargo?</h2>
+  <p>Tu ficha incluye como competencias básicas las <strong>herramientas informáticas</strong> y la <strong>gestión documental</strong>, y como funcionales las <strong>técnicas de auditoría interna</strong> y la evaluación del sistema de control interno. Las dos competencias básicas son la base material de la auditoría. La evidencia se obtiene cada vez más de datos, y se conserva en documentos que deben cumplir las reglas archivísticas.</p>
+  <ul class="lista">
+    <li><strong>Las Normas Globales exigen evidencia suficiente, confiable, relevante y útil.</strong> Un análisis de datos que no se puede reproducir no es evidencia confiable.</li>
+    <li><strong>La gestión documental es criterio de auditoría.</strong> Expedientes incompletos, TRD sin aplicar o eliminaciones sin acta son hallazgos frecuentes.</li>
+    <li><strong>La DIAN maneja información con reserva.</strong> El auditor que la usa mal crea un riesgo nuevo en lugar de evaluar el existente.</li>
+    <li><strong>Es el último día antes del simulacro.</strong> El repaso integrador conecta los temas que la prueba mezcla en un mismo caso.</li>
+  </ul>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con las guías anteriores y siguientes</div>
+    <p>Ayer viste que el análisis de datos sirve para detectar señales de alerta. En el Día 12 viste la evidencia y el muestreo, y en el Día 18 el expediente único del CPACA. Hoy les das soporte técnico y documental a todos esos temas. Mañana (Día 21) presentas el simulacro final.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Datos, documentos y evidencia: la base material del control</h2>
+
+<!-- MÓDULO 1 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">1</span><h3>Las herramientas informáticas en el trabajo de la OCI</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las <mark>herramientas informáticas</mark> del auditor son de varios tipos:</p>
+<ul class="lista">
+<li>Las de <strong>ofimática</strong>: procesador de texto, hoja de cálculo y presentaciones.</li>
+<li>Las <strong>técnicas de auditoría asistidas por computador</strong> (TAAC, o CAAT por su sigla en inglés): software de analítica y consultas a bases de datos.</li>
+<li>Los <strong>sistemas de información de la entidad</strong>, que el auditor consulta con permisos de solo lectura.</li>
+<li>Las herramientas de <strong>gestión del trabajo de auditoría</strong>: planeación, papeles de trabajo y seguimiento de hallazgos.</li>
+</ul>
+<p>Su valor está en que permiten examinar el <mark>universo</mark> de las operaciones en lugar de una muestra pequeña. Pero solo producen evidencia confiable si el análisis está <strong>documentado y se puede reproducir</strong>.</p></div>
+<div class="b-texto">
+<p>Durante décadas, la auditoría se basó en revisar muestras de documentos físicos. Hoy, la mayor parte de las operaciones de la DIAN quedan registradas en sistemas de información: declaraciones, devoluciones, operaciones aduaneras, pagos, actuaciones. El auditor que sabe extraer y analizar esos datos puede revisar el cien por ciento de las devoluciones del año y concentrar después su revisión documental en los casos que el análisis señala como anómalos. Esto cambia la naturaleza de la auditoría: de buscar errores al azar a buscar patrones con método.</p>
+<p>Las Normas Globales de Auditoría Interna (Día 11) piden que los auditores tengan la competencia necesaria, incluido el uso de tecnología, y que la función de auditoría considere el uso de herramientas tecnológicas y de analítica de datos. Tu ficha exige “herramientas informáticas” como competencia básica. No se espera que seas programador. Sí se espera que manejes con solvencia la hoja de cálculo y que entiendas qué pruebas de analítica existen y cuándo usarlas.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Tipo de herramienta</th><th>Uso en auditoría</th><th>Riesgo si se usa mal</th></tr></thead>
+<tbody>
+<tr><td>Hoja de cálculo</td><td>Depurar, cruzar, resumir y probar datos; cédulas de trabajo</td><td>Fórmulas erróneas, filas borradas sin rastro, versiones múltiples</td></tr>
+<tr><td>Software de analítica (TAAC)</td><td>Analizar grandes volúmenes con registro automático de los pasos</td><td>Conclusiones sin verificar con documentos</td></tr>
+<tr><td>Consultas a sistemas de la entidad</td><td>Obtener datos directamente de la fuente</td><td>Accesos con privilegios de modificación, que afectan la independencia</td></tr>
+<tr><td>Herramienta de gestión de auditoría</td><td>Planear, documentar, revisar y hacer seguimiento</td><td>Papeles fuera del repositorio oficial</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Fíjate en un punto de independencia que conecta con todo el curso. El auditor debe consultar los sistemas de la entidad con <strong>accesos de solo lectura</strong>. Si tuviera permisos para modificar datos, podría alterar la evidencia, aunque fuera sin querer, y quedaría en la posición de coadministrar. Lo mismo vale para el apoyo de tecnología. Es correcto pedir a TI que extraiga una base, porque TI es la que conoce las tablas. Pero la OCI debe definir los criterios de la extracción y verificar después que la base esté completa.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · Del muestreo al universo</div><div class="practica-body"><p><strong>Situación:</strong> en años anteriores, la OCI revisaba 30 expedientes de devoluciones escogidos al azar. Este año tiene la base completa de 12.400 devoluciones.</p>
+<p><strong>Razonamiento:</strong> primero aplicas pruebas al universo: duplicados, devoluciones a cuentas compartidas por varios contribuyentes, tiempos de aprobación atípicos y montos por encima de los umbrales. Luego seleccionas para revisión documental los casos que las pruebas señalan, más una muestra aleatoria de control. Así combinas cobertura total con verificación documental.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: auditoría continua</summary><div class="acc-body"><p>Algunas funciones de auditoría interna avanzan hacia la auditoría continua: pruebas automatizadas que se ejecutan periódicamente sobre los datos de los sistemas y generan alertas cuando aparecen patrones de riesgo. Esto no reemplaza el juicio del auditor, pero le permite detectar antes los problemas. Hay una condición clave: la OCI evalúa los resultados y recomienda, pero no se convierte en el control de primera o segunda línea. Si la entidad necesita un monitoreo permanente, ese monitoreo corresponde a la gestión, por ejemplo a la segunda línea. La OCI puede recomendarlo y luego evaluarlo.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> la analítica permite revisar el <strong>universo</strong>, pero genera <strong>hipótesis</strong> que se verifican con documentos. El auditor consulta los sistemas en <strong>solo lectura</strong>.</div>
+<div class="checkpoint" id="cp1"><div class="cp-tag">✅ Checkpoint 1</div><p class="cp-q">¿Qué tipo de acceso debe tener el auditor a los sistemas de información de la entidad?</p><div class="cp-opts"><button class="cp-opt" data-cp="1" data-ans="0">Acceso de administrador, para poder corregir los errores que encuentre durante la auditoría.</button><button class="cp-opt" data-cp="1" data-ans="1">Acceso de solo lectura, para obtener la evidencia sin poder modificar los datos.</button><button class="cp-opt" data-cp="1" data-ans="0">Ningún acceso: toda la información debe entregarla la dependencia auditada en papel.</button></div><div class="cp-fb" id="cpfb1">✔ Solo lectura: preserva la evidencia y la independencia.</div></div>
+</div>
+
+<!-- MÓDULO 2 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">2</span><h3>La hoja de cálculo como herramienta de auditoría</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>hoja de cálculo</mark> es la herramienta más usada por los auditores. Sus funciones clave son:</p>
+<ul class="lista">
+<li><strong>Búsqueda y cruce</strong>: BUSCARV, BUSCARX o INDICE con COINCIDIR.</li>
+<li><strong>Conteo y suma condicional</strong>: CONTAR.SI.CONJUNTO y SUMAR.SI.CONJUNTO.</li>
+<li><strong>Lógica</strong>: SI, Y, O.</li>
+<li><strong>Tablas dinámicas</strong>, para resumir y estratificar.</li>
+<li><strong>Filtros, ordenamiento, formato condicional</strong> e identificación de <strong>duplicados</strong>.</li>
+</ul>
+<p>La regla de oro es <mark>no trabajar nunca sobre el archivo original</mark>. Se conserva la fuente intacta, se trabaja en una copia y se documenta cada paso en una hoja de trazabilidad.</p></div>
+<div class="b-texto">
+<p>Cada función responde a una necesidad típica de la auditoría:</p>
+<ul class="lista">
+<li><strong>Funciones de búsqueda:</strong> cruzan dos bases, por ejemplo las cuentas bancarias de las devoluciones con las cuentas registradas por los servidores de la entidad.</li>
+<li><strong>Conteo condicional:</strong> responde preguntas como “¿cuántas devoluciones aprobó cada servidor?”.</li>
+<li><strong>Suma condicional:</strong> responde “¿qué valor se devolvió a cada beneficiario?”.</li>
+<li><strong>Tablas dinámicas:</strong> resumen miles de registros por dependencia, mes o rango de valor. Así se estratifica el universo antes de muestrear.</li>
+<li><strong>Formato condicional y función de duplicados:</strong> resaltan los registros repetidos o fuera de rango.</li>
+</ul>
+<p>El riesgo de la hoja de cálculo es su flexibilidad: permite borrar, sobrescribir y mover datos sin dejar rastro. En el caso del día, el analista filtró y borró filas sobre el archivo original. Después ya no se puede saber cuántos registros tenía la base al recibirla, qué se eliminó ni por qué. La evidencia perdió confiabilidad. Las buenas prácticas evitan ese problema:</p>
+<ul class="lista">
+<li>Guardar la base original como archivo de solo lectura, con su fecha y su fuente.</li>
+<li>Trabajar en una copia.</li>
+<li>Marcar los registros con columnas auxiliares en lugar de borrarlos.</li>
+<li>Registrar cada paso en una hoja de trazabilidad: qué se hizo, con qué criterio y con qué resultado.</li>
+<li>Verificar las fórmulas.</li>
+</ul>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Necesidad</th><th>Función o herramienta</th><th>Ejemplo en devoluciones</th></tr></thead>
+<tbody>
+<tr><td>Cruzar dos bases</td><td>BUSCARV, BUSCARX, INDICE con COINCIDIR</td><td>Cuentas de devolución contra cuentas de servidores</td></tr>
+<tr><td>Contar con condiciones</td><td>CONTAR.SI.CONJUNTO</td><td>Devoluciones aprobadas por servidor y mes</td></tr>
+<tr><td>Sumar con condiciones</td><td>SUMAR.SI.CONJUNTO</td><td>Valor devuelto por beneficiario</td></tr>
+<tr><td>Resumir y estratificar</td><td>Tabla dinámica</td><td>Número y valor por rango de monto</td></tr>
+<tr><td>Detectar repetidos</td><td>Formato condicional, quitar duplicados en copia, CONTAR.SI</td><td>Mismo NIT, mismo valor, mismo periodo</td></tr>
+<tr><td>Marcar excepciones</td><td>SI, Y, O en columna auxiliar</td><td>Aprobada en menos de 2 días y por encima del umbral</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La hoja de trazabilidad</div><div class="practica-body"><p><strong>Situación:</strong> rehaces el análisis del caso desde una nueva extracción.</p>
+<p><strong>Razonamiento:</strong> la hoja de trazabilidad registra lo siguiente:</p>
+<ul class="lista">
+<li>Paso 1: base recibida de TI el día X, con 12.400 registros y valor total Y, conciliada con el reporte oficial.</li>
+<li>Paso 2: copia de trabajo creada.</li>
+<li>Paso 3: columna “clave” = NIT + periodo + valor.</li>
+<li>Paso 4: CONTAR.SI sobre la clave; resultado, 38 claves repetidas (76 registros).</li>
+<li>Paso 5: los 76 registros se marcan para revisión documental.</li>
+</ul>
+<p>Con esa hoja, otro auditor puede repetir el análisis y llegar al mismo resultado.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: errores típicos en fórmulas</summary><div class="acc-body"><p>Los errores más comunes en las hojas de cálculo de auditoría son:</p>
+<ul class="lista">
+<li>Búsquedas que devuelven el primer resultado sin advertir que hay varios.</li>
+<li>Coincidencias aproximadas no deseadas: en BUSCARV hay que usar la coincidencia exacta.</li>
+<li>Referencias que se desplazan al copiar fórmulas, cuando no se fijan con el signo $.</li>
+<li>Textos que parecen números, como los NIT con espacios o ceros a la izquierda, y que impiden los cruces.</li>
+<li>Filtros activos que ocultan registros al sumar.</li>
+</ul>
+<p>Antes de concluir, conviene hacer pruebas de control: comprobar que los totales de la copia coinciden con los de la fuente y revisar a mano algunos resultados.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> nunca se trabaja sobre el <strong>original</strong>. Copia de trabajo, columnas auxiliares en lugar de borrar, y una <strong>hoja de trazabilidad</strong> que permita <strong>reproducir</strong> el análisis.</div>
+<div class="checkpoint" id="cp2"><div class="cp-tag">✅ Checkpoint 2</div><p class="cp-q">¿Cuál es la buena práctica al analizar en hoja de cálculo una base recibida de la entidad?</p><div class="cp-opts"><button class="cp-opt" data-cp="2" data-ans="0">Depurar directamente el archivo original, eliminando los registros que no interesan, para trabajar más rápido.</button><button class="cp-opt" data-cp="2" data-ans="0">Pedir a la dependencia auditada que haga los análisis y entregue solo los resultados finales a la OCI.</button><button class="cp-opt" data-cp="2" data-ans="1">Conservar el original intacto, trabajar en una copia y documentar cada paso para que el análisis se pueda reproducir.</button></div><div class="cp-fb" id="cpfb2">✔ Original intacto, copia de trabajo y trazabilidad.</div></div>
+</div>
+
+<!-- MÓDULO 3 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">3</span><h3>Técnicas de analítica de datos para auditoría</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las pruebas de analítica más usadas en auditoría son:</p>
+<ul class="lista">
+<li><mark>Duplicados</mark>: registros repetidos.</li>
+<li><mark>Faltantes en secuencias</mark>: saltos en numeraciones consecutivas.</li>
+<li><mark>Valores atípicos</mark>: registros que se salen del patrón.</li>
+<li><strong>Estratificación</strong>: distribución por rangos.</li>
+<li><strong>Cruces entre bases</strong>: relaciones que no deberían existir.</li>
+<li><strong>Pruebas de fecha y hora</strong>: operaciones en días no hábiles o fuera de horario.</li>
+<li><mark>Ley de Benford</mark>: distribución esperada de los primeros dígitos.</li>
+</ul>
+<p>Cada prueba genera una <strong>lista de excepciones</strong> que el auditor debe verificar con documentos antes de convertirla en hallazgo.</p></div>
+<div class="b-texto">
+<p>Las pruebas responden a riesgos concretos:</p>
+<ul class="lista">
+<li><strong>Duplicados:</strong> detectan pagos o devoluciones dobles.</li>
+<li><strong>Faltantes en secuencias:</strong> detectan documentos anulados o desaparecidos, por ejemplo números de resolución que no aparecen.</li>
+<li><strong>Valores atípicos:</strong> detectan operaciones fuera de lo normal, como montos muy superiores al promedio o tiempos de trámite muy cortos.</li>
+<li><strong>Estratificación:</strong> muestra dónde se concentra el valor y orienta el muestreo.</li>
+<li><strong>Cruces entre bases:</strong> detectan relaciones indebidas, como contratistas que comparten dirección o cuenta con servidores, o beneficiarios de devoluciones que comparten cuenta bancaria.</li>
+<li><strong>Pruebas de fecha:</strong> detectan aprobaciones en fines de semana o a horas inusuales.</li>
+</ul>
+<p>La <strong>Ley de Benford</strong> merece un comentario. En muchos conjuntos de datos naturales, como montos de facturas o de pagos, el primer dígito no se distribuye de manera uniforme. El 1 aparece como primer dígito cerca del 30 % de las veces, el 2 cerca del 18 %, y la frecuencia va bajando hasta el 9, que aparece cerca del 5 %. Cuando una base se aparta mucho de esa distribución, puede haber manipulación, como montos inventados o fraccionamientos para quedar bajo un umbral. Pero también puede haber explicaciones legítimas, como montos fijados por norma o tarifas. Por eso es una prueba de orientación, no de conclusión.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Prueba</th><th>Riesgo que ayuda a detectar</th><th>Ejemplo</th></tr></thead>
+<tbody>
+<tr><td>Duplicados</td><td>Pagos o devoluciones dobles</td><td>Mismo NIT, periodo y valor devuelto dos veces</td></tr>
+<tr><td>Faltantes en secuencia</td><td>Documentos anulados u ocultos</td><td>Resoluciones de devolución con números saltados</td></tr>
+<tr><td>Valores atípicos</td><td>Operaciones anómalas</td><td>Devolución aprobada en un día cuando el promedio es de treinta</td></tr>
+<tr><td>Estratificación</td><td>Concentración del valor</td><td>El 5 % de los casos concentra el 70 % del valor</td></tr>
+<tr><td>Cruces</td><td>Relaciones indebidas</td><td>Cuenta bancaria de un beneficiario igual a la de un servidor</td></tr>
+<tr><td>Fechas y horas</td><td>Operaciones fuera de control</td><td>Aprobaciones registradas un domingo a medianoche</td></tr>
+<tr><td>Benford</td><td>Manipulación de montos</td><td>Exceso de montos que empiezan por 9 justo bajo un umbral</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Recuerda la regla de ayer: la analítica genera <strong>hipótesis</strong>. Un duplicado puede ser una devolución doble o dos periodos distintos mal registrados. Un cruce de cuentas puede ser un fraude o un error de digitación. El paso siguiente es siempre la verificación documental, y solo lo confirmado se reporta como hallazgo. Lo no confirmado no se reporta como irregularidad. Si la explicación revela una debilidad en la calidad de los datos, eso sí puede ser una observación.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · Verificar los duplicados</div><div class="practica-body"><p><strong>Situación:</strong> la prueba de duplicados arroja 38 claves repetidas.</p>
+<p><strong>Razonamiento:</strong> revisas los expedientes. 30 corresponden a correcciones registradas como nuevas solicitudes, sin pago doble; es un problema de calidad del registro. 8 corresponden a devoluciones efectivamente pagadas dos veces. El hallazgo principal son los 8 pagos dobles, con su valor. Además hay una observación sobre el registro de las correcciones. Los pagos dobles también se ponen en conocimiento de la dependencia responsable para su recuperación y, si hay indicios de daño o de falta, de las autoridades competentes.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: fraccionamiento</summary><div class="acc-body"><p>Una prueba especialmente útil es la de fraccionamiento: buscar varias operaciones del mismo beneficiario, en fechas cercanas, cuyos montos individuales quedan justo por debajo de un umbral de aprobación o de control y que, sumados, lo superan. Se hace con una tabla dinámica por beneficiario y periodo, o con SUMAR.SI.CONJUNTO, y una columna que marque los montos entre el 90 % y el 100 % del umbral. El fraccionamiento es una señal típica de elusión de controles en contratación, pagos y devoluciones.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> duplicados, secuencias, atípicos, estratificación, cruces, fechas y <strong>Benford</strong> (el 1 aparece como primer dígito cerca del <strong>30 %</strong>). Toda excepción se <strong>verifica con documentos</strong> antes de ser hallazgo.</div>
+<div class="checkpoint" id="cp3"><div class="cp-tag">✅ Checkpoint 3</div><p class="cp-q">¿Qué prueba de analítica es la más adecuada para detectar resoluciones de devolución anuladas u ocultas?</p><div class="cp-opts"><button class="cp-opt" data-cp="3" data-ans="1">La prueba de faltantes en secuencias, que identifica saltos en la numeración consecutiva.</button><button class="cp-opt" data-cp="3" data-ans="0">La prueba de Benford, que identifica la distribución de los primeros dígitos de los montos.</button><button class="cp-opt" data-cp="3" data-ans="0">La estratificación, que identifica la concentración del valor por rangos de monto.</button></div><div class="cp-fb" id="cpfb3">✔ Faltantes en secuencia: saltos en la numeración.</div></div>
+</div>
+
+<!-- MÓDULO 4 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">4</span><h3>Calidad e integridad de los datos: antes de analizar, conciliar</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Antes de sacar conclusiones de una base de datos, el auditor debe asegurarse de que sea <mark>completa</mark> (tiene todos los registros del universo), <mark>exacta</mark> (los valores corresponden a la realidad) y <mark>válida</mark> (los datos tienen el formato y el rango esperados). La prueba básica es la <strong>conciliación</strong>: comparar el número de registros y los totales de valor de la base con un reporte oficial independiente, como los estados financieros, los reportes del proceso o los totales del sistema. Un análisis sobre una base no conciliada puede llevar a conclusiones falsas.</p></div>
+<div class="b-texto">
+<p>La calidad de los datos es la primera condición de la evidencia confiable. Si la base de devoluciones que entregó tecnología excluye por error un mes, o solo trae las devoluciones aprobadas y no las rechazadas, todas las pruebas posteriores estarán sesgadas. El auditor podría concluir que no hay duplicados cuando los duplicados están precisamente en el mes que falta. Por eso la conciliación no es un trámite: es la prueba que da sentido a todo lo demás.</p>
+<p>La verificación de la calidad incluye varios pasos:</p>
+<ul class="lista">
+<li><strong>Totales de control:</strong> número de registros y suma de valores, comparados con una fuente independiente.</li>
+<li><strong>Rango:</strong> fechas dentro del periodo, valores positivos, campos obligatorios diligenciados.</li>
+<li><strong>Formato:</strong> NIT sin caracteres extraños, fechas reconocidas como fechas.</li>
+<li><strong>Revisión de algunos registros contra los documentos fuente.</strong></li>
+</ul>
+<p>Si la conciliación no cuadra, el auditor investiga la diferencia antes de seguir. Puede ser un error de extracción, que se corrige, o una debilidad del sistema, que es en sí misma un hallazgo.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Atributo de calidad</th><th>Pregunta</th><th>Prueba</th></tr></thead>
+<tbody>
+<tr><td>Completitud</td><td>¿Están todos los registros del periodo?</td><td>Conciliar el número de registros y el valor total con un reporte oficial</td></tr>
+<tr><td>Exactitud</td><td>¿Los valores son correctos?</td><td>Comparar una muestra de registros con los documentos fuente</td></tr>
+<tr><td>Validez</td><td>¿Los datos tienen el formato y el rango esperados?</td><td>Filtros de rango, campos vacíos, formatos</td></tr>
+<tr><td>Oportunidad</td><td>¿La base corresponde a la fecha de corte acordada?</td><td>Fecha de extracción documentada</td></tr>
+<tr><td>Trazabilidad</td><td>¿Se sabe de dónde salió y quién la extrajo?</td><td>Acta o correo de entrega con criterios de extracción</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Un buen procedimiento empieza por la solicitud de la información. Esa solicitud debe decir con precisión qué se pide: periodo, campos, criterios, formato. Así se evita que la dependencia entregue lo que quiere y no lo que se necesita. La entrega se documenta con fecha, responsable, totales y criterios. Y la conciliación se registra en la hoja de trazabilidad, como primer paso del análisis.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La conciliación que no cuadra</div><div class="practica-body"><p><strong>Situación:</strong> la base tiene 12.400 registros y 1,82 billones de pesos. El reporte del proceso dice 12.610 devoluciones y 1,87 billones.</p>
+<p><strong>Razonamiento:</strong> no sigues con el análisis hasta explicar la diferencia. Al indagar con TI, se establece que la consulta excluyó las compensaciones registradas en otra tabla. Pides una nueva extracción, concilias y documentas la diferencia y su causa. Si la diferencia no se hubiera podido explicar, sería una observación sobre la confiabilidad de la información del proceso.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la información producida por la entidad</summary><div class="acc-body"><p>En auditoría se habla de “información producida por la entidad” para referirse a reportes, bases y listados que genera el auditado y que el auditor usa como evidencia. Las buenas prácticas exigen evaluar su confiabilidad antes de usarla: cómo se generó, qué controles tiene el sistema que la produce y si es completa y exacta. Es la misma idea que viste en el Día 16 sobre los indicadores: antes de usar un dato, verifica su calidad.</p></div></details>
+<details class="acc"><summary>📖 Profundiza: muestras reproducibles con herramientas</summary><div class="acc-body"><p>Cuando el auditor selecciona una muestra aleatoria con una herramienta informática, debe poder demostrar después que la selección fue realmente aleatoria y que otro auditor obtendría la misma muestra. Para eso documenta la población de la que partió (con su conciliación), el tamaño de la muestra y su justificación, el método de selección y, cuando la herramienta lo permite, la semilla o valor inicial del generador de números aleatorios. Una muestra escogida a mano “al azar”, sin dejar rastro del método, es difícil de defender si el auditado la controvierte. Si la población se estratificó, por ejemplo por rangos de valor, se documentan los estratos y la muestra de cada uno. Estas precauciones conectan lo que viste en el Día 12 sobre muestreo con las buenas prácticas de analítica de este día. La regla es la misma en ambos casos: el procedimiento debe quedar escrito de manera que cualquier revisor pueda repetirlo y llegar al mismo resultado, sin depender de la memoria de quien lo ejecutó ni de explicaciones verbales posteriores.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> antes de analizar, <strong>conciliar</strong> el número de registros y los totales con una fuente independiente. Una base no conciliada no es evidencia confiable.</div>
+<div class="checkpoint" id="cp4"><div class="cp-tag">✅ Checkpoint 4</div><p class="cp-q">¿Cuál es el primer paso antes de aplicar pruebas de analítica a una base recibida de la entidad?</p><div class="cp-opts"><button class="cp-opt" data-cp="4" data-ans="0">Aplicar la prueba de Benford, para saber si los montos fueron manipulados.</button><button class="cp-opt" data-cp="4" data-ans="1">Conciliar el número de registros y los totales con una fuente independiente.</button><button class="cp-opt" data-cp="4" data-ans="0">Eliminar los registros incompletos, para que no distorsionen los resultados.</button></div><div class="cp-fb" id="cpfb4">✔ Primero, conciliar.</div></div>
+</div>
+
+<!-- MÓDULO 5 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">5</span><h3>Seguridad de la información y protección de datos en el trabajo del auditor</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>seguridad de la información</mark> busca preservar su <strong>confidencialidad</strong> (solo la conocen los autorizados), su <strong>integridad</strong> (no se altera indebidamente) y su <strong>disponibilidad</strong> (está accesible cuando se necesita). En el Estado se gestiona con el <strong>Modelo de Seguridad y Privacidad de la Información</strong> (MSPI) de MinTIC, en el marco de la política de <mark>Seguridad Digital</mark> de MIPG. El auditor que maneja información con <mark>reserva tributaria</mark> o <mark>datos personales</mark> (Ley 1581 de 2012) debe cumplir las mismas reglas que exige a los demás.</p></div>
+<div class="b-texto">
+<p>La seguridad de la información tiene dos caras para la OCI. La primera es como <strong>objeto de auditoría</strong>. La OCI evalúa si la entidad gestiona sus riesgos de seguridad de la información: controles de acceso, segregación de funciones en los sistemas, registros de auditoría (logs), copias de respaldo, gestión de incidentes y continuidad. En la DIAN, donde los sistemas soportan el recaudo y las operaciones aduaneras, estos riesgos son críticos. Accesos de servidores retirados que siguen activos, usuarios genéricos compartidos o cambios en los sistemas sin trazabilidad son hallazgos típicos.</p>
+<p>La segunda cara es la de <strong>usuario de información sensible</strong>. Para auditar, la OCI accede a declaraciones, devoluciones, datos de contribuyentes e información de servidores. Esa información sigue protegida por la reserva tributaria (art. 583 ET) y por el régimen de protección de datos personales. Los auditores solo pueden usarla para los fines de la auditoría y deben protegerla. En el caso del día, enviar la base a un correo personal expone información reservada fuera de los controles de la entidad. No es una falta menor de forma: crea un riesgo real de divulgación y puede dar lugar a responsabilidad disciplinaria.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Principio</th><th>Qué protege</th><th>Riesgo en el trabajo del auditor</th></tr></thead>
+<tbody>
+<tr><td>Confidencialidad</td><td>Que solo los autorizados conozcan la información</td><td>Enviar bases a correos personales; dejar papeles en equipos no institucionales</td></tr>
+<tr><td>Integridad</td><td>Que la información no se altere indebidamente</td><td>Modificar la base original; usar accesos con privilegio de escritura</td></tr>
+<tr><td>Disponibilidad</td><td>Que la información esté accesible cuando se necesita</td><td>Papeles de trabajo que solo existen en el equipo de un auditor</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Las reglas prácticas para la OCI son sencillas:</p>
+<ul class="lista">
+<li>Trabajar solo en equipos y repositorios institucionales.</li>
+<li>Usar los canales oficiales para transferir información.</li>
+<li>Limitar los datos personales y reservados a lo necesario para la prueba; por ejemplo, anonimizar en los informes.</li>
+<li>No incluir datos de contribuyentes en los informes públicos.</li>
+<li>Reportar de inmediato cualquier incidente de seguridad, aunque lo haya causado la propia OCI.</li>
+</ul>
+<p>Una OCI que viola estas reglas pierde autoridad para recomendarlas.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El correo personal</div><div class="practica-body"><p><strong>Situación:</strong> descubres que el analista envió la base de devoluciones a su correo personal.</p>
+<p><strong>Razonamiento:</strong> es un incidente de seguridad de la información. La jefatura de la OCI lo reporta por el procedimiento de gestión de incidentes de la entidad, para que se tomen las medidas de contención, como la eliminación verificada de la copia externa. Además, refuerza las reglas internas de la oficina. La posible falta disciplinaria se pone en conocimiento de la autoridad competente. La OCI no puede manejar el asunto “en silencio” por tratarse de un integrante propio.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: auditar controles de acceso</summary><div class="acc-body"><p>Una prueba clásica de auditoría de sistemas cruza la lista de usuarios activos de un sistema con la nómina vigente para detectar usuarios de servidores retirados o trasladados. Otra revisa los perfiles: ¿hay usuarios que pueden registrar y aprobar la misma operación, lo que rompe la segregación de funciones? Otra revisa los logs: ¿quién modificó parámetros críticos, como los del sistema de riesgo aduanero del caso de ayer, y con qué autorización? Todas se hacen con la hoja de cálculo y las funciones de cruce que viste en el módulo 2.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> confidencialidad, integridad y disponibilidad. La OCI <strong>audita</strong> la seguridad de la información y además debe <strong>cumplirla</strong>: reserva tributaria (art. 583 ET) y datos personales (Ley 1581 de 2012).</div>
+<div class="checkpoint" id="cp5"><div class="cp-tag">✅ Checkpoint 5</div><p class="cp-q">Un auditor envía a su correo personal una base con información de contribuyentes. ¿Qué principio de seguridad de la información se compromete principalmente?</p><div class="cp-opts"><button class="cp-opt" data-cp="5" data-ans="0">La disponibilidad, porque la información deja de estar en los sistemas institucionales.</button><button class="cp-opt" data-cp="5" data-ans="0">La integridad, porque el correo personal modifica el contenido de la base.</button><button class="cp-opt" data-cp="5" data-ans="1">La confidencialidad, porque la información reservada queda fuera de los controles de la entidad.</button></div><div class="cp-fb" id="cpfb5">✔ Confidencialidad: riesgo de divulgación.</div></div>
+</div>
+
+<!-- MÓDULO 6 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">6</span><h3>Gestión documental: Ley 594 de 2000 y ciclo vital del documento</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>Ley 594 de 2000</mark>, Ley General de Archivos, establece las reglas y principios que regulan la función archivística del Estado. Su reglamentación está compilada en el <strong>Decreto 1080 de 2015</strong> y desarrollada por los acuerdos del <strong>Archivo General de la Nación</strong> (AGN). Los documentos tienen un <mark>ciclo vital</mark> con tres etapas: <strong>archivo de gestión</strong> (en la dependencia, mientras se tramita y consulta con frecuencia), <strong>archivo central</strong> (cuando la consulta disminuye, pero siguen vigentes sus valores administrativos o legales) y <strong>archivo histórico</strong> (documentos de conservación permanente por su valor histórico, científico o cultural). En MIPG, la gestión documental es una política de la dimensión de <mark>Información y Comunicación</mark>.</p></div>
+<div class="b-texto">
+<p>La gestión documental es el conjunto de actividades para planificar, manejar y organizar la documentación de una entidad desde que se produce o recibe hasta su destino final: eliminación o conservación permanente. Su propósito es que los documentos estén disponibles, sean auténticos y se conserven el tiempo necesario, para soportar las decisiones, garantizar los derechos de las personas, permitir el control y preservar la memoria institucional.</p>
+<p>La Ley 594 establece principios como estos:</p>
+<ul class="lista">
+<li>Los archivos son importantes para la administración y la cultura.</li>
+<li>Los documentos son responsabilidad de los servidores que los producen y custodian.</li>
+<li>Los archivos son un instrumento de apoyo a la administración y de control, porque sin documentos no hay evidencia.</li>
+</ul>
+<p>También fija obligaciones: crear archivos institucionales, elaborar y aplicar las tablas de retención documental y conservar los documentos en condiciones adecuadas.</p>
+<p>Al retirarse del cargo, el servidor debe entregar los documentos y archivos a su cargo debidamente inventariados. Esta regla conecta con la responsabilidad de los servidores sobre los documentos.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Etapa del ciclo vital</th><th>Dónde está</th><th>Característica</th></tr></thead>
+<tbody>
+<tr><td>Archivo de gestión</td><td>En la dependencia productora</td><td>Documentos en trámite o de consulta frecuente</td></tr>
+<tr><td>Archivo central</td><td>Unidad de archivo de la entidad</td><td>Consulta menos frecuente; conservan valores administrativos, legales o fiscales</td></tr>
+<tr><td>Archivo histórico</td><td>Archivo histórico de la entidad o el que corresponda</td><td>Conservación permanente por su valor secundario (histórico, científico, cultural)</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>El paso de una etapa a otra se hace mediante <strong>transferencias documentales</strong> (primarias, del archivo de gestión al central; secundarias, del central al histórico). Esas transferencias siguen los tiempos de la tabla de retención documental y se acompañan del inventario. Las cajas sin inventario del caso del día muestran que alguien trasladó documentos sin seguir el procedimiento. Nadie sabe qué contienen, y si se necesita un expediente para una tutela o una auditoría externa, no se podrá encontrar.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El depósito sin inventario</div><div class="practica-body"><p><strong>Situación:</strong> en el depósito hay 140 cajas de la dependencia de devoluciones sin inventario y sin rótulos completos.</p>
+<p><strong>Razonamiento:</strong> se trata de un fondo documental acumulado, es decir, documentos reunidos sin criterios archivísticos. El hallazgo tiene como criterio la Ley 594 y la normativa del AGN. El efecto es el riesgo de no disponer de los documentos que soportan las devoluciones. Recomiendas un plan de intervención del fondo acumulado (organización e inventario) y la aplicación de las TRD para que el problema no se repita.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: valores primarios y secundarios</summary><div class="acc-body"><p>Los documentos tienen <strong>valores primarios</strong>, que les dan importancia para la entidad productora y los interesados mientras están vigentes: administrativos, legales, jurídicos, fiscales, contables. Y algunos tienen <strong>valores secundarios</strong>, que les dan importancia permanente para la investigación y la memoria: históricos, científicos, culturales. La valoración documental determina cuánto tiempo conservar cada serie en cada archivo y cuál es su destino final. Ese análisis se refleja en las tablas de retención y de valoración documental.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>Ley 594 de 2000</strong>. Ciclo vital: <strong>gestión → central → histórico</strong>, mediante <strong>transferencias</strong>. En MIPG, la gestión documental está en la dimensión de <strong>Información y Comunicación</strong>.</div>
+<div class="checkpoint" id="cp6"><div class="cp-tag">✅ Checkpoint 6</div><p class="cp-q">¿Cuáles son las etapas del ciclo vital del documento?</p><div class="cp-opts"><button class="cp-opt" data-cp="6" data-ans="1">Archivo de gestión, archivo central y archivo histórico.</button><button class="cp-opt" data-cp="6" data-ans="0">Producción, digitalización y eliminación.</button><button class="cp-opt" data-cp="6" data-ans="0">Archivo físico, archivo electrónico y archivo híbrido.</button></div><div class="cp-fb" id="cpfb6">✔ Gestión, central e histórico.</div></div>
+</div>
+
+<!-- MÓDULO 7 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">7</span><h3>Los instrumentos archivísticos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Los <mark>instrumentos archivísticos</mark> son las herramientas con las que la entidad planea y ejecuta su gestión documental. Los principales son:</p>
+<ul class="lista">
+<li>El <mark>Cuadro de Clasificación Documental</mark> (CCD): la estructura de fondos, secciones, series y subseries.</li>
+<li>La <mark>Tabla de Retención Documental</mark> (TRD): para cada serie, los tiempos de retención en cada archivo y la disposición final.</li>
+<li>La <strong>Tabla de Valoración Documental</strong> (TVD): para los fondos acumulados.</li>
+<li>El <mark>Programa de Gestión Documental</mark> (PGD).</li>
+<li>El <strong>Plan Institucional de Archivos</strong> (PINAR).</li>
+<li>El <strong>Inventario Documental</strong>.</li>
+<li>Otros, como el modelo de requisitos para la gestión de documentos electrónicos, el Banco Terminológico, los mapas de procesos y flujos documentales, y las tablas de control de acceso.</li>
+</ul></div>
+<div class="b-texto">
+<p>Cada instrumento resuelve una pregunta:</p>
+<ul class="lista">
+<li><strong>Cuadro de Clasificación:</strong> ¿cómo se organizan los documentos?</li>
+<li><strong>TRD:</strong> ¿cuánto tiempo se conserva cada serie, en qué archivo y qué se hace al final (conservación total, eliminación, selección o medio técnico)?</li>
+<li><strong>TVD:</strong> lo mismo para los fondos acumulados que se produjeron sin TRD.</li>
+<li><strong>PGD:</strong> ¿cómo se implementan los procesos de gestión documental?</li>
+<li><strong>PINAR:</strong> ¿qué se va a hacer, en qué plazos, para mejorar la función archivística?</li>
+<li><strong>Inventario:</strong> ¿qué documentos hay y dónde están?</li>
+</ul>
+<p>Las TRD y las TVD deben ser elaboradas por la entidad, aprobadas por la instancia institucional competente y convalidadas por el órgano archivístico que corresponda. Luego se inscriben y se aplican.</p>
+<p>La <strong>eliminación de documentos</strong> solo puede hacerse según lo previsto en la TRD o la TVD, siguiendo el procedimiento que establece la normativa archivística. Ese procedimiento incluye la aprobación de la instancia competente, la publicación de los inventarios para que los interesados puedan pronunciarse y el levantamiento de un <mark>acta de eliminación</mark>. En el caso del día, el coordinador que “depuró” documentos antiguos sin acta eliminó documentos públicos sin seguir el procedimiento. Además del hallazgo, puede haber una falta disciplinaria. Si se destruyeron documentos que soportan actuaciones, puede haber afectación de derechos o de la capacidad de defensa de la entidad.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Instrumento</th><th>Pregunta que responde</th><th>Hallazgo típico</th></tr></thead>
+<tbody>
+<tr><td>Cuadro de Clasificación Documental</td><td>¿Cómo se organizan los documentos?</td><td>Series que no corresponden a las funciones actuales</td></tr>
+<tr><td>Tabla de Retención Documental</td><td>¿Cuánto se conserva y qué disposición final tiene?</td><td>TRD aprobada pero no aplicada en las dependencias</td></tr>
+<tr><td>Tabla de Valoración Documental</td><td>¿Qué hacer con los fondos acumulados?</td><td>Fondos acumulados sin intervenir</td></tr>
+<tr><td>Programa de Gestión Documental</td><td>¿Cómo se ejecutan los procesos documentales?</td><td>PGD desactualizado o sin seguimiento</td></tr>
+<tr><td>PINAR</td><td>¿Qué se mejora y en qué plazos?</td><td>Metas incumplidas sin reprogramación</td></tr>
+<tr><td>Inventario documental</td><td>¿Qué hay y dónde está?</td><td>Cajas sin inventario; transferencias sin inventario</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La depuración sin acta</div><div class="practica-body"><p><strong>Situación:</strong> un coordinador ordenó destruir “documentos viejos” de devoluciones de hace doce años, sin acta y sin consultar la TRD.</p>
+<p><strong>Razonamiento:</strong> primero verificas qué dice la TRD sobre esa serie. Si la serie debía conservarse o la eliminación debía seguir el procedimiento, la destrucción sin acta es contraria a la normativa archivística. El hallazgo señala la ausencia de control sobre la eliminación. La recomendación es que ninguna eliminación se haga sin aprobación, publicación de inventarios y acta. Los hechos se ponen en conocimiento de la autoridad disciplinaria. La OCI no calcula responsabilidades ni repone documentos.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: el instrumento archivístico en la Ley 1712</summary><div class="acc-body"><p>Recuerda que la Ley 1712 (ayer) incluye el programa de gestión documental entre los instrumentos de gestión de la información, junto con el registro de activos de información, el índice de información clasificada y reservada y el esquema de publicación. La gestión documental y la transparencia están conectadas: una entidad que no sabe qué documentos tiene ni dónde están no puede publicar ni responder solicitudes de acceso a la información de manera eficaz.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>TRD</strong> = tiempos de retención y disposición final por serie; <strong>TVD</strong> = para fondos <strong>acumulados</strong>. La eliminación solo según TRD o TVD, con aprobación, publicación de inventarios y <strong>acta</strong>.</div>
+<div class="checkpoint" id="cp7"><div class="cp-tag">✅ Checkpoint 7</div><p class="cp-q">¿Qué instrumento archivístico establece los tiempos de retención y la disposición final de cada serie documental?</p><div class="cp-opts"><button class="cp-opt" data-cp="7" data-ans="0">El Plan Institucional de Archivos (PINAR).</button><button class="cp-opt" data-cp="7" data-ans="1">La Tabla de Retención Documental (TRD).</button><button class="cp-opt" data-cp="7" data-ans="0">El Inventario Documental.</button></div><div class="cp-fb" id="cpfb7">✔ La TRD.</div></div>
+</div>
+
+<!-- MÓDULO 8 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">8</span><h3>El expediente y el documento electrónico de archivo</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>El <mark>expediente</mark> es el conjunto de documentos producidos y recibidos durante el desarrollo de un mismo trámite o asunto, acumulados de manera natural y ordenados según su secuencia. Se organiza según dos <strong>principios archivísticos</strong>: el de <mark>procedencia</mark> (los documentos se mantienen agrupados según la dependencia que los produjo) y el de <mark>orden original</mark> (se conserva el orden en que se produjeron). El <strong>documento electrónico de archivo</strong> debe garantizar <mark>autenticidad, integridad, fiabilidad y disponibilidad</mark> durante todo su ciclo vital.</p></div>
+<div class="b-texto">
+<p>El expediente es la unidad básica de la evidencia. Cuando la OCI audita una devolución, revisa el expediente: la solicitud, los soportes, la verificación, el acto que decide, la notificación, el pago. Si el expediente está completo y ordenado, la auditoría puede verificar cada paso. Si está incompleto, con documentos en distintos lugares o sin orden, la auditoría no puede concluir, y esa es ya una debilidad del control. Recuerda el artículo 36 del CPACA del Día 18: los documentos de una misma actuación forman un solo expediente.</p>
+<p>La organización del expediente físico incluye clasificación, ordenación y foliación (numerar las hojas). También incluye la hoja de control, que lista los documentos con su fecha y folio, y la rotulación. En el expediente electrónico, el equivalente es el <strong>índice electrónico</strong>: relaciona los documentos con sus metadatos y garantiza la integridad del conjunto. Muchos expedientes son <strong>híbridos</strong>, con una parte física y otra electrónica, y ambas deben estar referenciadas para que el expediente se pueda reconstruir completo.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Característica del documento electrónico</th><th>Significado</th></tr></thead>
+<tbody>
+<tr><td>Autenticidad</td><td>Se puede demostrar que el documento es lo que dice ser y que fue producido por quien dice haberlo producido</td></tr>
+<tr><td>Integridad</td><td>El documento está completo y no ha sido alterado sin autorización</td></tr>
+<tr><td>Fiabilidad</td><td>Su contenido es una representación completa y precisa de lo que da testimonio</td></tr>
+<tr><td>Disponibilidad</td><td>Se puede localizar, recuperar, presentar e interpretar cuando se necesita</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Para la DIAN, que tramita la mayor parte de sus actuaciones por medios electrónicos, estas características son esenciales. Un acto administrativo electrónico sin firma verificable, sin metadatos de fecha o sin trazabilidad de sus versiones no garantiza autenticidad ni integridad. Eso puede afectar su validez probatoria. La OCI evalúa si los sistemas de gestión documental electrónica tienen los controles necesarios: firma electrónica o digital, sellado de tiempo, registro de versiones, control de accesos, preservación a largo plazo.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El expediente partido</div><div class="practica-body"><p><strong>Situación:</strong> en la muestra, 11 de 40 expedientes de devolución están incompletos. La verificación de los soportes está en el correo del servidor, la resolución en el sistema y la constancia de pago en otra dependencia, sin referencias cruzadas.</p>
+<p><strong>Razonamiento:</strong> el hallazgo tiene dos criterios. El primero es el principio del expediente único (art. 36 del CPACA). El segundo son las reglas de organización documental (Ley 594 y TRD de la serie). El efecto es que no se puede verificar que las devoluciones se soportaron debidamente. Recomiendas integrar el expediente, físico, electrónico o híbrido con referencias, y definir el responsable de su conformación.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: digitalizar no es gestionar</summary><div class="acc-body"><p>Un error frecuente es creer que digitalizar los documentos físicos resuelve la gestión documental. La digitalización produce imágenes que, sin metadatos, sin organización por expedientes y sin controles de integridad, no son documentos electrónicos de archivo. Además, la sustitución del soporte papel por el digital, con eliminación del original, requiere cumplir requisitos técnicos y normativos específicos. La OCI puede encontrar proyectos de digitalización masiva que no cumplen estas condiciones y que, lejos de reducir el riesgo, lo aumentan.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> principios de <strong>procedencia</strong> y <strong>orden original</strong>. Documento electrónico: <strong>autenticidad, integridad, fiabilidad, disponibilidad</strong>. Expediente <strong>único</strong> (art. 36 CPACA).</div>
+<div class="checkpoint" id="cp8"><div class="cp-tag">✅ Checkpoint 8</div><p class="cp-q">¿Qué establece el principio de orden original?</p><div class="cp-opts"><button class="cp-opt" data-cp="8" data-ans="0">Que los documentos se ordenan alfabéticamente por el nombre del interesado.</button><button class="cp-opt" data-cp="8" data-ans="0">Que los documentos originales prevalecen sobre las copias en caso de conflicto.</button><button class="cp-opt" data-cp="8" data-ans="1">Que los documentos se conservan en el orden en que se produjeron durante el trámite.</button></div><div class="cp-fb" id="cpfb8">✔ Orden original: la secuencia natural del trámite.</div></div>
+</div>
+
+<!-- MÓDULO 9 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">9</span><h3>Papeles de trabajo y expediente de auditoría</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Los <mark>papeles de trabajo</mark> son los documentos en los que el auditor registra la planeación, los procedimientos aplicados, la evidencia obtenida y las conclusiones. Deben ser <strong>suficientes</strong> para que un auditor experimentado, sin conocimiento previo del trabajo, entienda qué se hizo y llegue a las mismas conclusiones. Se organizan en un <mark>expediente de auditoría</mark> con <strong>referenciación cruzada</strong>, se <strong>revisan</strong> por la supervisión, se custodian con <strong>confidencialidad</strong> y se conservan según la <mark>TRD</mark> de la OCI.</p></div>
+<div class="b-texto">
+<p>Las Normas Globales que viste en el Día 11 exigen documentar la información relevante para respaldar los resultados del trabajo. También exigen que la jefatura establezca políticas sobre la custodia, la retención y el acceso a la documentación del trabajo. Los papeles de trabajo son la prueba de que el informe tiene sustento. Si un auditado controvierte un hallazgo, o un ente de control pregunta por la base de una conclusión, la respuesta está en los papeles de trabajo.</p>
+<p>Un expediente de auditoría bien organizado contiene:</p>
+<ul class="lista">
+<li>El plan del trabajo: objetivos, alcance, criterios, programa.</li>
+<li>Las solicitudes de información y las respuestas.</li>
+<li>Las cédulas de trabajo con las pruebas aplicadas y sus resultados.</li>
+<li>Las bases de datos con su conciliación y su hoja de trazabilidad.</li>
+<li>La evidencia (documentos, actas de entrevistas, capturas debidamente identificadas).</li>
+<li>Las comunicaciones con el auditado.</li>
+<li>El informe preliminar, las observaciones del auditado y su análisis.</li>
+<li>El informe final.</li>
+</ul>
+<p>Cada papel tiene una referencia, por ejemplo “C-3”, y el informe remite a las referencias que soportan cada hallazgo. Eso es la referenciación cruzada.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Requisito</th><th>Qué asegura</th><th>Falla típica</th></tr></thead>
+<tbody>
+<tr><td>Suficiencia</td><td>Que otro auditor llegue a las mismas conclusiones</td><td>Cédulas con resultados, sin explicar el procedimiento</td></tr>
+<tr><td>Referenciación cruzada</td><td>Que cada hallazgo tenga su soporte identificado</td><td>Hallazgos sin referencia a la evidencia</td></tr>
+<tr><td>Revisión de la supervisión</td><td>Calidad y consistencia del trabajo</td><td>Papeles sin evidencia de revisión</td></tr>
+<tr><td>Custodia y confidencialidad</td><td>Que solo los autorizados accedan</td><td>Papeles en equipos personales o carpetas abiertas</td></tr>
+<tr><td>Retención según TRD</td><td>Conservación por el tiempo requerido</td><td>Eliminación anticipada o conservación sin criterio</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>En el caso del día, el analista guardó los papeles de trabajo en el escritorio de su computador personal. Eso afecta tres requisitos a la vez. La confidencialidad, porque la información reservada queda fuera de los controles. La disponibilidad, porque si el analista se va, los papeles se van con él. Y la revisión, porque la supervisión no puede acceder. La regla es que los papeles de trabajo se guardan en el repositorio oficial de la OCI, con acceso controlado, desde el inicio del trabajo.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La prueba del auditor ajeno</div><div class="practica-body"><p><strong>Situación:</strong> la jefa de la OCI pide a un auditor que no participó en el trabajo que revise si los papeles soportan el hallazgo de los pagos dobles.</p>
+<p><strong>Razonamiento:</strong> el revisor debe poder seguir la cadena completa sin preguntar nada a nadie:</p>
+<ul class="lista">
+<li>Base recibida y conciliada (referencia A-1).</li>
+<li>Hoja de trazabilidad (A-2).</li>
+<li>Resultado de la prueba de duplicados (A-3).</li>
+<li>Expedientes revisados (B-1 a B-8).</li>
+<li>Conclusión (C-1).</li>
+</ul>
+<p>Si en algún punto tiene que preguntar, los papeles no son suficientes.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: acceso de terceros a los papeles de trabajo</summary><div class="acc-body"><p>Los papeles de trabajo de la OCI son documentos públicos, pero pueden contener información clasificada o reservada: datos de contribuyentes, datos personales, información sobre posibles faltas en trámite. Cuando un tercero los solicita, se aplican las reglas de la Ley 1712: se entrega lo público y se protege lo exceptuado, con una negativa motivada en lo que corresponda. Los entes de control y las autoridades judiciales pueden acceder a ellos en ejercicio de sus funciones. La política de la OCI sobre acceso a su documentación debe reflejar estas reglas.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> papeles de trabajo <strong>suficientes</strong> (otro auditor llega a la misma conclusión), con <strong>referenciación cruzada</strong>, <strong>revisión</strong> de la supervisión, <strong>custodia confidencial</strong> en el repositorio oficial y <strong>retención según TRD</strong>.</div>
+<div class="checkpoint" id="cp9"><div class="cp-tag">✅ Checkpoint 9</div><p class="cp-q">¿Cuándo se consideran suficientes los papeles de trabajo?</p><div class="cp-opts"><button class="cp-opt" data-cp="9" data-ans="1">Cuando un auditor experimentado, sin conocimiento previo del trabajo, puede entender lo que se hizo y llegar a las mismas conclusiones.</button><button class="cp-opt" data-cp="9" data-ans="0">Cuando contienen todos los documentos del proceso auditado, sin importar si se relacionan con los hallazgos.</button><button class="cp-opt" data-cp="9" data-ans="0">Cuando el auditado los firma en señal de aceptación de los hallazgos del informe final de auditoría.</button></div><div class="cp-fb" id="cpfb9">✔ La prueba del auditor ajeno.</div></div>
+</div>
+
+<!-- MÓDULO 10 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">10</span><h3>Evidencia digital: cómo obtenerla y preservarla</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>evidencia digital</mark> (bases de datos, archivos, correos, registros de sistemas, capturas de pantalla) debe ser tan confiable como la física. Para eso hay que documentar su <strong>origen</strong> (sistema, consulta, responsable de la extracción), su <strong>fecha y hora</strong> y su <strong>integridad</strong>. Esto último puede hacerse, por ejemplo, con una huella digital del archivo o <mark>hash</mark>, que permite comprobar que no se ha modificado. Las capturas de pantalla deben mostrar la fecha, el sistema y los parámetros de la consulta. Cuando la evidencia puede ser usada por otras autoridades, se cuida su <mark>cadena de custodia</mark>.</p></div>
+<div class="b-texto">
+<p>En el caso del día, las evidencias del equipo eran capturas de pantalla sin fecha ni fuente. Una captura sin contexto prueba poco: no se sabe de qué sistema proviene, cuándo se tomó ni con qué filtros. Si el auditado controvierte el hallazgo y dice que la información no es suya o que en esa fecha no estaba así, la OCI no tiene cómo demostrarlo. Una captura confiable muestra la pantalla completa con la fecha y hora del sistema, el usuario o el nombre del sistema y los criterios de consulta. Además, se referencia en un papel de trabajo que explica qué prueba.</p>
+<p>Para las bases de datos y los archivos, una buena práctica es calcular el <strong>hash</strong> al recibirlos. El hash es una cadena de caracteres que resulta de aplicar un algoritmo al contenido del archivo. Si el archivo cambia, aunque sea un carácter, el hash cambia. Al registrar el hash en el papel de trabajo, el auditor puede demostrar en cualquier momento que la base que analizó es la misma que recibió. Es una herramienta sencilla con alto valor probatorio.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Tipo de evidencia</th><th>Cómo darle confiabilidad</th></tr></thead>
+<tbody>
+<tr><td>Base de datos</td><td>Acta o correo de entrega, criterios de extracción, conciliación, hash del archivo original</td></tr>
+<tr><td>Captura de pantalla</td><td>Pantalla completa con fecha y hora, sistema y parámetros; referencia en papel de trabajo</td></tr>
+<tr><td>Correo electrónico</td><td>Conservar el mensaje original con sus encabezados, no solo una copia del texto</td></tr>
+<tr><td>Registro de sistema (log)</td><td>Extracción por TI con acta, periodo y criterios; hash</td></tr>
+<tr><td>Documento electrónico</td><td>Verificación de la firma y los metadatos; copia del original</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>La <strong>cadena de custodia</strong> es el registro de quién ha tenido la evidencia, cuándo y para qué, desde que se obtuvo hasta que se entrega. Es indispensable en las investigaciones penales y disciplinarias. Cuando la OCI encuentra indicios que va a trasladar a una autoridad, como los pagos dobles con posibles irregularidades, conviene preservar la evidencia con cuidado: copia íntegra, hash, registro de quién la manejó. Así la autoridad competente puede usarla. La OCI no hace peritajes forenses, pero no debe dañar la evidencia que otros necesitarán.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · Rehacer la evidencia</div><div class="practica-body"><p><strong>Situación:</strong> las capturas de pantalla del equipo no tienen fecha ni fuente.</p>
+<p><strong>Razonamiento:</strong> como los sistemas siguen disponibles, rehaces las consultas clave con capturas completas: fecha, sistema y parámetros. Además pides a TI las extracciones con acta y calculas el hash de cada archivo. Todo se registra en papeles de trabajo con referencia. Recomiendas a la propia OCI incluir en su procedimiento un estándar mínimo de evidencia digital.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la evidencia y la reserva</summary><div class="acc-body"><p>La evidencia digital de la DIAN suele contener información con reserva tributaria o datos personales. Preservarla bien también significa protegerla. Se guarda en repositorios institucionales con acceso restringido, se comparte solo por canales oficiales y, al trasladarla a otra autoridad, se hace con oficio y con la advertencia de su carácter reservado. La integridad de la evidencia y su confidencialidad van juntas.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> la evidencia digital necesita <strong>origen, fecha e integridad</strong> (por ejemplo, <strong>hash</strong>). Una captura sin fecha ni fuente prueba poco. Cuando se trasladan indicios, se cuida la <strong>cadena de custodia</strong>.</div>
+<div class="checkpoint" id="cp10"><div class="cp-tag">✅ Checkpoint 10</div><p class="cp-q">¿Para qué sirve calcular el hash de una base de datos al recibirla?</p><div class="cp-opts"><button class="cp-opt" data-cp="10" data-ans="0">Para cifrar la base y evitar que terceros no autorizados puedan leer su contenido.</button><button class="cp-opt" data-cp="10" data-ans="1">Para poder demostrar después que la base analizada es la misma que se recibió, sin modificaciones.</button><button class="cp-opt" data-cp="10" data-ans="0">Para reducir el tamaño del archivo y facilitar su envío por correo electrónico institucional.</button></div><div class="cp-fb" id="cpfb10">✔ El hash prueba la integridad.</div></div>
+</div>
+
+<!-- MÓDULO 11 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">11</span><h3>Auditar el proceso de gestión documental</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Cuando la OCI audita la <mark>gestión documental</mark>, evalúa varios puntos:</p>
+<ul class="lista">
+<li>Si existen y se aplican los <strong>instrumentos archivísticos</strong>.</li>
+<li>Si los <strong>expedientes</strong> están completos y organizados.</li>
+<li>Si las <strong>transferencias</strong> y <strong>eliminaciones</strong> siguen el procedimiento.</li>
+<li>Si los <strong>préstamos</strong> y consultas se controlan.</li>
+<li>Si las <strong>condiciones de conservación</strong> son adecuadas.</li>
+<li>Si el <strong>documento electrónico</strong> cumple sus características.</li>
+</ul>
+<p>Los criterios son la <strong>Ley 594 de 2000</strong>, el <strong>Decreto 1080 de 2015</strong>, los acuerdos del <strong>AGN</strong> y los instrumentos de la propia entidad.</p></div>
+<div class="b-texto">
+<p>La gestión documental se puede auditar como proceso independiente o como componente de la auditoría de cualquier otro proceso. En el segundo caso, que es el más frecuente, la revisión de los expedientes de la muestra permite evaluar a la vez el cumplimiento del proceso misional y la calidad de su gestión documental. En el caso del día, la auditoría de devoluciones reveló hallazgos documentales: expedientes incompletos, TRD sin aplicar, fondo acumulado y eliminación sin acta. Pueden reportarse en el mismo informe o dar lugar a una auditoría específica de gestión documental.</p>
+<p>Las pruebas típicas son:</p>
+<ul class="lista">
+<li>Comparar las series que produce la dependencia con las de su TRD.</li>
+<li>Verificar en una muestra que los expedientes tengan los documentos que exige el procedimiento, estén foliados y tengan hoja de control.</li>
+<li>Comparar los inventarios con el contenido real de las cajas.</li>
+<li>Revisar los registros de préstamo de expedientes.</li>
+<li>Verificar las actas de eliminación y su soporte.</li>
+<li>Inspeccionar las condiciones de los depósitos: humedad, temperatura, seguridad.</li>
+<li>Verificar los controles del sistema de gestión documental electrónica.</li>
+</ul>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Prueba</th><th>Criterio</th><th>Hallazgo posible</th></tr></thead>
+<tbody>
+<tr><td>Series producidas contra TRD</td><td>TRD aprobada de la dependencia</td><td>Series no incluidas o TRD no aplicada</td></tr>
+<tr><td>Integridad de expedientes</td><td>Procedimiento del proceso; art. 36 CPACA</td><td>Expedientes incompletos o dispersos</td></tr>
+<tr><td>Inventarios contra contenido</td><td>Normativa del AGN sobre inventarios</td><td>Cajas sin inventario o con contenido distinto</td></tr>
+<tr><td>Control de préstamos</td><td>Procedimiento de consulta y préstamo</td><td>Expedientes prestados sin registro ni devolución</td></tr>
+<tr><td>Eliminaciones</td><td>TRD o TVD, aprobación y acta</td><td>Eliminaciones sin acta o fuera de lo previsto</td></tr>
+<tr><td>Conservación</td><td>Sistema Integrado de Conservación; condiciones de depósitos</td><td>Documentos expuestos a humedad o deterioro</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · Una causa común</div><div class="practica-body"><p><strong>Situación:</strong> los hallazgos documentales de la auditoría de devoluciones comparten un patrón: la dependencia nunca recibió capacitación en la TRD y no tiene un responsable de archivo designado.</p>
+<p><strong>Razonamiento:</strong> agrupas los hallazgos bajo la causa común. La recomendación principal es designar un responsable, capacitar en la aplicación de la TRD y hacer seguimiento desde la dependencia de gestión documental, que es la segunda línea. A eso se suman las recomendaciones específicas: intervenir el fondo acumulado y controlar las eliminaciones.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la gestión documental como control</summary><div class="acc-body"><p>Desde la mirada del MECI, la gestión documental es un control transversal. Garantiza que las actividades de control dejen evidencia, que la información fluya y que el monitoreo tenga sobre qué trabajar. Una entidad con mala gestión documental tiene, por definición, un sistema de control interno debilitado, porque sus controles no dejan rastro verificable. Por eso, en la evaluación independiente del sistema, la gestión documental pesa en los componentes de actividades de control y de información y comunicación.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> la auditoría documental verifica <strong>TRD aplicada</strong>, <strong>expedientes completos</strong>, <strong>inventarios</strong>, <strong>préstamos</strong>, <strong>eliminaciones con acta</strong> y <strong>conservación</strong>. Criterios: Ley 594, Decreto 1080, acuerdos del AGN.</div>
+<div class="checkpoint" id="cp11"><div class="cp-tag">✅ Checkpoint 11</div><p class="cp-q">¿Qué criterio aplica la OCI al encontrar documentos eliminados sin acta?</p><div class="cp-opts"><button class="cp-opt" data-cp="11" data-ans="0">Ninguno, porque cada dependencia decide cuándo deshacerse de sus documentos antiguos.</button><button class="cp-opt" data-cp="11" data-ans="1">La normativa archivística: la eliminación solo procede según TRD o TVD, con aprobación y acta.</button><button class="cp-opt" data-cp="11" data-ans="0">El Código de Integridad, porque la eliminación de documentos es solo un asunto de valores.</button></div><div class="cp-fb" id="cpfb11">✔ TRD o TVD, aprobación y acta.</div></div>
+</div>
+
+<!-- MÓDULO 12 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">12</span><h3>Repaso integrador I: el marco del control interno</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Todo el curso descansa en un marco de cinco piezas:</p>
+<ul class="lista">
+<li>La <mark>Ley 87 de 1993</mark>, que define el control interno y sus objetivos.</li>
+<li>El <mark>MIPG</mark>, cuya séptima dimensión es el control interno, operado mediante el <mark>MECI</mark> con sus <strong>cinco componentes</strong>.</li>
+<li>El <strong>esquema de líneas de defensa</strong>.</li>
+<li>Los <mark>cinco roles</mark> de la OCI (Decreto 1083 de 2015, modificado por el Decreto 648 de 2017).</li>
+<li>Las <mark>Normas Globales de Auditoría Interna</mark>.</li>
+</ul>
+<p>La idea que las une es que la OCI <strong>evalúa con independencia, recomienda y traslada</strong>: no coadministra, no firma por la administración, no sanciona y no declara responsabilidades.</p></div>
+<div class="b-texto">
+<p>La prueba mezcla estas piezas en un mismo caso, así que conviene tenerlas conectadas.</p>
+<ul class="lista">
+<li><strong>Ley 87:</strong> el control interno es responsabilidad de todos, empezando por el representante legal. La OCI es la encargada de evaluarlo de forma independiente.</li>
+<li><strong>MIPG:</strong> el control interno es una de sus siete dimensiones. Se opera con el MECI, cuyos componentes son ambiente de control, gestión del riesgo, actividades de control, información y comunicación, y actividades de monitoreo.</li>
+<li><strong>Líneas de defensa:</strong> la línea estratégica (alta dirección y comité de coordinación de control interno) define el marco. La primera línea (los líderes de proceso) gestiona los riesgos y aplica los controles. La segunda línea (planeación, riesgos, calidad, supervisores) monitorea. La tercera línea (la OCI) evalúa de forma independiente.</li>
+<li><strong>Roles de la OCI:</strong> liderazgo estratégico, enfoque hacia la prevención, evaluación de la gestión del riesgo, evaluación y seguimiento, y relación con entes externos de control.</li>
+<li><strong>Normas Globales:</strong> dan el estándar profesional con sus dominios: propósito, ética y profesionalismo, gobierno de la función, gestión de la función y desempeño de los servicios.</li>
+</ul>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Pieza del marco</th><th>Lo esencial</th><th>Día del curso</th></tr></thead>
+<tbody>
+<tr><td>Ley 87 de 1993</td><td>Definición, objetivos y responsabilidad del control interno; la OCI evalúa</td><td>9</td></tr>
+<tr><td>MIPG y MECI</td><td>Siete dimensiones; control interno con cinco componentes</td><td>10</td></tr>
+<tr><td>Líneas de defensa</td><td>Estratégica, primera, segunda y tercera</td><td>10</td></tr>
+<tr><td>Roles de la OCI</td><td>Liderazgo estratégico, prevención, evaluación del riesgo, evaluación y seguimiento, entes externos</td><td>9</td></tr>
+<tr><td>Normas Globales</td><td>Propósito, ética, gobierno, gestión de la función y desempeño; independencia y objetividad</td><td>11</td></tr>
+<tr><td>Constitución</td><td>Arts. 209 y 269 (control interno); 6, 121-123 (servidor); 23, 29 (petición, debido proceso)</td><td>17</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Una forma práctica de usar este marco en la prueba es hacer cuatro preguntas ante cada caso:</p>
+<ol class="lista">
+<li>¿Quién es el responsable de este control? Suele ser la primera línea.</li>
+<li>¿Quién debería estar monitoreándolo? Suele ser la segunda línea.</li>
+<li>¿Qué le corresponde a la OCI? Evaluar, informar, recomendar, hacer seguimiento y trasladar indicios.</li>
+<li>¿Hay alguna opción en la que la OCI asuma funciones de gestión, de sanción o de decisión? Si la hay, descártala.</li>
+</ol>
+<p>Con este filtro se resuelven muchas preguntas antes de entrar en el detalle técnico.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El filtro aplicado al caso del día</div><div class="practica-body"><p><strong>Situación:</strong> en la auditoría de devoluciones, el director pide a la OCI que recupere los pagos dobles, organice el fondo acumulado y administre el sistema de alertas de duplicados.</p>
+<p><strong>Razonamiento:</strong> las tres tareas son de gestión. Recuperar los pagos le corresponde a la dependencia responsable con el área de cobro. Organizar el fondo, a la dependencia con la gestión documental. Administrar las alertas, a la primera o la segunda línea. La OCI recomienda, comparte su metodología como asesoría, hace seguimiento y luego evalúa.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: por qué la independencia es el hilo conductor</summary><div class="acc-body"><p>Casi todas las trampas de la prueba se resuelven con la independencia. Si la OCI diseña un control, luego no puede evaluarlo con objetividad. Si firma por la administración, se vuelve responsable de la gestión. Si sanciona, invade la competencia disciplinaria. Si declara un daño fiscal, invade la de la Contraloría. Por eso la Ley 87, el Decreto 648 de 2017 y las Normas Globales coinciden: la OCI asesora sin asumir responsabilidades de gestión, evalúa sin coadministrar y traslada sin investigar.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> MECI con <strong>5 componentes</strong>, <strong>4 líneas</strong> (estratégica, 1.ª, 2.ª, 3.ª), <strong>5 roles</strong> de la OCI. La OCI <strong>evalúa, recomienda y traslada</strong>.</div>
+<div class="checkpoint" id="cp12"><div class="cp-tag">✅ Checkpoint 12</div><p class="cp-q">¿Cuáles son los componentes del MECI?</p><div class="cp-opts"><button class="cp-opt" data-cp="12" data-ans="0">Planeación, ejecución, verificación, actuación y mejora continua.</button><button class="cp-opt" data-cp="12" data-ans="1">Ambiente de control, gestión del riesgo, actividades de control, información y comunicación, y actividades de monitoreo.</button><button class="cp-opt" data-cp="12" data-ans="0">Liderazgo estratégico, prevención, evaluación del riesgo, evaluación y seguimiento, y entes externos.</button></div><div class="cp-fb" id="cpfb12">✔ Los cinco componentes del MECI (la tercera opción son los roles de la OCI).</div></div>
+</div>
+
+<!-- MÓDULO 13 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">13</span><h3>Repaso integrador II: del riesgo al hallazgo y del hallazgo a la mejora</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>El trabajo de la OCI sigue un ciclo:</p>
+<ol class="lista">
+<li><mark>Plan anual de auditoría basado en riesgos</mark>, aprobado por el comité de coordinación de control interno.</li>
+<li>Planeación del trabajo: objetivos, alcance, criterios y programa.</li>
+<li>Ejecución con <strong>pruebas</strong> y <strong>muestreo</strong> para obtener <strong>evidencia</strong> suficiente y confiable.</li>
+<li><mark>Hallazgos</mark> con sus atributos: <strong>condición, criterio, causa y efecto</strong>.</li>
+<li>Comunicación con el auditado e informe.</li>
+<li><mark>Plan de mejoramiento</mark> formulado por el responsable.</li>
+<li><strong>Seguimiento</strong> de la OCI, que verifica la ejecución y evalúa la <strong>eficacia</strong>.</li>
+</ol>
+<p>El ciclo se apoya en la gestión del riesgo, los indicadores y los informes de ley.</p></div>
+<div class="b-texto">
+<p>Las ideas fuerza de cada etapa, con el día del curso en que las viste:</p>
+<ul class="lista">
+<li><strong>Plan anual (Día 12):</strong> se basa en riesgos, cubre los informes de ley y se aprueba en el comité de coordinación de control interno.</li>
+<li><strong>Pruebas (Día 12):</strong> inspección, observación, indagación, confirmación, recálculo, reejecución y procedimientos analíticos. La indagación sola no basta.</li>
+<li><strong>Muestreo (Día 12):</strong> estadístico o no estadístico, con criterios documentados.</li>
+<li><strong>Hallazgos (Día 13):</strong> describen la condición, el criterio, la causa y el efecto. La recomendación se dirige a la causa. El auditado puede controvertir el informe preliminar.</li>
+<li><strong>Planes de mejoramiento (Día 14):</strong> los formula el responsable del proceso, no la OCI. Atacan la causa, con acciones, responsables, fechas e indicadores. La OCI verifica con evidencia y evalúa la eficacia. Los planes suscritos con la Contraloría se reportan en su sistema y la OCI les hace seguimiento.</li>
+<li><strong>Riesgos (Día 15):</strong> se identifican con sus causas y consecuencias. Se valoran antes y después de los controles. Los controles se diseñan con responsable, periodicidad, propósito, forma de ejecución, tratamiento de desviaciones y evidencia. Los riesgos de corrupción no se aceptan.</li>
+<li><strong>Indicadores (Día 16):</strong> antes de usarlos, se verifica la calidad del dato.</li>
+<li><strong>Informes de ley (Día 13):</strong> evaluación independiente del sistema de control interno, control interno contable, PQRSD semestral, seguimiento al PTEP y los demás que fije la normativa.</li>
+</ul>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Tema</th><th>Número o regla que conviene recordar</th></tr></thead>
+<tbody>
+<tr><td>Atributos del hallazgo</td><td>Condición, criterio, causa, efecto</td></tr>
+<tr><td>Derecho de petición</td><td>15 días general; 10 documentos e información; 30 consultas</td></tr>
+<tr><td>Recursos CPACA</td><td>10 días desde la notificación; silencio en recursos a los 2 meses</td></tr>
+<tr><td>Silencio negativo en peticiones</td><td>3 meses; no exime de responder</td></tr>
+<tr><td>Informe de PQRS de la OCI</td><td>Semestral (art. 76 Ley 1474)</td></tr>
+<tr><td>Reserva (Ley 1712)</td><td>Máximo 15 años; carga de la prueba en el sujeto obligado</td></tr>
+<tr><td>Código de Integridad</td><td>Honestidad, respeto, compromiso, diligencia, justicia</td></tr>
+<tr><td>Riesgos de corrupción</td><td>No se aceptan</td></tr>
+<tr><td>Gestión documental</td><td>Ley 594 de 2000; TRD; eliminación con acta</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El hallazgo completo del caso</div><div class="practica-body"><p><strong>Situación:</strong> redactas el hallazgo de los pagos dobles.</p>
+<p><strong>Razonamiento:</strong></p>
+<ul class="lista">
+<li><strong>Condición:</strong> 8 devoluciones pagadas dos veces, por un valor total X, identificadas con la prueba de duplicados y confirmadas en los expedientes (referencias A-3 y B-1 a B-8).</li>
+<li><strong>Criterio:</strong> el procedimiento de devoluciones exige verificar que no exista una devolución previa por el mismo periodo.</li>
+<li><strong>Causa:</strong> el sistema no tiene una validación automática de duplicados, y la verificación manual no se documenta.</li>
+<li><strong>Efecto:</strong> salida de recursos sin soporte, con riesgo de pérdida si no se recuperan.</li>
+<li><strong>Recomendación:</strong> implementar una validación automática y documentar la verificación. La recuperación queda a cargo de la dependencia responsable. Los indicios se trasladan a las autoridades competentes si corresponde.</li>
+</ul></div></div>
+<details class="acc"><summary>📖 Profundiza: la cadena completa en una frase</summary><div class="acc-body"><p>Si tuvieras que explicar el curso en una frase, podría ser esta: <em>la OCI planea con base en riesgos, prueba con evidencia suficiente (cada vez más con datos), redacta hallazgos con condición, criterio, causa y efecto, recomienda sobre las causas, verifica que el responsable mejore y traslada los indicios a quien corresponda, todo con independencia y documentado en papeles de trabajo que cualquier auditor puede seguir.</em> Las normas que viste (Constitución, CPACA, Ley 1712, Ley 2195, Ley 594) son los criterios con los que se miden los procesos.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> el ciclo es <strong>plan basado en riesgos → pruebas y evidencia → hallazgo (condición, criterio, causa, efecto) → plan de mejoramiento del responsable → seguimiento y eficacia</strong>.</div>
+<div class="checkpoint" id="cp13"><div class="cp-tag">✅ Checkpoint 13</div><p class="cp-q">¿Quién formula el plan de mejoramiento derivado de un hallazgo de la OCI?</p><div class="cp-opts"><button class="cp-opt" data-cp="13" data-ans="0">La OCI, porque es la que identificó el hallazgo y conoce mejor su causa.</button><button class="cp-opt" data-cp="13" data-ans="0">El comité de coordinación de control interno, porque aprueba todos los planes de la entidad.</button><button class="cp-opt" data-cp="13" data-ans="1">El responsable del proceso auditado; la OCI verifica su ejecución y evalúa su eficacia.</button></div><div class="cp-fb" id="cpfb13">✔ Lo formula el responsable; la OCI hace seguimiento.</div></div>
+</div>
+
+<!-- MÓDULO 14 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">14</span><h3>Taller integrador final: resolvemos el caso del día</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Volvamos a las situaciones del caso de apertura y apliquemos el patrón: <mark>situación → criterio → hallazgo o corrección interna → recomendación → traslado si hay indicios</mark>. Esta vez hay una particularidad. Varias fallas son de la <strong>propia OCI</strong>: análisis sin conciliar, original modificado, papeles en un equipo personal, evidencia sin fecha, base enviada al correo personal. La OCI debe corregirlas con el mismo rigor que exige a los demás.</p></div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Situación</th><th>Criterio</th><th>Lectura correcta</th></tr></thead>
+<tbody>
+<tr><td>Base no conciliada con los reportes oficiales</td><td>Normas Globales (evidencia confiable); buenas prácticas de analítica</td><td>Conciliar antes de concluir; explicar diferencias</td></tr>
+<tr><td>Filas borradas sobre el archivo original</td><td>Integridad de la evidencia; reproducibilidad</td><td>Nueva extracción, original intacto, copia de trabajo y trazabilidad</td></tr>
+<tr><td>Duplicados sin documentar cómo se identificaron</td><td>Suficiencia de los papeles de trabajo</td><td>Rehacer con hoja de trazabilidad y verificar con expedientes</td></tr>
+<tr><td>Papeles en el computador personal</td><td>Custodia, confidencialidad y disponibilidad</td><td>Repositorio oficial con acceso controlado</td></tr>
+<tr><td>Base reservada enviada al correo personal</td><td>Reserva tributaria (art. 583 ET); seguridad de la información</td><td>Incidente de seguridad; contención; traslado disciplinario si corresponde</td></tr>
+<tr><td>Expedientes incompletos y TRD sin aplicar</td><td>Ley 594; art. 36 CPACA; TRD</td><td>Hallazgo con causa (sin responsable ni capacitación) y recomendación</td></tr>
+<tr><td>Cajas sin inventario</td><td>Normativa del AGN</td><td>Fondo acumulado; plan de intervención</td></tr>
+<tr><td>Eliminación sin acta</td><td>TRD o TVD; procedimiento de eliminación</td><td>Hallazgo; traslado a la autoridad disciplinaria</td></tr>
+<tr><td>Capturas sin fecha ni fuente</td><td>Evidencia confiable</td><td>Rehacer con fecha, sistema y parámetros; estándar mínimo de evidencia digital</td></tr>
+</tbody></table></div>
+<div class="b-texto">
+<p>Fíjate en la lección de fondo: la credibilidad de la OCI depende de que su propio trabajo cumpla los estándares que exige. El programa de aseguramiento y mejora de la calidad que piden las Normas Globales existe precisamente para eso. Revisa el trabajo de la función de auditoría, detecta fallas como las del caso y las corrige. Una OCI que reconoce y corrige sus fallas tiene más autoridad, no menos.</p>
+<p>Fíjate también en lo que no cambia. Frente a los hallazgos del proceso auditado, la OCI no recupera los pagos dobles, no organiza el fondo acumulado, no repone los documentos eliminados y no sanciona al coordinador. Recomienda, hace seguimiento al plan de mejoramiento que formule el responsable y traslada los indicios. Es el mismo patrón de todo el curso, aplicado ahora a la evidencia y a los documentos.</p>
+</div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El informe final</div><div class="practica-body"><p><strong>Situación:</strong> presentas el informe de la auditoría de devoluciones al comité.</p>
+<p><strong>Razonamiento:</strong> el informe presenta:</p>
+<ol class="lista">
+<li>El hallazgo de los pagos dobles, con valor y causa.</li>
+<li>Los hallazgos documentales agrupados bajo su causa común.</li>
+<li>Las recomendaciones priorizadas: validación automática de duplicados, responsable de archivo y TRD, control de eliminaciones.</li>
+<li>La mención general de los traslados efectuados.</li>
+</ol>
+<p>Por separado, la jefatura informa al comité de las mejoras internas de la OCI: estándar de evidencia digital, uso obligatorio del repositorio y conciliación como primer paso del análisis de datos.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: cómo llegar al simulacro</summary><div class="acc-body"><p>Antes del simulacro final, repasa los resúmenes y las flashcards de los Días 9 a 20. Vuelve a los casos que te costaron. Para cada pregunta, aplica el filtro de cuatro pasos del módulo 12: responsable, monitoreo, rol de la OCI y descarte de las opciones de gestión o sanción. Busca la norma o el número preciso que pide el enunciado. En los casos largos, subraya mentalmente la situación, el actor y lo que se pregunta. Y recuerda que, entre dos opciones razonables, suele ser correcta la que respeta el rol de cada actor y ataca la causa.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> la OCI aplica a su <strong>propio trabajo</strong> los mismos estándares que exige: evidencia conciliada, reproducible, conservada y protegida. Frente al auditado, <strong>recomienda, hace seguimiento y traslada</strong>.</div>
+<div class="checkpoint" id="cp14"><div class="cp-tag">✅ Checkpoint 14</div><p class="cp-q">La jefa de la OCI descubre que un auditor guardó los papeles de trabajo en su computador personal. ¿Qué corresponde?</p><div class="cp-opts"><button class="cp-opt" data-cp="14" data-ans="1">Trasladarlos al repositorio oficial con acceso controlado, verificar que no queden copias externas y reforzar la regla en el procedimiento de la oficina.</button><button class="cp-opt" data-cp="14" data-ans="0">Nada, porque lo importante es que los papeles existan, sin importar el equipo en el que se encuentren guardados.</button><button class="cp-opt" data-cp="14" data-ans="0">Eliminar los papeles y rehacer toda la auditoría, porque la evidencia quedó invalidada de manera definitiva.</button></div><div class="cp-fb" id="cpfb14">✔ Custodia en el repositorio oficial y corrección del procedimiento.</div></div>
+</div>
+</section>
+
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">1. Archivo original y copia de trabajo</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Original</th><th>Copia de trabajo</th></tr></thead>
+<tbody>
+<tr><td>Se conserva intacto, con fecha, fuente y hash</td><td>Se depura y analiza con columnas auxiliares</td></tr>
+<tr><td>Prueba lo que se recibió</td><td>Documenta lo que se hizo (hoja de trazabilidad)</td></tr>
+</tbody></table></div>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">2. Confidencialidad, integridad y disponibilidad</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Confidencialidad</th><th>Integridad</th><th>Disponibilidad</th></tr></thead>
+<tbody>
+<tr><td>Solo la conocen los autorizados</td><td>No se altera indebidamente</td><td>Accesible cuando se necesita</td></tr>
+</tbody></table></div>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">3. TRD y TVD</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Tabla de Retención Documental</th><th>Tabla de Valoración Documental</th></tr></thead>
+<tbody>
+<tr><td>Documentos que se producen hoy</td><td>Fondos acumulados producidos sin TRD</td></tr>
+<tr><td>Tiempos de retención y disposición final por serie</td><td>Valoración y disposición final de lo acumulado</td></tr>
+</tbody></table></div>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">4. Archivo de gestión, central e histórico</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Gestión</th><th>Central</th><th>Histórico</th></tr></thead>
+<tbody>
+<tr><td>En la dependencia; trámite y consulta frecuente</td><td>Consulta menor; valores administrativos o legales vigentes</td><td>Conservación permanente</td></tr>
+</tbody></table></div>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">5. Procedencia y orden original</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Procedencia</th><th>Orden original</th></tr></thead>
+<tbody>
+<tr><td>Agrupar según la dependencia productora</td><td>Conservar la secuencia en que se produjeron</td></tr>
+</tbody></table></div>
+
+  <h4 style="margin:18px 0 6px;color:var(--azul);">6. Señal de alerta y hallazgo</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Señal de alerta (dato)</th><th>Hallazgo</th></tr></thead>
+<tbody>
+<tr><td>Hipótesis que genera la analítica</td><td>Situación verificada con evidencia y con sus atributos</td></tr>
+<tr><td>No se reporta como irregularidad</td><td>Se reporta con condición, criterio, causa y efecto</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos prácticos</span>
+  <h2 class="sec-title">📂 Casos resueltos de herramientas, documentos y evidencia</h2>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 1 · La base que no cuadra</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>La base tiene 210 registros menos que el reporte oficial.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Sigues con el análisis?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>No hasta explicar la diferencia. Se corrige la extracción o, si no se explica, se reporta como debilidad de confiabilidad de la información.</p></div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 2 · El cruce de cuentas</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Una cuenta bancaria de devolución coincide con la de un servidor.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Es un hallazgo?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Es una señal de alerta. Se verifica con el expediente. Si se confirma, se reporta el hallazgo de control y se trasladan los indicios.</p></div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 3 · Los usuarios fantasma</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El cruce de usuarios activos con la nómina muestra 14 usuarios de servidores retirados.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué señalas?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Una debilidad en el control de accesos (seguridad de la información). Se recomienda desactivar los usuarios y crear un control periódico de novedades de personal.</p></div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 4 · Digitalizar y destruir</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Una dependencia digitalizó expedientes y destruyó los originales sin acta.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué criterio aplicas?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>La normativa archivística. La eliminación solo procede según la TRD y con el procedimiento y el acta. La digitalización no sustituye por sí sola al original.</p></div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 5 · La captura sin contexto</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El auditado controvierte un hallazgo soportado en una captura sin fecha.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué faltó?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Fecha y hora, sistema y parámetros de la consulta, y referencia en un papel de trabajo.</p></div>
+    </div>
+  </div>
+
+  <div class="caso">
+    <div class="caso-head">📋 Caso 6 · El expediente partido</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Los soportes de una devolución están en el correo de un servidor, la resolución en el sistema y el pago en otra dependencia.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué criterios citas?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>El expediente único (art. 36 del CPACA) y las reglas de organización documental (Ley 594 y TRD).</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores comunes sobre herramientas, documentos y evidencia</h2>
+  <div class="card"><p><strong>❌ Trabajar sobre el archivo original.</strong> Siempre se usa una copia.</p></div>
+  <div class="card"><p><strong>❌ Analizar sin conciliar.</strong> Primero se cuadran los totales.</p></div>
+  <div class="card"><p><strong>❌ Reportar como hallazgo una señal de alerta sin verificar.</strong></p></div>
+  <div class="card"><p><strong>❌ Usar accesos con privilegios de modificación.</strong> El auditor consulta en solo lectura.</p></div>
+  <div class="card"><p><strong>❌ Sacar información reservada de los canales institucionales.</strong></p></div>
+  <div class="card"><p><strong>❌ Confundir TRD con TVD.</strong> La TVD es para fondos acumulados.</p></div>
+  <div class="card"><p><strong>❌ Eliminar documentos sin acta.</strong></p></div>
+  <div class="card"><p><strong>❌ Creer que digitalizar es gestionar documentos.</strong></p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar estos temas en la prueba</h2>
+  <div class="card card-lead"><p>Una lista corta que conviene tener a mano:</p>
+    <ul class="lista">
+      <li><strong>Analítica:</strong> conciliar, trabajar en una copia, registrar la trazabilidad, verificar las excepciones con documentos.</li>
+      <li><strong>Pruebas:</strong> duplicados, secuencias, atípicos, estratificación, cruces, fechas y Benford (el 1 aparece cerca del 30 %).</li>
+      <li><strong>Seguridad:</strong> confidencialidad, integridad y disponibilidad; MSPI; reserva (art. 583 ET); Ley 1581.</li>
+      <li><strong>Documentos:</strong> Ley 594 de 2000; Decreto 1080 de 2015; ciclo de gestión, central e histórico; TRD, TVD, PGD, PINAR, CCD, inventario.</li>
+      <li><strong>Evidencia digital:</strong> origen, fecha, hash y cadena de custodia.</li>
+      <li><strong>Papeles de trabajo:</strong> suficientes, referenciados, revisados, custodiados, retenidos según la TRD.</li>
+    </ul>
+  </div>
+  <div class="card"><ul class="lista">
+    <li><strong>Para el simulacro:</strong> responsable → monitoreo → rol de la OCI → descartar las opciones de gestión o sanción.</li>
+    <li><strong>Entre dos opciones razonables</strong>, elige la que ataca la causa y respeta el rol de cada actor.</li>
+  </ul></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Los datos lo dicen todo: es un fraude”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: el patrón es evidente.</div>
+      <div class="t-row malo">🔴 La trampa: la analítica genera hipótesis, no conclusiones.</div>
+      <div class="t-row bueno">🟢 Lo correcto: verificar con documentos y trasladar los indicios.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Para no perder tiempo, depuro la base original”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: es más rápido.</div>
+      <div class="t-row malo">🔴 La trampa: la evidencia pierde integridad y no se puede reproducir.</div>
+      <div class="t-row bueno">🟢 Lo correcto: original intacto y copia de trabajo con trazabilidad.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Démosle a la OCI acceso de administrador para que corrija lo que encuentre”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: agiliza las correcciones.</div>
+      <div class="t-row malo">🔴 La trampa: la OCI coadministra y puede alterar la evidencia.</div>
+      <div class="t-row bueno">🟢 Lo correcto: solo lectura; las correcciones las hace el responsable.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Ya está digitalizado, así que se pueden botar los papeles”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: la información se conserva en digital.</div>
+      <div class="t-row malo">🔴 La trampa: la eliminación exige TRD, procedimiento y acta.</div>
+      <div class="t-row bueno">🟢 Lo correcto: seguir la normativa archivística.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Los papeles de trabajo son del auditor que los hizo”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: él los elaboró.</div>
+      <div class="t-row malo">🔴 La trampa: son documentos públicos de la entidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: repositorio oficial, custodia y retención según la TRD.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Intenta responder antes de voltear cada una.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>💻 Herramientas</h4><p>Ofimática, TAAC, consultas en solo lectura, gestión de auditoría; analizar el universo y verificar con documentos.</p></div>
+    <div class="resumen-item"><h4>📊 Hoja de cálculo</h4><p>Búsqueda, conteo y suma condicional, tablas dinámicas, duplicados; original intacto y trazabilidad.</p></div>
+    <div class="resumen-item"><h4>🔍 Analítica</h4><p>Duplicados, secuencias, atípicos, estratificación, cruces, fechas, Benford; excepciones que se verifican.</p></div>
+    <div class="resumen-item"><h4>✅ Calidad del dato</h4><p>Completitud, exactitud y validez; conciliar antes de analizar.</p></div>
+    <div class="resumen-item"><h4>🔒 Seguridad</h4><p>Confidencialidad, integridad y disponibilidad; reserva tributaria y datos personales también para la OCI.</p></div>
+    <div class="resumen-item"><h4>🗂️ Gestión documental</h4><p>Ley 594; ciclo de gestión, central e histórico; TRD, TVD, PGD, PINAR; eliminación con acta.</p></div>
+    <div class="resumen-item"><h4>📁 Evidencia</h4><p>Expediente único; papeles suficientes y referenciados; evidencia digital con fecha, origen y hash.</p></div>
+    <div class="resumen-item"><h4>🧩 Integración</h4><p>Plan basado en riesgos → evidencia → hallazgo → plan del responsable → seguimiento; la OCI evalúa, recomienda y traslada.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>TAAC</dt><dd>Técnicas de auditoría asistidas por computador: software y procedimientos para analizar datos en auditoría.</dd>
+      <dt>Conciliación</dt><dd>Comparación de registros y totales de una base con una fuente independiente para verificar su completitud.</dd>
+      <dt>Hash</dt><dd>Huella digital de un archivo que cambia si el contenido se altera; permite probar su integridad.</dd>
+      <dt>Ley de Benford</dt><dd>Distribución esperada de los primeros dígitos en muchos conjuntos de datos naturales; sirve para orientar pruebas.</dd>
+      <dt>Tabla de Retención Documental</dt><dd>Instrumento que fija para cada serie los tiempos de retención y la disposición final.</dd>
+      <dt>Fondo acumulado</dt><dd>Documentos reunidos sin criterios archivísticos, que se intervienen con la Tabla de Valoración Documental.</dd>
+      <dt>Expediente</dt><dd>Conjunto de documentos de un mismo trámite o asunto, ordenados según su secuencia.</dd>
+      <dt>Papeles de trabajo</dt><dd>Documentos que registran la planeación, las pruebas, la evidencia y las conclusiones de la auditoría.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Herramientas informáticas, gestión documental y repaso integrador</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba escrita: un caso, un enunciado y 3 opciones (A, B, C), de las cuales solo una es la actuación correcta. Responde todas y al final verás tu puntaje y los temas a reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 20. Siguiente: Día 21 · SIM-DIAN-CI-001 · Simulacro final Gestor III Control Interno.</span>
+    <button class="advance-btn final" id="btnFinalizar" onclick="if(confirm('✅ Finalizar Día 20 y marcar como completado?\n\nPróxima guía: Día 21 · SIM-DIAN-CI-001 · Simulacro final Gestor III Control Interno.'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 20</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">FUN-CI-12 · Día 20 · v1.0 · © 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[
+ {
+  "f": "¿Qué tipo de acceso debe tener el auditor a los sistemas de la entidad?",
+  "b": "Acceso de solo lectura, para obtener evidencia sin poder modificar los datos y sin coadministrar."
+ },
+ {
+  "f": "¿Cuál es la regla de oro al analizar una base en hoja de cálculo?",
+  "b": "No trabajar sobre el original: conservarlo intacto, trabajar en una copia y documentar cada paso en una hoja de trazabilidad."
+ },
+ {
+  "f": "¿Qué es lo primero que se hace antes de aplicar pruebas de analítica?",
+  "b": "Conciliar el número de registros y los totales de la base con una fuente independiente."
+ },
+ {
+  "f": "¿Qué indica la Ley de Benford?",
+  "b": "Que en muchos datos naturales el primer dígito 1 aparece cerca del 30 % de las veces y la frecuencia baja hasta el 9 (cerca del 5 %); desviaciones fuertes orientan pruebas."
+ },
+ {
+  "f": "¿Cuáles son los tres principios de la seguridad de la información?",
+  "b": "Confidencialidad, integridad y disponibilidad."
+ },
+ {
+  "f": "¿Cuáles son las etapas del ciclo vital del documento?",
+  "b": "Archivo de gestión, archivo central y archivo histórico, conectadas mediante transferencias documentales."
+ },
+ {
+  "f": "¿Qué diferencia hay entre la TRD y la TVD?",
+  "b": "La TRD fija tiempos de retención y disposición final de las series que se producen; la TVD se aplica a los fondos acumulados."
+ },
+ {
+  "f": "¿Qué características debe garantizar el documento electrónico de archivo?",
+  "b": "Autenticidad, integridad, fiabilidad y disponibilidad."
+ },
+ {
+  "f": "¿Cuándo son suficientes los papeles de trabajo?",
+  "b": "Cuando un auditor experimentado, sin conocimiento previo del trabajo, puede entender lo que se hizo y llegar a las mismas conclusiones."
+ },
+ {
+  "f": "¿Para qué sirve el hash de un archivo?",
+  "b": "Para demostrar que el archivo no se ha modificado desde que se recibió, porque cualquier cambio altera el hash."
+ }
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+ {
+  "nivel": "b",
+  "tema": "Hoja de cálculo",
+  "ctx": "Un analista de la Oficina de Control Interno recibe de la dependencia de tecnología una base con todas las devoluciones del año para aplicar pruebas de analítica. Para avanzar rápido, abre el archivo recibido, aplica filtros, borra las filas que considera irrelevantes y guarda los cambios sobre el mismo archivo. Cuando la supervisora le pregunta cuántos registros tenía la base al recibirla y qué criterio usó para eliminar filas, el analista no puede responder con certeza. La supervisora te pide explicar al equipo cuál es la práctica correcta para que la situación no se repita en los siguientes trabajos.",
+  "q": "El analista depuró y guardó los cambios sobre el archivo recibido, y ahora no puede decir cuántos registros tenía ni qué criterio usó para eliminar filas, lo que impide a la supervisión verificar el trabajo. ¿Cuál es la práctica correcta para analizar una base en hoja de cálculo?",
+  "ops": [
+   "Depurar directamente el archivo recibido, pero anotar al final del trabajo, en el informe dirigido al jefe de la oficina, el número aproximado de registros eliminados y el motivo general de la depuración realizada.",
+   "Pedir a la dependencia de tecnología que entregue la base ya depurada según los criterios de la auditoría, de modo que la OCI no tenga que modificar ningún archivo durante el análisis.",
+   "Conservar intacto el archivo original, trabajar en una copia marcando los registros con columnas auxiliares y documentar cada paso en una hoja de trazabilidad que permita reproducir el análisis."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Modificar el original destruye la evidencia de lo recibido, y una anotación aproximada no permite reproducir el análisis.",
+   "Incorrecto. La depuración es parte del análisis de la OCI y debe quedar documentada por ella; además, se pierde el control sobre lo excluido.",
+   "Correcto. Original intacto, copia de trabajo, columnas auxiliares y trazabilidad hacen el análisis reproducible."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Ciclo vital del documento",
+  "ctx": "En una capacitación para las dependencias sobre gestión documental, un participante pregunta en qué momento los expedientes de devoluciones deben salir de la oficina donde se tramitan y a dónde van después. Comenta que en su dependencia los expedientes terminados se quedan en los escritorios durante años, hasta que alguien decide llevarlos al depósito sin ningún listado. La jefa de la Oficina de Control Interno, que participa como invitada, te pide explicar el ciclo vital del documento y la forma correcta de trasladar los expedientes entre las etapas, conforme a la normativa archivística.",
+  "q": "Un participante pregunta cuándo deben salir los expedientes de la oficina y a dónde van, y cuenta que en su dependencia se llevan al depósito sin listado después de años en los escritorios, lo que dificulta encontrar los documentos cuando se necesitan. ¿Qué explicación es correcta?",
+  "ops": [
+   "Que los documentos pasan del archivo de gestión al central y luego, si tienen valor permanente, al histórico, mediante transferencias que siguen los tiempos de la TRD y se acompañan del inventario.",
+   "Que los documentos pasan del archivo físico al electrónico cuando se digitalizan, y que a partir de ese momento la dependencia puede eliminar los originales sin necesidad de inventario ni de acta alguna.",
+   "Que cada dependencia decide libremente cuándo llevar sus expedientes al depósito, siempre que los conserve por lo menos diez años, que es el plazo único que fija la Ley 594 de 2000."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. Ciclo de gestión, central e histórico, con transferencias según la TRD y con inventario.",
+   "Incorrecto. Digitalizar no es una etapa del ciclo vital ni autoriza a eliminar sin el procedimiento.",
+   "Incorrecto. Los tiempos los fija la TRD de cada serie, no un plazo único decidido por la dependencia."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Seguridad de la información",
+  "ctx": "Durante la auditoría al proceso de devoluciones, la supervisora de la Oficina de Control Interno descubre que un analista del equipo envió a su correo personal la base de devoluciones, que contiene información de las declaraciones de los contribuyentes, para “avanzar desde la casa” durante el fin de semana. El analista explica que lo hizo con buena intención, que su correo tiene contraseña y que pensaba borrar el archivo al terminar. La supervisora te pide identificar qué principio de la seguridad de la información se vio comprometido y qué debe hacer la oficina.",
+  "q": "El analista envió a su correo personal la base con información de contribuyentes para trabajar el fin de semana, alegando buena intención y que su correo tiene contraseña. ¿Qué principio se compromete y qué corresponde hacer a la oficina?",
+  "ops": [
+   "La disponibilidad, porque la información dejó de estar en los sistemas institucionales; basta con que el analista vuelva a cargar el archivo en el repositorio oficial de la oficina.",
+   "La confidencialidad, porque información con reserva quedó fuera de los controles de la entidad; se gestiona como incidente de seguridad, con contención y traslado si hay posible falta.",
+   "La integridad, porque el correo personal pudo alterar los datos; basta con que el analista compare el archivo de su correo con el original para verificar que no cambió nada antes de borrarlo."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. El riesgo principal es la divulgación, y no basta con recargar el archivo.",
+   "Correcto. Se compromete la confidencialidad; la OCI reporta el incidente, se contiene y se traslada si hay posible falta.",
+   "Incorrecto. El riesgo principal no es la alteración sino la exposición de información reservada."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Instrumentos archivísticos",
+  "ctx": "Al revisar la gestión documental de una dependencia, encuentras un depósito con ciento cuarenta cajas de documentos de hace más de quince años, reunidos sin ningún criterio de organización, sin inventario y producidos antes de que la entidad tuviera tablas de retención documental aprobadas. El jefe de la dependencia propone aplicar la tabla de retención vigente para decidir qué se conserva y qué se elimina, porque considera que es el instrumento que regula los tiempos de conservación de los documentos. Debes identificar el instrumento archivístico aplicable a esta situación.",
+  "q": "Las cajas se reunieron sin criterio, sin inventario y antes de que existieran tablas de retención, y el jefe propone aplicar la TRD vigente para decidir qué conservar, en lugar de valorar primero ese conjunto documental. ¿Qué instrumento archivístico corresponde a esta situación?",
+  "ops": [
+   "La Tabla de Retención Documental vigente, porque regula los tiempos de conservación de todas las series de la entidad, sin importar cuándo se produjeron los documentos.",
+   "La Tabla de Valoración Documental, porque se trata de un fondo acumulado producido sin TRD, que debe valorarse para definir su disposición final, conforme a la normativa archivística.",
+   "El Plan Institucional de Archivos, porque es el instrumento que define qué documentos se conservan y cuáles se eliminan en cada una de las dependencias."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. La TRD se aplica a la producción documental actual; los fondos acumulados se intervienen con la TVD.",
+   "Correcto. Los fondos acumulados se valoran con la Tabla de Valoración Documental.",
+   "Incorrecto. El PINAR planea mejoras de la función archivística; no fija la disposición final de las series."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Calidad de los datos",
+  "ctx": "Antes de aplicar las pruebas de analítica a la base de devoluciones, comparas sus totales con el reporte oficial del proceso. La base tiene doce mil cuatrocientos registros por un valor de 1,82 billones de pesos, mientras que el reporte oficial registra doce mil seiscientas diez devoluciones por 1,87 billones. El analista propone seguir adelante con la base disponible, porque la diferencia es menor al dos por ciento de los registros y, según él, no cambiará las conclusiones. La supervisora te pide decidir cómo proceder y justificar la decisión con base en los requisitos de la evidencia.",
+  "q": "La base tiene doscientos diez registros y cincuenta mil millones de pesos menos que el reporte oficial, y el analista propone seguir porque la diferencia es pequeña, según él sin efecto en las conclusiones. ¿Cómo debe proceder la OCI?",
+  "ops": [
+   "Explicar la diferencia antes de seguir, porque una base incompleta puede sesgar todas las pruebas; si es un error de extracción se corrige, y si no se explica, se reporta como debilidad de la información.",
+   "Seguir con el análisis, porque una diferencia inferior al dos por ciento de los registros es inmaterial y no afecta la confiabilidad de la evidencia que se obtenga de las pruebas.",
+   "Usar el reporte oficial como base del análisis en lugar de la base de datos, porque el reporte es el documento con mayor valor probatorio dentro del proceso de devoluciones."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. La conciliación es condición de la evidencia confiable; las diferencias se explican antes de concluir.",
+   "Incorrecto. Los registros faltantes pueden ser justamente los relevantes, como las compensaciones excluidas.",
+   "Incorrecto. El reporte resume totales; las pruebas requieren la base detallada, completa y conciliada."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Analítica de datos",
+  "ctx": "La prueba de cruces de la OCI muestra que la cuenta bancaria registrada en tres devoluciones aprobadas durante el año coincide con la cuenta bancaria que un servidor de la dependencia de devoluciones reportó para el pago de su nómina. El director de la seccional, al conocer el dato en una reunión preliminar, pide a la OCI que incluya de inmediato en el informe un hallazgo de corrupción contra el servidor, porque considera que los datos son evidencia suficiente y que la entidad debe actuar con rapidez. Debes definir el tratamiento correcto del resultado de la prueba.",
+  "q": "El cruce muestra que la cuenta de tres devoluciones coincide con la cuenta de nómina de un servidor, y el director pide reportar de inmediato un hallazgo de corrupción, sin que se haya revisado aún ningún expediente. ¿Cuál es el tratamiento correcto de este resultado?",
+  "ops": [
+   "Incluir el hallazgo de corrupción en el informe con el nombre del servidor, porque la coincidencia de cuentas es una prueba directa y suficiente de la conducta irregular cometida.",
+   "Descartar el resultado, porque las coincidencias de cuentas bancarias suelen deberse a errores de digitación y la OCI no debe ocuparse de situaciones individuales de los servidores.",
+   "Tratarlo como señal de alerta, verificarlo con los expedientes y, si se confirma, reportar el hallazgo de control y trasladar los indicios con reserva a las autoridades competentes."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. El dato genera una hipótesis; además, la OCI no califica conductas ni expone nombres en el informe.",
+   "Incorrecto. Una coincidencia así es una señal de riesgo relevante que debe verificarse.",
+   "Correcto. Señal de alerta, verificación documental, hallazgo de control y traslado con reserva."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Evidencia digital",
+  "ctx": "En la reunión de cierre de la auditoría, el jefe de la dependencia de devoluciones controvierte un hallazgo sobre aprobaciones registradas en días no hábiles. Argumenta que las capturas de pantalla que soportan el hallazgo no muestran la fecha en que se tomaron, ni el sistema del que provienen, ni los filtros aplicados, y que por eso no se puede saber si corresponden a la información real del proceso. Al revisar los papeles de trabajo, confirmas que las capturas fueron recortadas para mostrar solo algunas filas, sin ninguna referencia adicional.",
+  "q": "En la reunión de cierre, el auditado controvierte el hallazgo porque las capturas no muestran fecha, sistema ni filtros, y confirmas que fueron recortadas sin dejar ninguna referencia en los papeles de trabajo. ¿Qué debe hacer la OCI frente a esta situación?",
+  "ops": [
+   "Mantener el hallazgo tal como está, porque las capturas de pantalla tomadas por la OCI tienen presunción de veracidad y el auditado no puede controvertirlas en la reunión de cierre de la auditoría.",
+   "Rehacer las consultas con capturas completas que muestren fecha, sistema y parámetros, o con extracciones documentadas, y adoptar un estándar mínimo de evidencia digital para la oficina.",
+   "Retirar el hallazgo definitivamente del informe, porque la evidencia digital no es válida en auditoría y solo pueden usarse documentos físicos firmados por los responsables."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. La evidencia de la OCI debe ser confiable por sí misma; no tiene presunción especial.",
+   "Correcto. Se rehace la evidencia con origen, fecha y parámetros, y se corrige el procedimiento de la oficina.",
+   "Incorrecto. La evidencia digital es válida si se obtiene y documenta adecuadamente."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Eliminación documental",
+  "ctx": "En la auditoría de devoluciones, descubres que un coordinador ordenó destruir varias cajas de expedientes de devoluciones de hace doce años porque ocupaban espacio, sin consultar la tabla de retención documental, sin aprobación de ninguna instancia y sin levantar acta. El coordinador explica que los documentos eran muy antiguos, que nadie los consultaba y que, en todo caso, la mayoría se había digitalizado años atrás. El jefe de la dependencia considera que no hay nada que reportar, porque los documentos ya cumplieron su función administrativa.",
+  "q": "El coordinador destruyó expedientes antiguos sin consultar la TRD, sin aprobación y sin acta, alegando que nadie los consultaba y que estaban digitalizados, y el jefe considera que no hay nada que reportar. ¿Qué conclusión corresponde a la OCI?",
+  "ops": [
+   "Que la eliminación es contraria a la normativa archivística, que solo permite eliminar según la TRD o la TVD con aprobación, publicación de inventarios y acta; se reporta el hallazgo y se trasladan los hechos a la autoridad disciplinaria.",
+   "Que no hay nada que reportar, porque los documentos digitalizados sustituyen plenamente a los originales y la dependencia puede eliminar estos últimos cuando lo considere necesario por espacio.",
+   "Que la OCI debe ordenar la reconstrucción de los expedientes destruidos a partir de las copias digitales y determinar la sanción disciplinaria que corresponde al coordinador."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. La eliminación exige TRD o TVD, aprobación, publicación de inventarios y acta; la OCI reporta y traslada.",
+   "Incorrecto. La digitalización no autoriza por sí sola la eliminación de los originales.",
+   "Incorrecto. La OCI no ordena la reconstrucción ni determina sanciones."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Papeles de trabajo",
+  "ctx": "La jefa de la Oficina de Control Interno pide a un auditor que no participó en la auditoría de devoluciones revisar si los papeles de trabajo soportan el hallazgo sobre los pagos dobles. El revisor encuentra la base de datos y el informe, pero no encuentra la conciliación de la base, ni la descripción de cómo se identificaron los duplicados, ni la referencia a los expedientes revisados. Para entender el hallazgo, tiene que preguntar varias veces al analista que hizo el trabajo, quien le explica verbalmente cada paso. El analista sostiene que, como él puede explicarlo, los papeles son suficientes.",
+  "q": "El revisor no encontró la conciliación, la descripción de la prueba ni la referencia a los expedientes y tuvo que preguntar al analista, quien considera suficientes los papeles porque puede explicarlos verbalmente. ¿Qué debe concluir la revisión?",
+  "ops": [
+   "Que los papeles son suficientes, porque el analista que hizo el trabajo puede explicar cada paso y eso garantiza que el hallazgo tiene sustento ante cualquier controversia futura.",
+   "Que los papeles son suficientes, siempre que el analista firme una certificación en la que declare que los procedimientos se aplicaron correctamente durante la auditoría realizada.",
+   "Que los papeles no son suficientes, porque otro auditor debe poder entender lo que se hizo y llegar a las mismas conclusiones sin preguntar; deben completarse con conciliación, trazabilidad y referencias."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. La suficiencia no puede depender de la memoria del analista, que puede no estar disponible.",
+   "Incorrecto. Una certificación no reemplaza la documentación de los procedimientos y la evidencia.",
+   "Correcto. La prueba del auditor ajeno: los papeles deben hablar por sí solos, con referenciación cruzada."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Analítica y verificación",
+  "ctx": "La prueba de duplicados sobre la base conciliada arroja treinta y ocho claves repetidas que corresponden a setenta y seis registros de devoluciones con el mismo NIT, periodo y valor. Al revisar los expedientes, el equipo establece que treinta claves corresponden a solicitudes corregidas que el sistema registró como nuevas, sin que hubiera un segundo pago, y que ocho corresponden a devoluciones efectivamente pagadas dos veces. El director de la seccional propone que el informe reporte solo los ocho pagos dobles y omita cualquier mención a las otras treinta claves, porque no hubo pérdida de recursos en ellas.",
+  "q": "De treinta y ocho claves repetidas, treinta son correcciones registradas como nuevas sin doble pago y ocho son pagos dobles, y el director propone omitir las treinta del informe, porque en ellas no hubo pérdida de recursos. ¿Cómo debe presentar la OCI los resultados?",
+  "ops": [
+   "Reportar las treinta y ocho claves como pagos dobles, porque la prueba de duplicados las identificó a todas y el informe debe reflejar el resultado completo de la analítica aplicada.",
+   "Reportar como hallazgo principal los ocho pagos dobles con su valor y causa, y como observación la debilidad en el registro de correcciones, que afecta la calidad de los datos del proceso.",
+   "Reportar solo los ocho pagos dobles, como propone el director, porque las otras treinta claves fueron descartadas en la verificación y no tienen ninguna relevancia para el control."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Las treinta claves verificadas no son pagos dobles; reportarlas así sería un error.",
+   "Correcto. El hallazgo se basa en lo verificado, y la falla de registro es una observación sobre la calidad de los datos.",
+   "Incorrecto. Aunque no hubo pago doble, el registro de correcciones como nuevas solicitudes es una debilidad que conviene informar."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Integración: rol de la OCI",
+  "ctx": "Al presentar el informe de la auditoría de devoluciones, el director de la seccional propone que, como la OCI ya conoce los casos y tiene las herramientas, asuma tres tareas: recuperar los ocho pagos dobles gestionando directamente con los contribuyentes, organizar el fondo documental acumulado con el apoyo de practicantes, y administrar de forma permanente el sistema de alertas de duplicados que construyó para la auditoría. El director considera que así se aprovecha el conocimiento técnico de la oficina y se evitan demoras en la implementación de las recomendaciones.",
+  "q": "El director propone que la OCI recupere los pagos dobles, organice el fondo acumulado y administre de forma permanente las alertas de duplicados que construyó, para evitar demoras en la implementación. ¿Cómo debe responder la OCI aplicando el marco del curso?",
+  "ops": [
+   "Que puede asumir las tres tareas de manera temporal, siempre que el comité institucional de coordinación de control interno lo apruebe y se fije una fecha de devolución a las dependencias responsables.",
+   "Que puede administrar el sistema de alertas porque lo construyó ella, pero que la recuperación de los pagos y la organización del fondo son tareas de las dependencias responsables.",
+   "Que las tres son tareas de gestión de la primera o segunda línea; la OCI recomienda, comparte su metodología como asesoría, hace seguimiento al plan de mejoramiento y luego evalúa."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Ningún comité puede asignar a la OCI funciones de gestión contrarias a su independencia.",
+   "Incorrecto. Administrar un control permanente es gestión; si la OCI lo hiciera, luego evaluaría su propio trabajo.",
+   "Correcto. Las tres son tareas de gestión; la OCI recomienda, asesora sin asumir responsabilidades, hace seguimiento y evalúa."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Integración: hallazgo completo",
+  "ctx": "Debes redactar el hallazgo sobre los pagos dobles para el informe final. Cuentas con la base conciliada y su hoja de trazabilidad, el resultado de la prueba de duplicados, los ocho expedientes verificados, el procedimiento de devoluciones que exige verificar que no exista una devolución previa por el mismo periodo, y la entrevista en la que la dependencia reconoció que el sistema no tiene una validación automática y que la verificación manual no se documenta. Un compañero propone un texto que dice: “Se evidenciaron pagos dobles. Se recomienda dar cumplimiento al procedimiento”.",
+  "q": "Tienes la evidencia, el criterio y la causa reconocida por la dependencia, y un compañero propone un hallazgo que solo dice que hubo pagos dobles y recomienda cumplir el procedimiento, sin causa ni efecto. ¿Qué redacción cumple los atributos del hallazgo?",
+  "ops": [
+   "La del compañero, porque es breve y clara, y los detalles de la evidencia, la causa y el efecto pueden consultarse en los papeles de trabajo si alguien los solicita.",
+   "Una que describa la condición con su valor y referencias, el criterio del procedimiento, la causa en la falta de validación y de documentación, el efecto sobre los recursos y una recomendación dirigida a esa causa.",
+   "Una que identifique al servidor que aprobó cada pago doble, califique su conducta como falta grave y recomiende su retiro inmediato del proceso de devoluciones de la entidad."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Sin causa ni efecto el hallazgo no orienta la mejora, y la recomendación genérica no ataca la causa.",
+   "Correcto. Condición, criterio, causa y efecto, con recomendación dirigida a la causa y referencias a la evidencia.",
+   "Incorrecto. La OCI no califica conductas ni recomienda sanciones; traslada indicios si los hay."
+  ]
+ }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
