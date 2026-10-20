@@ -29,6 +29,20 @@ export const OPECS_SECUENCIALES: string[] = [];
 // de esta lista y desplegar (+ /api/admin/seed-guias para refrescar el bucket).
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
+  // Andrea Aroca · Gestor III Control Interno (236872) — funcionales Días 9-20 + simulacro
+  "FUN-CI-01-funcion-control-interno-ley-87.html",
+  "FUN-CI-02-mipg-meci-lineas-defensa.html",
+  "FUN-CI-03-normas-globales-auditoria-interna.html",
+  "FUN-CI-04-plan-auditoria-pruebas-evidencia.html",
+  "FUN-CI-05-hallazgos-informes-de-ley.html",
+  "FUN-CI-06-planes-de-mejoramiento.html",
+  "FUN-CI-07-administracion-riesgo-diseno-controles.html",
+  "FUN-CI-08-indicadores-cultura-control-entes-externos.html",
+  "FUN-CI-09-constitucion-servidor-publico.html",
+  "FUN-CI-10-cpaca-pqrsf-servicio-ciudadano.html",
+  "FUN-CI-11-integridad-transparencia-evasion-contrabando.html",
+  "FUN-CI-12-herramientas-informaticas-gestion-documental.html",
+  "SIM-DIAN-CI-001.html",
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
 ]);
