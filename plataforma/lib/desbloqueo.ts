@@ -30,7 +30,6 @@ export const OPECS_SECUENCIALES: string[] = [];
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
-  "SIM-DIAN-GHI-001.html",
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
 ]);
 
