@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTENS-DIAN-06 · Gestión documental y herramientas informáticas — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">INTENS-DIAN-06</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 6 · Intensivo · Básicas comunes</div>
+  <h1>Gestión documental y herramientas informáticas: cómo se crea, organiza, protege y usa la información en la DIAN</h1>
+  <p class="header-sub">Ley 594 de 2000 y la función archivística; ciclo vital del documento; instrumentos archivísticos (TRD, TVD, PGD, PINAR, inventario); organización del expediente; documento electrónico de archivo; procesador de texto, hoja de cálculo y correo institucional; seguridad de la información y protección de datos; sistemas de información y trazabilidad.</p>
+  <div class="badges"><span class="badge">📅 Día 6 de 15</span><span class="badge">⏱ 60-80 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">⚡ Curso intensivo</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>En una dirección seccional, un grupo de trabajo necesita el expediente de una diligencia de hace tres años para responder una tutela. Nadie lo encuentra: parte de los documentos está en el correo de un servidor que ya se retiró, otra parte en cajas sin rótulo en un depósito y el acta principal en el escritorio de un compañero. Mientras buscan, otro servidor comparte su usuario del sistema con un practicante “para avanzar más rápido”, y un tercero envía a su correo personal una hoja de cálculo con datos de contribuyentes para terminarla en casa. Al final, un coordinador propone “depurar” el depósito botando las cajas más viejas.</p>
+    <p>Hoy vas a estudiar las reglas de la <mark>gestión documental</mark> (cómo se producen, organizan, conservan y eliminan los documentos) y las <mark>herramientas informáticas</mark> que usas a diario, con sus reglas de <mark>seguridad de la información</mark>.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>La <strong>Ley 594 de 2000</strong> y las responsabilidades de los servidores frente a los documentos.</li>
+      <li>El <strong>ciclo vital</strong> del documento y las <strong>transferencias</strong>.</li>
+      <li>Los <strong>instrumentos archivísticos</strong>: TRD, TVD, PGD, PINAR e inventario.</li>
+      <li>La organización del <strong>expediente</strong> y las características del <strong>documento electrónico</strong>.</li>
+      <li>El uso de la <strong>hoja de cálculo</strong>, el procesador de texto y el correo institucional.</li>
+      <li>Las reglas de <strong>seguridad de la información</strong> y protección de datos.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día sabrás cómo dejar trazabilidad de todo lo que haces, de modo que cualquier actuación pueda reconstruirse y defenderse, y cómo usar las herramientas sin poner en riesgo la información.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave?</h2>
+  <p>La gestión documental y las herramientas informáticas aparecen como competencias básicas en la ficha de los empleos de la DIAN. Para los cargos de apoyo, además, son parte de las funciones esenciales: organizar expedientes, registrar actuaciones y garantizar la trazabilidad.</p>
+  <ul class="lista">
+    <li><strong>Sin documentos no hay prueba.</strong> Una actuación sin soporte no se puede defender ante un juez o un ente de control.</li>
+    <li><strong>La información de la DIAN es sensible.</strong> Un mal manejo afecta la reserva tributaria y los datos personales.</li>
+    <li><strong>La prueba pregunta reglas concretas.</strong> TRD, eliminación con acta, notificación de incidentes, original y copia.</li>
+  </ul>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con el resto del curso</div>
+    <p>El día 4 viste el expediente único del CPACA; el día 5, la transparencia y la reserva. Hoy aprendes cómo se gestionan los documentos que soportan todo eso.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Documentos, datos y herramientas</h2>
+
+<!-- MÓDULO 1 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">1</span><h3>La Ley 594 de 2000 y la función archivística</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>Ley 594 de 2000</mark>, Ley General de Archivos, establece las reglas y principios de la función archivística del Estado. Su reglamentación está compilada en el <strong>Decreto 1080 de 2015</strong> y desarrollada por los acuerdos del <mark>Archivo General de la Nación</mark> (AGN). La ley parte de que los archivos son importantes para la administración, la cultura y el control, y de que los documentos son <strong>responsabilidad</strong> de los servidores que los producen y custodian. Al retirarse del cargo, el servidor debe entregar los documentos y archivos a su cargo <strong>debidamente inventariados</strong>.</p></div>
+<div class="b-texto">
+<p>La gestión documental es el conjunto de actividades para planificar, manejar y organizar la documentación desde que se produce o recibe hasta su destino final (conservación permanente o eliminación). Su propósito es que los documentos estén disponibles cuando se necesitan, sean auténticos y se conserven el tiempo necesario. Para la DIAN, eso significa poder demostrar lo que hizo en una fiscalización, una inspección o una respuesta a un ciudadano, años después de ocurrida.</p>
+<p>En el caso del día, el expediente de la diligencia se perdió entre el correo de un servidor retirado, unas cajas sin rótulo y el escritorio de otro compañero. Varias reglas se incumplieron: el servidor que se retiró no entregó sus documentos inventariados, los documentos no se incorporaron al expediente y las cajas se trasladaron sin inventario. El resultado es que la entidad no puede defender su actuación en la tutela. La gestión documental no es un asunto de orden: es una condición para que la entidad pueda probar lo que hace.</p>
+<p>En MIPG, la gestión documental es una política de la dimensión de <strong>Información y Comunicación</strong>. Cada entidad debe tener un archivo institucional, aplicar los instrumentos archivísticos y garantizar la conservación de los documentos en condiciones adecuadas. Cada servidor, por su parte, debe organizar los documentos que produce según esos instrumentos.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Norma o actor</th><th>Papel</th></tr></thead>
+<tbody>
+<tr><td>Ley 594 de 2000</td><td>Ley General de Archivos: principios y reglas</td></tr>
+<tr><td>Decreto 1080 de 2015</td><td>Compila la reglamentación del sector cultura, incluida la archivística</td></tr>
+<tr><td>Archivo General de la Nación</td><td>Ente rector de la política archivística; expide acuerdos técnicos</td></tr>
+<tr><td>Servidor público</td><td>Responde por los documentos que produce y custodia; los entrega inventariados al retirarse</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · Antes de irte de vacaciones o del cargo</div><div class="practica-body"><p><strong>Situación:</strong> un servidor se traslada a otra dependencia y deja sus documentos en su correo y en una carpeta personal.</p>
+<p><strong>Razonamiento:</strong> debe entregar los documentos a su cargo, organizados e inventariados, a quien lo reemplaza o a su jefe, e incorporar los que estén en el correo a los expedientes correspondientes. Así la dependencia no pierde la trazabilidad de sus actuaciones.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>Ley 594 de 2000</strong> (Ley General de Archivos); <strong>AGN</strong> como ente rector; el servidor entrega los documentos <strong>inventariados</strong> al retirarse. En MIPG: dimensión de <strong>Información y Comunicación</strong>.</div>
+<div class="checkpoint" id="cp1"><div class="cp-tag">✅ Checkpoint 1</div><p class="cp-q">¿Qué debe hacer un servidor con los documentos a su cargo al retirarse del empleo?</p><div class="cp-opts"><button class="cp-opt" data-cp="1" data-ans="0">Conservarlos en su correo personal para consultas futuras.</button><button class="cp-opt" data-cp="1" data-ans="1">Entregarlos debidamente inventariados.</button><button class="cp-opt" data-cp="1" data-ans="0">Eliminarlos para proteger la información.</button></div><div class="cp-fb" id="cpfb1">✔ Se entregan inventariados.</div></div>
+</div>
+
+<!-- MÓDULO 2 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">2</span><h3>El ciclo vital del documento</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Los documentos tienen un <mark>ciclo vital</mark> con tres etapas: el <strong>archivo de gestión</strong> (en la dependencia, mientras se tramita el asunto y se consulta con frecuencia), el <strong>archivo central</strong> (cuando la consulta disminuye pero siguen vigentes sus valores administrativos, legales o fiscales) y el <strong>archivo histórico</strong> (documentos de conservación permanente por su valor histórico, científico o cultural). El paso entre etapas se hace mediante <mark>transferencias documentales</mark> (primarias, de gestión a central; secundarias, de central a histórico), según los tiempos de la tabla de retención y con su <strong>inventario</strong>.</p></div>
+<div class="b-texto">
+<p>Los documentos tienen <strong>valores primarios</strong>, que les dan importancia para la entidad y los interesados mientras están vigentes (administrativos, legales, jurídicos, fiscales, contables), y algunos tienen <strong>valores secundarios</strong>, que les dan importancia permanente para la investigación y la memoria (históricos, científicos, culturales). La valoración de esos valores define cuánto tiempo se conserva cada tipo de documento y cuál es su destino final.</p>
+<p>Las transferencias no son un simple traslado de cajas. Se hacen según el cronograma de la entidad, con los documentos organizados, foliados y acompañados de un inventario que permite saber qué contiene cada caja y dónde está. Las cajas sin rótulo del caso del día muestran lo contrario: documentos trasladados sin inventario, imposibles de localizar. Cuando se acumulan documentos sin organización ni criterios, se forma un <strong>fondo acumulado</strong>, que luego requiere un proceso especial de organización y valoración.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Etapa</th><th>Dónde está</th><th>Característica</th></tr></thead>
+<tbody>
+<tr><td>Archivo de gestión</td><td>En la dependencia productora</td><td>Documentos en trámite o de consulta frecuente</td></tr>
+<tr><td>Archivo central</td><td>Unidad de archivo de la entidad</td><td>Consulta menor; conservan valores primarios</td></tr>
+<tr><td>Archivo histórico</td><td>Archivo histórico</td><td>Conservación permanente por valores secundarios</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La transferencia de fin de año</div><div class="practica-body"><p><strong>Situación:</strong> tu jefe te pide preparar la transferencia de los expedientes cerrados del grupo al archivo central.</p>
+<p><strong>Razonamiento:</strong> verificas en la TRD qué series ya cumplieron su tiempo en el archivo de gestión, organizas y foliás los expedientes, diligencias el inventario documental y entregas según el cronograma del archivo central.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: valores primarios y secundarios</summary><div class="acc-body"><p>La valoración documental determina cuánto tiempo se conservan los documentos y cuál es su destino final. Los valores primarios son los que tienen los documentos para la entidad y para los interesados mientras se tramitan los asuntos y durante los plazos legales: administrativos, legales, jurídicos, fiscales y contables. Los valores secundarios son los que justifican la conservación permanente: históricos, científicos y culturales. Un expediente de fiscalización, por ejemplo, tiene valor legal y fiscal mientras pueden presentarse reclamaciones o acciones judiciales; después, según la TRD, puede conservarse, seleccionarse o eliminarse.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> ciclo vital: <strong>gestión → central → histórico</strong>, mediante <strong>transferencias</strong> con <strong>inventario</strong>. Valores <strong>primarios</strong> (administrativos, legales, fiscales) y <strong>secundarios</strong> (históricos).</div>
+<div class="checkpoint" id="cp2"><div class="cp-tag">✅ Checkpoint 2</div><p class="cp-q">¿Cómo se llama el paso de los documentos del archivo de gestión al archivo central?</p><div class="cp-opts"><button class="cp-opt" data-cp="2" data-ans="1">Transferencia primaria.</button><button class="cp-opt" data-cp="2" data-ans="0">Eliminación documental.</button><button class="cp-opt" data-cp="2" data-ans="0">Transferencia secundaria.</button></div><div class="cp-fb" id="cpfb2">✔ De gestión a central: transferencia primaria.</div></div>
+</div>
+
+<!-- MÓDULO 3 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">3</span><h3>Los instrumentos archivísticos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Los <mark>instrumentos archivísticos</mark> son las herramientas con que la entidad planea y ejecuta su gestión documental. Los principales son: el <strong>Cuadro de Clasificación Documental</strong> (estructura de fondos, secciones, series y subseries); la <mark>Tabla de Retención Documental</mark> (TRD), que fija para cada serie el tiempo de retención en cada archivo y su <strong>disposición final</strong> (conservación total, eliminación, selección o medio técnico); la <mark>Tabla de Valoración Documental</mark> (TVD), para los fondos acumulados; el <strong>Programa de Gestión Documental</strong> (PGD); el <strong>Plan Institucional de Archivos</strong> (PINAR); y el <strong>inventario documental</strong>.</p></div>
+<div class="b-texto">
+<p>La TRD es el instrumento que más se usa en el día a día. Le dice al servidor en qué serie debe archivar cada documento, cuánto tiempo se conserva en su oficina, cuándo se transfiere y qué pasa al final. Una dependencia que no aplica la TRD termina con documentos mezclados, sin criterio para conservarlos o eliminarlos. La TVD cumple la misma función, pero para los fondos acumulados que se produjeron antes de tener TRD.</p>
+<p>La <strong>eliminación de documentos</strong> solo puede hacerse cuando lo prevé la TRD o la TVD y siguiendo el procedimiento que fija la normativa archivística: aprobación de la instancia competente, publicación de los inventarios para que los interesados puedan pronunciarse y levantamiento de un <strong>acta de eliminación</strong>. Por eso, la propuesta del coordinador del caso, de “depurar” el depósito botando las cajas más viejas, es contraria a la ley: no se sabe qué contienen ni si deben conservarse, y no habría acta. Destruir documentos públicos por fuera del procedimiento puede generar responsabilidad disciplinaria.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Instrumento</th><th>Pregunta que responde</th></tr></thead>
+<tbody>
+<tr><td>Cuadro de Clasificación Documental</td><td>¿Cómo se organizan los documentos de la entidad?</td></tr>
+<tr><td>Tabla de Retención Documental (TRD)</td><td>¿Cuánto tiempo se conserva cada serie y qué se hace al final?</td></tr>
+<tr><td>Tabla de Valoración Documental (TVD)</td><td>¿Qué hacer con los fondos acumulados?</td></tr>
+<tr><td>Programa de Gestión Documental (PGD)</td><td>¿Cómo se ejecutan los procesos documentales?</td></tr>
+<tr><td>PINAR</td><td>¿Qué se va a mejorar en la función archivística y en qué plazos?</td></tr>
+<tr><td>Inventario documental</td><td>¿Qué documentos hay y dónde están?</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La depuración</div><div class="practica-body"><p><strong>Situación:</strong> el coordinador propone botar las cajas más viejas del depósito para ganar espacio.</p>
+<p><strong>Razonamiento:</strong> se advierte que la eliminación solo procede según la TRD o la TVD, con aprobación, publicación de inventarios y acta. Lo correcto es organizar e inventariar las cajas y aplicar el instrumento que corresponda.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>TRD</strong> = retención y disposición final de cada serie; <strong>TVD</strong> = fondos <strong>acumulados</strong>. Eliminar solo según TRD o TVD, con <strong>acta</strong>.</div>
+<div class="checkpoint" id="cp3"><div class="cp-tag">✅ Checkpoint 3</div><p class="cp-q">¿Qué instrumento fija el tiempo de conservación y la disposición final de cada serie documental?</p><div class="cp-opts"><button class="cp-opt" data-cp="3" data-ans="0">El inventario documental.</button><button class="cp-opt" data-cp="3" data-ans="0">El Plan Institucional de Archivos.</button><button class="cp-opt" data-cp="3" data-ans="1">La Tabla de Retención Documental.</button></div><div class="cp-fb" id="cpfb3">✔ La TRD.</div></div>
+</div>
+
+<!-- MÓDULO 4 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">4</span><h3>La organización del expediente</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>El <mark>expediente</mark> es el conjunto de documentos producidos y recibidos durante un mismo trámite o asunto, ordenados según su secuencia. Se organiza con dos principios: el de <mark>procedencia</mark> (los documentos se mantienen agrupados según la dependencia que los produjo) y el de <mark>orden original</mark> (se conserva el orden en que se produjeron). La organización incluye <strong>clasificación</strong> (en la serie que corresponde), <strong>ordenación</strong>, <strong>foliación</strong> (numeración de las hojas) y una <strong>hoja de control</strong>. El CPACA exige que los documentos de una misma actuación formen un <strong>expediente único</strong> (art. 36).</p></div>
+<div class="b-texto">
+<p>Un expediente bien organizado permite reconstruir una actuación paso a paso: la solicitud, las pruebas, las actas, la decisión, la notificación. Si un documento está en el correo de alguien o en otra carpeta, el expediente queda incompleto y la actuación no se puede probar. Por eso, cada documento debe incorporarse al expediente apenas se produce o se recibe, en el orden en que ocurrió, con su folio. La foliación evita que se pierdan o se agreguen hojas sin control.</p>
+<p>El <strong>préstamo</strong> y la <strong>consulta</strong> de expedientes también se controlan: debe quedar registro de quién se lleva un expediente, cuándo y cuándo lo devuelve. El acceso de los interesados a su propio expediente es un derecho, salvo los documentos con reserva. Y los expedientes que se usan en actuaciones de control deben protegerse con especial cuidado, porque contienen pruebas e información reservada.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Actividad</th><th>Qué asegura</th></tr></thead>
+<tbody>
+<tr><td>Clasificación</td><td>Que el documento esté en la serie correcta</td></tr>
+<tr><td>Ordenación</td><td>Que se respete la secuencia del trámite (orden original)</td></tr>
+<tr><td>Foliación</td><td>Que no se pierdan ni se agreguen hojas sin control</td></tr>
+<tr><td>Hoja de control</td><td>Que se sepa qué documentos contiene el expediente</td></tr>
+<tr><td>Control de préstamo</td><td>Que se sepa quién tiene el expediente y cuándo lo devuelve</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El acta en el escritorio</div><div class="practica-body"><p><strong>Situación:</strong> después de una diligencia, dejas el acta firmada en tu escritorio para archivarla “cuando tengas tiempo”.</p>
+<p><strong>Razonamiento:</strong> el acta debe incorporarse de inmediato al expediente, en su orden y con su folio. Un documento fuera del expediente es un documento que puede perderse, y con él la prueba de la actuación.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: el préstamo de expedientes</summary><div class="acc-body"><p>Cuando un expediente sale del archivo para consulta o trámite, debe quedar registro de quién lo retira, en qué fecha, para qué y cuándo debe devolverlo. Al devolverlo, se verifica que esté completo, con el mismo número de folios. Este control evita la pérdida de documentos y permite saber dónde está cada expediente en todo momento. Si un expediente prestado no se devuelve en el plazo, el responsable del archivo hace el requerimiento y, si no aparece, lo informa al jefe para que se tomen las medidas que correspondan, incluida la reconstrucción del expediente cuando sea necesaria.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> principios de <strong>procedencia</strong> y <strong>orden original</strong>; clasificación, ordenación, <strong>foliación</strong> y hoja de control; <strong>expediente único</strong> (art. 36 CPACA); préstamo <strong>controlado</strong>.</div>
+<div class="checkpoint" id="cp4"><div class="cp-tag">✅ Checkpoint 4</div><p class="cp-q">¿Qué establece el principio de orden original?</p><div class="cp-opts"><button class="cp-opt" data-cp="4" data-ans="1">Que los documentos se conservan en el orden en que se produjeron durante el trámite.</button><button class="cp-opt" data-cp="4" data-ans="0">Que los originales prevalecen sobre las copias.</button><button class="cp-opt" data-cp="4" data-ans="0">Que los documentos se ordenan alfabéticamente.</button></div><div class="cp-fb" id="cpfb4">✔ Orden original: la secuencia del trámite.</div></div>
+</div>
+
+<!-- MÓDULO 5 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">5</span><h3>El documento electrónico de archivo</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Un <mark>documento electrónico de archivo</mark> debe garantizar, durante todo su ciclo vital, cuatro características: <strong>autenticidad</strong> (se puede demostrar quién lo produjo y que es lo que dice ser), <strong>integridad</strong> (está completo y no ha sido alterado sin autorización), <strong>fiabilidad</strong> (su contenido representa con exactitud lo que testimonia) y <strong>disponibilidad</strong> (se puede localizar, recuperar y leer cuando se necesita). El <mark>expediente electrónico</mark> se organiza con un <strong>índice electrónico</strong> que relaciona sus documentos y metadatos.</p></div>
+<div class="b-texto">
+<p>La DIAN tramita buena parte de sus actuaciones por medios electrónicos: declaraciones, actos, notificaciones, solicitudes. Para que esos documentos tengan valor probatorio, deben producirse y conservarse en sistemas que garanticen sus características: firma electrónica o digital, fecha y hora certificadas, control de versiones, control de accesos y preservación a largo plazo. Un documento guardado en una carpeta compartida que cualquiera puede modificar no garantiza integridad ni autenticidad.</p>
+<p>Un error frecuente es creer que <strong>digitalizar</strong> es gestionar documentos. Escanear un papel produce una imagen; si no se organiza en el expediente, no se le asignan metadatos y no se protege su integridad, no es un documento electrónico de archivo. Además, eliminar los originales en papel después de digitalizarlos requiere cumplir requisitos técnicos y normativos específicos y lo que diga la TRD. Muchos expedientes son <strong>híbridos</strong>, con una parte en papel y otra electrónica; ambas deben estar referenciadas para que el expediente pueda reconstruirse completo.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Característica</th><th>Significado</th><th>Riesgo si falla</th></tr></thead>
+<tbody>
+<tr><td>Autenticidad</td><td>Se sabe quién lo produjo</td><td>No se puede probar la autoría</td></tr>
+<tr><td>Integridad</td><td>No ha sido alterado</td><td>Se cuestiona su contenido</td></tr>
+<tr><td>Fiabilidad</td><td>Refleja con exactitud los hechos</td><td>Pierde valor como prueba</td></tr>
+<tr><td>Disponibilidad</td><td>Se encuentra y se lee cuando se necesita</td><td>No sirve cuando se requiere</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El acta en una carpeta compartida</div><div class="practica-body"><p><strong>Situación:</strong> las actas de un grupo se guardan en una carpeta compartida que cualquiera puede editar, sin firma ni registro de versiones.</p>
+<p><strong>Razonamiento:</strong> no se garantizan la autenticidad ni la integridad. Las actas deben incorporarse al sistema de gestión documental de la entidad, con firma y control de versiones. Lo reportas a tu jefe para que se corrija la práctica.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> documento electrónico de archivo: <strong>autenticidad, integridad, fiabilidad y disponibilidad</strong>. <strong>Digitalizar no es gestionar</strong>; eliminar originales exige requisitos y TRD.</div>
+<div class="checkpoint" id="cp5"><div class="cp-tag">✅ Checkpoint 5</div><p class="cp-q">¿Qué característica del documento electrónico asegura que no ha sido alterado sin autorización?</p><div class="cp-opts"><button class="cp-opt" data-cp="5" data-ans="0">La disponibilidad.</button><button class="cp-opt" data-cp="5" data-ans="1">La integridad.</button><button class="cp-opt" data-cp="5" data-ans="0">La fiabilidad.</button></div><div class="cp-fb" id="cpfb5">✔ Integridad.</div></div>
+</div>
+
+<!-- MÓDULO 6 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">6</span><h3>Herramientas de ofimática: hoja de cálculo, texto y correo</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las herramientas de <mark>ofimática</mark> más usadas son la <strong>hoja de cálculo</strong> (para registrar, depurar, cruzar y resumir datos), el <strong>procesador de texto</strong> (para actas, oficios e informes) y el <strong>correo institucional</strong> (para comunicaciones oficiales). En la hoja de cálculo, las funciones clave son las de búsqueda (<strong>BUSCARV</strong>, <strong>BUSCARX</strong>), las condicionales (<strong>SI</strong>, <strong>CONTAR.SI</strong>, <strong>SUMAR.SI</strong> y sus versiones de varios criterios), las <strong>tablas dinámicas</strong>, los <strong>filtros</strong> y la identificación de <strong>duplicados</strong>. La regla de oro es <mark>no modificar el archivo original</mark>: se trabaja sobre una copia y se deja registro de lo hecho.</p></div>
+<div class="b-texto">
+<p>Cada función responde a una necesidad del trabajo de apoyo. <strong>BUSCARV</strong> o <strong>BUSCARX</strong> traen datos de otra tabla, por ejemplo el nombre de un contribuyente a partir de su NIT. <strong>CONTAR.SI</strong> cuenta cuántas veces aparece un valor, útil para detectar registros repetidos. <strong>SUMAR.SI</strong> suma valores que cumplen una condición, como el total de mercancías por depósito. Las <strong>tablas dinámicas</strong> resumen miles de filas por categorías en segundos. Y los <strong>filtros</strong> permiten ver solo los registros de interés sin borrar los demás.</p>
+<p>Los errores típicos también son útiles para la prueba: borrar filas del archivo original sin dejar registro, usar búsquedas con coincidencia aproximada cuando se necesita la exacta, sumar con filtros activos que ocultan datos, o tener números guardados como texto que impiden los cruces. En el procesador de texto, conviene usar las plantillas oficiales de la entidad para actas y oficios. Y el correo institucional es el canal oficial: los documentos de la entidad no se envían a cuentas personales.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Necesidad</th><th>Función o herramienta</th></tr></thead>
+<tbody>
+<tr><td>Traer datos de otra tabla</td><td>BUSCARV, BUSCARX</td></tr>
+<tr><td>Contar con una condición</td><td>CONTAR.SI, CONTAR.SI.CONJUNTO</td></tr>
+<tr><td>Sumar con una condición</td><td>SUMAR.SI, SUMAR.SI.CONJUNTO</td></tr>
+<tr><td>Resumir por categorías</td><td>Tabla dinámica</td></tr>
+<tr><td>Ver solo algunos registros</td><td>Filtros</td></tr>
+<tr><td>Detectar repetidos</td><td>Formato condicional, CONTAR.SI</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El inventario en hoja de cálculo</div><div class="practica-body"><p><strong>Situación:</strong> te entregan la hoja de cálculo con el inventario de mercancías de una bodega y te piden el total de unidades por tipo.</p>
+<p><strong>Razonamiento:</strong> guardas una copia del archivo original, trabajas en la copia y usas una tabla dinámica o SUMAR.SI por tipo. Verificas que el total general coincida con el del inventario original antes de entregar el resultado.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: errores frecuentes en hoja de cálculo</summary><div class="acc-body"><p>Los errores más comunes al trabajar con datos son: buscar con coincidencia aproximada cuando se necesita la exacta, lo que trae datos de otro registro; copiar fórmulas sin fijar las referencias con el signo $, lo que desplaza los rangos; tener números guardados como texto, como NIT con espacios, que impiden los cruces; sumar con filtros activos, que ocultan registros; y dejar celdas combinadas que dañan los ordenamientos. Antes de entregar un resultado, conviene verificar que los totales de la copia coincidan con los del original y revisar a mano algunos casos.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>original intacto, copia de trabajo</strong>. BUSCARV/BUSCARX para cruzar; CONTAR.SI y SUMAR.SI para condicionar; <strong>tablas dinámicas</strong> para resumir. Documentos oficiales por <strong>correo institucional</strong>.</div>
+<div class="checkpoint" id="cp6"><div class="cp-tag">✅ Checkpoint 6</div><p class="cp-q">¿Qué herramienta de la hoja de cálculo resume rápidamente miles de registros por categorías?</p><div class="cp-opts"><button class="cp-opt" data-cp="6" data-ans="1">La tabla dinámica.</button><button class="cp-opt" data-cp="6" data-ans="0">La función BUSCARV.</button><button class="cp-opt" data-cp="6" data-ans="0">El formato condicional.</button></div><div class="cp-fb" id="cpfb6">✔ Tabla dinámica.</div></div>
+</div>
+
+<!-- MÓDULO 7 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">7</span><h3>Seguridad de la información y protección de datos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>seguridad de la información</mark> preserva tres propiedades: <strong>confidencialidad</strong> (solo la conocen los autorizados), <strong>integridad</strong> (no se altera indebidamente) y <strong>disponibilidad</strong> (está accesible cuando se necesita). En el Estado se gestiona con el <strong>Modelo de Seguridad y Privacidad de la Información</strong> de MinTIC, en el marco de la política de <strong>Seguridad Digital</strong> de MIPG. La <strong>Ley 1581 de 2012</strong> protege los <mark>datos personales</mark>, y en la DIAN se suma la <mark>reserva tributaria</mark>. Las reglas básicas para el servidor son: no compartir el usuario ni la contraseña, bloquear el equipo al retirarse, no enviar información a cuentas personales, desconfiar de correos sospechosos y reportar los incidentes.</p></div>
+<div class="b-texto">
+<p>El usuario y la contraseña identifican al servidor en los sistemas: todo lo que se haga con ellos se le atribuye. Compartirlos con un practicante “para avanzar más rápido”, como en el caso del día, rompe la trazabilidad (no se sabrá quién hizo qué) y expone al servidor a responder por actuaciones ajenas. Si alguien necesita acceso, debe solicitarse un usuario propio por el procedimiento de la entidad.</p>
+<p>Enviar información de la entidad a un correo personal la saca de los controles institucionales: puede perderse, filtrarse o quedar expuesta si la cuenta personal se ve comprometida. Si la información incluye datos de contribuyentes, además se vulnera la reserva tributaria. Y los correos de <strong>suplantación</strong> (phishing), que imitan mensajes oficiales para robar contraseñas o instalar programas maliciosos, son una de las principales amenazas: ante un correo sospechoso, no se abren enlaces ni adjuntos y se reporta a la mesa de ayuda. Cualquier <strong>incidente de seguridad</strong> (pérdida de un equipo, envío de información por error, sospecha de acceso indebido) se reporta de inmediato por el canal de la entidad.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Propiedad</th><th>Qué protege</th><th>Conducta que la afecta</th></tr></thead>
+<tbody>
+<tr><td>Confidencialidad</td><td>Que solo accedan los autorizados</td><td>Enviar datos a un correo personal; compartir el usuario</td></tr>
+<tr><td>Integridad</td><td>Que la información no se altere indebidamente</td><td>Modificar archivos originales sin control</td></tr>
+<tr><td>Disponibilidad</td><td>Que la información esté cuando se necesita</td><td>Guardar documentos solo en el equipo personal</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El usuario compartido</div><div class="practica-body"><p><strong>Situación:</strong> un compañero le presta su usuario a un practicante para que registre información en el sistema.</p>
+<p><strong>Razonamiento:</strong> se rompe la trazabilidad y se vulnera la confidencialidad. Le recomiendas no hacerlo y solicitar un usuario propio para el practicante por el procedimiento de la entidad. Si ya ocurrió, se informa al jefe.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la contraseña segura</summary><div class="acc-body"><p>Una contraseña segura es larga, combina letras, números y símbolos, no usa datos personales fáciles de adivinar y no se repite en otros servicios. No se anota en papeles pegados al computador ni se comparte por correo o chat. Cuando el sistema pide cambiarla, se cambia. Y si se sospecha que alguien la conoce, se cambia de inmediato y se reporta. Estas reglas parecen pequeñas, pero la mayoría de los incidentes de seguridad empiezan con una contraseña débil, compartida o robada mediante un correo de suplantación.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>confidencialidad, integridad y disponibilidad</strong>. No se comparte el usuario; no se envía información a cuentas personales; los <strong>incidentes se reportan</strong>. Datos personales: <strong>Ley 1581 de 2012</strong>.</div>
+<div class="checkpoint" id="cp7"><div class="cp-tag">✅ Checkpoint 7</div><p class="cp-q">¿Qué propiedad de la seguridad de la información se afecta principalmente al enviar datos de contribuyentes a un correo personal?</p><div class="cp-opts"><button class="cp-opt" data-cp="7" data-ans="0">La disponibilidad.</button><button class="cp-opt" data-cp="7" data-ans="0">La integridad.</button><button class="cp-opt" data-cp="7" data-ans="1">La confidencialidad.</button></div><div class="cp-fb" id="cpfb7">✔ Confidencialidad.</div></div>
+</div>
+
+<!-- MÓDULO 8 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">8</span><h3>Sistemas de información, registro y trazabilidad</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>trazabilidad</mark> es la posibilidad de reconstruir lo actuado a partir de registros y documentos. Se logra registrando cada actuación en el <strong>sistema oficial</strong> de la entidad, de manera <strong>oportuna</strong>, <strong>completa</strong> y <strong>exacta</strong>, e incorporando los soportes al expediente. Los registros en archivos personales, notas sueltas o mensajes informales no sustituyen el registro oficial. Las evidencias digitales (capturas, bases, correos) deben conservar su <strong>origen</strong> y su <strong>fecha</strong>.</p></div>
+<div class="b-texto">
+<p>En los procesos de la DIAN, lo que no está registrado “no existió” para efectos de control. Si un servidor recibe una denuncia y no la radica, o practica una verificación y no deja el acta en el sistema, la entidad no puede demostrar después que actuó, ni hacer seguimiento a los términos. Por eso, la gestión documental de trámites, solicitudes y denuncias es, en muchas fichas, una función esencial: garantiza la trazabilidad de lo actuado.</p>
+<p>La calidad del dato es parte de la trazabilidad. Un NIT mal digitado, una fecha equivocada o una cantidad errada pueden llevar a decisiones equivocadas o a que un caso no se encuentre. Por eso conviene verificar lo registrado antes de cerrarlo y corregir por los canales previstos cuando se detecta un error, dejando constancia de la corrección. Las capturas de pantalla que sirven como evidencia deben mostrar la fecha, el sistema y los parámetros de la consulta, para que tengan valor.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Buena práctica</th><th>Por qué importa</th></tr></thead>
+<tbody>
+<tr><td>Registrar en el sistema oficial</td><td>Permite el seguimiento y la consulta por otros</td></tr>
+<tr><td>Registrar a tiempo</td><td>Controla los términos</td></tr>
+<tr><td>Verificar los datos</td><td>Evita decisiones equivocadas</td></tr>
+<tr><td>Incorporar soportes al expediente</td><td>Permite probar lo actuado</td></tr>
+<tr><td>Corregir con constancia</td><td>Mantiene la confianza en el registro</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La denuncia en el cuaderno</div><div class="practica-body"><p><strong>Situación:</strong> un compañero anota las denuncias telefónicas en un cuaderno personal y las registra “cuando hay tiempo”.</p>
+<p><strong>Razonamiento:</strong> las denuncias deben radicarse en el sistema oficial de inmediato, para su trámite y la protección del denunciante. El cuaderno no da trazabilidad y puede perderse. Le recomiendas registrarlas el mismo día e informas al jefe si la práctica continúa.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: el correo como documento</summary><div class="acc-body"><p>Un correo electrónico institucional puede ser un documento de archivo cuando contiene una decisión, una instrucción o una prueba de una actuación. En ese caso, debe incorporarse al expediente que corresponda, con sus datos de envío y recepción, y no quedarse solo en el buzón del servidor. Cuando el servidor se retira o cambia de dependencia, los correos que son documentos de archivo deben entregarse junto con los demás documentos a su cargo.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>trazabilidad</strong> = registro oficial, oportuno, completo y exacto, con soportes en el expediente. Las notas personales <strong>no sustituyen</strong> el registro oficial.</div>
+<div class="checkpoint" id="cp8"><div class="cp-tag">✅ Checkpoint 8</div><p class="cp-q">¿Dónde debe registrarse una denuncia recibida por teléfono?</p><div class="cp-opts"><button class="cp-opt" data-cp="8" data-ans="0">En un cuaderno personal, para registrarla después.</button><button class="cp-opt" data-cp="8" data-ans="1">En el sistema oficial de la entidad, de inmediato.</button><button class="cp-opt" data-cp="8" data-ans="0">En un mensaje al jefe por una aplicación de chat.</button></div><div class="cp-fb" id="cpfb8">✔ Sistema oficial, de inmediato.</div></div>
+</div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">1. Archivo de gestión, central e histórico</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Gestión</th><th>Central</th><th>Histórico</th></tr></thead>
+<tbody>
+<tr><td>En la dependencia; trámite</td><td>Consulta menor; valores primarios</td><td>Conservación permanente</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">2. TRD y TVD</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>TRD</th><th>TVD</th></tr></thead>
+<tbody>
+<tr><td>Series que se producen hoy</td><td>Fondos acumulados</td></tr>
+<tr><td>Retención y disposición final</td><td>Valoración y disposición final</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">3. Procedencia y orden original</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Procedencia</th><th>Orden original</th></tr></thead>
+<tbody>
+<tr><td>Agrupar según la dependencia productora</td><td>Conservar la secuencia del trámite</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">4. Digitalizar y gestionar</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Digitalizar</th><th>Gestionar el documento electrónico</th></tr></thead>
+<tbody>
+<tr><td>Producir una imagen del papel</td><td>Organizar, describir con metadatos, proteger integridad</td></tr>
+<tr><td>No autoriza por sí sola a eliminar</td><td>Garantiza valor probatorio</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">5. Original y copia de trabajo</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Original</th><th>Copia de trabajo</th></tr></thead>
+<tbody>
+<tr><td>Se conserva intacto</td><td>Se depura y analiza</td></tr>
+<tr><td>Prueba lo recibido</td><td>Registra lo hecho</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos prácticos</span>
+  <h2 class="sec-title">📂 Casos resueltos de documentos y herramientas</h2>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 1 · El servidor que se va</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un servidor se retira dejando documentos en su correo.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué debió hacer?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Entregar los documentos a su cargo inventariados e incorporar los correos que son documentos de archivo al expediente.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 2 · Las cajas sin rótulo</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Se trasladaron cajas al depósito sin inventario.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué faltó?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>La transferencia con inventario, según la TRD.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 3 · La depuración</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Se propone botar las cajas viejas.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué corresponde?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Eliminar solo según TRD o TVD, con aprobación, publicación de inventarios y acta.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 4 · El acta en el escritorio</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>El acta de una diligencia está en un escritorio.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué haces?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Incorporarla de inmediato al expediente, foliada.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 5 · El usuario prestado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un servidor presta su usuario a un practicante.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué riesgo hay?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Se pierde la trazabilidad y se vulnera la confidencialidad; se solicita un usuario propio.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 6 · El correo sospechoso</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega un correo que pide confirmar la contraseña.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué haces?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>No abres enlaces ni adjuntos y lo reportas a la mesa de ayuda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores comunes sobre documentos y herramientas</h2>
+  <div class="card"><p><strong>❌ Guardar documentos oficiales solo en el correo o el equipo.</strong> Deben ir al expediente.</p></div>
+  <div class="card"><p><strong>❌ Trasladar cajas sin inventario.</strong> Las transferencias van con inventario.</p></div>
+  <div class="card"><p><strong>❌ Eliminar documentos sin acta.</strong> Solo según TRD o TVD y con acta.</p></div>
+  <div class="card"><p><strong>❌ Creer que digitalizar es gestionar.</strong> Falta organización, metadatos e integridad.</p></div>
+  <div class="card"><p><strong>❌ Trabajar sobre el archivo original.</strong> Siempre en una copia.</p></div>
+  <div class="card"><p><strong>❌ Compartir usuario y contraseña.</strong> Rompe la trazabilidad.</p></div>
+  <div class="card"><p><strong>❌ Enviar información a correos personales.</strong> Vulnera la confidencialidad y la reserva.</p></div>
+  <div class="card"><p><strong>❌ No reportar un incidente.</strong> Se reporta de inmediato.</p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para la prueba</h2>
+  <div class="card card-lead"><p>Claves del día:</p>
+    <ul class="lista">
+      <li><strong>Ley 594 de 2000</strong>, Decreto 1080 de 2015, acuerdos del AGN.</li>
+      <li><strong>Ciclo:</strong> gestión → central → histórico; transferencias con inventario.</li>
+      <li><strong>TRD</strong> para lo que se produce; <strong>TVD</strong> para fondos acumulados.</li>
+      <li><strong>Documento electrónico:</strong> autenticidad, integridad, fiabilidad, disponibilidad.</li>
+      <li><strong>Seguridad:</strong> confidencialidad, integridad, disponibilidad; Ley 1581 de 2012.</li>
+    </ul>
+  </div>
+  <div class="card"><ul class="lista">
+    <li><strong>Si no está registrado</strong> en el sistema oficial y en el expediente, no se puede probar.</li>
+    <li><strong>Ante un riesgo de seguridad</strong>, la respuesta correcta reporta, no oculta.</li>
+  </ul></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Ya está escaneado, se puede botar el papel”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: la información queda en digital.</div>
+      <div class="t-row malo">🔴 La trampa: la eliminación exige TRD, procedimiento y acta.</div>
+      <div class="t-row bueno">🟢 Lo correcto: seguir la normativa archivística.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Te presto mi usuario para avanzar”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: agiliza el trabajo.</div>
+      <div class="t-row malo">🔴 La trampa: rompe la trazabilidad.</div>
+      <div class="t-row bueno">🟢 Lo correcto: usuario propio para cada persona.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Lo termino en la casa desde mi correo”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: muestra compromiso.</div>
+      <div class="t-row malo">🔴 La trampa: saca la información de los controles.</div>
+      <div class="t-row bueno">🟢 Lo correcto: trabajar en los canales institucionales.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Lo archivo cuando tenga tiempo”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: no parece urgente.</div>
+      <div class="t-row malo">🔴 La trampa: el documento puede perderse.</div>
+      <div class="t-row bueno">🟢 Lo correcto: incorporarlo de inmediato al expediente.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Borro las filas que no sirven”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: limpia el archivo.</div>
+      <div class="t-row malo">🔴 La trampa: se pierde el original.</div>
+      <div class="t-row bueno">🟢 Lo correcto: copia de trabajo y registro de lo hecho.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Intenta responder antes de voltear cada una.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>📚 Ley 594</h4><p>Ley General de Archivos; AGN; servidor responsable; entrega inventariada.</p></div>
+    <div class="resumen-item"><h4>🔄 Ciclo vital</h4><p>Gestión, central e histórico; transferencias con inventario.</p></div>
+    <div class="resumen-item"><h4>🗂️ Instrumentos</h4><p>CCD, TRD, TVD, PGD, PINAR, inventario; eliminación con acta.</p></div>
+    <div class="resumen-item"><h4>📁 Expediente</h4><p>Procedencia, orden original, foliación, hoja de control; expediente único.</p></div>
+    <div class="resumen-item"><h4>💾 Electrónico</h4><p>Autenticidad, integridad, fiabilidad, disponibilidad; digitalizar no es gestionar.</p></div>
+    <div class="resumen-item"><h4>📊 Ofimática</h4><p>BUSCARV, CONTAR.SI, SUMAR.SI, tablas dinámicas; original intacto.</p></div>
+    <div class="resumen-item"><h4>🔒 Seguridad</h4><p>Confidencialidad, integridad, disponibilidad; no compartir usuario; reportar incidentes.</p></div>
+    <div class="resumen-item"><h4>🧭 Trazabilidad</h4><p>Registro oficial, oportuno y exacto con soportes.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Gestión documental</dt><dd>Actividades para planificar, manejar y organizar los documentos desde su origen hasta su destino final.</dd>
+      <dt>Transferencia documental</dt><dd>Paso de documentos de una etapa del ciclo vital a otra, con inventario.</dd>
+      <dt>Tabla de Retención Documental</dt><dd>Instrumento que fija tiempos de retención y disposición final por serie.</dd>
+      <dt>Fondo acumulado</dt><dd>Documentos reunidos sin criterios archivísticos, que se intervienen con la TVD.</dd>
+      <dt>Foliación</dt><dd>Numeración de las hojas de un expediente.</dd>
+      <dt>Documento electrónico de archivo</dt><dd>Documento electrónico que garantiza autenticidad, integridad, fiabilidad y disponibilidad.</dd>
+      <dt>Phishing</dt><dd>Correo fraudulento que suplanta a una entidad para robar datos o instalar programas maliciosos.</dd>
+      <dt>Trazabilidad</dt><dd>Posibilidad de reconstruir lo actuado a partir de registros y documentos.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — Gestión documental y herramientas informáticas</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba escrita: un caso, un enunciado y 3 opciones (A, B, C), de las cuales solo una es la actuación correcta. Responde todas y al final verás tu puntaje y los temas a reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 6. Siguiente: Día 7 · INTENS-DIAN-07 · Modelo Integrado de Planeación y Gestión.</span>
+    <button class="advance-btn final" id="btnFinalizar" onclick="if(confirm('✅ Finalizar Día 6 y marcar como completado?\n\nPróxima guía: Día 7 · INTENS-DIAN-07 · Modelo Integrado de Planeación y Gestión.'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 6</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">INTENS-DIAN-06 · Día 6 · v1.0 · © 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[
+ {
+  "f": "¿Qué ley es la Ley General de Archivos?",
+  "b": "La Ley 594 de 2000."
+ },
+ {
+  "f": "¿Cuáles son las etapas del ciclo vital del documento?",
+  "b": "Archivo de gestión, archivo central y archivo histórico."
+ },
+ {
+  "f": "¿Qué fija la Tabla de Retención Documental?",
+  "b": "El tiempo de retención de cada serie en cada archivo y su disposición final."
+ },
+ {
+  "f": "¿Para qué sirve la Tabla de Valoración Documental?",
+  "b": "Para valorar y definir la disposición final de los fondos acumulados producidos sin TRD."
+ },
+ {
+  "f": "¿Cuándo se pueden eliminar documentos?",
+  "b": "Solo cuando lo prevé la TRD o la TVD, con aprobación de la instancia competente, publicación de inventarios y acta de eliminación."
+ },
+ {
+  "f": "¿Qué son los principios de procedencia y orden original?",
+  "b": "Agrupar los documentos según la dependencia que los produjo y conservar el orden en que se produjeron."
+ },
+ {
+  "f": "¿Qué características debe garantizar el documento electrónico de archivo?",
+  "b": "Autenticidad, integridad, fiabilidad y disponibilidad."
+ },
+ {
+  "f": "¿Cuál es la regla de oro al trabajar una base en hoja de cálculo?",
+  "b": "No modificar el original: trabajar sobre una copia y dejar registro de lo hecho."
+ },
+ {
+  "f": "¿Cuáles son las tres propiedades de la seguridad de la información?",
+  "b": "Confidencialidad, integridad y disponibilidad."
+ },
+ {
+  "f": "¿Qué ley protege los datos personales?",
+  "b": "La Ley 1581 de 2012."
+ }
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+ {
+  "nivel": "b",
+  "tema": "Responsabilidad sobre los documentos",
+  "ctx": "Un servidor de un grupo de trabajo de una dirección seccional fue trasladado a otra ciudad con una semana de aviso. Durante sus años en el grupo tramitó decenas de solicitudes y guardó buena parte de los soportes en su correo institucional y en carpetas de su computador. Antes de irse, le dice a su jefe que “todo está en el correo” y que, si necesitan algo, lo pueden llamar. Dos meses después, el grupo necesita uno de esos expedientes para responder un requerimiento de un ente de control y no lo encuentra completo. El jefe te pide indicar qué debió hacerse al momento del traslado.",
+  "q": "El ente de control espera la respuesta esta semana. El jefe quiere evitar que la situación se repita con otros traslados. El servidor se fue dejando los soportes en su correo y su computador, sin entregarlos organizados, y ahora un expediente está incompleto. ¿Qué debió hacerse?",
+  "ops": [
+   "Nada adicional, porque el correo institucional conserva la información y el servidor trasladado puede enviar los documentos cuando el grupo los necesite para algún trámite.",
+   "Entregar los documentos a su cargo organizados e inventariados e incorporar los soportes del correo y del computador a los expedientes, como lo exige la Ley 594 de 2000.",
+   "Copiar todos los archivos en una memoria USB y dejarla en el escritorio del jefe, porque así los documentos quedan disponibles para el grupo sin necesidad de organizarlos."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Los documentos deben entregarse inventariados e incorporarse al expediente; depender del servidor no da trazabilidad.",
+   "Correcto. Al retirarse o trasladarse se entregan los documentos inventariados y los soportes se incorporan al expediente.",
+   "Incorrecto. Una memoria sin organización no garantiza disponibilidad ni integridad."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Eliminación documental",
+  "ctx": "El depósito de una dirección seccional está lleno de cajas con documentos de hace más de diez años, sin rótulos ni inventario. El coordinador administrativo, preocupado por el espacio, propone contratar a una empresa de reciclaje para que se lleve las cajas más viejas, porque “seguramente ya no sirven para nada” y nadie las ha consultado en años. Un compañero apoya la idea y dice que con una foto de las cajas antes de botarlas es suficiente como soporte. El jefe te pide tu opinión antes de aprobar la propuesta en la reunión del viernes. El coordinador ya pidió cotizaciones a dos empresas de reciclaje.",
+  "q": "La reunión será en dos días. El jefe debe decidir el viernes si aprueba la propuesta del coordinador. Se propone eliminar cajas viejas sin rótulos ni inventario, dejando solo una foto como soporte, porque nadie las consulta. ¿Qué opinión es correcta?",
+  "ops": [
+   "Que la propuesta es razonable, porque los documentos de más de diez años ya cumplieron su función y la foto de las cajas deja un soporte suficiente de la eliminación realizada.",
+   "Que solo pueden eliminarse si el coordinador firma una constancia de que revisó las cajas, porque así se asume la responsabilidad por la decisión de botar los documentos.",
+   "Que no pueden eliminarse así: primero deben organizarse e inventariarse, aplicar la TRD o la TVD y, si procede, eliminar con aprobación, publicación de inventarios y acta."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Sin TRD/TVD ni acta, la eliminación es contraria a la normativa archivística.",
+   "Incorrecto. Una constancia individual no sustituye el procedimiento de eliminación.",
+   "Correcto. Se organiza, se aplica el instrumento y se elimina, si procede, con el procedimiento y el acta."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Seguridad de la información",
+  "ctx": "En un grupo de trabajo con muchas solicitudes pendientes, un servidor le presta su usuario y su contraseña del sistema de gestión a un practicante para que le ayude a registrar información mientras él atiende otras tareas. El practicante es responsable y ya conoce el sistema, pero todavía no tiene un usuario propio porque su solicitud no ha sido aprobada. Otra compañera ve la situación y le dice al servidor que no hay ningún problema, porque el practicante “trabaja para la DIAN igual que todos”. El servidor te pregunta si está actuando bien. El practicante tiene acceso a información de contribuyentes en el sistema.",
+  "q": "La compañera insiste en que no pasa nada. El servidor quiere saber si debe seguir haciéndolo. Prestó su usuario y contraseña a un practicante para registrar información, mientras se aprueba el usuario propio del practicante. ¿Qué le respondes?",
+  "ops": [
+   "Que no debe hacerlo, porque todo lo registrado con su usuario se le atribuye a él, se pierde la trazabilidad y se afecta la confidencialidad; lo correcto es esperar o agilizar el usuario propio.",
+   "Que puede hacerlo mientras el practicante esté bajo su supervisión directa, porque así el servidor puede controlar que la información se registre de manera correcta en el sistema oficial.",
+   "Que puede hacerlo si cambia la contraseña al final del día, porque así se evita que el practicante conserve el acceso al sistema una vez termine de registrar la información."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. El usuario es personal e intransferible: compartirlo rompe la trazabilidad y la confidencialidad.",
+   "Incorrecto. La supervisión no evita que las actuaciones queden registradas a nombre de otro.",
+   "Incorrecto. Cambiar la contraseña después no corrige el registro de actuaciones a nombre ajeno."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Hoja de cálculo",
+  "ctx": "Te entregan una hoja de cálculo con el inventario de mercancías de una bodega, con más de dos mil filas, y te piden calcular el total de unidades por tipo de mercancía para un informe. Un compañero te sugiere borrar las filas de los tipos que no interesan y las que tienen datos incompletos, para que la tabla quede “más limpia” y sea más fácil sumar. Tú sabes que ese archivo es el inventario oficial que firmaron los responsables de la bodega. Debes decidir cómo hacer el trabajo para que el resultado sea confiable y verificable por otros. El informe se presentará al comité de la dirección seccional.",
+  "q": "El compañero insiste en que así se ahorra tiempo. Debes entregar el informe esta tarde con un resultado verificable. Un compañero sugiere borrar las filas que no interesan del inventario oficial para sumar más fácil. ¿Cómo debes hacer el cálculo?",
+  "ops": [
+   "Borrar las filas que no interesan del archivo oficial y guardar los cambios, porque así la tabla queda más clara y el resultado del informe se obtiene con mayor rapidez y menos errores.",
+   "Guardar una copia del archivo original, trabajar sobre la copia con una tabla dinámica o SUMAR.SI por tipo y verificar que los totales coincidan con el inventario original.",
+   "Pedir a los responsables de la bodega que hagan el cálculo y firmen el resultado, porque el servidor no debe manipular el archivo del inventario oficial de la mercancía."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Modificar el original destruye la evidencia de lo recibido.",
+   "Correcto. Original intacto, copia de trabajo, herramienta adecuada y verificación de totales.",
+   "Incorrecto. El cálculo es parte de la tarea encomendada; se hace sin alterar el original."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Organización del expediente",
+  "ctx": "Después de una diligencia de verificación, un servidor deja el acta firmada en su escritorio, guarda las fotografías en su computador y envía por correo a su jefe un resumen de lo ocurrido. Dice que archivará todo cuando termine la semana, porque tiene otras diligencias pendientes. Un mes después, el contribuyente controvierte la actuación y la dependencia necesita el expediente completo; el acta aparece traspapelada y las fotografías no tienen fecha. El jefe te pide establecer qué debió hacerse para que el expediente estuviera completo y ordenado.",
+  "q": "El contribuyente ya presentó su controversia ante la dependencia. El jefe quiere que el equipo aprenda de la situación. El acta quedó en un escritorio, las fotografías en un computador y el resumen en un correo, y un mes después el expediente estaba incompleto. ¿Qué debió hacerse?",
+  "ops": [
+   "Enviar todo al correo del jefe, porque el correo institucional es un archivo seguro y permite consultar los documentos de la diligencia en cualquier momento que se necesiten.",
+   "Archivar los documentos al final del mes, junto con los de las demás diligencias, porque es más eficiente organizar todo de una sola vez en el expediente que corresponda.",
+   "Incorporar de inmediato el acta y las fotografías al expediente, en el orden de la actuación, foliados y con su fecha y origen, para garantizar la trazabilidad."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. El correo no sustituye el expediente organizado.",
+   "Incorrecto. Postergar el archivo aumenta el riesgo de pérdida y desorden.",
+   "Correcto. Expediente único, orden original, foliación y soportes con fecha y origen."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Documento electrónico",
+  "ctx": "Un grupo de trabajo guarda las actas de sus diligencias en una carpeta compartida de la red, en archivos de texto que cualquier integrante del grupo puede abrir y modificar. Las actas no tienen firma electrónica ni registro de versiones, y algunas han sido editadas después de la diligencia para “corregir detalles”. Cuando un contribuyente cuestiona una de esas actas ante un juez, la dependencia no puede demostrar cuál fue el texto original. Debes identificar qué características del documento electrónico de archivo fallaron y qué recomendar. El juez pidió a la entidad explicar por qué hay dos versiones del acta.",
+  "q": "Debes explicar la falla y recomendar una corrección al jefe del grupo. Las actas se guardan en una carpeta compartida editable por todos, sin firma ni versiones, y algunas se modificaron después de la diligencia. ¿Qué características fallaron?",
+  "ops": [
+   "Principalmente la autenticidad y la integridad, porque no se puede demostrar quién produjo el acta ni que no fue alterada; deben gestionarse en el sistema oficial con firma y control de versiones.",
+   "Solo la disponibilidad, porque las actas pueden perderse si la carpeta compartida falla, pero el hecho de que se puedan editar no afecta su valor como prueba de lo ocurrido en la diligencia.",
+   "Ninguna, porque las actas existen y se pueden consultar, y las correcciones posteriores son normales para mejorar la redacción de los documentos que produce el grupo."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. Sin firma ni control de cambios, se pierden la autenticidad y la integridad.",
+   "Incorrecto. La posibilidad de edición sin control afecta directamente la integridad.",
+   "Incorrecto. Modificar un acta después de la diligencia altera la prueba."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Transferencia documental",
+  "ctx": "A fin de año, el jefe de un grupo pide trasladar al archivo central todos los expedientes del grupo para liberar espacio en la oficina, incluidos algunos que todavía están en trámite. Un compañero propone meterlos en cajas, marcarlas con el nombre del grupo y llevarlas al depósito esa misma tarde. No revisan la tabla de retención ni elaboran ningún inventario. Meses después, un contribuyente pide copia de un documento de un expediente en trámite y nadie sabe en qué caja está. Debes establecer cómo debió hacerse el traslado. El contribuyente presentó una queja por la demora en la respuesta.",
+  "q": "El jefe del grupo pide tu concepto por escrito. Debes establecer cómo debió hacerse el traslado para corregir la práctica. Se trasladaron al archivo central todos los expedientes, incluidos algunos en trámite, sin revisar la TRD ni elaborar inventario. ¿Qué debió hacerse?",
+  "ops": [
+   "Trasladar todos los expedientes como se hizo, porque liberar espacio es una prioridad del grupo y el archivo central tiene la responsabilidad de organizar las cajas una vez las recibe.",
+   "Hacer una transferencia primaria solo de los expedientes que cumplieron su tiempo según la TRD, organizados, foliados y con inventario, conservando en la oficina los que están en trámite.",
+   "Trasladar solo los expedientes más antiguos, sin inventario, porque los documentos de más de cinco años no se consultan y no necesitan estar organizados en el archivo central."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Los expedientes en trámite permanecen en el archivo de gestión y las transferencias van con inventario.",
+   "Correcto. Transferencia primaria según la TRD, con expedientes organizados e inventario.",
+   "Incorrecto. La antigüedad no reemplaza la TRD ni el inventario."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Correo sospechoso",
+  "ctx": "Un servidor recibe en su correo institucional un mensaje con el logo de la entidad que dice que su contraseña vencerá en dos horas y que debe confirmarla en un enlace para no perder el acceso a los sistemas. El remitente tiene un nombre parecido al de la mesa de ayuda, pero con una letra distinta en el dominio. El servidor está ocupado y piensa que lo más rápido es hacer clic y confirmar. Una compañera le comenta que ella ya lo hizo y que no pasó nada. Debes orientar al servidor sobre cómo actuar. Varios compañeros del grupo recibieron el mismo mensaje esa mañana.",
+  "q": "El servidor está a punto de hacer clic en el enlace para no perder el acceso. El correo con el logo de la entidad pide confirmar la contraseña, el dominio del remitente tiene una letra distinta y una compañera ya lo hizo. ¿Qué debe hacer?",
+  "ops": [
+   "Hacer clic y confirmar la contraseña, porque el correo tiene el logo de la entidad y la compañera ya lo hizo sin que se presentara ningún problema con su usuario.",
+   "Responder el correo pidiendo que confirmen si es auténtico, porque así el remitente puede aclarar si el mensaje proviene realmente de la mesa de ayuda de la entidad.",
+   "No abrir el enlace, reportar el correo a la mesa de ayuda como posible suplantación y avisar que la compañera ya ingresó sus datos, para que se tomen medidas."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Es un intento de suplantación; ingresar la contraseña la compromete.",
+   "Incorrecto. Responder al remitente fraudulento no aclara nada y puede exponer más información.",
+   "Correcto. No se abre, se reporta y se informa el posible incidente de la compañera."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Trazabilidad",
+  "ctx": "En un grupo que recibe denuncias por teléfono, una servidora anota las denuncias en un cuaderno personal y las registra en el sistema oficial al final de la semana, “cuando hay tiempo”. Algunas denuncias se registran con datos incompletos porque las notas no se entienden, y otras no se registran nunca porque el cuaderno se extravió. El jefe del grupo considera que lo importante es que las denuncias se atiendan, no cómo se anotan. Te pide tu concepto sobre la práctica de la servidora. Un denunciante llamó para preguntar por su denuncia y no aparecía registrada.",
+  "q": "La práctica lleva varios meses en el grupo. El jefe quiere saber si la práctica es aceptable. La servidora anota las denuncias en un cuaderno y las registra en el sistema al final de la semana, y algunas se pierden. ¿Qué concepto das?",
+  "ops": [
+   "Que la práctica es aceptable, porque lo importante es que la información de las denuncias llegue al sistema en algún momento, aunque sea al final de cada semana de trabajo.",
+   "Que la práctica es aceptable si la servidora usa un cuaderno numerado, porque así se reduce el riesgo de perder notas y se mantiene el orden de las denuncias recibidas.",
+   "Que la práctica no es aceptable, porque las denuncias deben registrarse de inmediato y de forma completa en el sistema oficial para garantizar su trámite y su trazabilidad."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. El retraso y la pérdida de denuncias afectan su trámite y la protección del denunciante.",
+   "Incorrecto. Un cuaderno personal no sustituye el registro oficial.",
+   "Correcto. Registro oficial, inmediato y completo."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Correo personal y reserva",
+  "ctx": "Un servidor necesita terminar una hoja de cálculo con información de declaraciones de varios contribuyentes para un informe que vence al día siguiente. Como en su casa no tiene acceso a los sistemas de la entidad, se envía el archivo a su correo personal para trabajar en la noche. Al día siguiente entrega el informe a tiempo y su jefe lo felicita. Una compañera se entera de cómo trabajó y le dice que eso pudo ser un problema. El servidor no entiende por qué, si cumplió el plazo y nadie más vio el archivo. El servidor considera que su compromiso con el plazo justifica lo que hizo.",
+  "q": "La compañera le sugiere hablar con el jefe. El servidor no entiende por qué su forma de trabajar podría ser un problema. Envió a su correo personal un archivo con datos de declaraciones para terminar un informe en casa, y cumplió el plazo. ¿Qué le explicas?",
+  "ops": [
+   "Que actuó bien, porque cumplió el plazo del informe y nadie más tuvo acceso al archivo, de modo que la información de los contribuyentes no se vio afectada en ningún momento del proceso.",
+   "Que el envío sacó información con reserva tributaria de los controles de la entidad y afectó la confidencialidad; debe reportarse como incidente y eliminarse la copia externa.",
+   "Que actuó bien, siempre que borre el archivo de su correo personal en los días siguientes, porque así se elimina cualquier riesgo y no es necesario informar a nadie más."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. El riesgo existe aunque no haya evidencia de acceso de terceros.",
+   "Correcto. Es un incidente de seguridad que se reporta y se contiene.",
+   "Incorrecto. Borrar sin reportar oculta el incidente."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Análisis de datos con hoja de cálculo",
+  "ctx": "Para un informe de seguimiento, debes identificar en una base de cinco mil registros de solicitudes cuáles están duplicadas. Un compañero ya hizo un primer análisis: filtró la base, borró filas que le parecieron erróneas y guardó los cambios sobre el archivo que entregó el área de sistemas. Encontró cuarenta duplicados, pero no anotó qué filas borró ni por qué. Ahora el jefe quiere que el resultado pueda ser revisado por otra persona. Debes decidir cómo proceder para que el análisis sea confiable. El informe se presentará en el comité de la próxima semana.",
+  "q": "El compañero cree que su resultado es suficiente. El jefe quiere un resultado que otra persona pueda revisar. El compañero borró filas del archivo original sin registrar cuáles ni por qué y encontró cuarenta duplicados. ¿Cómo debes proceder?",
+  "ops": [
+   "Usar el resultado del compañero, porque ya identificó los duplicados y repetir el análisis consumiría tiempo que el grupo necesita para otras tareas más urgentes del informe de seguimiento.",
+   "Pedir de nuevo la base original, conservarla intacta, trabajar en una copia, marcar los duplicados con CONTAR.SI en una columna auxiliar y dejar registro de cada paso.",
+   "Agregar al informe una nota que diga que algunas filas se borraron por error, para que el lector sepa que el resultado de los cuarenta duplicados puede no ser exacto."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Sin el original ni registro de lo hecho, el resultado no es verificable.",
+   "Correcto. Original intacto, copia, columna auxiliar y registro hacen el análisis reproducible.",
+   "Incorrecto. Una nota no corrige la falta de confiabilidad del análisis."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Digitalización y eliminación",
+  "ctx": "Un proyecto de digitalización escaneó todos los expedientes en papel de una dependencia y guardó las imágenes en una carpeta de la red, nombradas con números consecutivos, sin metadatos ni índice. Al terminar, el líder del proyecto propone destruir los originales en papel, porque “ya todo está digitalizado” y así se libera el depósito. Nadie ha consultado la tabla de retención ni verificado si las imágenes están completas y legibles. El jefe te pide tu concepto antes de autorizar la destrucción. El líder del proyecto ya tiene programada la recolección del papel.",
+  "q": "La recolección está programada para el lunes. El jefe debe decidir si autoriza la destrucción de los originales. Se escanearon los expedientes sin metadatos ni índice, y se propone destruir el papel sin consultar la TRD ni verificar las imágenes. ¿Qué concepto das?",
+  "ops": [
+   "Que puede autorizarse, porque las imágenes digitalizadas conservan toda la información de los expedientes y el papel ya no es necesario para la gestión de la dependencia.",
+   "Que puede autorizarse si el líder del proyecto certifica por escrito que las imágenes están completas, porque así se asegura que no se perdió información durante la digitalización.",
+   "Que no debe autorizarse: digitalizar no es gestionar, las imágenes no garantizan autenticidad ni integridad, y la eliminación exige aplicar la TRD, el procedimiento y el acta."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Las imágenes sin organización ni metadatos no son documentos electrónicos de archivo.",
+   "Incorrecto. Una certificación no sustituye la TRD ni el procedimiento de eliminación.",
+   "Correcto. Digitalizar no autoriza por sí solo a eliminar; se aplica la normativa archivística."
+  ]
+ }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
