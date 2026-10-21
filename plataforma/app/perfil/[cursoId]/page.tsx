@@ -294,7 +294,7 @@ export default async function CursoDetallePage({ params }: { params: { cursoId: 
             const gs = porModulo[m.key] || [];
             // Simulacro bloqueado: tarjeta de bloqueo en vez del módulo.
             if (m.key === "simulacro" && !simulacroDesbloqueado) {
-              return <SimulacroBloqueado key={m.key} numero={idx + 1} faltan={faltanSimulacro} total={guiasRequeridas.length} />;
+              return <SimulacroBloqueado key={m.key} numero={idx + 1} faltan={faltanSimulacro} total={guiasRequeridas.length} dia={(gs.find((g: any) => g.dia != null) as any)?.dia ?? (String((curso as any).modalidad || "21") === "15" ? 15 : 21)} />;
             }
             const total = gs.filter((g: any) => g.archivo_path).length;
             const leidas = gs.filter((g: any) => g.archivo_path && g.leida).length;
@@ -524,7 +524,7 @@ function ContinuarBanner({ guia }: { guia: any }) {
   );
 }
 
-function SimulacroBloqueado({ numero, faltan, total }: { numero: number; faltan: number; total: number }) {
+function SimulacroBloqueado({ numero, faltan, total, dia }: { numero: number; faltan: number; total: number; dia: number }) {
   const completadas = total - faltan;
   const pct = total > 0 ? Math.round((completadas / total) * 100) : 0;
   return (
@@ -534,7 +534,7 @@ function SimulacroBloqueado({ numero, faltan, total }: { numero: number; faltan:
         <span style={{ flex: 1, minWidth: 0 }}>
           <span className="modulo-tit">📝 Simulacro Final</span>
           <span className="modulo-chips">
-            <span className="chip chip-dia">📅 Día 21</span>
+            <span className="chip chip-dia">📅 Día {dia}</span>
             <span className="chip estado-bloqueado">Bloqueado</span>
           </span>
         </span>

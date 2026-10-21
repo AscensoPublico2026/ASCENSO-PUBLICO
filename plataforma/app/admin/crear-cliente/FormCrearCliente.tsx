@@ -44,15 +44,19 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
   const timerOpec = useRef<ReturnType<typeof setTimeout> | null>(null);
   const opecRef = useRef("");
   const convRef = useRef("");
-  const alCambiarOpec = (valor: string, conv: string = convRef.current) => {
+  // Modalidad del curso: "21" (regular) o "15" (intensivo).
+  const [modalidad, setModalidad] = useState<"21" | "15">("21");
+  const modRef = useRef<"21" | "15">("21");
+  const alCambiarOpec = (valor: string, conv: string = convRef.current, mod: "21" | "15" = modRef.current) => {
     opecRef.current = valor;
     convRef.current = conv;
+    modRef.current = mod;
     if (timerOpec.current) clearTimeout(timerOpec.current);
     const v = valor.trim();
     if (v.length < 2) { setPlanOpec(null); setConsultando(false); return; }
     setConsultando(true);
     timerOpec.current = setTimeout(async () => {
-      try { setPlanOpec(await consultarPlanPorOpec(v, conv || null)); }
+      try { setPlanOpec(await consultarPlanPorOpec(v, conv || null, mod)); }
       catch { setPlanOpec(null); }
       finally { setConsultando(false); }
     }, 500);
@@ -119,6 +123,9 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
               </code>
             </div>
             <div style={{ marginBottom: 6 }}><strong>ID Curso:</strong> {state.cursoId}</div>
+            <div style={{ marginBottom: 4 }}>
+              <strong>Modalidad:</strong> {state.modalidad === "15" ? "⚡ Intensivo de 15 días (arma el plan con «Armar plan completo» en el curso)" : "📅 Curso de 21 días"}
+            </div>
             <div style={{ marginBottom: 4 }}>
               <strong>Guías cargadas:</strong> {state.guiasCargadas ?? 0}
               {state.planCopiado ? " — plan completo copiado de un curso ya existente para este OPEC ✅" : ""}
@@ -264,6 +271,33 @@ export default function FormCrearCliente({ convocatorias }: { convocatorias: Con
         <h2 style={{ fontSize: "1.05rem", color: "var(--azul)", marginTop: 28, marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--gris-borde)" }}>
           🎓 Datos del curso
         </h2>
+
+        <div style={fieldGroup}>
+          <label style={labelStyle}>Modalidad del curso *</label>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            {([
+              ["21", "📅 Curso de 21 días", "Plan completo y detallado: 20 guías + simulacro final."],
+              ["15", "⚡ Curso intensivo de 15 días", "14 guías condensadas + simulacro general. Para quien tiene poco tiempo antes de la prueba."],
+            ] as const).map(([val, tit, desc]) => (
+              <label
+                key={val}
+                style={{
+                  display: "block", cursor: "pointer", padding: "12px 14px", borderRadius: 12,
+                  border: modalidad === val ? "2px solid var(--azul, #0A2A5E)" : "1px solid var(--gris-borde, #D9DEE7)",
+                  background: modalidad === val ? "#EAF0FB" : "#fff",
+                }}
+              >
+                <input
+                  type="radio" name="modalidad" value={val} checked={modalidad === val}
+                  onChange={() => { setModalidad(val); alCambiarOpec(opecRef.current, convRef.current, val); }}
+                  style={{ marginRight: 8 }}
+                />
+                <strong>{tit}</strong>
+                <div style={{ fontSize: ".8rem", color: "var(--texto-suave, #5B6675)", marginTop: 4 }}>{desc}</div>
+              </label>
+            ))}
+          </div>
+        </div>
 
         <div style={fieldGroup}>
           <label htmlFor="convocatoria_id" style={labelStyle}>Convocatoria</label>

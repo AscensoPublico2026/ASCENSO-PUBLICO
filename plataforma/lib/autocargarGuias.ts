@@ -151,7 +151,13 @@ const GUIAS_BONUS = [
  * una entrada aquí con la lista de códigos y sus días.
  */
 export interface ItemPlanPlantilla { codigo: string; dia: number | null; orden?: number }
-export interface PlanPlantilla { id: string; nombre: string; guias: ItemPlanPlantilla[] }
+export interface PlanPlantilla {
+  id: string;
+  nombre: string;
+  /** Duración del curso en días: 21 (regular, por defecto) o 15 (intensivo). */
+  duracion?: 21 | 15;
+  guias: ItemPlanPlantilla[];
+}
 
 export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
   // Procuraduría General de la Nación — Auxiliar Administrativo (5AM-10), Convocatoria 242-2026.
@@ -1094,12 +1100,17 @@ export async function copiarPlanDesdeOPEC(
   if (!opec) return false;
 
   // Otros cursos del mismo OPEC
-  const { data: cursos } = await supabase
+  // Solo se copian planes de la MISMA modalidad (21 días o intensivo de 15):
+  // un curso intensivo no debe heredar las guías del plan de 21 días ni al revés.
+  const { data: cursosTodos } = await supabase
     .from("cursos")
-    .select("id")
+    .select("*")
     .eq("opec", opec)
     .neq("id", nuevoCursoId);
-  if (!cursos || cursos.length === 0) return false;
+  const { data: actual } = await supabase.from("cursos").select("*").eq("id", nuevoCursoId).maybeSingle();
+  const modActual = String((actual as any)?.modalidad || "21");
+  const cursos = (cursosTodos || []).filter((c: any) => String(c.modalidad || "21") === modActual);
+  if (cursos.length === 0) return false;
 
   const ids = cursos.map((c: any) => c.id);
   const { data: guias } = await supabase

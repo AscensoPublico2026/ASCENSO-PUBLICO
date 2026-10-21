@@ -126,6 +126,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       <Link href="/admin/cursos" style={{ color: "var(--texto-suave)", fontSize: ".88rem" }}>← Todos los cursos</Link>
       <h1 style={{ fontSize: "1.5rem", margin: "16px 0 24px" }}>
         {toTitleCase(curso.cargo_nombre || "Curso")}
+        {String((curso as any).modalidad || "21") === "15" ? <span style={{ marginLeft: 10, fontSize: ".75rem", background: "#FFF1D6", color: "#8A5A00", padding: "3px 10px", borderRadius: 999, verticalAlign: "middle" }}>⚡ Intensivo 15 días</span> : null}
         {curso.convocatorias?.nombre ? <span style={{ fontWeight: 400, fontSize: "1rem", color: "var(--texto-suave)" }}> — {curso.convocatorias.nombre}</span> : ""}
       </h1>
 
@@ -183,7 +184,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
       <div style={{ ...box, background: "linear-gradient(135deg,#FBF3E1,#FFF9EF)", border: "1px solid #F0DCB0" }}>
         <h2 style={{ fontSize: "1rem", marginBottom: 6 }}>⚡ Armar plan completo (plantilla)</h2>
         <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", margin: "0 0 12px" }}>
-          Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
+          Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21, o 1 a 15 en el intensivo: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
         </p>
 
         {/* Recomendado si el curso quedó con duplicados: vaciar y armar */}
@@ -195,7 +196,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
             <button className="btn" style={{ padding: "9px 14px", fontSize: ".82rem", background: "#b00020", color: "#fff", border: "none", borderRadius: 8 }}>🗑️ Vaciar curso (borrar TODAS las guías)</button>
           </form>
         </div>
-        {Object.values(PLANES_PLANTILLA).map((plan) => (
+        {Object.values(PLANES_PLANTILLA).filter((plan) => String(plan.duracion ?? 21) === String((curso as any).modalidad || "21")).map((plan) => (
           <div key={plan.id} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8, paddingBottom: 8, borderBottom: "1px dashed #F0DCB0" }}>
             <span style={{ flex: 1, minWidth: 220, fontSize: ".86rem", color: "var(--azul)", fontWeight: 700 }}>{plan.nombre}</span>
             <span style={{ fontSize: ".76rem", color: "var(--texto-suave)" }}>{plan.guias.length} guías</span>
@@ -209,7 +210,7 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         ))}
         <p style={{ color: "var(--texto-suave)", fontSize: ".76rem", margin: "6px 0 0" }}>
           <strong>Armar</strong>: agrega las guías del plan que falten, sin borrar nada. &nbsp;•&nbsp;
-          <strong>Rehacer</strong>: elimina del curso las guías que NO son de este plan (p. ej. las genéricas CNSC auto-cargadas) y deja exactamente las 21 correctas. Úsalo si el curso quedó con guías mezcladas.
+          <strong>Rehacer</strong>: elimina del curso las guías que NO son de este plan (p. ej. las genéricas CNSC auto-cargadas) y deja exactamente las guías correctas del plan. Úsalo si el curso quedó con guías mezcladas.
         </p>
       </div>
 

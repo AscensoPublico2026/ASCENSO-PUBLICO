@@ -11,6 +11,7 @@ export type CrearClienteResult = {
   error?: string;
   userId?: string;
   cursoId?: string;
+  modalidad?: "21" | "15";
   correo?: string;
   /** true si el curso se creó con el plan completo copiado de un curso previo del mismo OPEC. */
   planCopiado?: boolean;
@@ -33,7 +34,7 @@ export type PlanOpecInfo = {
  * "Armado" = alguno de los cursos de ese OPEC tiene guías funcionales asignadas.
  * Lo usa el formulario para avisar "ya contamos con ese curso" al escribir el OPEC.
  */
-export async function consultarPlanPorOpec(opecRaw: string, convocatoriaId?: string | null): Promise<PlanOpecInfo> {
+export async function consultarPlanPorOpec(opecRaw: string, convocatoriaId?: string | null, modalidad: string = "21"): Promise<PlanOpecInfo> {
   await requireAdmin();
   const opec = (opecRaw || "").trim();
   if (opec.length < 2) return { existe: false };
@@ -47,14 +48,15 @@ export async function consultarPlanPorOpec(opecRaw: string, convocatoriaId?: str
   }
   const { data: cursos } = await supabase
     .from("cursos")
-    .select("id, cargo_nombre, convocatorias(nombre, entidad)")
+    .select("*, convocatorias(nombre, entidad)")
     .eq("opec", opec);
-  if (!cursos || cursos.length === 0) return { existe: false };
+  const cursosMod = (cursos || []).filter((c: any) => String(c.modalidad || "21") === (modalidad === "15" ? "15" : "21"));
+  if (cursosMod.length === 0) return { existe: false };
 
   const { data: guias } = await supabase
     .from("guias_curso")
     .select("curso_id, tipo")
-    .in("curso_id", cursos.map((c: any) => c.id));
+    .in("curso_id", cursosMod.map((c: any) => c.id));
 
   const porCurso: Record<string, any[]> = {};
   (guias || []).forEach((g: any) => { (porCurso[g.curso_id] = porCurso[g.curso_id] || []).push(g); });
@@ -67,7 +69,7 @@ export async function consultarPlanPorOpec(opecRaw: string, convocatoriaId?: str
   }
   if (!mejorId) return { existe: false };
 
-  const curso: any = cursos.find((c: any) => c.id === mejorId);
+  const curso: any = cursosMod.find((c: any) => c.id === mejorId);
   const conv: any = Array.isArray(curso?.convocatorias) ? curso.convocatorias[0] : curso?.convocatorias;
   const arr = porCurso[mejorId];
   return {
@@ -102,6 +104,8 @@ export async function crearClienteManual(
   const opec = String(formData.get("opec") || "").trim() || null;
   const cargo_nombre = String(formData.get("cargo_nombre") || "").trim() || null;
   const nivel = String(formData.get("nivel") || "").trim().toLowerCase() || null;
+  // Modalidad del curso: "21" (regular, por defecto) o "15" (intensivo de 15 días).
+  const modalidad = String(formData.get("modalidad") || "21").trim() === "15" ? "15" : "21";
 
   // --- Validaciones básicas ---
   if (!nombre) return { ok: false, error: "El nombre es obligatorio." };
@@ -192,6 +196,9 @@ export async function crearClienteManual(
         opec,
         cargo_nombre,
         nivel,
+        // Solo se envía la columna cuando es intensivo: el curso regular sigue
+        // funcionando aunque la migración de modalidad no se haya corrido.
+        ...(modalidad === "15" ? { modalidad: "15" } : {}),
         estado: "en_preparacion",
         fecha_compra: ahora.toISOString(),
         preparacion_deadline: deadline.toISOString(),
@@ -217,7 +224,9 @@ export async function crearClienteManual(
     }
 
     // Si no había plan previo, cargar las guías base según nivel
-    if (!copiadoPlan && nivel) {
+    // En el intensivo NO se cargan las guías genéricas de nivel (son del plan de
+    // 21 días): el admin arma el plan intensivo con "Armar plan completo".
+    if (!copiadoPlan && nivel && modalidad !== "15") {
       try {
         await cargarGuiasAutomaticas(supabase, cursoId, nivel, convocatoria_id);
       } catch (err: any) {
@@ -243,7 +252,7 @@ export async function crearClienteManual(
 
     const { count: totalGuias } = await supabase
       .from("guias_curso").select("id", { count: "exact", head: true }).eq("curso_id", cursoId);
-    return { ok: true, userId, cursoId, correo, planCopiado: copiadoPlan, guiasCargadas: totalGuias ?? 0 };
+    return { ok: true, userId, cursoId, modalidad: modalidad as "21" | "15", correo, planCopiado: copiadoPlan, guiasCargadas: totalGuias ?? 0 };
   } catch (e: any) {
     return { ok: false, error: "Error inesperado: " + e.message };
   }
