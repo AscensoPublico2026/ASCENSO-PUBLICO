@@ -30,7 +30,6 @@ export const OPECS_SECUENCIALES: string[] = [];
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
   // Adriana Bernal · Analista I Fiscalización (236764) — intensivo 15 días
-  "INTENS-AIFL-14-alcance-cargo-repaso-likert.html",
   "SIM-DIAN-AIFL-001.html",
   // Andrea Aroca · Gestor III Control Interno (236872) — funcionales Días 9-20 + simulacro
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
