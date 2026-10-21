@@ -862,8 +862,6 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
     duracion: 15,
     guias: [
       { codigo: "INTENS-DIAN-01", dia: 1 },
-      { codigo: "ENT-DIAN-01", dia: 1, orden: 1 },
-      { codigo: "DIAN-PON-01", dia: 1, orden: 2 },
       { codigo: "INTENS-DIAN-02", dia: 2 },
       { codigo: "INTENS-DIAN-03", dia: 3 },
       { codigo: "INTENS-DIAN-04", dia: 4 },
@@ -878,10 +876,6 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "INTENS-AIFL-13", dia: 13 },
       { codigo: "INTENS-AIFL-14", dia: 14 },
       { codigo: "SIM-DIAN-AIFL-001", dia: 15 },
-      { codigo: "BON-01", dia: null, orden: 100 },
-      { codigo: "BON-02", dia: null, orden: 101 },
-      { codigo: "DIAN-EST-01", dia: null, orden: 102 },
-      { codigo: "DIAN-INT-01", dia: null, orden: 103 },
     ],
   },
 };

@@ -22,7 +22,7 @@ Ficha AT-FL-2013 (FT-TAH-1824 v5, Resolución 67 de 2024, vigente 15-abr-2024). 
 ## Plan intensivo (duracion: 15) — `dian-analista-i-fiscalizacion-intensivo-236764`
 | Día | Código | Tema |
 |---|---|---|
-| 1 | INTENS-DIAN-01 (+ ENT-DIAN-01, DIAN-PON-01) | Arranque: entidad, prueba y método |
+| 1 | INTENS-DIAN-01 | Arranque: entidad, prueba y método |
 | 2 | INTENS-DIAN-02 | Sistema tributario, aduanero y cambiario |
 | 3 | INTENS-DIAN-03 | Constitución, función pública, integridad y buen gobierno |
 | 4 | INTENS-DIAN-04 | CPACA, PQRSF y servicio al ciudadano |
@@ -40,3 +40,5 @@ Ficha AT-FL-2013 (FT-TAH-1824 v5, Resolución 67 de 2024, vigente 15-abr-2024). 
 
 Las guías INTENS-DIAN y INTENS-TEC son reutilizables para cualquier intensivo DIAN (las TEC, solo nivel técnico): no nombran cargos. Un nuevo intensivo DIAN solo necesita sus guías de los días 10-14 y su simulacro.
 Guías intensivas: 4.000-5.000 palabras de desarrollo, 8 módulos con checkpoint, 12 preguntas (bbbbiiiiiaaa) y 10 flashcards. Validar con `validar-guia-dian.py <guía> <fugas> 4000`.
+
+El plan tiene exactamente 15 entregas (14 guías + simulacro), sin guías complementarias ni bonus.
