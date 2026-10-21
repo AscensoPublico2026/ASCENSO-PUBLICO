@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTENS-DIAN-04 · CPACA, sistema PQRSF y servicio al ciudadano — Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0A2A5E; --azul-medio:#1A4A8A; --azul-claro:#2D6CC0; --azul-suave:#EAF1FB; --azul-borde:#C9DCF4;
+  --oro:#E8A33D; --oro-claro:#F6C56B; --oro-suave:#FDF4E3; --oro-borde:#F0DCB0;
+  --crema:#FBF9F4; --blanco:#FFFFFF; --gris-bg:#F2F0EA; --gris-borde:#E6E2D8;
+  --verde:#1A7A4A; --verde-suave:#E8F6EE; --verde-borde:#BFE6CF;
+  --rojo:#C0392B; --rojo-suave:#FCEDEB; --rojo-borde:#F2CDC8;
+  --ambar:#B8600A; --ambar-suave:#FBEFDD; --ambar-borde:#EFD7B0;
+  --texto:#2A3441; --texto-suave:#5B6675;
+  --sombra:0 4px 20px rgba(10,42,94,0.08); --sombra-lg:0 10px 36px rgba(10,42,94,0.16); --radio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased;}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear;}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,0.22),transparent 70%);}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro) 0%,var(--oro-claro) 50%,var(--oro) 100%);}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2;}
+.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,0.4);}
+.brand-name{font-size:1.6rem;font-weight:800;}
+.brand-slogan{font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px;}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:0.68rem;font-weight:700;letter-spacing:0.16em;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.22);padding:4px 11px;border-radius:7px;text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:760px;margin:0 auto;position:relative;z-index:2;}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,0.82);font-size:0.98rem;}
+.header-sub strong{color:#fff;font-weight:700}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2;}
+.badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:0.8rem;font-weight:600;padding:7px 14px;border-radius:20px;}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;box-shadow:0 4px 18px rgba(10,42,94,0.22);}
+nav button{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:inherit;font-size:.85rem;}
+nav button:hover{background:rgba(255,255,255,0.16);color:#fff;}
+nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,0.4);}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px;}
+.section{display:none;animation:fade .4s ease;}
+.section.visible{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px;}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px;}
+p{margin-bottom:12px;}
+.card{background:#fff;border:1px solid var(--gris-borde);border-radius:var(--radio);padding:20px 22px;box-shadow:var(--sombra);margin:14px 0;}
+.card-lead{border-left:5px solid var(--oro);}
+.lista{list-style:none;margin:10px 0;}
+.lista li{position:relative;padding-left:26px;margin-bottom:8px;}
+.lista li::before{content:'✓';position:absolute;left:0;color:var(--verde);font-weight:800;}
+.concepto{background:var(--blanco);border:1px solid var(--oro-borde);border-radius:var(--radio);margin:18px 0;box-shadow:var(--sombra);overflow:hidden;}
+.concepto-head{background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 80%);padding:16px 22px;font-size:1.08rem;font-weight:700;color:var(--azul);display:flex;align-items:center;gap:11px;border-bottom:1px dashed var(--oro);}
+.concepto-body{display:grid;grid-template-columns:1fr;gap:12px;padding:20px 22px;}
+@media(min-width:700px){.concepto-body{grid-template-columns:1fr 1fr;}}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid;}
+.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.box p{margin-bottom:0;}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde);}
+.box.info .box-title{color:var(--azul);}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde);}
+.box.ok .box-title{color:var(--verde);}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde);}
+.box.warn .box-title{color:var(--ambar);}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.box.danger .box-title{color:var(--rojo);}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde);}
+.box.gold .box-title{color:var(--ambar);}
+.tabla-wrap{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--sombra);}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--gris-borde);vertical-align:top;}
+th{background:var(--azul);color:#fff;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;}
+tr:last-child td{border-bottom:none;}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;}
+.caso-body{padding:18px 20px;}
+.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;}
+.caso-body .label:first-child{margin-top:0;}
+.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px;}
+.trampa{background:#fff;border:1px solid var(--rojo-borde);border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sombra);}
+.trampa-q{background:var(--rojo-suave);color:var(--rojo);font-weight:700;padding:13px 16px;font-size:.92rem;}
+.trampa-detail{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.t-row{padding:9px 12px;border-radius:8px;font-size:.86rem;}
+.t-row.parece{background:var(--ambar-suave);border-left:4px solid var(--oro);}
+.t-row.malo{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+.t-row.bueno{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.flashcard-wrap{max-width:560px;margin:24px auto;perspective:1200px;}
+.flashcard{position:relative;height:240px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radio);padding:28px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--sombra-lg);text-align:center;}
+.flash-front{background:linear-gradient(135deg,var(--oro-suave),var(--blanco));border:2px solid var(--oro);}
+.flash-back{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;transform:rotateY(180deg);}
+.flash-tag{font-size:0.7rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;color:var(--ambar);}
+.flash-back .flash-tag{color:var(--oro-claro);}
+.flash-face p{font-size:1.05rem;margin:0;}
+.flash-hint{margin-top:14px;font-size:.76rem;color:var(--texto-suave);}
+.flash-controls{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.flash-controls button{background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:9px 16px;border-radius:9px;cursor:pointer;font-weight:700;font-size:0.84rem;font-family:inherit;}
+.flash-controls span{font-size:.82rem;color:var(--texto-suave);font-weight:600;}
+.resumen{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0;}
+.resumen-item{background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:16px;box-shadow:var(--sombra);}
+.resumen-item h4{font-family:'Plus Jakarta Sans',sans-serif;color:var(--azul);font-size:.95rem;margin-bottom:5px;}
+.resumen-item p{font-size:.85rem;color:var(--texto-suave);margin:0;}
+.glosario{margin:16px 0;}
+.glosario dt{font-weight:800;color:var(--azul);margin-top:10px;}
+.glosario dd{font-size:.88rem;color:var(--texto-suave);}
+.quiz-intro{text-align:center;}
+.dific-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tag{font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.tag.b{background:var(--verde-suave);color:var(--verde);}
+.tag.i{background:var(--azul-suave);color:var(--azul);}
+.tag.a{background:var(--rojo-suave);color:var(--rojo);}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra);}
+.q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px;}
+.nivel-pill{font-size:0.66rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.nivel-pill.b{background:var(--verde-suave);color:var(--verde);}
+.nivel-pill.i{background:var(--azul-suave);color:var(--azul);}
+.nivel-pill.a{background:var(--rojo-suave);color:var(--rojo);}
+.q-contexto{background:var(--azul-suave);border-left:4px solid var(--azul-claro);padding:11px 14px;border-radius:9px;font-size:0.88rem;margin:9px 0;}
+.q-texto{font-weight:600;margin:9px 0 15px;}
+.opciones{display:flex;flex-direction:column;gap:9px;}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff;}
+.opcion:hover{border-color:var(--oro);background:var(--oro-suave);}
+.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opcion.correcta{border-color:var(--verde);background:var(--verde-suave);}
+.opcion.correcta .letra{background:var(--verde);color:#fff;}
+.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave);}
+.opcion.incorrecta .letra{background:var(--rojo);color:#fff;}
+.opcion.bloqueada{pointer-events:none;}
+.op-body{display:flex;flex-direction:column;flex:1;}
+.op-txt{display:block;}
+.op-exp{display:none;margin-top:9px;font-size:.82rem;line-height:1.55;padding:9px 12px;border-radius:8px;}
+.op-exp.show{display:block;}
+.op-exp.ok{background:var(--verde-suave);color:#155e38;border-left:3px solid var(--verde);}
+.op-exp.no{background:var(--rojo-suave);color:#8e2b20;border-left:3px solid var(--rojo);}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:0.88rem;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde);}
+.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo);}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg);}
+#resultado.show{display:block;}
+.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif;}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;}
+.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);}
+.advance-bar{margin-top:36px;padding-top:22px;border-top:2px dashed var(--oro);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.advance-hint{color:var(--texto-suave);font-style:italic;font-size:.9rem;}
+.advance-btn{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);border:none;padding:12px 26px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(232,163,61,0.35);transition:all .2s;font-family:inherit;}
+.advance-btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg);}
+.advance-btn.final{background:linear-gradient(135deg,var(--verde),#2A9F66);color:#fff;}
+.narr{background:linear-gradient(135deg,var(--azul-suave),var(--blanco));border-left:5px solid var(--azul-claro);border-radius:14px;padding:18px 20px;margin:16px 0;font-size:1rem;}
+.narr .narr-tag{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--azul-claro);margin-bottom:6px;}
+.narr p:last-child{margin-bottom:0;}
+.flujo{display:flex;flex-wrap:wrap;gap:18px 10px;align-items:stretch;margin:22px 0;}
+.flujo-paso{flex:1;min-width:130px;background:var(--blanco);border:1.5px solid var(--azul-borde);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sombra);}
+.flujo-paso .fp-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:.82rem;margin-bottom:8px;}
+.flujo-paso h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;color:var(--azul);margin-bottom:4px;}
+.flujo-paso p{font-size:.76rem;color:var(--texto-suave);margin:0;}
+.flujo-paso:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--oro);font-weight:800;font-size:1.1rem;z-index:2;}
+@media(max-width:620px){.flujo-paso:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-16px;transform:translateX(50%);}}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.cp-tag{font-weight:800;color:var(--ambar);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.cp-q{font-weight:600;margin-bottom:12px;}
+.cp-opts{display:flex;flex-direction:column;gap:8px;}
+.cp-opt{text-align:left;background:#fff;border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;cursor:pointer;font-family:inherit;font-size:.9rem;color:var(--texto);transition:all .15s;}
+.cp-opt:hover{border-color:var(--oro);}
+.cp-opt.cp-lock{pointer-events:none;}
+.cp-opt.cp-ok{border-color:var(--verde);background:var(--verde-suave);font-weight:600;}
+.cp-opt.cp-no{border-color:var(--rojo);background:var(--rojo-suave);}
+.cp-fb{display:none;margin-top:12px;padding:12px 15px;border-radius:10px;background:var(--azul-suave);border-left:4px solid var(--azul-claro);font-size:.88rem;}
+.cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.modulo{margin:32px 0;}
+.modulo-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--oro-borde);}
+.modulo-n{flex-shrink:0;min-width:44px;height:44px;padding:0 11px;border-radius:13px;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;box-shadow:0 5px 14px rgba(10,42,94,.25);}
+.modulo-head h3{font-family:'Source Serif 4',serif;color:var(--azul);font-size:1.32rem;line-height:1.2;margin:0;}
+.b-texto{margin:12px 0;}
+.b-texto p{margin-bottom:11px;}
+.def-panel{background:linear-gradient(180deg,var(--azul-suave),#fff);border:1px solid var(--azul-borde);border-left:5px solid var(--azul-claro);border-radius:0 14px 14px 0;padding:16px 20px;margin:16px 0;}
+.def-label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--azul-claro);margin-bottom:6px;}
+.def-panel p{font-size:1.03rem;margin-bottom:0;color:var(--texto);}
+.def-panel p+p{margin-top:8px;}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--oro-suave);border:1px solid var(--oro-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.idea-ic{font-size:1.3rem;flex-shrink:0;line-height:1.4;}
+.idea p{margin-bottom:0;}
+.idea strong{color:var(--ambar);}
+.ejemplo{background:#fff;border:1px solid var(--verde-borde);border-radius:13px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.ejemplo-head{background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 16px;}
+.ejemplo-body{padding:14px 18px;font-size:.95rem;}
+.ejemplo-body p{margin-bottom:0;}
+.prueba{background:var(--rojo-suave);border:1px solid var(--rojo-borde);border-radius:13px;padding:14px 18px;margin:16px 0;}
+.prueba-head{font-weight:800;color:var(--rojo);font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.prueba p{margin-bottom:0;}
+.acordeon{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.acc{border:1px solid var(--gris-borde);border-radius:12px;background:#fff;overflow:hidden;box-shadow:var(--sombra);}
+.acc summary{padding:14px 18px;font-weight:700;color:var(--azul);cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:linear-gradient(100deg,var(--azul-suave),#fff 92%);}
+.acc summary::-webkit-details-marker{display:none;}
+.acc summary::after{content:'+';margin-left:auto;font-size:1.4rem;color:var(--oro);font-weight:400;transition:transform .2s;}
+.acc[open] summary::after{transform:rotate(45deg);}
+.acc-body{padding:16px 20px;font-size:.95rem;border-top:1px solid var(--gris-borde);}
+.acc-body p{margin-bottom:10px;}
+.acc-body p:last-child{margin-bottom:0;}
+.acc-body em{color:var(--texto-suave);}
+.destacado{display:flex;gap:14px;align-items:flex-start;border-radius:13px;padding:15px 18px;margin:18px 0;border:1px solid;}
+.destacado .dst-ic{font-size:1.5rem;flex-shrink:0;line-height:1.2;}
+.destacado .dst-body{flex:1;min-width:0;}
+.destacado .dst-title{font-weight:800;margin-bottom:4px;display:block;}
+.destacado p{margin-bottom:0;}
+.destacado.oro{background:var(--oro-suave);border-color:var(--oro-borde);}
+.destacado.oro .dst-title{color:var(--ambar);}
+.destacado.rojo{background:var(--rojo-suave);border-color:var(--rojo-borde);}
+.destacado.rojo .dst-title{color:var(--rojo);}
+.destacado.azul{background:var(--azul-suave);border-color:var(--azul-borde);}
+.destacado.azul .dst-title{color:var(--azul);}
+mark{background:none;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--oro);text-decoration-thickness:2px;text-underline-offset:3px;}
+.mmap-t{font-weight:800;color:var(--azul);margin:20px 0 10px;font-size:1.02rem;}
+.mmap{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:10px 0 18px;}
+.mmap .node{flex:1 1 150px;min-width:135px;background:#fff;border:1px solid var(--gris-borde);border-top:3px solid var(--oro);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);}
+.mmap .node .ic{font-size:1.5rem;display:block;margin-bottom:4px;}
+.mmap .node h5{margin:0 0 4px;color:var(--azul);font-size:.9rem;}
+.mmap .node p{margin:0;font-size:.8rem;color:#555;line-height:1.35;}
+.mmap .arrow{display:flex;align-items:center;justify-content:center;color:var(--oro);font-size:1.3rem;font-weight:800;flex:0 0 auto;}
+@media(max-width:640px){.mmap .arrow{transform:rotate(90deg);width:100%;}}
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.iconrow .ic-item{background:#fff;border:1px solid var(--gris-borde);border-radius:12px;padding:12px 14px;box-shadow:var(--sombra);font-size:.86rem;line-height:1.4;}
+.iconrow .ic-item .em{font-size:1.4rem;display:block;margin-bottom:4px;}
+footer{background:var(--azul);color:rgba(255,255,255,0.8);text-align:center;padding:34px 20px;}
+footer .f-brand{font-weight:800;color:#fff;font-size:1.1rem;}
+footer .f-slogan{color:var(--oro-claro);font-size:.82rem;margin:6px 0 12px;}
+footer .f-meta{font-size:.74rem;color:rgba(255,255,255,0.55);}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
+#toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:var(--sombra-lg);opacity:0;pointer-events:none;transform:translateY(10px);transition:all .25s;z-index:200;}
+#toTop.show{opacity:1;pointer-events:auto;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">INTENS-DIAN-04</span>
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/>
+        <circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/>
+        <path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/>
+        <path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Ascenso Público</div>
+      <div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div>
+    </div>
+  </div>
+  <div class="kicker">Día 4 · Intensivo · Básicas comunes</div>
+  <h1>CPACA, derecho de petición y servicio al ciudadano: cómo debe actuar la administración frente a las personas</h1>
+  <p class="header-sub">Principios y ámbito del CPACA (Ley 1437 de 2011); derechos, deberes, prohibiciones e impedimentos; el derecho de petición y sus términos (Ley 1755 de 2015); reglas especiales; notificaciones; recursos; silencio administrativo y firmeza; el sistema PQRSF y las políticas de servicio al ciudadano.</p>
+  <div class="badges"><span class="badge">📅 Día 4 de 15</span><span class="badge">⏱ 60-80 min</span><span class="badge">🎯 Prueba escrita CNSC</span><span class="badge">⚡ Curso intensivo</span></div>
+</header>
+
+<nav>
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">🧠 Repaso</button>
+  <button data-sec="9">📝 Resumen</button>
+  <button data-sec="10">🎓 Simulacro</button>
+</nav>
+
+<main>
+<section class="section visible" data-sec="0">
+  <span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Un lunes en el grupo de atención de una dirección seccional. Llega una petición de información que debe responderse rápido, pero nadie sabe si el término es de diez o de quince días. Otra solicitud llegó sin un documento y una compañera propone archivarla. Una queja sobre un impuesto municipal lleva dos semanas en una bandeja porque “no es de aquí”. Un usuario quiere saber si puede recurrir una decisión que le notificaron por correo, aunque nunca autorizó ese medio. Y otro pregunta qué pasa si la entidad no le contesta en tres meses.</p>
+    <p>Todas esas preguntas tienen respuesta en el <mark>Código de Procedimiento Administrativo y de lo Contencioso Administrativo</mark> (CPACA, Ley 1437 de 2011), en la ley del derecho de petición (Ley 1755 de 2015) y en las políticas de servicio al ciudadano. Hoy las vas a estudiar desde el punto de vista del servidor que atiende y tramita.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>El <strong>ámbito</strong> y los <strong>principios</strong> del CPACA, y su relación con los procedimientos especiales de la DIAN.</li>
+      <li>Los <strong>derechos</strong> de las personas, los <strong>deberes</strong> y <strong>prohibiciones</strong> de las autoridades, y los <strong>impedimentos</strong>.</li>
+      <li>Los <strong>términos</strong> del derecho de petición y sus reglas especiales.</li>
+      <li>Las <strong>notificaciones</strong>, los <strong>recursos</strong>, el <strong>silencio administrativo</strong> y la <strong>firmeza</strong> de los actos.</li>
+      <li>El <strong>sistema PQRSF</strong> y la <strong>política de servicio al ciudadano</strong>.</li>
+    </ul>
+  </div>
+  <div class="box gold"><div class="box-title">💎 La promesa de esta guía</div>
+    <p>Al cerrar el día podrás decir, para cualquier petición o actuación, qué término aplica, qué debe hacerse si está incompleta o no es competencia de la entidad, cómo se notifica la decisión y qué puede hacer el interesado.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="1">
+  <span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave?</h2>
+  <p>La ficha de los empleos de la DIAN incluye los principios de la función pública y el procedimiento administrativo general (Ley 1437 de 2011, Títulos I, II y III, capítulos I y V a VIII), el sistema PQRSF y las políticas estatales de servicio al ciudadano.</p>
+  <ul class="lista">
+    <li><strong>La prueba pregunta números.</strong> 15, 10 y 30 días; 5 días para remitir; 10 días para recurrir; 3 meses para el silencio.</li>
+    <li><strong>Es el día a día.</strong> Todo servidor recibe, tramita o remite peticiones.</li>
+    <li><strong>Las fallas tienen costo.</strong> Peticiones sin respuesta generan tutelas, quejas y faltas disciplinarias.</li>
+  </ul>
+  <div class="box info"><div class="box-title">ℹ️ Conexión con el resto del curso</div>
+    <p>Ayer viste el derecho de petición (art. 23) y el debido proceso (art. 29) en la Constitución. Hoy ves cómo los desarrolla la ley. Mañana verás la Ley de Transparencia, que complementa el acceso a la información.</p>
+  </div>
+</section>
+
+<section class="section" data-sec="2">
+  <span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 El procedimiento frente a las personas</h2>
+
+<!-- MÓDULO 1 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">1</span><h3>El CPACA: ámbito y principios</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>La <mark>Ley 1437 de 2011</mark> regula el procedimiento administrativo y la jurisdicción contencioso administrativa. Sus normas de procedimiento se aplican a todas las autoridades, <strong>sin perjuicio de los procedimientos regulados en leyes especiales</strong>; en lo no previsto en ellos, se aplica el Código (art. 2). Las actuaciones se rigen por los <mark>principios del artículo 3</mark>: debido proceso, igualdad, imparcialidad, buena fe, moralidad, participación, responsabilidad, transparencia, publicidad, coordinación, eficacia, economía y celeridad.</p></div>
+<div class="b-texto">
+<p>Para la DIAN, el artículo 2 es fundamental. Las actuaciones tributarias, aduaneras y cambiarias tienen procedimientos especiales (el Estatuto Tributario, la regulación aduanera, el régimen sancionatorio cambiario), con sus propios términos, notificaciones y recursos. Esos procedimientos prevalecen, y el CPACA se aplica en lo que no regulan. En cambio, las peticiones de información, las quejas, los reclamos y otras actuaciones generales se rigen por el CPACA. Saber qué norma aplica es el primer paso para responder bien un caso.</p>
+<p>Varios principios del artículo 3 coinciden con los del artículo 209 de la Constitución, pero el CPACA les da un contenido procedimental. La <strong>buena fe</strong> obliga a presumir el comportamiento leal de las personas. La <strong>eficacia</strong> obliga a que los procedimientos logren su finalidad, removiendo los obstáculos formales y saneando las irregularidades. La <strong>economía</strong> exige proceder con austeridad de tiempo y medios. La <strong>celeridad</strong> obliga a impulsar oficiosamente los procedimientos y a cumplir los términos. Y la <strong>publicidad</strong> exige dar a conocer las decisiones mediante comunicaciones, notificaciones o publicaciones.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Asunto</th><th>Norma que prevalece</th></tr></thead>
+<tbody>
+<tr><td>Determinación de impuestos, sanciones y recursos tributarios</td><td>Estatuto Tributario (procedimiento especial)</td></tr>
+<tr><td>Procedimientos aduaneros y sanciones aduaneras</td><td>Regulación aduanera (procedimiento especial)</td></tr>
+<tr><td>Peticiones de información, quejas y reclamos</td><td>CPACA y Ley 1755 de 2015</td></tr>
+<tr><td>Aspectos no regulados en los procedimientos especiales</td><td>CPACA, de manera supletoria</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · ¿Qué norma aplica?</div><div class="practica-body"><p><strong>Situación:</strong> un contribuyente pide copia de un documento de su expediente de fiscalización.</p>
+<p><strong>Razonamiento:</strong> la solicitud de copias es una petición de documentos, que se rige por el CPACA (término de 10 días). La fiscalización en sí misma sigue el procedimiento del Estatuto Tributario.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> el CPACA se aplica <strong>sin perjuicio de los procedimientos especiales</strong> y de forma <strong>supletoria</strong>. Los principios del art. 3 son trece; la buena fe se <strong>presume</strong>.</div>
+<div class="checkpoint" id="cp1"><div class="cp-tag">✅ Checkpoint 1</div><p class="cp-q">¿Cómo se aplica el CPACA frente a los procedimientos especiales de la DIAN?</p><div class="cp-opts"><button class="cp-opt" data-cp="1" data-ans="0">El CPACA prevalece siempre sobre el Estatuto Tributario.</button><button class="cp-opt" data-cp="1" data-ans="1">El procedimiento especial prevalece y el CPACA se aplica en lo no regulado.</button><button class="cp-opt" data-cp="1" data-ans="0">El CPACA no se aplica nunca en la DIAN.</button></div><div class="cp-fb" id="cpfb1">✔ Prevalece el especial; el CPACA es supletorio.</div></div>
+</div>
+
+<!-- MÓDULO 2 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">2</span><h3>Derechos, deberes, prohibiciones e impedimentos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las personas tienen derecho, entre otros, a presentar peticiones por cualquier medio, conocer el estado de sus trámites y obtener copias, salvo reserva; obtener información y orientación; ser tratadas con respeto; recibir <strong>atención especial y preferente</strong> si están en situación de discapacidad, son niños, adultos mayores o mujeres gestantes; y exigir el cumplimiento de las responsabilidades de los servidores (art. 5). Las autoridades tienen <mark>deberes</mark> (art. 7), como atender en horarios adecuados, tramitar las peticiones por medios electrónicos y tener un sistema de turnos. Tienen <mark>prohibiciones</mark> (art. 9), como negarse a recibir peticiones, exigir documentos no previstos o que reposan en la entidad, y reproducir actos suspendidos. Y deben <mark>declararse impedidas</mark> cuando tienen un interés particular y directo en el asunto (arts. 11 y 12).</p></div>
+<div class="b-texto">
+<p>Las <strong>prohibiciones</strong> del artículo 9 son una fuente frecuente de preguntas. Entre ellas: negarse a recibir peticiones o a expedir constancias de recibido; exigir constancias, certificaciones o documentos que reposen en la propia entidad; exigir requisitos no previstos en la ley; demorar injustificadamente la producción de los actos; ejecutar un acto que no se ha notificado o que está suspendido. Cuando una opción describe a un servidor que “devuelve la petición” o “pide un documento que la entidad ya tiene”, probablemente es la incorrecta.</p>
+<p>El régimen de <strong>impedimentos y recusaciones</strong> desarrolla la imparcialidad. El servidor que tiene un interés particular y directo en el asunto, o cuyos parientes cercanos lo tienen, debe declararse impedido dentro de los tres días siguientes a conocer la causal y enviar la actuación a su superior, que decide. Si no lo hace, el interesado puede recusarlo. Mientras se decide, la actuación se suspende. Las personas también tienen <strong>deberes</strong> (art. 6): actuar de buena fe, abstenerse de maniobras dilatorias, no hacer afirmaciones temerarias y tratar con respeto a los servidores.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Artículo</th><th>Contenido</th></tr></thead>
+<tbody>
+<tr><td>5</td><td>Derechos de las personas ante las autoridades</td></tr>
+<tr><td>6</td><td>Deberes de las personas</td></tr>
+<tr><td>7</td><td>Deberes de las autoridades en la atención al público</td></tr>
+<tr><td>9</td><td>Prohibiciones de las autoridades</td></tr>
+<tr><td>11 y 12</td><td>Conflictos de interés, impedimentos y recusaciones</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El certificado que ya tenemos</div><div class="practica-body"><p><strong>Situación:</strong> se exige a un contribuyente un certificado de su RUT para tramitar una solicitud.</p>
+<p><strong>Razonamiento:</strong> el RUT reposa en la entidad. Exigirlo está prohibido (art. 9). El servidor lo consulta directamente en el sistema.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> está <strong>prohibido</strong> negarse a recibir peticiones y exigir documentos que <strong>reposan en la entidad</strong>. Impedimento: declararlo en <strong>tres días</strong> y enviar la actuación al <strong>superior</strong>.</div>
+<div class="checkpoint" id="cp2"><div class="cp-tag">✅ Checkpoint 2</div><p class="cp-q">¿Cuál de estas conductas está prohibida a las autoridades por el artículo 9 del CPACA?</p><div class="cp-opts"><button class="cp-opt" data-cp="2" data-ans="0">Tener un sistema de turnos para atender al público.</button><button class="cp-opt" data-cp="2" data-ans="1">Exigir documentos que reposan en la propia entidad.</button><button class="cp-opt" data-cp="2" data-ans="0">Atender de manera preferente a los adultos mayores.</button></div><div class="cp-fb" id="cpfb2">✔ Exigir documentos que la entidad ya tiene está prohibido.</div></div>
+</div>
+
+<!-- MÓDULO 3 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">3</span><h3>El derecho de petición y sus términos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Toda persona puede presentar peticiones respetuosas a las autoridades, <strong>verbalmente, por escrito o por cualquier medio idóneo</strong>, y obtener pronta resolución <mark>completa y de fondo</mark>. Los términos (Ley 1755 de 2015, art. 14 del CPACA) son: <mark>15 días</mark> hábiles para cualquier petición; <mark>10 días</mark> para las de documentos e información; <mark>30 días</mark> para las consultas; y 10 días para las peticiones entre autoridades (art. 30). Si no es posible responder en el término, se debe <strong>informar antes de su vencimiento</strong> el motivo y el plazo, que no puede exceder del doble del inicial.</p></div>
+<div class="b-texto">
+<p>Toda actuación que inicia una persona ante una autoridad es un ejercicio del derecho de petición, aunque no lo diga expresamente. Por eso, una queja, un reclamo, una solicitud de copias o una consulta son peticiones, cada una con su término. No se puede exigir que la petición se presente por escrito ni con un formulario, salvo que una ley lo exija para un trámite determinado; y si la petición es verbal, la autoridad debe dejar constancia y radicarla.</p>
+<p>La respuesta debe ser <strong>de fondo, clara, precisa y congruente</strong> con lo pedido. No es obligatorio conceder lo solicitado: la autoridad puede negar, pero debe resolver. Una respuesta que dice “su solicitud está en trámite” sin explicar ni dar un plazo motivado no cumple. Y la respuesta debe llegar al peticionario: una respuesta que no se comunica no satisface el derecho. En las peticiones de documentos e información, si la autoridad no responde en el término, la solicitud se entiende aceptada y las copias deben entregarse dentro de los tres días siguientes.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Tipo de petición</th><th>Término</th></tr></thead>
+<tbody>
+<tr><td>General (quejas, reclamos, reconocimiento de derechos)</td><td>15 días hábiles</td></tr>
+<tr><td>Documentos e información</td><td>10 días hábiles</td></tr>
+<tr><td>Consultas sobre materias a cargo de la autoridad</td><td>30 días hábiles</td></tr>
+<tr><td>Peticiones entre autoridades</td><td>10 días hábiles</td></tr>
+<tr><td>Ampliación excepcional</td><td>Hasta el doble, informando antes del vencimiento</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El aviso tardío</div><div class="practica-body"><p><strong>Situación:</strong> una petición general vence el día 15 y la dependencia avisa la ampliación el día 17.</p>
+<p><strong>Razonamiento:</strong> el aviso debía darse antes del vencimiento. Al día 17 la petición ya estaba vencida. Lo correcto era revisar los términos y avisar a tiempo, con el motivo y el nuevo plazo.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: atención prioritaria</summary><div class="acc-body"><p>Las autoridades deben dar atención prioritaria a las peticiones de reconocimiento de un derecho fundamental cuando deban resolverse para evitar un perjuicio irremediable, a las de los periodistas para el ejercicio de su actividad, y adoptar medidas de urgencia cuando la petición se relacione con una amenaza a la vida o la integridad de una persona (art. 20). La atención preferente a personas en situación de discapacidad, niños, adultos mayores y mujeres gestantes es, además, un derecho (art. 5).</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> <strong>15</strong> general, <strong>10</strong> documentos e información, <strong>30</strong> consultas, <strong>10</strong> entre autoridades. Ampliación: aviso <strong>antes</strong> del vencimiento y hasta el <strong>doble</strong>. Respuesta <strong>de fondo</strong>.</div>
+<div class="checkpoint" id="cp3"><div class="cp-tag">✅ Checkpoint 3</div><p class="cp-q">¿Cuál es el término para responder una consulta sobre materias a cargo de la autoridad?</p><div class="cp-opts"><button class="cp-opt" data-cp="3" data-ans="0">10 días hábiles.</button><button class="cp-opt" data-cp="3" data-ans="0">15 días hábiles.</button><button class="cp-opt" data-cp="3" data-ans="1">30 días hábiles.</button></div><div class="cp-fb" id="cpfb3">✔ Consultas: 30 días.</div></div>
+</div>
+
+<!-- MÓDULO 4 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">4</span><h3>Reglas especiales: incompletas, falta de competencia y reserva</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Si la petición está <mark>incompleta</mark>, la autoridad debe requerir al peticionario <strong>dentro de los 10 días</strong> siguientes a la radicación para que la complete en el término máximo de <strong>un mes</strong>; si no lo hace, se entiende que desistió, lo que se declara en <strong>acto motivado</strong> (art. 17). Si la autoridad <mark>no es competente</mark>, debe informarlo de inmediato si la petición es verbal, o <strong>dentro de los 5 días</strong> siguientes si es escrita, y <strong>remitirla</strong> al competente con copia al peticionario (art. 21). La información con <mark>reserva</mark> solo puede negarse mediante decisión <strong>motivada</strong> que indique la norma que la establece (arts. 24 y 25).</p></div>
+<div class="b-texto">
+<p>Estas reglas protegen a la persona frente a respuestas informales. Archivar una petición incompleta sin pedir lo que falta, devolver una petición por falta de competencia sin remitirla, o negar información diciendo solo que es “confidencial”, son conductas que vulneran el derecho de petición. El artículo 19 agrega reglas para las peticiones <strong>irrespetuosas</strong> (se rechazan), <strong>oscuras</strong> (se devuelven para que se aclaren en diez días; si no, se archivan) y <strong>reiterativas</strong> ya resueltas (la autoridad puede remitirse a las respuestas anteriores).</p>
+<p>Sobre la reserva, el peticionario puede insistir ante la autoridad, que debe enviar la documentación al juez administrativo para que decida (art. 26). Y la reserva <strong>no es oponible</strong> a las autoridades judiciales, legislativas ni a las administrativas que la soliciten para el ejercicio de sus funciones, que deben asegurarla (art. 27). En la DIAN, la reserva tributaria tiene fundamento legal propio en el Estatuto Tributario, pero no cubre toda la información de la entidad.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Situación</th><th>Regla</th></tr></thead>
+<tbody>
+<tr><td>Petición incompleta</td><td>Requerir en 10 días; un mes para completar; desistimiento en acto motivado (art. 17)</td></tr>
+<tr><td>Falta de competencia</td><td>Remitir en 5 días (escrita) e informar al peticionario (art. 21)</td></tr>
+<tr><td>Petición oscura</td><td>Devolver para aclarar en 10 días; si no, archivar (art. 19)</td></tr>
+<tr><td>Información reservada</td><td>Negativa motivada con la norma; insistencia ante el juez (arts. 24 a 26)</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La queja que “no es de aquí”</div><div class="practica-body"><p><strong>Situación:</strong> la queja sobre un impuesto municipal lleva dos semanas en una bandeja.</p>
+<p><strong>Razonamiento:</strong> debía remitirse a la autoridad municipal dentro de los cinco días siguientes a su recepción, con copia al peticionario. Se remite de inmediato y se informa al ciudadano, y se ajusta el control de la bandeja para que no se repita.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> incompleta → requerir en <strong>10 días</strong>, <strong>un mes</strong> para completar. Sin competencia → remitir en <strong>5 días</strong>. Reserva → negativa <strong>motivada</strong> con la norma.</div>
+<div class="checkpoint" id="cp4"><div class="cp-tag">✅ Checkpoint 4</div><p class="cp-q">¿Qué debe hacer la autoridad que recibe una petición escrita sobre un asunto que no es de su competencia?</p><div class="cp-opts"><button class="cp-opt" data-cp="4" data-ans="1">Remitirla al competente dentro de los 5 días e informar al peticionario.</button><button class="cp-opt" data-cp="4" data-ans="0">Archivarla e informar al peticionario que acuda a otra entidad.</button><button class="cp-opt" data-cp="4" data-ans="0">Responderla de fondo dentro de los 15 días.</button></div><div class="cp-fb" id="cpfb4">✔ Remitir en 5 días con copia al peticionario.</div></div>
+</div>
+
+<!-- MÓDULO 5 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">5</span><h3>Reglas generales del procedimiento y notificaciones</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las actuaciones se adelantan por escrito, verbalmente o por medios electrónicos (art. 35); los documentos de un mismo asunto forman un <mark>expediente único</mark> que el interesado puede examinar, salvo reserva (art. 36); y se debe <strong>comunicar la actuación a terceros</strong> que puedan resultar afectados (art. 37). Los actos de carácter <strong>general</strong> se publican; los de carácter <strong>particular</strong> se <mark>notifican</mark>. La regla es la notificación <strong>personal</strong> (art. 67). Para lograrla, se envía una <strong>citación</strong> dentro de los <mark>5 días</mark> siguientes a la expedición del acto (art. 68); si no se logra en los 5 días siguientes al envío de la citación, se notifica por <strong>aviso</strong> (art. 69). La notificación <strong>electrónica</strong> procede solo si el interesado la ha <mark>aceptado</mark> (art. 56).</p></div>
+<div class="b-texto">
+<p>La notificación no es un trámite menor: sin ella, el acto <strong>no produce efectos</strong> frente al interesado ni empiezan a correr los términos para recurrir, salvo que este revele que lo conoce, por ejemplo interponiendo un recurso (conducta concluyente, art. 72). En la notificación personal se entrega copia íntegra del acto y se indican los recursos que proceden, ante quién y en qué plazo. Si se omiten esos datos, la notificación es irregular.</p>
+<p>En el caso del día, el usuario fue notificado por correo electrónico sin haber autorizado ese medio. Esa notificación es irregular: el acto no le es oponible ni está en firme, salvo que el usuario haya actuado como si lo conociera. Ten presente, además, que los actos tributarios y aduaneros tienen reglas propias de notificación en el Estatuto Tributario y en la regulación aduanera; lo que estudias aquí es la regla general del CPACA.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Forma</th><th>Cuándo</th><th>Requisito</th></tr></thead>
+<tbody>
+<tr><td>Personal</td><td>Regla general</td><td>Copia íntegra; recursos, autoridad y plazos</td></tr>
+<tr><td>Electrónica</td><td>Si el interesado la aceptó</td><td>Autorización previa</td></tr>
+<tr><td>Citación</td><td>Para lograr la personal</td><td>Enviada dentro de los 5 días siguientes al acto</td></tr>
+<tr><td>Aviso</td><td>Si no se logra la personal en 5 días</td><td>Copia íntegra del acto</td></tr>
+<tr><td>Conducta concluyente</td><td>Cuando el interesado revela conocer el acto</td><td>Convalida la notificación irregular</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El correo no autorizado</div><div class="practica-body"><p><strong>Situación:</strong> se notificó por correo a un usuario que no autorizó ese medio, y la dependencia considera el acto en firme.</p>
+<p><strong>Razonamiento:</strong> la notificación electrónica sin aceptación es irregular; el acto no produce efectos frente al usuario. Se le orienta sobre su derecho a recurrir y se informa a la dependencia para que notifique en debida forma.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> citación en <strong>5 días</strong>; aviso si no se logra la personal en <strong>5 días</strong>; electrónica solo con <strong>aceptación</strong>; sin notificación, el acto <strong>no produce efectos</strong>, salvo conducta concluyente.</div>
+<div class="checkpoint" id="cp5"><div class="cp-tag">✅ Checkpoint 5</div><p class="cp-q">¿Cuándo procede la notificación electrónica de un acto particular según el CPACA?</p><div class="cp-opts"><button class="cp-opt" data-cp="5" data-ans="0">Siempre que la entidad tenga el correo del interesado.</button><button class="cp-opt" data-cp="5" data-ans="1">Cuando el interesado ha aceptado ese medio.</button><button class="cp-opt" data-cp="5" data-ans="0">Solo cuando fracasa la notificación por aviso.</button></div><div class="cp-fb" id="cpfb5">✔ Requiere aceptación del interesado.</div></div>
+</div>
+
+<!-- MÓDULO 6 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">6</span><h3>Los recursos</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Contra los actos definitivos proceden los recursos de <mark>reposición</mark> (ante quien expidió la decisión), <mark>apelación</mark> (ante el inmediato superior) y <mark>queja</mark> (cuando se rechaza la apelación) (art. 74). Se interponen por escrito en la diligencia de notificación o <strong>dentro de los 10 días siguientes</strong> a ella (art. 76). <strong>No proceden</strong> contra los actos de carácter general ni contra los de trámite, preparatorios o de ejecución, salvo norma en contrario (art. 75). Los recursos deben interponerse en término, por el interesado o su representante, sustentarse y aportar las pruebas (art. 77); si no cumplen esos requisitos, se rechazan (art. 78).</p></div>
+<div class="b-texto">
+<p>Los recursos permiten que la propia administración revise su decisión antes de que el interesado acuda al juez. El de reposición no es obligatorio para demandar; el de apelación sí lo es cuando procede. La queja se presenta ante el superior del funcionario que rechazó la apelación, dentro de los cinco días siguientes a la notificación del rechazo. Si un recurso no se resuelve en <strong>dos meses</strong> desde su interposición, se entiende negado (silencio negativo, art. 86), sin que eso exima a la autoridad de resolverlo.</p>
+<p>En la DIAN, los actos tributarios y aduaneros tienen recursos propios: por ejemplo, el recurso de reconsideración del Estatuto Tributario, con su propio plazo. La regla de los diez días es la del procedimiento administrativo general. Un error típico en la prueba es aplicar el plazo de un procedimiento a otro: lee con cuidado de qué tipo de acto se trata.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Recurso</th><th>Ante quién</th><th>Particularidad</th></tr></thead>
+<tbody>
+<tr><td>Reposición</td><td>Quien expidió la decisión</td><td>No es obligatorio para acudir al juez</td></tr>
+<tr><td>Apelación</td><td>El inmediato superior</td><td>Obligatorio cuando procede</td></tr>
+<tr><td>Queja</td><td>El superior de quien rechazó la apelación</td><td>Dentro de los 5 días siguientes a la notificación del rechazo</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · El recurso al día 8</div><div class="practica-body"><p><strong>Situación:</strong> un usuario presenta reposición al octavo día hábil después de la notificación, y un compañero dice que está vencido porque “son cinco días”.</p>
+<p><strong>Razonamiento:</strong> en el procedimiento general el plazo es de diez días (art. 76). El recurso está en término y debe tramitarse.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la revocación directa</summary><div class="acc-body"><p>Además de los recursos, la administración puede revocar sus propios actos, de oficio o a solicitud de parte, cuando sean manifiestamente contrarios a la Constitución o a la ley, no estén conformes con el interés público o social, o causen un agravio injustificado a una persona (art. 93). La revocación no procede a solicitud de parte si el interesado ya usó los recursos frente a la misma causal. Para revocar un acto particular que creó una situación jurídica o reconoció un derecho, en general se requiere el consentimiento previo, expreso y escrito del titular. Es una herramienta de corrección distinta de los recursos, que la autoridad competente decide.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> reposición, apelación y queja; <strong>10 días</strong> desde la notificación; no proceden contra actos <strong>generales, de trámite, preparatorios o de ejecución</strong>; silencio en recursos a los <strong>2 meses</strong>.</div>
+<div class="checkpoint" id="cp6"><div class="cp-tag">✅ Checkpoint 6</div><p class="cp-q">¿Contra cuál de estos actos NO procede recurso según el artículo 75 del CPACA?</p><div class="cp-opts"><button class="cp-opt" data-cp="6" data-ans="0">Contra un acto definitivo que niega una solicitud particular.</button><button class="cp-opt" data-cp="6" data-ans="1">Contra un acto de trámite que solo impulsa la actuación.</button><button class="cp-opt" data-cp="6" data-ans="0">Contra un acto que impone una sanción a una persona.</button></div><div class="cp-fb" id="cpfb6">✔ Los actos de trámite no son recurribles, salvo norma en contrario.</div></div>
+</div>
+
+<!-- MÓDULO 7 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">7</span><h3>Silencio administrativo y conclusión del procedimiento</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>El <mark>silencio negativo</mark> opera cuando transcurren <strong>tres meses</strong> desde la presentación de una petición sin que se haya notificado decisión: se entiende negada (art. 83). Su ocurrencia <strong>no exime</strong> a la autoridad de responder ni de su responsabilidad. El <mark>silencio positivo</mark> solo opera en los casos que la ley prevé expresamente (art. 84). El procedimiento concluye con la <mark>firmeza</mark> del acto (art. 87): cuando contra él no procede recurso, cuando los recursos se decidieron, cuando no se interpusieron o se renunció a ellos, o cuando se acepta el desistimiento. Los actos se presumen <strong>legales</strong> mientras no sean anulados por el juez (art. 88) y, en firme, son <strong>ejecutorios</strong> (art. 89).</p></div>
+<div class="b-texto">
+<p>El silencio es una protección para el ciudadano, no una forma de responder. Si la entidad no contesta en tres meses, la persona puede acudir al juez como si su petición hubiera sido negada; pero la entidad sigue obligada a contestar y el servidor que no respondió puede responder disciplinariamente. Por eso, reportar peticiones como “cerradas por silencio” es un error.</p>
+<p>La <strong>firmeza</strong> es importante para la DIAN porque permite ejecutar el acto, por ejemplo cobrar una obligación. Un acto mal notificado no queda en firme. Y la <strong>pérdida de ejecutoriedad</strong> (art. 91) ocurre, entre otras causas, cuando el acto es suspendido por el juez, cuando desaparecen sus fundamentos o cuando no se ejecuta en cinco años desde su firmeza. Además de los recursos, la administración puede revocar directamente sus actos en los casos previstos (arts. 93 a 97); para revocar un acto particular que creó una situación jurídica, se requiere en general el consentimiento previo, expreso y escrito del titular.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Figura</th><th>Regla</th></tr></thead>
+<tbody>
+<tr><td>Silencio negativo en peticiones</td><td>3 meses; no exime de responder</td></tr>
+<tr><td>Silencio negativo en recursos</td><td>2 meses</td></tr>
+<tr><td>Silencio positivo</td><td>Solo si la ley lo prevé</td></tr>
+<tr><td>Firmeza</td><td>Sin recursos procedentes, recursos decididos, no interpuestos o renunciados</td></tr>
+<tr><td>Presunción de legalidad</td><td>El acto vale mientras no lo anule el juez</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · “Ya operó el silencio”</div><div class="practica-body"><p><strong>Situación:</strong> un compañero propone cerrar en el sistema las peticiones con más de tres meses sin respuesta, “porque ya operó el silencio negativo”.</p>
+<p><strong>Razonamiento:</strong> el silencio no exime de responder (art. 83). Las peticiones se mantienen abiertas, se responden de fondo y se informa al jefe el rezago para tomar medidas.</p></div></div>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> silencio negativo a los <strong>3 meses</strong> (peticiones) y <strong>2 meses</strong> (recursos); <strong>no exime</strong> de responder. Silencio positivo solo por <strong>ley</strong>. El acto se presume <strong>legal</strong>.</div>
+<div class="checkpoint" id="cp7"><div class="cp-tag">✅ Checkpoint 7</div><p class="cp-q">¿Qué efecto tiene el silencio administrativo negativo sobre el deber de responder?</p><div class="cp-opts"><button class="cp-opt" data-cp="7" data-ans="0">Extingue el deber de responder, porque la petición ya se entiende negada.</button><button class="cp-opt" data-cp="7" data-ans="0">Convierte la petición en aceptada a favor del ciudadano.</button><button class="cp-opt" data-cp="7" data-ans="1">No exime a la autoridad de responder ni de su responsabilidad.</button></div><div class="cp-fb" id="cpfb7">✔ El silencio no exime de responder.</div></div>
+</div>
+
+<!-- MÓDULO 8 -->
+<div class="modulo">
+<div class="modulo-head"><span class="modulo-n">8</span><h3>El sistema PQRSF y la política de servicio al ciudadano</h3></div>
+<div class="def-panel"><span class="def-label">Idea central</span><p>Las <mark>PQRSF</mark> son las peticiones, quejas, reclamos, sugerencias y felicitaciones (o denuncias) que los ciudadanos presentan a la entidad. El <strong>artículo 76 de la Ley 1474 de 2011</strong> obliga a toda entidad a tener al menos una dependencia encargada de recibir, tramitar y resolver las quejas, sugerencias y reclamos, y a la oficina de control interno a vigilar esa atención. En MIPG, el <mark>servicio al ciudadano</mark> es una política de la dimensión de gestión con valores para resultados: busca un acceso efectivo, oportuno y de calidad, por todos los canales, con atención incluyente. En la DIAN existe además la <strong>Defensoría del Contribuyente y del Usuario Aduanero</strong>, que vela por los derechos de los usuarios en sus relaciones con la entidad.</p></div>
+<div class="b-texto">
+<p>El sistema PQRSF funciona como un proceso: <strong>recepción</strong> por todos los canales, con radicación y constancia; <strong>clasificación</strong> por tipo, para aplicar el término correcto; <strong>asignación</strong> a la dependencia competente o remisión a la entidad que corresponda; <strong>respuesta</strong> de fondo y oportuna; <strong>comunicación</strong> al peticionario; <strong>seguimiento</strong> de los términos; y <strong>análisis</strong> para la mejora. Una clasificación errónea (por ejemplo, tratar una solicitud de información como consulta) hace que se aplique un término mayor y que el vencimiento pase inadvertido.</p>
+<p>La política de servicio al ciudadano va más allá de responder. Incluye conocer a los usuarios, gestionar los canales (presencial, telefónico y virtual) con estándares de calidad, garantizar la accesibilidad y el enfoque diferencial, formar a los servidores que atienden y medir la satisfacción. Para el servidor, se traduce en conductas concretas: escuchar, orientar con lenguaje claro, informar el estado de los trámites, no pedir requisitos innecesarios y remitir correctamente lo que no es de su competencia.</p>
+</div>
+<div class="tabla-wrap"><table>
+<thead><tr><th>Etapa del sistema PQRSF</th><th>Buena práctica</th><th>Error típico</th></tr></thead>
+<tbody>
+<tr><td>Recepción</td><td>Radicar toda petición, cualquiera que sea el canal</td><td>Rechazar peticiones verbales</td></tr>
+<tr><td>Clasificación</td><td>Aplicar el tipo y el término correctos</td><td>Tratar información como consulta</td></tr>
+<tr><td>Asignación</td><td>Enviar a la dependencia competente o remitir</td><td>Traslados internos sucesivos</td></tr>
+<tr><td>Respuesta</td><td>De fondo, clara y en término</td><td>“Su solicitud está en trámite”</td></tr>
+<tr><td>Análisis</td><td>Identificar causas recurrentes</td><td>Responder caso por caso sin aprender</td></tr>
+</tbody></table></div>
+<div class="practica"><div class="practica-head">💼 En la práctica · La queja en la ventanilla</div><div class="practica-body"><p><strong>Situación:</strong> un usuario presenta verbalmente una queja por el trato recibido en otra ventanilla.</p>
+<p><strong>Razonamiento:</strong> la recibes, dejas constancia y la radicas en el sistema PQRSF como queja, para que se tramite en el término de quince días. Le informas el número de radicado y cómo hacer seguimiento.</p></div></div>
+<details class="acc"><summary>📖 Profundiza: la Defensoría del Contribuyente y del Usuario Aduanero</summary><div class="acc-body"><p>La Defensoría del Contribuyente y del Usuario Aduanero es una instancia que vela por los derechos de los contribuyentes y usuarios aduaneros en sus relaciones con la DIAN. Atiende sus quejas, interviene para que se respeten sus garantías y formula recomendaciones a la entidad. No reemplaza los recursos ni los procedimientos legales, ni decide de fondo los asuntos tributarios o aduaneros. Para el servidor, conocer su existencia permite orientar correctamente a un usuario que siente vulnerados sus derechos: además de los recursos que procedan, puede acudir a esta instancia. Lo que no corresponde es desestimular la queja ni tomarla como algo personal: las quejas son información valiosa para mejorar el servicio.</p></div></details>
+<div class="ojo"><b>🎯 Ojo en la prueba:</b> art. <strong>76 Ley 1474</strong>: dependencia encargada de quejas, sugerencias y reclamos. Servicio al ciudadano: política de MIPG en <strong>gestión con valores para resultados</strong>. La <strong>Defensoría del Contribuyente</strong> protege los derechos de los usuarios.</div>
+<div class="checkpoint" id="cp8"><div class="cp-tag">✅ Checkpoint 8</div><p class="cp-q">¿Por qué es importante clasificar correctamente una PQRSF?</p><div class="cp-opts"><button class="cp-opt" data-cp="8" data-ans="1">Porque la clasificación determina el término aplicable y el control del vencimiento.</button><button class="cp-opt" data-cp="8" data-ans="0">Porque solo las quejas deben responderse de fondo.</button><button class="cp-opt" data-cp="8" data-ans="0">Porque las sugerencias no se radican en el sistema.</button></div><div class="cp-fb" id="cpfb8">✔ La clasificación define el término.</div></div>
+</div>
+</section>
+
+<section class="section" data-sec="3">
+  <span class="eyebrow">Sección 4 · Comparaciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">1. Términos del derecho de petición</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>General</th><th>Documentos e información</th><th>Consultas</th><th>Entre autoridades</th></tr></thead>
+<tbody>
+<tr><td>15 días</td><td>10 días</td><td>30 días</td><td>10 días</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">2. Petición incompleta y petición oscura</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Incompleta (art. 17)</th><th>Oscura (art. 19)</th></tr></thead>
+<tbody>
+<tr><td>Requerir en 10 días; un mes para completar</td><td>Devolver para aclarar en 10 días</td></tr>
+<tr><td>Desistimiento en acto motivado</td><td>Si no se aclara, se archiva</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">3. Publicación y notificación</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Publicación</th><th>Notificación</th></tr></thead>
+<tbody>
+<tr><td>Actos de carácter general</td><td>Actos de carácter particular</td></tr>
+<tr><td>Diario Oficial o gaceta y sitio web</td><td>Personal, electrónica con aceptación, citación y aviso</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">4. Los recursos</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Reposición</th><th>Apelación</th><th>Queja</th></tr></thead>
+<tbody>
+<tr><td>Ante quien decidió</td><td>Ante el superior</td><td>Contra el rechazo de la apelación</td></tr>
+</tbody></table></div>
+  <h4 style="margin:18px 0 6px;color:var(--azul);">5. Silencio negativo y positivo</h4>
+  <div class="tabla-wrap"><table>
+<thead><tr><th>Negativo</th><th>Positivo</th></tr></thead>
+<tbody>
+<tr><td>Regla general: 3 meses (peticiones), 2 meses (recursos)</td><td>Solo si la ley lo prevé</td></tr>
+<tr><td>No exime de responder</td><td>Debe protocolizarse la constancia</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="section" data-sec="4">
+  <span class="eyebrow">Sección 5 · Casos prácticos</span>
+  <h2 class="sec-title">📂 Casos resueltos de CPACA y PQRSF</h2>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 1 · La petición verbal</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un ciudadano pide información verbalmente y le exigen un formulario.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué corresponde?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Recibirla, dejar constancia y radicarla; no se exige formulario salvo ley.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 2 · La solicitud sin un documento</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Una solicitud llega sin un soporte y se propone archivarla.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué regla aplica?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Requerir en 10 días; el peticionario tiene un mes; si no completa, desistimiento motivado.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 3 · El predial en la DIAN</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Llega una queja sobre un impuesto municipal.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Qué haces?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>Remitirla al municipio en 5 días e informar al peticionario.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 4 · El correo no autorizado</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Un acto se notificó por correo sin aceptación.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Está en firme?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>No: la notificación es irregular, salvo conducta concluyente.</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 5 · El recurso al octavo día</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Te dicen que el plazo para reposición es de cinco días.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Es correcto?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>No: en el procedimiento general son diez días (art. 76).</p></div>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="caso-head">📋 Caso 6 · Tres meses sin respuesta</div>
+    <div class="caso-body">
+      <span class="label">Situación</span>
+      <p>Se propone cerrar peticiones por silencio.</p>
+      <span class="label">Pregunta</span>
+      <p>¿Es correcto?</p>
+      <span class="label">Respuesta</span>
+      <div class="resp-correcta"><p>No: el silencio no exime de responder (art. 83).</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="5">
+  <span class="eyebrow">Sección 6 · Errores frecuentes</span>
+  <h2 class="sec-title">⚠️ Errores comunes sobre CPACA y PQRSF</h2>
+  <div class="card"><p><strong>❌ Confundir los términos.</strong> 15 general, 10 información, 30 consultas.</p></div>
+  <div class="card"><p><strong>❌ Ampliar después del vencimiento.</strong> El aviso es antes, y hasta el doble.</p></div>
+  <div class="card"><p><strong>❌ Archivar incompletas sin requerir.</strong> Art. 17.</p></div>
+  <div class="card"><p><strong>❌ Devolver sin remitir.</strong> Remitir en 5 días al competente.</p></div>
+  <div class="card"><p><strong>❌ Creer que “en trámite” es respuesta.</strong> Debe ser de fondo.</p></div>
+  <div class="card"><p><strong>❌ Notificar por correo sin aceptación.</strong> Art. 56.</p></div>
+  <div class="card"><p><strong>❌ Decir que los recursos son en cinco días.</strong> Son diez en el procedimiento general.</p></div>
+  <div class="card"><p><strong>❌ Cerrar peticiones por silencio.</strong> No exime de responder.</p></div>
+</section>
+
+<section class="section" data-sec="6">
+  <span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para la prueba</h2>
+  <div class="card card-lead"><p>Números del día:</p>
+    <ul class="lista">
+      <li><strong>15 / 10 / 30 / 10:</strong> términos de petición.</li>
+      <li><strong>10 días + 1 mes:</strong> requerir incompletas y plazo para completar.</li>
+      <li><strong>5 días:</strong> remitir por falta de competencia; citación; aviso.</li>
+      <li><strong>3 días:</strong> declararse impedido.</li>
+      <li><strong>10 días:</strong> recursos. <strong>3 meses / 2 meses:</strong> silencio.</li>
+    </ul>
+  </div>
+  <div class="card"><ul class="lista">
+    <li><strong>Distingue el régimen:</strong> el Estatuto Tributario y la regulación aduanera tienen reglas propias.</li>
+    <li><strong>Descarta</strong> opciones que devuelven, archivan o rechazan sin el trámite legal.</li>
+  </ul></div>
+</section>
+
+<section class="section" data-sec="7">
+  <span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Respondimos a tiempo: dijimos que estaba en trámite”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: hubo comunicación.</div>
+      <div class="t-row malo">🔴 La trampa: no es respuesta de fondo.</div>
+      <div class="t-row bueno">🟢 Lo correcto: responder de fondo o avisar la ampliación motivada antes del vencimiento.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Eso no es de aquí”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: no es competencia de la DIAN.</div>
+      <div class="t-row malo">🔴 La trampa: no basta devolver.</div>
+      <div class="t-row bueno">🟢 Lo correcto: remitir en 5 días al competente e informar.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “El correo es un medio idóneo”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: hay constancia de envío.</div>
+      <div class="t-row malo">🔴 La trampa: requiere aceptación.</div>
+      <div class="t-row bueno">🟢 Lo correcto: notificar en debida forma.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Ya operó el silencio”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: la ley le da efectos.</div>
+      <div class="t-row malo">🔴 La trampa: no exime de responder.</div>
+      <div class="t-row bueno">🟢 Lo correcto: responder y escalar el rezago.</div>
+    </div>
+  </div>
+  <div class="trampa">
+    <div class="trampa-q">🎭 “Sin el documento, se archiva”</div>
+    <div class="trampa-detail">
+      <div class="t-row parece">🟡 Parece correcto: falta un requisito.</div>
+      <div class="t-row malo">🔴 La trampa: hay que requerir primero.</div>
+      <div class="t-row bueno">🟢 Lo correcto: requerir en 10 días y dar un mes.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-sec="8">
+  <span class="eyebrow">Sección 9 · Repaso</span>
+  <h2 class="sec-title">🧠 Flashcards de repaso</h2>
+  <p>Repasa los conceptos clave con estas tarjetas interactivas. Intenta responder antes de voltear cada una.</p>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="flash-face flash-front"><div class="flash-tag">Pregunta</div><p id="flashFront"></p><div class="flash-hint">Clic para voltear</div></div>
+      <div class="flash-face flash-back"><div class="flash-tag">Respuesta</div><p id="flashBack"></p></div>
+    </div>
+    <div class="flash-controls">
+      <button id="flashPrev">← Anterior</button>
+      <span id="flashCounter"></span>
+      <button id="flashFlip">Voltear</button>
+      <button id="flashNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" data-sec="9">
+  <span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>📘 CPACA</h4><p>Ley 1437; supletorio frente a procedimientos especiales; 13 principios.</p></div>
+    <div class="resumen-item"><h4>⚖️ Derechos y deberes</h4><p>Arts. 5, 6, 7 y 9; impedimentos (11 y 12).</p></div>
+    <div class="resumen-item"><h4>✉️ Petición</h4><p>15/10/30 días; ampliación antes del vencimiento; respuesta de fondo.</p></div>
+    <div class="resumen-item"><h4>📎 Especiales</h4><p>Incompletas (17), oscuras (19), sin competencia (21), reserva (24-27).</p></div>
+    <div class="resumen-item"><h4>📬 Notificación</h4><p>Personal, electrónica con aceptación, citación y aviso; sin notificación no hay efectos.</p></div>
+    <div class="resumen-item"><h4>🔁 Recursos</h4><p>Reposición, apelación, queja; 10 días; actos no recurribles.</p></div>
+    <div class="resumen-item"><h4>🔇 Silencio</h4><p>3 meses / 2 meses; no exime; firmeza y presunción de legalidad.</p></div>
+    <div class="resumen-item"><h4>🧾 PQRSF</h4><p>Art. 76 Ley 1474; proceso de atención; política de servicio al ciudadano.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>CPACA</dt><dd>Código de Procedimiento Administrativo y de lo Contencioso Administrativo (Ley 1437 de 2011).</dd>
+      <dt>Respuesta de fondo</dt><dd>Respuesta clara, precisa y congruente que resuelve lo pedido.</dd>
+      <dt>Desistimiento tácito</dt><dd>Efecto de no completar la petición en el mes concedido, declarado en acto motivado.</dd>
+      <dt>Notificación por aviso</dt><dd>Forma subsidiaria cuando no se logra la notificación personal tras la citación.</dd>
+      <dt>Conducta concluyente</dt><dd>Revelación por el interesado de que conoce el acto, que convalida la notificación irregular.</dd>
+      <dt>Acto de trámite</dt><dd>Acto que impulsa la actuación sin decidir el fondo; por regla general no es recurrible.</dd>
+      <dt>Silencio administrativo</dt><dd>Efecto que la ley da a la falta de decisión en un término.</dd>
+      <dt>PQRSF</dt><dd>Peticiones, quejas, reclamos, sugerencias y felicitaciones.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Listo para el simulacro →</span>
+    <button class="advance-btn" onclick="document.querySelectorAll('nav button')[10].click();">Ir al Simulacro 🎓</button>
+  </div>
+</section>
+<section class="section" data-sec="10">
+  <span class="eyebrow">Sección 11 · Simulacro</span>
+  <h2 class="sec-title">🎓 Simulacro de juicio situacional — CPACA, PQRSF y servicio al ciudadano</h2>
+  <div class="quiz-intro">
+    <p>12 preguntas tipo prueba escrita: un caso, un enunciado y 3 opciones (A, B, C), de las cuales solo una es la actuación correcta. Responde todas y al final verás tu puntaje y los temas a reforzar.</p>
+    <div class="dific-tags"><span class="tag b">4 Básicas</span><span class="tag i">5 Intermedias</span><span class="tag a">3 Avanzadas</span></div>
+  </div>
+  <div id="quiz"></div>
+  <div style="text-align:center;margin-top:24px;">
+    <button class="btn gold" id="btnCalcular">📊 Ver mi resultado</button>
+  </div>
+  <div id="resultado">
+    <p class="score-num" id="scoreNum"></p>
+    <p id="scoreMsg" style="font-size:1.05rem;margin:12px 0;"></p>
+    <div id="temasReforzar"></div>
+    <button class="btn" id="btnReiniciar" style="margin-top:18px;">🔄 Reiniciar simulacro</button>
+  </div>
+  <div class="advance-bar">
+    <span class="advance-hint">Has completado el Día 4. Siguiente: Día 5 · INTENS-DIAN-05 · Evasión, elusión, contrabando y transparencia.</span>
+    <button class="advance-btn final" id="btnFinalizar" onclick="if(confirm('✅ Finalizar Día 4 y marcar como completado?\n\nPróxima guía: Día 5 · INTENS-DIAN-05 · Evasión, elusión, contrabando y transparencia.'))window.parent.postMessage({type:'GUIA_COMPLETADA'},'*');">✅ Finalizar Día 4</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-brand">Ascenso Público</div>
+  <div class="f-slogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="f-meta">INTENS-DIAN-04 · Día 4 · v1.0 · © 2026 Ascenso Público · Preparación por cargo para concursos CNSC · Todos los derechos reservados</div>
+</footer>
+
+
+<script>
+const navBtns=document.querySelectorAll('nav button');
+const sections=document.querySelectorAll('.section');
+navBtns.forEach(btn=>{btn.addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  sections.forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.section[data-sec="'+btn.dataset.sec+'"]').classList.add('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+});});
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('readbar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+document.querySelectorAll('.cp-opt').forEach(btn=>{btn.addEventListener('click',function(){
+  const cp=this.dataset.cp,correct=this.dataset.ans==='1';
+  this.parentElement.querySelectorAll('.cp-opt').forEach(o=>{o.classList.add('cp-lock');if(o.dataset.ans==='1')o.classList.add('cp-ok');else o.classList.add('cp-no');});
+  document.getElementById('cpfb'+cp).classList.add('show');
+});});
+const flashcards=[
+ {
+  "f": "¿Cuáles son los términos del derecho de petición?",
+  "b": "15 días hábiles la regla general; 10 para documentos e información; 30 para consultas; 10 entre autoridades."
+ },
+ {
+  "f": "¿Cómo se amplía el término de una petición?",
+  "b": "Informando al peticionario antes del vencimiento el motivo y el nuevo plazo, que no puede exceder del doble del inicial."
+ },
+ {
+  "f": "¿Qué se hace con una petición incompleta?",
+  "b": "Requerir al peticionario dentro de los 10 días para que complete en máximo un mes; si no lo hace, se declara el desistimiento en acto motivado."
+ },
+ {
+  "f": "¿Qué hace la autoridad sin competencia?",
+  "b": "Remite la petición escrita al competente dentro de los 5 días e informa al peticionario."
+ },
+ {
+  "f": "¿Cuándo procede la notificación electrónica?",
+  "b": "Cuando el interesado ha aceptado ese medio (art. 56)."
+ },
+ {
+  "f": "¿Qué pasa si un acto particular no se notifica?",
+  "b": "No produce efectos frente al interesado, salvo conducta concluyente (art. 72)."
+ },
+ {
+  "f": "¿En qué término se interponen los recursos en el procedimiento general?",
+  "b": "En la diligencia de notificación o dentro de los 10 días siguientes (art. 76)."
+ },
+ {
+  "f": "¿Contra qué actos no proceden recursos?",
+  "b": "Contra los de carácter general y los de trámite, preparatorios o de ejecución, salvo norma en contrario (art. 75)."
+ },
+ {
+  "f": "¿Qué es el silencio negativo?",
+  "b": "Pasados tres meses sin decisión notificada, la petición se entiende negada; no exime de responder (art. 83)."
+ },
+ {
+  "f": "¿Qué ordena el artículo 76 de la Ley 1474 de 2011?",
+  "b": "Que toda entidad tenga una dependencia encargada de quejas, sugerencias y reclamos, y que control interno vigile esa atención."
+ }
+];
+let flashIndex=0;
+const flashEl=document.getElementById('flashcard');
+const flashFront=document.getElementById('flashFront');
+const flashBack=document.getElementById('flashBack');
+const flashCounter=document.getElementById('flashCounter');
+function renderFlash(){flashEl.classList.remove('flipped');flashFront.textContent=flashcards[flashIndex].f;flashBack.textContent=flashcards[flashIndex].b;flashCounter.textContent='Tarjeta '+(flashIndex+1)+' de '+flashcards.length;}
+flashEl.addEventListener('click',()=>flashEl.classList.toggle('flipped'));
+document.getElementById('flashFlip').addEventListener('click',e=>{e.stopPropagation();flashEl.classList.toggle('flipped');});
+document.getElementById('flashPrev').addEventListener('click',()=>{flashIndex=(flashIndex-1+flashcards.length)%flashcards.length;renderFlash();});
+document.getElementById('flashNext').addEventListener('click',()=>{flashIndex=(flashIndex+1)%flashcards.length;renderFlash();});
+renderFlash();
+const preguntas=[
+ {
+  "nivel": "b",
+  "tema": "Términos del derecho de petición",
+  "ctx": "En el grupo de atención de una dirección seccional se reciben, en la misma semana, tres tipos de solicitudes: un contribuyente pide copia de un documento de su expediente; una empresa formula una consulta sobre cómo interpretar una norma a cargo de la entidad; y un ciudadano presenta una queja por el trato que recibió. El nuevo sistema de control de términos aplica a todas el plazo general de quince días hábiles, porque así quedó configurado. Un compañero cree que está bien, porque “todas son peticiones”. La coordinadora te pide revisar si la configuración es correcta antes de que se venzan las solicitudes.",
+  "q": "Debes revisar la configuración antes de que se venzan las solicitudes de la semana. El sistema aplica quince días a una solicitud de copias, a una consulta y a una queja, y un compañero cree que está bien porque todas son peticiones. ¿Qué términos corresponden?",
+  "ops": [
+   "Quince días para las tres, porque todas son peticiones y el término general de la ley se aplica por igual a cualquier solicitud que presenten las personas ante la entidad.",
+   "Diez días para la solicitud de copias, treinta días para la consulta y quince días para la queja, porque cada modalidad de petición tiene un término distinto en la ley.",
+   "Treinta días para las tres, porque la entidad tiene una carga alta de trabajo y puede ampliar los términos de todas las peticiones sin necesidad de informar a los peticionarios."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Las peticiones de documentos e información y las consultas tienen términos especiales.",
+   "Correcto. Documentos e información: 10; consultas: 30; quejas y regla general: 15.",
+   "Incorrecto. La ampliación es excepcional, se informa antes del vencimiento y hasta el doble."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Falta de competencia",
+  "ctx": "Llega por correo certificado a una dirección seccional de la DIAN una petición escrita de una ciudadana que reclama por el cobro del impuesto de industria y comercio de su pequeño negocio, que considera excesivo. La petición queda en una bandeja durante dos semanas porque el servidor que la recibió anotó “no es de aquí” y nadie la tramitó. La ciudadana llama a preguntar por su solicitud y le dicen que debe ir a la alcaldía. El coordinador te pide indicar qué debió hacerse desde que llegó la petición y qué hacer ahora para corregir la situación.",
+  "q": "El coordinador necesita corregir la situación hoy mismo. La petición sobre un impuesto municipal estuvo dos semanas en una bandeja con la anotación de que no era de la DIAN, y a la ciudadana solo le dijeron que fuera a la alcaldía. ¿Qué debió hacerse y qué corresponde ahora?",
+  "ops": [
+   "Remitirla a la autoridad municipal competente dentro de los cinco días siguientes a su recepción, con copia a la ciudadana; ahora debe remitirse de inmediato e informarle.",
+   "Archivarla, porque la DIAN no administra el impuesto de industria y comercio, y la orientación verbal que se le dio a la ciudadana por teléfono es suficiente para cumplir.",
+   "Responderla de fondo dentro de los quince días, explicando a la ciudadana cómo se calcula el impuesto, porque la DIAN es la entidad que conoce los impuestos del país."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. Art. 21: remisión en 5 días con copia al peticionario; ahora, remitir sin más demora.",
+   "Incorrecto. La falta de competencia obliga a remitir, no a archivar.",
+   "Incorrecto. La DIAN no es competente para resolver de fondo sobre un tributo municipal."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Prohibiciones de las autoridades",
+  "ctx": "Para tramitar una solicitud de devolución, el instructivo interno de una dependencia exige que el contribuyente adjunte una copia impresa de su RUT actualizado y un certificado de que no tiene deudas con la DIAN, documentos que la entidad puede consultar directamente en sus propios sistemas. Un contribuyente se queja de que tuvo que hacer varias filas para obtener esos papeles. Un compañero defiende el instructivo, porque “así el expediente queda completo”. El jefe te pide tu concepto sobre si el instructivo se ajusta al CPACA. La dependencia tramita varias decenas de devoluciones cada mes.",
+  "q": "El jefe quiere decidir si ajusta el instructivo antes del próximo mes. Se exige al contribuyente una copia del RUT y un certificado de deudas que la entidad puede consultar en sus sistemas, y un compañero defiende el requisito. ¿Qué concepto das?",
+  "ops": [
+   "Que el instructivo es correcto, porque la entidad puede exigir los documentos que considere necesarios para tener un expediente completo y evitar errores en las devoluciones.",
+   "Que el instructivo debe ajustarse, porque el artículo 9 del CPACA prohíbe exigir documentos que reposan en la propia entidad, y los servidores pueden consultarlos en los sistemas.",
+   "Que el instructivo solo debe ajustarse si el contribuyente presenta una queja formal por escrito, porque mientras tanto se presume que los requisitos son aceptados por los usuarios."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. La entidad no puede exigir documentos que ya tiene.",
+   "Correcto. Art. 9: está prohibido exigir documentos que reposan en la entidad.",
+   "Incorrecto. La prohibición rige con independencia de que haya quejas."
+  ]
+ },
+ {
+  "nivel": "b",
+  "tema": "Silencio administrativo",
+  "ctx": "Al preparar el informe mensual de la dependencia, un compañero propone cerrar en el sistema las setenta peticiones que llevan más de tres meses sin respuesta, con la anotación “resuelta por silencio administrativo negativo”, porque así el indicador de peticiones pendientes mejora y, según él, la ley ya les dio una respuesta. El jefe del grupo duda, porque recuerda que el silencio tiene efectos, pero no sabe si eso libera a la entidad de contestar. Te pide aclarar el punto antes de enviar el informe a la dirección seccional. El jefe recuerda que el silencio tiene efectos, pero no sabe cuáles.",
+  "q": "El informe debe enviarse hoy a la dirección seccional y el jefe necesita un criterio claro. Un compañero propone cerrar setenta peticiones con más de tres meses sin respuesta por silencio negativo, para mejorar el indicador. ¿Qué aclaración es correcta?",
+  "ops": [
+   "Que se pueden cerrar, porque al cumplirse los tres meses la petición se entiende negada y la entidad queda liberada de responder, y el ciudadano puede acudir al juez si lo desea.",
+   "Que se pueden cerrar solo si se informa a cada peticionario por correo que su petición se entendió negada, porque así se cumple el deber de comunicar la decisión.",
+   "Que el silencio negativo no exime a la entidad de responder ni de su responsabilidad, por lo que las peticiones deben seguir abiertas, responderse de fondo y reportarse como rezago."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. El art. 83 dispone que el silencio no exime de responder.",
+   "Incorrecto. Informar que se entendió negada no es una respuesta de fondo.",
+   "Correcto. El silencio no exime de responder; el rezago se reporta y se atiende."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Ampliación del término",
+  "ctx": "Una petición general se radicó el lunes 2 de un mes sin festivos. La dependencia no logró reunir la información a tiempo y, el miércoles 25, envió al peticionario una comunicación en la que le informaba que, por la complejidad del asunto, respondería dentro de los quince días hábiles siguientes. Respondió de fondo el día 3 del mes siguiente. El jefe de la dependencia sostiene que la petición se respondió en término, porque la ampliación permitía hasta el doble del plazo inicial y la respuesta llegó antes de cumplirse los treinta días. El peticionario presentó después una queja por la demora.",
+  "q": "El jefe sostiene que la respuesta estuvo en término porque se respetó el doble del plazo. La petición general vencía a los quince días hábiles, el aviso de ampliación se envió el día 25 y la respuesta llegó después. ¿Cómo debe calificarse el caso?",
+  "ops": [
+   "Como respondida en término, porque la ampliación no superó el doble del plazo inicial y la dependencia explicó de manera suficiente la complejidad del asunto al peticionario.",
+   "Como extemporánea, porque el aviso de ampliación debía darse antes del vencimiento de los quince días, y cuando se envió la petición ya estaba vencida.",
+   "Como respondida en término, porque la ley no exige un momento específico para informar la ampliación, siempre que la respuesta final se dé dentro del doble del término."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. El límite del doble solo aplica si el aviso se dio antes del vencimiento.",
+   "Correcto. Art. 14: el aviso debe darse antes del vencimiento; al día 25 ya estaba vencida.",
+   "Incorrecto. La ley exige informar antes del vencimiento del término."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Petición incompleta",
+  "ctx": "En una dependencia, las solicitudes que llegan sin alguno de los documentos exigidos se “archivan” con una anotación interna y sin comunicar nada al peticionario. Un contribuyente presentó una solicitud a la que le faltaba un certificado, y tres meses después llama para preguntar por qué no le han respondido. El servidor que lo atiende le dice que su solicitud se archivó porque estaba incompleta y que debe presentarla de nuevo. El contribuyente reclama que nunca le pidieron el documento. El jefe te pide establecer qué debió hacerse. El contribuyente dice que tuvo que empezar de cero.",
+  "q": "El jefe quiere corregir la práctica de la dependencia. La solicitud incompleta se archivó sin pedir el documento faltante y, tres meses después, se le dijo al contribuyente que la presentara de nuevo. ¿Qué debió hacerse según el CPACA?",
+  "ops": [
+   "Archivarla, como se hizo, porque la carga de presentar la solicitud completa es del contribuyente y la entidad no tiene el deber de advertirle los documentos que le faltan.",
+   "Resolverla de fondo con la información disponible, negando lo pedido por falta del certificado, porque así se cumple el término y se evita que la solicitud quede sin respuesta.",
+   "Requerir al peticionario dentro de los diez días siguientes a la radicación para que la completara en un mes y, solo si no lo hacía, declarar el desistimiento en acto motivado."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. El art. 17 obliga a requerir al peticionario antes de cualquier archivo.",
+   "Incorrecto. Lo procedente era requerir el documento, no negar de plano.",
+   "Correcto. Art. 17: requerir en 10 días, un mes para completar, desistimiento motivado."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Notificación",
+  "ctx": "Una dependencia que resuelve solicitudes particulares por el procedimiento general notifica sus decisiones únicamente por correo electrónico, a la dirección que el ciudadano escribió en el formulario como dato de contacto. Ningún ciudadano ha aceptado expresamente ser notificado por ese medio. Un ciudadano se acerca a preguntar por su solicitud y se entera de que fue negada hace un mes; le dicen que ya no puede recurrir porque el plazo venció. El ciudadano asegura que nunca revisó ese correo. Debes orientar al ciudadano y a la dependencia. El ciudadano pide que le expliquen qué puede hacer ahora.",
+  "q": "Debes orientar tanto al ciudadano como a la dependencia que notificó, que considera el acto en firme. La decisión se notificó por correo sin que el ciudadano aceptara ese medio, y le dicen que ya no puede recurrir porque venció el plazo. ¿Cuál es la orientación correcta?",
+  "ops": [
+   "Que el plazo para recurrir está vencido, porque el correo era el dato de contacto del ciudadano y la entidad tiene constancia de que el mensaje fue enviado en la fecha de la decisión.",
+   "Que la notificación es irregular por falta de aceptación del medio electrónico, el acto no le es oponible y puede recurrirlo; la dependencia debe notificar en debida forma.",
+   "Que el ciudadano debe presentar una nueva solicitud igual a la anterior, porque la decisión ya está en firme y la única forma de obtener una respuesta distinta es iniciar otro trámite."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. Un dato de contacto no es aceptación de la notificación electrónica.",
+   "Correcto. Arts. 56 y 72: sin aceptación, la notificación es irregular y el acto no produce efectos.",
+   "Incorrecto. El acto no está en firme porque no se notificó en debida forma."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Recursos",
+  "ctx": "Un ciudadano recibe personalmente la notificación de un acto que niega su solicitud, expedido por un jefe de división en el procedimiento administrativo general. En la diligencia le indican que puede presentar recurso de reposición. Ocho días hábiles después lo presenta por escrito, con sus argumentos y pruebas. El servidor que recibe el recurso le dice que está vencido, porque “el plazo para recurrir es de cinco días”, según un instructivo antiguo que circula en la dependencia. El ciudadano pide que le expliquen la norma aplicable. El ciudadano insiste en que conoce sus derechos.",
+  "q": "El ciudadano necesita saber si su recurso será tramitado. Presentó la reposición al octavo día hábil después de la notificación personal, y el servidor dice que está vencida según un instructivo antiguo que fija cinco días. ¿Qué es lo correcto?",
+  "ops": [
+   "Que el recurso está vencido, porque el instructivo de la dependencia fija cinco días y los servidores deben aplicar las instrucciones internas vigentes mientras no se modifiquen.",
+   "Que el recurso solo puede tramitarse si el jefe de división lo autoriza expresamente, porque se presentó después del plazo que conoce la dependencia para este tipo de actos.",
+   "Que el recurso está en término, porque en el procedimiento general se interpone dentro de los diez días siguientes a la notificación, y debe tramitarse; el instructivo debe corregirse."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Un instructivo no puede reducir el plazo legal del art. 76.",
+   "Incorrecto. El trámite no depende de una autorización; el recurso está en término.",
+   "Correcto. Art. 76: diez días; se tramita y se corrige el instructivo."
+  ]
+ },
+ {
+  "nivel": "i",
+  "tema": "Servicio al ciudadano",
+  "ctx": "En el punto de atención, un adulto mayor con dificultades para caminar espera turno en una fila larga para pedir información sobre su RUT. El sistema de turnos no tiene una opción de atención preferente y el guarda de seguridad le dice que debe esperar como todos. Una servidora observa la situación. Su compañero le dice que no puede alterar el orden, porque “todos los ciudadanos son iguales” y otros usuarios podrían reclamar. La servidora debe decidir cómo actuar conforme al CPACA y a la política de servicio al ciudadano. Otros usuarios observan la situación y esperan la reacción de la servidora.",
+  "q": "La servidora debe decidir de inmediato cómo actuar. Un adulto mayor con dificultades para caminar espera en una fila larga, el sistema no tiene opción preferente y un compañero dice que no se puede alterar el orden. ¿Qué debe hacer?",
+  "ops": [
+   "Atenderlo de manera preferente, porque el CPACA reconoce el derecho a atención especial y preferente de los adultos mayores, y reportar la falta de la opción en el sistema de turnos.",
+   "Mantener el orden de la fila, porque el principio de igualdad exige dar el mismo trato a todos los ciudadanos sin hacer ninguna excepción por la edad o la condición de las personas.",
+   "Pedirle que regrese otro día a una hora con menos público, porque así puede ser atendido rápidamente sin alterar el orden de la fila ni generar reclamos de otros usuarios."
+  ],
+  "correcta": 0,
+  "expl": [
+   "Correcto. El art. 5 reconoce atención especial y preferente; además se reporta la falla del sistema.",
+   "Incorrecto. La igualdad material justifica la atención preferente a quienes están en situación de vulnerabilidad.",
+   "Incorrecto. Trasladar la carga al adulto mayor desconoce su derecho."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Reserva de la información",
+  "ctx": "Un ciudadano pide a una dirección seccional copia de los contratos de aseo y vigilancia de las sedes. La dependencia responde con una línea: “La información solicitada es reservada”, sin citar norma. En otro caso de la misma semana, un juzgado solicita, dentro de un proceso, información de la declaración de renta de un contribuyente, y la dependencia también la niega alegando la reserva tributaria. El jefe considera que ambas negativas son correctas, porque “la DIAN siempre debe proteger su información”. Te pide revisar los dos casos. Ambos solicitantes esperan una respuesta formal.",
+  "q": "El jefe quiere confirmar si ambas negativas se mantienen. Se negaron los contratos a un ciudadano sin citar norma y la información de una declaración a un juzgado alegando la reserva tributaria. ¿Qué conclusión es correcta según el CPACA?",
+  "ops": [
+   "Que ambas negativas son correctas, porque toda la información en poder de la DIAN está cubierta por la reserva tributaria y la entidad no debe entregarla a ningún solicitante.",
+   "Que la primera es correcta porque los contratos son documentos internos, y la segunda es incorrecta porque los jueces tienen acceso a toda la información sin ningún requisito.",
+   "Que la primera negativa debía motivarse con la norma que establece la reserva y los contratos son, en principio, públicos; y que la reserva no es oponible al juez que la solicita en sus funciones."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. La reserva tributaria no cubre toda la información y no es oponible a las autoridades judiciales.",
+   "Incorrecto. Los contratos son públicos en principio; la negativa exigía norma y motivación.",
+   "Correcto. Arts. 24, 25 y 27: negativa motivada con norma; la reserva no es oponible al juez."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Impedimentos",
+  "ctx": "A un servidor de una dependencia le corresponde proyectar la decisión sobre la solicitud presentada por una sociedad en la que su hermano es socio. El servidor considera que la solicitud cumple todos los requisitos y que, si se aparta, el trámite se demorará porque el grupo tiene mucha carga. Decide proyectarla sin decir nada, y su jefe la firma sin saber del vínculo. Semanas después, otro solicitante cuya petición similar fue negada se entera del parentesco y presenta una queja. El jefe te pide establecer qué debió hacerse. La queja ya llegó a la oficina de control disciplinario interno.",
+  "q": "El jefe necesita saber qué falló para tomar medidas. El servidor proyectó la decisión sobre la solicitud de una sociedad donde su hermano es socio, sin declarar el vínculo, porque consideró que cumplía los requisitos. ¿Qué debió hacer?",
+  "ops": [
+   "Proyectar la decisión con especial rigor, para demostrar que el vínculo no afectaba su imparcialidad, y dejar una nota en el expediente sobre el parentesco con el socio.",
+   "Proyectar la decisión, porque si la solicitud cumplía los requisitos el resultado habría sido el mismo, y el parentesco solo importa cuando el servidor recibe un beneficio.",
+   "Declararse impedido dentro de los tres días siguientes a conocer la causal y enviar la actuación a su superior, que decide quién la tramita, sin importar que la decisión fuera correcta."
+  ],
+  "correcta": 2,
+  "expl": [
+   "Incorrecto. Una nota no sustituye el deber de declararse impedido antes de actuar.",
+   "Incorrecto. El interés de un pariente configura la causal sin necesidad de beneficio propio.",
+   "Correcto. Arts. 11 y 12 del CPACA: impedimento en tres días y envío al superior."
+  ]
+ },
+ {
+  "nivel": "a",
+  "tema": "Sistema PQRSF",
+  "ctx": "El tablero de control de PQRSF de una dirección seccional muestra que el 96 % de las peticiones se responden en término. Sin embargo, al revisar una muestra, se encuentra que varias solicitudes de copias de documentos fueron clasificadas como consultas, que muchas respuestas dicen solo “su solicitud está en trámite” y que algunas quejas se trasladaron entre dependencias internas durante varias semanas antes de llegar a la competente. El jefe de servicio al ciudadano considera que el indicador demuestra que el servicio funciona bien. Te pide analizar la situación.",
+  "q": "El jefe quiere presentar el indicador como un logro ante la dirección. El 96 % de cumplimiento convive con copias clasificadas como consultas, respuestas que solo dicen “en trámite” y traslados internos prolongados. ¿Qué análisis es correcto?",
+  "ops": [
+   "Que el servicio funciona bien, porque el indicador de oportunidad es alto y los casos encontrados en la muestra son excepciones que no alteran el resultado general de la seccional.",
+   "Que la clasificación errónea aplica un término mayor y sobreestima el indicador, que las respuestas “en trámite” no son de fondo y que los traslados internos consumen el término; deben corregirse.",
+   "Que el problema es solo de los traslados internos, porque la clasificación y el contenido de las respuestas son decisiones de cada servidor que no afectan el cumplimiento del derecho de petición."
+  ],
+  "correcta": 1,
+  "expl": [
+   "Incorrecto. La muestra demuestra que el indicador no refleja la realidad.",
+   "Correcto. Clasificación, respuesta de fondo y asignación son controles del sistema PQRSF.",
+   "Incorrecto. La clasificación y la calidad de la respuesta sí afectan el derecho de petición."
+  ]
+ }
+];
+const quizDiv=document.getElementById('quiz');
+let respondidas={};
+function barajar(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function renderQuiz(){
+  respondidas={};quizDiv.innerHTML='';
+  const nivelLabel={b:'Basica',i:'Intermedia',a:'Avanzada'};
+  preguntas.forEach((p,idx)=>{
+    p._orden=barajar([0,1,2]);
+    const card=document.createElement('div');card.className='pregunta';
+    let opsHtml='';
+    p._orden.forEach((orig,d)=>{const letra=String.fromCharCode(65+d);opsHtml+='<div class="opcion" data-q="'+idx+'" data-d="'+d+'"><span class="letra">'+letra+'</span><div class="op-body"><span class="op-txt">'+p.ops[orig]+'</span><div class="op-exp" id="oe-'+idx+'-'+d+'"></div></div></div>';});
+    card.innerHTML='<div class="q-num">Pregunta '+(idx+1)+' <span class="nivel-pill '+p.nivel+'">'+nivelLabel[p.nivel]+'</span></div>'
+      +'<div class="q-contexto">'+p.ctx+'</div><div class="q-texto">'+p.q+'</div><div class="opciones">'+opsHtml+'</div><div class="feedback" id="fb-'+idx+'"></div>';
+    quizDiv.appendChild(card);
+  });
+  document.querySelectorAll('.opcion').forEach(op=>{
+    op.addEventListener('click',function(){
+      const qi=+this.dataset.q, di=+this.dataset.d;
+      if(respondidas[qi]!==undefined)return;
+      const p=preguntas[qi];const elegido=p._orden[di];
+      respondidas[qi]=elegido;
+      const cont=this.parentElement;
+      cont.querySelectorAll('.opcion').forEach((o,d)=>{
+        o.classList.add('bloqueada');
+        const orig=p._orden[d];
+        const exp=document.getElementById('oe-'+qi+'-'+d);const letra=String.fromCharCode(65+d);
+        if(orig===p.correcta){o.classList.add('correcta');exp.className='op-exp ok show';exp.innerHTML='<strong>'+letra+' es CORRECTA:</strong> '+p.expl[orig];}
+        else{exp.className='op-exp no show';exp.innerHTML='<strong>'+letra+' es incorrecta:</strong> '+p.expl[orig];}
+      });
+      if(elegido!==p.correcta)this.classList.add('incorrecta');
+      const fb=document.getElementById('fb-'+qi);const letraCorrecta=String.fromCharCode(65+p._orden.indexOf(p.correcta));
+      if(elegido===p.correcta){fb.className='feedback ok show';fb.innerHTML='<strong>Correcto!</strong> Opcion '+letraCorrecta+'.';}
+      else{fb.className='feedback no show';fb.innerHTML='<strong>Incorrecto.</strong> La correcta es '+letraCorrecta+'. Revisa las explicaciones.';}
+    });
+  });
+}
+document.getElementById('btnCalcular').addEventListener('click',()=>{
+  let correctas=0;const temasFallados=[];
+  preguntas.forEach((p,i)=>{if(respondidas[i]===p.correcta)correctas++;else if(temasFallados.indexOf(p.tema)===-1)temasFallados.push(p.tema);});
+  const res=document.getElementById('resultado');
+  document.getElementById('scoreNum').textContent=correctas+'/'+preguntas.length;
+  let msg;const pct=correctas/preguntas.length;
+  if(pct>=0.83)msg='Excelente! Dominas el tema.';
+  else if(pct>=0.58)msg='Buen trabajo. Refuerza los temas marcados.';
+  else msg='Repasa el Desarrollo y vuelve a intentarlo.';
+  document.getElementById('scoreMsg').textContent=msg;
+  const cont=document.getElementById('temasReforzar');
+  if(temasFallados.length===0){cont.innerHTML='<div class="box ok"><div class="box-title">Sin temas pendientes!</div><p>Todo correcto.</p></div>';}
+  else{cont.innerHTML='<div class="box warn"><div class="box-title">Temas a reforzar</div><ul class="lista">'+temasFallados.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';}
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnReiniciar').addEventListener('click',()=>{renderQuiz();document.getElementById('resultado').classList.remove('show');window.scrollTo({top:document.querySelector('[data-sec="10"]').offsetTop,behavior:'smooth'});});
+renderQuiz();
+</script>
+<script>
+(function(){
+  var sel=':scope > .modulo, :scope > .card, :scope > .caso, :scope > .trampa, :scope > .box, :scope > .destacado, :scope > .flujo, :scope > .checkpoint, :scope > .tabla-wrap, :scope > .concepto, :scope > .resumen, :scope > .glosario, :scope > .flashcard-wrap, :scope > #quiz, :scope > .fuentes, :scope > .narr, :scope > .quiz-intro';
+  document.querySelectorAll('.section').forEach(function(s){
+    try{s.querySelectorAll(sel).forEach(function(el){el.classList.add('reveal');});}catch(e){}
+  });
+  function animate(sec){var els=sec.querySelectorAll('.reveal');els.forEach(function(el,i){el.classList.remove('in');setTimeout(function(){el.classList.add('in');},Math.min(i*45,520));});}
+  var mo=new MutationObserver(function(muts){muts.forEach(function(m){if(m.target.classList&&m.target.classList.contains('visible'))animate(m.target);});});
+  document.querySelectorAll('.section').forEach(function(s){mo.observe(s,{attributes:true,attributeFilter:['class']});});
+  var vis=document.querySelector('.section.visible');if(vis)animate(vis);
+  var btn=document.createElement('button');btn.id='toTop';btn.setAttribute('aria-label','Volver arriba');btn.textContent='\u2191';document.body.appendChild(btn);
+  window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>500);});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>
