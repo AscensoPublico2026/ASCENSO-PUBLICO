@@ -30,7 +30,6 @@ export const OPECS_SECUENCIALES: string[] = [];
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
   // Adriana Bernal · Analista I Fiscalización (236764) — intensivo 15 días
-  "INTENS-DIAN-05-evasion-elusion-contrabando-transparencia.html",
   "INTENS-DIAN-06-gestion-documental-herramientas-informaticas.html",
   "INTENS-DIAN-07-mipg-modelo-integrado.html",
   "INTENS-TEC-08-comportamiento-etico-adaptabilidad.html",
