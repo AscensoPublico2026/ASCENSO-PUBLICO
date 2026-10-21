@@ -29,6 +29,21 @@ export const OPECS_SECUENCIALES: string[] = [];
 // de esta lista y desplegar (+ /api/admin/seed-guias para refrescar el bucket).
 // Se compara por nombre de archivo (sin carpeta).
 export const GUIAS_EN_PREPARACION = new Set<string>([
+  // Adriana Bernal · Analista I Fiscalización (236764) — intensivo 15 días
+  "INTENS-DIAN-02-sistema-tributario-aduanero-cambiario.html",
+  "INTENS-DIAN-03-constitucion-funcion-publica-integridad.html",
+  "INTENS-DIAN-04-cpaca-pqrsf-servicio-ciudadano.html",
+  "INTENS-DIAN-05-evasion-elusion-contrabando-transparencia.html",
+  "INTENS-DIAN-06-gestion-documental-herramientas-informaticas.html",
+  "INTENS-DIAN-07-mipg-modelo-integrado.html",
+  "INTENS-TEC-08-comportamiento-etico-adaptabilidad.html",
+  "INTENS-TEC-09-comunicacion-equipo-logro-usuario.html",
+  "INTENS-AIFL-10-fiscalizacion-liquidacion-control-tributario.html",
+  "INTENS-AIFL-11-fiscalizacion-aduanera-mercancias-cautelares.html",
+  "INTENS-AIFL-12-regimen-cambiario-divisas.html",
+  "INTENS-AIFL-13-fiscalizacion-internacional-gestion-documental.html",
+  "INTENS-AIFL-14-alcance-cargo-repaso-likert.html",
+  "SIM-DIAN-AIFL-001.html",
   // Andrea Aroca · Gestor III Control Interno (236872) — funcionales Días 9-20 + simulacro
   // Clary y Dayana · Gestor I Talento Humano (236897) — comportamentales Días 7-8 + simulacro
   // Paula · Facilitador II (236906) — funcionales Días 14-20 + simulacro
