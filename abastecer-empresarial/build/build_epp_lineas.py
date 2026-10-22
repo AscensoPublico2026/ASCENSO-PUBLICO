@@ -1,4 +1,4 @@
-# EPP por líneas (páginas 4, 5 y 6): cada línea con 3 productos, listado de productos principales
+# EPP por líneas (páginas 4 a 7, con Calzado y Alturas en la 7): cada línea con 3 productos, listado de productos principales
 # y llamado a cotizar lo que no aparece. Recortes mejorados con Real-ESRGAN (realesr-general-x4v3) + rembg.
 import os, sys
 from urllib.parse import quote
@@ -8,7 +8,7 @@ from build_pagina2 import *
 from reportlab.lib.colors import HexColor
 
 SOFT = HexColor("#EEF6F0")
-SW = {"blanco": "#FFFFFF", "amarillo": "#F5C800", "azul": "#1F4FA3", "verde": "#1E9A4B", "rojo": "#D93A26", "gris": "#8C8C8C"}
+SW = {"blanco": "#FFFFFF", "amarillo": "#F5C800", "azul": "#1F4FA3", "verde": "#1E9A4B", "rojo": "#D93A26", "gris": "#8C8C8C", "negro": "#1A1A1A", "cafe": "#6B4423"}
 
 # (título, descripción, [(imagen, nombre, colores)], listado de productos principales)
 LINEAS = [
@@ -37,7 +37,18 @@ LINEAS = [
      [("epp_cor_tyvek.png", "Traje desechable tipo Tyvek", None), ("epp_cor_delantal.png", "Delantal en vaqueta", None), ("epp_cor_impermeable.png", "Conjunto impermeable", None)],
      ["Trajes desechables tipo Tyvek", "Delantales en vaqueta, carnaza y PVC", "Conjuntos impermeables", "Capas y gabardinas",
       "Overoles", "Fajas lumbares", "Rodilleras y canilleras", "Zapatones en PVC"]),
+    ("Línea de calzado de seguridad y laboral", "Calzado para obra, industria, ambientes húmedos y uso diario en la operación.",
+     [("epp_cal_bota.png", "Bota de seguridad en cuero", ["negro", "cafe"]),
+      ("epp_cal_tenis.png", "Tenis de seguridad", None),
+      ("epp_cal_pvc.png", "Bota PVC con puntera", ["negro", "blanco", "amarillo"])],
+     ["Botas de seguridad en cuero", "Botines de seguridad", "Tenis de seguridad", "Bota para soldador",
+      "Botas PVC con y sin puntera", "Punteras de seguridad", "Polainas en carnaza", "Calzado laboral de dotación"]),
 ]
+
+ALTURAS = ("Línea de trabajo en alturas", "Equipos para detención de caídas, posicionamiento y rescate.",
+     [("epp_alt_arnes.png", "Arnés de cuerpo completo", None), ("epp_alt_eslinga.png", "Eslinga en Y con absorbedor", None), ("epp_alt_mosqueton.png", "Mosquetón en aluminio", None)],
+     ["Arneses de cuerpo completo", "Eslingas en Y con absorbedor", "Eslingas de posicionamiento", "Mosquetones en aluminio y acero",
+      "Anclajes portátiles", "Líneas de vida", "Poleas y frenos arrestadores", "Sillas de suspensión"])
 
 
 def page_frame(c, num):
@@ -76,9 +87,9 @@ def tile(c, x, y, w, h, f, name, colors):
     c.setFillColor(INK); c.setFont("Mont-Bold", fs); c.drawString(x + 20, y + 16.4, name)
 
 
-def line_block(c, ytop, idx, title, desc, prods, listado, th):
+def line_block(c, ytop, idx, title, desc, prods, listado, th, kicker=None):
     stripe(c, M, ytop - 9, h=7)
-    spaced(c, M + 20, ytop - 8, f"EPP · {idx:02d} DE {len(LINEAS):02d}", "Mont-SemiBold", 6.4, 1.8, GREEN)
+    spaced(c, M + 20, ytop - 8, kicker or f"EPP · {idx:02d} DE {len(LINEAS):02d}", "Mont-SemiBold", 6.4, 1.8, GREEN)
     c.setFillColor(INK); c.setFont("Mont-ExtraBold", 17); c.drawString(M, ytop - 31, title)
     c.setFillColor(GRAYT); c.setFont("Mont-Medium", 8.4); c.drawString(M, ytop - 45, desc)
     gap = 10; tw = (CW - 2 * gap) / 3; ty = ytop - 56 - th
@@ -131,11 +142,13 @@ def build(out, first_page=4):
             n += 1
             by = line_block(c, y, n, *l, th=th)
             y = by - (24 if p == 0 else 34)
+        if len(LINEAS[p:p + 2]) == 1:
+            line_block(c, y, 0, *ALTURAS, th=th, kicker="LÍNEA DE SUMINISTRO · ALTURAS")
         c.showPage()
     c.save()
 
 
 if __name__ == "__main__":
-    out = os.path.join(HERE, "..", "salidas", "EPP_por_lineas_pags_4-6.pdf")
+    out = os.path.join(HERE, "..", "salidas", "EPP_por_lineas_pags_4-7.pdf")
     build(out)
     print(out)

@@ -11,8 +11,8 @@ Proyecto de rediseño del portafolio comercial (PDF) de **Abastecer Empresarial 
 | 1. Portada | Lista para revisión (v7) | `salidas/Portada_Abastecer_v7.pdf` |
 | 2. Líneas de suministro | Vista previa (v3); faltan imágenes limpias de Tecnología, Aseo, Promocionales y Temporada | `salidas/Pagina2_v3_vista_previa.pdf` |
 | 3. Dotación | Por rediseñar | — |
-| 4 a 6. EPP por líneas | Vista previa: 6 líneas (cabeza, visual y facial, auditiva, respiratoria, manos, corporal), 3 productos por línea, colores de cascos, listado de productos principales y botón de WhatsApp con mensaje por línea; recortes ampliados con Real-ESRGAN | `salidas/EPP_por_lineas_pags_4-6.pdf` |
-| 7 en adelante | Por rediseñar (los números del índice de la página 2 ya contemplan las 3 páginas de EPP) | — |
+| 4 a 7. EPP por líneas | Vista previa: 7 líneas (cabeza, visual y facial, auditiva, respiratoria, manos, corporal, calzado de seguridad y laboral) + línea de trabajo en alturas en la pág. 7, 3 productos por línea, colores de cascos, listado de productos principales y botón de WhatsApp con mensaje por línea; recortes ampliados con Real-ESRGAN | `salidas/EPP_por_lineas_pags_4-7.pdf` |
+| 8 en adelante | Por rediseñar (los números del índice de la página 2 ya contemplan las 3 páginas de EPP) | — |
 
 ## Reglas del proyecto (no negociables)
 
@@ -42,7 +42,7 @@ pip install reportlab pillow numpy opencv-python-headless
 cd build
 python3 build_portada_v7.py     # -> Portada_Abastecer_v7.pdf
 python3 build_pagina2_v3.py     # -> Pagina2_v3_vista_previa.pdf
-python3 build_epp_lineas.py     # -> salidas/EPP_por_lineas_pags_4-6.pdf
+python3 build_epp_lineas.py     # -> salidas/EPP_por_lineas_pags_4-7.pdf
 ```
 
 Utilidades: `build_portada_v2.py` (paleta, íconos y funciones comunes), `cut*.py` / `gc2.py` / `auto.py` (recortes de producto desde el catálogo del proveedor).
