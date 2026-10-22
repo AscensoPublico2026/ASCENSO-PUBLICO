@@ -1,6 +1,6 @@
 # Línea de canecas, contenedores y almacenamiento (vista previa de una página).
-# Fotos reales: puntos ecológicos (catálogo Protecto). Canecas, baldes y canastillas: ilustraciones
-# vectoriales propias, rotuladas "Ilustración referencial" hasta tener fotos reales del proveedor.
+# Fotos reales: puntos ecológicos (catálogo Protecto); caneca de pedal, tambor y canastillas (fotos enviadas por Abastecer).
+# Las funciones ill_* quedan como respaldo (ilustraciones referenciales) por si falta alguna foto.
 import os, sys
 from urllib.parse import quote
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -14,9 +14,9 @@ BL1, BL2 = HexColor("#1F5BB5"), HexColor("#17468C")
 YL1 = HexColor("#F2B705")
 
 TITLE = "Línea de canecas, contenedores y almacenamiento"
-DESC = "Puntos ecológicos, canecas, baldes y canastillas para separar residuos y organizar tus espacios."
-LISTA = ["Puntos ecológicos de 2, 3 y 4 canecas", "Canecas con tapa vaivén", "Canecas de pedal", "Canecas sin tapa y papeleras",
-         "Baldes plásticos", "Baldes escurridores", "Canastillas plásticas", "Cajas y contenedores organizadores"]
+DESC = "Puntos ecológicos, canecas, tambores y canastillas para separar residuos y organizar tus espacios."
+LISTA = ["Puntos ecológicos de 2, 3 y 4 canecas", "Canecas de pedal", "Canecas con tapa vaivén", "Canecas sin tapa y papeleras",
+         "Tambores plásticos con tapa", "Baldes plásticos", "Canastillas caladas y cerradas", "Cajas y contenedores organizadores"]
 
 
 def shadow(c, cx, y, w):
@@ -112,10 +112,10 @@ def build(out, num=9):
         tile(c, M + k * (tw + gap), ty, tw, th, f, n, None)
     # canecas, baldes y canastillas (ilustraciones)
     y = ty - 24
-    spaced(c, M, y, "CANECAS, BALDES Y CANASTILLAS", "Mont-SemiBold", 6.2, 1.6, GREEN)
+    spaced(c, M, y, "CANECAS, TAMBORES Y CANASTILLAS", "Mont-SemiBold", 6.2, 1.6, GREEN)
     th2 = 196; ty2 = y - 10 - th2
-    for k, (fn, n) in enumerate([(ill_caneca, "Canecas"), (ill_balde, "Baldes"), (ill_canastilla, "Canastillas")]):
-        tile_ill(c, M + k * (tw + gap), ty2, tw, th2, fn, n)
+    for k, (f, n) in enumerate([("ase_caneca_pedal.png", "Caneca de pedal"), ("ase_tambor.png", "Tambor plástico con tapa"), ("ase_canastillas.png", "Canastillas plásticas")]):
+        tile(c, M + k * (tw + gap), ty2, tw, th2, f, n, None)
     # listado + llamado (igual que EPP)
     bh = 84; by = ty2 - 12 - bh; lw_ = tw * 2 + gap
     c.setStrokeColor(LINE); c.setLineWidth(0.8); c.setFillColor(WHITE); c.roundRect(M, by, lw_, bh, 12, stroke=1, fill=1)
