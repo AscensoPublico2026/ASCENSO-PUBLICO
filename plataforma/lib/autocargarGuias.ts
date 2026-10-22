@@ -1380,6 +1380,26 @@ export async function restaurarBaseCNSC(
   // ya trae su bloque Días 1-4; no agregar las genéricas encima.
   if ([...rutas].some((r) => /(^|\/)(INTRO-00|GEN-0[1-3])-[A-Z]/.test(r))) return 0;
 
+  // Curso INTENSIVO (plan propio de 15 días con guías INTENS-*): no lleva el bloque base
+  // CNSC. Si por una restauración anterior quedaron mezcladas las guías base genéricas
+  // (introducción, generales, competencias, bonus, extras de la entidad), se eliminan.
+  if ([...rutas].some((r) => /(^|\/)INTENS-/.test(r))) {
+    const nivelI = ((curso as any).nivel || "").toString().toLowerCase().trim()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const entI = entidadCNSCDeConvocatoria(textoConv);
+    const baseI = [INTRO_CNSC, ...(entI ? [{ codigo: entI.codigo }] : []), ...extrasDeEntidad(entI?.codigo),
+      ...GUIAS_GENERALES, ...guiasNivelPara(nivelI, entI?.codigo), ...GUIAS_BONUS,
+      ...Object.values(GUIAS_POR_NIVEL).flat(), ...Object.values(GUIAS_POR_NIVEL_DIAN).flat()];
+    const rutasBase = new Set<string>(baseI.map((g: any) => ARCHIVOS[g.codigo]).filter(Boolean));
+    const { data: filas } = await supabase.from("guias_curso").select("id, archivo_path").eq("curso_id", cursoId);
+    const ids = ((filas as any[]) || []).filter((g) => g.archivo_path && rutasBase.has(g.archivo_path)).map((g) => g.id);
+    if (ids.length > 0) {
+      const { error } = await supabase.from("guias_curso").delete().in("id", ids);
+      if (error) console.error("[restaurarBaseCNSC] Error al limpiar curso intensivo:", error.message);
+    }
+    return 0;
+  }
+
   // Solo si falta TODO el bloque inicial (no tocar cursos donde el admin borró una guía suelta).
   if (rutas.has(ARCHIVOS["INTRO-00"]) || rutas.has(ARCHIVOS["GEN-01"])) return 0;
 
@@ -1439,6 +1459,7 @@ export async function asegurarExtrasEntidad(
 
   const { data: guias } = await supabase.from("guias_curso").select("archivo_path").eq("curso_id", cursoId);
   const rutas = new Set<string>(((guias as any[]) || []).map((g) => (g.archivo_path || "").toString()).filter(Boolean));
+  if ([...rutas].some((r) => /(^|\/)INTENS-/.test(r))) return 0; // curso intensivo: plan cerrado.
   const registros = extras
     .filter((g) => ARCHIVOS[g.codigo] && !rutas.has(ARCHIVOS[g.codigo]))
     .map((g) => ({
