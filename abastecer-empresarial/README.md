@@ -11,7 +11,7 @@ Proyecto de rediseño del portafolio comercial (PDF) de **Abastecer Empresarial 
 | 1. Portada | Lista para revisión (v7) | `salidas/Portada_Abastecer_v7.pdf` |
 | 2. Líneas de suministro | Vista previa (v3); faltan imágenes limpias de Tecnología, Aseo, Promocionales y Temporada | `salidas/Pagina2_v3_vista_previa.pdf` |
 | 3. Dotación | Por rediseñar | — |
-| 4 a 6. EPP por líneas | Vista previa: 6 líneas (cabeza, visual y facial, auditiva, respiratoria, manos, corporal), 3 productos por línea y botón «Pregúntanos» con mensaje de WhatsApp por línea | `salidas/EPP_por_lineas_pags_4-6.pdf` |
+| 4 a 6. EPP por líneas | Vista previa: 6 líneas (cabeza, visual y facial, auditiva, respiratoria, manos, corporal), 3 productos por línea, colores de cascos, listado de productos principales y botón de WhatsApp con mensaje por línea; recortes ampliados con Real-ESRGAN | `salidas/EPP_por_lineas_pags_4-6.pdf` |
 | 7 en adelante | Por rediseñar (los números del índice de la página 2 ya contemplan las 3 páginas de EPP) | — |
 
 ## Reglas del proyecto (no negociables)
