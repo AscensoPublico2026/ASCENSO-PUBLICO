@@ -1,5 +1,5 @@
 # Ergonomía + Tecnología (una página) y Estanterías (página siguiente). Vista previa con
-# ilustraciones vectoriales propias, rotuladas "Ilustración referencial", hasta tener fotos reales.
+# fotos enviadas por Abastecer (recortadas y compuestas); las ilustraciones vectoriales quedan de respaldo.
 import os, sys
 from urllib.parse import quote
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -197,14 +197,14 @@ def tile2(c, x, y, w, h, f, name, colors):
 E.tile = tile2
 
 ERGO = ("Línea de ergonomía para la oficina", "Elementos que mejoran la postura y la comodidad en el puesto de trabajo.",
-        [(ill_silla, "Silla ergonómica", None), (ill_base_portatil, "Base para portátil", None), (ill_reposapies, "Reposapiés", None)],
+        [("erg_sillas.png", "Sillas ergonómicas", None), ("erg_bases.png", "Bases para portátil y pantalla", None), ("erg_reposapies.png", "Reposapiés ergonómico", None)],
         ["Sillas ergonómicas", "Pad mouse ergonómicos", "Bases para portátil", "Bases y brazos para pantalla", "Reposapiés"])
 TEC = ("Línea de tecnología y periféricos", "Equipos y accesorios para el trabajo diario en oficina y operación.",
-       [(ill_portatil, "Equipos de cómputo portátiles", None), (ill_impresora, "Impresoras", None), (ill_perifericos, "Teclados, mouse y cámaras web", None)],
+       [("tec_portatil.png", "Equipos de cómputo portátiles", None), ("tec_impresora.png", "Impresoras y tintas", None), ("tec_perifericos.png", "Teclados, mouse y cámaras web", None)],
        ["Equipos de cómputo portátiles", "Teclados y mouse", "Cámaras web", "Parlantes y micrófonos",
         "Impresoras", "Repuestos y consumibles de impresora", "Módems y routers wifi / ethernet", "Cables y adaptadores"])
 EST = ("Línea de estanterías", "Estanterías para oficinas, archivos y bodegas, en diferentes tamaños y capacidades.",
-       [(ill_estanteria, "Estantería para oficina y archivo", None), (ill_est_bodega, "Estantería para bodega", None), (ill_est_medida, "Estantería a la medida", None)],
+       [("est_oficina.png", "Estantería para oficina y archivo", None), ("est_bodega.png", "Estantería para bodega", None), ("est_medida.png", "Estantería a la medida", None)],
        ["Estanterías metálicas por niveles", "Estanterías para archivo", "Estanterías para bodega",
         "Entrepaños y niveles adicionales", "Estanterías a la medida", "Diferentes tamaños y materiales"])
 
