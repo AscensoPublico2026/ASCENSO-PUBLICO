@@ -82,18 +82,14 @@ def tipos_strip(c, ytop, h, title=True):
 
 
 def personalizada(c, ytop, h=58):
-    """Banda: señalización a la medida."""
-    y = ytop - h
+    """Banda: señalización según la necesidad del cliente (sin botón)."""
+    y = ytop - h; big = h >= 50
     c.setFillColor(NAVY); c.roundRect(M, y, CW, h, 13, stroke=0, fill=1)
-    stripe(c, M + 18, y + h - 20, h=7)
-    c.setFillColor(WHITE); c.setFont("Mont-Bold", 10.5 if h >= 50 else 9); c.drawString(M + 38, y + h - (21 if h >= 50 else 18), "Señalización a la medida de tu empresa")
-    c.setFillColor(MUTED); c.setFont("Mont-Medium", 7.6 if h >= 50 else 6.6)
-    c.drawString(M + 18, y + (14 if h >= 50 else 9), "¿Necesitas un aviso que no está en el catálogo? Lo personalizamos con el texto, la medida y el logo que requieras.")
-    bw = 132; bx = W - M - bw - 14; byb = y + h - (32 if h >= 50 else 26)
-    c.setFillColor(YELLOW); c.roundRect(bx, byb, bw, 20, 10, stroke=0, fill=1)
-    t = "COTIZA TU SEÑALIZACIÓN"; wl = spaced_w(c, t, "Mont-ExtraBold", 6.2, 0.8)
-    spaced(c, bx + (bw - wl) / 2, byb + 7, t, "Mont-ExtraBold", 6.2, 0.8, NAVY)
-    c.linkURL(WA + "?text=" + quote("Hola, quiero cotizar señalización personalizada para mi empresa."), (bx, byb, bx + bw, byb + 20), relative=0)
+    stripe(c, M + 18, y + h - (22 if big else 18), h=7)
+    c.setFillColor(WHITE); c.setFont("Mont-Bold", 11 if big else 9.2)
+    c.drawString(M + 38, y + h - (22 if big else 18), "Señalización según tu necesidad")
+    c.setFillColor(MUTED); c.setFont("Mont-Medium", 8 if big else 6.9)
+    c.drawString(M + 18, y + (16 if big else 9), "Envíanos una foto o el texto que quieres en tu aviso y nosotros lo elaboramos a la medida de tu empresa.")
     return y
 
 
