@@ -15,12 +15,12 @@ AI = {
 LINES = [
     ("Dotación", ["dot_camibuso.png", "overol.png", "dot_pantalon.png"], ic_dotacion, 3),
     ("EPP", ["epp_orejeras.png", "casco.png", "guantes.png"], ic_epp, 4),
-    ("Calzado", ["cal_tenis.png", "bota.png", "cal_botapvc.png"], ic_calzado, 5),
-    ("Alturas", ["alt_mosq.png", "alturas.png"], ic_alturas, 5),
-    ("Señalización", ["sen_cinta.png", "cono.png", "chaleco.png"], ic_senal, 6),
-    ("Emergencias", ["eme_botiquin.png", "extintor.png", "eme_camilla.png"], ic_emerg, 6),
-    ("Tecnología", None, ic_tec, 8), ("Mobiliario y ergonomía", ["mob_reposapies.png", "mob_silla.png"], ic_mob, 8), ("Aseo y cafetería", None, ic_aseo, 7),
-    ("Promocionales y carnés", None, ic_promo, 9), ("Temporada y celebraciones", None, ic_alim, 7), ("Compras especiales", "icon", ic_compras, 10),
+    ("Calzado", ["cal_tenis.png", "bota.png", "cal_botapvc.png"], ic_calzado, 7),
+    ("Alturas", ["alt_mosq.png", "alturas.png"], ic_alturas, 7),
+    ("Señalización", ["sen_cinta.png", "cono.png", "chaleco.png"], ic_senal, 8),
+    ("Emergencias", ["eme_botiquin.png", "extintor.png", "eme_camilla.png"], ic_emerg, 8),
+    ("Tecnología", None, ic_tec, 10), ("Mobiliario y ergonomía", ["mob_reposapies.png", "mob_silla.png"], ic_mob, 10), ("Aseo y cafetería", None, ic_aseo, 9),
+    ("Promocionales y carnés", None, ic_promo, 11), ("Temporada y celebraciones", None, ic_alim, 9), ("Compras especiales", "icon", ic_compras, 12),
 ]
 
 
