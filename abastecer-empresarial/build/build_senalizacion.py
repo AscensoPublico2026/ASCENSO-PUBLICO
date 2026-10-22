@@ -11,9 +11,9 @@ from reportlab.lib.colors import HexColor
 RED, YEL, BLUE, GRN = HexColor("#D52B1E"), HexColor("#F7C600"), HexColor("#1F5BB5"), HexColor("#17914A")
 
 SEN = ("Línea de señalización y demarcación", "Avisos, demarcación de áreas y control de tránsito en tus instalaciones.",
-       [("sen_sen_cono.png", "Cono vial reflectivo", None), ("sen_sen_cinta.png", "Cinta de peligro", None), ("sen_sen_barrera.png", "Barrera vial", None)],
-       ["Avisos en PVC por tipo de señal", "Conos viales reflectivos", "Cintas de demarcación y peligro", "Cintas antideslizantes",
-        "Colombinas y delineadores", "Barreras viales y cadenas", "Paletas pare y siga", "Señal de piso mojado"])
+       [("sen_sen_cono.png", "Cono vial reflectivo", None), ("sen_sen_chaleco.png", "Chaleco reflectivo", None), ("sen_sen_paleta.png", "Paleta pare y siga", None)],
+       ["Avisos en PVC por tipo de señal", "Conos viales reflectivos", "Chalecos reflectivos", "Paletas pare y siga",
+        "Cintas de demarcación y peligro", "Cintas antideslizantes", "Señal de piso mojado", "Señalización personalizada"])
 INC = ("Línea de protección contra incendios", "Extintores y detección para oficinas, bodegas, vehículos y plantas.",
        [("sen_inc_extintor.png", "Extintor multipropósito", None), ("sen_inc_co2.png", "Extintor de CO₂", None), ("sen_inc_detector.png", "Detector de humo", None)],
        ["Extintores multipropósito", "Extintores de CO₂", "Capacidades de 5 a 30 lb", "Soportes de pared",
@@ -23,8 +23,8 @@ EME = ("Línea de emergencias y primeros auxilios", "Dotación para brigadas y a
        ["Botiquines tipo A y B", "Maletas y bolsos para botiquín", "Camillas de inmovilización", "Inmovilizadores de cuello",
         "Lámparas de emergencia", "Kits de control de derrames", "Kits de carretera", "Brazaletes de brigadista"])
 LINES3 = [SEN, INC, EME]
-TIPOS = [("Prohibición", "prohibido fumar, no pase", RED, "pro"), ("Advertencia", "riesgo eléctrico, piso húmedo", YEL, "adv"),
-         ("Obligación", "uso obligatorio de EPP", BLUE, "obl"), ("Información", "salida de emergencia, ruta", GRN, "inf")]
+TIPOS = [("Prohibición", ["aviso_pro_fumar.png", "aviso_pro_acceso.png"], RED), ("Advertencia", ["aviso_pre_electrico.png", "aviso_pre_piso.png"], YEL),
+         ("Obligación", ["aviso_obl_casco.png", "aviso_obl_facial.png"], BLUE), ("Información", ["aviso_inf_salida.png", "aviso_inf_botiquin.png"], GRN)]
 
 
 def sign_icon(c, kind, cx, cy, s):
@@ -61,25 +61,40 @@ def sign_icon(c, kind, cx, cy, s):
 
 
 def tipos_strip(c, ytop, h, title=True):
+    """Fichas por tipo de aviso con fotos reales de avisos en PVC (catálogo del proveedor)."""
     if title:
         spaced(c, M, ytop - 8, "AVISOS EN PVC POR TIPO DE SEÑAL", "Mont-SemiBold", 6.2, 1.6, GREEN)
         ytop -= 18
     gap = 10; w = (CW - 3 * gap) / 4
-    for i, (name, ej, col, kind) in enumerate(TIPOS):
+    for i, (name, imgs, col) in enumerate(TIPOS):
         x = M + i * (w + gap); y = ytop - h
         c.setFillColor(TILE); c.roundRect(x, y, w, h, 12, stroke=0, fill=1)
-        c.setFillColor(col); c.roundRect(x, y, 5, h, 2.5, stroke=0, fill=1)
-        s = min(h * 0.5, 64)
+        c.setFillColor(col); c.roundRect(x + 10, y + h - 6, 26, 3.2, 1.6, stroke=0, fill=1)
         if h >= 80:
-            sign_icon(c, kind, x + w / 2, y + h - 12 - s / 2, s)
-            c.setFillColor(INK); c.setFont("Mont-Bold", 8.4); c.drawCentredString(x + w / 2, y + 22, name)
-            c.setFillColor(GRAYT); c.setFont("Mont-Medium", 6.2); c.drawCentredString(x + w / 2, y + 11, "Ej.: " + ej)
+            ih = (h - 52) / 2
+            for k, f in enumerate(imgs):
+                fit_image(c, os.path.join(CUT, f), x + 10, y + 30 + (1 - k) * (ih + 5), w - 20, ih, shadow=False)
+            c.setFillColor(INK); c.setFont("Mont-Bold", 8.2); c.drawString(x + 12, y + 12, name)
         else:
-            s = h * 0.62
-            sign_icon(c, kind, x + 12 + s / 2, y + h / 2, s)
-            c.setFillColor(INK); c.setFont("Mont-Bold", 7.8); c.drawString(x + 20 + s, y + h / 2 + 2, name)
-            c.setFillColor(GRAYT); c.setFont("Mont-Medium", 5.6); c.drawString(x + 20 + s, y + h / 2 - 8, ej)
+            fit_image(c, os.path.join(CUT, imgs[0]), x + 8, y + 16, w - 16, h - 26, shadow=False)
+            c.setFillColor(INK); c.setFont("Mont-Bold", 6.6); c.drawString(x + 10, y + 6, name)
     return ytop - h
+
+
+def personalizada(c, ytop, h=58):
+    """Banda: señalización a la medida."""
+    y = ytop - h
+    c.setFillColor(NAVY); c.roundRect(M, y, CW, h, 13, stroke=0, fill=1)
+    stripe(c, M + 18, y + h - 20, h=7)
+    c.setFillColor(WHITE); c.setFont("Mont-Bold", 10.5 if h >= 50 else 9); c.drawString(M + 38, y + h - (21 if h >= 50 else 18), "Señalización a la medida de tu empresa")
+    c.setFillColor(MUTED); c.setFont("Mont-Medium", 7.6 if h >= 50 else 6.6)
+    c.drawString(M + 18, y + (14 if h >= 50 else 9), "¿Necesitas un aviso que no está en el catálogo? Lo personalizamos con el texto, la medida y el logo que requieras.")
+    bw = 132; bx = W - M - bw - 14; byb = y + h - (32 if h >= 50 else 26)
+    c.setFillColor(YELLOW); c.roundRect(bx, byb, bw, 20, 10, stroke=0, fill=1)
+    t = "COTIZA TU SEÑALIZACIÓN"; wl = spaced_w(c, t, "Mont-ExtraBold", 6.2, 0.8)
+    spaced(c, bx + (bw - wl) / 2, byb + 7, t, "Mont-ExtraBold", 6.2, 0.8, NAVY)
+    c.linkURL(WA + "?text=" + quote("Hola, quiero cotizar señalización personalizada para mi empresa."), (bx, byb, bx + bw, byb + 20), relative=0)
+    return y
 
 
 def section_header(c, title, sub):
@@ -99,8 +114,9 @@ def opcion_a(out):
     c = canvas.Canvas(out, pagesize=(W, H)); c.setTitle("Portafolio - Abastecer Empresarial - Señalización, incendios y emergencias (opción A)")
     # pág. 8
     page_frame(c, 8); section_header(c, TITLE, SUB)
-    by = line_block(c, H - 160, 1, *SEN, th=188, kicker=kick(1))
-    tipos_strip(c, by - 28, 150)
+    by = line_block(c, H - 160, 1, *SEN, th=160, kicker=kick(1))
+    y = tipos_strip(c, by - 24, 138)
+    personalizada(c, y - 14)
     c.showPage()
     # pág. 9
     page_frame(c, 9)
@@ -114,7 +130,7 @@ def compact_block(c, ytop, i, title, desc, prods, listado):
     spaced(c, M + 20, ytop - 8, kick(i), "Mont-SemiBold", 6.2, 1.7, GREEN)
     c.setFillColor(INK); c.setFont("Mont-ExtraBold", 14); c.drawString(M, ytop - 28, title)
     c.setFillColor(GRAYT); c.setFont("Mont-Medium", 7.6); c.drawString(M, ytop - 40, desc)
-    th = 114; ty = ytop - 48 - th
+    th = 104; ty = ytop - 48 - th
     rw = 172; gap = 8; aw = CW - rw - gap; tw = (aw - 2 * gap) / 3
     for k, (f, name, col) in enumerate(prods):
         tile(c, M + k * (tw + gap), ty, tw, th, f, name, col)
@@ -122,7 +138,7 @@ def compact_block(c, ytop, i, title, desc, prods, listado):
     c.setStrokeColor(LINE); c.setLineWidth(0.8); c.setFillColor(WHITE); c.roundRect(rx, ty, rw, th, 12, stroke=1, fill=1)
     spaced(c, rx + 12, ty + th - 15, "PRODUCTOS PRINCIPALES", "Mont-SemiBold", 5.6, 1.4, GREEN)
     yy = ty + th - 28
-    for it in listado[:6]:
+    for it in listado[:5]:
         c.setFillColor(GREEN); c.circle(rx + 14, yy + 2.2, 1.8, stroke=0, fill=1)
         c.setFillColor(INK); c.setFont("Mont-Medium", 6.7); c.drawString(rx + 20, yy, it); yy -= 9.6
     bw = rw - 24; bx = rx + 12; byb = ty + 9
@@ -136,7 +152,8 @@ def compact_block(c, ytop, i, title, desc, prods, listado):
 def opcion_b(out):
     c = canvas.Canvas(out, pagesize=(W, H)); c.setTitle("Portafolio - Abastecer Empresarial - Señalización, incendios y emergencias (opción B)")
     page_frame(c, 8); section_header(c, TITLE, SUB)
-    y = tipos_strip(c, H - 152, 46)
+    y = tipos_strip(c, H - 150, 52)
+    y = personalizada(c, y - 8, h=40)
     for i, l in enumerate(LINES3, 1):
         y = compact_block(c, y - 16, i, *l) - 2
     c.showPage(); c.save()
