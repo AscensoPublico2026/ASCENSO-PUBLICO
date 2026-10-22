@@ -14,6 +14,7 @@ Proyecto de rediseño del portafolio comercial (PDF) de **Abastecer Empresarial 
 | 4 a 7. EPP por líneas | Vista previa: 7 líneas (cabeza, visual y facial, auditiva, respiratoria, manos, corporal, calzado de seguridad y laboral) + línea de trabajo en alturas en la pág. 7, 3 productos por línea, colores de cascos, listado de productos principales y botón de WhatsApp con mensaje por línea; recortes ampliados con Real-ESRGAN | `salidas/EPP_por_lineas_pags_4-7.pdf` |
 | 8 (y 9). Señalización, incendios y emergencias | Dos propuestas para elegir: **A** en dos páginas (`salidas/Senalizacion_opcionA_pags_8-9.pdf`) y **B** compacta en una página (`salidas/Senalizacion_opcionB_pag_8.pdf`). Si se elige A, renumerar el índice de la pág. 2 (+1 desde Aseo) | `build/build_senalizacion.py` |
 | Canecas, contenedores y almacenamiento | Vista previa de una página (`salidas/Canecas_contenedores_vista_previa.pdf`): fotos reales: puntos ecológicos (Protecto) y caneca de pedal, tambor y canastillas (fotos enviadas por Abastecer; confirmar origen) | `build/build_canecas.py` |
+| Ergonomía y tecnología (pág. 10) + Estanterías (pág. 11) | Vista previa con ilustraciones referenciales; faltan fotos reales (`salidas/Ergonomia_tecnologia_estanterias_vista_previa.pdf`) | `build/build_ergo_tec.py` |
 | Aseo y cafetería y siguientes | Por rediseñar | — | (los números del índice de la página 2 ya contemplan las 3 páginas de EPP) | — |
 
 ## Reglas del proyecto (no negociables)
