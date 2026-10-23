@@ -246,7 +246,7 @@ ASEO = ("Línea de aseo y cafetería", "Insumos para mantener limpios tus espaci
         ["Limpiadores y desinfectantes", "Jabones y gel antibacterial", "Papel higiénico y toallas", "Bolsas para basura",
          "Escobas, traperos y baldes", "Paños, esponjas y guantes", "Café, azúcar y aromáticas", "Vasos, mezcladores y servilletas"])
 FECHAS = ("Línea de anchetas y fechas especiales", "Regalos y detalles para celebrar con tu equipo, clientes y sus familias.",
-          [(ill_ancheta, "Anchetas", None), (ill_mercado, "Mercados empresariales", None), ("fec_juguetes.jpg", "Juguetes y regalos", None)],
+          [("fec_ancheta.png", "Anchetas", None), ("fec_mercado.jpg", "Mercados empresariales", None), ("fec_juguetes.png", "Juguetes y regalos", None)],
           ["Anchetas navideñas y corporativas", "Mercados para colaboradores", "Juguetes para hijos de colaboradores", "Regalos y detalles corporativos",
            "Decoración para fiestas y eventos", "Kits para cumpleaños", "Detalles para Día de la Madre y del Padre", "Halloween, amor y amistad y Navidad"])
 SERVICIOS = ["Logos e imagen corporativa", "Carnés y papelería corporativa", "Avisos y señalización a la medida",
@@ -258,7 +258,7 @@ def bloque_diseno(c, ytop, h=190):
     c.setFillColor(INK); c.setFont("Mont-ExtraBold", 17); c.drawString(M, ytop - 31, "Servicio de diseño gráfico")
     c.setFillColor(GRAYT); c.setFont("Mont-Medium", 8.4); c.drawString(M, ytop - 45, "Diseñamos las piezas de tu empresa y te entregamos el producto listo.")
     gap = 10; tw = (CW - 2 * gap) / 3; top = ytop - 56; y = top - h
-    T.tile2(c, M, y, tw, h, ill_diseno, "Diseño de piezas", None)
+    tile3(c, M, y, tw, h, "dis_diseno.jpg", "Diseño de piezas", None)
     x = M + tw + gap; w = CW - tw - gap
     c.setFillColor(NAVY); c.roundRect(x, y, w, h, 13, stroke=0, fill=1)
     stripe(c, x + 18, y + h - 26, h=7)
