@@ -216,19 +216,37 @@ def ill_diseno(c, cx, by, s):
         rr(c, cx + s * 0.26, by + s * (0.56 - k * 0.07), s * 0.1, s * 0.05, s * 0.01, col)
 
 
-for _f in (ill_limpieza, ill_mercado, ill_ancheta):
-    pass
+import build_epp_lineas as E
+from reportlab.lib.utils import ImageReader
+
+
+def tile3(c, x, y, w, h, f, name, colors):
+    """Foto de ambiente (.jpg): llena el recuadro recortada al centro; lo demás igual que tile2."""
+    if not (isinstance(f, str) and f.endswith(".jpg")):
+        return T.tile2(c, x, y, w, h, f, name, colors)
+    ir = ImageReader(os.path.join(CUT, f)); iw, ih = ir.getSize()
+    sc = max(w / iw, h / ih); dw, dh = iw * sc, ih * sc
+    c.saveState(); p = c.beginPath(); p.roundRect(x, y, w, h, 13); c.clipPath(p, stroke=0, fill=0)
+    c.drawImage(ir, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh); c.restoreState()
+    fs = 7.4
+    while c.stringWidth(name, "Mont-Bold", fs) > w - 40: fs -= 0.2
+    fw = c.stringWidth(name, "Mont-Bold", fs)
+    c.setFillColor(WHITE); c.roundRect(x + 10, y + 10, fw + 20, 19, 9.5, stroke=0, fill=1)
+    c.setFillColor(INK); c.setFont("Mont-Bold", fs); c.drawString(x + 20, y + 16.4, name)
+
+
+E.tile = tile3
 
 PAPEL = ("Línea de papelería y útiles de oficina", "Papel, archivo y útiles para el trabajo diario de la oficina.",
-         [(ill_resma, "Resmas de papel", None), (ill_archivo, "Archivo y AZ", None), (ill_utiles, "Útiles de oficina", None)],
+         [("pap_resmas.png", "Resmas de papel", None), ("pap_az.png", "Archivadores AZ", None), ("pap_utiles.jpg", "Útiles de oficina", None)],
          ["Resmas de papel carta y oficio", "Carpetas, AZ y archivadores", "Cajas de archivo", "Bolígrafos, lápices y marcadores",
           "Cosedoras, perforadoras y ganchos", "Notas adhesivas y libretas", "Sobres y papel especial", "Cintas, pegantes y tijeras"])
 ASEO = ("Línea de aseo y cafetería", "Insumos para mantener limpios tus espacios y atender a tu equipo y visitantes.",
-        [(ill_aseo, "Productos de limpieza", None), (ill_limpieza, "Escobas, traperos y baldes", None), (ill_cafeteria, "Cafetería", None)],
+        [("ase_limpieza.png", "Productos de aseo", None), ("ase_kit.png", "Escobas, traperos y baldes", None), ("caf_cafeteria.png", "Cafetería", None)],
         ["Limpiadores y desinfectantes", "Jabones y gel antibacterial", "Papel higiénico y toallas", "Bolsas para basura",
          "Escobas, traperos y baldes", "Paños, esponjas y guantes", "Café, azúcar y aromáticas", "Vasos, mezcladores y servilletas"])
 FECHAS = ("Línea de anchetas y fechas especiales", "Regalos y detalles para celebrar con tu equipo, clientes y sus familias.",
-          [(ill_ancheta, "Anchetas", None), (ill_mercado, "Mercados empresariales", None), (ill_regalos, "Juguetes, regalos y fiestas", None)],
+          [(ill_ancheta, "Anchetas", None), (ill_mercado, "Mercados empresariales", None), ("fec_juguetes.jpg", "Juguetes y regalos", None)],
           ["Anchetas navideñas y corporativas", "Mercados para colaboradores", "Juguetes para hijos de colaboradores", "Regalos y detalles corporativos",
            "Decoración para fiestas y eventos", "Kits para cumpleaños", "Detalles para Día de la Madre y del Padre", "Halloween, amor y amistad y Navidad"])
 SERVICIOS = ["Logos e imagen corporativa", "Carnés y papelería corporativa", "Avisos y señalización a la medida",
