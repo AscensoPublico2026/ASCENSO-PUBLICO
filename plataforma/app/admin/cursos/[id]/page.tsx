@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { toTitleCase } from "@/lib/format";
-import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm, rehacerPlanPlantillaForm, vaciarCursoForm } from "./actions";
+import { subirGuia, marcarCursoListo, habilitarCursoAhora, eliminarGuia, asignarGuiaDesdeBiblioteca, copiarPlanOPEC, armarPlanPlantillaForm, rehacerPlanPlantillaForm, vaciarCursoForm, cambiarModalidadForm } from "./actions";
 import { guiasFuncionalesAsignables, guiasSimulacroAsignables, guiasEntidadAsignables, esRutaEntidad } from "@/lib/catalogoGuias";
 import { PLANES_PLANTILLA } from "@/lib/autocargarGuias";
 import BarraTiempoAdmin from "../BarraTiempoAdmin";
@@ -186,6 +186,22 @@ export default async function AdminCursoDetalle({ params }: { params: { id: stri
         <p style={{ color: "var(--texto-suave)", fontSize: ".82rem", margin: "0 0 12px" }}>
           Carga de una sola vez TODAS las guías de un plan predefinido (Días 1 a 21, o 1 a 15 en el intensivo: introducción, entidad, generales, competencias, funcionales y simulacro), resolviendo cada guía desde la biblioteca. No duplica lo que ya esté asignado.
         </p>
+
+        {/* Modalidad del curso: 21 días o intensivo de 15 (define qué plantillas se muestran) */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12, padding: "10px 12px", background: "#FFF", border: "1px dashed #B7C6E5", borderRadius: 10 }}>
+          <span style={{ flex: 1, minWidth: 220, fontSize: ".82rem", color: "var(--texto)" }}>
+            Modalidad actual: <strong>{String((curso as any).modalidad || "21") === "15" ? "⚡ Intensivo de 15 días" : "📅 Curso de 21 días"}</strong>. Si el cliente compró la otra modalidad, cámbiala y luego usa <strong>Rehacer</strong> con el plan correspondiente.
+          </span>
+          {String((curso as any).modalidad || "21") === "15" ? (
+            <form action={cambiarModalidadForm.bind(null, curso.id, "21")}>
+              <button className="btn" style={{ padding: "9px 14px", fontSize: ".82rem", background: "#fff", color: "var(--azul)", border: "1px solid var(--azul)", borderRadius: 8 }}>📅 Cambiar a 21 días</button>
+            </form>
+          ) : (
+            <form action={cambiarModalidadForm.bind(null, curso.id, "15")}>
+              <button className="btn" style={{ padding: "9px 14px", fontSize: ".82rem", background: "#8A5A00", color: "#fff", border: "none", borderRadius: 8 }}>⚡ Cambiar a intensivo de 15 días</button>
+            </form>
+          )}
+        </div>
 
         {/* Recomendado si el curso quedó con duplicados: vaciar y armar */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12, padding: "10px 12px", background: "#FFF", border: "1px dashed #E0B84D", borderRadius: 10 }}>

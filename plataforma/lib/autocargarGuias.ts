@@ -878,6 +878,32 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
       { codigo: "SIM-DIAN-AIFL-001", dia: 15 },
     ],
   },
+  // DIAN 2676 — Gestor I (301-01), Fiscalización y liquidación (ficha AT-FL-3008), OPEC 236767 — intensivo de 15 días.
+  // Días 1-7 transversales DIAN intensivos (INTENS-DIAN), 8-9 comportamentales nivel profesional (INTENS-PRO),
+  // 10-14 propias del cargo (INTENS-GI, fusión de las guías del plan de 21 días), 15 simulacro del Gestor I.
+  // Ver referencias/_SPEC-CURSO-INTENSIVO-GESTOR1-FL.md.
+  "dian-gestor-i-fiscalizacion-intensivo-236767": {
+    id: "dian-gestor-i-fiscalizacion-intensivo-236767",
+    nombre: "DIAN · Gestor I (301-01, fiscalización y liquidación), concurso DIAN 2676, OPEC 236767 — intensivo 15 días",
+    duracion: 15,
+    guias: [
+      { codigo: "INTENS-DIAN-01", dia: 1 },
+      { codigo: "INTENS-DIAN-02", dia: 2 },
+      { codigo: "INTENS-DIAN-03", dia: 3 },
+      { codigo: "INTENS-DIAN-04", dia: 4 },
+      { codigo: "INTENS-DIAN-05", dia: 5 },
+      { codigo: "INTENS-DIAN-06", dia: 6 },
+      { codigo: "INTENS-DIAN-07", dia: 7 },
+      { codigo: "INTENS-PRO-08", dia: 8 },
+      { codigo: "INTENS-PRO-09", dia: 9 },
+      { codigo: "INTENS-GI-10", dia: 10 },
+      { codigo: "INTENS-GI-11", dia: 11 },
+      { codigo: "INTENS-GI-12", dia: 12 },
+      { codigo: "INTENS-GI-13", dia: 13 },
+      { codigo: "INTENS-GI-14", dia: 14 },
+      { codigo: "SIM-DIAN-001", dia: 15 },
+    ],
+  },
 };
 
 // Mapeo de código → archivo en storage (bucket 'guias')
@@ -897,6 +923,13 @@ const ARCHIVOS: Record<string, string> = {
   "INTENS-AIFL-13": "guias/INTENS-AIFL-13-fiscalizacion-internacional-gestion-documental.html",
   "INTENS-AIFL-14": "guias/INTENS-AIFL-14-alcance-cargo-repaso-likert.html",
   "SIM-DIAN-AIFL-001": "simulacro/SIM-DIAN-AIFL-001.html",
+  "INTENS-PRO-08": "guias/INTENS-PRO-08-comportamiento-etico-adaptabilidad.html",
+  "INTENS-PRO-09": "guias/INTENS-PRO-09-comunicacion-equipo-logro-usuario.html",
+  "INTENS-GI-10": "guias/INTENS-GI-10-determinacion-control-fiscalizacion-liquidacion.html",
+  "INTENS-GI-11": "guias/INTENS-GI-11-fiscalizacion-aduanera-cautelares-destruccion.html",
+  "INTENS-GI-12": "guias/INTENS-GI-12-regimen-cambiario-dian.html",
+  "INTENS-GI-13": "guias/INTENS-GI-13-fiscalizacion-internacional-laft-ros.html",
+  "INTENS-GI-14": "guias/INTENS-GI-14-alcance-cargo-informes-repaso-likert.html",
   "FUN-CI-01": "guias/FUN-CI-01-funcion-control-interno-ley-87.html",
   "FUN-CI-02": "guias/FUN-CI-02-mipg-meci-lineas-defensa.html",
   "FUN-CI-03": "guias/FUN-CI-03-normas-globales-auditoria-interna.html",
