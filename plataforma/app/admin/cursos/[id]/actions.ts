@@ -175,6 +175,19 @@ export async function vaciarCurso(cursoId: string) {
   revalidatePath(`/admin/cursos/${cursoId}`);
 }
 
+/**
+ * Cambia la modalidad de un curso ya creado: "21" (regular) o "15" (intensivo).
+ * Solo actualiza el campo `modalidad`; no toca las guías. Después de cambiarla,
+ * el panel muestra las plantillas de esa modalidad para "Rehacer" el plan.
+ */
+export async function cambiarModalidadForm(cursoId: string, modalidad: "21" | "15", _formData: FormData): Promise<void> {
+  await requireAdmin();
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("cursos").update({ modalidad }).eq("id", cursoId);
+  if (error) throw new Error("No se pudo cambiar la modalidad del curso: " + error.message);
+  revalidatePath(`/admin/cursos/${cursoId}`);
+}
+
 /** Wrapper `(formData)=>Promise<void>` para usar vaciarCurso en un <form>. */
 export async function vaciarCursoForm(cursoId: string, _formData: FormData): Promise<void> {
   await vaciarCurso(cursoId);
