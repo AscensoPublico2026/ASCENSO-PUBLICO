@@ -307,13 +307,20 @@ export async function rehacerPlanPlantilla(cursoId: string, planId: string) {
   // Guías actuales del curso.
   const { data: actuales } = await supabase
     .from("guias_curso")
-    .select("id, archivo_path, tipo, dia, orden, titulo")
+    .select("id, archivo_path, tipo, dia, orden, titulo, leida, fecha_leida")
     .eq("curso_id", cursoId);
 
   // 1) Eliminar las que NO están en el plan (incluye las de archivo_path null/vacío).
   const aEliminar = (actuales || []).filter(
     (g: any) => !(g.archivo_path && rutasPlan.has(g.archivo_path))
   );
+  // Progreso de las que se eliminan, por día: si una guía nueva del plan ocupa el
+  // mismo día que una ya leída (p. ej. se reemplaza una guía por su versión
+  // adaptada al cargo), la nueva hereda el "leída" y el alumno no pierde avance.
+  const leidaPorDia = new Map<number, string | null>();
+  for (const g of aEliminar as any[]) {
+    if (g.leida && typeof g.dia === "number") leidaPorDia.set(g.dia, g.fecha_leida ?? null);
+  }
   let eliminadas = 0;
   if (aEliminar.length > 0) {
     const ids = aEliminar.map((g: any) => g.id);
@@ -352,6 +359,10 @@ export async function rehacerPlanPlantilla(cursoId: string, planId: string) {
       tipo: g.tipo,
       orden: item.orden ?? item.dia ?? 0,
       archivo_path: g.archivoPath,
+      // Mismas columnas en todas las filas (el insert por lotes usa la unión de columnas).
+      ...(typeof item.dia === "number" && leidaPorDia.has(item.dia)
+        ? { leida: true, fecha_leida: leidaPorDia.get(item.dia) ?? new Date().toISOString() }
+        : { leida: false, fecha_leida: null }),
     });
   }
   if (registros.length > 0) {
