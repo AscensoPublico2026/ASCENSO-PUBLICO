@@ -306,6 +306,39 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
     ],
   },
 
+  // Procuraduría General de la Nación — Profesional Universitario (3PU-17), Convocatoria 146-2026.
+  // Procuradurías Regionales/Provinciales de Instrucción · procesos preventivo y disciplinario.
+  // Lina Lucía Ramírez Rodríguez. Base: familia -PU (Instrucción) reenfocada + Ordenamiento Territorial.
+  "pgn-profesional-3pu17-lina": {
+    id: "pgn-profesional-3pu17-lina",
+    nombre: "PGN · Profesional Universitario (3PU-17) Instrucción (Conv. 146-2026) — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-3PU17L", dia: 1 },
+      { codigo: "ENT-PGN-PU-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN", dia: 2 },
+      { codigo: "GEN-02-PGN", dia: 3 },
+      { codigo: "GEN-03-PGN", dia: 4 },
+      { codigo: "FUN-GDOC-3PU17L-01", dia: 4, orden: 1 },
+      { codigo: "3PU17L-COM-01", dia: 5 },
+      { codigo: "3PU17L-COM-02", dia: 6 },
+      { codigo: "3PU17L-COM-03", dia: 7 },
+      { codigo: "3PU17L-COM-04", dia: 8 },
+      { codigo: "FUN-PGN-3PU17L-01", dia: 9 },
+      { codigo: "FUN-CONST-3PU17L-01", dia: 10 },
+      { codigo: "FUN-DIS-3PU17L-01", dia: 11 },
+      { codigo: "FUN-DIS-3PU17L-02", dia: 12 },
+      { codigo: "FUN-PROB-3PU17L-01", dia: 13 },
+      { codigo: "FUN-DIS-3PU17L-03", dia: 14 },
+      { codigo: "FUN-PREV-3PU17L-01", dia: 15 },
+      { codigo: "FUN-PEN-3PU17L-01", dia: 16 },
+      { codigo: "FUN-PEN-3PU17L-02", dia: 17 },
+      { codigo: "FUN-JUR-3PU17L-01", dia: 18 },
+      { codigo: "FUN-CONT-3PU17L-01", dia: 19 },
+      { codigo: "FUN-OT-3PU17L-01", dia: 20 },
+      { codigo: "SIM-PGN-3PU17L-001", dia: 21 },
+    ],
+  },
+
   // Procuraduría General de la Nación — Secretario Procuraduría (4SP-13), Convocatoria 283-2026.
   // Nivel Técnico · apoyo secretarial (trámite, notificaciones, archivo) — Carolina Rueda Rodríguez.
   "pgn-secretario-4sp13": {
