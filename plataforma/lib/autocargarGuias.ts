@@ -339,6 +339,37 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
     ],
   },
 
+  // Procuraduría General de la Nación — Profesional Universitario (3PU-15), Convocatoria 106-2026.
+  // Procuradurías Delegadas Disciplinarias de Instrucción (Bogotá) · cargo exclusivamente disciplinario — Claudia Cruz Robayo.
+  "pgn-profesional-3pu15-claudia": {
+    id: "pgn-profesional-3pu15-claudia",
+    nombre: "PGN · Profesional Universitario (3PU-15) Delegadas Disciplinarias de Instrucción (Conv. 106-2026) — plan completo (21 días)",
+    guias: [
+      { codigo: "INTRO-00-PGN-3PU15C", dia: 1 },
+      { codigo: "ENT-PGN-3PU15C-01", dia: 1, orden: 1 },
+      { codigo: "GEN-01-PGN-3PU15C", dia: 2 },
+      { codigo: "GEN-02-PGN-3PU15C", dia: 3 },
+      { codigo: "GEN-03-PGN-3PU15C", dia: 4 },
+      { codigo: "3PU15C-COM-01", dia: 5 },
+      { codigo: "3PU15C-COM-02", dia: 6 },
+      { codigo: "3PU15C-COM-03", dia: 7 },
+      { codigo: "3PU15C-COM-04", dia: 8 },
+      { codigo: "FUN-PGN-3PU15C-01", dia: 9 },
+      { codigo: "FUN-CONST-3PU15C-01", dia: 10 },
+      { codigo: "FUN-DIS-3PU15C-01", dia: 11 },
+      { codigo: "FUN-DIS-3PU15C-02", dia: 12 },
+      { codigo: "FUN-PROB-3PU15C-01", dia: 13 },
+      { codigo: "FUN-DIS-3PU15C-03", dia: 14 },
+      { codigo: "FUN-VS-3PU15C-01", dia: 15 },
+      { codigo: "FUN-JUR-3PU15C-01", dia: 16 },
+      { codigo: "FUN-CONT-3PU15C-01", dia: 17 },
+      { codigo: "FUN-FP-3PU15C-01", dia: 18 },
+      { codigo: "FUN-HAC-3PU15C-01", dia: 19 },
+      { codigo: "FUN-GDOC-3PU15C-01", dia: 20 },
+      { codigo: "SIM-PGN-3PU15C-001", dia: 21 },
+    ],
+  },
+
   // Procuraduría General de la Nación — Secretario Procuraduría (4SP-13), Convocatoria 283-2026.
   // Nivel Técnico · apoyo secretarial (trámite, notificaciones, archivo) — Carolina Rueda Rodríguez.
   "pgn-secretario-4sp13": {
