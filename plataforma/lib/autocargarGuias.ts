@@ -315,9 +315,9 @@ export const PLANES_PLANTILLA: Record<string, PlanPlantilla> = {
     guias: [
       { codigo: "INTRO-00-PGN-3PU17L", dia: 1 },
       { codigo: "ENT-PGN-PU-01", dia: 1, orden: 1 },
-      { codigo: "GEN-01-PGN", dia: 2 },
-      { codigo: "GEN-02-PGN", dia: 3 },
-      { codigo: "GEN-03-PGN", dia: 4 },
+      { codigo: "GEN-01-PGN-3PU17L", dia: 2 },
+      { codigo: "GEN-02-PGN-3PU17L", dia: 3 },
+      { codigo: "GEN-03-PGN-3PU17L", dia: 4 },
       { codigo: "FUN-GDOC-3PU17L-01", dia: 4, orden: 1 },
       { codigo: "3PU17L-COM-01", dia: 5 },
       { codigo: "3PU17L-COM-02", dia: 6 },
