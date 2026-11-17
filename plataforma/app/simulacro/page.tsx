@@ -4,7 +4,7 @@ import "../landing.css";
 import "./simulacro.css";
 
 export const metadata: Metadata = {
-  title: "Simulacro CNSC gratis por nivel | Ascenso Público",
+  title: "Simulacro CNSC gratis por nivel",
   description:
     "Mide tu conocimiento para la prueba escrita de la CNSC con un simulacro gratis según tu nivel (asistencial, técnico o profesional). 20 preguntas tipo CNSC, retroalimentación y guía de qué estudiar.",
 };
