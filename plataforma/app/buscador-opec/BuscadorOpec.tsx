@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -337,7 +338,7 @@ function DetailModal({ job, detail, loading, error, copied, onClose, onCopy }: {
         <div className="opec-modal-actions">
           <button type="button" className={`opec-copy-button${copied ? " copied" : ""}`} onClick={() => onCopy(job)}><CopyIcon /> {copied ? `${job.tipoReferencia} copiado` : `Copiar ${job.tipoReferencia} ${job.referencia}`}</button>
           {detail?.urlOficial && <a href={detail.urlOficial} target="_blank" rel="noopener noreferrer" className="opec-simo-button" onClick={() => trackEvent("opec_official_clicked", { empleo_id: job.id, referencia: job.referencia, convocatoria_id: job.convocatoriaId, employment_level: job.nivel })}>Ir al sitio oficial <span aria-hidden="true">↗</span></a>}
-          <Link href="/comprar" className="opec-course-link" data-analytics-event="cta_click" data-analytics-placement="opec_detail_buy">Prepararme para este cargo</Link>
+          <a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener" className="opec-course-link" data-analytics-event="whatsapp_clicked" data-analytics-placement="opec_detail_buy">Prepararme para este cargo</a>
         </div>
         <p className="opec-modal-note">Confirma los requisitos, fechas y disponibilidad en el canal oficial antes de inscribirte.</p>
       </section>
