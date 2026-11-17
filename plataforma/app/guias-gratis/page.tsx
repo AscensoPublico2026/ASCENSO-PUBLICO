@@ -11,6 +11,12 @@ export const metadata: Metadata = {
 
 const GUIAS = [
   {
+    href: "/guias-gratis/como-funciona-un-concurso-cnsc.html",
+    emoji: "🧭",
+    titulo: "Cómo funciona un concurso de la CNSC",
+    desc: "Qué evalúa cada prueba, cómo piensa la CNSC, los errores que más eliminan y cómo detectar los distractores.",
+  },
+  {
     href: "/guias-gratis/estado-y-funcion-publica.html",
     emoji: "🏛️",
     titulo: "Estado y Función Pública",
@@ -32,6 +38,7 @@ const GUIAS = [
 
 const SIMULACROS = [
   { href: "/simulacro-gratis/procuraduria.html", emoji: "⚖️", titulo: "Procuraduría 2026", desc: "Núcleo común del concurso «Mérito Construyendo Excelencia».", nuevo: true },
+  { href: "/simulacro-gratis/docente.html", emoji: "👩‍🏫", titulo: "Concurso Docente 2026", desc: "Lectura crítica, razonamiento, pedagogía y casos de aula.", nuevo: true },
   { href: "/simulacro-gratis/asistencial.html", emoji: "🧰", titulo: "Nivel Asistencial", desc: "Estado, atención al ciudadano y competencias del nivel." },
   { href: "/simulacro-gratis/tecnico.html", emoji: "🛠️", titulo: "Nivel Técnico", desc: "Procedimientos, calidad de la información y competencias." },
   { href: "/simulacro-gratis/profesional.html", emoji: "🎓", titulo: "Nivel Profesional", desc: "Análisis, conceptos, conflictos de interés y liderazgo." },
@@ -55,7 +62,7 @@ export default function GuiasGratis() {
           <span className="eyebrow c">Material gratis · concursos de mérito</span>
           <h1 className="sim-h1">Empieza a estudiar hoy, gratis</h1>
           <p className="sim-lead">
-            Las tres guías generales que evalúan casi todas las convocatorias, y simulacros tipo caso
+            Las guías generales que evalúan casi todas las convocatorias y cinco simulacros tipo caso,
             con la explicación de cada respuesta. Sin registro para leer.
           </p>
         </div>
@@ -66,7 +73,7 @@ export default function GuiasGratis() {
         <p className="center" style={{ color: "var(--texto-suave)", maxWidth: 620, margin: "0 auto 26px" }}>
           Son las mismas guías generales de nuestra ruta de 21 días: con ejemplos, casos y autoevaluación.
         </p>
-        <div className="grid grid-3">
+        <div className="grid grid-4">
           {GUIAS.map((g) => (
             <div className="card sim-nivel-card" key={g.href}>
               <span className="sim-nivel-emoji">{g.emoji}</span>
@@ -82,7 +89,7 @@ export default function GuiasGratis() {
 
         <h2 className="center" style={{ color: "var(--azul)", margin: "56px 0 8px" }}>📝 Simulacros gratis</h2>
         <p className="center" style={{ color: "var(--texto-suave)", maxWidth: 620, margin: "0 auto 26px" }}>
-          20 casos tipo juicio situacional. Al final ves tu puntaje, la explicación de cada opción y qué temas reforzar.
+          20 casos cada uno. Al final ves tu puntaje, la explicación de cada opción y qué temas reforzar.
         </p>
         <div className="guias-sim-grid">
           {SIMULACROS.map((s) => (

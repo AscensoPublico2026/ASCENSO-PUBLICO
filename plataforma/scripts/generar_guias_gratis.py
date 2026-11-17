@@ -15,6 +15,7 @@ DST.mkdir(exist_ok=True)
 
 # (archivo origen, archivo destino, nombre, día que ocupa en la ruta del curso)
 GUIAS = [
+    ("INTRO-00-presentacion-curso.html", "como-funciona-un-concurso-cnsc.html", "Cómo funciona un concurso de la CNSC", 1),
     ("GEN-01-estado-funcion-publica.html", "estado-y-funcion-publica.html", "Estado y Función Pública", 2),
     ("GEN-02-relacion-estado-ciudadano.html", "relacion-estado-ciudadano.html", "Relación Estado-Ciudadano", 3),
     ("GEN-03-marco-institucional.html", "marco-institucional.html", "Marco Institucional", 4),
@@ -46,6 +47,9 @@ def sin_dias(s: str, n: int) -> str:
         ("el método de 4 pasos del Día 1", "el método de 4 pasos"),
         (f"Listo para el Día {n + 1}.", "Listo para la siguiente guía."),
         ("Mañana avanzas", "En el curso avanzas"),
+        ("Guías funcionales (Días 9–20).", "Guías funcionales del curso."),
+        ("Guías por nivel (Días 5–8).", "Guías por nivel del curso."),
+        ("Llega al simulacro final (Día 21)", "Llega al simulacro final del curso"),
         ("Mañana:", "Siguiente guía:"),
         ("último día del módulo general", "última guía del módulo general"),
         ("el último día de la Biblioteca General", "la última de la Biblioteca General"),

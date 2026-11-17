@@ -28,6 +28,7 @@ export default function NavLanding() {
           <Link href="/guias-gratis" className="nav-destacado">Guías gratis</Link>
           <Link href="/#como">Cómo funciona</Link>
           <Link href="/buscador-opec" className="nav-destacado nav-opec">Buscador OPEC <span>NUEVO</span></Link>
+          <Link href="/docentes" className="nav-destacado nav-opec">Docentes <span>2026</span></Link>
           <Link href="/#simulacro">Simulacro gratis</Link>
           <Link href="/#incluye">Qué incluye</Link>
           <Link href="/#convocatorias">Concursos</Link>
@@ -51,6 +52,7 @@ export default function NavLanding() {
           <Link href="/guias-gratis" className="nav-destacado" onClick={() => setOpen(false)}>Guías gratis</Link>
           <Link href="/#como" onClick={() => setOpen(false)}>Cómo funciona</Link>
           <Link href="/buscador-opec" className="nav-destacado nav-opec" onClick={() => setOpen(false)}>Buscador OPEC <span>NUEVO</span></Link>
+          <Link href="/docentes" className="nav-destacado nav-opec" onClick={() => setOpen(false)}>Docentes 2026</Link>
           <Link href="/#simulacro" onClick={() => setOpen(false)}>Simulacro gratis</Link>
           <Link href="/#incluye" onClick={() => setOpen(false)}>Qué incluye</Link>
           <Link href="/#convocatorias" onClick={() => setOpen(false)}>Concursos</Link>
