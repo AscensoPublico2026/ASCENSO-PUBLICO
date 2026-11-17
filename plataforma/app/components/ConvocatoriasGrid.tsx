@@ -10,6 +10,7 @@ type Convocatoria = {
   vacantes: string | null;
   fecha_prueba_aprox: string | null;
   imagen_url: string | null;
+  tema?: string | null;
 };
 
 /** Orden de aparición: primero donde todavía hay prueba por delante. */
@@ -20,14 +21,6 @@ const PESO_ESTADO: Record<string, number> = { abiertas: 0, proxima: 1, cerradas:
  * Se muestran como "Próximamente" con un botón para que avisemos por WhatsApp.
  */
 const PROXIMAMENTE = [
-  {
-    nombre: "Docentes y Directivos Docentes 2026",
-    entidad: "CNSC · secretarías de educación",
-    vacantes: "Más de 28.000",
-    fecha: "Inscripciones con reserva: 23 nov 2026 – 15 ene 2027 · generales a inicios de 2027 · prueba en el 2.º semestre de 2027",
-    imagen: "/fotos/nacional.jpg",
-    mensaje: "Hola, quiero que me avisen cuando abran la preparación para el concurso docente 2026.",
-  },
   {
     nombre: "Corporaciones Autónomas Regionales (CAR)",
     entidad: "CNSC · 33 corporaciones ambientales",
@@ -75,7 +68,7 @@ export default function ConvocatoriasGrid({ convocatorias }: { convocatorias: Co
                 </div>
               )}
               <Link
-                href={`/convocatorias/${c.id}`}
+                href={c.tema === "docente" ? "/docentes" : `/convocatorias/${c.id}`}
                 className={`btn ${cerrada ? "btn-ghost-conv" : "btn-azul"} conv-btn`}
                 style={{ padding: "11px 18px", fontSize: ".88rem", marginTop: 6 }}
               >

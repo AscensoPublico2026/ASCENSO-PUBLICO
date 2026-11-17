@@ -5,7 +5,7 @@ import "../simulacro/simulacro.css";
 import { waUrl } from "@/lib/contacto";
 
 export const metadata: Metadata = {
-  title: "Concurso Docente 2026: fechas, pruebas y simulacro gratis",
+  title: "Concurso Docente 2026: pruebas y simulacro gratis",
   description:
     "Todo sobre el concurso de docentes y directivos docentes 2026 de la CNSC: más de 31.000 vacantes, fechas de inscripción, las cuatro pruebas y su ponderación, y un simulacro gratis de 20 preguntas.",
 };

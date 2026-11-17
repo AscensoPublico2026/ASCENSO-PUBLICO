@@ -63,6 +63,11 @@ export default async function AdminHome() {
             </div>
           )}
         </Link>
+        <Link href="/admin/simulacros" style={{ ...stat, display: "block", transition: "transform .15s" }}>
+          <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>🧪</div>
+          <div style={{ fontWeight: 700, color: "var(--azul)" }}>Simulacros de pago</div>
+          <div style={{ color: "var(--texto-suave)", fontSize: ".85rem", marginTop: 4 }}>Compras de $39.000, puntajes, reenvío del enlace e intentos.</div>
+        </Link>
         <Link href="/admin/convocatorias" style={{ ...stat, display: "block", transition: "transform .15s" }}>
           <div style={{ fontSize: "1.2rem", marginBottom: 6 }}>📋</div>
           <div style={{ fontWeight: 700, color: "var(--azul)" }}>Gestionar convocatorias</div>

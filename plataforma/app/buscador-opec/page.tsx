@@ -9,7 +9,7 @@ import "../landing.css";
 import "./buscador-opec.css";
 
 export const metadata: Metadata = {
-  title: "Buscador inteligente de convocatorias 2026 | OPEC y vacantes",
+  title: "Buscador de OPEC y vacantes CNSC 2026",
   description:
     "Consulta en un solo buscador las vacantes ESE 2, EREON 2026 y Procuraduría. Filtra por convocatoria o describe tu perfil para encontrar empleos afines.",
   keywords: [

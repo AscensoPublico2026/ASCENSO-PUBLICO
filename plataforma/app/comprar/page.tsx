@@ -6,6 +6,7 @@ import Link from "next/link";
 import ContadorCupos from "../components/ContadorCupos";
 import { trackEvent } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 // Componente principal (ahora completamente cliente)
 export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string; error?: string } }) {
@@ -122,6 +123,26 @@ export default function ComprarPage({ searchParams }: { searchParams?: { conv?: 
           ? `Precio: ${formatoCOP(precioSeleccionado)} · pago único`
           : "Pago único · el precio depende de la convocatoria que elijas"}
       </p>
+
+      <a
+        href={waUrl(WA_MENSAJES.precio)}
+        target="_blank"
+        rel="noopener"
+        data-analytics-event="whatsapp_clicked"
+        data-analytics-placement="comprar_wa"
+        style={{
+          display: "block", background: "var(--verde-suave)", border: "1px solid #BFE6D2",
+          borderLeft: "4px solid var(--verde)", borderRadius: 12, padding: "14px 16px",
+          marginBottom: 18, textDecoration: "none", color: "var(--texto)",
+        }}
+      >
+        <strong style={{ color: "var(--verde)" }}>💬 ¿Prefieres que te atendamos por WhatsApp?</strong>
+        <br />
+        <span style={{ fontSize: ".88rem", color: "var(--texto-suave)" }}>
+          Es como compra la mayoría: nos dices tu convocatoria y tu cargo, confirmamos el precio de tu nivel
+          y te acompañamos con el manual de funciones. Escríbenos →
+        </span>
+      </a>
 
       <ContadorCupos />
 
