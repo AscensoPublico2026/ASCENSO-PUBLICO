@@ -64,10 +64,10 @@ export const PRODUCTOS: ProductoSimulacro[] = [
     nivel: "Docente de aula",
     nombre: "Simulacro completo · Concurso Docente",
     descripcion:
-      "Lectura crítica, razonamiento cuantitativo, competencias pedagógicas y casos de aula con el formato de la prueba de aptitudes y competencias básicas.",
+      "Lectura crítica, razonamiento cuantitativo, competencias pedagógicas, evaluación del aprendizaje, normatividad educativa, convivencia escolar y casos de aula.",
     preguntas: 100,
     minutos: 150,
-    disponible: false,
+    disponible: true,
   },
 ];
 

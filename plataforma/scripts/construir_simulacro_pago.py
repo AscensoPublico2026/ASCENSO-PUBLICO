@@ -22,6 +22,10 @@ import b1_estructura, b2_constitucion, b3_disciplinario  # noqa: E402
 import b4_mecanismos_funcion, b5_cpaca_contratacion_integridad  # noqa: E402
 import b6_tecnico, b7_operativo  # noqa: E402
 
+sys.path.insert(0, str(HERE / "banco_docente"))
+import d1_lectura, d2_cuantitativo, d3_pedagogia  # noqa: E402
+import d4_normatividad, d5_psicotecnica  # noqa: E402
+
 SALIDA = HERE.parent / "data" / "simulacros-pago"
 
 
@@ -57,6 +61,17 @@ BANCOS = {
     "procuraduria-operativo": [
         EST, CON, dis_por_dificultad("basic", "intermediate", cuantas=9),
         MEC, FUN[:11], INT, b7_operativo.BANCO,
+    ],
+    # Concurso docente: la prueba evalúa aptitudes y competencias básicas,
+    # pedagogía, normatividad educativa y casos de aula.
+    "docente": [
+        d1_lectura.BANCO,
+        d2_cuantitativo.BANCO,
+        por_eje(d3_pedagogia.BANCO, "Competencias pedagógicas"),
+        por_eje(d3_pedagogia.BANCO, "Evaluación del aprendizaje"),
+        por_eje(d4_normatividad.BANCO, "Normatividad educativa"),
+        por_eje(d4_normatividad.BANCO, "Convivencia escolar"),
+        d5_psicotecnica.BANCO,
     ],
 }
 
