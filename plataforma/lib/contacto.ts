@@ -30,4 +30,15 @@ export const WA_MENSAJES = {
   asesoria: "Hola, tengo una duda antes de comprar el curso de Ascenso Público.",
   soporte: "Hola, necesito ayuda con mi curso de Ascenso Público.",
   convocatoria: "Hola, quiero saber si mi convocatoria/cargo está disponible en Ascenso Público.",
+  simulacroPago: "Hola, quiero el simulacro completo de $39.000. Mi convocatoria y mi cargo son:",
+  precio: "Hola, quiero saber el precio del curso para mi cargo. Mi convocatoria y mi cargo son:",
 };
+
+/** Mensaje para pedir el curso de una convocatoria concreta. */
+export function waCurso(convocatoria?: string): string {
+  return waUrl(
+    convocatoria
+      ? `Hola, quiero mi curso personalizado para la convocatoria ${convocatoria}. Mi cargo es:`
+      : WA_MENSAJES.comprar
+  );
+}

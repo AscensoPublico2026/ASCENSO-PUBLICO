@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import "../landing.css";
 import "../simulacro/simulacro.css";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const metadata: Metadata = {
   title: "Guías y simulacros gratis para concursos de mérito",
@@ -52,9 +53,9 @@ export default function GuiasGratis() {
           <span className="sim-brand-logo">↗</span>
           <span>Ascenso Público</span>
         </Link>
-        <Link href="/comprar" className="btn btn-oro sim-top-cta" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_top">
+        <a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener" className="btn btn-oro sim-top-cta" data-analytics-event="whatsapp_clicked" data-analytics-placement="guias_gratis_top">
           Quiero mi curso
-        </Link>
+        </a>
       </header>
 
       <section className="sim-hero">
@@ -110,7 +111,7 @@ export default function GuiasGratis() {
             En el curso armamos tu ruta de 21 días con tu OPEC y tu manual de funciones.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_comprar">Quiero mi curso personalizado</Link>
+            <a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="guias_gratis_comprar">Quiero mi curso personalizado</a>
             <Link href="/#como" className="btn-ghost-dark">Ver cómo funciona</Link>
           </div>
         </div>

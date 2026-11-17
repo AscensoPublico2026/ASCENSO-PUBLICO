@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import NavLanding from "./components/NavLanding";
-import NivelTabs from "./components/NivelTabs";
 import ConvocatoriasGrid from "./components/ConvocatoriasGrid";
 import ContadorCupos from "./components/ContadorCupos";
 import ScrollReveal from "./components/ScrollReveal";
@@ -13,7 +12,8 @@ import "./landing.css";
 export const dynamic = "force-dynamic";
 
 const WA_URL = waUrl(WA_MENSAJES.comprar);
-const WA_ASESORIA = waUrl(WA_MENSAJES.asesoria);
+const WA_PRECIO = waUrl(WA_MENSAJES.precio);
+const WA_SIMULACRO = waUrl(WA_MENSAJES.simulacroPago);
 const formatNumber = (value: number) => value.toLocaleString("es-CO");
 const opecUpdatedDate = formatOpecDate(opecMeta.fechaActualizacion);
 
@@ -36,25 +36,22 @@ export default async function LandingPage() {
       <NavLanding />
       <ScrollReveal />
 
-      {/* ===== HERO ===== */}
+      {/* ===== 1. HERO ===== */}
       <section className="hero">
         <span className="hero-borde-oro" aria-hidden="true" />
         <div className="wrap hero-grid">
           <div>
             <span className="kick">⭐ Concursos de mérito · CNSC Colombia</span>
             <h1>Estudia para <span className="hl">tu cargo</span>, no para toda la convocatoria.</h1>
-            <p className="sub">El único curso de la CNSC que estudia el <strong>manual de funciones de tu cargo específico</strong> —no solo tu nivel— y te prepara exactamente para lo que van a evaluarte en la prueba escrita.</p>
-            <p className="vp">Deja de estudiar a ciegas. Sabe <strong>exactamente qué estudiar</strong> para ganar tu ascenso.</p>
+            <p className="sub">Armamos tu plan de estudio con <strong>el manual de funciones de tu cargo</strong> —no solo de tu nivel— para que estudies exactamente lo que van a evaluarte en la prueba escrita.</p>
             <div className="hero-cta">
-              <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="hero_buy">Quiero mi curso personalizado</Link>
-              <a href={WA_ASESORIA} target="_blank" rel="noopener" className="btn btn-wa" data-analytics-event="whatsapp_clicked" data-analytics-placement="hero_advice">💬 Asesoría por WhatsApp</a>
-              <a href="#como" className="btn btn-ghost">Ver cómo funciona</a>
+              <a href={WA_PRECIO} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="hero_buy">Quiero mi curso · escribir por WhatsApp</a>
+              <Link href="/guias-gratis" className="btn btn-ghost" data-analytics-event="cta_click" data-analytics-placement="hero_gratis">Probar gratis primero</Link>
             </div>
-            <a href="#convocatorias" className="btn btn-ghost btn-conv-movil">📋 Ver convocatorias disponibles</a>
             <div className="hero-mini">
               <span>🎯 Personalizado por cargo</span>
               <span>📅 Plan de 21 días</span>
-              <span>📝 Simulacros tipo CNSC</span>
+              <span>⚡ Listo en 24 horas</span>
             </div>
           </div>
 
@@ -78,22 +75,53 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ===== TRUST BAND ===== */}
-      <div className="trust">
-        <div className="trust-in">
-          <span>🔒 <b>Pago seguro</b> con Wompi</span>
-          <span>🏦 PSE · Nequi · Tarjetas</span>
-          <span>🛡️ Datos protegidos · <b>Ley 1581</b></span>
-          <span>⚡ Tu ruta lista en <b>24 horas</b></span>
+      {/* ===== 2. CONCURSOS (lo primero que la gente viene a buscar) ===== */}
+      <section className="sec sec-alt" id="convocatorias">
+        <div className="wrap">
+          <span className="eyebrow">Concursos · actualizado a noviembre de 2026</span>
+          <h2>¿En qué va tu concurso?</h2>
+          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero las que todavía tienen prueba escrita por delante. ¿No ves la tuya? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
+          <ConvocatoriasGrid convocatorias={convocatorias} />
         </div>
-      </div>
+      </section>
 
-      {/* ===== MIRA EL PRODUCTO POR DENTRO ===== */}
+      {/* ===== 3. GRATIS: simulacros y guías ===== */}
+      <section className="sim-promo" id="simulacro">
+        <div className="wrap">
+          <div className="sim-promo-head">
+            <span className="sim-promo-tag">🎁 Gratis · sin registro · resultado al instante</span>
+            <h2>Mide tu nivel <span className="hl">antes de pagar nada</span></h2>
+            <p className="sim-promo-lead">Simulacros con casos tipo prueba real y guías de estudio completas. Al terminar ves tu puntaje, la explicación de cada opción y qué debes reforzar.</p>
+          </div>
+
+          <div className="sim-promo-grid sim-promo-grid-2">
+            <a href="/simulacro-gratis/procuraduria.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="procuraduria">
+              <span className="sim-promo-emoji">⚖️</span>
+              <h3>Procuraduría 2026</h3>
+              <p>Núcleo común y por nivel: operativo, técnico y profesional.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </a>
+            <a href="/simulacro-gratis/docente.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="docente">
+              <span className="sim-promo-emoji">👩‍🏫</span>
+              <h3>Concurso Docente 2026</h3>
+              <p>Lectura crítica, razonamiento, pedagogía y casos de aula.</p>
+              <span className="sim-promo-go">Empezar simulacro →</span>
+            </a>
+          </div>
+
+          <div className="sim-promo-foot">
+            <Link href="/simulacro" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="landing_all_simulacros">Ver todos los simulacros</Link>
+            <Link href="/guias-gratis" className="btn btn-ghost-conv" style={{ padding: "13px 22px" }} data-analytics-event="cta_click" data-analytics-placement="landing_guias_gratis">📚 Guías de estudio gratis</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. ASÍ SE VE POR DENTRO ===== */}
       <section className="dentro" id="dentro">
         <div className="wrap">
           <span className="eyebrow c">Así se ve por dentro</span>
           <h2 className="center">No son PDFs. Son guías que se usan.</h2>
-          <p className="lead center">Cada día de tu ruta es una guía interactiva: explicación, casos reales de la CNSC, trampas frecuentes, tarjetas de repaso y un simulacro al final. Se abren en el navegador, desde el celular o el computador.</p>
+          <p className="lead center">Cada día de tu ruta es una guía interactiva: explicación, casos reales, trampas frecuentes, tarjetas de repaso y un simulacro al final. Se abren en el navegador, desde el celular o el computador.</p>
 
           <div className="dentro-grid">
             <article className="dentro-item">
@@ -104,7 +132,7 @@ export default async function LandingPage() {
               <div className="dentro-txt">
                 <span className="dentro-num">01</span>
                 <h3>Guías interactivas, no archivos muertos</h3>
-                <p>Objetivo, desarrollo, comparaciones, casos tipo CNSC, errores frecuentes, tips, repaso y simulacro. Avanzas por secciones y la guía te lleva de la mano.</p>
+                <p>Objetivo, desarrollo, comparaciones, casos tipo CNSC, errores frecuentes, repaso y simulacro. Avanzas por secciones y la guía te lleva de la mano.</p>
               </div>
             </article>
 
@@ -132,31 +160,113 @@ export default async function LandingPage() {
               </div>
             </article>
           </div>
+        </div>
+      </section>
 
-          <div className="dentro-cta">
-            <p><b>Pruébalo sin pagar:</b> abre una guía completa y haz un simulacro ahora mismo.</p>
-            <div>
-              <Link href="/guias-gratis" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="dentro_guias">Abrir una guía gratis</Link>
-              <Link href="/simulacro" className="btn btn-ghost-conv" data-analytics-event="cta_click" data-analytics-placement="dentro_simulacro">Hacer un simulacro</Link>
-            </div>
+      {/* ===== 5. CÓMO FUNCIONA ===== */}
+      <section className="sec" id="como">
+        <div className="wrap">
+          <span className="eyebrow">Cómo funciona</span>
+          <h2>De tu mensaje a tu ruta de estudio</h2>
+          <p className="lead">Tú nos dices tu cargo; nosotros armamos el plan. Todo empieza por WhatsApp.</p>
+          <div className="pasos">
+            <div className="paso"><h3>Nos escribes por WhatsApp</h3><p>Nos dices tu convocatoria y tu cargo. Te confirmamos el precio de tu nivel y resolvemos tus dudas sin compromiso.</p></div>
+            <div className="paso"><h3>Revisamos tu OPEC</h3><p>Verificamos tu empleo y su manual de funciones. Si no sabes dónde están, te enseñamos a descargarlos.</p></div>
+            <div className="paso"><h3>Armamos tu ruta en 24 horas</h3><p>Construimos tu plan de 21 días con las guías generales, las de tu nivel y las funcionales de tu empleo.</p></div>
+            <div className="paso"><h3>Estudias y practicas</h3><p>Entras con tu usuario, avanzas una guía por día (60 a 90 minutos) y cierras con el simulacro integral.</p></div>
+          </div>
+          <div className="como-cta">
+            <a href={WA_PRECIO} target="_blank" rel="noopener" className="btn btn-wa" data-analytics-event="whatsapp_clicked" data-analytics-placement="como_wa">💬 Escribir por WhatsApp</a>
           </div>
         </div>
       </section>
 
-      {/* ===== BUSCADOR OPEC ESE 2026 ===== */}
+      {/* ===== 6. PRECIO ===== */}
+      <section className="sec sec-alt" id="precio">
+        <div className="wrap">
+          <span className="eyebrow c" style={{ display: "block", textAlign: "center" }}>Precio por nivel</span>
+          <h2 className="center">El precio depende del cargo al que aspiras</h2>
+          <p className="lead center" style={{ margin: "0 auto 34px" }}>Como los derechos de participación del concurso, el valor cambia según el nivel del empleo. Pago único, sin mensualidades.</p>
+
+          <div className="precio-grid">
+            <div className="precio-nivel">
+              <span className="precio-nivel-tag">Operativo y administrativo</span>
+              <div className="precio-nivel-num">$190.000</div>
+              <p>Auxiliares, citadores y oficinistas.</p>
+            </div>
+            <div className="precio-nivel">
+              <span className="precio-nivel-tag">Técnico</span>
+              <div className="precio-nivel-num">$240.000</div>
+              <p>Sustanciadores, técnicos y tecnólogos.</p>
+            </div>
+            <div className="precio-nivel destacado">
+              <span className="precio-nivel-tag">Profesional</span>
+              <div className="precio-nivel-num">$290.000</div>
+              <p>Profesional universitario y equivalentes.</p>
+            </div>
+            <div className="precio-nivel">
+              <span className="precio-nivel-tag">Asesor y ejecutivo</span>
+              <div className="precio-nivel-num">$390.000</div>
+              <p>Asesores y cargos de dirección.</p>
+            </div>
+          </div>
+
+          <div className="precio-incluye">
+            <h3>Lo que incluye, en cualquier nivel</h3>
+            <ul>
+              <li>Plan personalizado de 21 días construido con tu OPEC y tu manual de funciones</li>
+              <li>Guías generales, de tu nivel y funcionales de tu empleo</li>
+              <li>Simulacros tipo CNSC y simulacro integral final</li>
+              <li>Guía de estrategia: cómo piensa la CNSC y cómo descartar distractores</li>
+              <li>Acceso desde tu perfil durante toda la vigencia del curso</li>
+            </ul>
+            <a href={WA_PRECIO} target="_blank" rel="noopener" className="btn btn-oro" style={{ width: "100%", padding: 15 }} data-analytics-event="whatsapp_clicked" data-analytics-placement="pricing_wa">💬 Pedir mi curso por WhatsApp</a>
+            <ContadorCupos />
+            <p className="precio-nota">Te confirmamos el precio exacto de tu cargo antes de que pagues. Sin compromiso.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 7. SIMULACRO COMPLETO DE PAGO ===== */}
+      <section className="sim39" id="simulacro-completo">
+        <div className="wrap sim39-grid">
+          <div>
+            <span className="eyebrow c">¿Todavía no quieres el curso completo?</span>
+            <h2>Simulacro completo de tu cargo</h2>
+            <p>100 preguntas con el formato de la prueba real, cronómetro y explicación de cada opción. Al terminar recibes un informe con tu puntaje por competencia y qué estudiar primero.</p>
+            <ul className="sim39-lista">
+              <li>100 preguntas construidas con los ejes temáticos de tu empleo</li>
+              <li>Cronómetro y una sola sesión, como en el examen</li>
+              <li>Explicación de por qué cada opción es correcta o es trampa</li>
+              <li>Informe por competencia y plan de refuerzo</li>
+            </ul>
+            <div className="sim39-precio">
+              <div><span className="sim39-num">$39.000</span><small>pago único</small></div>
+              <p>Y si después compras el curso, <strong>te lo descontamos completo</strong> durante los 30 días siguientes.</p>
+            </div>
+            <a href={WA_SIMULACRO} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="sim39_wa">💬 Pedir mi simulacro completo</a>
+          </div>
+          <div className="sim39-shot" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/producto/simulacro.jpg" alt="" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 8. BUSCADOR OPEC ===== */}
       <section className="opec-home-promo" id="buscador-opec">
         <div className="wrap opec-home-grid">
           <div className="opec-home-copy">
-            <span className="opec-home-tag"><i /> Nueva herramienta gratuita</span>
+            <span className="opec-home-tag"><i /> Herramienta gratuita</span>
             <h2>Encuentra la vacante que <span>sí encaja contigo</span></h2>
-            <p>Explora todas las OPEC de la convocatoria Empresas Sociales del Estado 2026. Filtra por profesión, ciudad, salario y experiencia sin revisar cientos de páginas en SIMO.</p>
+            <p>Explora las OPEC de la convocatoria Empresas Sociales del Estado 2026. Filtra por profesión, ciudad, salario y experiencia sin revisar cientos de páginas en SIMO.</p>
             <div className="opec-home-points">
               <span><b>{formatNumber(opecMeta.totalOpec)}</b> OPEC consolidadas</span>
               <span><b>{formatNumber(opecMeta.totalVacantes)}</b> vacantes</span>
-              <span><b>{formatNumber(opecMeta.sinExperiencia)}</b> OPEC abiertas sin experiencia</span>
+              <span><b>{formatNumber(opecMeta.sinExperiencia)}</b> sin experiencia</span>
             </div>
             <Link href="/buscador-opec" className="btn btn-oro opec-home-cta" data-analytics-event="cta_click" data-analytics-placement="landing_search">Buscar mi OPEC gratis <span aria-hidden="true">→</span></Link>
-            <small>Sin registro · Información actualizada al {opecUpdatedDate}</small>
+            <small>Sin registro · información actualizada al {opecUpdatedDate}</small>
           </div>
           <div className="opec-home-demo" aria-hidden="true">
             <div className="opec-home-window">
@@ -180,229 +290,29 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ===== SIMULACRO GRATIS (lead magnet) ===== */}
-      <section className="sim-promo" id="simulacro">
-        <div className="wrap">
-          <div className="sim-promo-head">
-            <span className="sim-promo-tag">🎁 Gratis · sin registro · resultado al instante</span>
-            <h2>Empieza con tu <span className="hl">simulacro gratis</span></h2>
-            <p className="sim-promo-lead">Mide tu nivel en los temas que la CNSC evalúa en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> con lo que ya dominas y lo que debes reforzar. Elige tu nivel:</p>
-          </div>
-          <a href="/simulacro-gratis/procuraduria.html" className="sim-promo-destacado" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="procuraduria">
-            <span className="sim-promo-nuevo">NUEVO</span>
-            <span className="sim-promo-emoji">⚖️</span>
-            <span className="sim-promo-destacado-txt">
-              <strong>Simulacro gratis · Concurso Procuraduría 2026</strong>
-              <span>20 casos del núcleo común: Procuraduría, disciplinario, mecanismos, atención al ciudadano y competencias.</span>
-            </span>
-            <span className="sim-promo-go">Empezar →</span>
-          </a>
-          <a href="/simulacro-gratis/docente.html" className="sim-promo-destacado" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="docente">
-            <span className="sim-promo-nuevo">NUEVO</span>
-            <span className="sim-promo-emoji">👩‍🏫</span>
-            <span className="sim-promo-destacado-txt">
-              <strong>Simulacro gratis · Concurso Docente 2026</strong>
-              <span>Lectura crítica, razonamiento cuantitativo, pedagogía, normatividad y casos de aula.</span>
-            </span>
-            <span className="sim-promo-go">Empezar →</span>
-          </a>
-          <div className="sim-promo-grid">
-            <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="asistencial">
-              <span className="sim-promo-emoji">🧰</span>
-              <h3>Nivel Asistencial</h3>
-              <p>Estado, atención al ciudadano y competencias del nivel.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-            <a href="/simulacro-gratis/tecnico.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="tecnico">
-              <span className="sim-promo-emoji">🛠️</span>
-              <h3>Nivel Técnico</h3>
-              <p>Marco institucional, procesos y competencias técnicas.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-            <a href="/simulacro-gratis/profesional.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="profesional">
-              <span className="sim-promo-emoji">🎓</span>
-              <h3>Nivel Profesional</h3>
-              <p>Función pública, gestión y competencias del nivel.</p>
-              <span className="sim-promo-go">Empezar simulacro →</span>
-            </a>
-          </div>
-          <div className="sim-promo-foot">
-            <Link href="/simulacro" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="landing_all_simulacros">Ver los simulacros gratis →</Link>
-            <Link href="/guias-gratis" className="btn btn-ghost-conv" style={{ padding: "13px 22px" }} data-analytics-event="cta_click" data-analytics-placement="landing_guias_gratis">📚 Guías de estudio gratis</Link>
-            <span className="sim-promo-mini">20 preguntas · explicación de cada respuesta · sin costo</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== PROBLEMA ===== */}
-      <section className="sec" id="problema">
-        <div className="wrap">
-          <span className="eyebrow">El problema</span>
-          <h2>Estudiar sin dirección es perder tiempo</h2>
-          <p className="lead">La mayoría de cursos te dan lo mismo a todos: PDFs enormes, videos genéricos y simulacros que no se parecen a tu prueba. El resultado: estudias mucho, pero no lo que tu cargo realmente evalúa.</p>
-          <div className="grid grid-3">
-            <div className="card pain"><span className="ic">📚</span><h3>Demasiada información</h3><p>Cientos de páginas y normas, sin saber cuáles aplican de verdad a tu empleo.</p></div>
-            <div className="card pain"><span className="ic">🎯</span><h3>Cero personalización</h3><p>Te preparan para &quot;la convocatoria&quot; en general, no para el cargo específico al que aspiras.</p></div>
-            <div className="card pain"><span className="ic">😵</span><h3>Simulacros que no se parecen</h3><p>Preguntas de memoria, cuando la CNSC evalúa con casos situacionales reales.</p></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== SOLUCION ===== */}
-      <section className="sec sec-alt" id="solucion">
-        <div className="wrap">
-          <div className="sol">
-            <div>
-              <span className="badge">La solución</span>
-              <h2>Una ruta hecha a la medida de tu cargo</h2>
-              <p style={{ color: "var(--texto-suave)", fontSize: "1.02rem" }}>Ascenso Público parte de <strong>tu OPEC, tu manual de funciones y tu nivel</strong> para construir un plan de estudio que se enfoca solo en lo que tu prueba va a evaluar.</p>
-              <ul>
-                <li>Analizamos las <strong>funciones reales</strong> de tu empleo.</li>
-                <li>Identificamos las <strong>competencias</strong> que la CNSC evalúa en tu nivel.</li>
-                <li>Te entregamos guías claras, dinámicas y <strong>simulacros tipo CNSC</strong>.</li>
-                <li>Aprendes <strong>estrategia</strong>: cómo piensa la CNSC y cómo responder.</li>
-              </ul>
-            </div>
-            <div className="sol-visual">
-              <div className="big">Por tu cargo,<br/>no por la convocatoria.</div>
-              <small>Esa es la diferencia.</small>
-              <hr/>
-              <p style={{ fontSize: ".95rem", color: "rgba(255,255,255,.9)" }}>«No se trata de estudiar más. Se trata de <strong style={{ color: "var(--oro-claro)" }}>estudiar mejor</strong>.»</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== EJEMPLO INTERACTIVO POR NIVEL ===== */}
-      <section className="sec sec-alt center" id="ejemplo">
-        <div className="wrap">
-          <span className="eyebrow c">Mira la diferencia</span>
-          <h2>Así se adapta tu ruta según tu nivel</h2>
-          <p className="lead">Elige tu nivel y mira un <strong>ejemplo</strong> de cómo cambia el enfoque. Tu curso real va aún más lejos: se ajusta al <strong>manual de funciones de tu cargo específico</strong>.</p>
-          <NivelTabs />
-        </div>
-      </section>
-
-      {/* ===== STATS ===== */}
-      <section className="sec" style={{ paddingTop: 64, paddingBottom: 64 }}>
-        <div className="wrap">
-          <div className="stats">
-            <div className="stat"><div className="n">21<span className="u"> días</span></div><p>de plan estructurado paso a paso</p></div>
-            <div className="stat"><div className="n">100<span className="u">%</span></div><p>enfocado en tu cargo y tu nivel</p></div>
-            <div className="stat"><div className="n">24<span className="u"> h</span></div><p>y tu ruta queda lista en tu perfil</p></div>
-            <div className="stat"><div className="n">CNSC</div><p>simulacros de juicio situacional</p></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== COMO FUNCIONA ===== */}
-      <section className="sec sec-alt" id="como">
-        <div className="wrap">
-          <span className="eyebrow">Cómo funciona</span>
-          <h2>De la compra a tu ruta de estudio</h2>
-          <p className="lead">Un proceso simple. Tú aportas los datos de tu cargo; nosotros armamos tu curso.</p>
-          <div className="pasos">
-            <div className="paso"><h3>Eliges tu convocatoria y cargas tus datos</h3><p>Seleccionas tu convocatoria y subes tu OPEC, el cargo, el nivel y el manual de funciones (te enseñamos cómo descargarlos).</p></div>
-            <div className="paso"><h3>Pagas de forma segura</h3><p>Realizas un único pago con Wompi (PSE, Nequi o tarjeta de crédito/débito).</p></div>
-            <div className="paso"><h3>Armamos tu ruta</h3><p>En máximo 24 horas construimos tu plan personalizado de 21 días y lo dejamos en tu perfil.</p></div>
-            <div className="paso"><h3>Estudias y practicas</h3><p>Accedes a tus guías por día y cierras con tu simulacro final tipo CNSC.</p></div>
-          </div>
-
-          {/* Compromiso de tiempo diario */}
-          <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 18, background: "linear-gradient(135deg,#0A2A5E,#1A4A8A)", borderRadius: 16, padding: "22px 26px", color: "#fff", flexWrap: "wrap" }}>
-            <div style={{ fontSize: "2.4rem", lineHeight: 1, flexShrink: 0 }}>⏱️</div>
-            <div style={{ flex: 1, minWidth: 220 }}>
-              <h3 style={{ margin: "0 0 4px", color: "#fff", fontSize: "1.12rem" }}>Dedica 60 a 90 minutos al día, vas a tu ritmo</h3>
-              <p style={{ margin: 0, color: "rgba(255,255,255,.85)", fontSize: ".95rem" }}>
-                Cada guía está diseñada para estudiarse en <strong style={{ color: "var(--oro-claro)" }}>60 a 90 minutos</strong>. Estudias <strong style={{ color: "var(--oro-claro)" }}>de lunes a viernes</strong> y descansas los fines de semana: son <strong style={{ color: "var(--oro-claro)" }}>20 días de preparación + tu simulacro final</strong>, un plan disciplinado que avanzas sin afán ni desgaste.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="sec" id="incluye">
-        <div className="wrap">
-          <span className="eyebrow">Qué incluye</span>
-          <h2>Todo lo que necesitas para tu prueba</h2>
-          <p className="lead">Un plan completo, personalizado y enfocado en aprobar.</p>
-          <div className="grid grid-2">
-            <div className="feat"><div className="fic">🗺️</div><div><h3>Plan personalizado de 21 días</h3><p>Una ruta diseñada para tu cargo: general, por nivel y por las funciones reales de tu empleo.</p></div></div>
-            <div className="feat"><div className="fic">📖</div><div><h3>Guías claras y dinámicas</h3><p>Contenido que se entiende, con ejemplos reales y enfocado en lo que la CNSC evalúa.</p></div></div>
-            <div className="feat"><div className="fic">📝</div><div><h3>Simulacros tipo CNSC</h3><p>Preguntas situacionales con retroalimentación, igual que en la prueba real.</p></div></div>
-            <div className="feat"><div className="fic">🧠</div><div><h3>Estrategia CNSC</h3><p>Aprende a identificar trampas, descartar distractores y administrar el tiempo.</p></div></div>
-            <div className="feat"><div className="fic">🎓</div><div><h3>Simulacro integral final</h3><p>Una evaluación completa enfocada en tu OPEC para llegar listo el día del examen.</p></div></div>
-            <div className="feat"><div className="fic">💻</div><div><h3>Acceso en tu perfil</h3><p>Estudias desde la plataforma, a tu ritmo, durante toda la vigencia de tu acceso.</p></div></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== CONVOCATORIAS ===== */}
-      <section className="sec sec-alt" id="convocatorias">
-        <div className="wrap">
-          <span className="eyebrow">Concursos activos · actualizado a noviembre de 2026</span>
-          <h2>¿En qué va tu concurso?</h2>
-          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero los concursos que todavía tienen prueba escrita por delante. ¿No ves el tuyo? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
-          <ConvocatoriasGrid convocatorias={convocatorias} />
-        </div>
-      </section>
-
-      {/* ===== PRECIO ===== */}
-      <section className="sec" id="precio">
-        <div className="wrap">
-          <span className="eyebrow c" style={{ display: "block", textAlign: "center" }}>Precio de lanzamiento</span>
-          <h2 className="center">Invierte en tu ascenso</h2>
-          <p className="lead center" style={{ margin: "0 auto 38px" }}>Un único pago por tu curso personalizado completo.</p>
-          <div className="precio-card">
-            <span className="precio-tag">🚀 Precio de lanzamiento</span>
-            <div className="precio-num">Desde $200.000 <small>COP</small></div>
-            <p style={{ color: "var(--texto-suave)" }}>Pago único · el valor depende de tu convocatoria</p>
-            <ul>
-              <li>Plan personalizado de 21 días según tu cargo</li>
-              <li>Todas las guías de tu ruta (general, nivel y funcionales)</li>
-              <li>Simulacros tipo CNSC + simulacro integral final</li>
-              <li>Guía de estrategia CNSC</li>
-              <li>Acceso desde tu perfil durante la vigencia del curso</li>
-            </ul>
-            <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="pricing_buy" style={{ width: "100%", padding: 15 }}>Comprar mi curso</Link>
-            <ContadorCupos />
-            <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", marginTop: 14 }}>Pago seguro con Wompi · PSE, Nequi y tarjetas</p>
-            <div className="garantia"><span className="gic">🛡️</span><span>¿Dudas antes de comprar? <a href={WA_ASESORIA} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos por WhatsApp</a> y te asesoramos sin compromiso antes de pagar.</span></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FAQ ===== */}
-      <section className="sec sec-alt" id="faq">
+      {/* ===== 9. FAQ ===== */}
+      <section className="sec" id="faq">
         <div className="wrap">
           <span className="eyebrow">Preguntas frecuentes</span>
           <h2>Resolvemos tus dudas</h2>
           <div className="faq" style={{ marginTop: 30 }}>
             <details open><summary>¿En qué se diferencia de otros cursos?</summary><div className="ans">No te preparamos para &quot;la convocatoria&quot; en general, sino para <strong>tu cargo específico</strong>. Analizamos tu OPEC y tu manual de funciones para enfocar el estudio en lo que tu prueba realmente evalúa.</div></details>
-            <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde tu compra tendrás tu ruta de estudio personalizada disponible en tu perfil.</div></details>
-            <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Dentro de la plataforma te explicamos cómo descargarlos de la página de la CNSC.</div></details>
-            <details><summary>¿Cómo son los simulacros?</summary><div className="ans">Son de <strong>juicio situacional</strong>, igual que la prueba real de la CNSC: un caso y la mejor actuación, con retroalimentación por cada opción.</div></details>
-            <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Con <strong>1 a 1 hora y media al día</strong> es suficiente. Cada guía está diseñada para estudiarse en <strong>60 a 90 minutos</strong> y el plan está pensado para estudiar <strong>de lunes a viernes</strong>, descansando los fines de semana. Son <strong>20 días de preparación más tu simulacro final</strong>: avanzas con disciplina y sin saturarte.</div></details>
-            <details><summary>¿Por cuánto tiempo tengo acceso?</summary><div className="ans">Tendrás acceso a tu curso durante la vigencia definida desde tu fecha de compra, suficiente para prepararte con calma para tu prueba.</div></details>
-            <details><summary>¿Cómo pago?</summary><div className="ans">De forma segura con <strong>Wompi</strong>: PSE, Nequi o tarjeta de crédito/débito.</div></details>
+            <details><summary>¿Cuánto cuesta para mi cargo?</summary><div className="ans">Depende del nivel del empleo: <strong>$190.000</strong> operativo y administrativo, <strong>$240.000</strong> técnico, <strong>$290.000</strong> profesional y <strong>$390.000</strong> asesor y ejecutivo. Escríbenos con tu convocatoria y tu cargo y te confirmamos el valor exacto.</div></details>
+            <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde el pago tendrás tu ruta personalizada en tu perfil.</div></details>
+            <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Si no sabes dónde están, te guiamos por WhatsApp para descargarlos.</div></details>
+            <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Entre <strong>60 y 90 minutos</strong>. El plan está pensado para estudiar <strong>de lunes a viernes</strong>: son 20 días de preparación más el simulacro final.</div></details>
+            <details><summary>¿Cómo son los simulacros?</summary><div className="ans">De <strong>juicio situacional</strong>, como la prueba real: un caso y cuatro opciones plausibles, con la explicación de cada una. Puedes probar los gratuitos antes de comprar.</div></details>
+            <details><summary>¿Cómo pago?</summary><div className="ans">Coordinamos el pago por WhatsApp: PSE, Nequi o tarjeta a través de <strong>Wompi</strong>. Te enviamos el enlace de pago seguro.</div></details>
           </div>
         </div>
       </section>
 
-      {/* ===== CTA FINAL ===== */}
+      {/* ===== 10. CTA FINAL ===== */}
       <section className="cta-band">
         <div className="wrap">
           <h2>¿List@ para preparar tu ascenso?</h2>
-          <p>Asegura tu cupo del precio de lanzamiento y empieza a estudiar con dirección.</p>
-          <Link href="/comprar" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="final_buy" style={{ padding: "15px 34px", fontSize: "1rem" }}>Quiero mi curso personalizado</Link>
-        </div>
-      </section>
-
-      {/* ===== POLITICA DE DATOS ===== */}
-      <section className="sec" id="datos" style={{ padding: "50px 0" }}>
-        <div className="wrap" style={{ maxWidth: 760 }}>
-          <span className="eyebrow">Privacidad</span>
-          <h2 style={{ fontSize: "1.5rem" }}>Tratamiento de datos personales</h2>
-          <p style={{ color: "var(--texto-suave)", fontSize: ".94rem" }}>En cumplimiento de la <strong>Ley 1581 de 2012</strong> y sus decretos reglamentarios, los datos que nos compartas (nombre, datos de contacto, número de OPEC, cargo y manual de funciones) se usan <strong>únicamente</strong> para crear y entregar tu curso personalizado y para comunicarnos contigo sobre tu preparación. No los compartimos con terceros ajenos a la prestación del servicio ni con la CNSC. Puedes solicitar en cualquier momento la consulta, actualización o eliminación de tus datos escribiéndonos a <a href="mailto:ascensopublico@gmail.com" style={{ color: "var(--azul)", fontWeight: 700, borderBottom: "1px solid var(--oro)" }}>ascensopublico@gmail.com</a>.</p>
+          <p>Cuéntanos tu convocatoria y tu cargo. Te decimos qué estudiar y cuánto cuesta, sin compromiso.</p>
+          <a href={WA_PRECIO} target="_blank" rel="noopener" className="btn btn-azul" data-analytics-event="whatsapp_clicked" data-analytics-placement="final_wa" style={{ padding: "15px 34px", fontSize: "1rem" }}>💬 Escribir por WhatsApp</a>
         </div>
       </section>
 

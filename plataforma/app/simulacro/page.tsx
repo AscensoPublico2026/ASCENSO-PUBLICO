@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import "../landing.css";
 import "./simulacro.css";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const metadata: Metadata = {
   title: "Simulacro CNSC gratis por nivel",
@@ -50,7 +51,7 @@ export default function SimulacroIndex() {
           <span className="sim-brand-logo">↗</span>
           <span>Ascenso Público</span>
         </Link>
-        <Link href="/comprar" className="btn btn-oro sim-top-cta" data-analytics-event="cta_click" data-analytics-placement="simulacro_index_buy">Quiero mi curso</Link>
+        <a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener" className="btn btn-oro sim-top-cta" data-analytics-event="whatsapp_clicked" data-analytics-placement="simulacro_index_buy">Quiero mi curso</a>
       </header>
 
       <section className="sim-hero">

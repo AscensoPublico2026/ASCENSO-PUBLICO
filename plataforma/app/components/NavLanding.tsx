@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
+
+const WA_PRECIO = waUrl(WA_MENSAJES.precio);
 
 export default function NavLanding() {
   const [open, setOpen] = useState(false);
@@ -34,7 +37,7 @@ export default function NavLanding() {
           <Link href="/#convocatorias">Concursos</Link>
           <Link href="/#precio">Precio</Link>
           <Link href="/login" className="btn btn-azul nav-cta desktop">Iniciar sesión</Link>
-          <Link href="/comprar" className="btn btn-oro nav-cta desktop">Quiero mi curso</Link>
+          <a href={WA_PRECIO} target="_blank" rel="noopener" className="btn btn-oro nav-cta desktop" data-analytics-event="whatsapp_clicked" data-analytics-placement="nav_cta">Quiero mi curso</a>
         </nav>
 
         <button
@@ -58,7 +61,7 @@ export default function NavLanding() {
           <Link href="/#convocatorias" onClick={() => setOpen(false)}>Concursos</Link>
           <Link href="/#precio" onClick={() => setOpen(false)}>Precio</Link>
           <Link href="/login" onClick={() => setOpen(false)} style={{ color: "var(--azul)", fontWeight: 800 }}>Iniciar sesión</Link>
-          <Link href="/comprar" onClick={() => setOpen(false)} style={{ color: "var(--oro)", fontWeight: 800 }}>Comprar mi curso</Link>
+          <a href={WA_PRECIO} target="_blank" rel="noopener" onClick={() => setOpen(false)} style={{ color: "var(--oro)", fontWeight: 800 }} data-analytics-event="whatsapp_clicked" data-analytics-placement="nav_cta_movil">Pedir mi curso por WhatsApp</a>
         </nav>
       )}
     </header>

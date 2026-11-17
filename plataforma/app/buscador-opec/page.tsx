@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 import NavLanding from "../components/NavLanding";
 import BuscadorOpec from "./BuscadorOpec";
 import meta from "@/data/opec-meta.json";
@@ -129,7 +130,7 @@ export default function BuscadorOpecPage() {
         <section className="opec-final-cta">
           <div className="wrap opec-final-cta-inner">
             <div><span>Ya encontraste tu OPEC</span><h2>Ahora prepárate específicamente para ese cargo</h2><p>Creamos una ruta de 21 días a partir de las funciones y competencias reales de tu empleo.</p></div>
-            <Link href="/comprar" className="btn btn-oro">Crear mi ruta personalizada <span aria-hidden="true">→</span></Link>
+            <a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="opec_buy">Crear mi ruta personalizada <span aria-hidden="true">→</span></a>
           </div>
         </section>
       </main>
@@ -147,7 +148,7 @@ export default function BuscadorOpecPage() {
             </span>
             <span><span className="brand-name">Ascenso Público</span><small>Tu ruta hacia el empleo público</small></span>
           </Link>
-          <div className="opec-footer-links"><Link href="/">Inicio</Link><Link href="/simulacro">Simulacros</Link><Link href="/comprar">Curso personalizado</Link><Link href="/privacidad">Privacidad</Link></div>
+          <div className="opec-footer-links"><Link href="/">Inicio</Link><Link href="/simulacro">Simulacros</Link><a href={waUrl(WA_MENSAJES.precio)} target="_blank" rel="noopener">Curso personalizado</a><Link href="/privacidad">Privacidad</Link></div>
           <p>© {new Date().getFullYear()} Ascenso Público. Herramienta independiente, no afiliada a la CNSC.</p>
         </div>
       </footer>
