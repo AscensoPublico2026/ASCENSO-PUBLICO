@@ -2,7 +2,7 @@
 
 Cada uno combina 10 preguntas del núcleo común del concurso (estructura y
 funciones de la PGN, disciplinario, mecanismos, derecho de petición) con 10 del
-nivel al que aspira el participante. Todas con cuatro opciones plausibles.
+nivel al que aspira el participante. Todas con tres opciones plausibles, el formato oficial de la prueba.
 
 Uso: python3 scripts/generar_simulacros_procuraduria_nivel.py
 """
