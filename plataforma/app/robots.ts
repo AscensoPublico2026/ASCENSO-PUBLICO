@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       // No indexar rutas privadas ni de API
-      disallow: ["/admin", "/api/", "/perfil", "/guia", "/activar", "/reset-password"],
+      disallow: ["/admin", "/api/", "/perfil", "/guia", "/activar", "/reset-password", "/seed-guias"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
