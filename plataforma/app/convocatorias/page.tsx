@@ -13,6 +13,7 @@ type Conv = {
   fecha_prueba_aprox: string | null;
   estado: string;
   imagen_url: string | null;
+  tema?: string | null;
 };
 
 export default async function ConvocatoriasPage() {
@@ -21,7 +22,7 @@ export default async function ConvocatoriasPage() {
     const supabase = createClient();
     const { data } = await supabase
       .from("convocatorias")
-      .select("id, nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url")
+      .select("id, nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema")
       .eq("activa", true)
       .order("orden");
     convs = (data as Conv[]) || [];

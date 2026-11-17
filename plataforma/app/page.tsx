@@ -23,7 +23,7 @@ export default async function LandingPage() {
     const supabase = createClient();
     const { data } = await supabase
       .from("convocatorias")
-      .select("id, nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url")
+      .select("id, nombre, entidad, estado, etiqueta, vacantes, fecha_prueba_aprox, imagen_url, tema")
       .eq("activa", true)
       .order("orden");
     convocatorias = data || [];
