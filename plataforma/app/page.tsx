@@ -98,7 +98,7 @@ export default async function LandingPage() {
             <a href="/simulacro-gratis/procuraduria.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="procuraduria">
               <span className="sim-promo-emoji">⚖️</span>
               <h3>Procuraduría 2026</h3>
-              <p>Núcleo común y por nivel: operativo, técnico y profesional.</p>
+              <p>Cuatro simulacros: el núcleo común del concurso y uno por cada nivel de la convocatoria.</p>
               <span className="sim-promo-go">Empezar simulacro →</span>
             </a>
             <a href="/simulacro-gratis/docente.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="docente">

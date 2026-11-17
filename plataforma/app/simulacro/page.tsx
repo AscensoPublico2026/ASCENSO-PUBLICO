@@ -5,9 +5,9 @@ import "./simulacro.css";
 import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 
 export const metadata: Metadata = {
-  title: "Simulacro CNSC gratis por nivel",
+  title: "Simulacros gratis por convocatoria",
   description:
-    "Mide tu conocimiento para la prueba escrita de la CNSC con un simulacro gratis según tu nivel (asistencial, técnico o profesional). 20 preguntas tipo CNSC, retroalimentación y guía de qué estudiar.",
+    "Simulacros gratis para la prueba escrita de tu concurso: Procuraduría 2026 en sus cuatro versiones y Concurso Docente. 20 casos tipo juicio situacional, puntaje al instante y guía de qué reforzar.",
 };
 
 const GRUPOS = [
@@ -16,10 +16,10 @@ const GRUPOS = [
     titulo: "Procuraduría General de la Nación 2026",
     sub: "«Mérito Construyendo Excelencia». Núcleo común del concurso y, además, uno por cada nivel de la convocatoria.",
     simulacros: [
-      { id: "procuraduria", nombre: "Núcleo común", emoji: "⚖️", desc: "Estructura y funciones de la PGN, derecho disciplinario, mecanismos de protección de derechos y derecho de petición." },
-      { id: "procuraduria-operativo", nombre: "Operativo y administrativo", emoji: "🧰", desc: "Auxiliares, citadores y oficinistas: núcleo común más atención al ciudadano, gestión documental y alcance del cargo." },
-      { id: "procuraduria-tecnico", nombre: "Técnico", emoji: "🛠️", desc: "Sustanciadores, técnicos y tecnólogos: núcleo común más procedimiento, calidad de la información y seguridad." },
-      { id: "procuraduria-profesional", nombre: "Profesional y asesor", emoji: "🎓", desc: "Profesional universitario, asesor y ejecutivo: núcleo común más conceptos técnicos, conflicto de interés e independencia de criterio." },
+      { id: "procuraduria", nombre: "Procuraduría · Núcleo común", emoji: "⚖️", desc: "Estructura y funciones de la PGN, derecho disciplinario, mecanismos de protección de derechos y derecho de petición." },
+      { id: "procuraduria-operativo", nombre: "Procuraduría · Operativo y administrativo", emoji: "🧰", desc: "Auxiliares, citadores y oficinistas: núcleo común más atención al ciudadano, gestión documental y alcance del cargo." },
+      { id: "procuraduria-tecnico", nombre: "Procuraduría · Técnico", emoji: "🛠️", desc: "Sustanciadores, técnicos y tecnólogos: núcleo común más procedimiento, calidad de la información y seguridad." },
+      { id: "procuraduria-profesional", nombre: "Procuraduría · Profesional y asesor", emoji: "🎓", desc: "Profesional universitario, asesor y ejecutivo: núcleo común más conceptos técnicos, conflicto de interés e independencia de criterio." },
     ],
   },
   {
@@ -45,12 +45,12 @@ export default function SimulacroIndex() {
 
       <section className="sim-hero">
         <div className="wrap center">
-          <span className="eyebrow c">Simulacro gratis · CNSC</span>
+          <span className="eyebrow c">Simulacros gratis · por convocatoria</span>
           <h1 className="sim-h1">Descubre qué tan listo estás para tu prueba</h1>
           <p className="sim-lead">
-            Responde un simulacro <strong>gratis</strong> de 20 preguntas tipo CNSC según tu
-            nivel y recibe una <strong>retroalimentación</strong> que te dice exactamente qué
-            temas dominas y cuáles reforzar. Sin costo, sin compromiso.
+            Elige <strong>tu concurso</strong> y responde 20 casos con el formato real de la prueba.
+            Al terminar ves tu puntaje, la explicación de cada opción y qué temas debes reforzar.
+            Sin costo, sin registro.
           </p>
         </div>
       </section>

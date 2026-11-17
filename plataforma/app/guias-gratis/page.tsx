@@ -7,7 +7,7 @@ import { waUrl, WA_MENSAJES } from "@/lib/contacto";
 export const metadata: Metadata = {
   title: "Guías y simulacros gratis para concursos de mérito",
   description:
-    "Guías de estudio gratis sobre el Estado, la función pública, la relación Estado-ciudadano y el marco institucional, más simulacros gratis por nivel y para el concurso de la Procuraduría.",
+    "Guías de estudio gratis sobre el Estado, la función pública, la relación Estado-ciudadano y el marco institucional, más los simulacros gratis de la Procuraduría 2026 y del Concurso Docente.",
 };
 
 const GUIAS = [
