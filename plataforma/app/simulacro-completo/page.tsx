@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 const QUE_TRAE = [
   {
     ic: "📝",
-    t: "100 preguntas, no 20",
-    d: "Un examen de verdad, construido con los ejes temáticos de tu convocatoria y de tu nivel. No es una muestra: es la prueba completa de principio a fin.",
+    t: "100 preguntas con el formato oficial",
+    d: "Caso, enunciado y tres opciones de respuesta, como en la Prueba de Juicio Situacional de la CNSC. No es una muestra: es la prueba completa de principio a fin.",
   },
   {
     ic: "⏱",
@@ -27,8 +27,8 @@ const QUE_TRAE = [
   },
   {
     ic: "🔍",
-    t: "Por qué cada opción es trampa",
-    d: "Al terminar ves las cuatro opciones de cada caso explicadas: por qué la correcta lo es y por qué las otras tres están diseñadas para sonar razonables.",
+    t: "Las tres opciones explicadas",
+    d: "Al terminar ves por qué la correcta lo es y por qué las otras dos, que también suenan razonables, no responden lo que el caso pregunta.",
   },
   {
     ic: "📊",
@@ -50,8 +50,9 @@ export default function SimulacroCompletoPage() {
               Mide tu puntaje real <span className="hl">antes del examen</span>
             </h1>
             <p className="sub">
-              100 preguntas con el formato de la prueba escrita, cronometradas y en una sola sesión.
-              Al terminar sabes tu puntaje, qué competencia te está costando y qué estudiar primero.
+              100 preguntas con el formato oficial de la prueba escrita: un caso, un enunciado y tres
+              opciones. Cronometradas y en una sola sesión. Al terminar sabes tu puntaje, qué competencia
+              te está costando y qué estudiar primero.
             </p>
             <div className="simc-precio-hero">
               <span className="simc-num">$39.000</span>
