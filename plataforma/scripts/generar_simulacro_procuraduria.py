@@ -11,7 +11,7 @@ import pathlib
 import re
 
 BASE = pathlib.Path(__file__).resolve().parent.parent / "public" / "simulacro-gratis"
-PLANTILLA = BASE / "profesional.html"
+PLANTILLA = pathlib.Path(__file__).resolve().parent / "plantillas" / "simulacro.html"
 DESTINO = BASE / "procuraduria.html"
 
 R_PGN = ("PGN-EST", "Estructura y funciones de la Procuraduría")

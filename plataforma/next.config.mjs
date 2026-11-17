@@ -5,6 +5,15 @@ const nextConfig = {
   // tipos/lint (el código es nuevo y sin probar). Los afinamos luego.
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  async redirects() {
+    // Los simulacros por nivel genérico se retiraron: ahora los simulacros van
+    // por convocatoria. Los enlaces viejos siguen vivos y llevan al índice.
+    return ["asistencial", "tecnico", "profesional"].map((nivel) => ({
+      source: `/simulacro-gratis/${nivel}.html`,
+      destination: "/simulacro",
+      permanent: true,
+    }));
+  },
   experimental: {
     serverActions: {
       // El formulario de /comprar sube el manual de funciones (PDF) a través

@@ -38,11 +38,11 @@ const GUIAS = [
 ];
 
 const SIMULACROS = [
-  { href: "/simulacro-gratis/procuraduria.html", emoji: "⚖️", titulo: "Procuraduría 2026", desc: "Núcleo común del concurso «Mérito Construyendo Excelencia».", nuevo: true },
+  { href: "/simulacro-gratis/procuraduria.html", emoji: "⚖️", titulo: "Procuraduría · Núcleo común", desc: "Estructura y funciones de la PGN, disciplinario y mecanismos de protección.", nuevo: true },
+  { href: "/simulacro-gratis/procuraduria-operativo.html", emoji: "🧰", titulo: "Procuraduría · Operativo", desc: "Auxiliares y oficinistas: atención al ciudadano y alcance del cargo.", nuevo: true },
+  { href: "/simulacro-gratis/procuraduria-tecnico.html", emoji: "🛠️", titulo: "Procuraduría · Técnico", desc: "Sustanciadores y técnicos: procedimiento y calidad de la información.", nuevo: true },
+  { href: "/simulacro-gratis/procuraduria-profesional.html", emoji: "🎓", titulo: "Procuraduría · Profesional", desc: "Profesional y asesor: conceptos, conflicto de interés y liderazgo.", nuevo: true },
   { href: "/simulacro-gratis/docente.html", emoji: "👩‍🏫", titulo: "Concurso Docente 2026", desc: "Lectura crítica, razonamiento, pedagogía y casos de aula.", nuevo: true },
-  { href: "/simulacro-gratis/asistencial.html", emoji: "🧰", titulo: "Nivel Asistencial", desc: "Estado, atención al ciudadano y competencias del nivel." },
-  { href: "/simulacro-gratis/tecnico.html", emoji: "🛠️", titulo: "Nivel Técnico", desc: "Procedimientos, calidad de la información y competencias." },
-  { href: "/simulacro-gratis/profesional.html", emoji: "🎓", titulo: "Nivel Profesional", desc: "Análisis, conceptos, conflictos de interés y liderazgo." },
 ];
 
 export default function GuiasGratis() {
