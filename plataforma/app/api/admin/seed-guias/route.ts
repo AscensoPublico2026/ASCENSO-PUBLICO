@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { archivosSeed } from "@/lib/catalogoGuias";
 import { SITE_URL } from "@/lib/site";
+import { seedFetchHeaders } from "@/lib/seedToken";
 
 /**
  * API Route: /api/admin/seed-guias
@@ -46,7 +47,7 @@ export async function GET() {
 
     try {
       // Leer el archivo desde public/seed-guias/ (servido por Next.js)
-      const res = await fetch(`${siteUrl}/seed-guias/${filename}`);
+      const res = await fetch(`${siteUrl}/seed-guias/${filename}`, { headers: await seedFetchHeaders() });
       if (!res.ok) {
         results.push({ file: filename, status: "error", message: `Fetch failed: ${res.status}` });
         continue;

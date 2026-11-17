@@ -38,6 +38,7 @@ export default async function LandingPage() {
 
       {/* ===== HERO ===== */}
       <section className="hero">
+        <span className="hero-borde-oro" aria-hidden="true" />
         <div className="wrap hero-grid">
           <div>
             <span className="kick">⭐ Concursos de mérito · CNSC Colombia</span>
@@ -57,18 +58,17 @@ export default async function LandingPage() {
             </div>
           </div>
 
-          {/* Mockup */}
-          <div className="mockup" aria-hidden="true">
-            <div className="float-badge fb-1"><span className="fb-ic">✅</span> Por tu cargo</div>
-            <div className="mockup-card">
-              <div className="mockup-head">
-                <span className="mk-dot">AP</span>
-                <span><b>Tu ruta de estudio</b><small>Plan personalizado · 21 días</small></span>
-              </div>
+          {/* Maqueta: captura real del producto */}
+          <div className="hero-shot" aria-hidden="true">
+            <div className="hero-window">
+              <div className="hero-window-bar"><i /><i /><i /><span>ascensopublico.com · tu guía del día</span></div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/producto/guia.jpg" alt="" loading="eager" />
+            </div>
+            <div className="hero-ruta">
+              <div className="hero-ruta-top"><span className="mk-dot">AP</span><span><b>Tu ruta de estudio</b><small>Plan de 21 días · por tu cargo</small></span></div>
               <div className="mk-row"><span className="mk-day">D1</span><p>Estado y función pública</p><span className="mk-check">✓</span></div>
-              <div className="mk-row"><span className="mk-day">D5</span><p>Competencias de tu nivel</p><span className="mk-check">✓</span></div>
               <div className="mk-row"><span className="mk-day">D9</span><p>Funciones reales de tu empleo</p><span className="mk-check">✓</span></div>
-              <div className="mk-row"><span className="mk-day">D14</span><p>Simulacro situacional tipo CNSC</p></div>
               <div className="mk-row"><span className="mk-day">D21</span><p>Simulacro integral final</p></div>
               <div className="mk-bar"><i></i></div>
               <div className="mk-prog"><span>Progreso</span><span>13 de 21 días</span></div>
@@ -87,6 +87,61 @@ export default async function LandingPage() {
           <span>⚡ Tu ruta lista en <b>24 horas</b></span>
         </div>
       </div>
+
+      {/* ===== MIRA EL PRODUCTO POR DENTRO ===== */}
+      <section className="dentro" id="dentro">
+        <div className="wrap">
+          <span className="eyebrow c">Así se ve por dentro</span>
+          <h2 className="center">No son PDFs. Son guías que se usan.</h2>
+          <p className="lead center">Cada día de tu ruta es una guía interactiva: explicación, casos reales de la CNSC, trampas frecuentes, tarjetas de repaso y un simulacro al final. Se abren en el navegador, desde el celular o el computador.</p>
+
+          <div className="dentro-grid">
+            <article className="dentro-item">
+              <div className="dentro-shot">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/producto/guia.jpg" alt="Guía interactiva de Ascenso Público con secciones de objetivo, desarrollo, casos y repaso" loading="lazy" />
+              </div>
+              <div className="dentro-txt">
+                <span className="dentro-num">01</span>
+                <h3>Guías interactivas, no archivos muertos</h3>
+                <p>Objetivo, desarrollo, comparaciones, casos tipo CNSC, errores frecuentes, tips, repaso y simulacro. Avanzas por secciones y la guía te lleva de la mano.</p>
+              </div>
+            </article>
+
+            <article className="dentro-item alt">
+              <div className="dentro-shot">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/producto/caso.jpg" alt="Caso práctico resuelto dentro de una guía de Ascenso Público" loading="lazy" />
+              </div>
+              <div className="dentro-txt">
+                <span className="dentro-num">02</span>
+                <h3>Casos resueltos con el razonamiento completo</h3>
+                <p>No basta con saber la respuesta: te mostramos por qué cada opción equivocada es una trampa. Eso es lo que define tu puntaje en juicio situacional.</p>
+              </div>
+            </article>
+
+            <article className="dentro-item">
+              <div className="dentro-shot">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/producto/simulacro.jpg" alt="Simulacro de Ascenso Público con un caso y cuatro opciones de respuesta" loading="lazy" />
+              </div>
+              <div className="dentro-txt">
+                <span className="dentro-num">03</span>
+                <h3>Simulacros con el formato real</h3>
+                <p>Casos con cuatro opciones plausibles, como en la prueba. Al terminar ves tu puntaje, la explicación de cada opción y los temas que debes reforzar.</p>
+              </div>
+            </article>
+          </div>
+
+          <div className="dentro-cta">
+            <p><b>Pruébalo sin pagar:</b> abre una guía completa y haz un simulacro ahora mismo.</p>
+            <div>
+              <Link href="/guias-gratis" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="dentro_guias">Abrir una guía gratis</Link>
+              <Link href="/simulacro" className="btn btn-ghost-conv" data-analytics-event="cta_click" data-analytics-placement="dentro_simulacro">Hacer un simulacro</Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ===== BUSCADOR OPEC ESE 2026 ===== */}
       <section className="opec-home-promo" id="buscador-opec">
@@ -133,6 +188,24 @@ export default async function LandingPage() {
             <h2>Empieza con tu <span className="hl">simulacro gratis</span></h2>
             <p className="sim-promo-lead">Mide tu nivel en los temas que la CNSC evalúa en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> con lo que ya dominas y lo que debes reforzar. Elige tu nivel:</p>
           </div>
+          <a href="/simulacro-gratis/procuraduria.html" className="sim-promo-destacado" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="procuraduria">
+            <span className="sim-promo-nuevo">NUEVO</span>
+            <span className="sim-promo-emoji">⚖️</span>
+            <span className="sim-promo-destacado-txt">
+              <strong>Simulacro gratis · Concurso Procuraduría 2026</strong>
+              <span>20 casos del núcleo común: Procuraduría, disciplinario, mecanismos, atención al ciudadano y competencias.</span>
+            </span>
+            <span className="sim-promo-go">Empezar →</span>
+          </a>
+          <a href="/simulacro-gratis/docente.html" className="sim-promo-destacado" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="docente">
+            <span className="sim-promo-nuevo">NUEVO</span>
+            <span className="sim-promo-emoji">👩‍🏫</span>
+            <span className="sim-promo-destacado-txt">
+              <strong>Simulacro gratis · Concurso Docente 2026</strong>
+              <span>Lectura crítica, razonamiento cuantitativo, pedagogía, normatividad y casos de aula.</span>
+            </span>
+            <span className="sim-promo-go">Empezar →</span>
+          </a>
           <div className="sim-promo-grid">
             <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="asistencial">
               <span className="sim-promo-emoji">🧰</span>
@@ -155,7 +228,8 @@ export default async function LandingPage() {
           </div>
           <div className="sim-promo-foot">
             <Link href="/simulacro" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="landing_all_simulacros">Ver los simulacros gratis →</Link>
-            <span className="sim-promo-mini">20 preguntas · sin costo · sin necesidad de registrarte</span>
+            <Link href="/guias-gratis" className="btn btn-ghost-conv" style={{ padding: "13px 22px" }} data-analytics-event="cta_click" data-analytics-placement="landing_guias_gratis">📚 Guías de estudio gratis</Link>
+            <span className="sim-promo-mini">20 preguntas · explicación de cada respuesta · sin costo</span>
           </div>
         </div>
       </section>
@@ -265,9 +339,9 @@ export default async function LandingPage() {
       {/* ===== CONVOCATORIAS ===== */}
       <section className="sec sec-alt" id="convocatorias">
         <div className="wrap">
-          <span className="eyebrow">Convocatorias disponibles</span>
-          <h2>¿Tu concurso está activo?</h2>
-          <p className="lead">Estas son las convocatorias para las que estamos preparando aspirantes ahora mismo. ¿No ves la tuya? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
+          <span className="eyebrow">Concursos activos · actualizado a noviembre de 2026</span>
+          <h2>¿En qué va tu concurso?</h2>
+          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero los concursos que todavía tienen prueba escrita por delante. ¿No ves el tuyo? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
           <ConvocatoriasGrid convocatorias={convocatorias} />
         </div>
       </section>

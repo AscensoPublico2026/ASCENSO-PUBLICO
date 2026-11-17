@@ -152,13 +152,24 @@ export default async function ConvocatoriaDetalle({ params }: { params: { id: st
             <p style={{ fontSize: ".85rem", color: "var(--texto-suave)", margin: "6px 0 18px" }}>Pago único · acceso completo</p>
           </div>
 
-          <Link
-            href={`/comprar?conv=${conv.id}`}
-            className="btn btn-oro"
-            style={{ width: "100%", padding: "14px 20px", fontSize: ".95rem", textAlign: "center" }}
-          >
-            Comprar mi curso →
-          </Link>
+          {conv.estado === "cerradas" ? (
+            <div style={{ background: "var(--azul-suave, #EAF1FB)", borderRadius: 12, padding: "14px 16px", fontSize: ".9rem", color: "var(--azul)", lineHeight: 1.5 }}>
+              <b>La prueba escrita de esta convocatoria ya se presentó.</b> Ya no abrimos cupos para este concurso.
+              ¿Vas a otro? Mira los concursos activos o haz un simulacro gratis.
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+                <Link href="/#convocatorias" className="btn btn-oro" style={{ width: "100%", textAlign: "center" }}>Ver concursos activos</Link>
+                <Link href="/guias-gratis" className="btn btn-azul" style={{ width: "100%", textAlign: "center" }}>Guías y simulacros gratis</Link>
+              </div>
+            </div>
+          ) : (
+            <Link
+              href={`/comprar?conv=${conv.id}`}
+              className="btn btn-oro"
+              style={{ width: "100%", padding: "14px 20px", fontSize: ".95rem", textAlign: "center" }}
+            >
+              Comprar mi curso →
+            </Link>
+          )}
 
           <p style={{ fontSize: ".78rem", color: "var(--texto-suave)", textAlign: "center", marginTop: 12 }}>
             Pago seguro con Wompi · PSE, Nequi y tarjetas
