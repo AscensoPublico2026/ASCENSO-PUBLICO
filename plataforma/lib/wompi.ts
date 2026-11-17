@@ -16,9 +16,10 @@ export function firmaIntegridad(reference: string, amountInCents: number, curren
 
 // Construye la URL del Web Checkout de Wompi.
 // Nota: la llave "signature:integrity" debe quedar literal (no URL-encoded).
-export function urlCheckout(opts: { reference: string; amountInCents: number; currency?: string; signature: string }): string {
+export function urlCheckout(opts: { reference: string; amountInCents: number; currency?: string; signature: string; redirectUrl?: string }): string {
   const currency = opts.currency ?? "COP";
-  const redirect = process.env.NEXT_PUBLIC_WOMPI_REDIRECT_URL
+  const redirect = opts.redirectUrl
+    || process.env.NEXT_PUBLIC_WOMPI_REDIRECT_URL
     || `${SITE_URL}/preparacion`;
   const q = [
     `public-key=${encodeURIComponent(process.env.NEXT_PUBLIC_WOMPI_PUBLIC_KEY || "")}`,

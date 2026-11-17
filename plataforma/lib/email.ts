@@ -242,3 +242,73 @@ export async function correoResultadoSimulacro(
 
   await enviar(to, `📊 Tu resultado del simulacro CNSC (${porcentaje}%) — Ascenso Público`, html);
 }
+
+
+/**
+ * Envía al comprador del SIMULACRO COMPLETO su enlace de acceso.
+ * No hay usuario ni contraseña: el enlace con token es la llave.
+ */
+export async function correoSimulacroPagoListo(
+  to: string,
+  nombre: string,
+  token: string,
+  productoNombre: string
+) {
+  const url = `${SITE}/simulacro-completo/${token}`;
+  const html = plantilla({
+    titulo: "Tu simulacro completo está listo ✅",
+    cuerpo: `
+      <p style="margin:0 0 14px;">Hola <strong>${nombre}</strong>, recibimos tu pago. Ya puedes presentar tu
+      <strong>${productoNombre}</strong>.</p>
+      <p style="margin:0 0 14px;">Este enlace es tu acceso. <strong>Guarda este correo:</strong> funciona desde
+      cualquier dispositivo y no necesitas usuario ni contraseña.</p>
+      <p style="margin:0 0 14px;padding:12px 14px;background:#FDF4E3;border-left:4px solid #E8A33D;border-radius:8px;color:#5B4A2A;">
+        Tienes <strong>2 intentos</strong> durante <strong>30 días</strong>. Preséntalo de una sola sentada,
+        con cronómetro, como en la prueba real.
+      </p>
+      <p style="margin:0;">Si algo no te abre, escríbenos por WhatsApp al
+      <strong>${WHATSAPP}</strong> y te lo reenviamos.</p>
+    `,
+    cta: { texto: "Presentar mi simulacro →", url },
+  });
+  await enviar(to, "✅ Tu simulacro completo está listo — Ascenso Público", html);
+}
+
+
+/**
+ * Envía al comprador del simulacro completo su informe por competencia.
+ */
+export async function correoResultadoSimulacroPago(
+  to: string,
+  nombre: string,
+  opts: {
+    titulo: string;
+    porcentaje: number;
+    correctas: number;
+    total: number;
+    competencias: { eje: string; bien: number; total: number; pct: number }[];
+    token: string;
+  }
+) {
+  const { titulo, porcentaje, correctas, total, competencias, token } = opts;
+  const filas = competencias
+    .map(
+      (c) =>
+        `<li style="margin-bottom:6px;color:#2A3441;"><strong>${c.eje}</strong>: ${c.bien} de ${c.total} (${c.pct}%)</li>`
+    )
+    .join("");
+
+  const html = plantilla({
+    titulo: `Tu resultado: ${porcentaje}%`,
+    cuerpo: `
+      <p style="margin:0 0 14px;">Hola <strong>${nombre}</strong>, presentaste el <strong>${titulo}</strong> y
+      obtuviste <strong style="color:#0A2A5E;">${correctas} de ${total}</strong> respuestas correctas (${porcentaje}%).</p>
+      <p style="margin:0 0 6px;font-weight:700;color:#0A2A5E;">Dónde estás más flojo:</p>
+      <ul style="margin:8px 0 0;padding-left:18px;">${filas}</ul>
+      <p style="margin:18px 0 0;">Estudia primero los dos primeros de esa lista y vuelve a presentarlo.
+      Tu enlace sigue activo.</p>
+    `,
+    cta: { texto: "Volver a mi simulacro →", url: `${SITE}/simulacro-completo/${token}` },
+  });
+  await enviar(to, `📊 Tu resultado: ${porcentaje}% — Ascenso Público`, html);
+}
