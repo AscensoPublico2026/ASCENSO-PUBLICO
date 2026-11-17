@@ -6,11 +6,17 @@ export const dynamic = "force-dynamic";
 
 const TERMINOS_VERSION = "2026-06";
 
+// Cada simulacro gratis manda su NIVEL_ID aquí. Un id que falte en este mapa
+// se rechaza con "Nivel inválido" y el lead se pierde en silencio: al publicar
+// un simulacro nuevo hay que agregarlo también acá.
 const NOMBRE_NIVEL: Record<string, string> = {
   asistencial: "Asistencial",
   tecnico: "Técnico",
   profesional: "Profesional",
   procuraduria: "Procuraduría (núcleo común)",
+  "procuraduria-operativo": "Procuraduría · Operativo y administrativo",
+  "procuraduria-tecnico": "Procuraduría · Técnico",
+  "procuraduria-profesional": "Procuraduría · Profesional y asesor",
   docente: "Concurso Docente 2026",
 };
 
