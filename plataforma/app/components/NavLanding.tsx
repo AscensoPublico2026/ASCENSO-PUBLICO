@@ -25,12 +25,12 @@ export default function NavLanding() {
         </Link>
 
         <nav className="nav-links">
-          <Link href="/#problema">El problema</Link>
+          <Link href="/guias-gratis" className="nav-destacado">Guías gratis</Link>
           <Link href="/#como">Cómo funciona</Link>
           <Link href="/buscador-opec" className="nav-destacado nav-opec">Buscador OPEC <span>NUEVO</span></Link>
           <Link href="/#simulacro">Simulacro gratis</Link>
           <Link href="/#incluye">Qué incluye</Link>
-          <Link href="/#convocatorias">Convocatorias</Link>
+          <Link href="/#convocatorias">Concursos</Link>
           <Link href="/#precio">Precio</Link>
           <Link href="/login" className="btn btn-azul nav-cta desktop">Iniciar sesión</Link>
           <Link href="/comprar" className="btn btn-oro nav-cta desktop">Quiero mi curso</Link>
@@ -48,12 +48,12 @@ export default function NavLanding() {
 
       {open && (
         <nav className="mobile-menu open" aria-label="Menú de navegación móvil">
-          <Link href="/#problema" onClick={() => setOpen(false)}>El problema</Link>
+          <Link href="/guias-gratis" className="nav-destacado" onClick={() => setOpen(false)}>Guías gratis</Link>
           <Link href="/#como" onClick={() => setOpen(false)}>Cómo funciona</Link>
           <Link href="/buscador-opec" className="nav-destacado nav-opec" onClick={() => setOpen(false)}>Buscador OPEC <span>NUEVO</span></Link>
           <Link href="/#simulacro" onClick={() => setOpen(false)}>Simulacro gratis</Link>
           <Link href="/#incluye" onClick={() => setOpen(false)}>Qué incluye</Link>
-          <Link href="/#convocatorias" onClick={() => setOpen(false)}>Convocatorias</Link>
+          <Link href="/#convocatorias" onClick={() => setOpen(false)}>Concursos</Link>
           <Link href="/#precio" onClick={() => setOpen(false)}>Precio</Link>
           <Link href="/login" onClick={() => setOpen(false)} style={{ color: "var(--azul)", fontWeight: 800 }}>Iniciar sesión</Link>
           <Link href="/comprar" onClick={() => setOpen(false)} style={{ color: "var(--oro)", fontWeight: 800 }}>Comprar mi curso</Link>

@@ -164,7 +164,8 @@ export default async function LandingPage() {
           </div>
           <div className="sim-promo-foot">
             <Link href="/simulacro" className="btn btn-azul" data-analytics-event="cta_click" data-analytics-placement="landing_all_simulacros">Ver los simulacros gratis →</Link>
-            <span className="sim-promo-mini">20 preguntas · sin costo · sin necesidad de registrarte</span>
+            <Link href="/guias-gratis" className="btn btn-ghost-conv" style={{ padding: "13px 22px" }} data-analytics-event="cta_click" data-analytics-placement="landing_guias_gratis">📚 Guías de estudio gratis</Link>
+            <span className="sim-promo-mini">20 preguntas · explicación de cada respuesta · sin costo</span>
           </div>
         </div>
       </section>
@@ -274,9 +275,9 @@ export default async function LandingPage() {
       {/* ===== CONVOCATORIAS ===== */}
       <section className="sec sec-alt" id="convocatorias">
         <div className="wrap">
-          <span className="eyebrow">Convocatorias disponibles</span>
-          <h2>¿Tu concurso está activo?</h2>
-          <p className="lead">Estas son las convocatorias para las que estamos preparando aspirantes ahora mismo. ¿No ves la tuya? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
+          <span className="eyebrow">Concursos activos · actualizado a noviembre de 2026</span>
+          <h2>¿En qué va tu concurso?</h2>
+          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero los concursos que todavía tienen prueba escrita por delante. ¿No ves el tuyo? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
           <ConvocatoriasGrid convocatorias={convocatorias} />
         </div>
       </section>

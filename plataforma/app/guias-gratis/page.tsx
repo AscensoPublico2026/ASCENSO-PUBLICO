@@ -1,0 +1,113 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import "../landing.css";
+import "../simulacro/simulacro.css";
+
+export const metadata: Metadata = {
+  title: "Guías y simulacros gratis para concursos de mérito | Ascenso Público",
+  description:
+    "Guías de estudio gratis sobre el Estado, la función pública, la relación Estado-ciudadano y el marco institucional, más simulacros gratis por nivel y para el concurso de la Procuraduría.",
+};
+
+const GUIAS = [
+  {
+    href: "/guias-gratis/estado-y-funcion-publica.html",
+    emoji: "🏛️",
+    titulo: "Estado y Función Pública",
+    desc: "Fines del Estado, principios de la función administrativa, deberes y prohibiciones del servidor, mérito y carrera.",
+  },
+  {
+    href: "/guias-gratis/relacion-estado-ciudadano.html",
+    emoji: "🤝",
+    titulo: "Relación Estado-Ciudadano",
+    desc: "Derecho de petición y sus términos, transparencia y acceso a la información, protección de datos y atención al ciudadano.",
+  },
+  {
+    href: "/guias-gratis/marco-institucional.html",
+    emoji: "⚖️",
+    titulo: "Marco Institucional",
+    desc: "Ramas del poder público, órganos autónomos y de control, control interno y cómo se organiza la administración.",
+  },
+];
+
+const SIMULACROS = [
+  { href: "/simulacro-gratis/procuraduria.html", emoji: "⚖️", titulo: "Procuraduría 2026", desc: "Núcleo común del concurso «Mérito Construyendo Excelencia».", nuevo: true },
+  { href: "/simulacro-gratis/asistencial.html", emoji: "🧰", titulo: "Nivel Asistencial", desc: "Estado, atención al ciudadano y competencias del nivel." },
+  { href: "/simulacro-gratis/tecnico.html", emoji: "🛠️", titulo: "Nivel Técnico", desc: "Procedimientos, calidad de la información y competencias." },
+  { href: "/simulacro-gratis/profesional.html", emoji: "🎓", titulo: "Nivel Profesional", desc: "Análisis, conceptos, conflictos de interés y liderazgo." },
+];
+
+export default function GuiasGratis() {
+  return (
+    <main className="sim-page">
+      <header className="sim-top">
+        <Link href="/" className="sim-brand">
+          <span className="sim-brand-logo">↗</span>
+          <span>Ascenso Público</span>
+        </Link>
+        <Link href="/comprar" className="btn btn-oro sim-top-cta" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_top">
+          Quiero mi curso
+        </Link>
+      </header>
+
+      <section className="sim-hero">
+        <div className="wrap center">
+          <span className="eyebrow c">Material gratis · concursos de mérito</span>
+          <h1 className="sim-h1">Empieza a estudiar hoy, gratis</h1>
+          <p className="sim-lead">
+            Las tres guías generales que evalúan casi todas las convocatorias, y simulacros tipo caso
+            con la explicación de cada respuesta. Sin registro para leer.
+          </p>
+        </div>
+      </section>
+
+      <section className="wrap sim-niveles">
+        <h2 className="center" style={{ color: "var(--azul)", marginBottom: 8 }}>📚 Guías de estudio gratis</h2>
+        <p className="center" style={{ color: "var(--texto-suave)", maxWidth: 620, margin: "0 auto 26px" }}>
+          Son las mismas guías generales de nuestra ruta de 21 días: con ejemplos, casos y autoevaluación.
+        </p>
+        <div className="grid grid-3">
+          {GUIAS.map((g) => (
+            <div className="card sim-nivel-card" key={g.href}>
+              <span className="sim-nivel-emoji">{g.emoji}</span>
+              <h3>{g.titulo}</h3>
+              <p>{g.desc}</p>
+              <div className="sim-nivel-meta">Guía completa · lectura de 60–90 min</div>
+              <a href={g.href} className="btn btn-azul sim-nivel-btn" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_abrir">
+                Abrir guía →
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <h2 className="center" style={{ color: "var(--azul)", margin: "56px 0 8px" }}>📝 Simulacros gratis</h2>
+        <p className="center" style={{ color: "var(--texto-suave)", maxWidth: 620, margin: "0 auto 26px" }}>
+          20 casos tipo juicio situacional. Al final ves tu puntaje, la explicación de cada opción y qué temas reforzar.
+        </p>
+        <div className="guias-sim-grid">
+          {SIMULACROS.map((s) => (
+            <a key={s.href} href={s.href} className="guias-sim-card" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_simulacro">
+              {s.nuevo && <span className="sim-promo-nuevo">NUEVO</span>}
+              <span className="sim-nivel-emoji">{s.emoji}</span>
+              <strong>{s.titulo}</strong>
+              <span>{s.desc}</span>
+              <span className="guias-sim-go">Empezar →</span>
+            </a>
+          ))}
+        </div>
+
+        <div className="guias-cta">
+          <h2>¿Y lo específico de tu cargo?</h2>
+          <p>
+            Las guías gratis cubren lo general. La prueba funcional evalúa las funciones de <b>tu</b> empleo.
+            En el curso armamos tu ruta de 21 días con tu OPEC y tu manual de funciones.
+          </p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/comprar" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="guias_gratis_comprar">Quiero mi curso personalizado</Link>
+            <Link href="/#como" className="btn-ghost-dark">Ver cómo funciona</Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
