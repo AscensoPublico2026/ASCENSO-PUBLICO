@@ -11,7 +11,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from banco_simulacro_docente import DOCENTE  # noqa: E402
 
 BASE = pathlib.Path(__file__).resolve().parent.parent / "public" / "simulacro-gratis"
-s = (BASE / "profesional.html").read_text(encoding="utf-8")
+s = (pathlib.Path(__file__).resolve().parent / "plantillas" / "simulacro.html").read_text(encoding="utf-8")
 i = s.index("const preguntas=")
 j = s.index("];", i) + 2
 s = s[:i] + "const preguntas=" + json.dumps(DOCENTE, ensure_ascii=False) + ";" + s[j:]

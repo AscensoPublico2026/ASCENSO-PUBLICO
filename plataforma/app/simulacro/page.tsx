@@ -30,16 +30,6 @@ const GRUPOS = [
       { id: "docente", nombre: "Docente de aula", emoji: "👩‍🏫", desc: "Lectura crítica, razonamiento cuantitativo, competencias pedagógicas, normatividad y casos de aula." },
     ],
   },
-  {
-    id: "generales",
-    titulo: "Otros concursos CNSC · práctica por nivel",
-    sub: "Si tu convocatoria todavía no tiene simulacro propio, practica con el de tu nivel: los ejes del Estado y de función pública se repiten en todas.",
-    simulacros: [
-      { id: "asistencial", nombre: "Nivel asistencial", emoji: "📋", desc: "Estado, atención al ciudadano y competencias del nivel asistencial." },
-      { id: "tecnico", nombre: "Nivel técnico", emoji: "⚙️", desc: "Marco institucional, procesos técnicos y competencias del nivel técnico." },
-      { id: "profesional", nombre: "Nivel profesional", emoji: "📊", desc: "Función pública, gestión y competencias del nivel profesional." },
-    ],
-  },
 ];
 
 export default function SimulacroIndex() {
