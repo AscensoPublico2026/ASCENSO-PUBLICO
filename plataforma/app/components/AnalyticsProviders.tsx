@@ -27,6 +27,10 @@ export default function AnalyticsProviders() {
   const clarityAllowed = !["/comprar", "/activar", "/login", "/reset-password", "/perfil", "/admin"]
     .some((route) => pathname.startsWith(route));
 
+  // Durante un simulacro cronometrado no interrumpimos con el banner de consentimiento:
+  // el examen es de una sola sesión y cualquier distracción cuenta.
+  const enExamen = /^\/simulacro-completo\/(?!gracias)/.test(pathname);
+
   useEffect(() => setConsent(readConsent()), []);
 
   useEffect(() => {
@@ -92,7 +96,7 @@ export default function AnalyticsProviders() {
         </Script>
       )}
 
-      {consent === null && (
+      {consent === null && !enExamen && (
         <aside
           role="dialog"
           aria-label="Preferencias de analítica"

@@ -244,7 +244,10 @@ export default async function LandingPage() {
               <div><span className="sim39-num">$39.000</span><small>pago único</small></div>
               <p>Y si después compras el curso, <strong>te lo descontamos completo</strong> durante los 30 días siguientes.</p>
             </div>
-            <a href={WA_SIMULACRO} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="sim39_wa">💬 Pedir mi simulacro completo</a>
+            <div className="sim39-ctas">
+              <Link href="/simulacro-completo" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="sim39_page">Ver el simulacro completo</Link>
+              <a href={WA_SIMULACRO} target="_blank" rel="noopener" className="sim39-wa" data-analytics-event="whatsapp_clicked" data-analytics-placement="sim39_wa">o pídelo por WhatsApp</a>
+            </div>
           </div>
           <div className="sim39-shot" aria-hidden="true">
             {/* eslint-disable-next-line @next/next/no-img-element */}

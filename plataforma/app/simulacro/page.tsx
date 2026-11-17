@@ -10,36 +10,35 @@ export const metadata: Metadata = {
     "Mide tu conocimiento para la prueba escrita de la CNSC con un simulacro gratis según tu nivel (asistencial, técnico o profesional). 20 preguntas tipo CNSC, retroalimentación y guía de qué estudiar.",
 };
 
-const NIVELES = [
+const GRUPOS = [
   {
-    id: "asistencial",
-    nombre: "Asistencial",
-    emoji: "🧰",
-    desc: "Estado, atención al ciudadano y competencias del nivel asistencial.",
-  },
-  {
-    id: "tecnico",
-    nombre: "Técnico",
-    emoji: "🛠️",
-    desc: "Marco institucional, procesos técnicos y competencias del nivel técnico.",
+    id: "procuraduria",
+    titulo: "Procuraduría General de la Nación 2026",
+    sub: "«Mérito Construyendo Excelencia». Núcleo común del concurso y, además, uno por cada nivel de la convocatoria.",
+    simulacros: [
+      { id: "procuraduria", nombre: "Núcleo común", emoji: "⚖️", desc: "Estructura y funciones de la PGN, derecho disciplinario, mecanismos de protección de derechos y derecho de petición." },
+      { id: "procuraduria-operativo", nombre: "Operativo y administrativo", emoji: "🧰", desc: "Auxiliares, citadores y oficinistas: núcleo común más atención al ciudadano, gestión documental y alcance del cargo." },
+      { id: "procuraduria-tecnico", nombre: "Técnico", emoji: "🛠️", desc: "Sustanciadores, técnicos y tecnólogos: núcleo común más procedimiento, calidad de la información y seguridad." },
+      { id: "procuraduria-profesional", nombre: "Profesional y asesor", emoji: "🎓", desc: "Profesional universitario, asesor y ejecutivo: núcleo común más conceptos técnicos, conflicto de interés e independencia de criterio." },
+    ],
   },
   {
     id: "docente",
-    nombre: "Concurso Docente 2026",
-    emoji: "👩‍🏫",
-    desc: "Lectura crítica, razonamiento cuantitativo, pedagogía, normatividad, convivencia y casos de aula.",
+    titulo: "Concurso Docente 2026",
+    sub: "Prueba de aptitudes y competencias básicas.",
+    simulacros: [
+      { id: "docente", nombre: "Docente de aula", emoji: "👩‍🏫", desc: "Lectura crítica, razonamiento cuantitativo, competencias pedagógicas, normatividad y casos de aula." },
+    ],
   },
   {
-    id: "procuraduria",
-    nombre: "Procuraduría 2026",
-    emoji: "⚖️",
-    desc: "Núcleo común del concurso «Mérito Construyendo Excelencia»: Procuraduría, disciplinario, mecanismos y atención al ciudadano.",
-  },
-  {
-    id: "profesional",
-    nombre: "Profesional",
-    emoji: "🎓",
-    desc: "Función pública, gestión y competencias del nivel profesional.",
+    id: "generales",
+    titulo: "Otros concursos CNSC · práctica por nivel",
+    sub: "Si tu convocatoria todavía no tiene simulacro propio, practica con el de tu nivel: los ejes del Estado y de función pública se repiten en todas.",
+    simulacros: [
+      { id: "asistencial", nombre: "Nivel asistencial", emoji: "📋", desc: "Estado, atención al ciudadano y competencias del nivel asistencial." },
+      { id: "tecnico", nombre: "Nivel técnico", emoji: "⚙️", desc: "Marco institucional, procesos técnicos y competencias del nivel técnico." },
+      { id: "profesional", nombre: "Nivel profesional", emoji: "📊", desc: "Función pública, gestión y competencias del nivel profesional." },
+    ],
   },
 ];
 
@@ -67,28 +66,49 @@ export default function SimulacroIndex() {
       </section>
 
       <section className="wrap sim-niveles">
-        <div className="grid grid-3">
-          {NIVELES.map((n) => (
-            <div className="card sim-nivel-card" key={n.id}>
-              <span className="sim-nivel-emoji">{n.emoji}</span>
-              <h3>{["procuraduria","docente"].includes(n.id) ? n.nombre : `Nivel ${n.nombre}`}</h3>
-              <p>{n.desc}</p>
-              <div className="sim-nivel-meta">20 preguntas · ~30 min</div>
-              <a
-                href={`/simulacro-gratis/${n.id}.html`}
-                className="btn btn-azul sim-nivel-btn"
-                data-analytics-event="cta_click"
-                data-analytics-placement="simulacro_index_start"
-                data-analytics-level={n.id}
-              >
-                Empezar simulacro →
-              </a>
+        {GRUPOS.map((g) => (
+          <div className="sim-grupo" key={g.id}>
+            <h2 className="sim-grupo-t">{g.titulo}</h2>
+            <p className="sim-grupo-s">{g.sub}</p>
+            <div className="grid grid-3">
+              {g.simulacros.map((n) => (
+                <div className="card sim-nivel-card" key={n.id}>
+                  <span className="sim-nivel-emoji">{n.emoji}</span>
+                  <h3>{n.nombre}</h3>
+                  <p>{n.desc}</p>
+                  <div className="sim-nivel-meta">20 preguntas · ~30 min</div>
+                  <a
+                    href={`/simulacro-gratis/${n.id}.html`}
+                    className="btn btn-azul sim-nivel-btn"
+                    data-analytics-event="cta_click"
+                    data-analytics-placement="simulacro_index_start"
+                    data-analytics-level={n.id}
+                  >
+                    Empezar simulacro →
+                  </a>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+        ))}
+
+        <div className="sim-pago-band">
+          <div>
+            <span className="sim-pago-tag">¿Ya hiciste el gratis?</span>
+            <h2>Simulacro completo de 100 preguntas</h2>
+            <p>
+              Con cronómetro, en una sola sesión y con informe por competencia. $39.000, y te lo
+              descontamos si después compras el curso.
+            </p>
+          </div>
+          <Link href="/simulacro-completo" className="btn btn-oro" data-analytics-event="cta_click" data-analytics-placement="simulacro_index_pago">
+            Ver el simulacro completo →
+          </Link>
         </div>
+
         <p className="sim-nota center">
-          Mide tu conocimiento del Estado y los temas base de la prueba escrita. Al finalizar,
-          te enviamos tu resultado por correo.
+          Todos los simulacros son gratis y sin registro. Al finalizar te enviamos tu resultado y los
+          temas que debes reforzar.
         </p>
       </section>
     </main>

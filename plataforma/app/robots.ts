@@ -8,7 +8,9 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       // No indexar rutas privadas ni de API
-      disallow: ["/admin", "/api/", "/perfil", "/guia", "/activar", "/reset-password", "/seed-guias"],
+      disallow: ["/admin", "/api/", "/perfil", "/guia", "/activar", "/reset-password", "/seed-guias",
+        // El acceso al simulacro de pago va por token: no debe indexarse
+        "/simulacro-completo/"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
