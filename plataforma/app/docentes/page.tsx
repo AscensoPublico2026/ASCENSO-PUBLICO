@@ -56,14 +56,14 @@ export default function Docentes() {
               Hacer el simulacro gratis
             </a>
             <a
-              href={waUrl("Hola, quiero que me avisen cuando abra la preparación para el concurso docente 2026.")}
+              href={waUrl("Hola, quiero mi curso personalizado para el concurso docente 2026. Mi área y mi nivel de enseñanza son:")}
               target="_blank"
               rel="noopener"
               className="btn btn-wa"
               data-analytics-event="whatsapp_clicked"
               data-analytics-placement="docentes_hero_wa"
             >
-              🔔 Avísame cuando abra el curso
+              💬 Quiero mi curso
             </a>
           </div>
           <p className="doc-nota-fechas">
@@ -118,21 +118,22 @@ export default function Docentes() {
           <div><span>4</span><h3>No esperes la fecha del examen</h3><p>Quien empieza cuando sale la citación llega con semanas. Quien empieza hoy llega con meses.</p></div>
         </div>
         <div className="guias-cta">
-          <h2>¿Quieres preparación completa para tu cargo?</h2>
+          <h2>Sí, tenemos curso para el concurso docente</h2>
           <p>
-            Estamos armando la preparación del concurso docente por cargo y por área. Déjanos tu
-            WhatsApp y te avisamos apenas abra, con precio de lanzamiento.
+            Armamos tu ruta con el <strong>manual de funciones de tu cargo</strong> y con tu área y nivel de
+            enseñanza, igual que en cualquier otra convocatoria. Escríbenos con el empleo al que te presentas
+            y te confirmamos el precio de tu nivel.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a
-              href={waUrl("Hola, quiero que me avisen cuando abra la preparación para el concurso docente 2026. Mi cargo de interés es:")}
+              href={waUrl("Hola, quiero mi curso personalizado para el concurso docente 2026. Mi área y mi nivel de enseñanza son:")}
               target="_blank"
               rel="noopener"
               className="btn btn-oro"
               data-analytics-event="whatsapp_clicked"
               data-analytics-placement="docentes_cta_wa"
             >
-              🔔 Avísame por WhatsApp
+              💬 Pedir mi curso por WhatsApp
             </a>
             <Link href="/guias-gratis" className="btn-ghost-dark">Ver guías gratis</Link>
           </div>

@@ -17,8 +17,9 @@ type Convocatoria = {
 const PESO_ESTADO: Record<string, number> = { abiertas: 0, proxima: 1, cerradas: 2 };
 
 /**
- * Concursos que aún no tienen curso en la plataforma, pero que la gente busca.
- * Se muestran como "Próximamente" con un botón para que avisemos por WhatsApp.
+ * Concursos que la gente ya busca pero que todavía no tienen OPEC ni manual de
+ * funciones publicados. En cuanto los publiquen podemos armar el curso, así que
+ * el botón invita a dejar el dato y no a esperar.
  */
 const PROXIMAMENTE = [
   {
@@ -27,7 +28,7 @@ const PROXIMAMENTE = [
     vacantes: "1.832",
     fecha: "Inscripciones aplazadas · nueva fecha por confirmar (se espera en 2027)",
     imagen: "/fotos/territorial-uapa.jpg",
-    mensaje: "Hola, quiero que me avisen cuando abran la preparación para el concurso de las CAR.",
+    mensaje: "Hola, quiero el curso para el concurso de las CAR. Mi cargo es:",
   },
 ];
 
@@ -83,7 +84,7 @@ export default function ConvocatoriasGrid({ convocatorias }: { convocatorias: Co
           <div className="conv-media">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={p.imagen} alt={p.nombre} loading="lazy" />
-            <span className="estado proxima">Próximamente en Ascenso Público</span>
+            <span className="estado proxima">Apenas publiquen la OPEC</span>
           </div>
           <div className="conv-body">
             <h3>{p.nombre}</h3>
@@ -102,7 +103,7 @@ export default function ConvocatoriasGrid({ convocatorias }: { convocatorias: Co
               data-analytics-event="whatsapp_clicked"
               data-analytics-placement="conv_proximamente"
             >
-              🔔 Avísame por WhatsApp
+              💬 Escribirnos por WhatsApp
             </a>
           </div>
         </div>
