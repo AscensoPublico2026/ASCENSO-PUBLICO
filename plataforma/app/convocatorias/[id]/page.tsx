@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { waCurso } from "@/lib/contacto";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 
@@ -144,12 +145,14 @@ export default async function ConvocatoriaDetalle({ params }: { params: { id: st
         }}>
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: ".78rem", fontWeight: 700, color: "var(--ambar, #B8600A)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 6 }}>
-              Precio de lanzamiento
+              Precio según tu nivel
             </div>
             <div style={{ fontFamily: "'Source Serif 4',serif", fontSize: "2.4rem", color: "var(--azul)", fontWeight: 700 }}>
-              ${Number(conv.precio_cop ?? 200000).toLocaleString("es-CO")} <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
+              desde $190.000 <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
             </div>
-            <p style={{ fontSize: ".85rem", color: "var(--texto-suave)", margin: "6px 0 18px" }}>Pago único · acceso completo</p>
+            <p style={{ fontSize: ".85rem", color: "var(--texto-suave)", margin: "6px 0 18px" }}>
+              Pago único · el valor depende del nivel del cargo. Te lo confirmamos antes de que pagues.
+            </p>
           </div>
 
           {conv.estado === "cerradas" ? (
@@ -162,17 +165,21 @@ export default async function ConvocatoriaDetalle({ params }: { params: { id: st
               </div>
             </div>
           ) : (
-            <Link
-              href={`/comprar?conv=${conv.id}`}
+            <a
+              href={waCurso(conv.nombre)}
+              target="_blank"
+              rel="noopener"
               className="btn btn-oro"
+              data-analytics-event="whatsapp_clicked"
+              data-analytics-placement="convocatoria_detalle"
               style={{ width: "100%", padding: "14px 20px", fontSize: ".95rem", textAlign: "center" }}
             >
-              Comprar mi curso →
-            </Link>
+              💬 Pedir mi curso por WhatsApp →
+            </a>
           )}
 
           <p style={{ fontSize: ".78rem", color: "var(--texto-suave)", textAlign: "center", marginTop: 12 }}>
-            Pago seguro con Wompi · PSE, Nequi y tarjetas
+            Te responde una persona · pago seguro con Wompi
           </p>
 
           <div style={{

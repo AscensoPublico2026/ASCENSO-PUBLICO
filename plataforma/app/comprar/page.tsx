@@ -1,301 +1,106 @@
-"use client";
-
-import { crearCompra } from "./actions";
-import { useState, useEffect } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import NavLanding from "../components/NavLanding";
 import ContadorCupos from "../components/ContadorCupos";
-import { trackEvent } from "@/lib/analytics";
-import { createClient } from "@/lib/supabase/client";
-import { waUrl, WA_MENSAJES } from "@/lib/contacto";
+import { waUrl, WA_MENSAJES, CORREO_CONTACTO } from "@/lib/contacto";
+import "../landing.css";
 
-// Componente principal (ahora completamente cliente)
-export default function ComprarPage({ searchParams }: { searchParams?: { conv?: string; error?: string } }) {
-  const [convocatorias, setConvocatorias] = useState<{ id: string; nombre: string; precio_cop: number }[]>([]);
-  const [usuarioLogueado, setUsuarioLogueado] = useState<{ correo: string; celular: string } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [convSeleccionada, setConvSeleccionada] = useState<string>("");
+export const metadata: Metadata = {
+  title: "Pedir mi curso personalizado",
+  description:
+    "Cuéntanos tu convocatoria y tu cargo por WhatsApp. Te confirmamos el precio de tu nivel, revisamos tu OPEC y armamos tu ruta de estudio en 24 horas.",
+  alternates: { canonical: "/comprar" },
+};
 
-  const [mostrarPassword, setMostrarPassword] = useState(false);
-  const [mostrarConfirm, setMostrarConfirm] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
+const NIVELES = [
+  { nivel: "Operativo y administrativo", precio: "$190.000", cargos: "Auxiliares, citadores y oficinistas" },
+  { nivel: "Técnico", precio: "$240.000", cargos: "Sustanciadores, técnicos y tecnólogos" },
+  { nivel: "Profesional", precio: "$290.000", cargos: "Profesional universitario y equivalentes" },
+  { nivel: "Asesor y ejecutivo", precio: "$390.000", cargos: "Asesores y cargos de dirección" },
+];
 
-  // Cargar datos al montar
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const supabase = createClient();
-        
-        // Cargar convocatorias
-        const { data: convData } = await supabase
-          .from("convocatorias")
-          .select("id,nombre,precio_cop")
-          .eq("activa", true)
-          .order("orden");
-        setConvocatorias(convData || []);
+const PASOS = [
+  "Nos escribes con tu convocatoria y el nombre de tu cargo.",
+  "Verificamos tu OPEC y el manual de funciones. Si no sabes dónde están, te enseñamos a descargarlos.",
+  "Te confirmamos el precio exacto de tu nivel y te enviamos el enlace de pago seguro de Wompi.",
+  "En máximo 24 horas tienes tu ruta de 21 días lista en tu perfil.",
+];
 
-        // Verificar si hay usuario logueado
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          const { data: profile } = await supabase
-            .from("profiles")
-            .select("correo, celular")
-            .eq("id", user.id)
-            .single();
-          setUsuarioLogueado({
-            correo: profile?.correo || user.email || "",
-            celular: profile?.celular || "",
-          });
-        }
-      } catch (error) {
-        console.error("Error cargando datos:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
-  }, []);
-
-  // Validar que las contraseñas coincidan
-  useEffect(() => {
-    if (confirmPassword && password !== confirmPassword) {
-      setErrorPassword("Las contraseñas no coinciden");
-    } else {
-      setErrorPassword("");
-    }
-  }, [password, confirmPassword]);
-
-  // Precargar la convocatoria si viene por URL (?conv=...)
-  useEffect(() => {
-    if (searchParams?.conv) setConvSeleccionada(searchParams.conv);
-  }, [searchParams?.conv]);
-
-  // Precio de la convocatoria seleccionada (COP). Null si aún no eligió.
-  const precioSeleccionado =
-    convocatorias.find((c) => c.id === convSeleccionada)?.precio_cop ?? null;
-  const formatoCOP = (n: number) =>
-    "$" + n.toLocaleString("es-CO") + " COP";
-
-  const inputStyle: React.CSSProperties = {
-    width: "100%", padding: "12px 14px", borderRadius: 12, border: "1px solid var(--gris-borde)",
-    fontFamily: "inherit", fontSize: ".95rem", marginTop: 6, background: "#fff",
-  };
-  const label: React.CSSProperties = { fontWeight: 700, fontSize: ".9rem", color: "var(--azul)", display: "block", marginTop: 16 };
-
-  const passwordContainerStyle: React.CSSProperties = {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-  };
-
-  const toggleButtonStyle: React.CSSProperties = {
-    position: "absolute",
-    right: "12px",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    fontSize: ".85rem",
-    color: "var(--azul)",
-    padding: "4px 8px",
-    userSelect: "none",
-  };
-
-  if (loading) {
-    return (
-      <main style={{ maxWidth: 620, margin: "0 auto", padding: "48px 22px", textAlign: "center" }}>
-        <p style={{ color: "var(--texto-suave)" }}>Cargando...</p>
-      </main>
-    );
-  }
+export default function ComprarPage() {
+  const wa = waUrl(WA_MENSAJES.precio);
 
   return (
-    <main style={{ maxWidth: 620, margin: "0 auto", padding: "48px 22px" }}>
-      <Link href="/" style={{ color: "var(--texto-suave)", fontSize: ".88rem" }}>← Volver al inicio</Link>
+    <>
+      <NavLanding />
 
-      <h1 style={{ fontSize: "1.9rem", marginBottom: 6, marginTop: 16 }}>Adquiere tu curso personalizado</h1>
-      <p style={{ color: "var(--texto-suave)", marginBottom: 8 }}>
-        Completa tus datos y sube tu manual de funciones. Después realizas el pago seguro con Wompi.
-      </p>
-      <p style={{ color: "var(--azul)", fontWeight: 800, marginBottom: 24 }}>
-        {precioSeleccionado != null
-          ? `Precio: ${formatoCOP(precioSeleccionado)} · pago único`
-          : "Pago único · el precio depende de la convocatoria que elijas"}
-      </p>
+      <section className="sec sec-alt">
+        <div className="wrap" style={{ maxWidth: 760 }}>
+          <span className="eyebrow">Tu curso personalizado</span>
+          <h1 style={{ fontFamily: "'Source Serif 4',serif", color: "var(--azul)", fontSize: "clamp(1.7rem,4vw,2.3rem)", margin: "6px 0 12px", lineHeight: 1.2 }}>
+            Cuéntanos tu cargo y te armamos la ruta
+          </h1>
+          <p className="lead" style={{ margin: "0 0 26px" }}>
+            El curso se arma con <strong>tu OPEC y tu manual de funciones</strong>, así que empieza con una
+            conversación, no con un formulario. Te responde una persona.
+          </p>
 
-      <a
-        href={waUrl(WA_MENSAJES.precio)}
-        target="_blank"
-        rel="noopener"
-        data-analytics-event="whatsapp_clicked"
-        data-analytics-placement="comprar_wa"
-        style={{
-          display: "block", background: "var(--verde-suave)", border: "1px solid #BFE6D2",
-          borderLeft: "4px solid var(--verde)", borderRadius: 12, padding: "14px 16px",
-          marginBottom: 18, textDecoration: "none", color: "var(--texto)",
-        }}
-      >
-        <strong style={{ color: "var(--verde)" }}>💬 ¿Prefieres que te atendamos por WhatsApp?</strong>
-        <br />
-        <span style={{ fontSize: ".88rem", color: "var(--texto-suave)" }}>
-          Es como compra la mayoría: nos dices tu convocatoria y tu cargo, confirmamos el precio de tu nivel
-          y te acompañamos con el manual de funciones. Escríbenos →
-        </span>
-      </a>
-
-      <ContadorCupos />
-
-      {searchParams?.error && (
-        <div style={{ background: "#fdecec", border: "1px solid #f5b5b5", borderRadius: 12, padding: "12px 16px", marginBottom: 12, fontSize: ".88rem", color: "#b00020" }}>
-          <strong>No se pudo procesar la compra.</strong> {searchParams.error}
-        </div>
-      )}
-
-      {usuarioLogueado && (
-        <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginBottom: 8, fontSize: ".85rem", color: "var(--verde)" }}>
-          ✓ Estás comprando con tu cuenta (<strong>{usuarioLogueado.correo}</strong>). Tu nuevo curso se sumará a tu perfil. Usa el mismo correo para que quede vinculado.
-        </div>
-      )}
-
-      <form
-        action={crearCompra}
-        onSubmit={(event) => {
-          const data = new FormData(event.currentTarget);
-          trackEvent("checkout_form_submitted", {
-            level: String(data.get("nivel") || ""),
-            convocatoria_id: String(data.get("convocatoria_id") || ""),
-          });
-        }}
-      >
-        {/* Nombres y Apellidos separados - OBLIGATORIOS */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-          <label style={label}>Nombres *
-            <input style={inputStyle} type="text" name="nombres" required placeholder="Ej: Julio César" />
-          </label>
-          <label style={label}>Apellidos *
-            <input style={inputStyle} type="text" name="apellidos" required placeholder="Ej: Deávila Pérez" />
-          </label>
-        </div>
-
-        <label style={label}>Correo *
-          <input style={inputStyle} type="email" name="correo" required placeholder="tucorreo@ejemplo.com" defaultValue={usuarioLogueado?.correo || ""} />
-        </label>
-        <label style={label}>Celular (WhatsApp)
-          <input style={inputStyle} type="tel" name="celular" placeholder="Ej: 315 197 2091" defaultValue={usuarioLogueado?.celular || ""} />
-        </label>
-        <label style={label}>Convocatoria *
-          <select
-            style={inputStyle}
-            name="convocatoria_id"
-            value={convSeleccionada}
-            onChange={(e) => setConvSeleccionada(e.target.value)}
-            required
+          <a
+            href={wa}
+            target="_blank"
+            rel="noopener"
+            className="btn btn-oro"
+            data-analytics-event="whatsapp_clicked"
+            data-analytics-placement="comprar_principal"
+            style={{ padding: "15px 32px", fontSize: "1rem" }}
           >
-            <option value="">Selecciona tu convocatoria</option>
-            {convocatorias.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.nombre} — {formatoCOP(c.precio_cop)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label style={label}>Número de OPEC *
-          <input style={inputStyle} type="text" name="opec" required placeholder="Ej: 48521" />
-        </label>
-        <label style={label}>Nombre del cargo *
-          <input style={inputStyle} type="text" name="cargo" required placeholder="Ej: Técnico Administrativo" />
-        </label>
-        <label style={label}>Nivel del cargo *
-          <select style={inputStyle} name="nivel" defaultValue="" required>
-            <option value="" disabled>Selecciona</option>
-            <option value="asistencial">Asistencial</option>
-            <option value="tecnico">Técnico</option>
-            <option value="profesional">Profesional</option>
-          </select>
-        </label>
-        {precioSeleccionado != null && (
-          <div style={{ background: "var(--verde-suave)", border: "1px solid #c3e6d3", borderRadius: 12, padding: "12px 16px", marginTop: 16, fontSize: ".92rem", color: "var(--azul)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontWeight: 600 }}>Valor a pagar</span>
-            <strong style={{ fontSize: "1.1rem" }}>{formatoCOP(precioSeleccionado)}</strong>
+            💬 Escribir por WhatsApp
+          </a>
+
+          <p style={{ fontSize: ".86rem", color: "var(--texto-suave)", marginTop: 12 }}>
+            ¿Prefieres correo? <a href={`mailto:${CORREO_CONTACTO}`} style={{ color: "var(--azul)", fontWeight: 700 }}>{CORREO_CONTACTO}</a>
+          </p>
+
+          <div style={{ marginTop: 34 }}>
+            <ContadorCupos />
           </div>
-        )}
-        <label style={label}>Manual de funciones (PDF) *
-          <input style={inputStyle} type="file" name="manual" accept=".pdf,application/pdf" required />
-          <span style={{ fontSize: ".78rem", color: "var(--texto-suave)", marginTop: 4, display: "block" }}>
-            Descárgalo de la página de la CNSC → SIMO → tu OPEC → &quot;Manual de funciones&quot;.
-          </span>
-        </label>
-
-        {/* Campos de contraseña */}
-        <div style={{ background: "var(--crema)", border: "1px solid #e8dcc4", borderRadius: 12, padding: "16px 18px", marginTop: 20 }}>
-          <p style={{ fontSize: ".88rem", color: "var(--azul)", fontWeight: 600, marginBottom: 12 }}>
-            🔐 Crea tu contraseña de acceso
-          </p>
-          <label style={label}>Contraseña *
-            <div style={passwordContainerStyle}>
-              <input 
-                style={{...inputStyle, paddingRight: "70px"}} 
-                type={mostrarPassword ? "text" : "password"}
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                minLength={6}
-                required 
-                placeholder="Mínimo 6 caracteres" 
-              />
-              <button
-                type="button"
-                style={toggleButtonStyle}
-                onClick={() => setMostrarPassword(!mostrarPassword)}
-              >
-                {mostrarPassword ? "Ocultar" : "Mostrar"}
-              </button>
-            </div>
-          </label>
-          <label style={label}>Confirma tu contraseña *
-            <div style={passwordContainerStyle}>
-              <input 
-                style={{...inputStyle, paddingRight: "70px", borderColor: errorPassword ? "#d00" : "var(--gris-borde)"}} 
-                type={mostrarConfirm ? "text" : "password"}
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                minLength={6}
-                required 
-                placeholder="Repite la contraseña" 
-              />
-              <button
-                type="button"
-                style={toggleButtonStyle}
-                onClick={() => setMostrarConfirm(!mostrarConfirm)}
-              >
-                {mostrarConfirm ? "Ocultar" : "Mostrar"}
-              </button>
-            </div>
-            {errorPassword && (
-              <span style={{ fontSize: ".78rem", color: "#d00", marginTop: 4, display: "block" }}>
-                {errorPassword}
-              </span>
-            )}
-          </label>
-          <p style={{ fontSize: ".75rem", color: "var(--texto-suave)", marginTop: 8 }}>
-            Usarás esta contraseña para acceder a tu curso después del pago.
-          </p>
         </div>
+      </section>
 
-        <label style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 20, fontSize: ".88rem", color: "var(--texto-suave)" }}>
-          <input type="checkbox" name="consentimiento" required style={{ marginTop: 3 }} />
-          <span>Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012 y la <Link href="/privacidad" style={{ color: "var(--azul)", textDecoration: "underline" }}>política de privacidad</Link>.</span>
-        </label>
+      <section className="sec">
+        <div className="wrap" style={{ maxWidth: 760 }}>
+          <h2 style={{ color: "var(--azul)", fontSize: "1.3rem", marginBottom: 6 }}>Precio según el nivel del empleo</h2>
+          <p style={{ color: "var(--texto-suave)", fontSize: ".93rem", marginBottom: 20 }}>
+            Como los derechos de participación del concurso, el valor cambia según el nivel del cargo al que
+            aspiras. Pago único, sin mensualidades.
+          </p>
 
-        <button type="submit" disabled={!!errorPassword} className="btn btn-oro" style={{ width: "100%", padding: 15, marginTop: 24, opacity: errorPassword ? 0.5 : 1, cursor: errorPassword ? "not-allowed" : "pointer" }}>
-          Continuar al pago seguro →
-        </button>
-        <p style={{ fontSize: ".8rem", color: "var(--texto-suave)", textAlign: "center", marginTop: 12 }}>
-          Pago seguro con Wompi · PSE, Nequi y tarjetas
-        </p>
-      </form>
-    </main>
+          <div className="precio-grid">
+            {NIVELES.map((n) => (
+              <div key={n.nivel} className="precio-nivel">
+                <span className="precio-nivel-tag">{n.nivel}</span>
+                <div className="precio-nivel-num">{n.precio}</div>
+                <p>{n.cargos}</p>
+              </div>
+            ))}
+          </div>
+
+          <h2 style={{ color: "var(--azul)", fontSize: "1.3rem", margin: "34px 0 14px" }}>Cómo funciona</h2>
+          <ol style={{ paddingLeft: 20, color: "var(--texto)", lineHeight: 1.65 }}>
+            {PASOS.map((p) => (
+              <li key={p} style={{ marginBottom: 8 }}>{p}</li>
+            ))}
+          </ol>
+
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 26 }}>
+            <a href={wa} target="_blank" rel="noopener" className="btn btn-oro" data-analytics-event="whatsapp_clicked" data-analytics-placement="comprar_final">
+              Pedir mi curso
+            </a>
+            <Link href="/simulacro" className="btn btn-ghost-conv" style={{ padding: "13px 22px" }}>
+              Probar un simulacro gratis
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
