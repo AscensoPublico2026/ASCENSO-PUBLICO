@@ -133,6 +133,15 @@ export default async function LandingPage() {
             <h2>Empieza con tu <span className="hl">simulacro gratis</span></h2>
             <p className="sim-promo-lead">Mide tu nivel en los temas que la CNSC evalúa en la prueba escrita. Al terminar recibes una <strong>retroalimentación</strong> con lo que ya dominas y lo que debes reforzar. Elige tu nivel:</p>
           </div>
+          <a href="/simulacro-gratis/procuraduria.html" className="sim-promo-destacado" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="procuraduria">
+            <span className="sim-promo-nuevo">NUEVO</span>
+            <span className="sim-promo-emoji">⚖️</span>
+            <span className="sim-promo-destacado-txt">
+              <strong>Simulacro gratis · Concurso Procuraduría 2026</strong>
+              <span>20 casos del núcleo común: Procuraduría, disciplinario, mecanismos, atención al ciudadano y competencias.</span>
+            </span>
+            <span className="sim-promo-go">Empezar →</span>
+          </a>
           <div className="sim-promo-grid">
             <a href="/simulacro-gratis/asistencial.html" className="sim-promo-card" data-analytics-event="cta_click" data-analytics-placement="landing_simulacro" data-analytics-level="asistencial">
               <span className="sim-promo-emoji">🧰</span>

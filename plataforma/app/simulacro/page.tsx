@@ -23,6 +23,12 @@ const NIVELES = [
     desc: "Marco institucional, procesos técnicos y competencias del nivel técnico.",
   },
   {
+    id: "procuraduria",
+    nombre: "Procuraduría 2026",
+    emoji: "⚖️",
+    desc: "Núcleo común del concurso «Mérito Construyendo Excelencia»: Procuraduría, disciplinario, mecanismos y atención al ciudadano.",
+  },
+  {
     id: "profesional",
     nombre: "Profesional",
     emoji: "🎓",
@@ -58,7 +64,7 @@ export default function SimulacroIndex() {
           {NIVELES.map((n) => (
             <div className="card sim-nivel-card" key={n.id}>
               <span className="sim-nivel-emoji">{n.emoji}</span>
-              <h3>Nivel {n.nombre}</h3>
+              <h3>{n.id === "procuraduria" ? n.nombre : `Nivel ${n.nombre}`}</h3>
               <p>{n.desc}</p>
               <div className="sim-nivel-meta">20 preguntas · ~30 min</div>
               <a

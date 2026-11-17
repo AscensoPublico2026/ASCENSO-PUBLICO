@@ -10,6 +10,7 @@ const NOMBRE_NIVEL: Record<string, string> = {
   asistencial: "Asistencial",
   tecnico: "Técnico",
   profesional: "Profesional",
+  procuraduria: "Procuraduría (núcleo común)",
 };
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
