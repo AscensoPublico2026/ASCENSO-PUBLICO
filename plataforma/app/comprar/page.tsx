@@ -41,7 +41,9 @@ export default function ComprarPage() {
           </h1>
           <p className="lead" style={{ margin: "0 0 26px" }}>
             El curso se arma con <strong>tu OPEC y tu manual de funciones</strong>, así que empieza con una
-            conversación, no con un formulario. Te responde una persona.
+            conversación, no con un formulario. Te responde una persona. Funciona para
+            <strong> cualquier convocatoria cuyo cargo ya tenga manual de funciones publicado</strong>,
+            incluido el concurso docente.
           </p>
 
           <a

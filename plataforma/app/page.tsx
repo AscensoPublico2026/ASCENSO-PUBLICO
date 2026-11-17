@@ -80,7 +80,7 @@ export default async function LandingPage() {
         <div className="wrap">
           <span className="eyebrow">Concursos · actualizado a noviembre de 2026</span>
           <h2>¿En qué va tu concurso?</h2>
-          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero las que todavía tienen prueba escrita por delante. ¿No ves la tuya? <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>Escríbenos</a>.</p>
+          <p className="lead">Estado y próxima fecha de cada convocatoria que seguimos. Primero las que todavía tienen prueba escrita por delante. <strong>Si tu cargo ya tiene manual de funciones publicado, podemos armarte el curso</strong>, aparezca o no en esta lista: <a href={waUrl(WA_MENSAJES.convocatoria)} target="_blank" rel="noopener" className="wa-link" style={{ color: "var(--azul)" }}>escríbenos</a>.</p>
           <ConvocatoriasGrid convocatorias={convocatorias} />
         </div>
       </section>
@@ -300,6 +300,7 @@ export default async function LandingPage() {
           <h2>Resolvemos tus dudas</h2>
           <div className="faq" style={{ marginTop: 30 }}>
             <details open><summary>¿En qué se diferencia de otros cursos?</summary><div className="ans">No te preparamos para &quot;la convocatoria&quot; en general, sino para <strong>tu cargo específico</strong>. Analizamos tu OPEC y tu manual de funciones para enfocar el estudio en lo que tu prueba realmente evalúa.</div></details>
+            <details><summary>¿Tienen curso para mi convocatoria?</summary><div className="ans">Sí, para <strong>cualquier concurso cuyo cargo ya tenga manual de funciones publicado</strong>, incluido el <strong>concurso docente</strong>. El curso no se arma a partir de un temario nuestro sino de tu empleo, así que lo que necesitamos es tu OPEC y tu manual de funciones. Si el concurso todavía no los publica, te avisamos apenas salgan.</div></details>
             <details><summary>¿Cuánto cuesta para mi cargo?</summary><div className="ans">Depende del nivel del empleo: <strong>$190.000</strong> operativo y administrativo, <strong>$240.000</strong> técnico, <strong>$290.000</strong> profesional y <strong>$390.000</strong> asesor y ejecutivo. Escríbenos con tu convocatoria y tu cargo y te confirmamos el valor exacto.</div></details>
             <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde el pago tendrás tu ruta personalizada en tu perfil.</div></details>
             <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Si no sabes dónde están, te guiamos por WhatsApp para descargarlos.</div></details>
