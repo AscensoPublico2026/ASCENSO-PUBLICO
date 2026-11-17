@@ -45,7 +45,8 @@ BARRA = """<!-- ap-barra-examen -->
 AVISO = """<div class="ap-aviso">
 <b>Esto es un diagnóstico, no el examen.</b> La prueba real es mucho más larga y se presenta
 en una sola sesión con tiempo límite. Aquí medimos tu criterio con 20 casos del mismo tipo:
-cuatro opciones plausibles, donde la trampa es la respuesta «casi correcta».
+tres opciones plausibles, como en la Prueba de Juicio Situacional, donde la trampa es la
+respuesta «casi correcta».
 </div>
 """
 

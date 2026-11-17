@@ -151,12 +151,12 @@ export default async function LandingPage() {
             <article className="dentro-item">
               <div className="dentro-shot">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/producto/simulacro.jpg" alt="Simulacro de Ascenso Público con un caso y cuatro opciones de respuesta" loading="lazy" />
+                <img src="/producto/simulacro.jpg" alt="Simulacro de Ascenso Público con un caso y tres opciones de respuesta" loading="lazy" />
               </div>
               <div className="dentro-txt">
                 <span className="dentro-num">03</span>
                 <h3>Simulacros con el formato real</h3>
-                <p>Casos con cuatro opciones plausibles, como en la prueba. Al terminar ves tu puntaje, la explicación de cada opción y los temas que debes reforzar.</p>
+                <p>Casos con tres opciones plausibles, el formato oficial de la Prueba de Juicio Situacional. Al terminar ves tu puntaje, la explicación de cada opción y los temas que debes reforzar.</p>
               </div>
             </article>
           </div>
@@ -305,7 +305,7 @@ export default async function LandingPage() {
             <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde el pago tendrás tu ruta personalizada en tu perfil.</div></details>
             <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Si no sabes dónde están, te guiamos por WhatsApp para descargarlos.</div></details>
             <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Entre <strong>60 y 90 minutos</strong>. El plan está pensado para estudiar <strong>de lunes a viernes</strong>: son 20 días de preparación más el simulacro final.</div></details>
-            <details><summary>¿Cómo son los simulacros?</summary><div className="ans">De <strong>juicio situacional</strong>, como la prueba real: un caso y cuatro opciones plausibles, con la explicación de cada una. Puedes probar los gratuitos antes de comprar.</div></details>
+            <details><summary>¿Cómo son los simulacros?</summary><div className="ans">De <strong>juicio situacional</strong>, como la prueba real: un caso y tres opciones plausibles, con la explicación de cada una. Puedes probar los gratuitos antes de comprar.</div></details>
             <details><summary>¿Cómo pago?</summary><div className="ans">Coordinamos el pago por WhatsApp: PSE, Nequi o tarjeta a través de <strong>Wompi</strong>. Te enviamos el enlace de pago seguro.</div></details>
           </div>
         </div>
