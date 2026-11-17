@@ -17,7 +17,13 @@ export async function middleware(request: NextRequest) {
     if (esperado && recibido === esperado) {
       return NextResponse.next();
     }
-    return new NextResponse("No encontrado", { status: 404 });
+    // La cabecera de diagnóstico dice si la protección quedó configurada
+    // (sin revelar el token). "unconfigured" = falta el secreto en el entorno
+    // y las guías nuevas no se podrán auto-subir al bucket.
+    return new NextResponse("No encontrado", {
+      status: 404,
+      headers: { "x-seed-guard": esperado ? "ready" : "unconfigured" },
+    });
   }
 
   // No interceptar rutas de API (se protegen internamente)
