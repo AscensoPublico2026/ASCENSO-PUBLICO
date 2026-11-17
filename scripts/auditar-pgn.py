@@ -101,6 +101,7 @@ def fugas(s, duenos):
                 out.append((tipo, plano[max(0, m.start()-60):m.end()+40]))
     for m in re.finditer(r'(?<![\d.])(\d{1,3}-2026)\b', plano):
         n = m.group(1)
+        if n == '999-2026': continue
         if n not in comun_conv and re.search(r'(?i)conv', plano[max(0, m.start()-25):m.start()]):
             tipo = 'convocatoria ajena' if n not in propios_conv else 'convocatoria específica en guía COMPARTIDA'
             out.append((tipo, plano[max(0, m.start()-60):m.end()+30]))
@@ -122,9 +123,37 @@ def avisos_entidad(s):
                 out.append('CNSC: ' + frag)
     return out
 
+
+# ---------------------------------------------------------------- normas (lint jurídico)
+# Normas derogadas, compiladas o sustituidas: si aparecen SIN aclarar que ya no rigen, se marca para revisión.
+NORMAS = [
+    (r'Ley 734 de 2002|Código Disciplinario Único|\bCDU\b', 'Ley 734 de 2002 (CDU) fue derogada por la Ley 1952 de 2019 (CGD), vigente desde el 29-mar-2022'),
+    (r'art(?:ículo|\.)?\s*3[45]\b[^.;]{0,25}(?:de la |del )?(?:Ley 1952|CGD|Código General Disciplinario)|(?:Ley 1952 de 2019|CGD)[^.;]{0,15}art(?:ículo|\.)?\s*3[45]\b', 'En la Ley 1952 (CGD) los deberes están en el art. 38 y las prohibiciones en el art. 39 (los arts. 34/35 eran de la Ley 734)'),
+    (r'Decreto (?:Ley )?01 de 1984|Código Contencioso Administrativo\b(?! y)', 'El CCA (Decreto 01/1984) fue sustituido por el CPACA (Ley 1437 de 2011)'),
+    (r'Sala Jurisdiccional Disciplinaria|Sala Disciplinaria del Consejo Superior', 'La Sala Jurisdiccional Disciplinaria fue reemplazada por la Comisión Nacional de Disciplina Judicial (A.L. 02 de 2015)'),
+    (r'Decreto 1510 de 2013', 'Decreto 1510/2013 fue compilado en el Decreto 1082 de 2015'),
+    (r'Decreto 1227 de 2005|Decreto 2539 de 2005', 'Compilado en el Decreto 1083 de 2015 (modificado por el Decreto 815 de 2018)'),
+    (r'Decreto 943 de 2014', 'MECI: compilado en el Decreto 1083/2015 y actualizado por el Decreto 1499 de 2017 (MIPG)'),
+    (r'Ley 1437 de 2011.{0,40}art(?:ículo|\.)? ?(?:13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33)\b.{0,60}(?:inexequible|Ley 1437 original)', 'Arts. 13-33 CPACA: sustituidos por la Ley 1755 de 2015'),
+    (r'Ley 190 de 1995 .{0,30}vigente', 'Revisar vigencia de la Ley 190/1995 citada como vigente'),
+]
+ACLARA = re.compile(r'(?i)derog|sustitu|reemplaz|compilad|anterior|antigu|ya no|hoy|dej[óo] de|antes de|antes regía|históric|distractor|vigente hasta|régimen previo|transici')
+
+def lint_normas(s):
+    plano = txt(s); out = []
+    for pat, nota in NORMAS:
+        for m in re.finditer(pat, plano):
+            frag = plano[max(0, m.start()-120):m.end()+120]
+            if not ACLARA.search(frag):
+                out.append((nota, plano[max(0, m.start()-70):m.end()+50]))
+    return out
+
 # ---------------------------------------------------------------- guía
 def auditar_html(path, duenos, dias, es_sim=False):
     s = open(path, encoding='utf-8').read()
+    if path.startswith('bases/'):   # medir como quedará instanciada (largo típico de la identidad)
+        for a_, b_ in (('{{CARGO}}', 'Profesional Universitario'), ('{{COD}}', '9XX-99'), ('{{CONV}}', '999-2026'), ('{{DIA}}', '9'), ('{{GUIA}}', 'BASE-XX-01')):
+            s = s.replace(a_, b_)
     R = {'archivo': path, 'duenos': duenos, 'dias': sorted(set(dias)), 'hallazgos': []}
     H = R['hallazgos']
     def add(sev, cat, msg): H.append({'sev': sev, 'cat': cat, 'msg': msg})
@@ -137,6 +166,8 @@ def auditar_html(path, duenos, dias, es_sim=False):
     dev = m.group(1) if m else ''
     R['palabras'] = len(txt(dev).split())
     tipo = 'sim' if es_sim else ('intro' if '/INTRO' in path else ('ent' if '/ENT-' in path else 'guia'))
+    if '{{' in s and not dias and not es_sim and tipo == 'guia':
+        pass
     R['tipo'] = tipo
     if tipo == 'guia':
         if R['palabras'] < 10000: add('ALTO' if R['palabras'] >= 7000 else 'CRITICO', 'contenido', f"Desarrollo con {R['palabras']} palabras (mín. 10.000)")
@@ -201,6 +232,7 @@ def auditar_html(path, duenos, dias, es_sim=False):
             if func < 50: add('CRITICO', 'simulacro', f'solo {func} preguntas funcionales (deben ser 50)')
     # fugas
     for tipo_f, frag in fugas(s, duenos): add('CRITICO', 'fuga', f"{tipo_f}: «…{frag}…»")
+    for nota, frag in lint_normas(s): add('ALTO', 'norma', f"{nota}: «…{frag}…»")
     R['avisos_entidad'] = avisos_entidad(s)
     return R
 
@@ -214,7 +246,7 @@ def js_check(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--plan'); ap.add_argument('--archivo'); ap.add_argument('--js', action='store_true')
-    ap.add_argument('--salida', default='referencias/pgn/AUDITORIA')
+    ap.add_argument('--salida', default='referencias/pgn/AUDITORIA'); ap.add_argument('--bases', action='store_true')
     a = ap.parse_args()
     planes = cargar_planes(); bib = cargar_biblioteca()
     uso = collections.defaultdict(list)
@@ -222,7 +254,12 @@ def main():
         if a.plan and pid != a.plan: continue
         for c, d in p['guias']: uso[c].append((pid, d))
     objetivos = []
-    if a.archivo:
+    if a.bases:
+        import glob as _g
+        for p in sorted(_g.glob('bases/pgn/*/*.html')):
+            objetivos.append((p, [], [], '/SIM-' in p))
+        a.salida = 'referencias/pgn/AUDITORIA-BASES'
+    elif a.archivo:
         objetivos.append((a.archivo, [a.plan] if a.plan else [], [], a.archivo.startswith('simulacro/')))
     else:
         for c, L in sorted(uso.items()):
