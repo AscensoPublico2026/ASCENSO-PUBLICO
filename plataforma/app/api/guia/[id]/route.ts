@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/site";
 import { esCursoSecuencial, calcularDesbloqueo, enPreparacion } from "@/lib/desbloqueo";
+import { seedFetchHeaders } from "@/lib/seedToken";
 
 export const dynamic = "force-dynamic";
 
@@ -65,7 +66,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
     //    bucket bajo la ruta normalizada y lo servimos. Así una guía nueva
     //    funciona SOLA, sin tener que correr /api/admin/seed-guias a mano.
     try {
-      const res = await fetch(`${SITE_URL}/seed-guias/${basename}`);
+      const res = await fetch(`${SITE_URL}/seed-guias/${basename}`, { headers: await seedFetchHeaders() });
       if (res.ok) {
         const content = await res.arrayBuffer();
         await admin.storage.from("guias").upload(rutaBucket, content, {

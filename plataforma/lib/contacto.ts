@@ -13,7 +13,7 @@ export const CORREO_CONTACTO = "ascensopublico@gmail.com";
  * Si una red aún no existe, déjala como cadena vacía "" y su botón no se mostrará.
  */
 export const REDES = {
-  tiktok: "https://www.tiktok.com/@ascensopublico",
+  tiktok: "https://www.tiktok.com/@ascensopublico.co",
   instagram: "https://www.instagram.com/ascensopublico",
 };
 

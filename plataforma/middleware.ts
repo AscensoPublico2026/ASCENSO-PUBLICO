@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { seedToken, SEED_TOKEN_HEADER } from "./lib/seedToken";
 
 /**
  * Middleware de autenticación para Ascenso Público.
@@ -7,6 +8,17 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Las guías pagadas en /seed-guias/ solo las puede leer el propio servidor
+  // (para subirlas al bucket privado). Al público le respondemos 404.
+  if (pathname.startsWith("/seed-guias")) {
+    const esperado = await seedToken();
+    const recibido = request.headers.get(SEED_TOKEN_HEADER);
+    if (esperado && recibido === esperado) {
+      return NextResponse.next();
+    }
+    return new NextResponse("No encontrado", { status: 404 });
+  }
 
   // No interceptar rutas de API (se protegen internamente)
   if (pathname.startsWith("/api/")) {
@@ -59,5 +71,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/perfil/:path*", "/guia/:path*", "/admin/:path*"],
+  matcher: ["/perfil/:path*", "/guia/:path*", "/admin/:path*", "/seed-guias/:path*"],
 };
