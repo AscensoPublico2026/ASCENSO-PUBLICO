@@ -42,10 +42,10 @@ export const PRODUCTOS: ProductoSimulacro[] = [
     nivel: "Técnico",
     nombre: "Simulacro completo · Procuraduría · Técnico",
     descripcion:
-      "Sustanciadores, técnicos y tecnólogos. Núcleo común del concurso, procedimiento disciplinario, gestión documental, calidad de la información y juicio situacional del nivel.",
+      "Sustanciadores, técnicos y tecnólogos. Núcleo común del concurso, procedimiento disciplinario y sustanciación, gestión documental, calidad de la información y juicio situacional del nivel.",
     preguntas: 100,
     minutos: 150,
-    disponible: false,
+    disponible: true,
   },
   {
     id: "procuraduria-operativo",
@@ -53,10 +53,10 @@ export const PRODUCTOS: ProductoSimulacro[] = [
     nivel: "Operativo y administrativo",
     nombre: "Simulacro completo · Procuraduría · Operativo y administrativo",
     descripcion:
-      "Auxiliares, citadores y oficinistas. Núcleo común del concurso, atención al ciudadano, derecho de petición, gestión documental y juicio situacional del nivel.",
+      "Auxiliares, citadores y oficinistas. Núcleo común del concurso, atención al ciudadano y derecho de petición, correspondencia y archivo, función pública y juicio situacional del nivel.",
     preguntas: 100,
     minutos: 150,
-    disponible: false,
+    disponible: true,
   },
   {
     id: "docente",
