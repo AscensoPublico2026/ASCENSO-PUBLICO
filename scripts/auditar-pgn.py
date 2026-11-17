@@ -131,13 +131,14 @@ NORMAS = [
     (r'art(?:ículo|\.)?\s*3[45]\b[^.;]{0,25}(?:de la |del )?(?:Ley 1952|CGD|Código General Disciplinario)|(?:Ley 1952 de 2019|CGD)[^.;]{0,15}art(?:ículo|\.)?\s*3[45]\b', 'En la Ley 1952 (CGD) los deberes están en el art. 38 y las prohibiciones en el art. 39 (los arts. 34/35 eran de la Ley 734)'),
     (r'Decreto (?:Ley )?01 de 1984|Código Contencioso Administrativo\b(?! y)', 'El CCA (Decreto 01/1984) fue sustituido por el CPACA (Ley 1437 de 2011)'),
     (r'Sala Jurisdiccional Disciplinaria|Sala Disciplinaria del Consejo Superior', 'La Sala Jurisdiccional Disciplinaria fue reemplazada por la Comisión Nacional de Disciplina Judicial (A.L. 02 de 2015)'),
+    (r'Ley 640 de 2001', 'La Ley 640 de 2001 fue derogada por la Ley 2220 de 2022 (Estatuto de Conciliación, vigente desde el 30-dic-2022)'),
     (r'Decreto 1510 de 2013', 'Decreto 1510/2013 fue compilado en el Decreto 1082 de 2015'),
     (r'Decreto 1227 de 2005|Decreto 2539 de 2005', 'Compilado en el Decreto 1083 de 2015 (modificado por el Decreto 815 de 2018)'),
     (r'Decreto 943 de 2014', 'MECI: compilado en el Decreto 1083/2015 y actualizado por el Decreto 1499 de 2017 (MIPG)'),
     (r'Ley 1437 de 2011.{0,40}art(?:ículo|\.)? ?(?:13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33)\b.{0,60}(?:inexequible|Ley 1437 original)', 'Arts. 13-33 CPACA: sustituidos por la Ley 1755 de 2015'),
     (r'Ley 190 de 1995 .{0,30}vigente', 'Revisar vigencia de la Ley 190/1995 citada como vigente'),
 ]
-ACLARA = re.compile(r'(?i)derog|sustitu|reemplaz|compilad|anterior|antigu|ya no|hoy|dej[óo] de|antes de|antes regía|históric|distractor|vigente hasta|régimen previo|transici')
+ACLARA = re.compile(r'(?i)derog|sustitu|reemplaz|compilad|anterior|antigu|ya no|hoy|dej[óo] de|antes de|antes regía|históric|recopil|durante años|giró en torno|distractor|vigente hasta|régimen previo|transici')
 
 def lint_normas(s):
     plano = txt(s); out = []
