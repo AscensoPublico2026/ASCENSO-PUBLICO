@@ -28,6 +28,9 @@ import d4_normatividad, d5_psicotecnica  # noqa: E402
 
 SALIDA = HERE.parent / "data" / "simulacros-pago"
 
+# Formato oficial de la Prueba de Juicio Situacional de la CNSC: tres opciones.
+OPCIONES = 3
+
 
 def por_eje(banco, eje):
     return [q for q in banco if q["refT"] == eje]
@@ -54,7 +57,7 @@ BANCOS = {
     "procuraduria-profesional": [EST, CON, DIS, MEC, FUN, CPA, CTR, INT],
     # Técnico: núcleo común, procedimiento y sustanciación, gestión documental.
     "procuraduria-tecnico": [
-        EST, CON, dis_por_dificultad("advanced", "intermediate", cuantas=11),
+        EST, CON, dis_por_dificultad("advanced", "intermediate", cuantas=9),
         MEC, CPA, INT, b6_tecnico.BANCO,
     ],
     # Operativo y administrativo: núcleo común, función pública, atención y archivo.
@@ -110,6 +113,27 @@ def intercalar(bloques, semilla):
     return orden
 
 
+def romper_rachas(banco, semilla, maximo=3):
+    """Vuelve a barajar las opciones de una pregunta cuando su respuesta
+    correcta prolongaría una racha de la misma letra. En la prueba real las
+    claves rotan, y una fila de cuatro «B» se nota aunque el total esté
+    balanceado."""
+    rnd = random.Random(semilla)
+    for i, q in enumerate(banco):
+        intentos = 0
+        while intentos < 60:
+            previas = [p["correcta"] for p in banco[max(0, i - maximo):i]]
+            if len(previas) < maximo or len(set(previas + [q["correcta"]])) > 1:
+                break
+            idx = list(range(len(q["ops"])))
+            rnd.shuffle(idx)
+            q["ops"] = [q["ops"][k] for k in idx]
+            q["expl"] = [q["expl"][k] for k in idx]
+            q["correcta"] = idx.index(q["correcta"])
+            intentos += 1
+    return banco
+
+
 def validar(banco, nombre):
     assert len(banco) == 100, f"{nombre}: se esperaban 100 preguntas y hay {len(banco)}"
 
@@ -117,15 +141,23 @@ def validar(banco, nombre):
     assert not repetidos, f"{nombre}: temas repetidos {repetidos}"
 
     for q in banco:
-        assert len(q["ops"]) == 4, f"{nombre}: {q['tema']}"
-        assert len(q["expl"]) == 4, f"{nombre}: {q['tema']}"
-        assert 0 <= q["correcta"] < 4, f"{nombre}: {q['tema']}"
+        assert len(q["ops"]) == OPCIONES, f"{nombre}: {q['tema']} tiene {len(q['ops'])} opciones"
+        assert len(q["expl"]) == OPCIONES, f"{nombre}: {q['tema']}"
+        assert 0 <= q["correcta"] < OPCIONES, f"{nombre}: {q['tema']}"
         assert q["nivel"] in ("basic", "intermediate", "advanced"), f"{nombre}: {q['tema']}"
         assert len(q["ctx"]) > 60, f"{nombre}: contexto muy corto en {q['tema']}"
-        assert len(set(q["ops"])) == 4, f"{nombre}: opciones repetidas en {q['tema']}"
+        assert len(set(q["ops"])) == OPCIONES, f"{nombre}: opciones repetidas en {q['tema']}"
 
     dist = Counter(q["correcta"] for q in banco)
-    assert max(dist.values()) <= 35, f"{nombre}: respuesta correcta mal distribuida {dict(dist)}"
+    assert max(dist.values()) <= 45, f"{nombre}: respuesta correcta mal distribuida {dict(dist)}"
+
+    # Ninguna letra puede repetirse más de tres veces seguidas.
+    posiciones = [q["correcta"] for q in banco]
+    racha = maxima = 1
+    for a, b in zip(posiciones, posiciones[1:]):
+        racha = racha + 1 if a == b else 1
+        maxima = max(maxima, racha)
+    assert maxima <= 3, f"{nombre}: {maxima} respuestas correctas seguidas en la misma letra"
     return dist
 
 
@@ -134,6 +166,7 @@ def main():
     for i, (slug, bloques) in enumerate(BANCOS.items()):
         semilla = 20260317 + i * 101
         banco = intercalar([barajar(b, semilla) for b in bloques], semilla + 7)
+        banco = romper_rachas(banco, semilla + 13)
         dist = validar(banco, slug)
         (SALIDA / f"{slug}.json").write_text(json.dumps(banco, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\n{slug}: {len(banco)} preguntas")
