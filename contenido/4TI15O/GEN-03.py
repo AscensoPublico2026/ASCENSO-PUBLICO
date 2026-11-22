@@ -41,6 +41,8 @@ R = [
     ('Secretario Procuraduría', 'Técnico Investigador'),
     ('ventanilla', 'punto de atención'),
 ]
+R.append(('<details class="acc"><summary>¿La Defensoría del Pueblo depende de la Procuraduría?</summary><div class="acc-body"><p>La Defensoría del Pueblo <strong>forma parte del Ministerio Público</strong> y ejerce sus funciones "bajo la suprema dirección del Procurador General" en los términos constitucionales, pero tiene su propio Defensor y su misión propia (promover y proteger los derechos humanos). No es una dependencia de la Procuraduría: son entidades distintas dentro del Ministerio Público.</p></div></details>',
+           '<details class="acc"><summary>¿La Defensoría del Pueblo depende de la Procuraduría?</summary><div class="acc-body"><p>No. La Defensoría del Pueblo <strong>forma parte del Ministerio Público</strong> (art. 118) y comparte con la Procuraduría la misión de guarda de los derechos humanos, pero tiene su <strong>propio Defensor</strong> y su misión propia (promover y proteger los derechos humanos). Y hay un punto que muchas guías desactualizadas siguen enseñando mal: el <strong>Acto Legislativo 02 de 2015</strong> reformó el <mark>artículo 281</mark>, que hoy dispone que <em>«el Defensor del Pueblo ejercerá sus funciones de manera autónoma»</em> y que <em>«será elegido por la Cámara de Representantes para un periodo institucional de cuatro años de terna elaborada por el Presidente de la República»</em>. Antes de esa reforma el texto lo situaba bajo la suprema dirección del Procurador General: <strong>esa frase ya no está vigente</strong>. Si una opción de respuesta la usa, es un distractor.</p></div></details>'))
 SEC = aplicar_todas(SEC, R, estricto=True)
 SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
@@ -185,8 +187,8 @@ P = [
   ['Lo integran únicamente la Procuraduría y la Defensoría del Pueblo, que actúan de manera independiente y sin relación funcional entre sí, mientras las personerías pertenecen a la administración municipal.',
    'Lo integran la Procuraduría, la Defensoría y las personerías, todas como dependencias de la PGN sometidas a la línea jerárquica directa del Procurador General en sus actuaciones diarias.',
    'Lo integran la Procuraduría y la Contraloría, por ser los dos órganos de control del Estado, mientras la Defensoría y las personerías cumplen funciones de promoción de derechos sin pertenecer a él.',
-   'Lo ejercen el Procurador General, el Defensor del Pueblo y los personeros municipales y distritales, bajo la suprema dirección del Procurador, aunque cada uno conserva su propia estructura.'],
-  'El artículo 118 señala que el Ministerio Público lo ejercen el Procurador General, el Defensor del Pueblo, los procuradores delegados y agentes, y los personeros municipales. La suprema dirección corresponde al Procurador, sin que ello convierta a las personerías en dependencias suyas.',
+   'Lo ejercen el Procurador General, el Defensor del Pueblo, los procuradores delegados y agentes y los personeros municipales y distritales, y cada uno conserva su propia estructura y su propio jefe.'],
+  'El artículo 118 señala que el Ministerio Público lo ejercen el Procurador General, el Defensor del Pueblo, los procuradores delegados y agentes, y los personeros municipales. Integrar el Ministerio Público no los convierte en dependencias de la PGN: la Defensoría tiene su propio Defensor, que desde el Acto Legislativo 02 de 2015 ejerce sus funciones de manera autónoma (art. 281), y las personerías pertenecen a la estructura municipal.',
   'La Defensoría sí integra el Ministerio Público, las personerías no son dependencias de la PGN y la Contraloría no hace parte del Ministerio Público.'),
 
  (0,

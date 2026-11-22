@@ -137,6 +137,8 @@ NORMAS = [
     (r'Decreto 943 de 2014', 'MECI: compilado en el Decreto 1083/2015 y actualizado por el Decreto 1499 de 2017 (MIPG)'),
     (r'Ley 1437 de 2011.{0,40}art(?:ículo|\.)? ?(?:13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33)\b.{0,60}(?:inexequible|Ley 1437 original)', 'Arts. 13-33 CPACA: sustituidos por la Ley 1755 de 2015'),
     (r'Ley 190 de 1995 .{0,30}vigente', 'Revisar vigencia de la Ley 190/1995 citada como vigente'),
+    (r'suprema direcci[óo]n del (?:Procurador|Ministerio P[úu]blico)', 'El A.L. 02 de 2015 reformó el art. 281 CP: el Defensor del Pueblo ejerce sus funciones de manera autónoma y es elegido por la Cámara de Representantes de terna del Presidente; la fórmula "bajo la suprema dirección del Procurador General" ya no está vigente para la Defensoría'),
+    (r'Defensor(?:ía)? del Pueblo[^.;]{0,80}(?:elegid[oa]|elige)[^.;]{0,40}Senado', 'Desde el A.L. 02 de 2015 el Defensor del Pueblo lo elige la Cámara de Representantes, no el Senado'),
 ]
 ACLARA = re.compile(r'(?i)derog|sustitu|reemplaz|compilad|anterior|antigu|ya no|hoy|dej[óo] de|antes de|antes regía|históric|recopil|durante años|giró en torno|distractor|vigente hasta|régimen previo|transici')
 
