@@ -74,7 +74,9 @@ def limpieza_rol(cargo='Técnico Investigador', plural='Técnicos Investigadores
         ('Auxiliares', plural), ('auxiliar administrativo', cargo),
         ('auxiliar', cargo), ('Auxiliar', cargo),
         ('apoyo secretarial', 'apoyo técnico'), ('secretarial', 'técnico'),
-        ('profesional sustanciador', 'profesional sustanciador'),
+        ('profesional sustanciador', '@@PSUST@@'),
+        ('Sustanciadores', plural), ('Sustanciadora', cargo), ('Sustanciador', cargo),
+        ('@@PSUST@@', 'profesional sustanciador'),
         ('ventanillas', 'puntos de atención'), ('ventanilla', 'punto de atención'),
         ('Secretaria Procuraduría', cargo), ('Secretario Procuraduría', cargo),
         ('Secretarias', plural), ('Secretarios', plural),
@@ -86,6 +88,7 @@ def limpieza_rol(cargo='Técnico Investigador', plural='Técnicos Investigadores
         ('unas puntos de atención', 'unos puntos de atención'),
         ('una ' + cargo, 'un ' + cargo), ('la ' + cargo + ' ', 'el ' + cargo + ' '),
         ('Una ' + cargo, 'Un ' + cargo),
+        ('ti misma', 'ti mismo'), ('tú misma', 'tú mismo'), ('usted misma', 'usted mismo'),
         # restituir nombres propios
         ('@@PAUX@@', 'Procuraduría Auxiliar'),
     ]
