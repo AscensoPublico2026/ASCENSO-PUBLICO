@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUN-PGN-4TI15O-01 · Estructura y Funciones de la PGN y la DNIE — Técnico Investigador 4TI-15 · Ascenso Público</title>
+<link rel="icon" type="image/svg+xml" href="../brand/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#0A2A5E;--azul-medio:#1A4A8A;--azul-claro:#2D6CC0;--azul-suave:#EAF1FB;--azul-borde:#C9DCF4;--oro:#E8A33D;--oro-claro:#F6C56B;--oro-suave:#FDF4E3;--oro-borde:#F0DCB0;--crema:#FBF9F4;--blanco:#FFFFFF;--gris-bg:#F2F0EA;--gris-borde:#E6E2D8;--verde:#1A7A4A;--verde-suave:#E8F6EE;--verde-borde:#BFE6CF;--rojo:#C0392B;--rojo-suave:#FCEDEB;--rojo-borde:#F2CDC8;--ambar:#B8600A;--ambar-suave:#FBEFDD;--ambar-borde:#EFD7B0;--texto:#2A3441;--texto-suave:#5B6675;--sombra:0 4px 20px rgba(10,42,94,0.08);--sombra-lg:0 10px 36px rgba(10,42,94,0.16);--radio:16px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--crema);color:var(--texto);line-height:1.7;-webkit-font-smoothing:antialiased}
+#readbar{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--oro),var(--oro-claro));z-index:999;transition:width .1s linear}
+header{background:linear-gradient(140deg,#08234F 0%,var(--azul) 45%,var(--azul-medio) 100%);color:var(--blanco);padding:42px 20px 36px;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.22),transparent 70%)}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--oro),var(--oro-claro) 50%,var(--oro))}
+.brand{display:inline-flex;align-items:center;gap:13px;position:relative;z-index:2}.brand-logo{width:50px;height:50px;border-radius:13px;background:linear-gradient(135deg,var(--oro-claro),var(--oro));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(232,163,61,.4);flex-shrink:0}
+.brand-name{font-size:1.6rem;font-weight:800;letter-spacing:.01em;line-height:1}.brand-slogan{font-size:.82rem;font-weight:400;color:rgba(255,255,255,.78);margin-top:4px}
+.doc-ref{position:absolute;top:16px;right:18px;z-index:3;font-size:.68rem;font-weight:700;letter-spacing:.16em;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.22);padding:4px 11px;border-radius:7px;text-transform:uppercase}
+.kicker{display:inline-flex;align-items:center;gap:11px;margin:24px 0 12px;position:relative;z-index:2;color:var(--oro-claro);font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}
+.kicker::before,.kicker::after{content:'';width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent)}
+header h1{font-family:'Source Serif 4',serif;font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;line-height:1.16;max-width:740px;margin:0 auto;position:relative;z-index:2}
+.header-sub{max-width:620px;margin:18px auto 0;position:relative;z-index:2;color:rgba(255,255,255,.82);font-size:.98rem;font-weight:400;line-height:1.6}
+.header-sub strong{color:#fff;font-weight:700}
+nav{position:sticky;top:0;z-index:50;background:var(--azul);display:flex;gap:5px;padding:11px 12px;overflow-x:auto;scrollbar-width:thin;box-shadow:0 4px 18px rgba(10,42,94,.22)}
+nav::-webkit-scrollbar{height:5px}nav::-webkit-scrollbar-thumb{background:var(--oro);border-radius:10px}
+nav button{background:rgba(255,255,255,.07);color:rgba(255,255,255,.78);border:none;padding:9px 16px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:.84rem;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}
+nav button:hover{background:rgba(255,255,255,.16);color:#fff}nav button.active{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul);box-shadow:0 4px 12px rgba(232,163,61,.4)}
+main{max-width:880px;margin:0 auto;padding:36px 18px 80px}
+.section{display:none;animation:fade .4s ease}.section.visible{display:block}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--ambar);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}.eyebrow::before{content:'';width:26px;height:3px;background:linear-gradient(90deg,var(--oro),var(--oro-claro));border-radius:3px}
+h2.sec-title{font-family:'Source Serif 4',serif;font-size:clamp(1.55rem,3.6vw,2.1rem);color:var(--azul);line-height:1.2;margin-bottom:20px}
+h3{font-size:1.2rem;color:var(--azul);margin:28px 0 11px;font-weight:700;display:flex;align-items:center;gap:9px}h3 .h3-chip{width:30px;height:30px;border-radius:9px;flex-shrink:0;background:var(--azul-suave);color:var(--azul-claro);display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800}
+h4{font-size:1.05rem;color:var(--azul-medio);margin:20px 0 8px;font-weight:700}p{margin-bottom:14px;color:var(--texto)}strong{color:var(--azul);font-weight:700}
+mark{background:none;border-bottom:2px solid var(--oro);color:inherit;font-weight:600;padding-bottom:1px}
+.card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:var(--radio);padding:26px;margin-bottom:20px;box-shadow:var(--sombra)}.card-lead{border:none;border-left:6px solid var(--oro);background:linear-gradient(100deg,var(--oro-suave),var(--blanco) 75%)}
+ul.lista{list-style:none;margin:6px 0 16px}ul.lista li{position:relative;padding-left:30px;margin-bottom:11px}ul.lista li::before{content:'✓';position:absolute;left:0;top:1px;width:20px;height:20px;background:var(--verde-suave);color:var(--verde);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.72rem}
+ol.lista-num{margin:6px 0 16px;list-style:none;counter-reset:paso}ol.lista-num li{position:relative;padding-left:38px;margin-bottom:12px;counter-increment:paso}ol.lista-num li::before{content:counter(paso);position:absolute;left:0;top:0;width:26px;height:26px;background:var(--azul);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem}
+.box{border-radius:13px;padding:18px 20px;margin:16px 0;border:1px solid}.box-title{font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.98rem}.box p:last-child{margin-bottom:0}
+.box.info{background:var(--azul-suave);border-color:var(--azul-borde)}.box.info .box-title{color:var(--azul)}
+.box.ok{background:var(--verde-suave);border-color:var(--verde-borde)}.box.ok .box-title{color:var(--verde)}
+.box.warn{background:var(--ambar-suave);border-color:var(--ambar-borde)}.box.warn .box-title{color:var(--ambar)}
+.box.danger{background:var(--rojo-suave);border-color:var(--rojo-borde)}.box.danger .box-title{color:var(--rojo)}
+.box.gold{background:var(--oro-suave);border-color:var(--oro-borde)}.box.gold .box-title{color:var(--ambar)}
+.tabla-wrap{overflow-x:auto;margin:16px 0;border-radius:13px;box-shadow:var(--sombra);border:1px solid var(--gris-borde)}table{width:100%;border-collapse:collapse;background:var(--blanco);min-width:480px}th{background:var(--azul);color:#fff;padding:14px 16px;text-align:left;font-size:.86rem;font-weight:700}td{padding:12px 16px;border-bottom:1px solid var(--gris-borde);font-size:.9rem;vertical-align:top}tr:last-child td{border-bottom:none}tr:nth-child(even) td{background:#FAF8F2}
+details.acc{border:1px solid var(--gris-borde);border-radius:12px;margin:12px 0;overflow:hidden;box-shadow:var(--sombra)}details.acc summary{background:var(--gris-bg);padding:14px 18px;cursor:pointer;font-weight:700;font-size:.94rem;color:var(--azul);list-style:none;display:flex;align-items:center;gap:8px}details.acc summary::before{content:'▶';font-size:.7rem;transition:transform .2s}details.acc[open] summary::before{transform:rotate(90deg)}details.acc .acc-body{padding:16px 18px;background:var(--blanco)}
+.caso{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra)}.caso-head{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;padding:13px 18px;font-weight:700;font-size:.94rem;display:flex;align-items:center;gap:8px}.caso-body{padding:18px 20px}.caso-body .label{font-weight:800;color:var(--ambar);display:block;margin-top:14px;margin-bottom:3px;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em}.caso-body .label:first-child{margin-top:0}.resp-correcta{background:var(--verde-suave);border-left:4px solid var(--verde);padding:11px 15px;border-radius:9px;margin-top:8px}
+.trampa{border:1px solid var(--gris-borde);border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:var(--sombra)}.trampa-q{background:linear-gradient(100deg,var(--ambar-suave),var(--blanco));padding:15px 18px;font-weight:600;border-left:5px solid var(--oro)}.trampa-detail{padding:16px 18px;background:var(--blanco)}.trampa-detail .t-row{margin-bottom:10px;padding-left:28px;position:relative}.trampa-detail .t-row:last-child{margin-bottom:0}.trampa-detail .t-row.parece::before{content:'⚠️';position:absolute;left:0}.trampa-detail .t-row.malo::before{content:'❌';position:absolute;left:0}.trampa-detail .t-row.bueno::before{content:'✅';position:absolute;left:0}
+.pregunta{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:21px 22px;margin-bottom:16px;box-shadow:var(--sombra)}.pregunta .q-num{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:var(--azul);margin-bottom:5px}.q-texto{font-weight:600;margin:9px 0 15px;color:var(--texto)}.opciones{display:flex;flex-direction:column;gap:9px}
+.opcion{display:flex;align-items:flex-start;gap:12px;border:1.5px solid var(--gris-borde);border-radius:11px;padding:13px 15px;cursor:pointer;transition:all .18s;background:#fff}.opcion:hover{border-color:var(--oro);background:var(--oro-suave)}.opcion .letra{width:27px;height:27px;border-radius:50%;background:var(--gris-bg);color:var(--texto-suave);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}.opcion.correcta{border-color:var(--verde);background:var(--verde-suave)}.opcion.correcta .letra{background:var(--verde);color:#fff}.opcion.incorrecta{border-color:var(--rojo);background:var(--rojo-suave)}.opcion.incorrecta .letra{background:var(--rojo);color:#fff}.opcion.bloqueada{pointer-events:none}
+.feedback{margin-top:12px;padding:12px 15px;border-radius:10px;font-size:.88rem;display:none}.feedback.show{display:block}.feedback.ok{background:var(--verde-suave);border-left:4px solid var(--verde)}.feedback.no{background:var(--rojo-suave);border-left:4px solid var(--rojo)}
+#resultado{display:none;text-align:center;background:var(--blanco);border:2px solid var(--oro);border-radius:18px;padding:32px;margin-top:24px;box-shadow:var(--sombra-lg)}#resultado.show{display:block}.score-num{font-size:3.2rem;font-weight:800;color:var(--azul);font-family:'Source Serif 4',serif}
+.btn{background:linear-gradient(135deg,var(--azul),var(--azul-medio));color:#fff;border:none;padding:13px 30px;border-radius:11px;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;margin-top:16px}.btn:hover{transform:translateY(-2px);box-shadow:var(--sombra-lg)}.btn.gold{background:linear-gradient(135deg,var(--oro),var(--oro-claro));color:var(--azul)}
+.resumen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:14px;margin:16px 0}.resumen-item{background:var(--blanco);border:1px solid var(--gris-borde);border-top:4px solid var(--oro);border-radius:13px;padding:17px 19px;box-shadow:var(--sombra)}.resumen-item h4{color:var(--azul);font-size:.98rem;margin-bottom:6px}.resumen-item p{font-size:.86rem;margin:0;color:var(--texto-suave)}
+.cierre{background:linear-gradient(140deg,var(--azul),var(--azul-medio));color:#fff;border-radius:18px;padding:36px 28px;text-align:center;box-shadow:var(--sombra-lg);position:relative;overflow:hidden}.cierre::before{content:'';position:absolute;top:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,163,61,.25),transparent 70%)}.cierre h3{color:#fff;font-size:1.45rem;margin:0 0 10px;justify-content:center}.cierre p{color:rgba(255,255,255,.9);position:relative;z-index:2}
+footer{background:var(--azul);color:rgba(255,255,255,.8);text-align:center;padding:28px 20px}footer .fbrand{font-weight:800;color:#fff;font-size:1.05rem}footer .fslogan{font-size:.78rem;margin-top:3px;color:var(--oro-claro)}footer .fmeta{margin-top:14px;font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.7}
+.nav-footer{display:flex;justify-content:space-between;gap:12px;margin-top:30px}.nav-footer button{flex:1;background:var(--blanco);border:1.5px solid var(--gris-borde);color:var(--azul);padding:14px;border-radius:12px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.88rem;transition:all .2s}.nav-footer button:hover:not(:disabled){border-color:var(--oro);background:var(--oro-suave)}.nav-footer button:disabled{opacity:.4;cursor:not-allowed}
+.checkpoint{background:var(--oro-suave);border:1.5px dashed var(--oro);border-radius:14px;padding:18px 20px;margin:20px 0;}
+.checkpoint .cp-tag{font-weight:800;color:var(--ambar);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.checkpoint .cp-op{background:var(--blanco);border:1.5px solid var(--gris-borde);border-radius:10px;padding:11px 14px;margin:7px 0;cursor:pointer;font-size:.9rem;transition:all .18s;}
+.checkpoint .cp-op:hover{border-color:var(--oro);}
+.checkpoint .cp-op.ok{border-color:var(--verde);background:var(--verde-suave);}
+.checkpoint .cp-op.no{border-color:var(--rojo);background:var(--rojo-suave);}
+.checkpoint .cp-fb{display:none;margin-top:10px;padding:11px 14px;border-radius:9px;font-size:.86rem;background:var(--azul-suave);border-left:4px solid var(--azul-claro);}
+.checkpoint .cp-fb.show{display:block;}
+.practica{background:var(--blanco);border:1px solid var(--verde-borde);border-radius:14px;overflow:hidden;margin:16px 0;box-shadow:var(--sombra);}
+.practica-head{background:var(--verde-suave);color:var(--verde);font-weight:800;padding:11px 16px;font-size:.9rem;display:flex;align-items:center;gap:8px;}
+.practica-body{padding:16px 18px;font-size:.9rem;}
+.practica-body p:last-child{margin-bottom:0;}
+.ojo{background:var(--ambar-suave);border-left:4px solid var(--oro);border-radius:9px;padding:10px 14px;margin:14px 0;font-size:.86rem;}
+.ojo b{color:var(--ambar);}
+.fuentes{background:var(--azul-suave);border:1px solid var(--azul-borde);border-radius:13px;padding:16px 20px;margin:22px 0 4px;}
+.fuentes .box-title{color:var(--azul);font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.fuentes p{font-size:.88rem;margin-bottom:8px;}
+.fuentes a{color:var(--azul-claro);font-weight:700;border-bottom:1px solid var(--oro);}
+.fuentes a:hover{color:var(--azul);}
+.fuentes .lista li{margin-bottom:9px;}
+.checkpoint .cp-q{font-weight:700;color:var(--texto);margin-bottom:12px}
+.flujo{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:16px 0}.flujo-paso{flex:1;min-width:150px;background:var(--blanco);border:1px solid var(--gris-borde);border-top:4px solid var(--oro);border-radius:12px;padding:14px 15px;box-shadow:var(--sombra)}.flujo-paso .n{width:24px;height:24px;border-radius:50%;background:var(--azul);color:#fff;font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center;margin-bottom:7px}.flujo-paso h5{color:var(--azul);font-size:.9rem;margin-bottom:3px}.flujo-paso p{margin:0;font-size:.82rem;color:var(--texto-suave)}
+@media(max-width:560px){.card{padding:21px 17px}header{padding:34px 16px 30px}}
+</style>
+</head>
+<body>
+<div id="readbar"></div>
+
+<header>
+  <span class="doc-ref">FUN-PGN-4TI15O-01</span>
+  <div class="brand"><div class="brand-logo"><svg viewBox="0 0 100 100" width="34" height="34" aria-label="Ascenso Público"><circle cx="26" cy="74" r="3.4" fill="#0A2A5E" opacity="0.45"/><circle cx="34" cy="70" r="4.2" fill="#0A2A5E" opacity="0.72"/><path d="M36 66 C48 62 58 54 72 34" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round"/><path d="M61 32 L75 30 L73 45" fill="none" stroke="#0A2A5E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="text-align:left"><div class="brand-name">Ascenso Público</div><div class="brand-slogan">Tu ruta personalizada hacia el empleo público</div></div></div>
+  <div class="kicker">Día 5 · Conocimientos comunes</div>
+  <h1>Estructura y Funciones de la PGN<br>y la Dirección Nacional de Investigaciones Especiales</h1>
+  <div class="badges" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;position:relative;z-index:2"><span style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 13px;border-radius:20px;font-size:.78rem;font-weight:600" class="badge">📅 Día 5 de 21</span><span class="badge" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 13px;border-radius:20px;font-size:.78rem;font-weight:600">⏱ 95-115 min</span><span class="badge" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 13px;border-radius:20px;font-size:.78rem;font-weight:600">🏛️ Régimen PGN</span><span class="badge" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 13px;border-radius:20px;font-size:.78rem;font-weight:600">🔬 DNIE</span></div>
+  <p class="header-sub">La <strong>estructura, organización y funciones de la Procuraduría General de la Nación</strong> es un conocimiento común exigido por el formato de convocatoria. Aquí verás qué es la PGN y de dónde viene su autoridad, sus <strong>tres funciones misionales</strong> (preventiva, disciplinaria y de intervención), el <strong>poder disciplinario preferente</strong>, la estructura del nivel central y de las procuradurías territoriales, las dependencias de apoyo y, con detalle propio, la <strong>Dirección Nacional de Investigaciones Especiales</strong>: qué es, de quién depende, qué funciones le asigna el <strong>artículo 10 del Decreto Ley 262 de 2000</strong> y por qué es la dependencia donde se ubica el <strong>Técnico Investigador 4TI-15</strong>.</p>
+</header>
+
+
+<nav id="nav">
+  <button class="active" data-sec="0">🎯 Objetivo</button>
+  <button data-sec="1">⭐ Importancia</button>
+  <button data-sec="2">📖 Desarrollo</button>
+  <button data-sec="3">⚖️ Comparaciones</button>
+  <button data-sec="4">📂 Casos</button>
+  <button data-sec="5">⚠️ Errores</button>
+  <button data-sec="6">💡 Tips</button>
+  <button data-sec="7">🎭 Trampas</button>
+  <button data-sec="8">📋 Resumen</button>
+  <button data-sec="9">🧪 Simulacro</button>
+</nav>
+
+<main>
+
+<!-- SEC 0: OBJETIVO -->
+<section class="section visible" data-sec="0">
+<span class="eyebrow">Sección 1 · Objetivo</span>
+  <h2 class="sec-title">🎯 ¿Qué vas a aprender hoy?</h2>
+  <div class="narr"><span class="narr-tag">📍 El caso que te acompaña hoy</span>
+    <p>Llevas apenas unas semanas en tu cargo cuando te piden llevar un oficio a la "Procuraduría Delegada para la Vigilancia Preventiva" y, poco después, otro a la "División de Registro de Sanciones y Causas de Inhabilidad". No tienes del todo claro qué hace cada una ni por qué existen tantas dependencias distintas dentro de la misma entidad. Un compañero más antiguo te comenta de pasada: "acá hay delegadas disciplinarias, delegadas preventivas, procuradurías regionales... si no entiendes cómo está armada la casa, te vas a perder repartiendo". Tiene razón: aunque tu función es operativa (organizar, repartir, notificar), hacerlo bien exige saber, al menos en sus líneas generales, <mark>cómo está organizada la Procuraduría</mark> y qué tipo de trabajo hace cada parte de ella.</p>
+    <p>Hoy vas a construir ese mapa. No se trata de memorizar un organigrama completo con cada nombre y cada sigla, sino de entender la <strong>lógica</strong> detrás de la estructura: por qué existen las tres grandes funciones misionales de la PGN, por qué hay Procuradurías Delegadas de distintos tipos, qué hacen las divisiones administrativas que mencionó tu manual de funciones, y —lo más importante para ti— <mark>dónde encaja el trabajo del Técnico Investigador</mark> dentro de esa enorme maquinaria institucional. Con ese mapa claro, cada apoyo técnico que prestes y cada diligencia que practiques tendrán sentido dentro de un todo que entiendes, y no serán tareas sueltas que ejecutas sin ver el conjunto.</p>
+  </div>
+  <div class="card card-lead"><p>Al terminar esta guía dominarás:</p>
+    <ul class="lista">
+      <li>Qué es la <strong>Procuraduría General de la Nación</strong>: su naturaleza como organismo de control y su autonomía.</li>
+      <li>Las tres <strong>funciones misionales</strong>: preventiva, disciplinaria y de intervención.</li>
+      <li>La estructura general: <strong>Procurador General, Viceprocurador, Secretaría General y Procuradurías Delegadas</strong> (Mixtas, Disciplinarias de Juzgamiento, de Instrucción, Preventivas y de Control de Gestión).</li>
+      <li>Las <strong>Procuradurías Regionales, Provinciales y Judiciales</strong>, y su alcance territorial.</li>
+      <li>Las principales <strong>divisiones administrativas de apoyo</strong> mencionadas en tu manual: Documentación, Financiera, Gestión Humana, Registro de Sanciones y Causas de Inhabilidad, Oficina de Prensa.</li>
+      <li>La <strong>Dirección Nacional de Investigaciones Especiales</strong> y la <strong>Procuraduría Auxiliar para Asuntos Disciplinarios</strong>, como contexto institucional.</li>
+      <li>Dónde encaja exactamente el <strong>Técnico Investigador</strong> en esta estructura, y por qué la Dirección Nacional de Investigaciones Especiales presta su capacidad técnica a todas las dependencias.</li>
+      <li>El <strong>régimen especial de carrera</strong> (Decreto Ley 262 y 263 de 2000) y por qué tu concurso no lo administra la CNSC.</li>
+    </ul>
+  </div>
+  <div class="box info"><div class="box-title">🧭 Cómo está organizada esta guía</div><p>Recorreremos ocho módulos con mapas visuales, tablas, ejemplos "En la práctica" situados en tu rol de reparto y diligencias entre dependencias, ejercicios resueltos y puntos de control. Cerramos con casos tipo prueba, errores frecuentes, tips, trampas, repaso con flashcards y un simulacro. Al terminar, sabrás ubicar con seguridad cualquier dependencia que te mencionen en tu trabajo diario.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Cuando termines de leer el objetivo, continúa con la siguiente sección.</span><button class="advance-btn" data-goto="1">Ver por qué es clave →</button></div>
+</section>
+
+
+<!-- SEC 1: IMPORTANCIA -->
+<section class="section" data-sec="1">
+<span class="eyebrow">Sección 2 · Importancia</span>
+  <h2 class="sec-title">⭐ ¿Por qué este tema es clave para tu prueba?</h2>
+  <div class="card"><p>Aunque tu manual de funciones no lista "estructura de la PGN" como un conocimiento esencial específico separado, este contenido es la base institucional indispensable para entender tus propias funciones: no puedes "organizar, recoger y repartir la correspondencia... de acuerdo con los procedimientos establecidos en la entidad" (función 1 de tu manual) sin saber, aunque sea en términos generales, qué tipo de dependencia envía o recibe cada documento. La prueba evalúa este tema porque un Técnico Investigador que confunde una Procuraduría Delegada Disciplinaria con una Preventiva, o que no sabe de quién depende su propia Dirección, difícilmente podrá repartir con criterio y orientar correctamente a quien le pregunte.</p></div>
+  <div class="mmap-t">🗺️ Por qué conviene dominar este mapa institucional</div>
+  <div class="mmap">
+    <div class="node"><span class="ic">🏛️</span><h5>Es tu "casa" de trabajo</h5><p>Conocerla te permite moverte con seguridad entre dependencias.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">📬</span><h5>Repartes entre dependencias</h5><p>Tu función central depende de saber a quién corresponde cada tipo de asunto.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🧭</span><h5>Orientas a usuarios</h5><p>Cuando alguien pregunta "¿dónde queda tal cosa?", necesitas saberlo.</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><span class="ic">🎯</span><h5>Se evalúa con preguntas directas</h5><p>La prueba pregunta por nombres, funciones y jerarquía de dependencias.</p></div>
+  </div>
+  <div class="box gold"><div class="box-title">💡 La idea que debes grabarte</div><p>La PGN se organiza alrededor de <strong>tres funciones misionales</strong> (preventiva, disciplinaria, de intervención) y de una <strong>estructura de apoyo administrativo</strong> que las hace posibles. Tu cargo de Técnico Investigador pertenece, precisamente, a la función disciplinaria: no decides el fondo de ninguna actuación, pero tu trabajo de correspondencia y notificación es indispensable para que todas ellas funcionen con fluidez.</p></div>
+  <div class="box info"><div class="box-title">🏛️ Un recordatorio sobre tu concurso</div><p>Bajo la <strong>Convocatoria 257-2026</strong> (Resolución No. 212 de 2026), compites por el cargo de Técnico Investigador, código y grado <strong>4TI-15</strong>, nivel jerárquico Técnico, dentro del <strong>régimen especial de carrera de la Procuraduría</strong> (Decreto Ley 262 y 263 de 2000). Tu proceso de selección NO lo administra la CNSC: lo adelanta la propia entidad con su operador designado.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Listo para lo importante: entremos al Desarrollo.</span><button class="advance-btn" data-goto="2">Ir al Desarrollo →</button></div>
+</section>
+
+
+<!-- SEC 2: DESARROLLO -->
+<section class="section" data-sec="2">
+<span class="eyebrow">Sección 3 · Desarrollo</span>
+  <h2 class="sec-title">📖 Estructura y Funciones de la PGN para el Técnico Investigador</h2>
+  <p>Ocho módulos para que construyas, pieza por pieza, el mapa institucional que da sentido a tu labor diaria de reparto, notificación y diligencias. Cada uno con teoría aplicada, tablas, ejemplos "En la práctica" y puntos de control.</p>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">1</div><h3>Qué es la Procuraduría General de la Nación</h3></div>
+    <div class="b-texto">
+      <p>Antes de ver la estructura interna, conviene fijar con claridad qué tipo de entidad es la Procuraduría, porque eso explica por qué está organizada como está. La PGN es el <strong>máximo organismo del Ministerio Público</strong> en Colombia, junto con la Defensoría del Pueblo y las personerías municipales y distritales. Es un <mark>órgano de control</mark>, lo que significa que su función no es ejecutar políticas públicas como un ministerio, ni legislar como el Congreso, ni juzgar como un tribunal ordinario: su función es <strong>vigilar</strong> la conducta de quienes sí ejercen esas funciones y de los servidores públicos en general, y defender los derechos y el interés público.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>Procuraduría General de la Nación</strong> es el organismo autónomo e independiente que, como cabeza del Ministerio Público, ejerce el control disciplinario sobre los servidores públicos, vigila la conducta oficial de quienes desempeñan funciones públicas, defiende el ordenamiento jurídico y los derechos humanos, e interviene ante las autoridades judiciales y administrativas cuando es necesario para proteger el interés general.</p></div>
+      <h4>Autonomía y ubicación en el Estado</h4>
+      <p>La Procuraduría no pertenece a ninguna de las tres ramas clásicas del poder público (ejecutiva, legislativa, judicial): es un <strong>órgano de control autónomo e independiente</strong>, previsto directamente en la Constitución Política (artículos 275 a 279). Esta autonomía es fundamental para que pueda vigilar a los demás poderes y a los servidores públicos sin depender de ellos ni estar subordinada a sus intereses. El Procurador General de la Nación es elegido por el Senado de la República, de una terna conformada por el Presidente, la Corte Suprema de Justicia y el Consejo de Estado, para un período fijo, lo que refuerza su independencia frente al gobierno de turno.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Característica</th><th>Qué significa para la PGN</th></tr>
+        <tr><td><strong>Órgano de control</strong></td><td>No ejecuta ni legisla ni juzga: vigila y controla la conducta de otros.</td></tr>
+        <tr><td><strong>Autónomo e independiente</strong></td><td>No depende del Gobierno ni de ninguna otra rama del poder público.</td></tr>
+        <tr><td><strong>Cabeza del Ministerio Público</strong></td><td>Articula su labor con la Defensoría del Pueblo y las personerías.</td></tr>
+        <tr><td><strong>Alcance nacional</strong></td><td>Tiene presencia en todo el territorio mediante procuradurías regionales y provinciales.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> no confundas a la Procuraduría con la Fiscalía General de la Nación (que investiga y acusa penalmente) ni con la Contraloría (que vigila el manejo de los recursos públicos). La PGN tiene su propio ámbito: <mark>control disciplinario, función preventiva y de intervención</mark>.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>⚖️ ¿Por qué necesita ser independiente?</summary><div class="acc-body"><p>Si la Procuraduría dependiera del Gobierno o de alguna rama del poder, no podría ejercer con credibilidad su función de vigilar la conducta de los propios servidores de esas ramas. Su independencia constitucional es, por tanto, condición necesaria para que su control sea efectivo y confiable ante la ciudadanía.</p></div></details>
+        <details class="acc"><summary>🏛️ El Ministerio Público en conjunto</summary><div class="acc-body"><p>El Ministerio Público no es un único organismo: lo integran la Procuraduría (a nivel nacional), la Defensoría del Pueblo (defensa de derechos humanos) y las personerías (a nivel municipal y distrital). La PGN los coordina a nivel nacional en su labor de vigilancia y defensa del interés público.</p></div></details>
+        <details class="acc"><summary>👤 ¿Quién es el Procurador General y cómo se elige?</summary><div class="acc-body"><p>El Procurador General de la Nación es elegido por el Senado de la República para un período fijo de cuatro años, a partir de una terna de candidatos que presentan el Presidente de la República, la Corte Suprema de Justicia y el Consejo de Estado. Este mecanismo de elección, que involucra a tres poderes distintos del Estado en la conformación de la terna y a un cuarto (el Congreso) en la elección final, busca precisamente reforzar la independencia del cargo frente a cualquiera de esos poderes por separado.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Entender a quién sirves con tu trabajo</div><div class="practica-body"><p>Cuando repartes un oficio de una Procuraduría Delegada, recuerda que ese documento es parte del ejercicio de una función de control muy particular: vigilar la conducta de quienes ejercen funciones públicas. No es un trámite administrativo "más": forma parte de uno de los mecanismos constitucionales más importantes para que el Estado colombiano funcione con transparencia.</p></div></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Responder con precisión cuando te preguntan "qué es" la Procuraduría</div><div class="practica-body"><p>Un ciudadano, mientras esperas para entregar una notificación en su domicilio, te pregunta con curiosidad qué es exactamente la Procuraduría y en qué se diferencia de un juzgado. Sin entrar en tecnicismos que no te corresponde explicar a fondo, puedes decirle con sencillez que es un organismo de control del Estado que vigila la conducta de los servidores públicos y defiende el interés general, y que un juzgado, en cambio, resuelve procesos judiciales específicos. Esa breve y correcta orientación refuerza la confianza del ciudadano en que la entidad que lo está notificando actúa dentro de un marco institucional serio y bien definido.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 1</div><div class="cp-q">¿Cómo se clasifica correctamente a la Procuraduría General de la Nación dentro del Estado colombiano?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="1" data-ans="0">Es un ministerio que depende directamente del Presidente de la República.</button>
+        <button class="cp-opt" data-cp="1" data-ans="1">Es un órgano de control autónomo e independiente, cabeza del Ministerio Público, previsto en la Constitución.</button>
+        <button class="cp-opt" data-cp="1" data-ans="0">Es un tribunal judicial encargado de juzgar penalmente a los servidores públicos.</button>
+      </div><div class="cp-fb" id="cpfb1"><strong>Correcto: la segunda.</strong> La PGN es un órgano de control autónomo e independiente (artículos 275-279 de la Constitución), cabeza del Ministerio Público, y no depende del Gobierno ni ejerce función judicial penal.</div></div>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la PGN es un órgano de control autónomo e independiente, cabeza del Ministerio Público, con fundamento constitucional directo. No ejecuta, legisla ni juzga penalmente: vigila y controla la conducta oficial y defiende el interés general.</p></div>
+      <p>Vale la pena añadir una reflexión final sobre el origen histórico de esta figura, porque ayuda a fijar la idea en la memoria con más solidez. La tradición de tener un Ministerio Público independiente, encargado de vigilar el buen comportamiento de quienes ejercen el poder, es relativamente antigua en el constitucionalismo colombiano, y responde a una preocupación de fondo compartida por muchas democracias: el poder, por su propia naturaleza, tiende a abusarse si nadie externo lo vigila con independencia real. Por eso la Constitución de 1991 no se limitó a crear jueces y fiscales para sancionar delitos, sino que diseñó, además, un órgano específico —la Procuraduría— dedicado a vigilar la conducta administrativa y disciplinaria de los servidores públicos, de forma distinta y complementaria al sistema penal. Entender este propósito histórico te da una perspectiva más completa de por qué tu trabajo diario, aunque parezca modesto en apariencia, forma parte de uno de los mecanismos de control más antiguos y mejor afianzados del Estado colombiano.</p>
+      <p>Un dato adicional que conviene conocer es que la Procuraduría ejerce su labor sobre un universo muy amplio de destinatarios: en principio, cualquier persona que ejerza una función pública, sin importar si pertenece a la rama ejecutiva, legislativa o judicial, a un ente territorial o a una entidad nacional, puede llegar a ser objeto de su función disciplinaria o preventiva, salvo las excepciones y fueros especiales que la propia ley establezca para ciertos cargos. Esta amplitud de competencia es otra de las razones que explican por qué la Procuraduría necesita una estructura tan extensa, con Procuradurías Delegadas por materia y Procuradurías Regionales y Provinciales por territorio: ningún órgano pequeño y centralizado podría cubrir, por sí solo, un universo de vigilancia tan grande y diverso como el de todos los servidores públicos del país.</p>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">2</div><h3>Las tres funciones misionales: preventiva, disciplinaria y de intervención</h3></div>
+    <div class="b-texto">
+      <p>Toda la estructura de la Procuraduría se organiza alrededor de tres grandes funciones misionales. Entenderlas bien es la llave para entender por qué existen tantos tipos de Procuradurías Delegadas: cada una se especializa, en mayor o menor medida, en una o varias de estas tres funciones.</p>
+      <div class="flujo">
+        <div class="flujo-paso"><span class="fp-n">1</span><h4>Preventiva</h4><p>Vigilar antes de que el daño ocurra, advertir y hacer seguimiento.</p></div>
+        <div class="flujo-paso"><span class="fp-n">2</span><h4>Disciplinaria</h4><p>Investigar y sancionar faltas de los servidores públicos.</p></div>
+        <div class="flujo-paso"><span class="fp-n">3</span><h4>De intervención</h4><p>Actuar ante autoridades judiciales y administrativas en defensa del interés general.</p></div>
+      </div>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>función preventiva</strong> busca anticiparse a los riesgos de mala gestión o corrupción mediante vigilancia, advertencias y seguimiento a la gestión pública. La <strong>función disciplinaria</strong> investiga y sanciona las faltas que cometen los servidores públicos en el ejercicio de sus funciones. La <strong>función de intervención</strong> permite a la Procuraduría actuar como parte o interviniente ante procesos judiciales y administrativos, en defensa del ordenamiento jurídico, el patrimonio público o los derechos fundamentales.</p></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>Función</th><th>Qué busca</th><th>Ejemplo de actuación</th></tr>
+        <tr><td><strong>Preventiva</strong></td><td>Evitar que el daño ocurra; vigilancia y advertencia oportuna.</td><td>Hacer seguimiento a una obra pública para advertir riesgos antes de que se concrete un perjuicio.</td></tr>
+        <tr><td><strong>Disciplinaria</strong></td><td>Sancionar faltas ya cometidas por servidores públicos.</td><td>Investigar a un funcionario por una irregularidad en el ejercicio de su cargo.</td></tr>
+        <tr><td><strong>De intervención</strong></td><td>Defender el interés general dentro de procesos ya iniciados.</td><td>Intervenir en un proceso judicial que involucra derechos colectivos o el patrimonio del Estado.</td></tr>
+      </table></div>
+      <p>Vale la pena notar que estas tres funciones no son completamente independientes entre sí: muchas veces, la vigilancia preventiva detecta situaciones que terminan dando lugar a una investigación disciplinaria, y una intervención judicial puede surgir, a su vez, de hallazgos disciplinarios o preventivos previos. Esta interrelación explica por qué la estructura interna de la Procuraduría necesita mecanismos ágiles de comunicación entre sus distintas dependencias, y es precisamente ahí donde tu labor de correspondencia adquiere tanta relevancia práctica: muchos documentos que repartes conectan, de hecho, actuaciones de más de una de estas tres funciones.</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> si te preguntan por el nombre de las tres funciones misionales, recuerda el orden lógico: <mark>primero se previene, luego se investiga/sanciona (disciplinaria), y también se interviene</mark> ante otras autoridades cuando el interés general lo exige.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔍 ¿La función disciplinaria aplica a cualquier servidor público?</summary><div class="acc-body"><p>Sí, en términos generales la función disciplinaria de la Procuraduría tiene un alcance amplio sobre los servidores públicos del país (con las excepciones y fueros especiales que determine la ley), lo que explica la enorme estructura de Procuradurías Delegadas y Regionales necesaria para cubrir ese universo tan extenso de posibles investigados.</p></div></details>
+        <details class="acc"><summary>🏗️ ¿Por qué la función de intervención es menos conocida?</summary><div class="acc-body"><p>La función de intervención suele ser menos visible para el ciudadano común porque ocurre "dentro" de procesos judiciales o administrativos que llevan otras autoridades (jueces, por ejemplo), y la Procuraduría actúa como interviniente especial, no como la autoridad que decide el caso. Aun así, es una de sus tres funciones misionales con pleno respaldo constitucional.</p></div></details>
+        <details class="acc"><summary>🔄 ¿Cómo se complementan las tres funciones en un mismo caso?</summary><div class="acc-body"><p>Imagina que la función preventiva detecta, mediante seguimiento, un riesgo de irregularidad en la ejecución de un contrato público; si ese riesgo se concreta en una falta real de un servidor, el caso puede pasar a conocimiento de la función disciplinaria para la investigación y eventual sanción; y si el asunto involucra, además, un proceso judicial en curso relacionado con el mismo contrato, la función de intervención puede actuar dentro de ese proceso para defender el interés público. Las tres funciones, aunque ejercidas por dependencias distintas, pueden terminar entrelazadas alrededor de un mismo hecho de fondo.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Identificar de qué función viene un documento</div><div class="practica-body"><p>Si repartes un oficio de una Procuraduría Delegada Preventiva, probablemente se trata de un tema de seguimiento o advertencia sobre gestión pública; si viene de una Procuraduría Delegada Disciplinaria de Instrucción, probablemente es parte de una investigación en curso. No necesitas conocer el fondo del asunto, pero sí reconocer, en términos generales, con qué función se relaciona cada dependencia, para manejar la correspondencia con el criterio adecuado (por ejemplo, con mayor reserva en asuntos disciplinarios en curso).</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 2</div><div class="cp-q">¿Cuál de las siguientes opciones describe correctamente las tres funciones misionales de la PGN?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="2" data-ans="1">Preventiva (anticipar riesgos), disciplinaria (investigar y sancionar faltas) y de intervención (actuar ante autoridades judiciales/administrativas en defensa del interés general).</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Ejecutiva, legislativa y judicial, igual que las tres ramas clásicas del poder público.</button>
+        <button class="cp-opt" data-cp="2" data-ans="0">Electoral, fiscal y notarial, porque la PGN administra elecciones y notarías del país.</button>
+      </div><div class="cp-fb" id="cpfb2"><strong>Correcto: la primera.</strong> Las tres funciones misionales de la PGN son preventiva, disciplinaria y de intervención; las otras opciones corresponden a clasificaciones que no describen a la Procuraduría.</div></div>
+      <p>Para interiorizar mejor esta tríada, puede ayudarte una analogía sencilla: piensa en un edificio donde la función preventiva es como un vigilante que recorre los pasillos revisando que las puertas estén bien cerradas y que no haya cables sueltos, antes de que ocurra algún accidente; la función disciplinaria es como un investigador interno que, una vez ocurrido un incidente dentro del edificio, averigua qué pasó y determina responsabilidades; y la función de intervención es como un representante del edificio que acude a instancias externas (un juzgado, por ejemplo) para defender los intereses de la comunidad que vive en él, cuando el asunto trasciende las paredes del propio edificio. Las tres funciones son necesarias y se complementan: ninguna sustituye del todo a las otras dos, y juntas conforman la misión completa de la Procuraduría frente al Estado y la sociedad.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la PGN cumple tres funciones misionales interrelacionadas: preventiva (anticipar), disciplinaria (investigar y sancionar) y de intervención (actuar ante otras autoridades). Esta tríada organiza toda la estructura interna de la entidad.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">3</div><h3>La estructura general: dirección y Procuradurías Delegadas</h3></div>
+    <div class="b-texto">
+      <p>En la cúspide de la estructura está el <strong>Procurador General de la Nación</strong>, apoyado por el <strong>Viceprocurador General</strong> y la <strong>Secretaría General</strong>, que coordina la gestión administrativa de toda la entidad. Bajo esa dirección general, el trabajo misional se organiza principalmente a través de las <strong>Procuradurías Delegadas</strong>, que son dependencias especializadas por materia o por tipo de función dentro del proceso disciplinario.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Una <strong>Procuraduría Delegada</strong> es una dependencia especializada de la PGN, a la que el Procurador General delega el ejercicio de funciones preventivas, disciplinarias o de intervención sobre determinadas materias, sectores o etapas del proceso disciplinario.</p></div>
+      <h4>Tipos de Procuradurías Delegadas que debes conocer</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>Tipo de Delegada</th><th>Qué hace, en términos generales</th></tr>
+        <tr><td><strong>Mixtas</strong></td><td>Combinan funciones preventivas y de intervención sobre un sector o materia determinada.</td></tr>
+        <tr><td><strong>Disciplinarias de Instrucción</strong></td><td>Investigan (instruyen) los procesos disciplinarios en su primera etapa, recaudando pruebas.</td></tr>
+        <tr><td><strong>Disciplinarias de Juzgamiento</strong></td><td>Deciden (juzgan) los procesos disciplinarios una vez instruidos, en una etapa distinta y separada de la instrucción.</td></tr>
+        <tr><td><strong>Preventivas y de Control de Gestión</strong></td><td>Ejercen vigilancia preventiva sobre la gestión de entidades y sectores específicos.</td></tr>
+      </table></div>
+      <p>Esta separación entre Procuradurías Delegadas de <strong>Instrucción</strong> y de <strong>Juzgamiento</strong> dentro de la función disciplinaria no es un detalle menor: refleja un principio importante del debido proceso, según el cual quien investiga (recoge pruebas, formula cargos) no es la misma instancia que, en una etapa posterior, decide sobre la sanción. Esta separación de etapas garantiza mayor objetividad e imparcialidad en el proceso disciplinario, y es parte de por qué tu manual de funciones menciona ambos tipos de Procuradurías Delegadas Disciplinarias entre las dependencias donde puedes llegar a trabajar.</p>
+      <p>Para ti, en términos prácticos, esta separación se traduce en que, a lo largo de un mismo proceso disciplinario, es posible que debas repartir o notificar documentos que provienen primero de una Procuraduría Delegada de Instrucción (por ejemplo, un auto de apertura de investigación o una citación a rendir versión) y, más adelante, documentos de una Procuraduría Delegada de Juzgamiento relacionados con la decisión final del mismo caso (por ejemplo, la notificación de un fallo disciplinario). Reconocer en qué etapa se encuentra cada documento te ayuda a entender la importancia relativa de cada entrega y a anticipar el tipo de reacción que puede tener la persona notificada, especialmente cuando se trata de una decisión que ya resuelve de fondo su situación disciplinaria.</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> no confundas <mark>Instrucción</mark> (investiga, primera etapa) con <mark>Juzgamiento</mark> (decide, etapa posterior y separada) dentro de la función disciplinaria. Son dos tipos distintos de Procuraduría Delegada, con roles diferentes dentro del mismo proceso.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🧑‍⚖️ ¿Por qué separar instrucción y juzgamiento?</summary><div class="acc-body"><p>Separar quién investiga de quién decide evita que la misma instancia que recoge las pruebas sea también quien falla el proceso, lo que reforzaría el riesgo de parcialidad. Este principio, común en muchos sistemas disciplinarios y judiciales, busca mayor garantía de imparcialidad para el investigado.</p></div></details>
+        <details class="acc"><summary>🏢 ¿Qué es una Procuraduría Delegada "Mixta"?</summary><div class="acc-body"><p>Se llama "mixta" porque combina, dentro de una misma dependencia especializada en un sector o materia (por ejemplo, un sector económico o social particular), funciones tanto preventivas como de intervención, sin limitarse a una sola de las tres funciones misionales.</p></div></details>
+        <details class="acc"><summary>📌 ¿Todas las Delegadas tienen el mismo rango dentro de la entidad?</summary><div class="acc-body"><p>Todas las Procuradurías Delegadas dependen jerárquicamente del Procurador General, a través de la estructura de dirección de la entidad, y comparten un rango similar entre sí como dependencias especializadas de primer nivel. Lo que las diferencia no es su jerarquía relativa, sino la materia o etapa del proceso en la que se especializan, según el tipo de Delegada de que se trate.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Reconocer el tipo de Delegada al repartir</div><div class="practica-body"><p>Si debes notificar una decisión que proviene de una "Procuraduría Delegada Disciplinaria de Juzgamiento", sabes que corresponde a la etapa final de un proceso disciplinario, donde ya se decidió algo; eso te ayuda a entender la importancia y la sensibilidad de esa notificación en particular, aplicando con especial cuidado el protocolo de notificación que corresponda.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 3</div><div class="cp-q">¿Cuál es la diferencia correcta entre una Procuraduría Delegada Disciplinaria de Instrucción y una de Juzgamiento?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="3" data-ans="1">La de Instrucción investiga y recauda pruebas en la primera etapa; la de Juzgamiento decide el proceso disciplinario en una etapa posterior y separada.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">Son exactamente la misma dependencia, solo que con nombres distintos según la región del país.</button>
+        <button class="cp-opt" data-cp="3" data-ans="0">La de Instrucción se encarga de asuntos preventivos y la de Juzgamiento de asuntos de intervención judicial.</button>
+      </div><div class="cp-fb" id="cpfb3"><strong>Correcto: la primera.</strong> La separación entre instrucción (investigar) y juzgamiento (decidir) es un principio de garantía dentro del proceso disciplinario, y corresponde a dos tipos distintos de Procuraduría Delegada.</div></div>
+      <p>Un aspecto adicional que conviene mencionar es que, dentro de cada Procuraduría Delegada, suele existir también personal de apoyo operativo similar al tuyo, encargado de que la correspondencia y las notificaciones de esa dependencia específica fluyan correctamente. Esto significa que, dependiendo de en qué Procuraduría Delegada te asignen trabajar, el tipo de documentos que manejarás tendrá características distintas: en una Delegada de Instrucción, probablemente manejarás comunicaciones relacionadas con el recaudo de pruebas y las etapas iniciales de un proceso; en una de Juzgamiento, notificaciones de decisiones ya tomadas, con plazos legales que empiezan a correr desde el momento de la entrega; y en una Mixta o Preventiva, comunicaciones de seguimiento y advertencia que, aunque igualmente importantes, suelen tener una dinámica distinta a la de un proceso disciplinario estrictamente hablando.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> las Procuradurías Delegadas (Mixtas, Disciplinarias de Instrucción, Disciplinarias de Juzgamiento, Preventivas y de Control de Gestión) son el principal nivel especializado bajo la dirección general de la PGN, y cada tipo corresponde a una combinación distinta de las tres funciones misionales.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">4</div><h3>Presencia territorial: regionales, provinciales y judiciales</h3></div>
+    <div class="b-texto">
+      <p>La Procuraduría no solo tiene estructura por materia (las Delegadas), sino también por territorio, para poder ejercer sus funciones en todo el país. Esa presencia territorial se organiza principalmente mediante las <strong>Procuradurías Regionales</strong>, las <strong>Procuradurías Provinciales</strong> y las <strong>Procuradurías Judiciales</strong>.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Las <strong>Procuradurías Regionales y Provinciales de Instrucción</strong> son dependencias territoriales que ejercen la función disciplinaria (principalmente de instrucción) a nivel departamental (regional) o de un grupo más reducido de municipios (provincial), descentralizando así el trabajo que de otro modo recaería únicamente en la sede central. Las <strong>Procuradurías Judiciales</strong> ejercen la función de intervención ante despachos judiciales específicos, como la Procuraduría Judicial II en Asuntos Penales.</p></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>Nivel territorial</th><th>Alcance</th><th>Función principal</th></tr>
+        <tr><td><strong>Regional</strong></td><td>Departamental.</td><td>Disciplinaria (instrucción) y, en algunos casos, preventiva, sobre su territorio.</td></tr>
+        <tr><td><strong>Provincial</strong></td><td>Agrupación de municipios dentro de un departamento.</td><td>Disciplinaria (instrucción) de menor complejidad, más cercana al ciudadano.</td></tr>
+        <tr><td><strong>Judicial</strong></td><td>Ante un despacho o rama judicial específica (por ejemplo, penal).</td><td>Intervención ante esa jurisdicción en defensa del interés general.</td></tr>
+      </table></div>
+      <p>Esta descentralización territorial tiene una lógica clara: sería impracticable que toda investigación disciplinaria o toda labor preventiva en el país se tramitara únicamente desde una sola sede central en Bogotá. Al distribuir la función en regionales y provinciales, la Procuraduría logra estar físicamente más cerca de los servidores públicos y ciudadanos de cada región, agilizando los procesos y facilitando el acceso de las personas a sus servicios. Para ti, como Técnico Investigador, esto puede traducirse en diligencias externas que no siempre son "a la vuelta de la esquina", sino que a veces implican desplazamientos más amplios dentro de tu jurisdicción territorial, dependiendo de la dependencia donde trabajes.</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> si te preguntan por una "Procuraduría Judicial II en Asuntos Penales", recuerda que su función principal es de <mark>intervención ante la jurisdicción penal</mark>, no de investigación disciplinaria interna de servidores.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🗺️ ¿Regional y Provincial hacen exactamente lo mismo?</summary><div class="acc-body"><p>No exactamente: aunque ambas ejercen principalmente función disciplinaria de instrucción a nivel territorial, la Regional suele tener un alcance departamental más amplio, mientras que la Provincial atiende un grupo más reducido de municipios, acercando aún más el servicio a zonas específicas del territorio.</p></div></details>
+        <details class="acc"><summary>⚖️ ¿Por qué existe una Procuraduría Judicial "en Asuntos Penales"?</summary><div class="acc-body"><p>La función de intervención de la Procuraduría se ejerce, en materia penal, mediante procuradurías judiciales especializadas que participan dentro de procesos penales específicos cuando el interés general lo justifica, sin que esto signifique que la Procuraduría reemplace a la Fiscalía en su labor investigativa penal.</p></div></details>
+        <details class="acc"><summary>🏘️ ¿Cómo afecta la descentralización territorial al ciudadano común?</summary><div class="acc-body"><p>Gracias a la existencia de Procuradurías Regionales y Provinciales, un ciudadano de un municipio alejado de la capital departamental no tiene que viajar necesariamente hasta la sede central para presentar una queja o hacer seguimiento a un proceso que le interesa: puede acudir a la dependencia territorial más cercana. Esta cercanía territorial es, en el fondo, una forma de garantizar un mejor acceso a la función de control que ejerce la Procuraduría para toda la ciudadanía, no solo para quienes viven cerca de las grandes ciudades.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Entender tu alcance territorial de diligencias</div><div class="practica-body"><p>Si trabajas en una Procuraduría Provincial, tus diligencias externas probablemente se concentren en los municipios que cubre esa provincia; si trabajas en una dependencia de la sede central o en una Procuraduría Regional, el alcance puede ser distinto. Conocer la lógica territorial te ayuda a entender por qué tu "orientación y ubicación espacial" (otro conocimiento esencial de tu manual) cobra tanta importancia práctica en tu día a día.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 4</div><div class="cp-q">¿Cuál es la lógica detrás de que existan Procuradurías Regionales y Provinciales, además de las dependencias centrales?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="4" data-ans="1">Descentralizar la función disciplinaria y preventiva en el territorio, acercando el servicio a servidores públicos y ciudadanos de cada región y provincia.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Porque la sede central de Bogotá decidió delegar toda su función de intervención judicial a esas dependencias territoriales exclusivamente.</button>
+        <button class="cp-opt" data-cp="4" data-ans="0">Porque cada región del país tiene su propio Procurador General elegido de forma independiente al de la sede central.</button>
+      </div><div class="cp-fb" id="cpfb4"><strong>Correcto: la primera.</strong> Las Regionales y Provinciales descentralizan la función disciplinaria y preventiva en el territorio; no existe un Procurador General distinto por región, y la intervención judicial no es exclusiva de esas dependencias.</div></div>
+      <p>Esta organización territorial también explica una característica distintiva de tu labor, en comparación con un cargo que trabajara exclusivamente en una oficina central sin salir de ella: cuando trabajas en una dependencia territorial, tus diligencias externas pueden implicar desplazamientos a distintos puntos del municipio o de la provincia, a veces con condiciones de acceso, distancias o infraestructura muy distintas entre un lugar y otro. Un Técnico Investigador que trabaja en una capital de departamento puede tener rutas de diligencia relativamente cortas y bien señalizadas, mientras que uno asignado a una Procuraduría Provincial que cubre varios municipios rurales puede enfrentar trayectos más largos, vías en peores condiciones, o direcciones menos precisas. Esta realidad territorial refuerza, una vez más, por qué "orientación y ubicación espacial" aparece como un conocimiento esencial propio y distintivo de tu cargo dentro del manual de funciones.</p>
+      <p>Vale la pena mencionar también que, dentro de las dependencias iniciales listadas en tu manual, se incluyen expresamente Procuradurías Regionales y Provinciales de Instrucción, lo que confirma que buena parte de la fuerza de trabajo de apoyo operativo de la entidad, incluidos los Técnico Investigadores, se distribuye precisamente en este nivel territorial de la función disciplinaria. Esto no excluye que también puedas ser asignado a dependencias de la sede central o a divisiones administrativas, pero sí explica por qué el componente territorial de la estructura de la PGN tiene tanto peso dentro de la lógica general de dónde se ubica tu cargo en la práctica.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la presencia territorial de la PGN se organiza en Regionales (departamental), Provinciales (grupo de municipios) y Judiciales (ante una jurisdicción específica), descentralizando el ejercicio de sus funciones misionales en todo el país.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">5</div><h3>Las divisiones administrativas de apoyo</h3></div>
+    <div class="b-texto">
+      <p>Además de las dependencias misionales (Delegadas, Regionales, Provinciales, Judiciales), la Procuraduría cuenta con <strong>divisiones administrativas de apoyo</strong>, que hacen posible el funcionamiento cotidiano de toda la entidad. Varias de estas divisiones aparecen explícitamente en tu manual de funciones como dependencias iniciales donde puedes llegar a trabajar como Técnico Investigador, así que vale la pena conocerlas con algo más de detalle.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Una <strong>división administrativa de apoyo</strong> es una dependencia que no ejerce directamente las funciones misionales de preventiva, disciplinaria o de intervención, sino que sostiene y facilita el funcionamiento interno de la entidad: gestión de documentos, manejo financiero, gestión del personal, comunicación institucional, entre otras.</p></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>División</th><th>Qué hace, en términos generales</th></tr>
+        <tr><td><strong>División de Documentación</strong></td><td>Gestiona el archivo institucional, los procesos documentales y, en buena medida, coordina lo relacionado con correspondencia a nivel central.</td></tr>
+        <tr><td><strong>División Financiera</strong></td><td>Administra el presupuesto, los pagos y la gestión financiera de la entidad.</td></tr>
+        <tr><td><strong>División de Gestión Humana</strong></td><td>Gestiona todo lo relacionado con el personal: nómina, novedades, bienestar, selección.</td></tr>
+        <tr><td><strong>División de Registro de Sanciones y Causas de Inhabilidad</strong></td><td>Lleva el registro de las sanciones disciplinarias impuestas y las inhabilidades derivadas de ellas.</td></tr>
+        <tr><td><strong>Oficina de Prensa</strong></td><td>Gestiona la comunicación institucional y la información pública de la entidad.</td></tr>
+      </table></div>
+      <p>Esta distinción entre dependencias misionales y de apoyo es importante para tu criterio diario: cuando repartas correspondencia hacia la <strong>División de Registro de Sanciones y Causas de Inhabilidad</strong>, por ejemplo, sabrás que se trata de un asunto relacionado con el resultado final de procesos disciplinarios ya decididos, lo que exige un manejo especialmente cuidadoso de la reserva de esa información. Y si repartes hacia la <strong>Oficina de Prensa</strong>, entiendes que se trata de comunicación institucional, con una naturaleza distinta a la de un expediente disciplinario.</p>
+      <p>Conviene subrayar, además, que estas divisiones administrativas no funcionan de manera aislada entre sí: suelen coordinarse constantemente para que la entidad opere como un todo coherente. Por ejemplo, cuando la División de Gestión Humana tramita el ingreso de un nuevo servidor, probablemente deba coordinar con la División Financiera para activar su nómina, y con la División de Documentación para abrir su respectiva hoja de vida dentro del sistema de gestión documental de la entidad. Esta interdependencia entre divisiones administrativas es otra razón por la que la correspondencia interna fluye constantemente entre ellas, generando buena parte del volumen de trabajo que un Técnico Investigador asignado a estas dependencias puede llegar a manejar en su día a día.</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> no confundas una división de apoyo administrativo con una Procuraduría Delegada: las divisiones <mark>sostienen el funcionamiento interno</mark>, mientras que las Delegadas ejercen directamente las funciones misionales.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>📂 ¿Por qué la División de Documentación es tan relevante para el Técnico Investigador?</summary><div class="acc-body"><p>Porque buena parte de los procedimientos de archivo, notificación y correspondencia que aplicas diariamente están alineados con las políticas y procedimientos que define o coordina esta división a nivel institucional. Entender su rol te ayuda a situar tu propia labor dentro de un sistema documental más amplio.</p></div></details>
+        <details class="acc"><summary>🔒 La sensibilidad del Registro de Sanciones y Causas de Inhabilidad</summary><div class="acc-body"><p>Esta división maneja información que puede afectar seriamente la vida laboral de una persona (una inhabilidad para ejercer cargos públicos, por ejemplo). Si alguna vez repartes o notificas algo relacionado con esta dependencia, el cuidado en la reserva y en el protocolo de entrega debe ser particularmente riguroso.</p></div></details>
+        <details class="acc"><summary>📰 ¿Qué papel juega la Oficina de Prensa en tu labor?</summary><div class="acc-body"><p>Aunque la Oficina de Prensa no suele generar la correspondencia más voluminosa de la entidad, en ocasiones puede requerir apoyo de reparto o de diligencias relacionadas con material de comunicación institucional (boletines, invitaciones, documentos de imagen). Si trabajas o colaboras con esta dependencia, el criterio de atención y reserva sigue aplicando, aunque la naturaleza de la información suele ser de carácter más público que la de un expediente disciplinario.</p></div></details>
+        <details class="acc"><summary>💰 La División Financiera y la importancia de los plazos</summary><div class="acc-body"><p>Muchos documentos que circulan hacia o desde la División Financiera están sujetos a plazos estrictos (pagos, trámites presupuestales, rendición de cuentas). Si te asignan repartir correspondencia relacionada con esta división, conviene que tengas presente que una demora injustificada en la entrega puede generar consecuencias financieras o administrativas mayores de lo que ocurriría con otros tipos de documentos menos sujetos a plazos fijos.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — Saber qué tipo de dependencia tienes enfrente</div><div class="practica-body"><p>Te asignan repartir correspondencia entre la División Financiera y la División de Gestión Humana en una misma mañana. Reconoces que ambas son divisiones de apoyo administrativo (no misionales), lo que te ayuda a anticipar el tipo de documentos que probablemente manejan (pagos, nómina, novedades de personal) y a tratarlos con el nivel de cuidado y reserva correspondiente, sin necesidad de conocer el detalle de cada trámite.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 5</div><div class="cp-q">¿Cuál de las siguientes es una división administrativa de apoyo, y NO una dependencia que ejerce directamente una función misional?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="5" data-ans="1">La División de Gestión Humana, que administra el personal de la entidad.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">La Procuraduría Delegada Disciplinaria de Instrucción, que investiga procesos disciplinarios.</button>
+        <button class="cp-opt" data-cp="5" data-ans="0">La Procuraduría Regional, que ejerce función disciplinaria en su territorio.</button>
+      </div><div class="cp-fb" id="cpfb5"><strong>Correcto: la primera.</strong> La División de Gestión Humana es de apoyo administrativo (gestiona personal); las otras dos ejercen directamente la función disciplinaria misional de la entidad.</div></div>
+      <p>Resulta útil también pensar en estas divisiones administrativas de apoyo como un reflejo de las necesidades que tiene cualquier organización grande, pública o privada, para poder funcionar día a día: alguien debe gestionar los documentos, alguien debe asegurar que haya recursos financieros disponibles, alguien debe encargarse de la nómina y el bienestar de cientos o miles de servidores, alguien debe mantener el registro histórico de decisiones disciplinarias ya tomadas, y alguien debe comunicar hacia afuera lo que la entidad hace. Ninguna de estas tareas es "menos importante" que las funciones misionales: sin ellas, ni siquiera las Procuradurías Delegadas podrían operar, porque no habría quién les pagara, quién les diera soporte documental o quién gestionara a su personal. En ese sentido, tu propio cargo de Técnico Investigador, aunque también de apoyo, comparte con estas divisiones administrativas el mismo principio: ser indispensable para que la misión de la entidad se cumpla, aunque tu nombre no aparezca en la decisión final de ningún proceso.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> las divisiones administrativas (Documentación, Financiera, Gestión Humana, Registro de Sanciones y Causas de Inhabilidad, Oficina de Prensa) sostienen el funcionamiento interno de la PGN sin ejercer directamente sus funciones misionales, y varias de ellas son dependencias donde puedes trabajar como Técnico Investigador.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo"><div class="modulo-head"><div class="modulo-n">6</div><h3>La Dirección Nacional de Investigaciones Especiales: tu dependencia</h3></div>
+    <div class="b-texto">
+      <p>Este módulo merece atención especial porque describe <mark>la dependencia donde se ubica tu cargo</mark>. La <strong>Dirección Nacional de Investigaciones Especiales (DNIE)</strong> está regulada en el <strong>artículo 10 del Decreto Ley 262 de 2000</strong> y pertenece al <strong>nivel central</strong> de la entidad, adscrita al <strong>Despacho del Procurador General</strong>. Esa ubicación no es un dato decorativo: explica de quién recibe las asignaciones, ante quién responde y por qué sus actuaciones pueden alcanzar cualquier territorio del país.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>La <strong>DNIE</strong> es la dependencia de la Procuraduría que adelanta las indagaciones e investigaciones disciplinarias que le asigna o delega el Procurador General, presta <strong>asesoría y apoyo técnico-científico</strong> a las demás dependencias de la entidad y a los otros órganos del Ministerio Público, y <strong>ejerce funciones de policía judicial</strong>.</p></div>
+      <h4>Las funciones del artículo 10, una por una</h4>
+      <div class="tabla-wrap"><table>
+        <tr><th>#</th><th>Función</th><th>Qué significa en la práctica</th></tr>
+        <tr><td>1</td><td>Adelantar las <strong>indagaciones preliminares e investigaciones disciplinarias</strong> que le asigne o delegue el Procurador General.</td><td>La DNIE no escoge sus casos: los recibe por asignación o delegación del Procurador General.</td></tr>
+        <tr><td>2</td><td>Prestar <strong>asesoría y apoyo técnico-científico</strong> a las dependencias de la PGN y a los demás órganos del Ministerio Público.</td><td>Aquí entra tu cargo: una delegada, una regional o una provincial pide apoyo y la Dirección lo asigna.</td></tr>
+        <tr><td>3</td><td><strong>Informar periódicamente</strong> al Procurador General sobre el estado de las investigaciones, y de inmediato cuando la gravedad de los hechos lo exija.</td><td>La información fluye hacia arriba con corte periódico y con alertas cuando el caso lo amerita.</td></tr>
+        <tr><td>4</td><td><strong>Coordinar las seccionales</strong> regionales que llegue a crear el Procurador General.</td><td>Permite desplegar la capacidad técnica fuera de Bogotá cuando se decida crearlas.</td></tr>
+        <tr><td>5</td><td><strong>Ejercer funciones de policía judicial</strong> y participar, previa designación del Procurador General, en <strong>comisiones conjuntas</strong> con la Fiscalía, funcionarios judiciales, la Contraloría y otros funcionarios con funciones de policía judicial.</td><td>Es el fundamento de la función 5 de tu manual: practicar pruebas técnicas asegurando los elementos, previa delegación.</td></tr>
+        <tr><td>6</td><td>Las demás funciones que le <strong>asigne o delegue</strong> el Procurador General.</td><td>Cláusula de cierre: siempre dentro del marco de la Dirección.</td></tr>
+      </table></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> hay dos ideas que conviene no mezclar. La DNIE <mark>investiga</mark> cuando el Procurador General se lo asigna o delega, y además <mark>apoya técnicamente</mark> a otras dependencias que conservan su propio caso. En el segundo escenario —el más frecuente para un técnico investigador— la Dirección no se queda con el expediente: aporta la prueba técnica y la entrega a quien pidió el apoyo.</div>
+      <h4>Cómo llega el trabajo a tus manos</h4>
+      <div class="flujo">
+        <div class="flujo-item"><strong>1. Solicitud</strong><br>Una dependencia (delegada, regional, provincial o la propia Dirección) requiere apoyo técnico para un expediente</div>
+        <div class="flujo-item"><strong>2. Asignación</strong><br>La Dirección asigna el apoyo a un servidor de la especialidad que el caso exige</div>
+        <div class="flujo-item"><strong>3. Metodología</strong><br>Se acuerda con la dependencia qué se busca, con qué técnica y en qué orden</div>
+        <div class="flujo-item"><strong>4. Práctica</strong><br>Se practica la prueba técnica y se aseguran los elementos con cadena de custodia</div>
+        <div class="flujo-item"><strong>5. Informe</strong><br>Se elabora el informe técnico y se presenta con sus anexos a quien pidió el apoyo</div>
+      </div>
+      <div class="practica">
+        <div class="practica-head">🗂️ En la práctica</div>
+        <div class="practica-body">
+          <p>Una Procuraduría Provincial investiga a un servidor por el manejo irregular de unos bienes y pide apoyo técnico. La DNIE asigna el caso. El técnico investigador acuerda la metodología con la Provincial, realiza la verificación, asegura los elementos recaudados con su registro de cadena de custodia y entrega el informe técnico con sus anexos <strong>a la Provincial</strong>, que es la dependencia que conserva el expediente y la que decidirá. La DNIE aportó la técnica; la decisión sigue siendo de quien instruye.</p>
+        </div>
+      </div>
+      <h4>La Procuraduría Auxiliar para Asuntos Disciplinarios</h4>
+      <p>Junto a la DNIE conviene conocer la <strong>Procuraduría Auxiliar para Asuntos Disciplinarios</strong>, que apoya y coordina aspectos específicos del ejercicio de la función disciplinaria dentro de la entidad. No la confundas con la Dirección: la Auxiliar acompaña la función disciplinaria en su conjunto, mientras la DNIE investiga por asignación y aporta la capacidad técnico-científica y de policía judicial.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🔎 ¿Por qué una dependencia nacional de investigaciones especiales?</summary><div class="acc-body"><p>Algunos procesos disciplinarios exigen recursos de investigación que una dependencia territorial no tiene: análisis técnicos, verificaciones en terreno, aseguramiento de evidencia con cadena de custodia, trabajo conjunto con otras autoridades. Concentrar esa capacidad en una dirección del nivel central permite un manejo riguroso y homogéneo en todo el país, y poner esa capacidad al servicio de cualquier dependencia que la necesite.</p></div></details>
+        <details class="acc"><summary>🔎 ¿La DNIE puede actuar con otras autoridades?</summary><div class="acc-body"><p>Sí. El numeral 5 del artículo 10 prevé que, <strong>previa designación del Procurador General</strong>, participe en comisiones que investiguen conjuntamente con la Fiscalía General de la Nación, con funcionarios judiciales, con la Contraloría y con otros servidores que tengan funciones de policía judicial. Es trabajo coordinado, no absorción de competencias: cada autoridad conserva la suya.</p></div></details>
+      </div>
+      <div class="box info"><div class="box-title">🧭 Síntesis del módulo</div><p><strong>Síntesis del módulo:</strong> la Dirección Nacional de Investigaciones Especiales es una dependencia del nivel central adscrita al Despacho del Procurador General (art. 10 del Decreto Ley 262 de 2000). Adelanta las investigaciones que le asignan o delegan, presta apoyo técnico-científico a las dependencias de la PGN y a los demás órganos del Ministerio Público, informa al Procurador General, coordina las seccionales que se creen, ejerce funciones de policía judicial y participa en comisiones conjuntas previa designación. Es la dependencia donde se ubica el Técnico Investigador 4TI-15.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo"><div class="modulo-head"><div class="modulo-n">7</div><h3>Dónde encaja el Técnico Investigador en este mapa institucional</h3></div>
+    <div class="b-texto">
+      <p>Con el mapa completo, ubiquemos tu cargo. El <strong>Técnico Investigador 4TI-15</strong> es un empleo del <strong>nivel técnico</strong> adscrito a la <strong>Dirección Nacional de Investigaciones Especiales</strong>, con ubicación inicial en Bogotá y vinculado al <strong>proceso disciplinario</strong>. Su propósito, según el manual, es <mark>apoyar las actividades técnicas, técnico científicas y administrativas de investigación para la recolección de material probatorio</mark> que soporte las investigaciones de la entidad.</p>
+      <p>Dicho de otro modo: de las tres funciones misionales de la PGN, tu cargo trabaja sobre todo para la <strong>disciplinaria</strong>, y lo hace aportando algo que las demás dependencias no siempre tienen: <strong>capacidad técnica para producir y asegurar prueba</strong>. Cuando una delegada necesita verificar un dato que exige método, cuando hay que asegurar unos documentos con cadena de custodia o cuando se requiere un informe que resista la contradicción del investigado, ahí entra el técnico investigador.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Función misional</th><th>¿Participa el Técnico Investigador?</th><th>Cómo</th></tr>
+        <tr><td><strong>Disciplinaria</strong></td><td>Sí, de manera principal</td><td>Practica pruebas técnicas, recauda y asegura elementos, elabora informes y proyecta documentos para la firma del competente.</td></tr>
+        <tr><td><strong>Preventiva</strong></td><td>De manera indirecta</td><td>El apoyo técnico puede sustentar actuaciones preventivas de otras dependencias cuando así se le solicite.</td></tr>
+        <tr><td><strong>De intervención</strong></td><td>No</td><td>La intervención ante autoridades judiciales y administrativas la ejercen los agentes del Ministerio Público designados para ello.</td></tr>
+      </table></div>
+      <h4>La línea de trabajo: quién pide, quién asigna, quién decide</h4>
+      <div class="flujo">
+        <div class="flujo-item"><strong>Procurador General</strong><br>Asigna o delega las investigaciones y designa para comisiones conjuntas</div>
+        <div class="flujo-item"><strong>Director Nacional</strong><br>Dirige la Dirección, distribuye el trabajo y delega las funciones de policía judicial</div>
+        <div class="flujo-item"><strong>Técnico Investigador ★</strong><br>Acuerda metodología, practica la prueba técnica, asegura elementos e informa</div>
+        <div class="flujo-item"><strong>Dependencia solicitante</strong><br>Recibe el informe con sus anexos y adopta la decisión dentro de su expediente</div>
+      </div>
+      <div class="box ok">
+        <div class="box-title">✅ Tu aporte es decisivo, y tiene un límite claro</div>
+        <p>La calidad de la prueba que usted recaude determina si un caso se sostiene o se cae. Pero su trabajo termina en el <strong>informe técnico</strong>: no califica la falta, no gradúa la sanción, no declara responsabilidades y no firma la decisión de fondo. Ese límite no le resta importancia: es lo que mantiene su producto dentro del terreno técnico, que es precisamente donde tiene valor.</p>
+      </div>
+      <div class="ojo"><b>Ojo en la prueba:</b> muchas preguntas situacionales de este perfil ponen a prueba exactamente esa frontera. Cuando una opción propone que el técnico <mark>califique, decida, sancione o capture</mark>, casi siempre es incorrecta, por muy eficaz que parezca. La conducta esperada es documentar, asegurar, informar y dejar la decisión a quien le corresponde.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>🔎 ¿Qué significa que el empleo sea de planta global?</summary><div class="acc-body"><p>Que la ubicación inicial —Bogotá, en la DNIE— no es inamovible. Conforme al numeral 34 del artículo 7 del Decreto Ley 262 de 2000, los cargos de la planta globalizada pueden ser distribuidos y reubicados en diferentes especialidades, sedes y dependencias según las necesidades del servicio, en cualquier tiempo durante el período de prueba o después de cumplido. El formato de convocatoria lo advierte expresamente.</p></div></details>
+        <details class="acc"><summary>🔎 ¿El técnico investigador trabaja solo con la DNIE?</summary><div class="acc-body"><p>Trabaja <em>desde</em> la DNIE, pero su cliente interno cambia con cada caso: puede ser una Procuraduría Delegada, una Regional, una Provincial o la propia Dirección. Por eso la función 2 del manual habla de prestar apoyo «a las dependencias que lo soliciten». Esa es también la razón por la que debe entender la estructura completa de la entidad: para saber quién le pide, con qué competencia y a quién debe entregar el resultado.</p></div></details>
+      </div>
+    </div>
+        <div class="box info"><div class="box-title">🧭 Síntesis del módulo</div><p><strong>Síntesis del módulo:</strong> el Técnico Investigador 4TI-15 pertenece al nivel técnico y trabaja desde la Dirección Nacional de Investigaciones Especiales para la función disciplinaria de la entidad. Su aporte es la prueba técnica: acuerda la metodología con quien pide el apoyo, practica, asegura los elementos con cadena de custodia, elabora el informe y proyecta documentos para la firma del funcionario competente. No califica la falta ni decide el fondo, y su empleo pertenece a la planta global, de modo que puede ser reubicado según las necesidades del servicio.</p></div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">8</div><h3>El régimen especial de carrera y tu proceso de selección</h3></div>
+    <div class="b-texto">
+      <p>Cerramos el día con un aspecto institucional que conecta directamente con tu propio proceso de selección: el <strong>régimen especial de carrera</strong> de la Procuraduría. Entender este punto evita confusiones frecuentes entre aspirantes que vienen de prepararse para concursos administrados por la Comisión Nacional del Servicio Civil (CNSC), que es el régimen general de la mayoría de entidades públicas del país.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Un <strong>régimen especial de carrera administrativa</strong> es aquel que, por disposición constitucional o legal, se aparta del régimen general administrado por la CNSC, otorgando a la propia entidad (o a otro organismo específico) la facultad de regular y adelantar sus procesos de ingreso, permanencia y ascenso en la carrera. La Procuraduría General de la Nación cuenta con uno de estos regímenes especiales, regulado principalmente por los <strong>Decretos Ley 262 y 263 de 2000</strong>.</p></div>
+      <div class="tabla-wrap"><table>
+        <tr><th>Aspecto</th><th>Régimen general (CNSC)</th><th>Régimen especial PGN</th></tr>
+        <tr><td><strong>Quién administra el concurso</strong></td><td>La Comisión Nacional del Servicio Civil.</td><td>La propia Procuraduría, con su operador designado.</td></tr>
+        <tr><td><strong>Fundamento normativo</strong></td><td>Ley 909 de 2004 y normas generales de carrera administrativa.</td><td>Decretos Ley 262 y 263 de 2000 (régimen especial de la PGN).</td></tr>
+        <tr><td><strong>Tu convocatoria</strong></td><td>No aplica a tu proceso.</td><td>Convocatoria 257-2026, Resolución No. 212 de 2026.</td></tr>
+      </table></div>
+      <p>Para ti, como aspirante al cargo de Técnico Investigador, código y grado <strong>4TI-15</strong>, bajo la <strong>Convocatoria 257-2026</strong>, esto significa que las reglas específicas de tu proceso (etapas, ponderaciones, requisitos) las define la propia Procuraduría a través de su normativa especial, no las reglas generales que aplicarías si concursaras, por ejemplo, para una entidad del sector central administrada por la CNSC. El nivel jerárquico de tu cargo es <strong>Operativo</strong>, aunque en algunas plataformas de gestión de recursos humanos pueda clasificarse bajo la categoría "Asistencial" que agrupa cargos de apoyo con características similares.</p>
+      <p>Otro dato institucional relevante de tu convocatoria es el número de plazas disponibles y la asignación salarial: la Convocatoria 257-2026 ofrece <strong>39 plazas</strong> para el cargo de Técnico Investigador 4TI-15, dentro de la modalidad de Planta Global, con una asignación salarial de <strong>$3.120.457</strong> vigente para el año 2025. Para acceder a estas plazas, el manual exige una aprobación de 2 años de educación básica secundaria, sin requerir experiencia laboral previa, lo que hace de este cargo una puerta de entrada accesible a la carrera especial de la Procuraduría para muchas personas que buscan su primera oportunidad en el sector público.</p>
+      <p>La modalidad de "Planta Global" merece una breve aclaración adicional: significa que las 39 plazas no están necesariamente atadas, de forma fija y permanente, a una única dependencia específica, sino que la entidad tiene flexibilidad para distribuir y, en algunos casos, reubicar a quienes ocupan estos cargos según las necesidades del servicio en las distintas dependencias que hemos recorrido en esta guía. Esta flexibilidad organizacional es coherente con el carácter transversal de tu función que vimos en el módulo anterior: así como puedes trabajar en una Delegada, una Regional o una división administrativa, la propia estructura de la planta está diseñada para permitir esa movilidad según las necesidades reales de la entidad en cada momento.</p>
+      <div class="ojo"><b>Ojo en la prueba:</b> si una pregunta institucional menciona a la CNSC como la entidad que administra tu concurso, es <mark>incorrecta</mark>: tu proceso se rige por el régimen especial de la Procuraduría, no por el régimen general de la CNSC.</div>
+      <div class="acordeon">
+        <details class="acc"><summary>📜 ¿Por qué la PGN tiene un régimen especial y no el general?</summary><div class="acc-body"><p>Algunas entidades, por la naturaleza particular de sus funciones (como ocurre también con la Fiscalía o la Rama Judicial), cuentan con regímenes especiales de carrera reconocidos por la ley, que les permiten adaptar sus procesos de selección a las particularidades de su misión institucional, sin estar sujetas al procedimiento estándar de la CNSC.</p></div></details>
+        <details class="acc"><summary>🎯 ¿Qué significa "Operativo" como nivel jerárquico de tu cargo?</summary><div class="acc-body"><p>El nivel jerárquico "Operativo" agrupa cargos cuya función principal es la ejecución de labores operativas o de apoyo logístico, sin funciones de dirección, coordinación ni asesoría. El cargo de Técnico Investigador, enfocado en correspondencia, notificación y diligencias, se ubica naturalmente en este nivel.</p></div></details>
+        <details class="acc"><summary>📋 Las tres pruebas de tu proceso de selección</summary><div class="acc-body"><p>Tu proceso bajo la Convocatoria 257-2026 se estructura, según lo establecido por la Procuraduría, en una prueba de conocimientos (eliminatoria, con un mínimo de 65 sobre 100 y un peso del 60% en la calificación final), una prueba de competencias comportamentales (20%) y un estudio de antecedentes (20%), siendo elegible quien alcance un mínimo del 70% en el resultado total. Conocer esta estructura te ayuda a entender por qué este día de estudio institucional se complementa con los días dedicados a las competencias comportamentales y con el simulacro final que integra ambos componentes.</p></div></details>
+      </div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica — No confundir reglas de otros procesos con el tuyo</div><div class="practica-body"><p>Si en tu preparación encuentras información sobre "la guía del concurso CNSC" para otro tipo de entidad, recuerda que esas reglas generales no necesariamente aplican a tu proceso bajo el régimen especial de la Procuraduría. Siempre que tengas dudas sobre plazos, etapas o ponderaciones, la fuente correcta es la normativa propia de tu convocatoria (Resolución No. 212 de 2026) y los canales oficiales de la PGN para tu concurso.</p></div></div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 8</div><div class="cp-q">¿Quién administra el proceso de selección para el cargo de Técnico Investigador 4TI-15 bajo la Convocatoria 257-2026?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="8" data-ans="0">La Comisión Nacional del Servicio Civil (CNSC), como en la mayoría de entidades del régimen general.</button>
+        <button class="cp-opt" data-cp="8" data-ans="1">La propia Procuraduría General de la Nación, con su operador designado, bajo su régimen especial de carrera (Decretos Ley 262 y 263 de 2000).</button>
+        <button class="cp-opt" data-cp="8" data-ans="0">El Departamento Administrativo de la Función Pública, de forma directa y exclusiva.</button>
+      </div><div class="cp-fb" id="cpfb8"><strong>Correcto: la segunda.</strong> El concurso de la PGN, incluido el de Técnico Investigador bajo la Convocatoria 257-2026, lo administra la propia entidad con su operador, bajo su régimen especial de carrera; no lo administra la CNSC.</div></div>
+      <p>Con este último módulo cierras el mapa institucional completo: sabes qué es la Procuraduría, qué funciones misionales cumple, cómo se organiza por materia (Delegadas) y por territorio (Regionales, Provinciales, Judiciales), qué divisiones administrativas la sostienen, dónde encaja tu propio cargo dentro de ese entramado, y bajo qué régimen se rige tu propio proceso de selección. Con este mapa en mente, cada oficio que repartas, cada notificación que tramites y cada diligencia que realices dejará de ser un trámite aislado y se convertirá en una pieza reconocible dentro de un todo institucional que ya comprendes.</p>
+      <p>Una última recomendación práctica para tu estudio: en lugar de memorizar de forma aislada cada nombre de dependencia, intenta siempre ubicarlo primero dentro de alguna de las tres funciones misionales (preventiva, disciplinaria o de intervención) o, si no es misional, dentro de las divisiones de apoyo administrativo. Ese ejercicio de clasificación, repetido varias veces con distintos nombres de dependencias que te vayas encontrando en tu preparación, entrena exactamente el tipo de razonamiento institucional que la prueba evalúa, mucho más que la simple memorización de nombres sueltos sin ese marco de referencia. Con la práctica, reconocer de inmediato "a qué función pertenece" cualquier dependencia que te mencionen se vuelve casi automático, y ese automatismo es, precisamente, lo que te dará seguridad el día del examen.</p>
+      <p>Para terminar, piensa en todo lo recorrido hoy como el "plano arquitectónico" del edificio institucional donde trabajas. Así como un trabajador de mantenimiento de un edificio grande entiende mejor su labor cuando conoce el plano completo —dónde está cada oficina, cada piso, cada área técnica—, tú entenderás mejor cada entrega, cada notificación y cada diligencia cuando tengas claro este plano institucional de la Procuraduría. Ese conocimiento no sustituye el detalle operativo de tus demás funciones, que ya estudiaste en días anteriores del curso, pero le da a cada una de ellas un marco de sentido que las vuelve mucho más fáciles de recordar y de aplicar correctamente frente a cualquier situación nueva que se te presente en el examen o, más adelante, en tu trabajo real dentro de la entidad.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la PGN tiene un régimen especial de carrera (Decretos Ley 262 y 263 de 2000), administrado por la propia entidad y no por la CNSC. Tu concurso (Convocatoria 257-2026) se rige por esas reglas especiales, con el cargo de Técnico Investigador 4TI-15 en el nivel jerárquico Operativo.</p></div>
+    </div>
+  </div>
+
+  <div class="modulo">
+    <div class="modulo-head"><div class="modulo-n">9</div><h3>La PGN frente a otros organismos de control: no confundir funciones</h3></div>
+    <div class="b-texto">
+      <p>Un error frecuente en las pruebas de conocimiento sobre la estructura del Estado es confundir a la Procuraduría General de la Nación con otros organismos que también tienen funciones de control, pero con objetos completamente distintos. Aunque todos pertenecen a lo que la Constitución llama genéricamente "organismos de control", cada uno vigila un aspecto diferente de la gestión pública, y <mark>mezclar sus funciones es una de las trampas más comunes</mark> en preguntas sobre el marco institucional del Estado colombiano.</p>
+      <div class="def-panel"><span class="def-label">Concepto</span><p>Los <strong>organismos de control</strong> son entidades autónomas e independientes de las tres ramas del poder público, encargadas de vigilar distintos aspectos de la actuación estatal: la PGN vigila la conducta disciplinaria de los servidores públicos y defiende el interés general; otros organismos vigilan el manejo de los recursos públicos, los derechos humanos, o investigan penalmente.</p></div>
+      <h4>Procuraduría vs. Contraloría: conducta disciplinaria vs. manejo de recursos</h4>
+      <p>La diferencia más preguntada en este tipo de exámenes es la que existe entre la Procuraduría y la <strong>Contraloría General de la República</strong>. La Procuraduría, como ya viste, ejerce el control disciplinario sobre la conducta de los servidores públicos: investiga si alguien incumplió sus deberes, incurrió en una falta o actuó de forma indebida en el ejercicio de su cargo. La Contraloría, en cambio, ejerce el <mark>control fiscal</mark>: vigila específicamente si los recursos públicos (el dinero, los bienes del Estado) se manejaron correctamente, sin pérdida ni detrimento patrimonial. Una misma situación puede, en teoría, dar lugar a una investigación disciplinaria por la PGN y, de forma independiente, a una investigación fiscal por la Contraloría, porque cada una mira un aspecto distinto del mismo hecho.</p>
+      <div class="tabla-wrap"><table>
+        <tr><th>Organismo</th><th>Qué vigila</th><th>Ejemplo de lo que investiga</th></tr>
+        <tr><td>Procuraduría General de la Nación</td><td>Conducta disciplinaria de servidores públicos; defensa del interés general</td><td>Un funcionario que incumple sus deberes o actúa de forma indebida en su cargo</td></tr>
+        <tr><td>Contraloría General de la República</td><td>Manejo fiscal de los recursos públicos</td><td>Un contrato público ejecutado con pérdida de recursos del Estado</td></tr>
+        <tr><td>Defensoría del Pueblo</td><td>Promoción y protección de los derechos humanos</td><td>Una queja ciudadana por vulneración de un derecho fundamental</td></tr>
+        <tr><td>Fiscalía General de la Nación</td><td>Investigación penal de delitos</td><td>Un hecho que podría constituir un delito, más allá de la falta disciplinaria</td></tr>
+      </table></div>
+      <div class="practica"><div class="practica-head">🛠️ En la práctica</div><div class="practica-body"><p>Repartes un oficio y, por la naturaleza del documento, notas que se trata de una decisión disciplinaria contra un servidor público. No confundes esto con un proceso fiscal ni con uno penal: entiendes que corresponde al ámbito propio de la Procuraduría, lo cual te ayuda a tratarlo con el nivel de reserva y cuidado que corresponde a un proceso disciplinario, sin mezclarlo mentalmente con otro tipo de investigación.</p></div></div>
+      <div class="ojo"><b>Ojo en la prueba:</b> si una opción describe a la Procuraduría investigando <mark>pérdida de recursos públicos</mark> (eso es función de la Contraloría) o <mark>delitos penales directamente</mark> (eso es función de la Fiscalía), es incorrecta. La PGN se enfoca en la conducta disciplinaria y la defensa del interés general, no en estas otras funciones.</div>
+      <h4>Procuraduría vs. Defensoría del Pueblo: disciplina vs. derechos humanos</h4>
+      <p>Otra confusión frecuente es con la <strong>Defensoría del Pueblo</strong>, que también es un organismo de control pero con un enfoque centrado en la promoción y protección de los <mark>derechos humanos</mark> de las personas, más que en la conducta disciplinaria de los servidores públicos. Mientras la Procuraduría pregunta "¿este servidor cumplió bien su deber?", la Defensoría pregunta más bien "¿se respetó el derecho de esta persona?". Ambas pueden coincidir en un mismo caso (un servidor que vulnera un derecho puede ser investigado disciplinariamente por la PGN mientras la Defensoría acompaña a la persona afectada), pero su función y su enfoque de fondo son distintos.</p>
+      <div class="acordeon">
+        <details class="acc"><summary>🧭 ¿Por qué me conviene conocer esta diferencia si solo reparto correspondencia?</summary><div class="acc-body"><p>Porque entender qué investiga cada organismo te ayuda a orientar correctamente a un ciudadano que, por error, llega a la Procuraduría buscando algo que en realidad corresponde a otro organismo de control. Saber distinguirlos con precisión es parte de orientar bien, sin inventar competencias que la PGN no tiene.</p></div></details>
+        <details class="acc"><summary>⚖️ ¿Puede la Procuraduría investigar a alguien que ya investiga la Fiscalía?</summary><div class="acc-body"><p>Sí, porque son procesos de naturaleza distinta (disciplinario vs. penal) que pueden avanzar de forma paralela e independiente sobre un mismo hecho, cada uno con sus propias reglas y consecuencias. Esto no es una duplicidad indebida: refleja que el mismo hecho puede tener, a la vez, una dimensión disciplinaria y una dimensión penal.</p></div></details>
+      </div>
+      <div class="checkpoint"><div class="cp-tag">✅ Punto de control 9</div><div class="cp-q">Un ciudadano llega preguntando por la Procuraduría para reclamar porque el Estado perdió recursos públicos en un contrato. ¿Qué es correcto responder?</div><div class="cp-opts">
+        <button class="cp-opt" data-cp="9" data-ans="0">Que la Procuraduría investiga directamente ese tipo de pérdida de recursos, igual que cualquier otro reclamo.</button>
+        <button class="cp-opt" data-cp="9" data-ans="1">Que ese tipo de vigilancia sobre el manejo fiscal de los recursos corresponde a la Contraloría General de la República, y orientarlo hacia el canal correcto.</button>
+        <button class="cp-opt" data-cp="9" data-ans="0">Que ningún organismo del Estado se encarga de revisar ese tipo de situaciones.</button>
+      </div><div class="cp-fb" id="cpfb9"><strong>Correcto: la segunda.</strong> El control fiscal sobre el manejo de recursos públicos corresponde a la Contraloría, no a la Procuraduría, cuyo enfoque es la conducta disciplinaria y la defensa del interés general.</div></div>
+      <p>Tener clara esta distinción entre organismos de control no solo te sirve para la prueba: en tu día a día como Técnico Investigador, puede llegar un ciudadano confundido sobre a qué entidad dirigirse para un reclamo específico. Orientar correctamente —explicando con respeto que su situación corresponde a otro organismo, sin que eso se sienta como un rechazo— es exactamente el tipo de conducta que ya trabajaste en el día dedicado a la atención al usuario, aplicado ahora al conocimiento concreto de cómo se organiza el Estado en materia de control.</p>
+      <div class="idea"><span class="idea-ic">💡</span><p><strong>Idea clave del módulo:</strong> la PGN vigila la conducta disciplinaria de los servidores públicos y defiende el interés general; la Contraloría vigila el manejo fiscal de los recursos; la Defensoría protege los derechos humanos; la Fiscalía investiga delitos. No confundir estas funciones es clave tanto para la prueba como para orientar bien a un ciudadano.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Source Serif 4',serif;color:var(--azul);margin:30px 0 8px">🧮 Ejercicios prácticos resueltos</h3>
+  <p>Pon a prueba tu comprensión del mapa institucional con estos mini-casos. Lee, piensa tu respuesta y despliega la solución.</p>
+  <div class="acordeon">
+    <details class="acc"><summary>Ejercicio 1 — Te piden llevar un oficio a la "Procuraduría Delegada Preventiva y de Control de Gestión". ¿A qué función misional corresponde principalmente esa dependencia?</summary><div class="acc-body"><p><strong>Solución:</strong> a la <mark>función preventiva</mark>: su labor es anticiparse a riesgos de mala gestión mediante vigilancia y seguimiento, no investigar faltas ya cometidas (eso sería función disciplinaria) ni intervenir ante un juez (función de intervención).</p></div></details>
+    <details class="acc"><summary>Ejercicio 2 — Un compañero te dice que trabaja en la "Procuraduría Regional" de su departamento. ¿Qué tipo de alcance territorial tiene esa dependencia?</summary><div class="acc-body"><p><strong>Solución:</strong> un alcance <mark>departamental</mark>, más amplio que el de una Procuraduría Provincial (que cubre un grupo más reducido de municipios) y distinto de las dependencias de la sede central.</p></div></details>
+    <details class="acc"><summary>Ejercicio 3 — Te preguntan si la División de Registro de Sanciones y Causas de Inhabilidad "decide" las sanciones disciplinarias. ¿Es correcto?</summary><div class="acc-body"><p><strong>Solución:</strong> no. Esa división <mark>registra</mark> las sanciones ya impuestas por las Procuradurías Delegadas Disciplinarias de Juzgamiento; no decide el proceso disciplinario, solo lleva su registro administrativo.</p></div></details>
+    <details class="acc"><summary>Ejercicio 4 — ¿Puede un Técnico Investigador trabajar tanto en una dependencia misional como en una administrativa dentro de la PGN?</summary><div class="acc-body"><p><strong>Solución:</strong> sí. El manual de funciones lista dependencias iniciales de ambos tipos (misionales y de apoyo administrativo), porque la función del Técnico Investigador es <mark>transversal</mark> a toda la estructura de la entidad.</p></div></details>
+    <details class="acc"><summary>Ejercicio 5 — Un ciudadano te pregunta, mientras repartes correspondencia en la sede, si la Procuraduría es "lo mismo" que la Fiscalía. ¿Qué le respondes?</summary><div class="acc-body"><p><strong>Solución:</strong> le explicas que son entidades distintas: la <mark>Fiscalía investiga y acusa penalmente los delitos</mark>, mientras que la Procuraduría ejerce funciones preventiva, disciplinaria y de intervención, vigilando la conducta de los servidores públicos y defendiendo el interés general, sin ser la autoridad que investiga delitos.</p></div></details>
+    <details class="acc"><summary>Ejercicio 6 — Debes repartir dos oficios: uno hacia una Procuraduría Regional y otro hacia la sede central en Bogotá. ¿Qué diferencia de alcance territorial existe entre ambas dependencias?</summary><div class="acc-body"><p><strong>Solución:</strong> la Procuraduría Regional tiene un <mark>alcance departamental</mark>, mientras que la sede central coordina la función de la entidad a nivel nacional, incluyendo la dirección de todas las dependencias territoriales y especializadas del país.</p></div></details>
+  </div>
+
+  <div class="box info"><div class="box-title">🗂️ Mapa de bolsillo para repasar antes del simulacro</div><p>Tres funciones misionales (preventiva, disciplinaria, de intervención) → Procuradurías Delegadas por materia (Mixtas, Disciplinarias de Instrucción/Juzgamiento, Preventivas y de Control de Gestión) → presencia territorial (Regional, Provincial, Judicial) → divisiones administrativas de apoyo (Documentación, Financiera, Gestión Humana, Registro de Sanciones, Prensa) → y, atravesando todo ese mapa, el Técnico Investigador, como cargo transversal de apoyo operativo en correspondencia, notificación y diligencias, bajo el régimen especial de carrera de la Convocatoria 257-2026. Repasa este mapa de bolsillo una última vez antes de entrar al simulacro: si puedes explicar en voz alta cada flecha de esta secuencia, sin mirar la guía, estás listo para esta parte institucional de la prueba.</p></div>
+
+  <div class="destacado oro"><span class="dst-ic">⭐</span><div class="dst-body"><span class="dst-title">Idea clave de todo el día</span><p>La PGN es un órgano de control autónomo, cabeza del Ministerio Público, con tres funciones misionales (<mark>preventiva, disciplinaria, de intervención</mark>) que se despliegan a través de Procuradurías Delegadas (Mixtas, Disciplinarias de Instrucción/Juzgamiento, Preventivas) y dependencias territoriales (Regionales, Provinciales, Judiciales), sostenidas por divisiones administrativas (Documentación, Financiera, Gestión Humana, Registro de Sanciones, Oficina de Prensa). El Técnico Investigador es un cargo transversal que conecta, con su labor de correspondencia y notificación, a todas esas partes entre sí y con la ciudadanía, bajo el régimen especial de carrera de la entidad.</p></div></div>
+
+  <div class="box gold"><div class="box-title">🧰 Tips para grabar en la memoria (repásalos todos antes del simulacro)</div>
+    <ul class="lista">
+      <li><strong>Tres funciones misionales:</strong> preventiva (anticipar), disciplinaria (investigar/sancionar), de intervención (actuar ante otras autoridades).</li>
+      <li><strong>Instrucción ≠ Juzgamiento:</strong> investigar y decidir son etapas y dependencias disciplinarias distintas y separadas.</li>
+      <li><strong>Territorio:</strong> Regional (departamental) → Provincial (grupo de municipios) → Judicial (ante una jurisdicción específica).</li>
+      <li><strong>Divisiones administrativas:</strong> sostienen el funcionamiento interno, no ejercen funciones misionales directamente.</li>
+      <li><strong>El Técnico Investigador es transversal:</strong> puede trabajar en dependencias misionales o administrativas; su función nuclear no cambia.</li>
+      <li><strong>Régimen especial PGN:</strong> Decretos Ley 262 y 263 de 2000; tu concurso NO lo administra la CNSC.</li>
+      <li><strong>La PGN NO es</strong> la Fiscalía ni la Contraloría: su ámbito propio es preventivo, disciplinario y de intervención.</li>
+    </ul>
+  </div>
+
+  <div class="destacado oro"><span class="dst-ic">⚡</span><div class="dst-body"><span class="dst-title">Frase para recordar</span><p>"Previene, investiga y sanciona, e interviene cuando el interés general lo exige: así actúa la Procuraduría. Y en cada una de esas tres funciones, tu labor de correspondencia conecta a la entidad por dentro y con la ciudadanía por fuera." Grábate esta frase completa, porque resume en pocas palabras todo el mapa institucional de este día.</p></div></div>
+
+  <div class="fuentes"><div class="box-title">📚 Fuentes oficiales para profundizar</div>
+    <p>Consulta directamente las normas y fuentes institucionales (se abren en una pestaña nueva):</p>
+    <ul class="lista">
+      <li><a href="https://www.procuraduria.gov.co" target="_blank" rel="noopener">Procuraduría General de la Nación — sitio institucional</a></li>
+      <li><a href="http://www.secretariasenado.gov.co/senado/basedoc/constitucion_politica_1991_pr010.html" target="_blank" rel="noopener">Constitución Política de Colombia — artículos 275 a 279 (Ministerio Público y PGN)</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4304" target="_blank" rel="noopener">Decreto Ley 262 de 2000 — estructura y organización de la PGN</a></li>
+      <li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=4303" target="_blank" rel="noopener">Decreto Ley 263 de 2000 — régimen de carrera especial de la PGN</a></li>
+    </ul>
+  </div>
+
+  <div class="advance-bar"><span class="advance-hint">Terminaste el Desarrollo. Afina el criterio con distinciones, casos y trampas.</span><button class="advance-btn" data-goto="3">Ver distinciones clave →</button></div>
+</section>
+
+
+<!-- SEC 3: COMPARACIONES -->
+<section class="section" data-sec="3">
+<span class="eyebrow">Sección 4 · Distinciones</span>
+  <h2 class="sec-title">⚖️ Distinciones clave que confunde la prueba</h2>
+  <p>La prueba de conocimientos vive de las confusiones finas. Aquí tienes las parejas de conceptos de este día que más se prestan a error, con la diferencia clara.</p>
+  <div class="tabla-wrap"><table>
+    <tr><th>Concepto A</th><th>Concepto B</th><th>La diferencia clave</th></tr>
+    <tr><td><strong>Función preventiva</strong></td><td><strong>Función disciplinaria</strong></td><td>Preventiva anticipa riesgos antes del daño; disciplinaria investiga y sanciona faltas ya cometidas.</td></tr>
+    <tr><td><strong>Procuraduría Delegada de Instrucción</strong></td><td><strong>Procuraduría Delegada de Juzgamiento</strong></td><td>Instrucción investiga y recauda pruebas; Juzgamiento decide el proceso en una etapa posterior y separada.</td></tr>
+    <tr><td><strong>Procuraduría Regional</strong></td><td><strong>Procuraduría Provincial</strong></td><td>Regional = alcance departamental; Provincial = grupo más reducido de municipios.</td></tr>
+    <tr><td><strong>Dependencia misional</strong></td><td><strong>División administrativa de apoyo</strong></td><td>Misional ejerce directamente preventiva/disciplinaria/intervención; apoyo sostiene el funcionamiento interno.</td></tr>
+    <tr><td><strong>PGN</strong></td><td><strong>CNSC</strong></td><td>La PGN administra su propio concurso bajo régimen especial; la CNSC administra el régimen general de otras entidades.</td></tr>
+    <tr><td><strong>Procuraduría Judicial</strong></td><td><strong>Autoridad judicial (juez)</strong></td><td>La Procuraduría Judicial interviene ante esa autoridad; no es ella quien decide el proceso judicial.</td></tr>
+  </table></div>
+  <div class="destacado azul"><span class="dst-ic">🎯</span><div class="dst-body"><span class="dst-title">Cómo estudiar estas parejas</span><p>No las memorices como lista: <strong>construye una frase con cada pareja</strong>. Por ejemplo: "Instrucción investiga, Juzgamiento decide" o "Mi concurso lo administra la PGN, no la CNSC". Si puedes decir la frase sin dudar, dominaste la distinción.</p></div></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora aplica todo en casos tipo prueba.</span><button class="advance-btn" data-goto="4">Ver casos resueltos →</button></div>
+</section>
+
+
+<!-- SEC 4: CASOS -->
+<section class="section" data-sec="4">
+<span class="eyebrow">Sección 5 · Casos</span>
+  <h2 class="sec-title">📂 Casos tipo prueba resueltos</h2>
+  <p>Casos situados en tu rol de Técnico Investigador de la PGN, con la respuesta correcta y su fundamento.</p>
+  <div class="caso"><div class="caso-head">Caso 1 · Identificar la función de una dependencia nueva</div><div class="caso-body">
+    <span class="label">Situación</span><p>Te asignan por primera vez repartir correspondencia hacia una "Procuraduría Delegada Mixta" que nunca habías mencionado antes. Un compañero te pregunta qué tipo de función cumple esa dependencia.</p>
+    <span class="label">¿Qué le respondes?</span>
+    <div class="resp-correcta"><p>Le explicas que una Procuraduría Delegada "Mixta" combina, sobre un sector o materia determinada, <strong>funciones preventivas y de intervención</strong>, sin limitarse a una sola de las tres funciones misionales de la PGN.</p></div>
+    <span class="label">Por qué</span><p>El nombre "mixta" se refiere precisamente a esa combinación de funciones sobre una materia especializada, distinta de las Delegadas puramente disciplinarias.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 2 · Diferenciar instrucción de juzgamiento al notificar</div><div class="caso-body">
+    <span class="label">Situación</span><p>Debes notificar dos decisiones distintas: una de una "Procuraduría Delegada Disciplinaria de Instrucción" y otra de una "Procuraduría Delegada Disciplinaria de Juzgamiento". Un usuario te pregunta qué significa cada una.</p>
+    <span class="label">¿Qué le explicas?</span>
+    <div class="resp-correcta"><p>Le explicas, sin entrar en el fondo jurídico que no te corresponde, que la de <strong>Instrucción</strong> investiga y recauda pruebas en la primera etapa del proceso, mientras que la de <strong>Juzgamiento</strong> decide el proceso en una etapa posterior y separada, lo que garantiza mayor imparcialidad.</p></div>
+    <span class="label">Por qué</span><p>Conocer esta distinción te permite orientar con precisión, sin exceder tu función de explicar el hecho de la notificación.</p>
+  </div></div>
+  <div class="caso"><div class="caso-head">Caso 3 · Explicar por qué tu concurso no lo administra la CNSC</div><div class="caso-body">
+    <span class="label">Situación</span><p>Un familiar que se preparó para un concurso de otra entidad te pregunta por qué tu proceso de la Procuraduría tiene reglas y etapas distintas a las que él vivió con la CNSC.</p>
+    <span class="label">¿Qué le explicas?</span>
+    <div class="resp-correcta"><p>Le explicas que la Procuraduría tiene un <strong>régimen especial de carrera</strong> (Decretos Ley 262 y 263 de 2000), por lo que administra su propio proceso de selección con su operador designado, en vez de regirse por el régimen general de la CNSC que aplica a la mayoría de otras entidades.</p></div>
+    <span class="label">Por qué</span><p>Entender esta diferencia evita confusiones sobre plazos, etapas y reglas que no aplican a tu proceso bajo la Convocatoria 257-2026.</p>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Conoce los errores que más cuestan puntos.</span><button class="advance-btn" data-goto="5">Ver errores comunes →</button></div>
+</section>
+
+
+<!-- SEC 5: ERRORES -->
+<section class="section" data-sec="5">
+<span class="eyebrow">Sección 6 · Errores</span>
+  <h2 class="sec-title">⚠️ Errores comunes que debes evitar</h2>
+  <div class="box danger"><div class="box-title">❌ Confundir a la PGN con la Fiscalía o la Contraloría</div><p>La PGN tiene su propio ámbito (preventivo, disciplinario, de intervención); no investiga penalmente como la Fiscalía ni vigila el manejo fiscal de recursos como la Contraloría.</p></div>
+  <div class="box danger"><div class="box-title">❌ Confundir Instrucción con Juzgamiento</div><p>Son etapas y dependencias distintas dentro de la función disciplinaria: investigar no es lo mismo que decidir.</p></div>
+  <div class="box danger"><div class="box-title">❌ Pensar que el Técnico Investigador solo trabaja en dependencias disciplinarias</div><p>El manual lista dependencias misionales y administrativas por igual; el Técnico Investigador es un cargo transversal.</p></div>
+  <div class="box danger"><div class="box-title">❌ Creer que la CNSC administra tu concurso</div><p>Tu proceso se rige por el régimen especial de carrera de la propia Procuraduría (Decretos Ley 262 y 263 de 2000).</p></div>
+  <div class="box danger"><div class="box-title">❌ Confundir Regional con Provincial</div><p>Regional tiene alcance departamental; Provincial cubre un grupo más reducido de municipios dentro del departamento.</p></div>
+  <div class="box danger"><div class="box-title">❌ Tratar las divisiones administrativas como dependencias misionales</div><p>Documentación, Financiera, Gestión Humana, entre otras, sostienen el funcionamiento interno; no ejercen directamente las tres funciones misionales.</p></div>
+  <div class="advance-bar"><span class="advance-hint">Ahora los tips para rendir en la prueba.</span><button class="advance-btn" data-goto="6">Ver tips →</button></div>
+</section>
+
+
+<!-- SEC 6: TIPS -->
+<section class="section" data-sec="6">
+<span class="eyebrow">Sección 7 · Tips</span>
+  <h2 class="sec-title">💡 Tips para dominar el tema en la prueba</h2>
+  <div class="card"><ul class="lista">
+    <li><strong>Las tres funciones misionales:</strong> preventiva, disciplinaria, de intervención. Apréndelas en ese orden lógico.</li>
+    <li><strong>Instrucción investiga, Juzgamiento decide:</strong> son etapas separadas por garantía de imparcialidad.</li>
+    <li><strong>Territorio:</strong> Regional (departamental) > Provincial (municipios) ; Judicial = ante una jurisdicción específica.</li>
+    <li><strong>Divisiones administrativas</strong> sostienen, no deciden sobre lo misional: Documentación, Financiera, Gestión Humana, Registro de Sanciones, Prensa.</li>
+    <li><strong>El Técnico Investigador es transversal:</strong> puede estar en cualquier tipo de dependencia; su función nuclear no cambia.</li>
+    <li><strong>Tu concurso:</strong> régimen especial PGN (Decretos Ley 262/263 de 2000), NO lo administra la CNSC.</li>
+    <li><strong>Cuando dudes,</strong> pregúntate: ¿esta dependencia previene, investiga/sanciona, interviene, o solo apoya administrativamente?</li>
+  </ul></div>
+  <div class="advance-bar"><span class="advance-hint">Reconoce las trampas típicas.</span><button class="advance-btn" data-goto="7">Ver trampas →</button></div>
+</section>
+
+
+<!-- SEC 7: TRAMPAS -->
+<section class="section" data-sec="7">
+<span class="eyebrow">Sección 8 · Trampas</span>
+  <h2 class="sec-title">🎭 Trampas de la prueba</h2>
+  <div class="trampa"><div class="trampa-q">"La Procuraduría Delegada de Instrucción decide las sanciones disciplinarias, porque es la que lleva todo el proceso."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> "lleva el proceso desde el inicio".</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la de Instrucción investiga y recauda pruebas; decidir corresponde a la de Juzgamiento, en una etapa separada.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> Instrucción investiga, Juzgamiento decide; son dependencias y etapas distintas.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"El Técnico Investigador solo puede trabajar en dependencias disciplinarias, porque su función es apoyar procesos de investigación."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> muchas notificaciones vienen de asuntos disciplinarios.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> el manual lista dependencias misionales y administrativas por igual como lugares de trabajo iniciales.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> el Técnico Investigador es un cargo transversal a toda la estructura de la entidad.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"Mi concurso de Técnico Investigador lo administra la CNSC, igual que la mayoría de concursos públicos del país."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> la CNSC administra la mayoría de concursos del régimen general.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la PGN tiene régimen especial de carrera y administra su propio proceso con su operador.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> tu concurso se rige por los Decretos Ley 262 y 263 de 2000, no por la CNSC.</div>
+  </div></div>
+  <div class="trampa"><div class="trampa-q">"La Procuraduría Judicial en Asuntos Penales reemplaza a la Fiscalía en la investigación de los delitos."</div><div class="trampa-detail">
+    <div class="t-row parece"><strong>Parece correcto porque:</strong> ambas tienen relación con asuntos penales.</div>
+    <div class="t-row malo"><strong>Pero es falso:</strong> la Procuraduría Judicial interviene ante la jurisdicción penal en defensa del interés general; no investiga delitos como la Fiscalía.</div>
+    <div class="t-row bueno"><strong>Lo correcto:</strong> la Procuraduría ejerce función de intervención; la investigación penal corresponde a la Fiscalía.</div>
+  </div></div>
+  <div class="advance-bar"><span class="advance-hint">Repasa con flashcards.</span><button class="advance-btn" data-goto="8">Ir al repaso →</button></div>
+</section>
+
+
+<!-- SEC 8: RESUMEN -->
+<section class="section" data-sec="8">
+<span class="eyebrow">Sección 10 · Resumen</span>
+  <h2 class="sec-title">📝 Resumen ejecutivo del día</h2>
+  <div class="resumen">
+    <div class="resumen-item"><h4>Naturaleza de la PGN</h4><p>Órgano de control autónomo e independiente, cabeza del Ministerio Público (arts. 275-279 C.P.).</p></div>
+    <div class="resumen-item"><h4>Tres funciones misionales</h4><p>Preventiva (anticipar), disciplinaria (investigar/sancionar), de intervención (actuar ante otras autoridades).</p></div>
+    <div class="resumen-item"><h4>Procuradurías Delegadas</h4><p>Mixtas, Disciplinarias de Instrucción/Juzgamiento, Preventivas y de Control de Gestión.</p></div>
+    <div class="resumen-item"><h4>Territorio</h4><p>Regional (departamental), Provincial (municipios), Judicial (ante una jurisdicción específica).</p></div>
+    <div class="resumen-item"><h4>Divisiones administrativas</h4><p>Documentación, Financiera, Gestión Humana, Registro de Sanciones y Causas de Inhabilidad, Oficina de Prensa.</p></div>
+    <div class="resumen-item"><h4>El Técnico Investigador</h4><p>Cargo transversal: puede trabajar en cualquier tipo de dependencia, conectando correspondencia y notificación entre todas.</p></div>
+    <div class="resumen-item"><h4>Tu concurso</h4><p>Régimen especial PGN (Decretos Ley 262/263 de 2000); NO lo administra la CNSC.</p></div>
+  </div>
+  <div class="glosario">
+    <dl>
+      <dt>Órgano de control</dt><dd>Entidad autónoma que vigila la conducta de otros poderes y servidores, sin ejecutar, legislar ni juzgar penalmente.</dd>
+      <dt>Procuraduría Delegada</dt><dd>Dependencia especializada por materia o etapa del proceso disciplinario.</dd>
+      <dt>Instrucción / Juzgamiento</dt><dd>Etapas separadas del proceso disciplinario: investigar y decidir, respectivamente.</dd>
+      <dt>Régimen especial de carrera</dt><dd>Régimen propio de la PGN (Decretos Ley 262/263 de 2000), distinto del régimen general de la CNSC.</dd>
+      <dt>Técnico Investigador (cargo transversal)</dt><dd>Apoyo operativo en correspondencia, notificación y diligencias en cualquier dependencia de la PGN.</dd>
+    </dl>
+  </div>
+  <div class="advance-bar"><span class="advance-hint">¡Última parada! Pon a prueba tu criterio con el simulacro.</span><button class="advance-btn" data-goto="10">Ir al simulacro →</button></div>
+</section>
+
+
+<!-- SEC 9: SIMULACRO -->
+<section class="section" data-sec="9">
+  <div class="eyebrow">Simulacro de práctica</div>
+  <h2 class="sec-title">Pon a prueba lo aprendido</h2>
+  <p>Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre la estructura y las funciones de la Procuraduría y de la Dirección Nacional de Investigaciones Especiales. Los contextos son extensos y las cuatro opciones son plausibles. Al seleccionar una opción verás si acertaste y la explicación.</p>
+
+  <div class="pregunta" data-correct="1">
+    <div class="q-num">Pregunta 1</div>
+    <p class="q-texto">Una Procuraduría Provincial adelanta una investigación disciplinaria y necesita verificar técnicamente unos registros que la entidad investigada entregó en medio digital. El procurador provincial llama a la Dirección Nacional de Investigaciones Especiales y pide apoyo. En la dependencia hay dudas: un servidor sostiene que, al pedir apoyo, la Provincial pierde el expediente y la DNIE asume la investigación completa; otro cree que la DNIE debe negarse porque el caso no se lo asignó el Procurador General.</p>
+    <p class="q-texto">¿Cuál es la lectura correcta del papel de la DNIE en ese escenario?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>La Provincial pierde la competencia al solicitar el apoyo: desde ese momento la Dirección asume la investigación, adopta las decisiones del expediente y responde por su resultado final.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La DNIE presta asesoría y apoyo técnico-científico a las dependencias que lo soliciten (num. 2 del art. 10): aporta la prueba técnica y la entrega, y la Provincial conserva su expediente.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La DNIE debe negarse porque solo puede actuar en las investigaciones que le asigne o delegue el Procurador General, de modo que el apoyo técnico a otras dependencias excede sus funciones.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La DNIE debe remitir la solicitud a la Procuraduría Auxiliar para Asuntos Disciplinarios, que es la dependencia encargada de coordinar el apoyo entre las distintas áreas de la entidad.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="3">
+    <div class="q-num">Pregunta 2</div>
+    <p class="q-texto">Un practicante pregunta de quién depende la Dirección Nacional de Investigaciones Especiales. Un servidor responde que de la Procuraduría Delegada para la Fuerza Pública, porque «maneja temas de policía judicial»; otro, que es una entidad adscrita con autonomía administrativa y presupuestal propia; y un tercero, que depende del Instituto de Estudios del Ministerio Público.</p>
+    <p class="q-texto">Conforme al Decreto Ley 262 de 2000, ¿cuál es la ubicación correcta de la DNIE?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Depende de la Procuraduría Delegada para la Fuerza Pública, porque las funciones de policía judicial de la entidad se concentran en esa delegada y de allí se distribuyen a las demás áreas.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>Es una entidad adscrita a la Procuraduría, con personería jurídica, autonomía administrativa y presupuesto propio, lo que le permite definir por sí misma las investigaciones que adelanta.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Depende del Instituto de Estudios del Ministerio Público, que es el encargado de la formación y de la investigación científica aplicada dentro de la estructura de la entidad.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Es una dependencia del nivel central adscrita al Despacho del Procurador General, de quien recibe las asignaciones y delegaciones y ante quien informa sobre el estado de las investigaciones.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="2">
+    <div class="q-num">Pregunta 3</div>
+    <p class="q-texto">En una reunión, un servidor afirma que «la Procuraduría solo sanciona» y que la función preventiva «es publicidad institucional». Otro sostiene que la función de intervención consiste en que la entidad demande a los servidores ante los jueces. El jefe le pide a usted explicar las tres funciones misionales, porque el informe técnico que prepara el equipo será usado en una actuación preventiva.</p>
+    <p class="q-texto">¿Cuál explicación distingue correctamente las tres funciones?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Las tres son la misma actividad con nombres distintos según la dependencia que la ejerza, de modo que prevenir, investigar y conceptuar son etapas sucesivas de un único procedimiento.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La preventiva y la de intervención corresponden a la Defensoría del Pueblo y a las personerías, mientras la PGN se limita a la función disciplinaria sobre los servidores públicos.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La preventiva actúa antes del daño advirtiendo y acompañando; la disciplinaria investiga y sanciona la conducta del servidor; y la de intervención hace comparecer al Ministerio Público ante las autoridades judiciales y administrativas.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La preventiva impone medidas cautelares, la disciplinaria formula cargos y la de intervención ejecuta las sanciones impuestas, de modo que las tres se aplican en ese orden dentro del mismo proceso.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="0">
+    <div class="q-num">Pregunta 4</div>
+    <p class="q-texto">Una entidad territorial alega que su oficina de control interno disciplinario ya está tramitando el caso y que, por eso, la Procuraduría «no puede meterse». El expediente lleva dos años sin movimiento y hay riesgo de prescripción. El equipo debe explicar en el informe por qué la Procuraduría sí puede actuar. El informe debe explicar la base normativa de la actuación y el jefe advierte que la entidad ya anunció que controvertirá cualquier intervención de la Procuraduría en ese expediente.</p>
+    <p class="q-texto">¿Qué figura constitucional fundamenta esa posibilidad?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>El poder disciplinario preferente (art. 277 num. 6): la PGN puede desplazar a la oficina de control interno disciplinario y asumir directamente el conocimiento del proceso.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>El control fiscal preferente, que permite a la Procuraduría asumir las investigaciones de la Contraloría cuando esta no actúa con la diligencia debida en los casos de mayor impacto.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La función de intervención, que faculta a la Procuraduría para comparecer dentro del proceso disciplinario interno de la entidad como sujeto procesal con facultades de impulso.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La vigilancia administrativa ordinaria, que obliga a la entidad a remitir el expediente a la Procuraduría cuando la actuación supera los dos años sin decisión de fondo del asunto.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="1">
+    <div class="q-num">Pregunta 5</div>
+    <p class="q-texto">Al preparar una actuación conjunta, surge la pregunta de si el equipo de la DNIE puede trabajar con la Fiscalía en una misma diligencia. Un servidor sostiene que está prohibido porque son autoridades distintas; otro, que puede hacerse siempre que el Director lo autorice internamente; y un tercero, que la PGN quedaría subordinada a la Fiscalía durante esa actuación.</p>
+    <p class="q-texto">Conforme al numeral 5 del artículo 10 del Decreto Ley 262 de 2000, ¿qué es lo correcto?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Está prohibido: cada autoridad debe practicar sus propias diligencias por separado, de modo que la actuación conjunta vicia lo recaudado y compromete la autonomía de los órganos.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La DNIE puede participar en comisiones que investiguen conjuntamente con la Fiscalía y otras autoridades, previa designación del Procurador General, conservando cada entidad su competencia.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Puede hacerse con la sola autorización interna del Director Nacional, porque la coordinación operativa entre autoridades es un asunto administrativo que no requiere designación superior.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Puede hacerse, pero durante la comisión la Procuraduría queda subordinada a la dirección de la Fiscalía, que es la autoridad titular de la acción penal y dirige la investigación conjunta.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="3">
+    <div class="q-num">Pregunta 6</div>
+    <p class="q-texto">Un servidor nuevo cree que las procuradurías regionales y provinciales «son entidades independientes» y que, por eso, la DNIE no puede prestarles apoyo sin un convenio. Otro sostiene que el apoyo solo procede para las procuradurías delegadas del nivel central. El jefe pide claridad porque acaba de llegar una solicitud de una Provincial. La solicitud llegó firmada por el procurador provincial, con el objeto del apoyo definido, y el término del expediente empieza a correr contra la dependencia solicitante.</p>
+    <p class="q-texto">¿Cuál es la afirmación correcta?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Las procuradurías territoriales son entidades independientes y el apoyo entre ellas y el nivel central requiere la celebración previa de un convenio interadministrativo de cooperación.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>El apoyo técnico de la DNIE solo procede para las procuradurías delegadas del nivel central, porque son las únicas que pertenecen a la misma estructura orgánica de la Dirección.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>El apoyo procede únicamente cuando el Procurador General lo ordena caso por caso, de modo que una solicitud directa de una Provincial debe devolverse sin trámite por falta de competencia.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Las procuradurías territoriales son dependencias de la misma entidad y la DNIE presta apoyo técnico-científico a las dependencias que lo soliciten, sin necesidad de convenio alguno.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="2">
+    <div class="q-num">Pregunta 7</div>
+    <p class="q-texto">El equipo recibe un expediente y advierte que el investigado es un servidor de una entidad del orden nacional, pero que la queja fue radicada en una Procuraduría Provincial. Un servidor propone practicar de una vez la prueba técnica solicitada para no perder tiempo; otro, devolver la solicitud sin más. El apoyo fue solicitado para la semana entrante y cualquier demora en aclarar el punto obligaría a reprogramar la diligencia con la entidad ya citada.</p>
+    <p class="q-texto">¿Qué debe verificarse antes de practicar el apoyo técnico?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Nada en particular: la DNIE presta el apoyo que se le solicite y la verificación de la competencia corresponde exclusivamente a la dependencia que tiene a su cargo el expediente.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>Debe verificarse únicamente que el expediente tenga número de radicado y que la solicitud venga firmada por el jefe de la dependencia, requisitos formales suficientes para prestar el apoyo.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Conviene verificar que la solicitud provenga de la dependencia competente y que el objeto del apoyo esté definido, y dejar constancia de cualquier duda, porque una actuación viciada afecta la prueba.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Debe devolverse la solicitud de plano, porque los servidores del orden nacional solo pueden ser investigados por las procuradurías delegadas del nivel central y nunca por una provincial.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="0">
+    <div class="q-num">Pregunta 8</div>
+    <p class="q-texto">Un ciudadano pregunta en la sede si la Procuraduría es la entidad que debe recuperar unos recursos públicos que, según él, se perdieron en un contrato. Un servidor le responde que sí, que «la Procuraduría recupera el dinero»; otro, que debe acudir a la Fiscalía porque «todo lo de plata es delito». El ciudadano insiste en que ya pasaron dos años desde los hechos y que quiere saber ante quién debe insistir para recuperar el dinero perdido en el contrato.</p>
+    <p class="q-texto">¿Cuál es la orientación correcta sobre las competencias?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>La recuperación de los recursos y la responsabilidad fiscal corresponden a la Contraloría; la PGN examina la conducta del servidor y, si hay indicios de delito, se compulsa a la Fiscalía.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La Procuraduría recupera los recursos mediante el proceso disciplinario, porque la sanción incluye la orden de reintegro del valor perdido a cargo del servidor responsable del contrato.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La Fiscalía concentra todo el asunto, porque cualquier pérdida de recursos públicos constituye un delito y las demás autoridades deben esperar el resultado del proceso penal.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>El ciudadano debe acudir primero a la entidad contratante para que ella recupere el dinero, y solo si no lo hace puede presentar la queja ante los órganos de control del Estado.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="1">
+    <div class="q-num">Pregunta 9</div>
+    <p class="q-texto">En la dependencia se discute qué significa que la PGN tenga «régimen especial de carrera». Un servidor afirma que la entidad puede nombrar libremente a su personal porque «no está sujeta a concurso»; otro cree que aplica la Ley 909 de 2004 con algunas modificaciones. La discusión surge porque la dependencia debe explicar el punto en una jornada de inducción y el jefe quiere que la respuesta quede sustentada en la norma que rige la entidad.</p>
+    <p class="q-texto">¿Cuál es la afirmación correcta sobre el régimen de carrera de la PGN?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>La entidad puede nombrar libremente a su personal porque el régimen especial la exime de los concursos de méritos previstos para el régimen general de carrera administrativa.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La PGN tiene su propio sistema especial de carrera (Decretos Ley 262, 263 y 264 de 2000) y administra sus concursos: el ingreso se hace por mérito, pero no bajo las reglas de la CNSC.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La PGN aplica la Ley 909 de 2004 con modificaciones menores, de modo que sus concursos los administra la Comisión Nacional del Servicio Civil con reglas adaptadas a su estructura.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La PGN carece de régimen propio y por eso cada convocatoria define libremente sus reglas, sin sujeción a una norma previa que regule el ingreso, la permanencia y el retiro del servicio.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="3">
+    <div class="q-num">Pregunta 10</div>
+    <p class="q-texto">Durante una capacitación, un asistente sostiene que el Técnico Investigador «participa en las tres funciones misionales por igual». Otro afirma que no participa en ninguna porque es un cargo de apoyo. El facilitador pide precisión, porque la pregunta suele aparecer en las pruebas de este perfil. El facilitador recuerda que en las pruebas anteriores aparecieron opciones que atribuían al cargo funciones de intervención ante jueces, y que varios aspirantes cayeron en ellas.</p>
+    <p class="q-texto">¿Cómo se relaciona el cargo con las funciones misionales?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Participa en las tres por igual, porque el apoyo técnico puede requerirse indistintamente en actuaciones preventivas, disciplinarias y de intervención ante autoridades judiciales.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>No participa en ninguna función misional, porque su empleo es de apoyo administrativo y su trabajo se limita a tareas instrumentales dentro de la operación diaria de la dependencia.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Participa principalmente en la función de intervención, porque el informe técnico que elabora se presenta ante autoridades judiciales en defensa del orden jurídico y del patrimonio público.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Participa principalmente en la disciplinaria, aportando prueba técnica; puede apoyar indirectamente lo preventivo, y no ejerce la intervención ante autoridades judiciales.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="2">
+    <div class="q-num">Pregunta 11</div>
+    <p class="q-texto">Llega a la Dirección un oficio en el que una Procuraduría Delegada pide apoyo técnico y, además, solicita que el informe «concluya si la conducta del servidor constituye falta gravísima». El jefe le pide a usted preparar la respuesta al oficio. El oficio llegó esta mañana, el término del expediente corre y la delegada insiste en que necesita el informe «con conclusión jurídica incluida» para decidir la próxima semana.</p>
+    <p class="q-texto">¿Qué corresponde responder sobre el alcance del apoyo?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Aceptar la solicitud completa, porque la delegada es la dependencia competente y puede definir el contenido del informe técnico que requiere para sustentar su decisión en el expediente.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>Rechazar la solicitud en su totalidad, porque incluir una petición improcedente vicia el requerimiento y obliga a la delegada a presentarlo nuevamente en debida forma ante la Dirección.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Atender el apoyo técnico y precisar que el informe se limitará a hechos, metodología y resultados, porque calificar la falta corresponde al funcionario competente del expediente.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Atender la solicitud y emitir la calificación pedida, siempre que el informe advierta que se trata de una opinión técnica que no vincula a la delegada al momento de adoptar su decisión.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="0">
+    <div class="q-num">Pregunta 12</div>
+    <p class="q-texto">Un servidor de otra dependencia le comenta que la Procuraduría «ya no puede investigar a nadie» después de la Ley 2094 de 2021, porque «todo pasó a la justicia». Otro sostiene que la reforma no cambió nada. Usted debe precisar el punto antes de continuar con el apoyo técnico de un expediente disciplinario en curso. El servidor insiste delante del equipo y pide que se suspenda el apoyo técnico hasta aclarar el punto.</p>
+    <p class="q-texto">¿Cuál es el efecto central de la Ley 2094 de 2021 sobre la función disciplinaria de la PGN?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>La PGN conserva la función disciplinaria y la reforma reforzó las garantías: separó instrucción y juzgamiento, garantizó la doble conformidad y previó control judicial de las decisiones.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La función disciplinaria pasó íntegramente a la Fiscalía General de la Nación, de modo que la Procuraduría conserva solo las funciones preventiva y de intervención ante autoridades.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La reforma no produjo ningún cambio: la Procuraduría sigue concentrando instrucción y juzgamiento en el mismo funcionario y sin previsión de control judicial sobre sus decisiones.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La reforma eliminó la posibilidad de sancionar a cualquier servidor público, de modo que las actuaciones disciplinarias en curso deben archivarse por pérdida de competencia sancionatoria.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="1">
+    <div class="q-num">Pregunta 13</div>
+    <p class="q-texto">El equipo recibe una solicitud de apoyo de la Defensoría del Pueblo. Un servidor sostiene que la DNIE solo puede apoyar a dependencias de la Procuraduría y que la solicitud debe devolverse; otro cree que debe tramitarse como si viniera de una entidad externa, mediante convenio. La solicitud viene firmada por un defensor regional, describe el objeto del apoyo y la Dirección debe responder esta semana si lo asume o no.</p>
+    <p class="q-texto">¿Qué dice el artículo 10 sobre el alcance del apoyo técnico-científico?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>El apoyo se limita a las dependencias de la Procuraduría, de modo que cualquier solicitud externa debe devolverse e indicarle a la entidad que contrate un perito particular.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>El apoyo se presta a las demás dependencias de la PGN y también a los otros órganos del Ministerio Público, de modo que una solicitud de la Defensoría del Pueblo tiene cabida.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>El apoyo puede prestarse a cualquier entidad del Estado que lo solicite, siempre que medie un convenio interadministrativo que defina las condiciones técnicas y económicas del servicio.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>El apoyo solo procede cuando el Procurador General lo autoriza expresamente para cada solicitud, incluso si proviene de una dependencia interna de la propia Procuraduría General.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="3">
+    <div class="q-num">Pregunta 14</div>
+    <p class="q-texto">En una discusión sobre la estructura territorial, un servidor afirma que las procuradurías judiciales «son juzgados especializados de la Procuraduría». Otro sostiene que son lo mismo que las provinciales, solo que con otro nombre. La precisión importa porque el equipo debe remitir una parte del asunto a la dependencia que corresponde y una confusión obligaría a repetir el trámite completo.</p>
+    <p class="q-texto">¿Cuál es la precisión correcta sobre las procuradurías judiciales?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>Son juzgados especializados dentro de la estructura de la Procuraduría, con competencia para decidir los procesos disciplinarios de mayor complejidad en cada distrito judicial del país.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>Son equivalentes a las procuradurías provinciales y la diferencia es solo de denominación histórica, pues ambas adelantan los mismos procesos disciplinarios en su respectiva jurisdicción.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>Son dependencias del Consejo Superior de la Judicatura adscritas funcionalmente a la Procuraduría para efectos del control disciplinario de los funcionarios de la rama judicial.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>Son dependencias de la PGN que ejercen la función de intervención ante las autoridades judiciales, actuando como agentes del Ministerio Público en los procesos que la ley señala.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pregunta" data-correct="2">
+    <div class="q-num">Pregunta 15</div>
+    <p class="q-texto">El Director Nacional delega en usted las funciones de policía judicial para practicar una prueba técnica en una entidad. Durante la diligencia, un servidor de la entidad se niega a entregar un equipo y usted considera que podría estar ocultando información. Un compañero sugiere retenerlo por obstrucción y otro, requisar las oficinas para encontrar la información. La diligencia está en curso, hay testigos presentes y el jefe no contesta el teléfono en ese momento.</p>
+    <p class="q-texto">¿Cuál es el alcance correcto de esa delegación?</p>
+    <div class="opciones">
+      <div class="opcion" data-idx="0"><span class="letra">A</span><span>La delegación habilita a practicar cualquier acto urgente de investigación, incluidas requisas y retenciones, porque las funciones de policía judicial no admiten distinciones según el órgano.</span></div>
+      <div class="opcion" data-idx="1"><span class="letra">B</span><span>La delegación permite retener a quien obstruya la diligencia hasta que entregue lo requerido, dejando constancia escrita del hecho y poniéndolo después en conocimiento de la autoridad.</span></div>
+      <div class="opcion" data-idx="2"><span class="letra">C</span><span>La delegación habilita a practicar la prueba técnica y asegurar los elementos conforme al procedimiento; la negativa se documenta y se informa, sin asumir facultades penales que no se tienen.</span></div>
+      <div class="opcion" data-idx="3"><span class="letra">D</span><span>La delegación carece de efectos si no la autoriza previamente un juez de control de garantías, de modo que la diligencia debe suspenderse hasta obtener esa autorización judicial expresa.</span></div>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div id="resultado">
+    <div class="score-num"><span id="aciertos">0</span>/15</div>
+    <p id="msg-resultado"></p>
+    <button class="btn gold" onclick="reiniciar()">🔄 Reintentar</button>
+  </div>
+
+  <div style="text-align:center;margin-top:26px">
+    <button class="btn gold" id="btnFinalizar" style="font-size:1rem">✅ Finalizar Día 5</button>
+  </div>
+
+  <div class="nav-footer">
+    <button id="btnPrev">← Sección anterior</button>
+    <button id="btnNext">Siguiente sección →</button>
+  </div>
+
+</section>
+
+
+</main>
+
+<footer>
+  <div class="fbrand">ASCENSO PÚBLICO</div>
+  <div class="fslogan">Tu ruta personalizada hacia el empleo público</div>
+  <div class="fmeta">FUN-PGN-4TI15O-01 · Estructura y Funciones de la PGN y la Dirección Nacional de Investigaciones Especiales (Decreto Ley 262 de 2000) · Día 5 · Técnico Investigador 4TI-15 (Nivel Técnico)<br>© Ascenso Público. Preparación para el Concurso de Méritos de la Procuraduría General de la Nación · Convocatoria 257-2026</div>
+</footer>
+
+<script>
+const navBtns=document.querySelectorAll('nav button'),sections=document.querySelectorAll('.section');let current=0;const total=sections.length;
+function showSection(i){current=i;sections.forEach(s=>s.classList.remove('visible'));navBtns.forEach(b=>b.classList.remove('active'));sections[i].classList.add('visible');navBtns[i].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updateFooterBtns()}
+navBtns.forEach((btn,i)=>btn.addEventListener('click',()=>showSection(i)));
+const btnPrev=document.getElementById('btnPrev'),btnNext=document.getElementById('btnNext');
+function updateFooterBtns(){if(btnPrev)btnPrev.disabled=current===0;if(btnNext)btnNext.disabled=current===total-1}
+if(btnPrev)btnPrev.addEventListener('click',()=>{if(current>0)showSection(current-1)});
+const btnFinalizar=document.getElementById('btnFinalizar');
+if(btnFinalizar)btnFinalizar.addEventListener('click',()=>{alert('✅ Has finalizado el Día 5: Estructura de la PGN y la DNIE. ¡Excelente trabajo, sigue así!')});
+if(btnNext)btnNext.addEventListener('click',()=>{if(current<total-1)showSection(current+1)});
+window.addEventListener('scroll',()=>{const h=document.documentElement;const s=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;document.getElementById('readbar').style.width=s+'%'});
+updateFooterBtns();
+const preguntas=document.querySelectorAll('.pregunta');
+const feedbacks={
+0:{ok:'El numeral 2 del artículo 10 del Decreto Ley 262 de 2000 asigna a la DNIE prestar asesoría y apoyo técnico-científico a las demás dependencias de la PGN y a los otros órganos del Ministerio Público. El apoyo no traslada la competencia: el expediente sigue en la Provincial.',no:'Ni la Provincial pierde el caso, ni la DNIE debe negarse, ni el apoyo se canaliza por la Procuraduría Auxiliar.'},
+1:{ok:'La DNIE está en el nivel central, en el Despacho del Procurador General. Esa dependencia directa explica que reciba de él las asignaciones, las delegaciones y las designaciones para comisiones conjuntas, y que le informe periódicamente.',no:'No depende de una delegada sectorial, no es una entidad con personería propia y no pertenece al IEMP.'},
+2:{ok:'Son tres funciones autónomas: prevenir antes del daño, disciplinar la conducta ya ocurrida e intervenir ante autoridades en defensa del orden jurídico, los derechos y el patrimonio público. Pueden concurrir sobre hechos conexos.',no:'No son etapas de un mismo procedimiento, la PGN sí ejerce las tres y la intervención no consiste en ejecutar sanciones.'},
+3:{ok:'El poder disciplinario preferente del artículo 277 numeral 6 permite a la PGN asumir el conocimiento de procesos que adelantan las oficinas de control interno disciplinario, con la motivación que corresponda.',no:'No existe un control fiscal preferente de la PGN, la intervención no opera dentro del proceso disciplinario interno y no hay remisión automática por el paso del tiempo.'},
+4:{ok:'El numeral 5 prevé expresamente la participación en comisiones conjuntas con la Fiscalía, funcionarios judiciales, la Contraloría y otros servidores con funciones de policía judicial, previa designación del Procurador General. Es coordinación, no subordinación.',no:'Ni está prohibido, ni basta la autorización interna, ni la PGN queda subordinada: se requiere designación del Procurador General y cada autoridad conserva su competencia.'},
+5:{ok:'Regionales, distritales y provinciales son dependencias de la PGN desconcentradas en el territorio, no entidades distintas. El numeral 2 del artículo 10 habla de apoyo a «las dependencias» sin restringirlo al nivel central.',no:'No son entidades independientes, el apoyo no se limita a las delegadas y no exige orden caso por caso del Procurador General.'},
+6:{ok:'La competencia es presupuesto de validez: una prueba practicada en una actuación adelantada por quien no es competente puede verse afectada. Advertirlo y dejar constancia protege el trabajo técnico y el expediente.',no:'Ni ignorar el punto, ni limitarse a los requisitos formales, ni devolver de plano: se verifica, se advierte y se deja constancia.'},
+7:{ok:'Cada responsabilidad tiene su autoridad: fiscal en la Contraloría, disciplinaria en la PGN y penal en la Fiscalía. Son autónomas y pueden concurrir sobre el mismo hecho.',no:'La PGN no recupera recursos, la Fiscalía no concentra todas las vías y no hay que agotar primero a la entidad contratante.'},
+8:{ok:'El régimen especial no elimina el mérito: lo organiza con reglas propias. La entidad convoca y administra el concurso conforme a sus decretos ley y a la resolución de convocatoria.',no:'Ni nombramiento libre, ni aplicación de la Ley 909 con la CNSC, ni ausencia de regulación.'},
+9:{ok:'El manual vincula el empleo al proceso disciplinario y el propósito es recolectar material probatorio. La intervención ante autoridades la ejercen los agentes del Ministerio Público designados para ello.',no:'Ni las tres por igual, ni ninguna, ni la intervención: el eje es la función disciplinaria.'},
+10:{ok:'El informe técnico aporta hechos, método y resultados verificables. Calificar la falta es una valoración jurídica que corresponde a quien instruye y decide: incluirla contamina el producto técnico.',no:'Ni aceptar la calificación, ni rechazar todo el requerimiento, ni emitirla «como opinión no vinculante».'},
+11:{ok:'La Ley 2094 de 2021 ajustó el procedimiento a los estándares interamericanos: separación entre quien instruye y quien juzga, doble conformidad frente a la sanción y control judicial de ciertas decisiones. La competencia disciplinaria se mantiene.',no:'La función no pasó a la Fiscalía, la reforma sí cambió el procedimiento y no eliminó la potestad sancionatoria.'},
+12:{ok:'El numeral 2 del artículo 10 menciona expresamente a las demás dependencias de la PGN y a los demás órganos del Ministerio Público, que son la Defensoría del Pueblo y las personerías.',no:'No se limita a la PGN, no se extiende a cualquier entidad mediante convenio y no exige autorización caso por caso.'},
+13:{ok:'Las procuradurías judiciales ejercen la intervención ante jueces y tribunales como agentes del Ministerio Público. No juzgan, no son provinciales con otro nombre y no pertenecen a la rama judicial.',no:'No son juzgados, no equivalen a las provinciales y no dependen del Consejo Superior de la Judicatura.'},
+14:{ok:'Las funciones de policía judicial de la PGN son especiales y acotadas a la práctica de pruebas dentro de su ámbito. No confieren competencia penal general: no habilitan capturas, retenciones ni requisas por iniciativa propia.',no:'Ni facultades penales plenas, ni retención del renuente, ni suspensión por falta de autorización judicial: se documenta la negativa y se informa.'},
+};
+let respondidas=0,aciertos=0;
+preguntas.forEach((preg,idx)=>{const correcta=parseInt(preg.dataset.correct);const opciones=preg.querySelectorAll('.opcion');const fb=preg.querySelector('.feedback');opciones.forEach((op,oi)=>{op.addEventListener('click',()=>{if(op.classList.contains('bloqueada'))return;opciones.forEach(o=>o.classList.add('bloqueada'));if(oi===correcta){op.classList.add('correcta');fb.className='feedback show ok';fb.textContent=feedbacks[idx].ok;aciertos++}else{op.classList.add('incorrecta');opciones[correcta].classList.add('correcta');fb.className='feedback show no';fb.textContent=feedbacks[idx].no}respondidas++;if(respondidas===preguntas.length){document.getElementById('aciertos').textContent=aciertos;const r=document.getElementById('resultado');r.classList.add('show');document.getElementById('msg-resultado').textContent=aciertos>=9?'¡Excelente! Dominas el ordenamiento territorial a nivel de prueba.':aciertos>=9?'Buen nivel. Repasa los módulos donde fallaste para afinar los límites de la vigilancia.':'Necesitas repasar. Vuelve al Desarrollo y estudia la organización territorial, la Ley 388, la LOOT, la clasificación del suelo y los determinantes ambientales.'}})})});
+function reiniciar(){respondidas=0;aciertos=0;document.getElementById('resultado').classList.remove('show');preguntas.forEach(p=>{p.querySelectorAll('.opcion').forEach(o=>{o.classList.remove('correcta','incorrecta','bloqueada')});p.querySelector('.feedback').className='feedback'})}
+document.querySelectorAll('.checkpoint').forEach(cp=>{const correcta=parseInt(cp.dataset.correcta);const fb=cp.querySelector('.cp-fb');cp.querySelectorAll('.cp-op').forEach((op,i)=>{op.addEventListener('click',()=>{if(cp.classList.contains('resuelto'))return;cp.classList.add('resuelto');cp.querySelectorAll('.cp-op').forEach(o=>o.style.pointerEvents='none');if(i===correcta){op.classList.add('ok');}else{op.classList.add('no');cp.querySelectorAll('.cp-op')[correcta].classList.add('ok');}fb.classList.add('show');});});});
+</script>
+
+</body>
+</html>
