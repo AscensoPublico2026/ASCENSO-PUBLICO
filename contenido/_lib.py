@@ -49,3 +49,12 @@ def aplicar_todas(SEC, R, estricto=False):
         if estricto:
             raise SystemExit(1)
     return SEC
+
+
+def secciones_mapeadas(path, mapa=None):
+    """Devuelve las secciones renumeradas al molde de 10 secciones (0-8 de contenido).
+    Por defecto convierte el molde de 11 secciones (8 = flashcards, 9 = resumen, 10 = simulacro)."""
+    S = secciones(path)
+    if mapa is None:
+        mapa = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 9: 8} if 10 in S else {n: n for n in range(9)}
+    return {dst: S[src] for src, dst in mapa.items() if src in S}
