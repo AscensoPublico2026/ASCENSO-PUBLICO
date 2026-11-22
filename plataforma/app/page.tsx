@@ -191,22 +191,22 @@ export default async function LandingPage() {
           <div className="precio-grid">
             <div className="precio-nivel">
               <span className="precio-nivel-tag">Operativo y administrativo</span>
-              <div className="precio-nivel-num">$190.000</div>
+              <div className="precio-nivel-num">$150.000</div>
               <p>Auxiliares, citadores y oficinistas.</p>
             </div>
             <div className="precio-nivel">
               <span className="precio-nivel-tag">Técnico</span>
-              <div className="precio-nivel-num">$240.000</div>
+              <div className="precio-nivel-num">$200.000</div>
               <p>Sustanciadores, técnicos y tecnólogos.</p>
             </div>
             <div className="precio-nivel destacado">
               <span className="precio-nivel-tag">Profesional</span>
-              <div className="precio-nivel-num">$290.000</div>
+              <div className="precio-nivel-num">$250.000</div>
               <p>Profesional universitario y equivalentes.</p>
             </div>
             <div className="precio-nivel">
               <span className="precio-nivel-tag">Asesor y ejecutivo</span>
-              <div className="precio-nivel-num">$390.000</div>
+              <div className="precio-nivel-num">$350.000</div>
               <p>Asesores y cargos de dirección.</p>
             </div>
           </div>
@@ -301,7 +301,7 @@ export default async function LandingPage() {
           <div className="faq" style={{ marginTop: 30 }}>
             <details open><summary>¿En qué se diferencia de otros cursos?</summary><div className="ans">No te preparamos para &quot;la convocatoria&quot; en general, sino para <strong>tu cargo específico</strong>. Analizamos tu OPEC y tu manual de funciones para enfocar el estudio en lo que tu prueba realmente evalúa.</div></details>
             <details><summary>¿Tienen curso para mi convocatoria?</summary><div className="ans">Sí, para <strong>cualquier concurso cuyo cargo ya tenga manual de funciones publicado</strong>, incluido el <strong>concurso docente</strong>. El curso no se arma a partir de un temario nuestro sino de tu empleo, así que lo que necesitamos es tu OPEC y tu manual de funciones. Si el concurso todavía no los publica, te avisamos apenas salgan.</div></details>
-            <details><summary>¿Cuánto cuesta para mi cargo?</summary><div className="ans">Depende del nivel del empleo: <strong>$190.000</strong> operativo y administrativo, <strong>$240.000</strong> técnico, <strong>$290.000</strong> profesional y <strong>$390.000</strong> asesor y ejecutivo. Escríbenos con tu convocatoria y tu cargo y te confirmamos el valor exacto.</div></details>
+            <details><summary>¿Cuánto cuesta para mi cargo?</summary><div className="ans">Depende del nivel del empleo: <strong>$150.000</strong> operativo y administrativo, <strong>$200.000</strong> técnico, <strong>$250.000</strong> profesional y <strong>$350.000</strong> asesor y ejecutivo. Escríbenos con tu convocatoria y tu cargo y te confirmamos el valor exacto.</div></details>
             <details><summary>¿Cuánto tarda en estar listo mi curso?</summary><div className="ans">En máximo <strong>24 horas</strong> desde el pago tendrás tu ruta personalizada en tu perfil.</div></details>
             <details><summary>¿Qué necesito para empezar?</summary><div className="ans">Tu número de OPEC, el nombre y nivel del cargo, y el <strong>manual de funciones en PDF</strong>. Si no sabes dónde están, te guiamos por WhatsApp para descargarlos.</div></details>
             <details><summary>¿Cuánto tiempo debo dedicarle al día?</summary><div className="ans">Entre <strong>60 y 90 minutos</strong>. El plan está pensado para estudiar <strong>de lunes a viernes</strong>: son 20 días de preparación más el simulacro final.</div></details>
