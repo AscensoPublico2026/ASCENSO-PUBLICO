@@ -2,7 +2,7 @@
 """Día 4 (2.ª guía) · Sistemas de gestión y MIPG — Técnico Investigador 4TI-15."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _lib import secciones_mapeadas, aplicar_todas
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='FUN-MIPG-4TI15O-01',
@@ -30,6 +30,8 @@ R = [
      '<div class="ojo"><b>👀 Ojo en la prueba</b>'),
 ]
 SEC = aplicar_todas(SEC, R, estricto=True)
+SEC = aplicar_todas(SEC, [('Secretario', 'Técnico Investigador')], estricto=False)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre sistemas de '
               'gestión, MIPG, control interno y mejora continua. Los contextos son extensos y las cuatro opciones son '

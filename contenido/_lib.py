@@ -58,3 +58,34 @@ def secciones_mapeadas(path, mapa=None):
     if mapa is None:
         mapa = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 9: 8} if 10 in S else {n: n for n in range(9)}
     return {dst: S[src] for src, dst in mapa.items() if src in S}
+
+
+def limpieza_rol(cargo='Técnico Investigador', plural='Técnicos Investigadores'):
+    """Reemplazos de seguridad: borra todo rastro del cargo de la guía de origen
+    (auxiliar / secretarial / ventanilla / sustanciador) y arregla la concordancia
+    que esos reemplazos pueden romper. Se aplica SIEMPRE con estricto=False,
+    después de los reemplazos de contenido, como último filtro antifugas.
+    No toca 'Procuraduría Auxiliar para Asuntos Disciplinarios' (dependencia real)."""
+    return [
+        # proteger nombres propios de dependencias
+        ('Procuraduría Auxiliar', '@@PAUX@@'),
+        # cargos ajenos
+        ('auxiliares administrativos', plural), ('auxiliares', plural),
+        ('Auxiliares', plural), ('auxiliar administrativo', cargo),
+        ('auxiliar', cargo), ('Auxiliar', cargo),
+        ('apoyo secretarial', 'apoyo técnico'), ('secretarial', 'técnico'),
+        ('profesional sustanciador', 'profesional sustanciador'),
+        ('ventanillas', 'puntos de atención'), ('ventanilla', 'punto de atención'),
+        ('Secretaria Procuraduría', cargo), ('Secretario Procuraduría', cargo),
+        ('Secretarias', plural), ('Secretarios', plural),
+        ('Secretaria', cargo), ('Secretario', cargo),
+        # concordancia que los reemplazos anteriores pueden romper
+        ('la punto de atención', 'el punto de atención'),
+        ('una punto de atención', 'un punto de atención'),
+        ('las puntos de atención', 'los puntos de atención'),
+        ('unas puntos de atención', 'unos puntos de atención'),
+        ('una ' + cargo, 'un ' + cargo), ('la ' + cargo + ' ', 'el ' + cargo + ' '),
+        ('Una ' + cargo, 'Un ' + cargo),
+        # restituir nombres propios
+        ('@@PAUX@@', 'Procuraduría Auxiliar'),
+    ]

@@ -2,7 +2,7 @@
 """Día 4 · Marco Institucional del Estado — Técnico Investigador 4TI-15 (Conv. 257-2026)."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _lib import secciones_mapeadas, aplicar_todas
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='GEN-03-PGN-4TI15O',
@@ -42,6 +42,7 @@ R = [
     ('ventanilla', 'punto de atención'),
 ]
 SEC = aplicar_todas(SEC, R, estricto=True)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre el marco '
               'institucional del Estado. Los contextos son extensos y las cuatro opciones son plausibles. '

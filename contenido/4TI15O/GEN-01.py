@@ -8,7 +8,7 @@ Reutiliza el desarrollo de GEN-01-PGN-4SP13 y lo corrige y reenfoca al cargo:
 """
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from _lib import secciones, aplicar_todas
+from _lib import secciones, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='GEN-01-PGN-4TI15O',
@@ -98,6 +98,9 @@ R = [
 ]
 
 SEC = aplicar_todas(SEC, R, estricto=True)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
+SEC = aplicar_todas(SEC, [('(aquí el Secretario)', '(aquí el Técnico Investigador)'),
+                          ('Secretaria', 'Técnico Investigador'), ('Secretario', 'Técnico Investigador')], estricto=False)
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre el Estado y la '
               'función pública. Los contextos son extensos y las cuatro opciones son plausibles y elaboradas. '

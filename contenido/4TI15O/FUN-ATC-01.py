@@ -2,7 +2,7 @@
 """Día 3 (2.ª guía) · Atención al Usuario y Servicio al Ciudadano — Técnico Investigador 4TI-15."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _lib import secciones_mapeadas, aplicar_todas
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='FUN-ATC-4TI15O-01',
@@ -36,6 +36,12 @@ R = [
 ]
 
 SEC = aplicar_todas(SEC, R, estricto=True)
+LIMPIEZA = [('la punto de atención', 'el punto de atención'), ('una punto de atención', 'un punto de atención'),
+            ('Secretario de punto de atención', 'servidor que atiende'),
+            ('Secretario en la punto de atención', 'servidor que atiende en el punto de atención'),
+            ('Secretario', 'Técnico Investigador')]
+SEC = aplicar_todas(SEC, LIMPIEZA, estricto=False)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre atención al '
               'usuario y servicio al ciudadano. Los contextos son extensos y las cuatro opciones son plausibles. '

@@ -2,7 +2,7 @@
 """Día 3 · La Relación Estado-Ciudadano — Técnico Investigador 4TI-15 (Conv. 257-2026)."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _lib import secciones_mapeadas, aplicar_todas
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='GEN-02-PGN-4TI15O',
@@ -71,6 +71,7 @@ SEC = aplicar_todas(SEC, [('ventanilla', 'punto de atención'),
                           ('<div class="box ojo"><div class="box-title">👁️ Ojo en la prueba</div>',
                            '<div class="ojo"><b>👁️ Ojo en la prueba</b>'),
                           ], estricto=True)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre la relación '
               'Estado-ciudadano, el derecho de petición y el servicio al ciudadano. Los contextos son extensos y las '

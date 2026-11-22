@@ -2,7 +2,7 @@
 """Día 5 · Estructura y funciones de la PGN y la DNIE — Técnico Investigador 4TI-15."""
 import os, sys, re
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _lib import secciones_mapeadas, aplicar_todas
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
 
 META = dict(
     codigo='FUN-PGN-4TI15O-01',
@@ -110,6 +110,7 @@ R = [
     ('90-2026', '257-2026'),
 ]
 SEC = aplicar_todas(SEC, R, estricto=False)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
 
 partes = SEC[2].split('<div class="modulo">')
 assert len(partes) == 10, f'se esperaban 10 bloques y hay {len(partes)}'
