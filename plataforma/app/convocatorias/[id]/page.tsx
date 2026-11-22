@@ -148,7 +148,7 @@ export default async function ConvocatoriaDetalle({ params }: { params: { id: st
               Precio según tu nivel
             </div>
             <div style={{ fontFamily: "'Source Serif 4',serif", fontSize: "2.4rem", color: "var(--azul)", fontWeight: 700 }}>
-              desde $190.000 <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
+              desde $150.000 <span style={{ fontSize: ".9rem", color: "var(--texto-suave)", fontWeight: 600 }}>COP</span>
             </div>
             <p style={{ fontSize: ".85rem", color: "var(--texto-suave)", margin: "6px 0 18px" }}>
               Pago único · el valor depende del nivel del cargo. Te lo confirmamos antes de que pagues.

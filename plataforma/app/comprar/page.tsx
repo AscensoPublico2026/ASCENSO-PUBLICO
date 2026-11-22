@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 };
 
 const NIVELES = [
-  { nivel: "Operativo y administrativo", precio: "$190.000", cargos: "Auxiliares, citadores y oficinistas" },
-  { nivel: "Técnico", precio: "$240.000", cargos: "Sustanciadores, técnicos y tecnólogos" },
-  { nivel: "Profesional", precio: "$290.000", cargos: "Profesional universitario y equivalentes" },
-  { nivel: "Asesor y ejecutivo", precio: "$390.000", cargos: "Asesores y cargos de dirección" },
+  { nivel: "Operativo y administrativo", precio: "$150.000", cargos: "Auxiliares, citadores y oficinistas" },
+  { nivel: "Técnico", precio: "$200.000", cargos: "Sustanciadores, técnicos y tecnólogos" },
+  { nivel: "Profesional", precio: "$250.000", cargos: "Profesional universitario y equivalentes" },
+  { nivel: "Asesor y ejecutivo", precio: "$350.000", cargos: "Asesores y cargos de dirección" },
 ];
 
 const PASOS = [
