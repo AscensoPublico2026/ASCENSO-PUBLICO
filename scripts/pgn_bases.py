@@ -164,9 +164,9 @@ def curso(spec_path):
         for guia, dia, dst, b in creadas:
             o = orden.get(dia, 0); orden[dia] = o + 1
             filas.append(f'      {{ codigo: "{guia}", dia: {dia}' + (f', orden: {o}' if o else '') + ' },')
-        bloque = ('  {\n    id: "' + spec['plan_id'] + '",\n    nombre: "' + spec['plan_nombre'] + '",\n    guias: [\n'
+        bloque = ('  "' + spec['plan_id'] + '": {\n    id: "' + spec['plan_id'] + '",\n    nombre: "' + spec['plan_nombre'] + '",\n    guias: [\n'
                   + '\n'.join(filas) + '\n    ],\n  },\n')
-        i = ts.rfind('  {\n    id: "pgn-')
+        i = ts.rfind('\n    id: "pgn-')
         j = ts.index('\n  },\n', i) + len('\n  },\n')
         ts = ts[:j] + bloque + ts[j:]
         open(ts_path, 'w', encoding='utf-8').write(ts)
