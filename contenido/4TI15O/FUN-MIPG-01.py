@@ -1,0 +1,190 @@
+# -*- coding: utf-8 -*-
+"""Día 4 (2.ª guía) · Sistemas de gestión y MIPG — Técnico Investigador 4TI-15."""
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
+
+META = dict(
+    codigo='FUN-MIPG-4TI15O-01',
+    archivo='FUN-MIPG-4TI15O-01-sistemas-gestion-mipg.html',
+    dia=4,
+    titulo_doc='Sistemas de Gestión y MIPG',
+    h1='Sistemas de Gestión y MIPG',
+    kicker='Día 4 · Conocimientos comunes',
+    sub='<strong>Sistemas de gestión</strong> es un conocimiento común exigido por el formato de convocatoria del <strong>Técnico Investigador 4TI-15</strong>. Aquí verás qué es un sistema de gestión y para qué sirve, el <strong>ciclo PHVA</strong>, el <strong>Modelo Integrado de Planeación y Gestión (MIPG)</strong> del Decreto 1499 de 2017 con sus <strong>siete dimensiones</strong> y sus políticas, la gestión por <strong>procesos, procedimientos, formatos e indicadores</strong>, el <strong>control interno y el MECI</strong> con las líneas de defensa (Ley 87 de 1993), y la <strong>mejora continua</strong>: hallazgos, acciones correctivas y planes de mejoramiento. Todo conectado con lo que hace un técnico que practica pruebas y rinde informes: seguir el procedimiento, dejar trazabilidad y mejorar con la evidencia.',
+    badges=['⏱ 95-115 min', '🏛️ Régimen PGN', '📘 Conocimientos comunes'],
+    fmeta='Sistemas de Gestión y MIPG (Decreto 1499 de 2017 y Ley 87 de 1993)',
+    cargo='Técnico Investigador 4TI-15 (Nivel Técnico)',
+    conv='257-2026',
+    alerta='Sistemas de gestión y MIPG',
+)
+
+SEC = secciones_mapeadas('guias/FUN-MIPG-TEC-01-sistemas-gestion-mipg.html')
+
+R = [
+    ('Como <strong>Secretario Procuraduría</strong>, participas en el sistema de gestión todos los días',
+     'Como <strong>Técnico Investigador</strong> participas en el sistema de gestión todos los días'),
+    ('Casos situados en tu rol de Secretario Procuraduría de la PGN',
+     'Casos situados en tu rol de Técnico Investigador de la PGN'),
+    ('<div class="box ojo"><div class="box-title">👀 Ojo en la prueba</div>',
+     '<div class="ojo"><b>👀 Ojo en la prueba</b>'),
+]
+SEC = aplicar_todas(SEC, R, estricto=True)
+SEC = aplicar_todas(SEC, [('Secretario', 'Técnico Investigador')], estricto=False)
+SEC = aplicar_todas(SEC, limpieza_rol(), estricto=False)   # filtro antifugas final
+
+QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre sistemas de '
+              'gestión, MIPG, control interno y mejora continua. Los contextos son extensos y las cuatro opciones son '
+              'plausibles. Al seleccionar una opción verás si acertaste y la explicación.')
+
+P = [
+ (2,
+  'Un compañero del equipo técnico afirma que diligenciar los formatos del sistema de gestión «es pura burocracia que quita tiempo al trabajo real» y propone que, mientras haya carga alta, se practiquen las diligencias y se diligencien los registros después, de memoria, cuando baje el volumen. Añade que lo importante es el resultado técnico y que los formatos solo sirven para las auditorías internas que hace la entidad cada año.',
+  '¿Cuál es la lectura correcta sobre el papel de los formatos y registros?',
+  ['El compañero tiene razón: los formatos son instrumentos administrativos de control interno que no aportan valor al resultado técnico y pueden diligenciarse cuando la carga de trabajo lo permita.',
+   'Los formatos pueden diligenciarse después siempre que quien los llene sea la misma persona que practicó la diligencia, porque así se conserva la fidelidad de la información registrada.',
+   'Los registros dan trazabilidad y, en el trabajo probatorio, son parte de la prueba misma: diligenciarlos después y de memoria compromete su valor y la posibilidad de verificar lo actuado.',
+   'Los formatos solo son obligatorios cuando la entidad está en proceso de certificación de calidad; fuera de esos períodos basta con dejar una constancia general de las actuaciones realizadas.'],
+  'En un sistema de gestión el registro demuestra lo que se hizo. En el trabajo de un técnico investigador esa trazabilidad es doblemente crítica: el registro de la diligencia y de la cadena de custodia no acompaña la prueba, en buena medida la constituye.',
+  'El registro tardío y de memoria no es equivalente al registro oportuno, y los formatos no dependen de que haya una certificación en curso.'),
+
+ (0,
+  'Durante una reunión, el jefe pregunta cómo se organiza la mejora del trabajo de la dependencia. Un integrante propone «arreglar los problemas cuando aparezcan» y otro sugiere esperar la auditoría anual para que sea ella la que diga qué cambiar. El jefe recuerda que el modelo de gestión de la entidad se apoya en un ciclo que debe aplicarse de forma permanente, y pide que alguien lo explique con un ejemplo del trabajo técnico.',
+  '¿Cuál es el ciclo y cómo se aplica?',
+  ['El ciclo PHVA: planear la diligencia y su metodología, hacerla conforme a lo planeado, verificar los resultados frente a lo esperado y actuar corrigiendo y estandarizando lo que funcionó.',
+   'El ciclo de auditoría: identificar el hallazgo, comunicarlo a la dependencia, esperar la respuesta del responsable y archivar el caso cuando el plazo de la acción correctiva se cumpla.',
+   'El ciclo presupuestal: programar los recursos de la vigencia, ejecutarlos conforme al plan de compras y rendir el informe de ejecución al cierre de cada período fiscal de la entidad.',
+   'El ciclo documental: producir el documento, radicarlo, archivarlo en el expediente y transferirlo al archivo central cuando se cumpla el tiempo de retención previsto en las tablas.'],
+  'El PHVA (planear, hacer, verificar, actuar) es el corazón de la mejora continua y se aplica a cualquier actividad, incluida una diligencia técnica: se planea la metodología, se ejecuta, se verifica el resultado y se ajusta.',
+  'El ciclo de auditoría, el presupuestal y el documental existen, pero ninguno es el ciclo de mejora continua del sistema de gestión.'),
+
+ (3,
+  'En una capacitación, un asistente sostiene que el MIPG «es un formato que se diligencia una vez al año ante Función Pública» y que no tiene relación con el trabajo sustantivo de una dependencia técnica. Otro afirma que el MIPG reemplazó al Código General Disciplinario en materia de gestión. El facilitador le pide a usted precisar qué es el modelo y para qué sirve, porque el tema aparece entre los conocimientos comunes de la convocatoria.',
+  '¿Qué es el MIPG y qué alcance tiene?',
+  ['Es un formulario anual de reporte ante el Departamento Administrativo de la Función Pública, sin incidencia en la operación diaria ni en los procedimientos internos de las dependencias.',
+   'Es una norma que reemplazó al régimen disciplinario en materia de gestión, de modo que las faltas relacionadas con procedimientos internos se califican hoy conforme a sus lineamientos.',
+   'Es un sistema de certificación de calidad de carácter voluntario, al que las entidades se adhieren cuando buscan acreditar sus procesos ante organismos certificadores externos.',
+   'Es el Modelo Integrado de Planeación y Gestión (Decreto 1499 de 2017): el marco que articula las políticas de gestión y desempeño del Estado en siete dimensiones y orienta la operación diaria.',],
+  'El MIPG articula en un solo modelo las políticas de gestión y desempeño institucional. No es un formato, no sustituye normas disciplinarias y no es una certificación voluntaria: es el marco con el que opera la administración.',
+  'Ni formulario anual, ni norma disciplinaria, ni certificación voluntaria: es el modelo de gestión del Estado.'),
+
+ (1,
+  'El jefe pide al equipo identificar a qué dimensión del MIPG corresponde el trabajo que hace la dependencia con los documentos y la información de los expedientes. Un integrante responde que «eso no está en el MIPG porque es un asunto técnico» y otro, que corresponde a la dimensión de talento humano porque la ejecutan los servidores. El jefe recuerda que el informe de esa dependencia se usa como insumo de decisiones disciplinarias y que una información mal gestionada ya obligó a repetir una actuación el año pasado.',
+  '¿Cómo se relaciona el manejo de documentos e información con el modelo?',
+  ['No se relaciona: el MIPG se ocupa de la planeación y del desempeño institucional, mientras el manejo documental se rige exclusivamente por la Ley General de Archivos y sus reglamentos.',
+   'Se relaciona con la dimensión de información y comunicación, que cubre la gestión documental, los datos y la transparencia como insumos para la operación y la toma de decisiones.',
+   'Se relaciona con la dimensión de talento humano, porque son los servidores quienes producen, radican y archivan los documentos en el ejercicio de sus funciones dentro de la entidad.',
+   'Se relaciona únicamente con la dimensión de control interno, dado que los documentos son la evidencia que revisan las auditorías internas y externas de la entidad durante la vigencia.'],
+  'La dimensión de información y comunicación del MIPG abarca la gestión documental, la información y la comunicación interna y externa: es la que convierte los datos en insumo confiable para decidir.',
+  'El manejo documental sí está en el modelo, y no se agota en el talento humano ni en el control interno.'),
+
+ (2,
+  'La oficina de control interno realiza una auditoría y formula un hallazgo: en varias diligencias los registros se diligenciaron de forma incompleta. Un compañero propone responder que el hallazgo «no aplica» porque las pruebas sí se practicaron bien, y otro sugiere corregir esos registros ahora y dar el asunto por terminado sin más análisis. El plazo para responder la auditoría vence en una semana y el jefe advierte que el mismo hallazgo se repitió en las dos vigencias anteriores sin que nadie analizara por qué.',
+  '¿Cuál es el tratamiento correcto del hallazgo?',
+  ['Responder que el hallazgo no aplica, acreditando con los informes técnicos que las pruebas se practicaron correctamente, de modo que el defecto formal carece de efectos prácticos.',
+   'Corregir de inmediato los registros incompletos y cerrar el hallazgo, porque una vez subsanado el defecto desaparece la causa que originó la observación de la auditoría interna.',
+   'Analizar la causa, formular una acción correctiva en un plan de mejoramiento con responsable y plazo, ejecutarla y verificar su eficacia, además de corregir los registros afectados.',
+   'Trasladar el hallazgo a la oficina de control interno disciplinario para que determine si hubo falta, dado que el incumplimiento de un procedimiento interno compromete la responsabilidad del servidor.'],
+  'La mejora continua distingue entre corrección (arreglar el caso) y acción correctiva (eliminar la causa). El plan de mejoramiento documenta la causa, la acción, el responsable, el plazo y la verificación de eficacia.',
+  'Ni negar el hallazgo, ni quedarse en la corrección puntual, ni convertir toda observación en un asunto disciplinario.'),
+
+ (0,
+  'En una discusión sobre el control interno, un integrante del equipo afirma que «el control interno lo ejerce la oficina de control interno y nadie más», y otro sostiene que es responsabilidad de la Contraloría. El jefe recuerda que la Ley 87 de 1993 define quién responde por el sistema y pide una explicación clara, porque el tema suele aparecer en la prueba. La discusión surge porque la entidad recibió una observación sobre el funcionamiento de su sistema de control interno y el jefe quiere que el equipo sepa a quién corresponde cada papel.',
+  '¿Quién es responsable del control interno en una entidad?',
+  ['Es responsabilidad de la entidad y, en particular, de su representante legal; cada servidor lo aplica en su trabajo y la oficina de control interno evalúa de manera independiente su funcionamiento.',
+   'Es responsabilidad exclusiva de la oficina de control interno, que diseña los controles, los ejecuta y responde por su efectividad ante los órganos de control externos de la entidad.',
+   'Es responsabilidad de la Contraloría General de la República, que ejerce el control interno sobre las entidades vigiladas mediante auditorías periódicas a su gestión y a sus recursos.',
+   'Es responsabilidad de la Procuraduría, que ejerce vigilancia superior sobre los sistemas de control interno de todas las entidades públicas del orden nacional y territorial del país.'],
+  'La Ley 87 de 1993 establece que el control interno es inherente a la entidad y responsabilidad de su representante legal; la oficina de control interno lo evalúa con independencia. Cada servidor lo aplica en su propio trabajo.',
+  'La oficina evalúa pero no asume la responsabilidad del sistema, y ni la Contraloría ni la Procuraduría ejercen el control interno de las entidades.'),
+
+ (3,
+  'El equipo revisa el modelo de las tres líneas de defensa y surge la pregunta de dónde se ubica un técnico que practica pruebas y diligencia registros. Un integrante dice que está en la tercera línea «porque genera evidencia para las auditorías» y otro, que está por fuera del modelo porque su trabajo es misional y no de control. La pregunta surge en una capacitación sobre el modelo de control y el facilitador advierte que suele formularse en las pruebas con opciones que confunden ejecución con evaluación.',
+  '¿En qué línea de defensa se ubica y por qué?',
+  ['En la tercera línea, porque la evidencia que produce es la que utilizan las auditorías internas y externas para evaluar la gestión de la dependencia durante el período correspondiente.',
+   'Por fuera del modelo, dado que las líneas de defensa se refieren a actividades de control y no a la ejecución de labores misionales como la práctica de pruebas técnicas en una diligencia.',
+   'En la segunda línea, porque al diligenciar registros y verificar que la información quede completa cumple una función de supervisión sobre el trabajo de las demás dependencias.',
+   'En la primera línea: quien ejecuta la actividad es el primer responsable de aplicar los controles de su propio proceso, antes de la supervisión de la segunda y de la evaluación independiente.'],
+  'La primera línea la conforman quienes ejecutan los procesos y aplican los controles en su día a día. La segunda supervisa y acompaña; la tercera, la oficina de control interno, evalúa con independencia.',
+  'La tercera línea es la evaluación independiente, la segunda es supervisión, y ningún servidor queda por fuera del modelo: todos aplican controles en su trabajo.'),
+
+ (1,
+  'Al revisar el procedimiento interno de una actuación técnica, usted detecta que el documento vigente describe un paso que ya no corresponde a la práctica real, porque la herramienta que menciona fue reemplazada hace meses. Un compañero propone seguir haciendo lo que se hace en la práctica y «no complicarse con el papel», y otro, seguir el procedimiento al pie de la letra aunque la herramienta no exista.',
+  '¿Cuál es la actuación correcta dentro del sistema de gestión?',
+  ['Seguir la práctica real sin actualizar el documento, porque el procedimiento escrito es una referencia orientadora y lo importante es que el resultado técnico sea correcto y oportuno.',
+   'Aplicar el procedimiento en lo que sigue vigente, reportar la desactualización por el canal previsto y proponer su actualización, dejando constancia de cómo se realizó la actividad mientras tanto.',
+   'Seguir el procedimiento al pie de la letra aunque la herramienta ya no exista, porque apartarse de un documento vigente constituye un incumplimiento que puede generar un hallazgo de auditoría.',
+   'Suspender la actividad hasta que el procedimiento sea actualizado formalmente, de modo que no se ejecute ninguna actuación por fuera de lo que está documentado en el sistema de gestión.'],
+  'El sistema de gestión vive de la mejora continua: cuando la realidad y el documento se separan, se reporta y se actualiza. Ni se ignora el documento ni se aplica lo imposible ni se paraliza el trabajo.',
+  'Ignorar el documento, aplicar lo inaplicable o paralizar la actividad son tres formas de romper el sistema.'),
+
+ (2,
+  'La entidad debe reportar anualmente información sobre su desempeño institucional. Un integrante del equipo afirma que ese reporte «lo hace la oficina de planeación y no afecta a nadie más» y otro sostiene que se trata de una auditoría de la Contraloría sobre la gestión de la entidad. El jefe aclara que de esos resultados salieron los últimos planes de mejora de la dependencia, incluidos los que obligaron a ajustar los formatos de las diligencias técnicas.',
+  '¿Qué es ese reporte y qué relación tiene con el trabajo de la dependencia?',
+  ['Es una auditoría de la Contraloría General de la República sobre la gestión institucional, cuyo resultado determina la calificación fiscal de la entidad para la vigencia evaluada.',
+   'Es un informe interno de la oficina de planeación sin incidencia en las dependencias técnicas, que se utiliza únicamente para la formulación del plan de acción del año siguiente.',
+   'Es el FURAG, el instrumento con el que se mide el desempeño institucional frente al MIPG; sus resultados orientan los planes de mejora y, por tanto, sí alcanzan a cada dependencia.',
+   'Es el plan anticorrupción y de atención al ciudadano, documento que la entidad publica cada año con los compromisos de transparencia y las acciones de mejora del servicio al usuario.'],
+  'El FURAG mide el desempeño institucional frente al MIPG y sus resultados alimentan los planes de mejora. No es una auditoría fiscal ni un documento inocuo para las áreas técnicas.',
+  'No es auditoría de la Contraloría, no es un informe sin consecuencias y no es el plan anticorrupción.'),
+
+ (0,
+  'En una reunión se discute la diferencia entre un proceso, un procedimiento, un formato y un indicador. Un integrante sostiene que «son sinónimos» y otro, que el indicador es lo mismo que la meta. El jefe pide una explicación precisa porque la dependencia está documentando su trabajo técnico y necesita nombrar bien cada cosa. La dependencia está documentando su trabajo técnico para una revisión próxima y el jefe advierte que usar mal los términos genera confusión en la auditoría y en los informes.',
+  '¿Cuál es la distinción correcta?',
+  ['El proceso es el conjunto de actividades que transforma entradas en resultados; el procedimiento detalla cómo se hace; el formato recoge la evidencia; y el indicador mide el comportamiento del proceso.',
+   'El proceso y el procedimiento son sinónimos, mientras el formato es el documento donde se escribe el resultado y el indicador es la meta que la dependencia se propone alcanzar en la vigencia.',
+   'El procedimiento es más amplio que el proceso porque incluye varias actividades, el formato es un requisito de archivo y el indicador corresponde al resultado final obtenido en el período.',
+   'El proceso es el documento que describe la actividad, el procedimiento es su versión resumida para consulta rápida y el indicador es el porcentaje de cumplimiento del plan de acción anual.'],
+  'Proceso (qué se hace y para qué), procedimiento (cómo se hace, paso a paso), formato (dónde queda la evidencia) e indicador (cómo se mide el comportamiento). El indicador no es la meta: la meta es el valor esperado del indicador.',
+  'No son sinónimos, el procedimiento no es más amplio que el proceso y el indicador no es un documento ni la meta.'),
+
+ (3,
+  'Al preparar una diligencia, el equipo identifica que existe el riesgo de que un elemento recaudado se dañe durante el traslado. Un integrante propone no registrar ese riesgo «para no alarmar» y otro, registrarlo pero sin definir controles, porque «si se daña, se repite la diligencia». La diligencia se realizará en otro municipio, con traslado por carretera de varias horas, y ya hubo un antecedente de elementos afectados por humedad en una actuación anterior.',
+  '¿Cómo debe tratarse ese riesgo dentro del sistema de gestión?',
+  ['No debe registrarse, porque los riesgos del sistema de gestión se refieren a la planeación institucional y no a las contingencias materiales que puedan ocurrir durante una diligencia técnica.',
+   'Debe registrarse pero sin definir controles, ya que la materialización del riesgo se resuelve repitiendo la actuación y no requiere medidas preventivas adicionales por parte del equipo.',
+   'Debe trasladarse a la oficina de control interno para que ella defina los controles aplicables, pues la administración de riesgos es una competencia exclusiva de la tercera línea de defensa.',
+   'Debe identificarse, valorarse y tratarse con controles concretos —embalaje adecuado, condiciones de transporte, registro de traslado—, porque administrar riesgos es parte del proceso.'],
+  'La administración del riesgo es una dimensión del MIPG y un componente del control interno: se identifica, se valora y se trata con controles por quienes ejecutan el proceso, no solo por la oficina de control interno.',
+  'El riesgo operativo sí hace parte del sistema, registrarlo sin controles no lo gestiona y la primera línea no puede delegar su tratamiento.'),
+
+ (1,
+  'Un compañero sostiene que el MECI «desapareció cuando salió el MIPG» y otro, que son dos sistemas paralelos que la entidad debe mantener por separado, con auditorías distintas. El jefe pide claridad porque ambos conceptos aparecen en la prueba y en los documentos internos de la entidad. La discusión aparece al revisar un documento interno que menciona los dos modelos y el jefe advierte que esa confusión suele aparecer en las preguntas sobre sistemas de gestión.',
+  '¿Cuál es la relación entre el MIPG y el MECI?',
+  ['El MECI desapareció con la expedición del MIPG, de modo que las referencias al modelo de control interno en documentos internos corresponden a una etapa ya superada de la gestión pública.',
+   'El MECI se mantiene como el modelo de control interno y quedó articulado dentro del MIPG como su dimensión de control interno, de modo que no son sistemas paralelos sino integrados.',
+   'Son dos sistemas paralelos e independientes que la entidad debe mantener por separado, con planes, auditorías e informes propios, según lo disponen las normas que los regulan.',
+   'El MIPG es la versión territorial del MECI, de manera que las entidades del orden nacional aplican el MECI y las del orden territorial aplican el MIPG en su gestión institucional.'],
+  'El Decreto 1499 de 2017 integró el MECI dentro del MIPG como su séptima dimensión, la de control interno. Ni desapareció ni corre en paralelo: quedó articulado.',
+  'El MECI no desapareció, no es paralelo al MIPG y la distinción no es nacional frente a territorial.'),
+
+ (2,
+  'En una auditoría interna se pregunta cómo demuestra la dependencia que una diligencia se realizó conforme al procedimiento. El responsable responde que «todos saben cómo se hace» y que el equipo tiene experiencia suficiente. El auditor insiste en que necesita algo más que la afirmación. El auditor advierte que, sin respaldo documental, la observación quedará como hallazgo y la dependencia deberá formular un plan de mejoramiento en los próximos quince días.',
+  '¿Qué es lo que la auditoría está pidiendo?',
+  ['Un certificado de competencias del personal que participó en la diligencia, que acredite la formación técnica y la experiencia de cada integrante del equipo en el procedimiento aplicado.',
+   'Una declaración escrita del jefe de la dependencia en la que conste que el procedimiento se cumplió, suficiente como respaldo documental frente a cualquier revisión posterior de la actuación.',
+   'La evidencia objetiva: los registros, actas, formatos y soportes que permiten verificar, sin depender de la memoria de nadie, que la actividad se ejecutó como estaba previsto.',
+   'El procedimiento documentado y vigente, que es el documento que demuestra ante el auditor que la dependencia tiene definida la forma de realizar ese tipo de diligencias técnicas.'],
+  'La evidencia objetiva es la base de cualquier verificación: sin registro, lo ocurrido no se puede demostrar. Tener el procedimiento documentado prueba que existe la regla, no que se cumplió.',
+  'Ni los certificados del personal, ni una declaración del jefe, ni el procedimiento en sí mismo prueban la ejecución: lo hacen los registros de la actuación.'),
+
+ (0,
+  'La dependencia debe formular su plan de mejoramiento tras una auditoría. Un integrante propone redactar acciones generales como «mejorar la calidad de los registros» para cumplir rápido con el formato; otro sugiere copiar las acciones del plan del año anterior, que ya fue aprobado. El plan debe presentarse esta semana y la oficina de control interno ya advirtió que no aceptará acciones que no permitan verificar después si el problema dejó de repetirse.',
+  '¿Cómo debe formularse una acción correctiva para que sirva?',
+  ['Debe atacar la causa identificada y ser concreta, con responsable, plazo y forma de verificar su eficacia, de modo que pueda comprobarse si el problema dejó de repetirse.',
+   'Debe redactarse de manera general para cubrir varias situaciones posibles, de modo que la dependencia conserve flexibilidad frente a los distintos hallazgos que puedan presentarse.',
+   'Debe reproducir las acciones aprobadas en vigencias anteriores, porque ya fueron validadas por la oficina de control interno y su formulación no generará observaciones nuevas.',
+   'Debe limitarse a describir la corrección aplicada al caso concreto detectado, dado que el plan de mejoramiento documenta lo ocurrido y no compromisos hacia el futuro de la dependencia.'],
+  'Una acción correctiva útil ataca la causa, tiene responsable, plazo y verificación de eficacia. Las acciones genéricas o copiadas no corrigen nada y vuelven a producir el mismo hallazgo.',
+  'La generalidad, la copia y la mera corrección puntual son las tres formas típicas de un plan de mejoramiento que no mejora.'),
+
+ (3,
+  'Al cierre de la guía, el jefe pregunta al equipo por qué un técnico investigador debería interesarse en el sistema de gestión si su trabajo es practicar pruebas. Un integrante responde que no debería, porque son mundos distintos, y otro, que solo le interesa para responder la prueba del concurso. La pregunta cierra la jornada y el jefe quiere que cada integrante pueda explicarla con un ejemplo de su propio trabajo, porque también aparece en las pruebas del concurso.',
+  '¿Cuál es la conexión real entre el sistema de gestión y el trabajo técnico?',
+  ['No hay conexión real: el sistema de gestión organiza la administración de la entidad, mientras el trabajo técnico se rige por protocolos científicos ajenos a la lógica de la gestión pública.',
+   'La conexión se limita a la prueba del concurso, porque en el ejercicio diario el técnico aplica manuales especializados y no los documentos del sistema de gestión de la entidad.',
+   'La conexión es solo documental: el sistema aporta los formatos en los que se registran las actuaciones, sin incidir en la forma en que se planean o se ejecutan las diligencias técnicas.',
+   'Es directa: el procedimiento define cómo se hace la diligencia, el registro deja la trazabilidad, el riesgo se controla y el hallazgo mejora la práctica. Ese es el ciclo del trabajo técnico.'],
+  'El sistema de gestión no es un añadido administrativo: es la forma en que la entidad asegura que lo técnico se haga igual de bien siempre, deje rastro y mejore con la evidencia.',
+  'La conexión no es inexistente, ni se agota en el examen, ni es solo documental: alcanza la planeación, la ejecución, el control del riesgo y la mejora.'),
+]
