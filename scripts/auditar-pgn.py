@@ -195,8 +195,13 @@ def auditar_html(path, duenos, dias, es_sim=False):
         for d in sorted(set(dias)):
             D = f'Día {d}'
             okb = re.search(r'📅 ' + D + r' de 21', s); okf = re.search(r'Finalizar ' + D + r'\s*<', s)
-            okk = re.search(r'kicker">\s*' + D + r'\b', s)
-            falt = [n for n, v in (('insignia', okb), ('botón Finalizar', okf), ('kicker', okk)) if not v]
+            okk = re.search(r'kicker[^>]*>\s*(?:🎯\s*)?' + D + r'\b', s)
+            if es_sim:
+                # un simulacro no tiene botón «Finalizar Día N» ni el kicker de una guía:
+                # se le exige la insignia del día y que el kicker lo mencione
+                falt = [n for n, v in (('insignia', okb), ('kicker', okk)) if not v]
+            else:
+                falt = [n for n, v in (('insignia', okb), ('botón Finalizar', okf), ('kicker', okk)) if not v]
             if falt: add('ALTO', 'día', f"{D}: falta/incoherente en {', '.join(falt)}")
         otros = set(int(x) for x in re.findall(r'Finalizar Día (\d+)', s)) | set(int(x) for x in re.findall(r'📅 Día (\d+) de 21', s))
         if otros - set(dias): add('CRITICO', 'día', f"muestra días ajenos {sorted(otros - set(dias))} (plan: {sorted(set(dias))})")

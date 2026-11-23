@@ -64,6 +64,11 @@ def main():
     s = s.replace('291-2026', META['conv'])
     s = s.replace('SIM-PGN-4TI15O-001-001', META['codigo'])
 
+    # insignia del día, para que el simulacro quede coherente con el plan de 21 días
+    if '📅 Día 21 de 21' not in s:
+        s = s.replace('<div class="badges"><span class="badge">',
+                      '<div class="badges"><span class="badge">📅 Día 21 de 21</span><span class="badge">', 1)
+
     assert 'Secretari' not in s, 'quedaron menciones del cargo de la plantilla'
     assert '4SP' not in s and '291-2026' not in s, 'quedaron identidades de la plantilla'
 
