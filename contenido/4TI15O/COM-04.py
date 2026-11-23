@@ -224,6 +224,8 @@ SEC = aplicar_todas(SEC, [
      '<div class="ojo"><b>👁️ Ojo en la prueba</b>'),
     ('(4SU-11)', '(4TI-15)'),
     ('4SU-11', '4TI-15'),
+    ('Resolución 243 de 2026', 'Resolución 212 de 2026'),
+    ('288-2026', '257-2026'),
     ('Estatuto de Conciliación', 'marco normativo de Policía Judicial'),
     ('Centro de Conciliación en materia civil y comercial', 'dependencias que soliciten apoyo técnico'),
     ('Centro de Conciliación', 'DNIE'),
