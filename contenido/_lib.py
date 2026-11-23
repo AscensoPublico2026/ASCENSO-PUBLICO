@@ -11,7 +11,9 @@ import re, sys
 def secciones(path):
     s = open(path, encoding='utf-8').read()
     out = {}
-    for m in re.finditer(r'<section class="section[^"]*" data-sec="(\d+)">(.*?)\n</section>', s, re.S):
+    # el cierre puede venir sin salto de línea (…</div></section>) en las guías antiguas:
+    # exigir «\n</section>» hacía que dos secciones se fusionaran y arrastraba un </section> al contenido
+    for m in re.finditer(r'<section class="section[^"]*" data-sec="(\d+)">(.*?)\s*</section>', s, re.S):
         out[int(m.group(1))] = m.group(2).strip('\n')
     return out
 

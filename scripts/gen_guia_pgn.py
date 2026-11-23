@@ -85,7 +85,7 @@ def generar(path):
 
     # --- secciones de contenido ---
     for n in range(nsec if not con_quiz else nsec - 1):
-        pat = re.compile(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\n</section>)' % n, re.S)
+        pat = re.compile(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\s*</section>)' % n, re.S)
         assert pat.search(s), f'no se encontró la sección {n} en el molde'
         s = pat.sub(lambda m: m.group(1) + '\n' + SEC[n].strip() + m.group(3), s, count=1)
 
@@ -93,9 +93,10 @@ def generar(path):
     if not con_quiz:
         P = []
     pregs = ''.join(bloque_pregunta(i, p[0], p[1], p[2], p[3]) + '\n' for i, p in enumerate(P, 1))
+    # el contenido de las preguntas puede traer «%» (porcentajes), que rompería el formateo de abajo
     sec9 = ('\n  <div class="eyebrow">Simulacro de práctica</div>\n'
-            f'  <h2 class="sec-title">Pon a prueba lo aprendido</h2>\n  <p>{c.QUIZ_INTRO}</p>\n\n'
-            + pregs +
+            f'  <h2 class="sec-title">Pon a prueba lo aprendido</h2>\n  <p>{c.QUIZ_INTRO}</p>\n\n'.replace('%', '%%')
+            + pregs.replace('%', '%%') +
             '  <div id="resultado">\n    <div class="score-num"><span id="aciertos">0</span>/%d</div>\n'
             '    <p id="msg-resultado"></p>\n'
             '    <button class="btn gold" onclick="reiniciar()">🔄 Reintentar</button>\n  </div>\n\n'
@@ -108,10 +109,10 @@ def generar(path):
                   '    <button id="btnFinalizar" style="background:linear-gradient(135deg,#c9a227,#e0b84a);color:#1a1a1a;'
                   'border:none;padding:14px 32px;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer">'
                   f'✅ Finalizar Día {M["dia"]}</button>\n  </div>\n')
-        s = re.sub(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\n</section>)' % (nsec - 1),
+        s = re.sub(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\s*</section>)' % (nsec - 1),
                    lambda m: m.group(1) + m.group(2) + cierre + m.group(3), s, count=1, flags=re.S)
     if con_quiz:
-        s = re.sub(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\n</section>)' % (nsec - 1),
+        s = re.sub(r'(<section class="section[^"]*" data-sec="%d">)(.*?)(\s*</section>)' % (nsec - 1),
                    lambda m: m.group(1) + sec9 + m.group(3), s, count=1, flags=re.S)
 
     # --- footer ---
