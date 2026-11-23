@@ -92,3 +92,34 @@ def limpieza_rol(cargo='Técnico Investigador', plural='Técnicos Investigadores
         # restituir nombres propios
         ('@@PAUX@@', 'Procuraduría Auxiliar'),
     ]
+
+
+def modulos(html):
+    """Parte el HTML de una sección de Desarrollo en (encabezado, [(n_h3, html_del_modulo), …]).
+
+    Sirve para repartir los módulos de una guía base entre dos guías nuevas sin duplicar
+    contenido: `cabeza, mods = modulos(SEC[2])` y luego se arma cada guía con los que le tocan.
+    """
+    import re as _re
+    cortes = [m.start() for m in _re.finditer(r'(?:<!--\s*M[ÓO]DULO[^>]*-->\s*)?<h3[ >]', html)]
+    if not cortes:
+        return html, []
+    cabeza = html[:cortes[0]]
+    partes = []
+    for i, ini in enumerate(cortes):
+        fin = cortes[i + 1] if i + 1 < len(cortes) else len(html)
+        partes.append((i + 1, html[ini:fin]))
+    return cabeza, partes
+
+
+def armar(cabeza, partes, cuales, renumerar=True):
+    """Reconstruye una sección de Desarrollo con los módulos elegidos, renumerando los chips."""
+    import re as _re
+    elegidos = [p for n, p in partes if n in cuales]
+    if renumerar:
+        out = []
+        for i, p in enumerate(elegidos, 1):
+            p = _re.sub(r'<span class="h3-chip">[^<]*</span>', f'<span class="h3-chip">{i}</span>', p, count=1)
+            out.append(p)
+        elegidos = out
+    return cabeza + ''.join(elegidos)
