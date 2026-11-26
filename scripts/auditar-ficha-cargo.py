@@ -114,9 +114,23 @@ def auditar(plan_id, ficha, hallazgos):
             if n:
                 hallazgos.append(('ALTO', plan_id, nombre, f'menciona la entidad ajena «{e}» ({n} vez/veces)'))
         # 6. requisitos de otro cargo
+        propios = (ficha.get('estudio', '') + ficha.get('experiencia', '')).lower()
         for r in REQ_AJENOS:
-            if r in txt.lower() and r not in (ficha.get('estudio', '') + ficha.get('experiencia', '')).lower():
-                hallazgos.append(('ALTO', plan_id, nombre, f'requisito ajeno al cargo: «{r}»'))
+            if r in propios:
+                continue
+            for m in re.finditer(re.escape(r), txt, re.I):
+                ventana = txt[max(0, m.start() - 220):m.end() + 160]
+                # Nombrar un requisito ajeno es legítimo cuando se contrasta con
+                # otro nivel del empleo o cuando el cargo VERIFICA el requisito
+                # de un tercero, que es justamente la función de talento humano.
+                if re.search(r'nivel(?:es)? asistencial|nivel(?:es)? profesional|seg[uú]n el empleo|'
+                             r'cuando aplique|si aplica|verificas?|verificaci[oó]n|revisas?|'
+                             r'acredit|otros? (?:cargos?|empleos?|niveles?)|hoja de vida|'
+                             r'historia laboral|del aspirante|de la persona', ventana, re.I):
+                    continue
+                hallazgos.append(('ALTO', plan_id, nombre,
+                    f'requisito ajeno al cargo: «{r}» → …{re.sub(chr(32)+"+", " ", ventana[180:300]).strip()}…'))
+                break
         # 7. dependencia y proceso
         dep = ficha.get('dependencia')
         if dep and 'DNIE' in txt and 'no ' not in txt[max(0, txt.find('DNIE') - 60):txt.find('DNIE')].lower():
