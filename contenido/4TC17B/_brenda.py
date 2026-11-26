@@ -26,6 +26,12 @@ IDENTIDAD = [
     ('Gestor I', 'Técnico en Criminalística 4TC-17'),
     ('la Seccional', 'la División'),
     ('Seccional', 'División'),
+    # La denominación del empleo es gramaticalmente masculina («el Técnico en
+    # Criminalística»), aunque la aspirante sea mujer. Mezclar las dos formas
+    # se lee como un descuido, así que se unifica.
+    ('La Técnico en Criminalística', 'El Técnico en Criminalística'),
+    ('la Técnico en Criminalística', 'el Técnico en Criminalística'),
+    ('una Técnico en Criminalística', 'un Técnico en Criminalística'),
 ]
 
 # aviso que se repite en todo el bloque de talento humano: la PGN tiene carrera especial

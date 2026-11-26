@@ -47,6 +47,38 @@ def cargar(path):
     return m
 
 
+def castellano(s):
+    """Repara las contracciones que rompen los reemplazos de identidad.
+
+    Cuando una sustitución cambia «la ventanilla» por «el punto de atención»,
+    una frase como «se acerca a la ventanilla» queda como «se acerca a el punto
+    de atención». Son errores que el estudiante ve en la primera lectura. Solo
+    se corrige la forma en minúscula: «siendo A el más exigente» (la letra de
+    una opción) debe quedar intacta.
+    """
+    s = re.sub(r'\ba el\s+(?=[A-Za-zÁÉÍÓÚÑáéíóúñ])', 'al ', s)
+    s = re.sub(r'\bde el\s+(?=[A-Za-zÁÉÍÓÚÑáéíóúñ])', 'del ', s)
+    # concordancia de género: «la Seccional» → «la División» deja «el División»
+    for mal, bien in (('el División', 'la División'), ('El División', 'La División'),
+                      ('del División', 'de la División'), ('al División', 'a la División'),
+                      ('un División', 'una División'), ('este División', 'esta División'),
+                      ('ese División', 'esa División'), ('los División', 'las División')):
+        s = re.sub(r'\b' + mal + r'\b', bien, s)
+    # Las denominaciones de empleo de la PGN son gramaticalmente masculinas
+    # aunque la aspirante sea mujer; los reemplazos de identidad dejaban
+    # mezclas como «la Técnico en Criminalística» junto a «el Técnico en
+    # Criminalística» en la misma guía, que se leen como un descuido.
+    for d in ('Técnico en Criminalística', 'Técnico Investigador', 'Técnico Administrativo',
+              'Sustanciador', 'Citador', 'Asesor', 'Gestor', 'Analista'):
+        s = re.sub(r'\bLa (' + d + r')\b', r'El \1', s)
+        s = re.sub(r'\bla (' + d + r')\b', r'el \1', s)
+        s = re.sub(r'\bUna (' + d + r')\b', r'Un \1', s)
+        s = re.sub(r'\buna (' + d + r')\b', r'un \1', s)
+        s = re.sub(r'\bde la (' + d + r')\b', r'del \1', s)
+        s = re.sub(r'\ba la (' + d + r')\b', r'al \1', s)
+    return s
+
+
 def bloque_pregunta(n, correcta, ctx, ask, ops):
     assert len(ops) == 4, f'pregunta {n}: deben ser 4 opciones'
     o = '\n'.join(
@@ -136,6 +168,7 @@ def generar(path):
     s = re.sub(r"<span id=\"aciertos\">0</span>/\d+", f'<span id="aciertos">0</span>/{len(P)}', s)
     s = re.sub(r'respondidas===\d+', f'respondidas==={len(P)}', s)
 
+    s = castellano(s)
     assert '{{' not in s, 'quedaron marcadores sin reemplazar: ' + str(set(re.findall(r'\{\{[A-Z]+\}\}', s)))
     carpeta = 'simulacro' if M.get('es_simulacro') else 'guias'
     dest = os.path.join(carpeta, M['archivo'])

@@ -243,6 +243,20 @@ SEC = aplicar_todas(SEC, [
     ('Resolución 243 de 2026', 'Resolución 212 de 2026'),
     ('288-2026', '285-2026'),
     ('Estatuto de Conciliación', 'CPACA y el régimen de situaciones administrativas'),
+    # El módulo 9 de la base explica la ubicación en el Centro de Conciliación.
+    # Ese pasaje no se puede traducir con reemplazos sueltos (quedaba «te ubicas
+    # en el dependencias que soliciten apoyo técnico» y hablando de audiencias
+    # de conciliación), así que se sustituye completo por la ubicación real del
+    # empleo 4TC-17: la División de Gestión Humana, proceso de Talento Humano.
+    ('<h4>Ejemplo: si te ubicas en el Centro de Conciliación en materia civil y comercial</h4>',
+     '<h4>Ejemplo: si te ubicas en la División de Gestión Humana</h4>'),
+    ('<p>Si, en cambio, te ubicas en el Centro de Conciliación en materia civil y comercial de la PGN, tu apoyo se orientará hacia la sustanciación de solicitudes de conciliación, la organización de las audiencias, el registro de actas y constancias, y el apoyo logístico y documental al conciliador designado. Aquí también aplica la misma lógica: el conciliador —que sí tiene una función decisoria propia dentro del trámite conciliatorio, avalando o no el acuerdo al que lleguen las partes— es quien ejerce esa función; tu apoyo es de sustanciación y organización del trámite, no de definición del contenido del acuerdo entre las partes.</p>',
+     '<p>El empleo <strong>4TC-17</strong> que ofrece la convocatoria <strong>285-2026</strong> está ubicado en la <strong>División de Gestión Humana</strong>, dentro del proceso de <strong>Talento Humano</strong>. Allí tu apoyo se orienta a la gestión de las <strong>historias laborales</strong>, a la preparación de los soportes de las <strong>situaciones administrativas</strong> (vacaciones, licencias, permisos, encargos), al trámite de <strong>certificaciones laborales</strong> y de novedades de nómina, y al registro y control de la información del personal en los sistemas de la entidad. Aquí aplica exactamente la misma lógica de frontera: el <strong>jefe de la División</strong> —o el funcionario a quien el manual atribuye la competencia— es quien <mark>decide y firma</mark> el acto administrativo que reconoce una situación administrativa o resuelve una solicitud; tu apoyo es de <strong>verificación, sustanciación y organización documental</strong> del trámite, no de definición de su contenido decisorio.</p>\n      <p>Y si, por necesidades del servicio, llegaras a ser reubicada en otra dependencia, lo que cambia es el <strong>tema</strong> de los documentos que proyectas, nunca la <strong>naturaleza</strong> de tu rol: sigues siendo apoyo técnico bajo la supervisión de quien tiene la competencia decisoria. Esa es la idea que la prueba evalúa una y otra vez.</p>'),
+    ('<tr><td>Centro de Conciliación civil y comercial</td><td>Solicitudes, actas, constancias de audiencia</td><td>El conciliador designado</td></tr>',
+     '<tr><td><strong>División de Gestión Humana</strong> (tu ubicación)</td><td>Soportes de situaciones administrativas, certificaciones laborales, novedades de nómina, historias laborales</td><td>El jefe de la División de Gestión Humana</td></tr>'),
+    ('<button class="cp-opt" data-ans="0">Pasas a tener autonomía decisoria plena sobre el acuerdo conciliatorio.</button>',
+     '<button class="cp-opt" data-ans="0">Pasas a tener autonomía decisoria plena sobre el acto administrativo que reconoce la situación administrativa.</button>'),
+    ('Centro de Conciliación civil y comercial de la PGN', 'División de Gestión Humana de la PGN'),
     ('Centro de Conciliación en materia civil y comercial', 'dependencias que soliciten apoyo técnico'),
     ('Centro de Conciliación', 'División de Gestión Humana'),
     ('apoyo en sustanciación', 'apoyo técnico'),
