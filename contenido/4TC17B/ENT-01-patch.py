@@ -82,6 +82,12 @@ s = re.sub(r'<p class="header-sub">.*?</p>',
            '<p class="header-sub">Antes de estudiar los temas del cargo, conozcamos la entidad a la que vas a llegar: qué es la Procuraduría, qué hace, cómo está organizada, qué normas la rigen, qué es la <strong>División de Gestión Humana</strong>, de quién depende y por qué tu trabajo de soporte va a importar.</p>',
            s, count=1, flags=re.S)
 
+# pie: dejar explícitos el cargo y la convocatoria, para que la pieza no sea anónima
+s = s.replace(
+    'ENT-PGN-4TC17B-01 · Conoce tu Entidad: Procuraduría General de la Nación · Día 1<br>',
+    'ENT-PGN-4TC17B-01 · Conoce tu Entidad: Procuraduría General de la Nación · Día 1 · '
+    'Técnico en Criminalística 4TC-17 (Nivel Técnico) · Convocatoria 285-2026<br>')
+
 assert '{{' not in s
 open(DEST, 'w', encoding='utf-8').write(s)
 print(DEST, len(s), 'bytes')

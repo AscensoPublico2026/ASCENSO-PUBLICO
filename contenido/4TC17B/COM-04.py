@@ -28,7 +28,7 @@ UBICACION = (
     '      <p>Tu cargo, <strong>Técnico en Criminalística código 4TC-17</strong>, se ubica en el '
     '<strong>nivel Técnico</strong> y, según el formato de la convocatoria 285-2026, su dependencia es '
     'la <strong>División de Gestión Humana</strong>, en planta global, con '
-    '<strong>9 plazas</strong> ofertadas. Que sea nivel Técnico significa que tu función exige el '
+    '<strong>1 plaza</strong> ofertada. Que sea nivel Técnico significa que tu función exige el '
     '<strong>dominio de una técnica o una tecnología</strong> —procedimientos de investigación, '
     'recolección y manejo de soportes documentales, elaboración de informes técnicos— aplicada con un '
     'grado de autonomía intermedio: mayor que el de un cargo asistencial (labores de apoyo manual, '

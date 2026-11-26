@@ -36,7 +36,7 @@ SEC[0] = '''
   </ul>
   <div class="box ok">
     <div class="box-title">🎯 La meta concreta</div>
-    <p>La prueba de <strong>Conocimientos es eliminatoria</strong>: necesitas <strong>mínimo 65 sobre 100</strong> solo para seguir en el concurso, y un puntaje final total <strong>igual o superior a 70 %</strong> para integrar la lista de elegibles. Son <strong>9 plazas</strong>. Este curso existe para que superes ese filtro con holgura y pelees el puesto, no para que apenas lo roces.</p>
+    <p>La prueba de <strong>Conocimientos es eliminatoria</strong>: necesitas <strong>mínimo 65 sobre 100</strong> solo para seguir en el concurso, y un puntaje final total <strong>igual o superior a 70 %</strong> para integrar la lista de elegibles. Es <strong>una sola plaza</strong>. Este curso existe para que superes ese filtro con holgura y quedes de primero, no para que apenas lo roces.</p>
   </div>
 '''
 
@@ -65,7 +65,7 @@ SEC[2] = '''
 
   <h3><span class="h3-chip">1</span> Qué es este concurso y por qué es una buena oportunidad</h3>
   <p>La Procuraduría General de la Nación es el órgano supremo del <strong>Ministerio Público</strong>. Vigila la conducta de quienes desempeñan funciones públicas, protege los derechos humanos y el patrimonio público, interviene ante las autoridades judiciales y administrativas, y ejerce la <strong>potestad disciplinaria</strong> sobre los servidores del Estado. Para cumplir todo eso necesita personal de carrera, y por eso convoca concursos abiertos de méritos.</p>
-  <p>La <strong>Convocatoria 285-2026</strong> ofrece <mark>9 plazas de Técnico en Criminalística, código 4TC-17</mark>, en planta global con ubicación inicial en <strong>Bogotá</strong>, adscritas a la <strong>División de Gestión Humana</strong> y vinculadas al <strong>proceso disciplinario</strong>. La asignación básica del empleo es de <strong>$6.889.867</strong> (vigencia 2025). Es un cargo del <strong>nivel técnico</strong> con un contenido profesional exigente: no es un empleo de apoyo administrativo, es el personal que <strong>recoge y asegura la prueba</strong> en la que después se sostiene una decisión disciplinaria.</p>
+  <p>La <strong>Convocatoria 285-2026</strong> ofrece <mark>1 plaza de Técnico en Criminalística, código 4TC-17</mark>, en planta global con ubicación inicial en <strong>Bogotá</strong>, adscrita a la <strong>División de Gestión Humana</strong> y vinculada al proceso de <strong>Talento Humano</strong>. La asignación básica del empleo es de <strong>$8.972.318</strong> (vigencia 2025). Es un cargo del <strong>nivel técnico</strong> con un contenido profesional exigente: no es un empleo de apoyo administrativo, es el personal que <strong>recoge y asegura la prueba</strong> en la que después se sostiene una decisión disciplinaria.</p>
   <div class="ojo"><b>Ojo en la prueba:</b> el cargo pertenece a la <strong>planta globalizada</strong>. Una vez nombrado, en cualquier tiempo puedes ser distribuido o reubicado en otras especialidades, sedes y dependencias según las necesidades del servicio (numeral 34 del art. 7 del Decreto Ley 262 de 2000). Las opciones que afirmen que el cargo es «inamovible» o «exclusivo de una sede» son falsas.</p></div>
 
   <h3><span class="h3-chip">2</span> Los requisitos del empleo</h3>
@@ -97,7 +97,7 @@ SEC[2] = '''
   <p>Solo quienes obtengan un <strong>puntaje final total igual o superior a 70 %</strong> integran la lista de elegibles (art. 216 del Decreto Ley 262 de 2000). Tres consecuencias prácticas:</p>
   <ul class="lista">
     <li><strong>Eliminatoria significa eliminatoria.</strong> Si sacas 64 en conocimientos, el resto no se califica. No hay compensación posible con antecedentes ni con comportamentales.</li>
-    <li><strong>El 60 % manda, pero el 40 % decide el puesto.</strong> Con 9 plazas, la diferencia entre el elegible número 8 y el número 15 suele estar en las clasificatorias.</li>
+    <li><strong>El 60 % manda, pero el 40 % decide el puesto.</strong> Con <strong>una sola plaza</strong>, no basta con pasar: hay que quedar de primera en la lista de elegibles, y esa diferencia se juega en las clasificatorias.</li>
     <li><strong>Las comportamentales se estudian.</strong> Mucha gente cree que «eso no se prepara». Sí se prepara: son preguntas de juicio situacional con una conducta esperada, y ese estándar se aprende.</li>
   </ul>
   <div class="box warn">
@@ -221,7 +221,7 @@ SEC[2] = '''
     <div class="cp-op">Tiene razón: con 65 en conocimientos ya se asegura la lista de elegibles.</div>
     <div class="cp-op">Con 65 solo evita quedar eliminado; para entrar a la lista se necesita un total ≥ 70 %, y el 40 % restante sale de comportamentales y antecedentes.</div>
     <div class="cp-op">Las comportamentales no se califican, así que da igual cómo las responda.</div>
-    <div class="cp-fb"><strong>Respuesta: la segunda.</strong> El 65 es el mínimo para no ser eliminado en una prueba que vale el 60 %. El puntaje final combina las tres pruebas y debe llegar a 70 % para integrar la lista. Con 9 plazas, las clasificatorias deciden el orden.</div>
+    <div class="cp-fb"><strong>Respuesta: la segunda.</strong> El 65 es el mínimo para no ser eliminado en una prueba que vale el 60 %. El puntaje final combina las tres pruebas y debe llegar a 70 % para integrar la lista. Con una sola plaza, las clasificatorias deciden quién queda de primero.</div>
   </div>
 
   <h3><span class="h3-chip">9</span> Cómo son las preguntas de la prueba</h3>
