@@ -2,7 +2,10 @@
 """Día 14 · Talento humano I: función pública, clasificación de empleos y planeación — Técnico en Criminalística 4TC-17."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol
+from _lib import aplicar_todas as _ap
+from _regimen import TODAS as _REGIMEN
 
 META = dict(
     codigo='FUN-GTH-4TC17B-01',
@@ -70,6 +73,9 @@ R = [
 SEC = aplicar_todas(SEC, R, estricto=False)
 SEC = aplicar_todas(SEC, limpieza_rol('Técnico en Criminalística', 'Técnicos en Criminalística'), estricto=False)
 
+
+SEC = _ap(SEC, _REGIMEN, estricto=False)   # carrera especial PGN, no CNSC
+
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre función '
               'pública, clasificación de los empleos, actores del sistema y planeación del talento humano. '
               'Varias ponen a prueba la distinción entre el régimen general y la carrera especial de la PGN: '
@@ -124,7 +130,7 @@ P = [
    'Negarse a tramitar cualquier provisión, porque sin lista de elegibles vigente la vacante solo puede proveerse cuando se convoque un nuevo concurso y el empleo debe permanecer desierto hasta entonces.',
    'Proyectar el nombramiento provisional pero por un término máximo de seis meses, de modo que el acto quede condicionado y la vacante vuelva a estar disponible cuando los empleados de carrera puedan participar.'],
   'Correcto. Antes de la provisionalidad hay que agotar el encargo de empleados de carrera que cumplan los requisitos y tengan calificación satisfactoria: esa prelación protege el derecho de quienes ya ganaron su empleo por mérito. Y usted deja constancia de la verificación, que es lo que después demuestra que el orden se respetó.',
-  'Que no haya lista de elegibles no devuelve libertad de designación: el orden legal de provisión sigue vigente, empezando por el encargo. Tampoco corresponde dejar el empleo desierto, ni inventar un término de seis meses que la norma no prevé para sanear el salto del encargo.'),
+  'Que no haya lista de elegibles no devuelve libertad de designación: el orden legal de provisión sigue vigente, empezando por el encargo. Tampoco corresponde dejar el empleo desierto. Y ponerle un término de seis meses al acto no sanea nada: ese término existe —el artículo 188 del Decreto Ley 262 de 2000 lo fija, prorrogable por otro igual— pero es el límite de duración de la provisionalidad, no una autorización para saltarse la prelación del encargo.'),
 
  (2,
   'Para una vacante de la entidad, un aspirante presenta un título de formación técnica profesional y varios años de experiencia relacionada, y pregunta si cumple los requisitos. Un compañero le dice que lo dé por cumplido «porque se ve que sabe del tema y así agilizamos la posesión»; otro sostiene que debe descartarlo de inmediato porque no trae el título exacto que menciona el manual. El jefe le pide a usted el concepto escrito antes de que el trámite siga.',

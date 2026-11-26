@@ -3,6 +3,8 @@
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _brenda import base, meta
+from _lib import aplicar_todas as _ap
+from _regimen import TODAS as _REGIMEN
 
 META = meta(
     codigo='FUN-GTH-4TC17B-04',
@@ -48,6 +50,8 @@ MOD_PGN = '''
 '''
 
 SEC = base('guias/FUN-GHI-03-gestion-rendimiento-evaluacion-desempeno.html', MOD_PGN)
+
+SEC = _ap(SEC, _REGIMEN, estricto=False)   # carrera especial PGN, no CNSC
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre el ciclo de '
               'la evaluación del desempeño, el período de prueba, la escala y sus efectos, el debido proceso de la '

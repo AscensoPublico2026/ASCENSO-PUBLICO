@@ -5,6 +5,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from _lib import secciones_mapeadas, aplicar_todas, limpieza_rol, modulos, armar
 from _brenda import IDENTIDAD, CARGO, PLURAL, meta
+from _lib import aplicar_todas as _ap
+from _regimen import TODAS as _REGIMEN
 
 META = meta(
     codigo='FUN-CPACA-4TC17B-02',
@@ -52,6 +54,8 @@ CIERRE = '''
 S[2] = S[2] + CIERRE
 SEC = aplicar_todas(S, IDENTIDAD + [('Gestor II', 'Técnico en Criminalística 4TC-17'), ('Gestor', 'Técnico en Criminalística 4TC-17')], estricto=False)
 SEC = aplicar_todas(SEC, limpieza_rol(CARGO, PLURAL), estricto=False)
+
+SEC = _ap(SEC, _REGIMEN, estricto=False)   # carrera especial PGN, no CNSC
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre el '
               'procedimiento administrativo, la decisión, las notificaciones, los recursos, el silencio '
