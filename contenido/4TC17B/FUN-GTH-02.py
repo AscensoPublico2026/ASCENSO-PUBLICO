@@ -3,6 +3,8 @@
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _brenda import base, meta
+from _lib import aplicar_todas as _ap
+from _regimen import TODAS as _REGIMEN
 
 META = meta(
     codigo='FUN-GTH-4TC17B-02',
@@ -48,6 +50,9 @@ MOD_PGN = '''
 '''
 
 SEC = base('guias/FUN-GHI-01-gestion-del-empleo-publico.html', MOD_PGN)
+
+
+SEC = _ap(SEC, _REGIMEN, estricto=False)   # carrera especial PGN, no CNSC
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre provisión, '
               'posesión, historia laboral, situaciones administrativas y retiro. Varias se resuelven con una sola '

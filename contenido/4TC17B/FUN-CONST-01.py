@@ -3,6 +3,8 @@
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _brenda import base, meta
+from _lib import aplicar_todas as _ap
+from _regimen import TODAS as _REGIMEN
 
 META = meta(
     codigo='FUN-CONST-4TC17B-01',
@@ -52,6 +54,8 @@ MOD_PGN = '''
 '''
 
 SEC = base('guias/FUN-CONST-DIAN-GHI-01-constitucion-aplicada-cargo.html', MOD_PGN, aviso=False)
+
+SEC = _ap(SEC, _REGIMEN, estricto=False)   # carrera especial PGN, no CNSC
 
 QUIZ_INTRO = ('Responde estas 15 preguntas de juicio situacional, tipo prueba escrita de la PGN, sobre los derechos '
               'fundamentales que tocan tu trabajo, sus mecanismos de protección y el régimen constitucional de la '
